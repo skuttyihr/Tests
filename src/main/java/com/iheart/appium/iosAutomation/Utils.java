@@ -122,6 +122,9 @@ public class Utils {
 	    desiredCapabilities.setCapability("appiumVersion", "1.4.8");
 	    
 	   driver = new IOSDriver(new URL("http://localhost:4723/wd/hub"), desiredCapabilities);
+	   driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+	  
+	   WaitUtility.sleep(5000);
 	   return driver;
 	}
 	
@@ -143,6 +146,9 @@ public class Utils {
 	   
 	   
 	   driver = new IOSDriver(new URL("http://localhost:4723/wd/hub"), desiredCapabilities);
+	   driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+	  
+	   WaitUtility.sleep(5000);
 	   return driver;
 	}
 	
@@ -170,6 +176,7 @@ public class Utils {
 	   
 	   driver = new IOSDriver(new URL("http://localhost:4723/wd/hub"), capabilities);
 	   driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+	   Page.setIsRealDevice(true);
 	   WaitUtility.sleep(5000);
 	   return driver;
 	}

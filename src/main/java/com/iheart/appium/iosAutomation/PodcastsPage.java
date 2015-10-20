@@ -36,6 +36,7 @@ public class PodcastsPage extends Page{
 	    String podName = firstPod.getAttribute("name");
 	    System.out.println("See pod name:" + podName);
 		firstPod.click();
+		WaitUtility.sleep(2000);
 	    firstEpisode.click();
 	    //Wait for PREROLL
 	    waitForPreroll();

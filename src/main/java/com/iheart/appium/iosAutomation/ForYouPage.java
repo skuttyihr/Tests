@@ -21,7 +21,7 @@ public class ForYouPage extends Page {
 	//@iOSFindBy(name="Sign in") private WebElement signIn;
 	
 	//for search 
-   @iOSFindBy(name="Top Hit") private IOSElement topHit;
+   @iOSFindBy(xpath="//UIAApplication[1]/UIAWindow[1]/UIATableView[2]/UIATableCell[1]/UIAStaticText[1]") private IOSElement topHit;
    	
    @iOSFindBy(xpath="//UIAApplication[1]/UIAWindow[1]/UIATableView[3]/UIATableCell[1]/UIAStaticText[1]")	
       private IOSElement topStation;
@@ -34,18 +34,19 @@ public class ForYouPage extends Page {
 	public void AIOS_22674_createArtistStation()
 	{   String artist ="Josh Groban";
 		searchField.sendKeys(artist);
+		WaitUtility.sleep(3000);
 		topHit.click();
 		WaitUtility.sleep(3000);
 		//Verify PLAYER
-		player.verifyPlayer_live(artist);
+		player.verifyPlayer_artist(artist);
 		
 		player.doThumbUp();
 	
-		player.doThumbDown();
+		player.doThumbDown("artist");
 		
 		player.doFavorite();
 		
-		player.doScan();
+		player.doSkip();
 	    
 	   //Verify that this station is added under My Station
 		(player.back).click();
@@ -59,19 +60,50 @@ public class ForYouPage extends Page {
 		
 	}
 	
-	public void AIOS_22673_playLiveRadio()
-	{   String myStation ="101.3";
-		//First, find out for-sure live radio 101.3
-		List<WebElement> stations = driver.findElements(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]"));
+	private String chooseLiveRadioToPlay(List<WebElement> stations)
+	{   String myStation ="";
+		String radioName ="";
+	    boolean  played = false;
+		//1.Not ends with 'Radio', 1. Hopefully, but not necessarily, contains number like 101.3
 		for(WebElement station:stations)
-		{
-			if(station.getAttribute("name").contains(myStation))
+		{   
+			//radioName = station.getAttribute("name");
+			radioName = station.getText();
+			System.out.println("See station:" + radioName);
+			if (!radioName.endsWith("Radio"))
 			{
-			   station.click();
-			   break;
+			    //Any station contains numbers?
+			    if ( radioName.matches(".*\\d+.*"))
+			    {	myStation = radioName;
+			    	station.click();
+			        played = true;
+			        break;
+			    }    
 			}
 			
 		 }//for
+		
+		if (played) return myStation;
+		//if no station contains number, then play candidate;
+		for(WebElement station:stations)
+		{   
+			if (!station.getText().equals("Radio"))
+		    {	myStation = station.getText();
+				station.click();
+			        break;
+			}  
+		 }//for
+		
+		return myStation;
+		
+	}
+	
+	public void AIOS_22673_playLiveRadio()
+	{   String myStation ="";
+		WebElement collectionView =  driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]"));
+		List<WebElement> stations = collectionView.findElements(By.className("UIACollectionCell"));
+		myStation = chooseLiveRadioToPlay(stations);
+		System.out.println("MySTATION:" + myStation);
 		
 		//Verify PLAYER
 		player.verifyPlayer_live(myStation);
@@ -84,14 +116,21 @@ public class ForYouPage extends Page {
 		
 		player.doFavorite();
 		   
-		player.pauseAndResume("live");
+		//Here, remember the playing station name:
+		myStation = driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIANavigationBar[1]/UIAStaticText[1]")).getText();
+		System.out.println("playing station:" + myStation);
+		
+	//	player.pauseAndResume("live");
 	    
 	   //tap on My Station and make sure Station is added??
 		//Verify that this station is added under My Station
 		(player.back).click();
-	    
-		if (!topStation.getText().equals(myStation))
-	    	handleError("Artist station is not added under My Station.", "AIOS_22673_playLiveRadio");
+		WaitUtility.sleep(1000);
+	    driver.findElement(By.name("My Stations")).click();
+	    WaitUtility.sleep(1000);
+		//if (!topHit.getText().equals(myStation))
+	    if (!driver.getPageSource().contains(myStation))
+	    	handleError("Live station is not added under My Station.", "AIOS_22673_playLiveRadio");
 	    
    	}
 	

@@ -2,6 +2,7 @@ package com.iheart.appium.iosAutomation;
 
 import org.openqa.selenium.By;
 
+
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
 import io.appium.java_client.pagefactory.iOSFindBy;
@@ -35,7 +36,9 @@ public class Player extends Page{
 	//@iOSFindBy(xpath="//UIAApplication[1]/UIAWindow[1]/UIAButton[9]") public IOSElement playButton_artist;
 	@iOSFindBy(xpath="//UIAApplication[1]/UIAWindow[1]/UIAButton[2]") public IOSElement playButton_artist;
 	//@iOSFindBy(xpath="//UIAApplication[1]/UIAWindow[1]/UIAButton[11]") public IOSElement more;
-	@iOSFindBy(name="more") public IOSElement more;
+	@iOSFindBy(xpath="//UIAApplication[1]/UIAWindow[1]/UIAButton[6]") public IOSElement more_live;
+	//@iOSFindBy(name="more") public IOSElement more;
+	
 	@iOSFindBy(name="skip") public IOSElement skip;
 	@iOSFindBy(name="scan") public IOSElement scan;
 	@iOSFindBy(name="Thumb up") public IOSElement thumbUp;
@@ -68,14 +71,14 @@ public class Player extends Page{
 	Volume control
 	*/
 	public void verifyPlayer_live(String stationName)
-	{  if(!stationLabel.getText().contains(stationName))
-		  errors.append("Station name is not correct.");
+	{  //if(!stationLabel.getText().contains(stationName))
+		//  errors.append("Station name is not correct.");
 	
 		if(!isElementPresent(songTrack_live))
 		   errors.append("No sound track name is displayed.");
 		
 		if(!isElementPresent(artist_live))
-			   errors.append("No artist name is displayed.");
+			   errors.append("Artist name is NOT displayed.");
 		
 		if(!isElementPresent(playButton_live))
 			   errors.append("Play icon is not displayed.");
@@ -83,12 +86,16 @@ public class Player extends Page{
 		if(!isElementPresent(scan))
 			   errors.append("Scan icon is not displayed.");
 		
+		if(!isElementPresent(more_live))
+			   errors.append(".... is not displayed.");
+		
+		
 		verfiyCommonIcons("verifyPlayer_live");
 		
 	}
 	
 	
-	public void verifyPlayer_custom(String stationName)
+	public void verifyPlayer_artist(String stationName)
 	{  if(!stationLabel.getText().contains(stationName))
 		  errors.append("Station name is not correct.");
 	
@@ -139,8 +146,8 @@ public class Player extends Page{
 			   errors.append("No Thumb Down icon is displayed.");
 		
 		
-		if(!isElementPresent(more))
-			   errors.append(".... is not displayed.");
+		//if(!isElementPresent(more))
+		//	   errors.append(".... is not displayed.");
 		
 		if(errors.length() > 1)
 			handleError("", callingMethod);
@@ -173,7 +180,7 @@ public class Player extends Page{
 	
 	public void doShare()
 	{
-		more.tap(1, 1);
+		more_live.tap(1, 1);
 		share.tap(1, 1);
 		if(!isElementPresent(mail))
 			handleError("Share button is not working.", "doShare");
@@ -181,36 +188,306 @@ public class Player extends Page{
 	
 	public void doThumbUp()
 	{
-		thumbUp.click();
+		//Sometimes the thumbUp button is disabled, keep scan(At most 10 times though to avoid hang) until thumbUpiCON is enabled.
+		int count = 0; 
 		
-		String response = driver.findElement(By.className("growls")).getText();
+		//Try a little bit more
+		while(isThumbUpDisabled() && count < 3)
+		{	System.out.println("thumbUp button is disabled. Scan now..");
+		    try{
+			   scan.click();
+		    }catch(Exception e)
+		    {   
+		    	
+		    }
+			count++;
+			WaitUtility.sleep(3000);
+		}
+		
+		//if it is still disabled, return 
+		if(isThumbUpDisabled()) return;
+		
+		//If this is thumbUp before, double-click
+		if (isThumbUpDone())
+		{	thumbUp.click();
+		     WaitUtility.sleep(1000);
+		   //Sometimes 'Like iheartRadio?" pops up
+			handleGladYouLikeItPopup();
+			
+		}
+
+	     
+	    thumbUp.click();
+		//Glad you like it!  We'll let our DJs know.
+	    String response = driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAStaticText[8]")).getText();
 		System.out.println("See growls:" + response);
-		if (!(response.contains("Glad you like") || response.contains("Thanks for your feedback")))
-			handleError("Thump Up is not working properly.", "AIOS_22674_createArtistStation");
+		
+		
+		
+		//Sometimes 'Like iheartRadio?" pops up
+		handleGladYouLikeItPopup();
+		
+		//FOR ARITST: Great, we’ll play you more songs like this.
+		if (!(response.contains("Glad you like") || response.contains("Thanks for your feedback") || response.contains("Great")))
+			handleError("Thump Up is not working properly.", "doThumbUp");
 		
 	}
 	
+	//This happens when you thumbup a already thumbuped song track
+	private void handleGladYouLikeItPopup()
+	{
+		try{
+			   driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAButton[10]")).click();//No , thnak you.
+		}catch(Exception e)
+		{
+			
+		}
+	}
+	
+	private void handleGladAfterFavorite()
+	{
+	  try{
+	    driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAButton[2]")).click();//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAButton[2]
+	    WaitUtility.sleep(1000);
+	  }catch(Exception e)
+	  {
+		  
+	  }
+	}
+	//this needs to be tested
+	private boolean isThumbUpDisabled()
+	{    return !thumbUp.isEnabled();
+	/*
+		boolean isDisabled = false;
+		try{
+			String value = thumbUp.getAttribute("enabled");
+			System.out.println("isThumbUpDisabled:" + value);
+		   isDisabled = !value.equals("true");
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return isDisabled;
+		*/
+	}
+	
+	private boolean isThumbDownDisabled()
+	{
+		return !thumbDown.isEnabled();
+		/*
+		boolean isDisabled = false;
+		try{
+			
+			//Here, need debugging.. 
+			String value = thumbDown.getAttribute("enabled");
+			System.out.println("isThumbDownDisabled:" + value);
+		   isDisabled = !value.equals("true");
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return isDisabled;
+		*/
+	}
+	
+	
+	//This is for live radio
 	public void doThumbDown()
 	{
-		thumbDown.click();
+		//Sometimes the thumbUp button is disabled, keep scan(At most 10 times though to avoid hang) until thumbUpiCON is enabled.
+		int count = 0; 
 		
-	    String response = driver.findElement(By.className("growls")).getText();
-		System.out.println("See growls:" + response);
-		if (! response.contains("Thanks for your feedback"))
-			handleError("Thump Down is not working properly.", "AIOS_22674_createArtistStation");
+		//Try a little bit more
+		while(isThumbDownDisabled() && count < 3)
+		{	System.out.println("thumbDown button is disabled. Scan now..");
+		    try{
+			   scan.click();
+		    }catch(Exception e)
+		    {   
+		    	
+		    }
+			count++;
+			WaitUtility.sleep(3000);
+		}
+		
+		//if it is still disabled, return 
+		if(isThumbDownDisabled()) return;
+		
+		//If this is thumbUp before, double-click
+		if (isThumbDownDone())
+		{	thumbDown.click();
+		     WaitUtility.sleep(1000);
+		   //Sometimes 'Like iheartRadio?" pops up
+			handleGladYouLikeItPopup();
+			
+		}
+		
+		thumbDown.click();
+		WaitUtility.sleep(1000);
+		
+		String response = driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAStaticText[8]")).getText();
+		System.out.println("See thumbDOWN DOWN growls:" + response);
+		
+		
+	//	if (! response.contains("heard enough"))
+	//		handleError("Thump Down is not working properly.", "doThumbDown");
 		
 	}
 	
+	public void doThumbDown(String stationType)
+	{
+		//Sometimes the thumbUp button is disabled, keep scan(At most 10 times though to avoid hang) until thumbUpiCON is enabled.
+		int count = 0; 
+		
+		//Try a little bit more
+		while(isThumbDownDisabled() && count < 3)
+		{	System.out.println("thumbDown button is disabled. Scan now..");
+		    try{
+		       if(stationType.equals("live"))	
+			      scan.click();
+		       else
+		    	   skip.click();
+		    }catch(Exception e)
+		    {   
+		    	
+		    }
+			count++;
+			WaitUtility.sleep(3000);
+		}
+		
+		//if it is still disabled, return 
+		if(isThumbDownDisabled()) return;
+		
+		//If this is thumbUp before, double-click
+		if (isThumbDownDone())
+		{	thumbDown.click();
+		     WaitUtility.sleep(1000);
+		   //Sometimes 'Like iheartRadio?" pops up
+			handleGladYouLikeItPopup();
+			
+		}
+		
+		thumbDown.click();
+		WaitUtility.sleep(1000);
+		if (stationType.equals("artist"))
+			handleThumbDownPopUpForArtistStation();
+														
+		String response = driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAStaticText[8]")).getText();
+		System.out.println("See thumbDOWN DOWN growls:" + response);
+		
+
+		if (stationType.equals("live"))
+		{   if (!response.contains("heard enough"))
+			   handleError("Thump Down is not working properly.", "doThumbDown");
+		}else 
+		{
+			if (!response.contains("OK, we’ll adjust your music mix."))
+				   handleError("Thump Down is not working properly.", "doThumbDown");
+		}
+	   	
+		
+	}
+	
+	private boolean isThumbUpDone()
+	{
+		
+		boolean isDone = false;
+		try{
+			//if yes, its value is 1; otherwise, blank
+			String value = thumbUp.getAttribute("value");
+			
+			System.out.println("Is thumpUp done:" + value );
+			  
+		   isDone = value.equals("1");
+		   
+		}catch(Exception e)
+		{
+			
+		}
+		return isDone;
+	}
+	
+	private boolean isThumbDownDone()
+	{
+		
+		boolean isDone = false;
+		try{
+			//if yes, its value is 1; otherwise, blank
+			String value = thumbDown.getAttribute("value");
+			
+			System.out.println("Is thumpDown done:" + value );
+			  
+		   isDone = value.equals("1");
+		   
+		}catch(Exception e)
+		{
+			
+		}
+		return isDone;
+	}
 	
 	public void doFavorite()
-	{
-		favorite.click();
-		String response = driver.findElement(By.className("growls")).getText();
-		System.out.println("See growls:" + response);
+	{   //if faved before, its value is 1;
+		if (isFavDone()) //unfav it
+		{
+			favorite.click();
+			WaitUtility.sleep(1000);
+			handleUnFavConfirmation();
+		}
 		
-		if (!response.contains("Favorite"))
-			handleError("Add to Favorite failed.", "AIOS_22674_createArtistStation");
+		favorite.click();
+		WaitUtility.sleep(1000);
+
+		handleGladAfterFavorite();
+		
+		String response = "";
+		response = driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAStaticText[8]")).getText();
+		System.out.println("See favorite growls:" + response);
+		
+		
+		//Station added to your favorites!
+		if (!response.contains("Station added"))
+			handleError("Add to Favorite failed.", "doFavorite");
 		   
+	}
+	
+	//Are you sure you want to delete this preset?
+	private void handleUnFavConfirmation()
+	{
+		try{
+			driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[4]/UIAAlert[1]/UIACollectionView[1]/UIACollectionCell[2]/UIAButton[1]")).click();
+		    WaitUtility.sleep(1000);
+		}catch(Exception e)
+		{
+			
+		}
+	}
+	
+	//Thumbing down customizes your station without using a skip.
+	private void handleThumbDownPopUpForArtistStation()
+	{
+		try{
+			//click on OKAY BUTTON
+			driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAAlert[1]/UIACollectionView[1]/UIACollectionCell[1]/UIAButton[1]")).click();
+		    WaitUtility.sleep(1000);
+		}catch(Exception e)
+		{
+			
+		}
+	}
+	
+	private boolean isFavDone()
+	{
+		boolean isDone = false;
+		
+	    try{
+	    	isDone = favorite.getAttribute("value").equals("1");
+	    }catch(Exception e)
+	    {
+	    	
+	    }
+	    
+	    return isDone;
 	}
 	
 	public void doScan()
@@ -222,7 +499,20 @@ public class Player extends Page{
 		//Verify that new song is playing 
 		String newSong =  driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAStaticText[2]")).getText();
 		if (newSong.equals(currentSong))
-			handleError("Skip is not working.", "doScan");
+			handleError("Scan is not working.", "doScan");
+		
+	}
+	
+	public void doSkip()
+	{
+		String currentSong = driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAStaticText[2]")).getText();
+		
+		skip.click();
+		WaitUtility.sleep(5000);
+		//Verify that new song is playing 
+		String newSong =  driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAStaticText[2]")).getText();
+		if (newSong.equals(currentSong))
+			handleError("Skip is not working.", "doSkip");
 		
 	}
 	

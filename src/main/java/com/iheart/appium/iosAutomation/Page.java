@@ -29,6 +29,8 @@ public class Page {
 	static IOSDriver driver;
 	static SideNavigationBar sideNavigationBar ;
 	static Player player;
+	//Real device requires longer reponse time
+	static boolean isRealDevice = false;
 	Logger logger = Logger.getLogger(Page.class);
 	
 	static final String USER_NAME ="iheartrocks999@gmail.com";
@@ -58,10 +60,10 @@ public class Page {
 	public boolean  isElementPresent(IOSElement element)
 	{
 		 try{
-			   element.getText();
+			  System.out.println("see element:" +  element.getText());
 			   return true;
 		   }catch(Exception e)
-		   {
+		   {   e.printStackTrace();
 			   return false;
 		   }
 	}
@@ -82,6 +84,17 @@ public class Page {
 	public static void setPlayer(Player _player)
 	{
 		player = _player;
+	}
+	
+	
+	public static void setIsRealDevice(boolean isOrNot)
+	{
+		isRealDevice = isOrNot;
+	}
+	
+	public static boolean getIsRealDevice()
+	{
+		return isRealDevice ;
 	}
 	
 	public static void setSideNavigationBar(SideNavigationBar _sideNavigationBar)
@@ -130,4 +143,10 @@ public class Page {
 		
 		return contexts;
 	}	
+	
+	public void realDeviceWait(int seconds)
+	{
+		if (isRealDevice)
+			WaitUtility.sleep(seconds);
+	}
 }

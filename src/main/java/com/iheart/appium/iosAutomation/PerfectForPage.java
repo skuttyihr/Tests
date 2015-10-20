@@ -42,10 +42,12 @@ public class PerfectForPage extends Page{
 	private String playACustomStation()
 	{
 		searchField.sendKeys("Swift");
+		realDeviceWait(15000);
 		WaitUtility.sleep(2000);
 		String chosenStation = firstStationLink.getText();
 		System.out.println("Chosen station:" + chosenStation);
 		firstStationLink.click();
+		realDeviceWait(5000);
 		WaitUtility.sleep(2000);
 		
 		return chosenStation;
@@ -55,17 +57,11 @@ public class PerfectForPage extends Page{
 	public void AIOS_22642_playCustomStation()
 	{   String chosenStation ="";
 		perfectFor.click();
-		WaitUtility.sleep(1000);
-		//Here, search for a custom station and play it
-		/*
-		searchField.sendKeys("taylor swift");
-		WaitUtility.sleep(1000);
+		if (isRealDevice)
+			WaitUtility.sleep(5000);
+		else 
+		    WaitUtility.sleep(1000);
 		
-		String chosenStation = firstStationLink.getText();
-		System.out.println("Chosen station:" + chosenStation);
-		firstElement.click();
-		firstStation.click();
-		*/
 		chosenStation = playACustomStation();
 		//verify that it is playing: Get its attribute: class shall be 'pause'
 	    if (!player.isPlaying("artist"))
@@ -79,6 +75,8 @@ public class PerfectForPage extends Page{
 	    player.back.click();
 	    cancel.click();
 	    myStations.click();
+	    if(isRealDevice)
+	    	WaitUtility.sleep(5000);
 	    WaitUtility.sleep(1500);
 	    // String firstStation = driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]")).getText();
 	  //  System.out.println("Recent stations:" + firstStation);

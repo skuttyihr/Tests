@@ -1,7 +1,7 @@
 package com.iheart.appium.iosAutomation;
 
-
 import java.util.concurrent.TimeUnit;
+
 import static org.junit.Assert.*; 
 
 import org.apache.log4j.BasicConfigurator;
@@ -25,7 +25,9 @@ import io.appium.java_client.remote.MobileCapabilityType;
 import junit.framework.TestCase;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 
-public class iosTest {
+
+public class RealDeviceIOSTest {
+
 	private static final String DEVICE_NAME = "QA iPhone 5s";
 	 private static final String UDID ="6a667778f94f8241aa6511e3c8cbc8b1643bb9b5"; //IPHONE 5s
 	//private static final String UDID = "d7cb4ae985ed62b786a621597c9c0d53a4c1e678";
@@ -55,22 +57,22 @@ public class iosTest {
 	  public void setUp() throws Exception {
 		
 		//BasicConfigurator.configure();
-	   driver = Utils.launchAPPinSimulator();
-	  //driver = Utils.launchAPPinRealDevice(DEVICE_NAME, UDID, BUNDLE_ID, IPA_NAME);
+	 //  driver = Utils.launchAPPinSimulator();
+	  driver = Utils.launchAPPinRealDevice(DEVICE_NAME, UDID, BUNDLE_ID, IPA_NAME);
 		
 	   Page.setDriver(driver);
 	  
 	   
-      loginPage = new LoginPage(driver);
-      signupPage = new SignUpPage(driver);
-      player = new Player(driver);
-      sideNavBar = new SideNavigationBar(driver);
-      
-      forYouPage = new ForYouPage(driver);
-      perfectForPage = new PerfectForPage(driver);
-      podcastsPage = new PodcastsPage(driver);
-      
-      deepLink = new DeepLink(driver);
+     loginPage = new LoginPage(driver);
+     signupPage = new SignUpPage(driver);
+     player = new Player(driver);
+     sideNavBar = new SideNavigationBar(driver);
+     
+     forYouPage = new ForYouPage(driver);
+     perfectForPage = new PerfectForPage(driver);
+     podcastsPage = new PodcastsPage(driver);
+     
+     deepLink = new DeepLink(driver);
 	    
 	  }
 	
@@ -107,7 +109,7 @@ public class iosTest {
 	   }
 	}
 	
-	@Test
+	@Ignore("skip")
 	public void test_AIOS_22642_playCustomStation() throws Exception {
 	   try{
 		   loginPage.login();
@@ -132,7 +134,7 @@ public class iosTest {
 	}
 	
 	
-	@Ignore("SKip")
+	@Ignore("skip")
 	public void test_AIOS_22669_loginViaFacebook() throws Exception {
 	   try{
 	       loginPage.loginViaFacebook();
@@ -144,7 +146,7 @@ public class iosTest {
 	}
 	
 	
-	@Ignore("SKIP")
+	@Test
 	public void test_AIOS_22672_createAnAccount() throws Exception {
 	   try{
 	       signupPage.AIOS_22672_createAnAccount();
@@ -154,7 +156,7 @@ public class iosTest {
 		   Utils.takeScreenshot(driver, "test_AIOS_22672_createAnAccount");
 	   }
 	}
-    
+   
 	
 	
 	  @After
@@ -170,14 +172,13 @@ public class iosTest {
 	  {   Page.getErrors().append("Exception is thrown.");
 	        e.printStackTrace();
 	       
-          try{
+         try{
 	    	   Utils.takeScreenshot(driver, name.getMethodName());
-          }catch(Exception eX)
-          {
-          	
-          }
-          
+         }catch(Exception eX)
+         {
+         	
+         }
+         
 	  }
 	    
-	
 }

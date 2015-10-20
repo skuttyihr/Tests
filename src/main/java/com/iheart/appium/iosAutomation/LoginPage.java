@@ -82,11 +82,14 @@ public class LoginPage extends Page {
 		//loginButton.click();
 	    
 		driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAButton[1]")).click();
-		WaitUtility.sleep(5000);
+		if (isRealDevice)
+		    WaitUtility.sleep(15000);
+		else
+		    WaitUtility.sleep(5000);
 		
 		chooseStayConnected(false);
 		
-		//logger.info("see page:" +  driver.getPageSource()) ;
+		
 		//verify we are in!
 	   
 	    driver.findElement(By.name("For You")).getText();
@@ -101,7 +104,7 @@ public class LoginPage extends Page {
 	
 	public void loginViaFacebook()
 	{   System.out.println("See context:" + driver.getContext());
-		getContextHandles();
+		//getContextHandles();
 		loginButton.click();
 	    WaitUtility.sleep(1000);
 	    facebookButton.click();
@@ -177,14 +180,18 @@ public class LoginPage extends Page {
 		{
 			
 		}
-		//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAButton[2]
+		
+		WaitUtility.sleep(2000);
 	}
 	
 	//Want your local radio?
 	private void handlePossiblePopUp()
 	{
 		try{
-			WaitUtility.sleep(1000);
+			if (isRealDevice)
+				WaitUtility.sleep(10000);
+			else
+			    WaitUtility.sleep(1000);
 			driver.findElement(By.name("No Thanks")).click();
 		}catch(Exception e)
 		{
@@ -196,7 +203,10 @@ public class LoginPage extends Page {
 	private void tellUsWhatYouLike()
 	{   try{
 		  driver.findElement(By.name("Rock")).click();
+		  if (isRealDevice)
+			  WaitUtility.sleep(2000);
 		  driver.findElement(By.name("Done")).click();
+		  WaitUtility.sleep(2000);
 		}catch(Exception e)
 		{
 			

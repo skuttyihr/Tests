@@ -90,5 +90,14 @@ public class WaitUtility {
 	    System.out.println("Jquery is loaded.");
 	}	
 	
-	
+	//if it is real device, tripple the waiting time 
+	//Only loading page is extremely slow for real devce, so..
+    public static void isoWait(int timeInMilliSeconds)
+    {
+    	if (Page.getIsRealDevice())
+    	{   sleep(10000);
+    		sleep(timeInMilliSeconds);
+    	}else
+    		sleep(timeInMilliSeconds);
+    }
 }

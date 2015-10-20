@@ -84,15 +84,25 @@ public  class SideNavigationBar extends Page{
 		public void gotoSettings()
 		{
 			navIcon.click();
+			if(isRealDevice)
+				WaitUtility.sleep(3000);
 			settings.click();
+			if(isRealDevice)
+				WaitUtility.sleep(3000);
 		}
 		
 		public void logout()
 		{
 			settings.click();
+			if(isRealDevice)
+				WaitUtility.sleep(1000);
 			loggedInAs.click();
-			//Need to switch window here?
+			if(isRealDevice)
+				WaitUtility.sleep(1000);
+			
 			logout.click();
+			if(isRealDevice)
+				WaitUtility.sleep(1000);
 			
 		}
 		
