@@ -149,4 +149,9 @@ public class Page {
 		if (isRealDevice)
 			WaitUtility.sleep(seconds);
 	}
+	
+	public static void clearErrors()
+	{
+		errors.setLength(0);
+	}
 }

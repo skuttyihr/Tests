@@ -137,8 +137,8 @@ public class RealDeviceIOSTest {
 	@Ignore("skip")
 	public void test_AIOS_22669_loginViaFacebook() throws Exception {
 	   try{
-	       loginPage.loginViaFacebook();
-		 	
+	       
+		   loginPage.AIOS_22669_loginViaFacebook();
 	   }catch(Exception e)
 	   {   e.printStackTrace();
 		   Utils.takeScreenshot(driver, "testLogin");

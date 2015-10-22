@@ -115,7 +115,7 @@ public class Player extends Page{
 	}
 	
 	public void verifyPlayer_podcast(String stationName)
-	{  if(!stationLabel.getText().contains(stationName))
+	{  if(!stationLabel.getText().contains(stationName.substring(0,5)))
 		  errors.append("Station name is not correct.");
 	
 		if(!isElementPresent(episodeName_podcast))
@@ -161,6 +161,7 @@ public class Player extends Page{
 	    skip.tap(1, 1);
 	    WaitUtility.sleep(2000);
 	    nowPlaying = getNowPlaying(type);
+	    System.out.println("before/after:" + currentTrack + "/" + nowPlaying);
 	    //Verify new episode is playing
 	    if (currentTrack.equals(nowPlaying))
 	    	handleError("Skip is not working.", "doSkipFor" + type);
@@ -379,12 +380,14 @@ public class Player extends Page{
 		if (stationType.equals("live"))
 		{   if (!response.contains("heard enough"))
 			   handleError("Thump Down is not working properly.", "doThumbDown");
-		}else 
+		}
+		/*
+		else // No growl when alert is showing up "Thumbing down customizes your station without using a skip." 
 		{
 			if (!response.contains("OK, we’ll adjust your music mix."))
 				   handleError("Thump Down is not working properly.", "doThumbDown");
 		}
-	   	
+	   	*/
 		
 	}
 	
@@ -467,7 +470,7 @@ public class Player extends Page{
 	private void handleThumbDownPopUpForArtistStation()
 	{
 		try{
-			//click on OKAY BUTTON
+			//click on OKAY BUTTON of alert box: Thumbing down customizes your station without using a skip.
 			driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAAlert[1]/UIACollectionView[1]/UIACollectionCell[1]/UIAButton[1]")).click();
 		    WaitUtility.sleep(1000);
 		}catch(Exception e)

@@ -48,10 +48,10 @@ public class DeepLinkTest {
 		
 		//BasicConfigurator.configure();
 	 
-		//driver = Utils.launchBrowser("safari");
-		driver = Utils.launchBrowserInRealDevice("Safari", "iphone 5s", UDID, BUNDLE_ID);
+		driver = Utils.launchBrowser("safari");
+		//driver = Utils.launchBrowserInRealDevice("Safari", "iphone 5s", UDID, BUNDLE_ID);
 		driver.get("http://m.z100.com");
-	   WaitUtility.sleep(8000);
+	   WaitUtility.sleep(5000);
 	   Page.setDriver(driver);
      
        deepLink = new DeepLink(driver);
@@ -72,7 +72,7 @@ public class DeepLinkTest {
 	
 	 @After
 	  public void tearDown() {
-	       //driver.quit();
+	       driver.quit();
 		  if (Page.getErrors().length() > 0)
 				 fail(Page.getErrors().toString());
 	    	   

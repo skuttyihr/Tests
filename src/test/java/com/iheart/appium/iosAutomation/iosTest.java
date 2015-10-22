@@ -59,7 +59,7 @@ public class iosTest {
 	  //driver = Utils.launchAPPinRealDevice(DEVICE_NAME, UDID, BUNDLE_ID, IPA_NAME);
 		
 	   Page.setDriver(driver);
-	  
+	   Page.clearErrors();
 	   
       loginPage = new LoginPage(driver);
       signupPage = new SignUpPage(driver);
@@ -74,6 +74,20 @@ public class iosTest {
 	    
 	  }
 	
+	@Test
+	public void test_AIOS_22669_loginViaFacebook() throws Exception {
+	   try{
+	       loginPage.AIOS_22669_loginViaFacebook();
+		 	
+	   }catch(Exception e)
+	   {   e.printStackTrace();
+		   Utils.takeScreenshot(driver, "testLogin");
+	   }
+	}
+	
+	
+
+	
 	@Ignore("skip")
 	public void test_AIOS_22697_playPodcasts() throws Exception {
 	   try{
@@ -85,7 +99,10 @@ public class iosTest {
 	   }
 	}
 	
-	@Ignore("skip")
+	
+
+	
+	@Test
 	public void test_AIOS_22674_createArtistStation() throws Exception {
 	   try{
 		   loginPage.login();
@@ -96,7 +113,14 @@ public class iosTest {
 	   }
 	}
 	
-	@Ignore("SKIP")
+	
+
+	
+	
+	
+	
+	
+	@Test
 	public void test_AIOS_22673_playLiveRadio() throws Exception {
 	   try{
 		   loginPage.login();
@@ -111,7 +135,6 @@ public class iosTest {
 	public void test_AIOS_22642_playCustomStation() throws Exception {
 	   try{
 		   loginPage.login();
-		   forYouPage.AIOS_22673_playLiveRadio();
 	       perfectForPage.AIOS_22642_playCustomStation();
 		 	
 	   }catch(Exception e)
@@ -120,31 +143,9 @@ public class iosTest {
 	   }
 	}
 	
-	@Ignore("Skip")
-	public void test_AIOS_22669_loginViaGoogle() throws Exception {
-	   try{
-	       loginPage.loginViaGoogle();
-		 	
-	   }catch(Exception e)
-	   {   e.printStackTrace();
-		   Utils.takeScreenshot(driver, "testLogin");
-	   }
-	}
 	
 	
-	@Ignore("SKip")
-	public void test_AIOS_22669_loginViaFacebook() throws Exception {
-	   try{
-	       loginPage.loginViaFacebook();
-		 	
-	   }catch(Exception e)
-	   {   e.printStackTrace();
-		   Utils.takeScreenshot(driver, "testLogin");
-	   }
-	}
-	
-	
-	@Ignore("SKIP")
+	@Test
 	public void test_AIOS_22672_createAnAccount() throws Exception {
 	   try{
 	       signupPage.AIOS_22672_createAnAccount();
@@ -159,7 +160,7 @@ public class iosTest {
 	
 	  @After
 	  public void tearDown() {
-	      //driver.quit();
+	      driver.quit();
 		  if (Page.getErrors().length() > 0)
 				 fail(Page.getErrors().toString());
 	    	   

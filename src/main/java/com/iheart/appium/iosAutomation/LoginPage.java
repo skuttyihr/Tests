@@ -1,5 +1,7 @@
 package com.iheart.appium.iosAutomation;
 
+
+import java.util.List;
 import io.appium.java_client.pagefactory.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -102,7 +104,7 @@ public class LoginPage extends Page {
 	}
 	
 	
-	public void loginViaFacebook()
+	public void AIOS_22669_loginViaFacebook()
 	{   System.out.println("See context:" + driver.getContext());
 		//getContextHandles();
 		loginButton.click();
@@ -110,34 +112,51 @@ public class LoginPage extends Page {
 	    facebookButton.click();
 	    WaitUtility.sleep(2000);
 	   
-	    System.out.println("See context again:" + driver.getContext());
 	    
-	    System.out.println("SEE PAGE: " + driver.getPageSource());
-	   /* NATIVE VERSION
-	    fbEmail.sendKeys(FACEBOOK_USER_NAME);
-		fbPassword.sendKeys(PASSWORD);
-		fbLogin.click();
-		*/
+	    getContextHandles();
+	    driver.context("WEBVIEW_1");
+	    WaitUtility.sleep(5000);
+	    System.out.println("After switch:" + driver.getContext());
+	    driver.findElement(By.name("email")).sendKeys(FACEBOOK_USER_NAME);
+	    driver.findElement(By.name("pass")).sendKeys(PASSWORD);
+	    driver.findElement(By.name("login")).click();
 	    
+	    //Handle Authorizaton confirm
+	    driver.findElement(By.name("__CONFIRM__")).click();
 	    
-	    facebookEmail_web.sendKeys(FACEBOOK_USER_NAME);
-		facebookPass_web.sendKeys(PASSWORD);
-		facebookLogin.click();
-		
-		System.out.println("Done.");
-	    /* If facebook is installed on this phone or sim
-	     * iOS 9 is hybrid: SafariViewController inside of app showing facebook website
-		  iOS 8 switches to native FB app on phone, if it doesn't exist, goes to external Safari and fb site
-	     */
-		/*
-		facebookButton.click();
-		WaitUtility.sleep(2000);
-		facebookEmail.sendKeys(FACEBOOK_USER_NAME);
-		facebookPassword.sendKeys(PASSWORD);
-		loginButton.click();
-		*/
+	    //Now switch to native view
+	    driver.context("NATIVE_APP");
+	    System.out.println("See page:" + driver.getPageSource());
+	 
+	    WaitUtility.sleep(5000);
+	    
+	    handleWantYourLocalRadioPopup();
+	    tellUsWhatYouLike();
+	    dismissStayConnectedPopup();
+	    
+	    //Now go to setting to check login status
+	    sideNavigationBar.gotoSettings();
+	    
+	    //check status
+	    String status = driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIATableView[2]/UIATableCell[1]/UIAStaticText[2]")).getText();
+	    System.out.println("Status:" + status);
+	    if (!status.equalsIgnoreCase("Logged In"))
+	    	handleError("Facebook login failed.", "AIOS_22669_loginViaFacebook");
 	}
 	
+	
+	private void handleWantYourLocalRadioPopup()
+	{
+		
+	  try{
+		  driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAButton[3]")).click();
+	  }catch(Exception e)
+	  {
+		  
+	  }
+		
+		
+	}
 	
 	public void loginViaGoogle()
 	{   loginButton.click();
@@ -167,6 +186,19 @@ public class LoginPage extends Page {
 		
 	}
 	
+	
+	
+	private void dismissStayConnectedPopup()
+	{    
+		try{
+			 driver.findElement(By.name("Maybe Later")).click();
+		}catch(Exception e)
+		{
+			
+		}
+		
+		WaitUtility.sleep(2000);
+	}
 	
 	private void chooseStayConnected(boolean stayConnected)
 	{    handlePossiblePopUp();
@@ -201,7 +233,8 @@ public class LoginPage extends Page {
 	
     //Tell us what you like
 	private void tellUsWhatYouLike()
-	{   try{
+	{   WaitUtility.sleep(2000);
+		try{
 		  driver.findElement(By.name("Rock")).click();
 		  if (isRealDevice)
 			  WaitUtility.sleep(2000);
@@ -209,7 +242,7 @@ public class LoginPage extends Page {
 		  WaitUtility.sleep(2000);
 		}catch(Exception e)
 		{
-			
+		  // e.printStackTrace();	
 		}
 	}
 	
