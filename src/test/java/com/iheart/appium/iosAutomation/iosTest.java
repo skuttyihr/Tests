@@ -89,7 +89,7 @@ public class iosTest {
 
 	
 	@Ignore("skip")
-	public void test_AIOS_22697_playPodcasts() throws Exception {
+	public void test_AIOS_22697_playPodcasts_skip_share() throws Exception {
 	   try{
 		   loginPage.login();
 		   podcastsPage.AIOS_22697_playPodcasts();
@@ -103,7 +103,7 @@ public class iosTest {
 
 	
 	@Test
-	public void test_AIOS_22674_createArtistStation() throws Exception {
+	public void test_AIOS_22674_createArtistStation_thumbUp_thumbDown_favorite_skip() throws Exception {
 	   try{
 		   loginPage.login();
 		   forYouPage.AIOS_22674_createArtistStation();
@@ -117,11 +117,8 @@ public class iosTest {
 
 	
 	
-	
-	
-	
 	@Test
-	public void test_AIOS_22673_playLiveRadio() throws Exception {
+	public void test_AIOS_22673_playLiveRadio_thumbUP_thumbDown_doFavorite() throws Exception {
 	   try{
 		   loginPage.login();
 		   forYouPage.AIOS_22673_playLiveRadio();
@@ -132,7 +129,7 @@ public class iosTest {
 	}
 	
 	@Test
-	public void test_AIOS_22642_playCustomStation() throws Exception {
+	public void test_AIOS_22642_playCustomStation_search_logout() throws Exception {
 	   try{
 		   loginPage.login();
 	       perfectForPage.AIOS_22642_playCustomStation();
