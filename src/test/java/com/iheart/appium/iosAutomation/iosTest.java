@@ -2,6 +2,7 @@ package com.iheart.appium.iosAutomation;
 
 
 import java.util.concurrent.TimeUnit;
+
 import static org.junit.Assert.*; 
 
 import org.apache.log4j.BasicConfigurator;
@@ -31,7 +32,10 @@ public class iosTest {
 	//private static final String UDID = "d7cb4ae985ed62b786a621597c9c0d53a4c1e678";
 	 private static final String BUNDLE_ID = "com.clearchannel.iheartradio";
 	 //private static final String IPA_NAME = "/Users/1111128/git/ios-flagship/iPhone.ipa";
-	 private static final String IPA_NAME = "/Users/1111128/Library/Developer/Xcode/DerivedData/iPhone-cgjadqsrbgztopfcrtkodcgtscgf/Build/Products/Debug-iphoneos/iHeartRadio.app";
+	// private static final String IPA_NAME = "/Users/1111128/Library/Developer/Xcode/DerivedData/iPhone-cgjadqsrbgztopfcrtkodcgtscgf/Build/Products/Debug-iphoneos/iHeartRadio.app";
+	 private static final String IPA_NAME = "/Users/1111128/Library/Developer/Xcode/DerivedData/iPhone-ccflceywhaxzymfxdatoocajqggx/Build/Products/Debug-iphonesimulator/iHeartRadio.app";
+	 
+	 
 	 
 	 private HomePage homePage;
 	 private LoginPage loginPage;
@@ -55,7 +59,7 @@ public class iosTest {
 	  public void setUp() throws Exception {
 		
 		//BasicConfigurator.configure();
-	   driver = Utils.launchAPPinSimulator();
+	   driver = Utils.launchAPPinSimulator("iPhone 6", IPA_NAME);
 	  //driver = Utils.launchAPPinRealDevice(DEVICE_NAME, UDID, BUNDLE_ID, IPA_NAME);
 		
 	   Page.setDriver(driver);
@@ -74,69 +78,67 @@ public class iosTest {
 	    
 	  }
 	
+	
+
+	@Test
+	public void test_AIOS_22674_createArtistStation_thumbUp_thumbDown_favorite_skip() throws Exception {
+		System.out.println("test method:" +  name.getMethodName() );
+	   try{
+		   loginPage.login();
+		   forYouPage.AIOS_22674_createArtistStation();
+	   }catch(Exception e)
+	   {   handleException(e);
+	   }
+	}
+	
+	
+
+	
+	@Test
+	public void test_AIOS_22697_playPodcasts_skip_share() throws Exception {
+		System.out.println("test method:" +  name.getMethodName() );
+	   try{
+		   loginPage.login();
+		   podcastsPage.AIOS_22697_playPodcasts();
+	   }catch(Exception e)
+	   {   handleException(e);
+	   }
+	}
+	
+
+	
 	@Test
 	public void test_AIOS_22669_loginViaFacebook() throws Exception {
 	   try{
 	       loginPage.AIOS_22669_loginViaFacebook();
 		 	
 	   }catch(Exception e)
-	   {   e.printStackTrace();
-		   Utils.takeScreenshot(driver, "testLogin");
+	   {   handleException(e);
 	   }
 	}
 	
-	
-
-	
-	@Ignore("skip")
-	public void test_AIOS_22697_playPodcasts_skip_share() throws Exception {
-	   try{
-		   loginPage.login();
-		   podcastsPage.AIOS_22697_playPodcasts();
-	   }catch(Exception e)
-	   {   e.printStackTrace();
-		   Utils.takeScreenshot(driver, "AIOS_22697_playPodcasts");
-	   }
-	}
-	
-	
-
-	
-	@Test
-	public void test_AIOS_22674_createArtistStation_thumbUp_thumbDown_favorite_skip() throws Exception {
-	   try{
-		   loginPage.login();
-		   forYouPage.AIOS_22674_createArtistStation();
-	   }catch(Exception e)
-	   {   e.printStackTrace();
-		   Utils.takeScreenshot(driver, "AIOS_22674_createArtistStation");
-	   }
-	}
-	
-	
-
 	
 	
 	@Test
 	public void test_AIOS_22673_playLiveRadio_thumbUP_thumbDown_doFavorite() throws Exception {
-	   try{
+		System.out.println("test method:" +  name.getMethodName() );
+		try{
 		   loginPage.login();
 		   forYouPage.AIOS_22673_playLiveRadio();
 	   }catch(Exception e)
-	   {   e.printStackTrace();
-		   Utils.takeScreenshot(driver, "AIOS_22673_playLiveRadio");
+	   {   handleException(e);
 	   }
 	}
 	
 	@Test
 	public void test_AIOS_22642_playCustomStation_search_logout() throws Exception {
+		System.out.println("test method:" +  name.getMethodName() );
 	   try{
 		   loginPage.login();
 	       perfectForPage.AIOS_22642_playCustomStation();
 		 	
 	   }catch(Exception e)
-	   {   e.printStackTrace();
-		   Utils.takeScreenshot(driver, "testLogin");
+	   {   handleException(e);
 	   }
 	}
 	
@@ -144,16 +146,16 @@ public class iosTest {
 	
 	@Test
 	public void test_AIOS_22672_createAnAccount() throws Exception {
+		System.out.println("test method:" +  name.getMethodName() );
 	   try{
 	       signupPage.AIOS_22672_createAnAccount();
 			
 	   }catch(Exception e)
-	   {   e.printStackTrace();
-		   Utils.takeScreenshot(driver, "test_AIOS_22672_createAnAccount");
+	   {   handleException(e);
 	   }
 	}
     
-	
+
 	
 	  @After
 	  public void tearDown() {

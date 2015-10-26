@@ -78,6 +78,7 @@ public class RealDeviceIOSTest {
 	
 	@Ignore("skip")
 	public void test_AIOS_22697_playPodcasts() throws Exception {
+		
 	   try{
 		   loginPage.login();
 		   podcastsPage.AIOS_22697_playPodcasts();

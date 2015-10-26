@@ -63,7 +63,7 @@ public class Page {
 			  System.out.println("see element:" +  element.getText());
 			   return true;
 		   }catch(Exception e)
-		   {   e.printStackTrace();
+		   {  // e.printStackTrace();
 			   return false;
 		   }
 	}

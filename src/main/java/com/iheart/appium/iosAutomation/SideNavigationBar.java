@@ -25,10 +25,22 @@ public  class SideNavigationBar extends Page{
 		@iOSFindBy(name="Listening History") public IOSElement listeningHistory;
 
 	  //The footer on the nav page: ALARM, SLEEP, SONGS, settings
-		@iOSFindBy(name="Alarm") public IOSElement alarm;
-		@iOSFindBy(name="Sleep") public IOSElement sleep;
+		/*
+		
+		@iOSFindBy(name="Alarm Clock") public IOSElement alarm;
+		@iOSFindBy(name="Sleep Timer") public IOSElement sleep;
+		@iOSFindBy(name="Songs") public IOSElement songs;
+		//@iOSFindBy(name="Settings") public IOSElement settings;
+		@iOSFindBy(name="Account Settings") public IOSElement settings;
+	   */
+		
+	
+		@iOSFindBy(name="Alarm Clock") public IOSElement alarm;
+		@iOSFindBy(name="Sleep Timer") public IOSElement sleep;
 		@iOSFindBy(name="Songs") public IOSElement songs;
 		@iOSFindBy(name="Settings") public IOSElement settings;
+		
+	   
 	   
 		//****** End of Side Nav page ******
 		
@@ -82,7 +94,7 @@ public  class SideNavigationBar extends Page{
 		}
 		
 		public void gotoSettings()
-		{
+		{  
 			navIcon.click();
 			if(isRealDevice)
 				WaitUtility.sleep(3000);

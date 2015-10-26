@@ -61,6 +61,7 @@ public class DeepLinkTest {
 	
 	@Test
 	public void AIOS_22641_doDeepLink() throws Exception {
+		System.out.println("test method:" +  name.getMethodName() );
 	   try{
 	       deepLink.AIOS_22641_doDeepLink();
 			

@@ -98,7 +98,7 @@ public class Utils {
 		
 		
 	    DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
-	    desiredCapabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "8.4");
+	    desiredCapabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "9.1");
 	    desiredCapabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "iPhone 6");
 	    desiredCapabilities.setCapability("browser", "safari");
 	    desiredCapabilities.setCapability("appiumVersion", "1.4.8");
@@ -139,9 +139,29 @@ public class Utils {
 	{
 		 IOSDriver driver;
 	    DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
-	    desiredCapabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "8.4");
+	    //desiredCapabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "8.4");
+	    desiredCapabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "9.1");
 	    desiredCapabilities.setCapability(MobileCapabilityType.DEVICE_NAME, simulatorName);
-	    desiredCapabilities.setCapability(MobileCapabilityType.APP, "/Users/1111128/Library/Developer/Xcode/DerivedData/iPhone-cgjadqsrbgztopfcrtkodcgtscgf/Build/Products/Debug-iphonesimulator/iHeartRadio.app");
+	    desiredCapabilities.setCapability(MobileCapabilityType.APP, "/Users/1111128/Library/Developer/Xcode/DerivedData/iPhone-ccflceywhaxzymfxdatoocajqggx/Build/Products/Debug-iphonesimulator/iHeartRadio.app");
+	    desiredCapabilities.setCapability("appiumVersion", "1.4.8");
+	   
+	   
+	   driver = new IOSDriver(new URL("http://localhost:4723/wd/hub"), desiredCapabilities);
+	   driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+	  
+	   WaitUtility.sleep(5000);
+	   return driver;
+	}
+	
+	
+	public  static  IOSDriver launchAPPinSimulator(String simulatorName, String pathToBuild) throws Exception
+	{
+		 IOSDriver driver;
+	    DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
+	    //desiredCapabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "8.4");
+	    desiredCapabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "9.1");
+	    desiredCapabilities.setCapability(MobileCapabilityType.DEVICE_NAME, simulatorName);
+	    desiredCapabilities.setCapability(MobileCapabilityType.APP, pathToBuild);
 	    desiredCapabilities.setCapability("appiumVersion", "1.4.8");
 	   
 	   

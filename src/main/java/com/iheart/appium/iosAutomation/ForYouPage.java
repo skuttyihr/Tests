@@ -70,7 +70,7 @@ public class ForYouPage extends Page {
 			//radioName = station.getAttribute("name");
 			radioName = station.getText();
 			System.out.println("See station:" + radioName);
-			if (!radioName.endsWith("Radio"))
+			if (!radioName.contains(" Radio"))
 			{
 			    //Any station contains numbers?
 			    if ( radioName.matches(".*\\d+.*"))
@@ -87,7 +87,7 @@ public class ForYouPage extends Page {
 		//if no station contains number, then play candidate;
 		for(WebElement station:stations)
 		{   
-			if (!station.getText().equals("Radio"))
+			if (!station.getText().contains(" Radio"))
 		    {	myStation = station.getText();
 				station.click();
 			        break;
@@ -108,13 +108,15 @@ public class ForYouPage extends Page {
 		//Verify PLAYER
 		player.verifyPlayer_live(myStation);
 		
+		player.doFavorite();
+		   
 		player.doScan();
 		
 		player.doThumbUp();
 	
 		player.doThumbDown();
 		
-		player.doFavorite();
+		//player.doFavorite();
 		   
 		//Here, remember the playing station name:
 		myStation = driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIANavigationBar[1]/UIAStaticText[1]")).getText();

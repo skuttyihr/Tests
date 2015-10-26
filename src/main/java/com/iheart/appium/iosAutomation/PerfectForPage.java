@@ -55,7 +55,9 @@ public class PerfectForPage extends Page{
 	
 	
 	public void AIOS_22642_playCustomStation()
-	{   String chosenStation ="";
+	{   
+		WaitUtility.sleep(2000);
+		String chosenStation ="";
 		perfectFor.click();
 		if (isRealDevice)
 			WaitUtility.sleep(5000);

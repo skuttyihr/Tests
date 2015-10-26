@@ -37,14 +37,14 @@ public class LoginPage extends Page {
 	
 	
 	//Native version
-	/*
-	 * //*[@id="u_0_0"]/div[1]/div/input
-	 * 
-	@iOSFindBy(xpath="//UIAApplication[1]/UIAWindow[2]/UIAScrollView[1]/UIAScrollView[1]/UIAWebView[1]/UIATextField[1]") 
-	   private WebElement facebookEmail;
-	@iOSFindBy(xpath="//UIAApplication[1]/UIAWindow[2]/UIAScrollView[1]/UIAScrollView[1]/UIAWebView[1]/UIASecureTextField[1]")
-	   private WebElement facebookPassword;
-	*/
+	
+	@iOSFindBy(xpath="//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIATextField[1]") 
+	   private WebElement facebookEmail_native;
+	@iOSFindBy(xpath="//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIASecureTextField[1]")
+	   private WebElement facebookPassword_native;
+	@iOSFindBy(xpath="//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIAButton[1]") 
+	   private WebElement FBlogin_native;
+	
 	
 	@iOSFindBy(name="Google") private WebElement googleButton;
 	@iOSFindBy(xpath="//UIAApplication[1]/UIAWindow[2]/UIAScrollView[1]/UIAScrollView[1]/UIAWebView[1]/UIATextField[1]")
@@ -104,6 +104,63 @@ public class LoginPage extends Page {
 	}
 	
 	
+	public void AIOS_22669_loginViaFacebook_NEW()
+	{  
+		loginButton.click();
+	    WaitUtility.sleep(1000);
+	    facebookButton.click();
+	    WaitUtility.sleep(2000);
+	   
+	    
+	    getContextHandles();
+	    
+	    System.out.println("See context Now:" + driver.getContext());
+	    
+	    driver.context("WEBVIEW_1");
+	    WaitUtility.sleep(5000);
+	    System.out.println("After switch:" + driver.getContext());
+	    /*//native view
+	    facebookEmail_native.sendKeys(FACEBOOK_USER_NAME);
+	    facebookPassword_native.sendKeys(PASSWORD);
+	    FBlogin_native.click();
+	    WaitUtility.sleep(5000);
+	    */
+	     driver.findElement(By.name("email")).sendKeys(FACEBOOK_USER_NAME);
+	    driver.findElement(By.name("pass")).sendKeys(PASSWORD);
+	    driver.findElement(By.name("login")).click();
+	    
+	    WaitUtility.sleep(2000);
+	    //Handle Authorizaton confirm
+	    driver.findElement(By.name("__CONFIRM__")).click();
+	   
+	    //Now switch to native view
+	    driver.context("NATIVE_APP");
+	 //   System.out.println("See page:" + driver.getPageSource());
+	 
+	    WaitUtility.sleep(5000);
+	    
+	    handleWantYourLocalRadioPopup();
+	    tellUsWhatYouLike();
+	    dismissStayConnectedPopup();
+	    
+	    
+	    //Now go to setting to check login status
+	    try {
+	    	//In case navIcon is not showing up yet
+	    	sideNavigationBar.navIcon.click();
+	    }catch(Exception e)
+	    {
+	    	tellUsWhatYouLike();
+	    }
+	    sideNavigationBar.gotoSettings();
+	    
+	    //check status
+	    String status = driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIATableView[2]/UIATableCell[1]/UIAStaticText[2]")).getText();
+	    System.out.println("Status:" + status);
+	    if (!status.equalsIgnoreCase("Logged In"))
+	    	handleError("Facebook login failed.", "AIOS_22669_loginViaFacebook");
+	}
+	
 	public void AIOS_22669_loginViaFacebook()
 	{   System.out.println("See context:" + driver.getContext());
 		//getContextHandles();
@@ -126,7 +183,7 @@ public class LoginPage extends Page {
 	    
 	    //Now switch to native view
 	    driver.context("NATIVE_APP");
-	    System.out.println("See page:" + driver.getPageSource());
+	  //  System.out.println("See page:" + driver.getPageSource());
 	 
 	    WaitUtility.sleep(5000);
 	    

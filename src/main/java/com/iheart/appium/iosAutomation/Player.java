@@ -24,6 +24,10 @@ public class Player extends Page{
 	@iOSFindBy(xpath="//UIAApplication[1]/UIAWindow[1]/UIAStaticText[9]")  public IOSElement songTrack_live;
 	@iOSFindBy(xpath="//UIAApplication[1]/UIAWindow[1]/UIAStaticText[10]")  public IOSElement artist_live;
 	
+	@iOSFindBy(xpath="//UIAApplication[1]/UIAWindow[1]/UIAStaticText[2]")  public IOSElement songTrack2_live;
+	@iOSFindBy(xpath="//UIAApplication[1]/UIAWindow[1]/UIAStaticText[3]")  public IOSElement artist2_live;
+	
+	
 	//podcast specific
 	@iOSFindBy(xpath="//UIAApplication[1]/UIAWindow[1]/UIAImage[4]") public IOSElement podcastImage;
 	@iOSFindBy(xpath="//UIAApplication[1]/UIAWindow[1]/UIASlider[1]") public IOSElement slideBar;
@@ -75,11 +79,15 @@ public class Player extends Page{
 		//  errors.append("Station name is not correct.");
 	
 		if(!isElementPresent(songTrack_live))
-		   errors.append("No sound track name is displayed.");
+		{   if(!isElementPresent(songTrack2_live))
+			    errors.append("No sound track name is displayed.");
+		}
 		
 		if(!isElementPresent(artist_live))
+		{	
+			if(!isElementPresent(artist2_live))
 			   errors.append("Artist name is NOT displayed.");
-		
+		}
 		if(!isElementPresent(playButton_live))
 			   errors.append("Play icon is not displayed.");
 		
@@ -249,7 +257,7 @@ public class Player extends Page{
 	{
 	  try{
 	    driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAButton[2]")).click();//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAButton[2]
-	    WaitUtility.sleep(1000);
+	    WaitUtility.sleep(200);
 	  }catch(Exception e)
 	  {
 		  
@@ -327,7 +335,7 @@ public class Player extends Page{
 		WaitUtility.sleep(1000);
 		
 		String response = driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAStaticText[8]")).getText();
-		System.out.println("See thumbDOWN DOWN growls:" + response);
+	//	System.out.println("See thumbDOWN DOWN growls:" + response);
 		
 		
 	//	if (! response.contains("heard enough"))
@@ -439,19 +447,26 @@ public class Player extends Page{
 		}
 		
 		favorite.click();
-		WaitUtility.sleep(1000);
+		WaitUtility.sleep(500);
 
 		handleGladAfterFavorite();
 		
+		//Verify that icon is filled
+		if (!favorite.getAttribute("value").equals("1"))
+			handleError("Add to Favorite failed.", "doFavorite");
+		
+	/*
 		String response = "";
 		response = driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAStaticText[8]")).getText();
-		System.out.println("See favorite growls:" + response);
+	    System.out.println("See favorite growls:" + response);
 		
 		
 		//Station added to your favorites!
 		if (!response.contains("Station added"))
 			handleError("Add to Favorite failed.", "doFavorite");
-		   
+			
+	*/		
+		  
 	}
 	
 	//Are you sure you want to delete this preset?
