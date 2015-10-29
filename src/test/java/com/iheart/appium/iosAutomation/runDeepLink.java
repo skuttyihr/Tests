@@ -26,7 +26,7 @@ import junit.framework.TestCase;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 
 
-public class DeepLinkTest {
+public class runDeepLink {
 	private static final String DEVICE_NAME = "iPhone 6";
 	// private static final String UDID ="6a667778f94f8241aa6511e3c8cbc8b1643bb9b5"; //IPHONE 5s
 	private static final String UDID = "d7cb4ae985ed62b786a621597c9c0d53a4c1e678";

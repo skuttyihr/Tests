@@ -26,7 +26,7 @@ import junit.framework.TestCase;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 
 
-public class RealDeviceIOSTest {
+public class RunOnRealDevice {
 
 	private static final String DEVICE_NAME = "QA iPhone 5s";
 	 private static final String UDID ="6a667778f94f8241aa6511e3c8cbc8b1643bb9b5"; //IPHONE 5s
