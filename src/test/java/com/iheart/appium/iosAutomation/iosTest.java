@@ -36,9 +36,9 @@ public class iosTest {
 	 private static final String UDID ="6a667778f94f8241aa6511e3c8cbc8b1643bb9b5"; //IPHONE 5s
 	//private static final String UDID = "d7cb4ae985ed62b786a621597c9c0d53a4c1e678";
 	 private static final String BUNDLE_ID = "com.clearchannel.iheartradio";
-	 private static final String IPA_NAME = "/Users/1111128/Documents/ios-flagship_5_14/build/Debug-iphoneos/iHeartRadio.app";
+	// private static final String IPA_NAME = "/Users/1111128/Documents/ios-flagship_5_14/build/Debug-iphoneos/iHeartRadio.app";
 	// private static final String IPA_NAME = "/Users/1111128/Library/Developer/Xcode/DerivedData/iPhone-cgjadqsrbgztopfcrtkodcgtscgf/Build/Products/Debug-iphoneos/iHeartRadio.app";
-	// private static final String IPA_NAME = "/Users/1111128/Library/Developer/Xcode/DerivedData/iPhone-ccflceywhaxzymfxdatoocajqggx/Build/Products/Debug-iphonesimulator/iHeartRadio.app";
+	 private static final String IPA_NAME = "/Users/1111128/Library/Developer/Xcode/DerivedData/iPhone-ccflceywhaxzymfxdatoocajqggx/Build/Products/Debug-iphonesimulator/iHeartRadio.app";
 	 
 	 
 	 
@@ -64,7 +64,8 @@ public class iosTest {
 	  public void setUp() throws Exception {
 		
 		//BasicConfigurator.configure();
-	   driver = Utils.launchAPPinSimulator("iPhone 6", IPA_NAME);
+	//   driver = Utils.launchAPPinSimulator("iPhone 6", IPA_NAME);
+		 driver = Utils.launchAPPinSimulator("iPhone 6", IPA_NAME);
 	  //driver = Utils.launchAPPinRealDevice(DEVICE_NAME, UDID, BUNDLE_ID, IPA_NAME);
 		
 	   Page.setDriver(driver);
