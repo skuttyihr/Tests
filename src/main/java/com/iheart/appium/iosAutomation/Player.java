@@ -237,8 +237,8 @@ public class Player extends Page{
 		handleGladYouLikeItPopup();
 		
 		//FOR ARITST: Great, we’ll play you more songs like this.
-		if (!(response.contains("Glad you like") || response.contains("Thanks for your feedback") || response.contains("Great")))
-			handleError("Thump Up is not working properly.", "doThumbUp");
+	//	if (!(response.contains("Glad you like") || response.contains("Thanks for your feedback") || response.contains("Great")))
+	//		handleError("Thump Up is not working properly.", "doThumbUp");
 		
 	}
 	
