@@ -1,0 +1,11 @@
+/bin/
+build/
+.settings/
+.gradle/
+.metadata
+
+*.project
+.DS_STORE
+*.xcodeproject
+*.classpath
+*.local
