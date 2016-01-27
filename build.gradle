@@ -1,0 +1,44 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'io.appium:java-client:3.2.0'
+    compile 'junit:junit:4.12
+    compile 'log4j:log4j:1.2.17'
+    compile 'com.github.detro.ghostdriver:phantomjsdriver:1.1.0'
+    compile 'xml-apis:xml-apis:1.4.01'
+    compile 'org.apache.poi:poi:3.9'
+    compile 'org.apache.poi:poi-ooxml:3.9'
+    compile 'dom4j:dom4j:1.6.1'
+    compile 'xmlbeans:xbean:2.2.0'
+    compile 'org.apache.httpcomponents:httpclient:4.5.1'
+    compile 'org.apache.commons:commons-lang3:3.4'
+}
+
+sourceSets {
+    test{
+        java{
+            srcDirs = ['src/']
+            
+        }
+        resources{
+            srcDirs = ['properties']
+        }
+    }
+}
+
+test{
+    useJUnit()
+    testLogging {
+        exceptionFormat = 'full'
+        events 'started', 'passed', 'failed'
+        showStandardStreams = true
+    }
+    systemProperties = System.getProperties()
+}
+
+
