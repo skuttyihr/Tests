@@ -3,6 +3,7 @@ build/
 .settings/
 .gradle/
 .metadata
+target/
 
 *.project
 .DS_STORE
