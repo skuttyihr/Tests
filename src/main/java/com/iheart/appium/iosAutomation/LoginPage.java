@@ -1,13 +1,9 @@
 package com.iheart.appium.iosAutomation;
 
-
-import java.util.List;
 import io.appium.java_client.pagefactory.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import io.appium.java_client.ios.*;
-
-import org.openqa.selenium.support.PageFactory;
 
 import org.openqa.selenium.support.FindBy;
 
@@ -68,7 +64,7 @@ public class LoginPage extends Page {
 		super();
 		//PageFactory.initElements(new AppiumFieldDecorator(driver), this);
 	}
-	public LoginPage(IOSDriver _driver)
+	public LoginPage(IOSDriver<IOSElement> _driver)
 	{
 		super(_driver);
 		//PageFactory.initElements(new AppiumFieldDecorator(driver), this);

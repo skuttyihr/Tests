@@ -7,8 +7,6 @@ import org.apache.log4j.Logger;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
 
-import org.openqa.selenium.By;
-
 import io.appium.java_client.pagefactory.*;
 
 import org.openqa.selenium.support.PageFactory;
@@ -26,7 +24,7 @@ public class Page {
 	@iOSFindBy(name="Perfect For")  public IOSElement perfectFor;
 	
 	
-	static IOSDriver driver;
+	static IOSDriver<IOSElement> driver;
 	static SideNavigationBar sideNavigationBar ;
 	static Player player;
 	//Real device requires longer reponse time
@@ -48,9 +46,9 @@ public class Page {
 		
 	}
 	
-	public Page(IOSDriver _driver)
+	public Page(IOSDriver<IOSElement> _driver)
 	{   
-		this.driver = _driver;
+		Page.driver = _driver;
 		PageFactory.initElements(new AppiumFieldDecorator(driver), this);
 		//navBar = PageFactory.initElements(driver, SideNavigationBar.class);
 	    //player = PageFactory.initElements(driver, Player.class);
@@ -76,7 +74,7 @@ public class Page {
 		
 	}
 	
-	public static void setDriver(IOSDriver _driver)
+	public static void setDriver(IOSDriver<IOSElement> _driver)
 	{
 		driver = _driver;
 	}

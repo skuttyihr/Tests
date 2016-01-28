@@ -1,14 +1,13 @@
 package com.iheart.appium.iosAutomation;
 
 import io.appium.java_client.ios.IOSDriver;
+import io.appium.java_client.ios.IOSElement;
 import io.appium.java_client.remote.MobileCapabilityType;
 
 import org.openqa.selenium.remote.DesiredCapabilities;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.io.File;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.concurrent.TimeUnit;
 import java.util.Date;
@@ -22,20 +21,9 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.By;
-import org.openqa.selenium.remote.RemoteWebDriver;
-
-
 
 
 public class Utils {
@@ -92,9 +80,9 @@ public class Utils {
 	    
 	}
 	
-	public static IOSDriver launchBrowser(String browser) throws Exception
+	public static IOSDriver<IOSElement> launchBrowser(String browser) throws Exception
 	{
-		 IOSDriver driver;
+		 IOSDriver<IOSElement> driver;
 		
 		
 	    DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
@@ -103,13 +91,13 @@ public class Utils {
 	    desiredCapabilities.setCapability("browser", "safari");
 	    desiredCapabilities.setCapability("appiumVersion", "1.4.8");
 	    
-	   driver = new IOSDriver(new URL("http://localhost:4723/wd/hub"), desiredCapabilities);
+	   driver = new IOSDriver<IOSElement>(new URL("http://localhost:4723/wd/hub"), desiredCapabilities);
 	   return driver;
 	}
 	
-	public static IOSDriver launchBrowserInRealDevice(String browser, String deviceName, String udid, String bundleid) throws Exception
+	public static IOSDriver<IOSElement> launchBrowserInRealDevice(String browser, String deviceName, String udid, String bundleid) throws Exception
 	{
-		 IOSDriver driver;
+		 IOSDriver<IOSElement> driver;
 		
 		
 	    DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
@@ -121,7 +109,7 @@ public class Utils {
 	    desiredCapabilities.setCapability("browser", browser);
 	    desiredCapabilities.setCapability("appiumVersion", "1.4.8");
 	    
-	   driver = new IOSDriver(new URL("http://localhost:4723/wd/hub"), desiredCapabilities);
+	   driver = new IOSDriver<IOSElement>(new URL("http://localhost:4723/wd/hub"), desiredCapabilities);
 	   driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 	  
 	   WaitUtility.sleep(5000);
@@ -130,14 +118,14 @@ public class Utils {
 	
 	
 	//default to iphone 6
-	public  static IOSDriver launchAPPinSimulator() throws Exception
+	public  static IOSDriver<IOSElement> launchAPPinSimulator() throws Exception
 	{
 		return launchAPPinSimulator("iPhone 6");
 	}
 	
-	public  static  IOSDriver launchAPPinSimulator(String simulatorName) throws Exception
+	public  static  IOSDriver<IOSElement> launchAPPinSimulator(String simulatorName) throws Exception
 	{
-		 IOSDriver driver;
+		IOSDriver<IOSElement> driver;
 	    DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
 	    //desiredCapabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "8.4");
 	    desiredCapabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "9.1");
@@ -146,7 +134,7 @@ public class Utils {
 	    desiredCapabilities.setCapability("appiumVersion", "1.4.8");
 	   
 	   
-	   driver = new IOSDriver(new URL("http://localhost:4723/wd/hub"), desiredCapabilities);
+	   driver = new IOSDriver<IOSElement>(new URL("http://localhost:4723/wd/hub"), desiredCapabilities);
 	   driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 	  
 	   WaitUtility.sleep(5000);
@@ -154,9 +142,9 @@ public class Utils {
 	}
 	
 	
-	public  static  IOSDriver launchAPPinSimulator(String simulatorName, String pathToBuild) throws Exception
+	public  static  IOSDriver<IOSElement> launchAPPinSimulator(String simulatorName, String pathToBuild) throws Exception
 	{
-		 IOSDriver driver;
+		IOSDriver<IOSElement> driver;
 	    DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
 	    //desiredCapabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "8.4");
 	    desiredCapabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "9.1");
@@ -165,7 +153,7 @@ public class Utils {
 	    desiredCapabilities.setCapability("appiumVersion", "1.4.8");
 	   
 	   
-	   driver = new IOSDriver(new URL("http://localhost:4723/wd/hub"), desiredCapabilities);
+	   driver = new IOSDriver<IOSElement>(new URL("http://localhost:4723/wd/hub"), desiredCapabilities);
 	   driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 	  
 	   WaitUtility.sleep(5000);
@@ -174,9 +162,9 @@ public class Utils {
 	
 	
 	//This is for native, what about mobile web? 
-	public static IOSDriver launchAPPinRealDevice(String deviceName, String udid, String bundleid, String ipaName) throws Exception
+	public static IOSDriver<IOSElement> launchAPPinRealDevice(String deviceName, String udid, String bundleid, String ipaName) throws Exception
 	{
-		 IOSDriver driver;
+		 IOSDriver<IOSElement> driver;
 		
 		 DesiredCapabilities capabilities = new DesiredCapabilities();
 
@@ -194,7 +182,7 @@ public class Utils {
 		capabilities.setCapability("appiumVersion", "1.4.8");
 	   
 	   
-	   driver = new IOSDriver(new URL("http://localhost:4723/wd/hub"), capabilities);
+	   driver = new IOSDriver<IOSElement>(new URL("http://localhost:4723/wd/hub"), capabilities);
 	   driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 	   Page.setIsRealDevice(true);
 	   WaitUtility.sleep(5000);

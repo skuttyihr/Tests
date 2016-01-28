@@ -1,11 +1,7 @@
 package com.iheart.appium.iosAutomation;
 
-import org.openqa.selenium.support.PageFactory;
-
-import org.openqa.selenium.By;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
-import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import io.appium.java_client.pagefactory.iOSFindBy;
 
 public class PerfectForPage extends Page{
@@ -25,12 +21,12 @@ public class PerfectForPage extends Page{
 	@iOSFindBy(name="Sign up for Free") private IOSElement signUpPrompt;
 	@iOSFindBy(name="Create Account") private IOSElement createAccount;
 	
-	public PerfectForPage(IOSDriver _driver)
+	public PerfectForPage(IOSDriver<IOSElement> _driver)
 	{
 		super(_driver);
 	}
 	
-	private void playAstation()
+	protected void playAstation()
 	{
 		perfectFor.click();
 		WaitUtility.sleep(2000);

@@ -56,7 +56,7 @@ public class Player extends Page{
 		super();
 	}
 	
-	public Player(IOSDriver _driver)
+	public Player(IOSDriver<IOSElement> _driver)
 	{
 		super(_driver);   
 		setPlayer(this);
@@ -334,7 +334,7 @@ public class Player extends Page{
 		thumbDown.click();
 		WaitUtility.sleep(1000);
 		
-		String response = driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAStaticText[8]")).getText();
+//		String response = driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAStaticText[8]")).getText();
 	//	System.out.println("See thumbDOWN DOWN growls:" + response);
 		
 		

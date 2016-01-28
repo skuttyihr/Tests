@@ -50,7 +50,7 @@ public  class SideNavigationBar extends Page{
 		@iOSFindBy(xpath="//UIAApplication[1]/UIAWindow[4]/UIAAlert[1]/UIACollectionView[1]/UIACollectionCell[2]/UIAButton[1]")
 		   private IOSElement logout;
 		
-		public SideNavigationBar(IOSDriver _driver)
+		public SideNavigationBar(IOSDriver<IOSElement> _driver)
 		{
 			super(_driver);
 			setSideNavigationBar(this);

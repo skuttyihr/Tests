@@ -41,7 +41,7 @@ public class SignUpPage extends Page{
 		//PageFactory.initElements(new AppiumFieldDecorator(driver), this);
 	}
     
-    public SignUpPage(IOSDriver _driver)
+    public SignUpPage(IOSDriver<IOSElement> _driver)
 	{
 		super(_driver);
 		//PageFactory.initElements(new AppiumFieldDecorator(driver), this);

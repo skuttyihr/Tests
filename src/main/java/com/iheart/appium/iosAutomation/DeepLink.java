@@ -1,16 +1,10 @@
 package com.iheart.appium.iosAutomation;
 
-import java.util.List;
-
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-
 import io.appium.java_client.ios.*;
 import io.appium.java_client.pagefactory.*;
 
 import org.openqa.selenium.support.PageFactory;
 
-import com.thoughtworks.selenium.webdriven.commands.Click;
 
 
 
@@ -18,7 +12,7 @@ public class DeepLink extends Page{
 
 	@iOSFindBy(xpath="//*[@id='push-content']/header/section[1]/div[3]/a") private IOSElement playButton;
 	
-	public DeepLink(IOSDriver _driver)
+	public DeepLink(IOSDriver<IOSElement> _driver)
 	{
 		super(_driver);
 		PageFactory.initElements(new AppiumFieldDecorator(driver), this);
