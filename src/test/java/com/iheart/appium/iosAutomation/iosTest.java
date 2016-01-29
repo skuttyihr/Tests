@@ -1,29 +1,21 @@
 package com.iheart.appium.iosAutomation;
 
-import static org.junit.Assert.*;
 
-import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 import org.junit.Before;
 import org.junit.After;
 import org.junit.Rule;
-import org.junit.rules.TestRule;
-import org.junit.rules.TestWatcher;
 import org.junit.rules.TestName;
-import org.junit.runner.Description;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 
-import java.io.File;
 
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
 
-public class iosTest {
+public class iosTest extends TestRoot {
 	// TODO Remove all of this, use properties files like we do for Android
 	protected static final String DEVICE_NAME = "QA iPhone 5s";
 	protected static final String UDID = "6a667778f94f8241aa6511e3c8cbc8b1643bb9b5"; // IPHONE
-																					// 5s
+																						// 5s
 	// private static final String UDID =
 	// "d7cb4ae985ed62b786a621597c9c0d53a4c1e678";
 	protected static final String BUNDLE_ID = "com.clearchannel.iheartradio";
@@ -144,54 +136,12 @@ public class iosTest {
 	}
 
 	@After
-	public void tearDown() {
-		// driver.quit(); //moved into TestWatcher
-		if (Page.getErrors().length() > 0)
-			fail(Page.getErrors().toString());
-
+	public void after() {
+		TestRoot.tearDown();
 	}
 
 	private void handleException(Exception e) {
 		Page.getErrors().append("Exception is thrown.");
 		e.printStackTrace();
-		/*
-		 * try{ Utils.takeScreenshot(driver, name.getMethodName());
-		 * }catch(Exception eX) {
-		 * 
-		 * }
-		 */
 	}
-
-	@Rule
-	public TestRule watcher = new TestWatcher() {
-		@Override
-		public void finished(Description description) {
-			driver.quit();
-		}
-
-		@Override
-		public void failed(Throwable e, Description description) {
-
-			try {
-
-				File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-
-				// String filePathRoot = "C:\\_Jenkins\\workspace\\" +
-				// jenkinsJobName + "\\target\\surefire-reports\\";
-				String currentPath = System.getProperty("user.dir");
-				String path = currentPath + "\\target\\surefire-reports\\";
-
-				String fullFilePath = path + description.getClassName() + "\\" + description.getMethodName() + ".jpg";
-
-				FileUtils.copyFile(screenshot, new File(fullFilePath));
-
-			} catch (Exception ex) {
-				System.out.println(ex.toString());
-				System.out.println(ex.getMessage());
-			}
-
-			driver.quit();
-		}
-	};
-
 }

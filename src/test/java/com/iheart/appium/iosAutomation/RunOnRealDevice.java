@@ -1,7 +1,5 @@
 package com.iheart.appium.iosAutomation;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
 import org.junit.Ignore;
 import org.junit.Before;
@@ -117,10 +115,7 @@ public class RunOnRealDevice extends iosTest{
 	}
 
 	@After
-	public void tearDown() {
-		// driver.quit();
-		if (Page.getErrors().length() > 0)
-			fail(Page.getErrors().toString());
-
+	public void after() {
+		TestRoot.tearDown();
 	}
 }

@@ -1,7 +1,5 @@
 package com.iheart.appium.iosAutomation;
 
-import static org.junit.Assert.*;
-
 import org.junit.*;
 import org.junit.Before;
 import org.junit.After;
@@ -42,10 +40,7 @@ public class runDeepLink extends iosTest {
 	}
 
 	@After
-	public void tearDown() {
-		driver.quit();
-		if (Page.getErrors().length() > 0)
-			fail(Page.getErrors().toString());
-
+	public void after() {
+		TestRoot.tearDown();
 	}
 }
