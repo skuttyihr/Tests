@@ -7,7 +7,7 @@ import org.junit.After;
 import org.junit.Rule;
 import org.junit.rules.TestName;
 
-public class RunOnRealDevice extends iosTest{
+public class RunOnRealDevice extends TestRoot{
 
 	@Rule
 	public TestName name = new TestName();

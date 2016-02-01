@@ -6,7 +6,7 @@ import org.junit.After;
 import org.junit.Rule;
 import org.junit.rules.TestName;
 
-public class runDeepLink extends iosTest {
+public class runDeepLink extends TestRoot {
 
 	private DeepLink deepLink;
 
