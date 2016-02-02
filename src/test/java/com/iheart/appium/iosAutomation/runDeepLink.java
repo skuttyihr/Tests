@@ -15,12 +15,10 @@ public class runDeepLink extends TestRoot {
 
 	@Before
 	public void setUp() throws Exception {
-
-		// BasicConfigurator.configure();
-
-		driver = Utils.launchBrowser("safari");
+		setup();
+		
 		driver.get("http://m.z100.com");
-		WaitUtility.sleep(5000);
+		sleep(5000);
 		Page.setDriver(driver);
 
 		deepLink = new DeepLink(driver);
@@ -32,7 +30,6 @@ public class runDeepLink extends TestRoot {
 		System.out.println("test method:" + name.getMethodName());
 		try {
 			deepLink.AIOS_22641_doDeepLink();
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			Utils.takeScreenshot(driver, "testLogin");

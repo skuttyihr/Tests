@@ -14,24 +14,9 @@ public class RunOnRealDevice extends TestRoot{
 
 	@Before
 	public void setUp() throws Exception {
-
-		// BasicConfigurator.configure();
-		// driver = Utils.launchAPPinSimulator();
-		driver = Utils.launchAPPinRealDevice(DEVICE_NAME, UDID, BUNDLE_ID, IPA_NAME);
-
+		
+		setup();
 		Page.setDriver(driver);
-
-		loginPage = new LoginPage(driver);
-		signupPage = new SignUpPage(driver);
-		player = new Player(driver);
-		sideNavBar = new SideNavigationBar(driver);
-
-		forYouPage = new ForYouPage(driver);
-		perfectForPage = new PerfectForPage(driver);
-		podcastsPage = new PodcastsPage(driver);
-
-		deepLink = new DeepLink(driver);
-
 	}
 
 	@Ignore("skip")
