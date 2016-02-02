@@ -28,6 +28,7 @@ public class TestRoot {
 	// Desired Capabilities for Appium to be imported from properties
 	protected static String DEVICE_NAME;
 	protected static String UDID;
+	protected static String PLATFORM_VERSION;
 	protected static String BUNDLE_ID;
 	protected static String IPA_NAME;
 	protected static boolean SIMULATOR = true;
@@ -61,17 +62,18 @@ public class TestRoot {
 		if(props != null){
 			DEVICE_NAME = props.getProperty("APPIUM.DEVICE.NAME");
 			UDID = props.getProperty("APPIUM.DEVICE.UDID");
+			PLATFORM_VERSION = props.getProperty("APPIUM.DEVICE.PLATFORMVERSION");
 			BUNDLE_ID = props.getProperty("APPIUM.APP.BUNDLEID");
 			IPA_NAME = props.getProperty("APPIUM.APP.PATH");
-			
 			SIMULATOR = Boolean.parseBoolean(props.getProperty("APPIUM.USESIMULATOR"));
-			appiumUrl = props.getProperty("APPIUM.URL");
-			appiumPort = props.getProperty("APPIUM.PORT");
+			appiumUrl = props.getProperty("APPIUM.WEBDRIVER.URL");
+			appiumPort = props.getProperty("APPIUM.WEBDRIVER.PORT");
 		}
 		else{
 			// Use system properties
 			DEVICE_NAME = System.getProperty("APPIUM.DEVICE.NAME");
 			UDID = System.getProperty("APPIUM.DEVICE.UDID");
+			PLATFORM_VERSION = System.getProperty("APPIUM.DEVICE.PLATFORMVERSION");
 			BUNDLE_ID = System.getProperty("APPIUM.APP.BUNDLEID");
 			IPA_NAME = System.getProperty("APPIUM.APP.PATH");
 			
@@ -83,7 +85,7 @@ public class TestRoot {
 		// Create a new driver object
 		URL url = null;
 		try {
-			url = new URL("http://" + appiumUrl + ":" + appiumPort);
+			url = new URL("http://" + appiumUrl + ":" + appiumPort + "/wd/hub");
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
@@ -93,7 +95,7 @@ public class TestRoot {
 		// Set capabilities
 		capabilities.setCapability("deviceName", DEVICE_NAME);
 		capabilities.setCapability("platformName", "iOS");
-		capabilities.setCapability("udid", UDID);
+		capabilities.setCapability("platformVersion", PLATFORM_VERSION);
 		capabilities.setCapability("bundleId", BUNDLE_ID);
         capabilities.setCapability("app", IPA_NAME);
         
@@ -103,6 +105,7 @@ public class TestRoot {
         }
         else{
         	capabilities.setCapability("sendKeyStrategy", "grouped");
+        	capabilities.setCapability("udid", UDID);
         }
         	
 		// Start the driver
@@ -137,7 +140,7 @@ public class TestRoot {
 	}
 
 	protected static void tearDown() {
-		if (Page.getErrors().length() > 0) {
+		if (Page.getErrors() != null && Page.getErrors().length() > 0) {
 			fail(Page.getErrors().toString());
 		}
 	}
@@ -165,9 +168,9 @@ public class TestRoot {
 				// String filePathRoot = "C:\\_Jenkins\\workspace\\" +
 				// jenkinsJobName + "\\target\\surefire-reports\\";
 				String currentPath = System.getProperty("user.dir");
-				String path = currentPath + "\\target\\surefire-reports\\";
+				String path = currentPath + File.separator + "target" + File.separator + "surefire-reports" + File.separator;
 
-				String fullFilePath = path + description.getClassName() + "\\" + description.getMethodName() + ".jpg";
+				String fullFilePath = path + description.getClassName() + File.separator + description.getMethodName() + ".jpg";
 
 				FileUtils.copyFile(screenshot, new File(fullFilePath));
 
