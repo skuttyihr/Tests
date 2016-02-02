@@ -1,5 +1,7 @@
 package com.iheart.appium.iosAutomation;
 
+import org.junit.Assert;
+
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
 import io.appium.java_client.pagefactory.iOSFindBy;
@@ -31,12 +33,12 @@ public class PerfectForPage extends Page {
 
 	private String playACustomStation() {
 		searchField.sendKeys("Swift");
-		realDeviceWait(15000);
+		TestRoot.sleep(15000);
 		TestRoot.sleep(2000);
 		String chosenStation = firstStationLink.getText();
 		System.out.println("Chosen station:" + chosenStation);
 		firstStationLink.click();
-		realDeviceWait(5000);
+		TestRoot.sleep(5000);
 		TestRoot.sleep(2000);
 
 		return chosenStation;
@@ -54,7 +56,7 @@ public class PerfectForPage extends Page {
 		chosenStation = playACustomStation();
 		// verify that it is playing: Get its attribute: class shall be 'pause'
 		if (!player.isPlaying("artist"))
-			errors.append("Station is not playing.");
+			Assert.fail("Station is not playing.");
 
 		// Stop the station
 
@@ -70,7 +72,7 @@ public class PerfectForPage extends Page {
 		// driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]")).getText();
 		// System.out.println("Recent stations:" + firstStation);
 		if (!driver.getPageSource().contains(chosenStation))
-			handleError("Newly played custom station is not added under my Recent Stations.", "playCustomStation");
+			Assert.fail("Newly played custom station is not added under my Recent Stations.");
 
 		// logout
 		sideNavigationBar.gotoSettings();
@@ -82,8 +84,8 @@ public class PerfectForPage extends Page {
 		// playAstation();
 		playACustomStation();
 		// verify that login prompt is popped up
-		if (!isElementPresent(createAccount))
-			handleError("No login prompt is displayed for signed out users.", "playCustomStation");
+		if (!TestRoot.isElementVisible(createAccount))
+			Assert.fail("No login prompt is displayed for signed out users.");
 
 	}
 

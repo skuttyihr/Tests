@@ -1,5 +1,6 @@
 package com.iheart.appium.iosAutomation;
 
+import org.junit.Assert;
 import org.openqa.selenium.By;
 
 import io.appium.java_client.ios.IOSDriver;
@@ -66,27 +67,27 @@ public class Player extends Page {
 	 * statio Volume control
 	 */
 	public void verifyPlayer_live(String stationName) { // if(!stationLabel.getText().contains(stationName))
-														// errors.append("Station
+														// Assert.fail("Station
 														// name is not
 														// correct.");
 
-		if (!isElementPresent(songTrack_live)) {
-			if (!isElementPresent(songTrack2_live))
-				errors.append("No sound track name is displayed.");
+		if (!TestRoot.isElementVisible(songTrack_live)) {
+			if (!TestRoot.isElementVisible(songTrack2_live))
+				Assert.fail("No sound track name is displayed.");
 		}
 
-		if (!isElementPresent(artist_live)) {
-			if (!isElementPresent(artist2_live))
-				errors.append("Artist name is NOT displayed.");
+		if (!TestRoot.isElementVisible(artist_live)) {
+			if (!TestRoot.isElementVisible(artist2_live))
+				Assert.fail("Artist name is NOT displayed.");
 		}
-		if (!isElementPresent(playButton_live))
-			errors.append("Play icon is not displayed.");
+		if (!TestRoot.isElementVisible(playButton_live))
+			Assert.fail("Play icon is not displayed.");
 
-		if (!isElementPresent(scan))
-			errors.append("Scan icon is not displayed.");
+		if (!TestRoot.isElementVisible(scan))
+			Assert.fail("Scan icon is not displayed.");
 
-		if (!isElementPresent(more_live))
-			errors.append(".... is not displayed.");
+		if (!TestRoot.isElementVisible(more_live))
+			Assert.fail(".... is not displayed.");
 
 		verfiyCommonIcons("verifyPlayer_live");
 
@@ -94,57 +95,51 @@ public class Player extends Page {
 
 	public void verifyPlayer_artist(String stationName) {
 		if (!stationLabel.getText().contains(stationName))
-			errors.append("Station name is not correct.");
+			Assert.fail("Station name is not correct.");
 
-		if (!isElementPresent(songTrack_artist))
-			errors.append("No sound track name is displayed.");
+		if (!TestRoot.isElementVisible(songTrack_artist))
+			Assert.fail("No sound track name is displayed.");
 
-		if (!isElementPresent(artist_artist))
-			errors.append("No artist name is displayed.");
+		if (!TestRoot.isElementVisible(artist_artist))
+			Assert.fail("No artist name is displayed.");
 
-		if (!isElementPresent(playButton_artist))
-			errors.append("Play icon is not displayed.");
+		if (!TestRoot.isElementVisible(playButton_artist))
+			Assert.fail("Play icon is not displayed.");
 
-		if (!isElementPresent(skip))
-			errors.append("Skip icon is not displayed.");
+		if (!TestRoot.isElementVisible(skip))
+			Assert.fail("Skip icon is not displayed.");
 
 		verfiyCommonIcons("verifyPlayer_custom");
 	}
 
 	public void verifyPlayer_podcast(String stationName) {
 		if (!stationLabel.getText().contains(stationName.substring(0, 5)))
-			errors.append("Station name is not correct.");
+			Assert.fail("Station name is not correct.");
 
-		if (!isElementPresent(episodeName_podcast))
-			errors.append("Episode name is not displayed.");
+		if (!TestRoot.isElementVisible(episodeName_podcast))
+			Assert.fail("Episode name is not displayed.");
 
-		if (!isElementPresent(stationName_podcast))
-			errors.append("Station name is Not displayed.");
+		if (!TestRoot.isElementVisible(stationName_podcast))
+			Assert.fail("Station name is Not displayed.");
 
-		if (!isElementPresent(slideBar))
-			errors.append("No Scrobber is displayed.");
+		if (!TestRoot.isElementVisible(slideBar))
+			Assert.fail("No Scrobber is displayed.");
 
-		if (!isElementPresent(playButton_podcast))
-			errors.append("Play icon is not displayed.");
+		if (!TestRoot.isElementVisible(playButton_podcast))
+			Assert.fail("Play icon is not displayed.");
 
-		if (!isElementPresent(skip))
-			errors.append("Skip icon is not displayed.");
+		if (!TestRoot.isElementVisible(skip))
+			Assert.fail("Skip icon is not displayed.");
 
 		verfiyCommonIcons("verifyPlayer_podcast");
 	}
 
 	private void verfiyCommonIcons(String callingMethod) {
-		if (!isElementPresent(thumbUp))
-			errors.append("No Thumb Up icon is displayed.");
+		if (!TestRoot.isElementVisible(thumbUp))
+			Assert.fail("No Thumb Up icon is displayed.");
 
-		if (!isElementPresent(thumbDown))
-			errors.append("No Thumb Down icon is displayed.");
-
-		// if(!isElementPresent(more))
-		// errors.append(".... is not displayed.");
-
-		if (errors.length() > 1)
-			handleError("", callingMethod);
+		if (!TestRoot.isElementVisible(thumbDown))
+			Assert.fail("No Thumb Down icon is displayed.");
 	}
 
 	public void doSkip(String type) {
@@ -157,7 +152,7 @@ public class Player extends Page {
 		System.out.println("before/after:" + currentTrack + "/" + nowPlaying);
 		// Verify new episode is playing
 		if (currentTrack.equals(nowPlaying))
-			handleError("Skip is not working.", "doSkipFor" + type);
+			Assert.fail("Skip is not working.");
 	}
 
 	private String getNowPlaying(String type) {
@@ -174,8 +169,8 @@ public class Player extends Page {
 	public void doShare() {
 		more_live.tap(1, 1);
 		share.tap(1, 1);
-		if (!isElementPresent(mail))
-			handleError("Share button is not working.", "doShare");
+		if (!TestRoot.isElementVisible(mail))
+			Assert.fail("Share button is not working.");
 	}
 
 	public void doThumbUp() {
@@ -226,13 +221,8 @@ public class Player extends Page {
 	// This happens when you thumbup a already thumbuped song track
 	private void handleGladYouLikeItPopup() {
 		try {
-			driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAButton[10]")).click();// No
-																									// ,
-																									// thnak
-																									// you.
-		} catch (Exception e) {
-
-		}
+			driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAButton[10]")).click();// No, thank you
+		} catch (Exception e) {}
 	}
 
 	private void handleGladAfterFavorite() {
@@ -301,7 +291,7 @@ public class Player extends Page {
 		}
 
 		thumbDown.click();
-		TestRoot.sleep(1000);
+//		TestRoot.sleep(1000);
 
 		// String response =
 		// driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAStaticText[8]")).getText();
@@ -342,7 +332,6 @@ public class Player extends Page {
 			TestRoot.sleep(1000);
 			// Sometimes 'Like iheartRadio?" pops up
 			handleGladYouLikeItPopup();
-
 		}
 
 		thumbDown.click();
@@ -355,15 +344,8 @@ public class Player extends Page {
 
 		if (stationType.equals("live")) {
 			if (!response.contains("heard enough"))
-				handleError("Thump Down is not working properly.", "doThumbDown");
+				Assert.fail("Thump Down is not working properly.");
 		}
-		/*
-		 * else // No growl when alert is showing up
-		 * "Thumbing down customizes your station without using a skip." { if
-		 * (!response.contains("OK, we’ll adjust your music mix.")) handleError(
-		 * "Thump Down is not working properly.", "doThumbDown"); }
-		 */
-
 	}
 
 	private boolean isThumbUpDone() {
@@ -415,7 +397,7 @@ public class Player extends Page {
 
 		// Verify that icon is filled
 		if (!favorite.getAttribute("value").equals("1"))
-			handleError("Add to Favorite failed.", "doFavorite");
+			Assert.fail("Add to Favorite failed.");
 
 		/*
 		 * String response = ""; response = driver.findElement(By.xpath(
@@ -478,7 +460,7 @@ public class Player extends Page {
 		// Verify that new song is playing
 		String newSong = driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAStaticText[2]")).getText();
 		if (newSong.equals(currentSong))
-			handleError("Scan is not working.", "doScan");
+			Assert.fail("Scan is not working.");
 
 	}
 
@@ -491,7 +473,7 @@ public class Player extends Page {
 		// Verify that new song is playing
 		String newSong = driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAStaticText[2]")).getText();
 		if (newSong.equals(currentSong))
-			handleError("Skip is not working.", "doSkip");
+			Assert.fail("Skip is not working.");
 
 	}
 
@@ -507,12 +489,12 @@ public class Player extends Page {
 		theOne.click();
 		// verify it is paused
 		if (!theOne.getAttribute("name").contains("play"))
-			errors.append("Station playing is not paused.");
+			Assert.fail("Station playing is not paused.");
 
 		theOne.click();
 		// verify it is resumed
 		if (!theOne.getAttribute("name").contains("pause"))
-			errors.append("Station playing is not RESUMED.");
+			Assert.fail("Station playing is not RESUMED.");
 
 	}
 

@@ -1,6 +1,8 @@
 package com.iheart.appium.iosAutomation;
 
 import io.appium.java_client.pagefactory.*;
+
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import io.appium.java_client.ios.*;
@@ -70,13 +72,7 @@ public class LoginPage extends Page {
 		chooseStayConnected(false);
 
 		// verify we are in!
-
-		driver.findElement(By.name("For You")).getText();
-		try {
-			driver.findElement(By.name("For You")).getText();
-		} catch (Exception e) {
-			errors.append("Home page is not shown.");
-		}
+		Assert.assertTrue("Did not log in", driver.findElement(By.name("For You")).getText() != null);
 	}
 
 	public void loginViaFacebook_NEW() {
@@ -131,7 +127,7 @@ public class LoginPage extends Page {
 				.getText();
 		System.out.println("Status:" + status);
 		if (!status.equalsIgnoreCase("Logged In"))
-			handleError("Facebook login failed.", "loginViaFacebook");
+			Assert.fail("Facebook login failed.");
 	}
 
 	public void loginViaFacebook() {
@@ -173,7 +169,7 @@ public class LoginPage extends Page {
 				.getText();
 		System.out.println("Status:" + status);
 		if (!status.equalsIgnoreCase("Logged In"))
-			handleError("Facebook login failed.", "loginViaFacebook");
+			Assert.fail("Facebook login failed.");
 	}
 
 	private void handleWantYourLocalRadioPopup() {

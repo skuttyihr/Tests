@@ -2,8 +2,9 @@ package com.iheart.appium.iosAutomation;
 
 import java.util.Date;
 
-import io.appium.java_client.pagefactory.*;
+import org.junit.Assert;
 
+import io.appium.java_client.pagefactory.*;
 import io.appium.java_client.ios.*;
 
 public class SignUpPage extends Page {
@@ -55,12 +56,11 @@ public class SignUpPage extends Page {
 		gender_male.click();
 		iAgree.click();
 		create.click();
-		TestRoot.sleep(2000);
-		realDeviceWait(15000);
+		TestRoot.sleep(20000);
 
 		// verify that tell us what you like page shows up
-		if (!isElementPresent(genrePicker))
-			handleError("Genre Picker View is not displayed. Sign up failed.", "createAnAccount");
+		if (!TestRoot.isElementVisible(genrePicker))
+			Assert.fail("Genre Picker View is not displayed. Sign up failed.");
 	}
 
 	private String getCurrentDateInMilli() {

@@ -4,6 +4,7 @@ import java.util.List;
 
 import io.appium.java_client.pagefactory.*;
 
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -40,7 +41,7 @@ public class ForYouPage extends Page {
 		try {
 			driver.findElement(By.name(artist)).getText();
 		} catch (Exception e) {
-			handleError("Artist station is not added under My Station.", "createArtistStation");
+			Assert.fail("Artist station is not added under My Station.");
 		}
 
 	}
@@ -114,12 +115,10 @@ public class ForYouPage extends Page {
 		TestRoot.sleep(1000);
 		// if (!topHit.getText().equals(myStation))
 		if (!driver.getPageSource().contains(myStation))
-			handleError("Live station is not added under My Station.", "playLiveRadio");
-
+			Assert.fail("Live station is not added under My Station.");
 	}
 
 	public void comeToThisPage() {
 		driver.findElement(By.name("For You")).click();
 	}
-
 }

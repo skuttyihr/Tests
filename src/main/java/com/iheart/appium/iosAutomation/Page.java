@@ -1,5 +1,6 @@
 package com.iheart.appium.iosAutomation;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
@@ -35,11 +36,9 @@ public class Page {
 	static final String GOOGLE_USER_NAME = USER_NAME;
 
 	public static final String screenshot_folder = "iosScreenshots";
-	public static StringBuffer errors = new StringBuffer();
 
 	public Page() {
 		PageFactory.initElements(new AppiumFieldDecorator(driver), this);
-
 	}
 
 	public Page(IOSDriver<IOSElement> _driver) {
@@ -47,15 +46,6 @@ public class Page {
 		PageFactory.initElements(new AppiumFieldDecorator(driver), this);
 		// navBar = PageFactory.initElements(driver, SideNavigationBar.class);
 		// player = PageFactory.initElements(driver, Player.class);
-	}
-
-	public boolean isElementPresent(IOSElement element) {
-		try {
-			System.out.println("see element:" + element.getText());
-			return true;
-		} catch (Exception e) { // e.printStackTrace();
-			return false;
-		}
 	}
 
 	// The popup: Like iHeartRadio? Let us know!
@@ -71,33 +61,11 @@ public class Page {
 		player = _player;
 	}
 
-	public static void setIsRealDevice(boolean isOrNot) {
-		isRealDevice = isOrNot;
-	}
-
-	public static boolean getIsRealDevice() {
-		return isRealDevice;
-	}
-
 	public static void setSideNavigationBar(SideNavigationBar _sideNavigationBar) {
 		sideNavigationBar = _sideNavigationBar;
 	}
 
 	public void waitForPreroll() {
-		TestRoot.sleep(38000);
-	}
-
-	public static StringBuffer getErrors() {
-		return errors;
-	}
-
-	public void handleError(String msg, String methodName) {
-		errors.append(msg);
-		try {
-			TestRoot.takeScreenshot(driver, methodName);
-		} catch (Exception e) {
-			System.out.println("Exception is thrown taking screenshot.");
-		}
 	}
 
 	public String switchWindow() {
@@ -111,19 +79,17 @@ public class Page {
 	}
 
 	public Set<String> getContextHandles() {
-		Set<String> contexts = driver.getContextHandles(); // Errors here
-		for (String context : contexts) // debug
-			System.out.println(context);
+		Set<String> contexts = new HashSet<String>();
+		try{
+			contexts = driver.getContextHandles(); // Errors here
+		}
+		catch(Exception e){
+		}
+
+//		for (String context : contexts){
+//			System.out.println(context);
+//		}
 
 		return contexts;
-	}
-
-	public void realDeviceWait(int seconds) {
-		if (isRealDevice)
-			TestRoot.sleep(seconds);
-	}
-
-	public static void clearErrors() {
-		errors.setLength(0);
 	}
 }

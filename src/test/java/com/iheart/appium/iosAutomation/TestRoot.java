@@ -1,7 +1,5 @@
 package com.iheart.appium.iosAutomation;
 
-import static org.junit.Assert.fail;
-
 import java.io.File;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -15,6 +13,7 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
+import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.rules.TestRule;
 import org.junit.rules.TestWatcher;
@@ -26,6 +25,7 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -33,7 +33,8 @@ import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
 
 public class TestRoot {
-
+	protected static int implicitWaitTimeout = 375;
+	
 	protected static IOSDriver<IOSElement> driver;
 
 	// Desired Capabilities for Appium to be imported from properties
@@ -136,7 +137,6 @@ public class TestRoot {
 		
 		// Create pages and set driver status
 		Page.setDriver(driver);
-		Page.clearErrors();
 
 		loginPage = new LoginPage(driver);
 		signupPage = new SignUpPage(driver);
@@ -151,10 +151,6 @@ public class TestRoot {
 	}
 
 	protected static void tearDown() {
-		if (Page.getErrors() != null && Page.getErrors().length() > 0) {
-			fail(Page.getErrors().toString());
-		}
-		
 		if(driver != null){
 			try{
 				driver.quit();
@@ -263,6 +259,23 @@ public class TestRoot {
 		System.out.println("Jquery is loaded.");
 	}
 	
+	public static IOSElement findElement(IOSDriver<IOSElement> d, By by){
+		IOSElement e = null;
+		try{
+			d.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
+			e = d.findElement(by);
+			if(e != null){
+				return e;
+			}
+		}
+		catch(Exception exc){}
+		finally{
+			d.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
+		}
+		return e;
+	}
+	
+	
 	//// Waiting Methods ////
 	public static void sleep(int timeInMs){
 		try{
@@ -290,6 +303,82 @@ public class TestRoot {
 		}
 	}
 
+	
+	public static IOSElement waitForPresent(IOSDriver<IOSElement> d, By by, long timeoutInSec){
+		long timeLeftMil = timeoutInSec * 1000;
+		while(timeLeftMil > 0){
+			
+			if(findElement(d, by) != null){
+				break;
+			}
+			sleep(200);
+			timeLeftMil -= 200;
+		}
+		return (IOSElement) d.findElement(by);
+	}
+	
+	public static IOSElement waitForVisible(IOSDriver<IOSElement> d, By by, long timeoutInSec){
+		// Wait for it to be present (not just clickable/visible, but loaded)
+		long timeLeftMil = timeoutInSec * 1000;
+		while(timeLeftMil > 0){
+			if(findElement(d, by) != null){
+				break;
+			}
+			sleep(100); // Intentionally mismatched to make up for time searching for element
+			timeLeftMil -= 200;
+		}
+		
+		timeoutInSec = (timeLeftMil / 1000);
+		if(timeLeftMil >= 500){
+			timeoutInSec = 1;
+		}
+	
+		IOSElement returnElement = null;
+		WebDriverWait wait = new WebDriverWait(d, timeoutInSec);
+		try{
+			returnElement = (IOSElement) wait.until(ExpectedConditions.elementToBeClickable(d.findElement(by)));
+		}
+		catch(Exception e){
+			// Attempt to grab it anyway
+			try{
+				returnElement = (IOSElement) d.findElement(by);
+			}
+			catch(Exception e1){}
+		}
+		return returnElement;
+	}
+	
+	public static boolean isElementVisible(IOSElement ele){
+		try{
+			return ele.getText() != null;
+		}
+		catch(Exception e){
+			return false;
+		}
+	}
+	
+	public static boolean waitForNotVisible(IOSDriver<IOSElement> d, By by, int maxWaitTimeSeconds){
+		boolean elementGone = false;
+		for(int i = 0; i < maxWaitTimeSeconds; i++){
+			try{
+				IOSElement element = waitForVisible(d, by, 1);
+				if(element == null){
+					elementGone = true;
+					break;
+				}
+			}catch(Exception e){}
+		}
+		return elementGone;
+	}
+	
+	
+	// Assert utilities
+	public static void fail(String failMessage){
+		Assert.fail(failMessage);
+	}
+	public static void assertTrue(String message, boolean condition){
+		Assert.assertTrue(message, condition);
+	}
 	
 	// Test Watcher control
 	@Rule
