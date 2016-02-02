@@ -156,9 +156,7 @@ public class TestRoot {
 	}
 	
 	public static void sleep(int timeInMs){
-		try{
-			Thread.sleep(timeInMs);
-		}catch(Exception e){}
+		WaitUtility.sleep(timeInMs);
 	}
 
 	@Rule
@@ -166,12 +164,8 @@ public class TestRoot {
 
 		@Override
 		public void failed(Throwable e, Description description) {
-
 			try {
 				File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-
-				// String filePathRoot = "C:\\_Jenkins\\workspace\\" +
-				// jenkinsJobName + "\\target\\surefire-reports\\";
 				String currentPath = System.getProperty("user.dir");
 				String path = currentPath + File.separator + "target" + File.separator + "surefire-reports" + File.separator;
 

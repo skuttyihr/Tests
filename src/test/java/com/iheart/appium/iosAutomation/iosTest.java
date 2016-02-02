@@ -19,7 +19,7 @@ public class iosTest extends TestRoot {
 	}
 
 	@Test
-	public void test_AIOS_22674_createArtistStation_thumbUp_thumbDown_favorite_skip() throws Exception {
+	public void test_createArtistStation_thumbUp_thumbDown_favorite_skip() throws Exception {
 		System.out.println("test method:" + name.getMethodName());
 		try {
 			loginPage.login();
@@ -30,7 +30,7 @@ public class iosTest extends TestRoot {
 	}
 
 	@Test
-	public void test_AIOS_22697_playPodcasts_skip_share() throws Exception {
+	public void test_playPodcasts_skip_share() throws Exception {
 		System.out.println("test method:" + name.getMethodName());
 		try {
 			loginPage.login();
@@ -41,7 +41,7 @@ public class iosTest extends TestRoot {
 	}
 
 	@Test
-	public void test_AIOS_22669_loginViaFacebook() throws Exception {
+	public void test_loginViaFacebook() throws Exception {
 		try {
 			loginPage.AIOS_22669_loginViaFacebook();
 
@@ -51,7 +51,7 @@ public class iosTest extends TestRoot {
 	}
 
 	@Test
-	public void test_AIOS_22673_playLiveRadio_thumbUP_thumbDown_doFavorite() throws Exception {
+	public void test_playLiveRadio_thumbUP_thumbDown_doFavorite() throws Exception {
 		System.out.println("test method:" + name.getMethodName());
 		try {
 			loginPage.login();
@@ -62,7 +62,7 @@ public class iosTest extends TestRoot {
 	}
 
 	@Test
-	public void test_AIOS_22642_playCustomStation_search_logout() throws Exception {
+	public void test_playCustomStation_search_logout() throws Exception {
 		System.out.println("test method:" + name.getMethodName());
 		try {
 			loginPage.login();
@@ -74,7 +74,7 @@ public class iosTest extends TestRoot {
 	}
 
 	@Test
-	public void test_AIOS_22672_createAnAccount() throws Exception {
+	public void test_createAnAccount() throws Exception {
 		System.out.println("test method:" + name.getMethodName());
 		try {
 			signupPage.AIOS_22672_createAnAccount();
