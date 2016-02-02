@@ -2,7 +2,6 @@ package com.iheart.appium.iosAutomation;
 
 import java.util.Date;
 
-import org.junit.Assert;
 
 import io.appium.java_client.pagefactory.*;
 import io.appium.java_client.ios.*;
@@ -41,12 +40,12 @@ public class SignUpPage extends Page {
 		// PageFactory.initElements(new AppiumFieldDecorator(driver), this);
 	}
 
-	public void createAnAccount() {
+	public boolean createAnAccount() {
+		TestRoot.waitForElementToBeVisible(getStarted, 10);
 		getStarted.click();
 
 		// Generate a random email
-		String randomEmail_firstPart = getCurrentDateInMilli();
-		String _email = randomEmail_firstPart + "@mailinator.com";
+		String _email = getCurrentDateInMilli() + "@mailinator.com";
 		System.out.println("See randomEmail:" + _email);
 
 		email.sendKeys(_email);
@@ -55,12 +54,12 @@ public class SignUpPage extends Page {
 		birthYear.sendKeys("1988");
 		gender_male.click();
 		iAgree.click();
+		TestRoot.waitForElementToBeVisible(create, 5);
 		create.click();
-		TestRoot.sleep(20000);
+		TestRoot.waitForElementToBeVisible(genrePicker, 15);
 
 		// verify that tell us what you like page shows up
-		if (!TestRoot.isElementVisible(genrePicker))
-			Assert.fail("Genre Picker View is not displayed. Sign up failed.");
+		return TestRoot.isElementVisible(genrePicker);
 	}
 
 	private String getCurrentDateInMilli() {
@@ -68,4 +67,7 @@ public class SignUpPage extends Page {
 		return date.getTime() + "";
 	}
 
+	public IOSElement getGetStartedButton(){
+		return getStarted;
+	}
 }

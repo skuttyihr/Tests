@@ -49,10 +49,4 @@ public class iosTest extends TestRoot {
 		loginPage.login();
 		perfectForPage.playCustomStation();
 	}
-
-	@Test
-	public void test_createAnAccount() throws Exception {
-		System.out.println("test method:" + name.getMethodName());
-		signupPage.createAnAccount();
-	}
 }

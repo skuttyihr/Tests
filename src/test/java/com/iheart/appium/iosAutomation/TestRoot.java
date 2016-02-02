@@ -137,7 +137,7 @@ public class TestRoot {
 		
 		// Create pages and set driver status
 		Page.setDriver(driver);
-
+		
 		loginPage = new LoginPage(driver);
 		signupPage = new SignUpPage(driver);
 		player = new Player(driver);
@@ -148,6 +148,9 @@ public class TestRoot {
 		podcastsPage = new PodcastsPage(driver);
 
 		deepLink = new DeepLink(driver);
+		
+		// Wait for login to display
+		waitForElementToBeVisible(signupPage.getGetStartedButton(), 40);
 	}
 
 	protected static void tearDown() {
@@ -350,10 +353,33 @@ public class TestRoot {
 	
 	public static boolean isElementVisible(IOSElement ele){
 		try{
-			return ele.getText() != null;
+			return ele.isDisplayed();
 		}
 		catch(Exception e){
 			return false;
+		}
+	}
+	
+	public static void waitForElementToBeVisible(IOSElement ele, int timeInSeconds){
+		long timeLeftMil = timeInSeconds * 1000;
+		while(timeLeftMil > 0){
+			if(isElementVisible(ele)){
+				break;
+			}
+			sleep(100); // Intentionally mismatched to make up for time searching for element
+			timeLeftMil -= 200;
+		}
+		
+		timeInSeconds = (int) (timeLeftMil / 1000);
+		if(timeLeftMil >= 500){
+			timeInSeconds = 1;
+		}
+		
+		WebDriverWait wait = new WebDriverWait(driver, timeInSeconds);
+		try{
+			wait.until(ExpectedConditions.elementToBeClickable(ele));
+		}
+		catch(Exception e){
 		}
 	}
 	
@@ -369,15 +395,6 @@ public class TestRoot {
 			}catch(Exception e){}
 		}
 		return elementGone;
-	}
-	
-	
-	// Assert utilities
-	public static void fail(String failMessage){
-		Assert.fail(failMessage);
-	}
-	public static void assertTrue(String message, boolean condition){
-		Assert.assertTrue(message, condition);
 	}
 	
 	// Test Watcher control
