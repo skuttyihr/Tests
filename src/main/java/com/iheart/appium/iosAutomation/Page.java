@@ -14,18 +14,13 @@ import org.openqa.selenium.support.PageFactory;
 public class Page {
 
 	// Search field
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIASearchBar[1]")
-	public IOSElement searchField;
-	@iOSFindBy(name = "Cancel")
-	public IOSElement cancel;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIASearchBar[1]") public IOSElement searchField;
+	@iOSFindBy(name = "Cancel") public IOSElement cancel;
 
 	// SUB NAVIGATION bar
-	@iOSFindBy(name = "My Stations")
-	public IOSElement myStations;
-	@iOSFindBy(name = "For You")
-	public IOSElement forYou;
-	@iOSFindBy(name = "Perfect For")
-	public IOSElement perfectFor;
+	@iOSFindBy(name = "My Stations") public IOSElement myStations;
+	@iOSFindBy(name = "For You") public IOSElement forYou;
+	@iOSFindBy(name = "Perfect For") public IOSElement perfectFor;
 
 	static IOSDriver<IOSElement> driver;
 	static SideNavigationBar sideNavigationBar;

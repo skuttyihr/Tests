@@ -7,8 +7,7 @@ import org.openqa.selenium.support.PageFactory;
 
 public class DeepLink extends Page {
 
-	@iOSFindBy(xpath = "//*[@id='push-content']/header/section[1]/div[3]/a")
-	private IOSElement playButton;
+	@iOSFindBy(xpath = "//*[@id='push-content']/header/section[1]/div[3]/a") private IOSElement playButton;
 
 	public DeepLink(IOSDriver<IOSElement> _driver) {
 		super(_driver);

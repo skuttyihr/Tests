@@ -11,16 +11,13 @@ import io.appium.java_client.ios.*;
 
 public class ForYouPage extends Page {
 
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell[1]")
-	private IOSElement firstStation;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell[1]") private IOSElement firstStation;
 	// @iOSFindBy(name="Sign in") private WebElement signIn;
 
 	// for search
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIATableView[2]/UIATableCell[1]/UIAStaticText[1]")
-	private IOSElement topHit;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIATableView[2]/UIATableCell[1]/UIAStaticText[1]") private IOSElement topHit;
 
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIATableView[3]/UIATableCell[1]/UIAStaticText[1]")
-	private IOSElement topStation;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIATableView[3]/UIATableCell[1]/UIAStaticText[1]") private IOSElement topStation;
 
 	public ForYouPage(IOSDriver<IOSElement> _driver) {
 		super(_driver);
@@ -34,15 +31,10 @@ public class ForYouPage extends Page {
 		TestRoot.sleep(3000);
 		// Verify PLAYER
 		player.verifyPlayer_artist(artist);
-
 		player.doThumbUp();
-
 		player.doThumbDown("artist");
-
 		player.doFavorite();
-
 		player.doSkip();
-
 		// Verify that this station is added under My Station
 		(player.back).click();
 		try {

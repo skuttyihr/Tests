@@ -9,55 +9,35 @@ import org.openqa.selenium.support.FindBy;
 
 public class LoginPage extends Page {
 
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[1]/UIATextField[1]")
-	private IOSElement userName;
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[2]/UIASecureTextField[1]")
-	private IOSElement password;
-	@iOSFindBy(name = "Log In")
-	private IOSElement loginButton;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[1]/UIATextField[1]") private IOSElement userName;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[2]/UIASecureTextField[1]") private IOSElement password;
+	@iOSFindBy(name = "Log In") private IOSElement loginButton;
 
-	@iOSFindBy(name = "Facebook")
-	private WebElement facebookButton;
+	@iOSFindBy(name = "Facebook") private WebElement facebookButton;
 
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[2]/UIAScrollView[1]/UIAScrollView[1]/UIAWebView[1]/UIATextField[1]")
-	private WebElement fbEmail;
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[2]/UIAScrollView[1]/UIAScrollView[1]/UIAWebView[1]/UIASecureTextField[1]")
-	private IOSElement fbPassword;
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[2]/UIAScrollView[1]/UIAScrollView[1]/UIAWebView[1]/UIAButton[1]")
-	private IOSElement fbLogin;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[2]/UIAScrollView[1]/UIAScrollView[1]/UIAWebView[1]/UIATextField[1]") private WebElement fbEmail;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[2]/UIAScrollView[1]/UIAScrollView[1]/UIAWebView[1]/UIASecureTextField[1]") private IOSElement fbPassword;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[2]/UIAScrollView[1]/UIAScrollView[1]/UIAWebView[1]/UIAButton[1]") private IOSElement fbLogin;
 
 	// WEB version
-	@FindBy(name = "email")
-	private WebElement facebookEmail_web;
-	@FindBy(name = "pass")
-	private WebElement facebookPass_web;
-	@FindBy(name = "login")
-	private WebElement facebookLogin;
+	@FindBy(name = "email") private WebElement facebookEmail_web;
+	@FindBy(name = "pass") private WebElement facebookPass_web;
+	@FindBy(name = "login") private WebElement facebookLogin;
 
 	// Native version
 
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIATextField[1]")
-	private WebElement facebookEmail_native;
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIASecureTextField[1]")
-	private WebElement facebookPassword_native;
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIAButton[1]")
-	private WebElement FBlogin_native;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIATextField[1]") private WebElement facebookEmail_native;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIASecureTextField[1]") private WebElement facebookPassword_native;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIAButton[1]") private WebElement FBlogin_native;
 
-	@iOSFindBy(name = "Google")
-	private WebElement googleButton;
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[2]/UIAScrollView[1]/UIAScrollView[1]/UIAWebView[1]/UIATextField[1]")
-	private WebElement googleEmail;
-	@iOSFindBy(name = "Next")
-	private WebElement nextButton;
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[2]/UIAScrollView[1]/UIAScrollView[1]/UIAWebView[1]/UIASecureTextField[1]")
-	private WebElement googlePassword;
-	@iOSFindBy(name = "Sign in")
-	private WebElement signIn;
+	@iOSFindBy(name = "Google") private WebElement googleButton;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[2]/UIAScrollView[1]/UIAScrollView[1]/UIAWebView[1]/UIATextField[1]") private WebElement googleEmail;
+	@iOSFindBy(name = "Next") private WebElement nextButton;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[2]/UIAScrollView[1]/UIAScrollView[1]/UIAWebView[1]/UIASecureTextField[1]") private WebElement googlePassword;
+	@iOSFindBy(name = "Sign in") private WebElement signIn;
 	// for first-timer
-	@iOSFindBy(name = "Continue")
-	private WebElement continueButton; // for first-time login user
-	@iOSFindBy(name = "Allow")
-	private WebElement allowButton;
+	@iOSFindBy(name = "Continue") private WebElement continueButton; // for first-time login user
+	@iOSFindBy(name = "Allow") private WebElement allowButton;
 
 	// for verification: Maybe shall move nav bar stuff up to the Page.java?
 	@iOSFindBy(name = "For You")

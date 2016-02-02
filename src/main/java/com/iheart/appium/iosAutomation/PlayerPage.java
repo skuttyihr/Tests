@@ -23,8 +23,7 @@ public class PlayerPage extends Page{
 	@iOSFindBy(name="Thumb up") private IOSElement thumbUp;
 	@iOSFindBy(name="Thumb down") private IOSElement thumbDown;
 	
-	public PlayerPage(IOSDriver<IOSElement> _driver)
-	{
+	public PlayerPage(IOSDriver<IOSElement> _driver) {
 		PlayerPage.driver = _driver;
 		PageFactory.initElements(new AppiumFieldDecorator(driver), this);
 	}

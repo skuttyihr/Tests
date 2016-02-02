@@ -1,30 +1,24 @@
 package com.iheart.appium.iosAutomation;
 
+public class HomePage extends Page {
 
-public class HomePage extends Page{
-
-	public HomePage()
-	{
+	public HomePage() {
 		super();
 	}
+
 	/*
-	public HomePage(IOSDriver _driver)
-	{
-		super(_driver);
-	}
-	*/
-	public void gotoMyStations()
-	{
+	 * public HomePage(IOSDriver _driver) { super(_driver); }
+	 */
+	public void gotoMyStations() {
 		myStations.click();
 	}
-	public void gotoForYou()
-	{
+
+	public void gotoForYou() {
 		forYou.click();
 	}
-	
-	public void gotoPerfectFor()
-	{
+
+	public void gotoPerfectFor() {
 		perfectFor.click();
 	}
-	
+
 }
