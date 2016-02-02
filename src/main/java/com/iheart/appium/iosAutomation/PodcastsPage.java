@@ -31,7 +31,7 @@ public class PodcastsPage extends Page{
 	    String podName = firstPod.getAttribute("name");
 	    System.out.println("See pod name:" + podName);
 		firstPod.click();
-		WaitUtility.sleep(3000);
+		TestRoot.sleep(3000);
 		
 		/*
 		List<WebElement> tables = driver.findElements(By.className("UIATableView"));

@@ -97,24 +97,24 @@ public  class SideNavigationBar extends Page{
 		{  
 			navIcon.click();
 			if(isRealDevice)
-				WaitUtility.sleep(3000);
+				TestRoot.sleep(3000);
 			settings.click();
 			if(isRealDevice)
-				WaitUtility.sleep(3000);
+				TestRoot.sleep(3000);
 		}
 		
 		public void logout()
 		{
 			settings.click();
 			if(isRealDevice)
-				WaitUtility.sleep(1000);
+				TestRoot.sleep(1000);
 			loggedInAs.click();
 			if(isRealDevice)
-				WaitUtility.sleep(1000);
+				TestRoot.sleep(1000);
 			
 			logout.click();
 			if(isRealDevice)
-				WaitUtility.sleep(1000);
+				TestRoot.sleep(1000);
 			
 		}
 		

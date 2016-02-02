@@ -89,7 +89,7 @@ public class Page {
 	}
 
 	public void waitForPreroll() {
-		WaitUtility.sleep(38000);
+		TestRoot.sleep(38000);
 	}
 
 	public static StringBuffer getErrors() {
@@ -125,7 +125,7 @@ public class Page {
 
 	public void realDeviceWait(int seconds) {
 		if (isRealDevice)
-			WaitUtility.sleep(seconds);
+			TestRoot.sleep(seconds);
 	}
 
 	public static void clearErrors() {

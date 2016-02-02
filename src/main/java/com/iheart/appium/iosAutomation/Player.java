@@ -167,7 +167,7 @@ public class Player extends Page{
 		currentTrack = getNowPlaying(type);
 		
 	    skip.tap(1, 1);
-	    WaitUtility.sleep(2000);
+	    TestRoot.sleep(2000);
 	    nowPlaying = getNowPlaying(type);
 	    System.out.println("before/after:" + currentTrack + "/" + nowPlaying);
 	    //Verify new episode is playing
@@ -210,7 +210,7 @@ public class Player extends Page{
 		    	
 		    }
 			count++;
-			WaitUtility.sleep(3000);
+			TestRoot.sleep(3000);
 		}
 		
 		//if it is still disabled, return 
@@ -219,7 +219,7 @@ public class Player extends Page{
 		//If this is thumbUp before, double-click
 		if (isThumbUpDone())
 		{	thumbUp.click();
-		     WaitUtility.sleep(1000);
+		     TestRoot.sleep(1000);
 		   //Sometimes 'Like iheartRadio?" pops up
 			handleGladYouLikeItPopup();
 			
@@ -257,7 +257,7 @@ public class Player extends Page{
 	{
 	  try{
 	    driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAButton[2]")).click();//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAButton[2]
-	    WaitUtility.sleep(200);
+	    TestRoot.sleep(200);
 	  }catch(Exception e)
 	  {
 		  
@@ -316,7 +316,7 @@ public class Player extends Page{
 		    	
 		    }
 			count++;
-			WaitUtility.sleep(3000);
+			TestRoot.sleep(3000);
 		}
 		
 		//if it is still disabled, return 
@@ -325,14 +325,14 @@ public class Player extends Page{
 		//If this is thumbUp before, double-click
 		if (isThumbDownDone())
 		{	thumbDown.click();
-		     WaitUtility.sleep(1000);
+		     TestRoot.sleep(1000);
 		   //Sometimes 'Like iheartRadio?" pops up
 			handleGladYouLikeItPopup();
 			
 		}
 		
 		thumbDown.click();
-		WaitUtility.sleep(1000);
+		TestRoot.sleep(1000);
 		
 //		String response = driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAStaticText[8]")).getText();
 	//	System.out.println("See thumbDOWN DOWN growls:" + response);
@@ -361,7 +361,7 @@ public class Player extends Page{
 		    	
 		    }
 			count++;
-			WaitUtility.sleep(3000);
+			TestRoot.sleep(3000);
 		}
 		
 		//if it is still disabled, return 
@@ -370,14 +370,14 @@ public class Player extends Page{
 		//If this is thumbUp before, double-click
 		if (isThumbDownDone())
 		{	thumbDown.click();
-		     WaitUtility.sleep(1000);
+		     TestRoot.sleep(1000);
 		   //Sometimes 'Like iheartRadio?" pops up
 			handleGladYouLikeItPopup();
 			
 		}
 		
 		thumbDown.click();
-		WaitUtility.sleep(1000);
+		TestRoot.sleep(1000);
 		if (stationType.equals("artist"))
 			handleThumbDownPopUpForArtistStation();
 														
@@ -442,12 +442,12 @@ public class Player extends Page{
 		if (isFavDone()) //unfav it
 		{
 			favorite.click();
-			WaitUtility.sleep(1000);
+			TestRoot.sleep(1000);
 			handleUnFavConfirmation();
 		}
 		
 		favorite.click();
-		WaitUtility.sleep(500);
+		TestRoot.sleep(500);
 
 		handleGladAfterFavorite();
 		
@@ -474,7 +474,7 @@ public class Player extends Page{
 	{
 		try{
 			driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[4]/UIAAlert[1]/UIACollectionView[1]/UIACollectionCell[2]/UIAButton[1]")).click();
-		    WaitUtility.sleep(1000);
+		    TestRoot.sleep(1000);
 		}catch(Exception e)
 		{
 			
@@ -487,7 +487,7 @@ public class Player extends Page{
 		try{
 			//click on OKAY BUTTON of alert box: Thumbing down customizes your station without using a skip.
 			driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAAlert[1]/UIACollectionView[1]/UIACollectionCell[1]/UIAButton[1]")).click();
-		    WaitUtility.sleep(1000);
+		    TestRoot.sleep(1000);
 		}catch(Exception e)
 		{
 			
@@ -513,7 +513,7 @@ public class Player extends Page{
 		String currentSong = driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAStaticText[2]")).getText();
 		
 		scan.click();
-		WaitUtility.sleep(5000);
+		TestRoot.sleep(5000);
 		//Verify that new song is playing 
 		String newSong =  driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAStaticText[2]")).getText();
 		if (newSong.equals(currentSong))
@@ -526,7 +526,7 @@ public class Player extends Page{
 		String currentSong = driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAStaticText[2]")).getText();
 		
 		skip.click();
-		WaitUtility.sleep(5000);
+		TestRoot.sleep(5000);
 		//Verify that new song is playing 
 		String newSong =  driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAStaticText[2]")).getText();
 		if (newSong.equals(currentSong))

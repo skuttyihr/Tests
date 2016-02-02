@@ -83,9 +83,9 @@ public class LoginPage extends Page {
 
 		driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAButton[1]")).click();
 		if (isRealDevice)
-			WaitUtility.sleep(15000);
+			TestRoot.sleep(15000);
 		else
-			WaitUtility.sleep(5000);
+			TestRoot.sleep(5000);
 
 		chooseStayConnected(false);
 
@@ -101,27 +101,27 @@ public class LoginPage extends Page {
 
 	public void loginViaFacebook_NEW() {
 		loginButton.click();
-		WaitUtility.sleep(1000);
+		TestRoot.sleep(1000);
 		facebookButton.click();
-		WaitUtility.sleep(2000);
+		TestRoot.sleep(2000);
 
 		getContextHandles();
 
 		System.out.println("See context Now:" + driver.getContext());
 
 		driver.context("WEBVIEW_1");
-		WaitUtility.sleep(5000);
+		TestRoot.sleep(5000);
 		System.out.println("After switch:" + driver.getContext());
 		/*
 		 * //native view facebookEmail_native.sendKeys(FACEBOOK_USER_NAME);
 		 * facebookPassword_native.sendKeys(PASSWORD); FBlogin_native.click();
-		 * WaitUtility.sleep(5000);
+		 * TestRoot.sleep(5000);
 		 */
 		driver.findElement(By.name("email")).sendKeys(FACEBOOK_USER_NAME);
 		driver.findElement(By.name("pass")).sendKeys(PASSWORD);
 		driver.findElement(By.name("login")).click();
 
-		WaitUtility.sleep(2000);
+		TestRoot.sleep(2000);
 		// Handle Authorizaton confirm
 		driver.findElement(By.name("__CONFIRM__")).click();
 
@@ -129,7 +129,7 @@ public class LoginPage extends Page {
 		driver.context("NATIVE_APP");
 		// System.out.println("See page:" + driver.getPageSource());
 
-		WaitUtility.sleep(5000);
+		TestRoot.sleep(5000);
 
 		handleWantYourLocalRadioPopup();
 		tellUsWhatYouLike();
@@ -158,13 +158,13 @@ public class LoginPage extends Page {
 		System.out.println("See context:" + driver.getContext());
 		// getContextHandles();
 		loginButton.click();
-		WaitUtility.sleep(1000);
+		TestRoot.sleep(1000);
 		facebookButton.click();
-		WaitUtility.sleep(2000);
+		TestRoot.sleep(2000);
 
 		getContextHandles();
 		driver.context("WEBVIEW_1");
-		WaitUtility.sleep(5000);
+		TestRoot.sleep(5000);
 		System.out.println("After switch:" + driver.getContext());
 		driver.findElement(By.name("email")).sendKeys(FACEBOOK_USER_NAME);
 		driver.findElement(By.name("pass")).sendKeys(PASSWORD);
@@ -177,7 +177,7 @@ public class LoginPage extends Page {
 		driver.context("NATIVE_APP");
 		// System.out.println("See page:" + driver.getPageSource());
 
-		WaitUtility.sleep(5000);
+		TestRoot.sleep(5000);
 
 		handleWantYourLocalRadioPopup();
 		tellUsWhatYouLike();
@@ -208,9 +208,9 @@ public class LoginPage extends Page {
 
 	public void loginViaGoogle() {
 		loginButton.click();
-		WaitUtility.sleep(1000);
+		TestRoot.sleep(1000);
 		googleButton.click();
-		WaitUtility.sleep(2000);
+		TestRoot.sleep(2000);
 		googleEmail.sendKeys(GOOGLE_USER_NAME);
 		nextButton.click();
 		googlePassword.sendKeys(PASSWORD);
@@ -239,7 +239,7 @@ public class LoginPage extends Page {
 
 		}
 
-		WaitUtility.sleep(2000);
+		TestRoot.sleep(2000);
 	}
 
 	private void chooseStayConnected(boolean stayConnected) {
@@ -254,16 +254,16 @@ public class LoginPage extends Page {
 
 		}
 
-		WaitUtility.sleep(2000);
+		TestRoot.sleep(2000);
 	}
 
 	// Want your local radio?
 	private void handlePossiblePopUp() {
 		try {
 			if (isRealDevice)
-				WaitUtility.sleep(10000);
+				TestRoot.sleep(10000);
 			else
-				WaitUtility.sleep(1000);
+				TestRoot.sleep(1000);
 			driver.findElement(By.name("No Thanks")).click();
 		} catch (Exception e) {
 
@@ -272,13 +272,13 @@ public class LoginPage extends Page {
 
 	// Tell us what you like
 	private void tellUsWhatYouLike() {
-		WaitUtility.sleep(2000);
+		TestRoot.sleep(2000);
 		try {
 			driver.findElement(By.name("Rock")).click();
 			if (isRealDevice)
-				WaitUtility.sleep(2000);
+				TestRoot.sleep(2000);
 			driver.findElement(By.name("Done")).click();
-			WaitUtility.sleep(2000);
+			TestRoot.sleep(2000);
 		} catch (Exception e) {
 			// e.printStackTrace();
 		}

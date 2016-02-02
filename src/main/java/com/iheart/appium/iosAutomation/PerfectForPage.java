@@ -29,9 +29,9 @@ public class PerfectForPage extends Page{
 	protected void playAstation()
 	{
 		perfectFor.click();
-		WaitUtility.sleep(2000);
+		TestRoot.sleep(2000);
 		firstElement.click();
-		WaitUtility.sleep(2000);
+		TestRoot.sleep(2000);
 		firstStation.click();
 	}
 	
@@ -39,12 +39,12 @@ public class PerfectForPage extends Page{
 	{
 		searchField.sendKeys("Swift");
 		realDeviceWait(15000);
-		WaitUtility.sleep(2000);
+		TestRoot.sleep(2000);
 		String chosenStation = firstStationLink.getText();
 		System.out.println("Chosen station:" + chosenStation);
 		firstStationLink.click();
 		realDeviceWait(5000);
-		WaitUtility.sleep(2000);
+		TestRoot.sleep(2000);
 		
 		return chosenStation;
 	}
@@ -52,13 +52,13 @@ public class PerfectForPage extends Page{
 	
 	public void playCustomStation()
 	{   
-		WaitUtility.sleep(2000);
+		TestRoot.sleep(2000);
 		String chosenStation ="";
 		perfectFor.click();
 		if (isRealDevice)
-			WaitUtility.sleep(5000);
+			TestRoot.sleep(5000);
 		else 
-		    WaitUtility.sleep(1000);
+		    TestRoot.sleep(1000);
 		
 		chosenStation = playACustomStation();
 		//verify that it is playing: Get its attribute: class shall be 'pause'
@@ -74,8 +74,8 @@ public class PerfectForPage extends Page{
 	    cancel.click();
 	    myStations.click();
 	    if(isRealDevice)
-	    	WaitUtility.sleep(5000);
-	    WaitUtility.sleep(1500);
+	    	TestRoot.sleep(5000);
+	    TestRoot.sleep(1500);
 	    // String firstStation = driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]")).getText();
 	  //  System.out.println("Recent stations:" + firstStation);
 	    if (!driver.getPageSource().contains(chosenStation))

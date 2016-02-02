@@ -29,9 +29,9 @@ public class ForYouPage extends Page {
 	public void createArtistStation() {
 		String artist = "Josh Groban";
 		searchField.sendKeys(artist);
-		WaitUtility.sleep(3000);
+		TestRoot.sleep(3000);
 		topHit.click();
-		WaitUtility.sleep(3000);
+		TestRoot.sleep(3000);
 		// Verify PLAYER
 		player.verifyPlayer_artist(artist);
 
@@ -117,9 +117,9 @@ public class ForYouPage extends Page {
 		// tap on My Station and make sure Station is added??
 		// Verify that this station is added under My Station
 		(player.back).click();
-		WaitUtility.sleep(1000);
+		TestRoot.sleep(1000);
 		driver.findElement(By.name("My Stations")).click();
-		WaitUtility.sleep(1000);
+		TestRoot.sleep(1000);
 		// if (!topHit.getText().equals(myStation))
 		if (!driver.getPageSource().contains(myStation))
 			handleError("Live station is not added under My Station.", "playLiveRadio");

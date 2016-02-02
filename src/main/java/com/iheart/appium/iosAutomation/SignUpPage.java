@@ -64,7 +64,7 @@ public class SignUpPage extends Page{
 		gender_male.click();
 		iAgree.click();
 		create.click();
-		WaitUtility.sleep(2000);
+		TestRoot.sleep(2000);
 		realDeviceWait(15000);
 		
 		//verify that tell us what you like page shows up
