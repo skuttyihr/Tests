@@ -26,7 +26,7 @@ public class PodcastsPage extends Page{
 	}
 	
 	
-	public void AIOS_22697_playPodcasts()
+	public void playPodcasts()
 	{   sideNavigationBar.gotoPodcastsPage();
 	    String podName = firstPod.getAttribute("name");
 	    System.out.println("See pod name:" + podName);

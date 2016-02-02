@@ -50,7 +50,7 @@ public class PerfectForPage extends Page{
 	}
 	
 	
-	public void AIOS_22642_playCustomStation()
+	public void playCustomStation()
 	{   
 		WaitUtility.sleep(2000);
 		String chosenStation ="";
@@ -79,7 +79,7 @@ public class PerfectForPage extends Page{
 	    // String firstStation = driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]")).getText();
 	  //  System.out.println("Recent stations:" + firstStation);
 	    if (!driver.getPageSource().contains(chosenStation))
-	       handleError("Newly played custom station is not added under my Recent Stations." , "AIOS_22642_playCustomStation");
+	       handleError("Newly played custom station is not added under my Recent Stations." , "playCustomStation");
 	   
 	    //logout
 	    sideNavigationBar.gotoSettings();
@@ -92,7 +92,7 @@ public class PerfectForPage extends Page{
 	    playACustomStation();
 	    //verify that login prompt is popped up
 	    if(!isElementPresent(createAccount))
-	    	handleError("No login prompt is displayed for signed out users.", "AIOS_22642_playCustomStation");
+	    	handleError("No login prompt is displayed for signed out users.", "playCustomStation");
 	    
 	}
 

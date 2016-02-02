@@ -26,7 +26,7 @@ public class DeepLink extends Page {
 
 		System.out.println("See page:" + driver.getPageSource());
 		if (!driver.getPageSource().contains("Get the App"))
-			handleError("Get App page is not launched.", "AIOS_22641_doDeepLink");
+			handleError("Get App page is not launched.", "doDeepLink");
 	}
 
 }

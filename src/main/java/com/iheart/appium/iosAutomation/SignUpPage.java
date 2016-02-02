@@ -48,7 +48,7 @@ public class SignUpPage extends Page{
 	}
 	
     
-    public void AIOS_22672_createAnAccount()
+    public void createAnAccount()
 	{   
     	getStarted.click();
     	
@@ -69,7 +69,7 @@ public class SignUpPage extends Page{
 		
 		//verify that tell us what you like page shows up
 		if (!isElementPresent(genrePicker))
-			handleError("Genre Picker View is not displayed. Sign up failed.", "AIOS_22672_createAnAccount");
+			handleError("Genre Picker View is not displayed. Sign up failed.", "createAnAccount");
 	}
     
     private String getCurrentDateInMilli()

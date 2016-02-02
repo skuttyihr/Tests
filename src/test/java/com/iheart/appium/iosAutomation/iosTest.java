@@ -23,7 +23,7 @@ public class iosTest extends TestRoot {
 		System.out.println("test method:" + name.getMethodName());
 		try {
 			loginPage.login();
-			forYouPage.AIOS_22674_createArtistStation();
+			forYouPage.createArtistStation();
 		} catch (Exception e) {
 			handleException(e);
 		}
@@ -34,7 +34,7 @@ public class iosTest extends TestRoot {
 		System.out.println("test method:" + name.getMethodName());
 		try {
 			loginPage.login();
-			podcastsPage.AIOS_22697_playPodcasts();
+			podcastsPage.playPodcasts();
 		} catch (Exception e) {
 			handleException(e);
 		}
@@ -43,7 +43,7 @@ public class iosTest extends TestRoot {
 	@Test
 	public void test_loginViaFacebook() throws Exception {
 		try {
-			loginPage.AIOS_22669_loginViaFacebook();
+			loginPage.loginViaFacebook();
 
 		} catch (Exception e) {
 			handleException(e);
@@ -55,7 +55,7 @@ public class iosTest extends TestRoot {
 		System.out.println("test method:" + name.getMethodName());
 		try {
 			loginPage.login();
-			forYouPage.AIOS_22673_playLiveRadio();
+			forYouPage.playLiveRadio();
 		} catch (Exception e) {
 			handleException(e);
 		}
@@ -66,7 +66,7 @@ public class iosTest extends TestRoot {
 		System.out.println("test method:" + name.getMethodName());
 		try {
 			loginPage.login();
-			perfectForPage.AIOS_22642_playCustomStation();
+			perfectForPage.playCustomStation();
 
 		} catch (Exception e) {
 			handleException(e);
@@ -77,7 +77,7 @@ public class iosTest extends TestRoot {
 	public void test_createAnAccount() throws Exception {
 		System.out.println("test method:" + name.getMethodName());
 		try {
-			signupPage.AIOS_22672_createAnAccount();
+			signupPage.createAnAccount();
 
 		} catch (Exception e) {
 			handleException(e);
