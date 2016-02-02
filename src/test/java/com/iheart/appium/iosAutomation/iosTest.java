@@ -37,11 +37,6 @@ public class iosTest extends TestRoot {
 	}
 
 	@Test
-	public void test_loginViaFacebook() throws Exception {
-		loginPage.loginViaFacebook();
-	}
-
-	@Test
 	public void test_playLiveRadio_thumbUP_thumbDown_doFavorite() throws Exception {
 		System.out.println("test method:" + name.getMethodName());
 		loginPage.login();
