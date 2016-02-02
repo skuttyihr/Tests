@@ -31,8 +31,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
 
-import com.iheart.appium.iosAutomation.Utils;
-
 public class TestRoot {
 
 	protected static IOSDriver<IOSElement> driver;

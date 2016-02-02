@@ -99,7 +99,7 @@ public class Page {
 	public void handleError(String msg, String methodName) {
 		errors.append(msg);
 		try {
-			Utils.takeScreenshot(driver, methodName);
+			TestRoot.takeScreenshot(driver, methodName);
 		} catch (Exception e) {
 			System.out.println("Exception is thrown taking screenshot.");
 		}
