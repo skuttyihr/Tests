@@ -16,24 +16,13 @@ public class runDeepLink extends TestRoot {
 	@Before
 	public void setUp() throws Exception {
 		setup();
-		
-		driver.get("http://m.z100.com");
-		sleep(5000);
-		Page.setDriver(driver);
-
-		deepLink = new DeepLink(driver);
-
 	}
 
+	@Ignore
 	@Test
-	public void AIOS_22641_doDeepLink() throws Exception {
+	public void deepLinkTest() throws Exception {
 		System.out.println("test method:" + name.getMethodName());
-		try {
-			deepLink.AIOS_22641_doDeepLink();
-		} catch (Exception e) {
-			e.printStackTrace();
-			Utils.takeScreenshot(driver, "testLogin");
-		}
+		deepLink.doDeepLink();
 	}
 
 	@After

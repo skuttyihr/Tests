@@ -143,6 +143,16 @@ public class TestRoot {
 		if (Page.getErrors() != null && Page.getErrors().length() > 0) {
 			fail(Page.getErrors().toString());
 		}
+		
+		if(driver != null){
+			try{
+				driver.quit();
+			}
+			catch(Exception e){
+				System.err.println("ERROR SHUTTING DOWN DRIVER");
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public static void sleep(int timeInMs){
@@ -153,16 +163,11 @@ public class TestRoot {
 
 	@Rule
 	public TestRule watcher = new TestWatcher() {
-		@Override
-		public void finished(Description description) {
-			driver.quit();
-		}
 
 		@Override
 		public void failed(Throwable e, Description description) {
 
 			try {
-
 				File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 
 				// String filePathRoot = "C:\\_Jenkins\\workspace\\" +
@@ -178,8 +183,6 @@ public class TestRoot {
 				System.out.println(ex.toString());
 				System.out.println(ex.getMessage());
 			}
-
-			driver.quit();
 		}
 	};
 }
