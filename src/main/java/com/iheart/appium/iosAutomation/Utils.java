@@ -1,16 +1,8 @@
 package com.iheart.appium.iosAutomation;
 
-import io.appium.java_client.ios.IOSDriver;
-import io.appium.java_client.ios.IOSElement;
-import io.appium.java_client.remote.MobileCapabilityType;
-
-import org.openqa.selenium.remote.DesiredCapabilities;
-
-import java.net.URL;
 import java.io.File;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
-import java.util.concurrent.TimeUnit;
 import java.util.Date;
 import java.util.Random;
 import java.util.Map;
@@ -74,112 +66,6 @@ public class Utils {
 
 		return randomInt;
 
-	}
-
-	public static IOSDriver<IOSElement> launchBrowser(String browser) throws Exception {
-		IOSDriver<IOSElement> driver;
-
-		DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
-		desiredCapabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "9.1");
-		desiredCapabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "iPhone 6");
-		desiredCapabilities.setCapability("browser", "safari");
-		desiredCapabilities.setCapability("appiumVersion", "1.4.8");
-
-		driver = new IOSDriver<IOSElement>(new URL("http://localhost:4723/wd/hub"), desiredCapabilities);
-		return driver;
-	}
-
-	public static IOSDriver<IOSElement> launchBrowserInRealDevice(String browser, String deviceName, String udid,
-			String bundleid) throws Exception {
-		IOSDriver<IOSElement> driver;
-
-		DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
-		desiredCapabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "8.4");
-		desiredCapabilities.setCapability(MobileCapabilityType.DEVICE_NAME, deviceName);
-		desiredCapabilities.setCapability("udid", udid);
-		// desiredCapabilities.setCapability("bundleid", bundleid);
-		// //com.clearchannel.iheartradio
-
-		desiredCapabilities.setCapability("browser", browser);
-		desiredCapabilities.setCapability("appiumVersion", "1.4.8");
-
-		driver = new IOSDriver<IOSElement>(new URL("http://localhost:4723/wd/hub"), desiredCapabilities);
-		driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-
-		WaitUtility.sleep(5000);
-		return driver;
-	}
-
-	// default to iphone 6
-	public static IOSDriver<IOSElement> launchAPPinSimulator() throws Exception {
-		return launchAPPinSimulator("iPhone 6");
-	}
-
-	public static IOSDriver<IOSElement> launchAPPinSimulator(String simulatorName) throws Exception {
-		IOSDriver<IOSElement> driver;
-		DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
-		// desiredCapabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION,
-		// "8.4");
-		desiredCapabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "9.1");
-		desiredCapabilities.setCapability(MobileCapabilityType.DEVICE_NAME, simulatorName);
-		desiredCapabilities.setCapability(MobileCapabilityType.APP,
-				"/Users/1111128/Library/Developer/Xcode/DerivedData/iPhone-ccflceywhaxzymfxdatoocajqggx/Build/Products/Debug-iphonesimulator/iHeartRadio.app");
-		desiredCapabilities.setCapability("appiumVersion", "1.4.8");
-
-		driver = new IOSDriver<IOSElement>(new URL("http://localhost:4723/wd/hub"), desiredCapabilities);
-		driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-
-		WaitUtility.sleep(5000);
-		return driver;
-	}
-
-	public static IOSDriver<IOSElement> launchAPPinSimulator(String simulatorName, String pathToBuild)
-			throws Exception {
-		IOSDriver<IOSElement> driver;
-		DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
-		// desiredCapabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION,
-		// "8.4");
-		desiredCapabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "9.1");
-		desiredCapabilities.setCapability(MobileCapabilityType.DEVICE_NAME, simulatorName);
-		desiredCapabilities.setCapability(MobileCapabilityType.APP, pathToBuild);
-		desiredCapabilities.setCapability("appiumVersion", "1.4.8");
-
-		driver = new IOSDriver<IOSElement>(new URL("http://localhost:4723/wd/hub"), desiredCapabilities);
-		driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-
-		WaitUtility.sleep(5000);
-		return driver;
-	}
-
-	// This is for native, what about mobile web?
-	public static IOSDriver<IOSElement> launchAPPinRealDevice(String deviceName, String udid, String bundleid,
-			String ipaName) throws Exception {
-		IOSDriver<IOSElement> driver;
-
-		DesiredCapabilities capabilities = new DesiredCapabilities();
-
-		capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "8.4");
-		capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, deviceName);
-		// capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "iPhone
-		// 6");
-		// capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "iPhone
-		// 5s");
-		// capabilities.setCapability("device", "iPhone 5s");
-		// capabilities.setCapability("udid",
-		// "6a667778f94f8241aa6511e3c8cbc8b1643bb9b5");
-		// capabilities.setCapability("bundleid",
-		// "com.example.appiumiphonetest");
-		capabilities.setCapability("udid", udid);
-		capabilities.setCapability("bundleid", bundleid); // com.clearchannel.iheartradio
-		// capabilities.setCapability("ipa", "MyiOSApp.ipa");
-		capabilities.setCapability("ipa", ipaName); /// Users/1111128/git/ios-flagship/iPhone.ipa
-		capabilities.setCapability("appiumVersion", "1.4.8");
-
-		driver = new IOSDriver<IOSElement>(new URL("http://localhost:4723/wd/hub"), capabilities);
-		driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-		Page.setIsRealDevice(true);
-		WaitUtility.sleep(5000);
-		return driver;
 	}
 
 	public static Map<String, String> getLocationByIp(WebDriver driver) {
