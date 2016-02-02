@@ -206,7 +206,7 @@ public class TestRoot {
 		Properties loadedProps = new Properties();
 		InputStream in = null;
 		try {
-			in = Utils.class.getClassLoader().getResourceAsStream(propFile);
+			in = TestRoot.class.getClassLoader().getResourceAsStream(propFile);
 			loadedProps.load(in);
 		} catch (Exception e) {
 			e.printStackTrace();
