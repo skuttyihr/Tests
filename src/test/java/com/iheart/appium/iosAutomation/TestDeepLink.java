@@ -6,7 +6,7 @@ import org.junit.After;
 import org.junit.Rule;
 import org.junit.rules.TestName;
 
-public class runDeepLink extends TestRoot {
+public class TestDeepLink extends TestRoot {
 
 	private DeepLink deepLink;
 

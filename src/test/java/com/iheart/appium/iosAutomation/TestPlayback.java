@@ -8,7 +8,7 @@ import org.junit.Rule;
 import org.junit.rules.TestName;
 
 
-public class iosTest extends TestRoot {
+public class TestPlayback extends TestRoot {
 
 	@Rule
 	public TestName name = new TestName();

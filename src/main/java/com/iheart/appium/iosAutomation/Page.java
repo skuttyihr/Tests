@@ -12,7 +12,7 @@ import io.appium.java_client.pagefactory.*;
 
 import org.openqa.selenium.support.PageFactory;
 
-public class Page {
+public class Page extends TestRoot{
 
 	// Search field
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIASearchBar[1]") public IOSElement searchField;

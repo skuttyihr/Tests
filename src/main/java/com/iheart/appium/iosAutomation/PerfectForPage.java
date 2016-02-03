@@ -25,33 +25,33 @@ public class PerfectForPage extends Page {
 
 	protected void playAstation() {
 		perfectFor.click();
-		TestRoot.sleep(2000);
+		sleep(2000);
 		firstElement.click();
-		TestRoot.sleep(2000);
+		sleep(2000);
 		firstStation.click();
 	}
 
 	private String playACustomStation() {
 		searchField.sendKeys("Swift");
-		TestRoot.sleep(15000);
-		TestRoot.sleep(2000);
+		sleep(15000);
+		sleep(2000);
 		String chosenStation = firstStationLink.getText();
 		System.out.println("Chosen station:" + chosenStation);
 		firstStationLink.click();
-		TestRoot.sleep(5000);
-		TestRoot.sleep(2000);
+		sleep(5000);
+		sleep(2000);
 
 		return chosenStation;
 	}
 
 	public void playCustomStation() {
-		TestRoot.sleep(2000);
 		String chosenStation = "";
+		waitForElementToBeVisible(perfectFor, 10);
 		perfectFor.click();
 		if (isRealDevice)
-			TestRoot.sleep(5000);
+			sleep(5000);
 		else
-			TestRoot.sleep(1000);
+			sleep(1000);
 
 		chosenStation = playACustomStation();
 		// verify that it is playing: Get its attribute: class shall be 'pause'
@@ -66,8 +66,8 @@ public class PerfectForPage extends Page {
 		cancel.click();
 		myStations.click();
 		if (isRealDevice)
-			TestRoot.sleep(5000);
-		TestRoot.sleep(1500);
+			sleep(5000);
+		sleep(1500);
 		// String firstStation =
 		// driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]")).getText();
 		// System.out.println("Recent stations:" + firstStation);
@@ -84,7 +84,7 @@ public class PerfectForPage extends Page {
 		// playAstation();
 		playACustomStation();
 		// verify that login prompt is popped up
-		if (!TestRoot.isElementVisible(createAccount))
+		if (!isElementVisible(createAccount))
 			Assert.fail("No login prompt is displayed for signed out users.");
 
 	}
