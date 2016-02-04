@@ -29,7 +29,7 @@ public class Page extends TestRoot{
 	static Player player;
 	// Real device requires longer reponse time
 	static boolean isRealDevice = false;
-	Logger logger = Logger.getLogger(Page.class);
+//	Logger logger = Logger.getLogger(Page.class);
 
 	static final String USER_NAME = "iheartrocks999@gmail.com";
 	static final String PASSWORD = "iheart001";

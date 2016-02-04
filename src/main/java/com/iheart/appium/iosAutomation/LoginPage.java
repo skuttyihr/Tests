@@ -67,8 +67,11 @@ public class LoginPage extends Page {
 		chooseStayConnected(false);
 
 		// verify we are in
-		return waitForVisible(driver, By.name("For You"), 25).isDisplayed();
-//		return driver.findElement(By.name("For You")).getText() != null;
+		IOSElement forYouTest = waitForVisible(driver, By.name("For You"), 35);
+		if(forYouTest != null)
+			return forYouTest.isDisplayed();
+		else
+			return false;
 	}
 
 	public void loginViaFacebook_NEW() {
@@ -200,7 +203,7 @@ public class LoginPage extends Page {
 		}
 		// verfiy that we are in Perfect for now!
 		// See page source:
-		logger.info("see page:" + driver.getPageSource());
+//		logger.info("see page:" + driver.getPageSource());
 
 	}
 
