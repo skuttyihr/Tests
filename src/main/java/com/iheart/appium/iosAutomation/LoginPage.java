@@ -14,7 +14,7 @@ public class LoginPage extends Page {
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[1]/UIATextField[1]") private IOSElement userName;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[2]/UIASecureTextField[1]") private IOSElement password;
 	@iOSFindBy(name = "Log In") private IOSElement loginButton;
-
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAButton[2]") private IOSElement logInFormButton;
 	@iOSFindBy(name = "Facebook") private WebElement facebookButton;
 
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[2]/UIAScrollView[1]/UIAScrollView[1]/UIAWebView[1]/UIATextField[1]") private WebElement fbEmail;
@@ -55,24 +55,20 @@ public class LoginPage extends Page {
 		// PageFactory.initElements(new AppiumFieldDecorator(driver), this);
 	}
 
-	public void login() { // logger.info("About to login...");
-
+	public boolean login() { // logger.info("About to login...");
+		
+		waitForElementToBeVisible(loginButton, 20);
 		loginButton.click();
-
+		waitForElementToBeVisible(userName, 5);
 		userName.sendKeys(USER_NAME);
 		password.sendKeys(PASSWORD);
-		// loginButton.click();
-
-		driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAButton[1]")).click();
-		if (isRealDevice)
-			TestRoot.sleep(15000);
-		else
-			TestRoot.sleep(5000);
-
+		logInFormButton.click();
+		
 		chooseStayConnected(false);
 
-		// verify we are in!
-		Assert.assertTrue("Did not log in", driver.findElement(By.name("For You")).getText() != null);
+		// verify we are in
+		return waitForVisible(driver, By.name("For You"), 25).isDisplayed();
+//		return driver.findElement(By.name("For You")).getText() != null;
 	}
 
 	public void loginViaFacebook_NEW() {
@@ -223,38 +219,26 @@ public class LoginPage extends Page {
 		tellUsWhatYouLike();
 		try {
 			if (stayConnected)
-				driver.findElement(By.name("Get Notifications")).click();
+				waitForVisible(driver, By.name("Get Notifications"), 2).click();
 			else
-				driver.findElement(By.name("Maybe Later")).click();
+				waitForVisible(driver, By.name("Maybe Later"), 2).click();
 		} catch (Exception e) {
-
 		}
-
-		TestRoot.sleep(2000);
 	}
 
 	// Want your local radio?
 	private void handlePossiblePopUp() {
 		try {
-			if (isRealDevice)
-				TestRoot.sleep(10000);
-			else
-				TestRoot.sleep(1000);
-			driver.findElement(By.name("No Thanks")).click();
+			waitForVisible(driver, By.name("No Thanks"), 5).click();
 		} catch (Exception e) {
-
 		}
 	}
 
 	// Tell us what you like
 	private void tellUsWhatYouLike() {
-		TestRoot.sleep(2000);
 		try {
-			driver.findElement(By.name("Rock")).click();
-			if (isRealDevice)
-				TestRoot.sleep(2000);
+			driver.findElement(By.name("Pop")).click();
 			driver.findElement(By.name("Done")).click();
-			TestRoot.sleep(2000);
 		} catch (Exception e) {
 			// e.printStackTrace();
 		}

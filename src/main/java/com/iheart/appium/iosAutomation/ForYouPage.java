@@ -24,12 +24,13 @@ public class ForYouPage extends Page {
 		super(_driver);
 	}
 
-	public void createArtistStation() {
+	// Returns true if the station was added
+	public boolean createArtistStation() {
 		String artist = "Josh Groban";
+		waitForElementToBeVisible(searchButton, 5);
+		searchButton.click();
 		searchField.sendKeys(artist);
-		TestRoot.sleep(3000);
 		topHit.click();
-		TestRoot.sleep(3000);
 		// Verify PLAYER
 		player.verifyPlayer_artist(artist);
 		player.doThumbUp();
@@ -37,13 +38,10 @@ public class ForYouPage extends Page {
 		player.doFavorite();
 		player.doSkip();
 		// Verify that this station is added under My Station
-		(player.back).click();
-		try {
-			driver.findElement(By.name(artist)).getText();
-		} catch (Exception e) {
-			Assert.fail("Artist station is not added under My Station.");
-		}
-
+		player.back.click();
+		player.cancel.click();
+		player.myStations.click();
+		return isStationAFavorite(artist) > 0;
 	}
 
 	private String chooseLiveRadioToPlay(List<WebElement> stations) {

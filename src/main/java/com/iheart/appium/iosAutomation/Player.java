@@ -17,11 +17,11 @@ public class Player extends Page {
 	@iOSFindBy(name = "Favorite") public IOSElement favorite;
 
 	// Seems that this is depending upon from where the player is launched
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[7]") public IOSElement songTrack_artist;
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[8]") public IOSElement artist_artist;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[4]") public IOSElement songTrack_artist;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[5]") public IOSElement artist_artist;
 
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[9]") public IOSElement songTrack_live;
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[10]") public IOSElement artist_live;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[6]") public IOSElement songTrack_live;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[7]") public IOSElement artist_live;
 
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[2]") public IOSElement songTrack2_live;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[3]") public IOSElement artist2_live;
@@ -37,14 +37,15 @@ public class Player extends Page {
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAButton[7]") public IOSElement playButton_live; // doesn't apply for podcast
 	// @iOSFindBy(xpath="//UIAApplication[1]/UIAWindow[1]/UIAButton[9]") public
 	// IOSElement playButton_artist;
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAButton[2]") public IOSElement playButton_artist;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAButton[3]") public IOSElement playButton_artist;
 	// @iOSFindBy(xpath="//UIAApplication[1]/UIAWindow[1]/UIAButton[11]") public
 	// IOSElement more;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAButton[6]") public IOSElement more_live;
 	// @iOSFindBy(name="more") public IOSElement more;
 
-	@iOSFindBy(name = "skip") public IOSElement skip;
-	@iOSFindBy(name = "scan") public IOSElement scan;
+//	@iOSFindBy(name = "Skip") public IOSElement skip;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAButton[6]") public IOSElement skip;
+	@iOSFindBy(name = "Scan") public IOSElement scan;
 	@iOSFindBy(name = "Thumb up") public IOSElement thumbUp;
 	@iOSFindBy(name = "Thumb down") public IOSElement thumbDown;
 	// FOR SHARE
@@ -221,16 +222,15 @@ public class Player extends Page {
 	// This happens when you thumbup a already thumbuped song track
 	private void handleGladYouLikeItPopup() {
 		try {
-			driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAButton[10]")).click();// No, thank you
+			waitForVisible(driver, By.name("No Thanks"), 5).click();
+//			driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAButton[10]")).click();// No, thank you
 		} catch (Exception e) {}
 	}
 
 	private void handleGladAfterFavorite() {
 		try {
-			driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAButton[2]")).click();// UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAButton[2]
-			TestRoot.sleep(200);
+			waitForVisible(driver, By.name("No Thanks"), 5).click();
 		} catch (Exception e) {
-
 		}
 	}
 
@@ -391,8 +391,6 @@ public class Player extends Page {
 		}
 
 		favorite.click();
-		TestRoot.sleep(500);
-
 		handleGladAfterFavorite();
 
 		// Verify that icon is filled
@@ -416,12 +414,8 @@ public class Player extends Page {
 	// Are you sure you want to delete this preset?
 	private void handleUnFavConfirmation() {
 		try {
-			driver.findElement(By
-					.xpath("//UIAApplication[1]/UIAWindow[4]/UIAAlert[1]/UIACollectionView[1]/UIACollectionCell[2]/UIAButton[1]"))
-					.click();
-			TestRoot.sleep(1000);
+			waitForVisible(driver, By.xpath("//UIAApplication[1]/UIAWindow[4]/UIAAlert[1]/UIACollectionView[1]/UIACollectionCell[2]/UIAButton[1]"), 3).click();
 		} catch (Exception e) {
-
 		}
 	}
 

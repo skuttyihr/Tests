@@ -137,6 +137,7 @@ public class TestRoot {
 		// Create pages and set driver status
 		Page.setDriver(driver);
 		
+		homePage = new HomePage(driver);
 		loginPage = new LoginPage(driver);
 		signupPage = new SignUpPage(driver);
 		player = new Player(driver);
@@ -147,6 +148,8 @@ public class TestRoot {
 		podcastsPage = new PodcastsPage(driver);
 
 		deepLink = new DeepLink(driver);
+
+		driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 		
 		// Wait for login to display
 		waitForElementToBeVisible(signupPage.getGetStartedButton(), 40);
@@ -277,6 +280,30 @@ public class TestRoot {
 		return e;
 	}
 	
+	/**
+	 * Driver, locator, method to locate BY
+	 * @param d
+	 * @param locator
+	 * @param method
+	 * @return
+	 */
+	public static By find(IOSDriver<IOSElement> d, String locator, String method){
+		if(method.equalsIgnoreCase("name")){
+			return By.name(locator);
+		}
+		else if(method.equalsIgnoreCase("name")){
+			return By.id(locator);
+		}
+		else if(method.equalsIgnoreCase("xpath")){
+			return By.xpath(locator);
+		}
+		else if(method.toLowerCase().contains("css")){
+			return By.cssSelector(locator);
+		}
+		else{
+			return By.className(locator);
+		}
+	}
 	
 	//// Waiting Methods ////
 	public static void sleep(int timeInMs){
@@ -309,12 +336,11 @@ public class TestRoot {
 	public static IOSElement waitForPresent(IOSDriver<IOSElement> d, By by, long timeoutInSec){
 		long timeLeftMil = timeoutInSec * 1000;
 		while(timeLeftMil > 0){
-			
 			if(findElement(d, by) != null){
 				break;
 			}
-			sleep(200);
-			timeLeftMil -= 200;
+//			sleep(200);
+			timeLeftMil -= 1000;
 		}
 		return (IOSElement) d.findElement(by);
 	}
@@ -326,8 +352,7 @@ public class TestRoot {
 			if(findElement(d, by) != null){
 				break;
 			}
-			sleep(100); // Intentionally mismatched to make up for time searching for element
-			timeLeftMil -= 200;
+			timeLeftMil -= 1000; // Takes about a second each time
 		}
 		
 		timeoutInSec = (timeLeftMil / 1000);
@@ -365,8 +390,8 @@ public class TestRoot {
 			if(isElementVisible(ele)){
 				break;
 			}
-			sleep(100); // Intentionally mismatched to make up for time searching for element
-			timeLeftMil -= 200;
+//			sleep(100); // Intentionally mismatched to make up for time searching for element
+			timeLeftMil -= 1000;
 		}
 		
 		timeInSeconds = (int) (timeLeftMil / 1000);
