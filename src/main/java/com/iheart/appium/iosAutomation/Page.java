@@ -3,7 +3,7 @@ package com.iheart.appium.iosAutomation;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
@@ -94,6 +94,25 @@ public class Page extends TestRoot{
 		return contexts;
 	}
 	
+	private static int getRecentY(){
+		int recentY = 100000;
+		try{
+			recentY = waitForVisible(driver, 
+								find(driver, "//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIAStaticText[2]", "xpath"), 
+								2).getLocation().getY();
+		}
+		catch(Exception e){
+			IOSElement testElement = waitForVisible(driver, 
+					find(driver, "//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIAStaticText[1]", "xpath"), 
+					2);
+			if(testElement != null){
+				if(testElement.getText().equalsIgnoreCase("Recent Stations")){
+					recentY = testElement.getLocation().getY();
+				}
+			}
+		}
+		return recentY;
+	}
 	public int isStationAFavorite(String artist){
 		/*
 		 * Click my Station if on home
@@ -107,13 +126,8 @@ public class Page extends TestRoot{
 		int foundStation = -1;
 		homePage.gotoMyStations();
 		IOSElement favorites = waitForVisible(driver, find(driver, "//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIAStaticText[1]", "xpath"), 10);
-		if(favorites != null){
-			int recentY = 100000;
-			try{
-				recentY = waitForVisible(driver, 
-									find(driver, "//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIAStaticText[2]", "xpath"), 
-									10).getLocation().getY();
-			}catch(Exception e){}
+		if(favorites != null && favorites.getText().equalsIgnoreCase("Favorite Stations")){
+			int recentY = getRecentY();
 			for(int i = 1; i <= 25; i++){
 				IOSElement item = getStationFromList(i);
 				if(item.getText().contains(artist)){
@@ -128,7 +142,46 @@ public class Page extends TestRoot{
 		return foundStation;
 	}
 	
-	public IOSElement getStationFromList(int selector){
+	public static boolean removeFavorite(int itemToRemove){
+		boolean removedFavorite = false;
+		// First assert that it is a favorite
+		IOSElement favorites = waitForVisible(driver, find(driver, "//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIAStaticText[1]", "xpath"), 10);
+		if(favorites != null){
+			int recentY = getRecentY();
+			IOSElement item = getStationFromList(itemToRemove);
+			if(item != null){
+				int x = item.getLocation().getX();
+				int y = item.getLocation().getY();
+				if(y < recentY){
+					int w = item.getSize().getWidth();
+					int h = item.getSize().getHeight();
+					int clickX = x + w - (w / 10);
+					int swipeToX = x + w - (w / 2);
+					int clickY = y + h - (h / 2);
+					// Swipe to reveal unfavorite
+					driver.swipe(clickX, clickY, swipeToX, clickY, 500);
+					// Tap unfavorite
+					driver.tap(1, clickX, clickY, 150);
+					removedFavorite = true;
+				}
+			}
+		}
+		
+		return removedFavorite;
+	}
+	
+	public static void removeAllFavorites(){
+		IOSElement itemToRemove = getStationFromList(1);
+		int count = 100; // let's be safe here
+		while(itemToRemove != null && count > 0){
+			count--;
+			if(!removeFavorite(1)){
+				break;
+			}
+		}
+	}
+	
+	public static IOSElement getStationFromList(int selector){
 		String xpathForItem = "//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell[" + selector + "]";
 		return waitForVisible(driver, find(driver, xpathForItem, "xpath"), 5);
 	}

@@ -2,6 +2,7 @@ package com.iheart.appium.iosAutomation;
 
 import java.util.Date;
 
+import org.openqa.selenium.By;
 
 import io.appium.java_client.pagefactory.*;
 import io.appium.java_client.ios.*;
@@ -28,7 +29,9 @@ public class SignUpPage extends Page {
 	@iOSFindBy(name = "Okay") private IOSElement okay;
 
 	// After success signup
-	@iOSFindBy(name = "IHRiPhoneGenrePickerView") private IOSElement genrePicker;
+	@iOSFindBy(name = "IHRiPhoneGenrePickerView") public IOSElement genrePicker;
+	@iOSFindBy(name = "Done") public IOSElement genreDone;
+	@iOSFindBy(name = "Cancel") public IOSElement genreCancel;
 
 	public SignUpPage() {
 		super();
@@ -62,6 +65,46 @@ public class SignUpPage extends Page {
 		return TestRoot.isElementVisible(genrePicker);
 	}
 
+	// By position in list
+	public void selectGenre(int g){
+		selectGenre(g, false);
+	}
+	public void selectGenre(int g, boolean selectingMultiple){
+		// XPATH: //UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell[1]
+		waitForVisible(driver, 
+				By.xpath("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell[" + g + "]"),
+				10).click();
+
+		if(!selectingMultiple){
+			genreDone.click();
+		}
+	}
+	public void selectGenres(int[] gs){
+		for(int g : gs){
+			selectGenre(g, true);
+		}
+		genreDone.click();
+	}
+	
+	// By name
+	public void selectGenre(String g){
+		selectGenre(g, false);
+	}
+	public void selectGenre(String g, boolean selectingMultiple){
+		// Examples: Top 40 & Pop, Country, Hip Hop and R&B, Alternative, etc
+		waitForVisible(driver, By.name(g), 10).click();
+		if(!selectingMultiple){
+			genreDone.click();
+		}
+	}
+	public void selectGenres(String[] gs){
+		for(String g : gs){
+			selectGenre(g, true);
+		}
+		genreDone.click();
+	}
+	
+	
 	private String getCurrentDateInMilli() {
 		Date date = new Date();
 		return date.getTime() + "";

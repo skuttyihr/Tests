@@ -65,7 +65,13 @@ public class LoginPage extends Page {
 		logInFormButton.click();
 		
 		chooseStayConnected(false);
-
+		
+		if(waitForVisible(driver, By.name("IHRiPhoneGenrePickerView"), 10) != null){
+			signupPage.selectGenre("Alternative");
+		}
+		
+		chooseStayConnected(false);
+		
 		// verify we are in
 		IOSElement forYouTest = waitForVisible(driver, By.name("For You"), 35);
 		if(forYouTest != null)

@@ -29,7 +29,7 @@ public class TestPlayback extends TestRoot {
 		Assert.assertTrue("Was not able to login", loginPage.login());
 		Assert.assertTrue("Artist was not added to favorites!", forYouPage.createArtistStation());
 		// Remove favorites
-		
+		Page.removeAllFavorites();
 	}
 
 	@Test
