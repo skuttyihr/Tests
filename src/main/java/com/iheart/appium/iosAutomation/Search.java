@@ -22,7 +22,8 @@ public class Search extends Page {
 	@iOSFindBy(name = "Cancel") public IOSElement cancel;
 	// Search Elements, used to create custom stations
 //	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell[1]") public IOSElement firstElement;
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIATableView[2]/UIATableCell[2]") public IOSElement firstStation;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIATableView[2]/UIATableCell[1]") public IOSElement firstStation;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIATableView[2]/UIATableCell[1]/UIAStaticText[1]") public IOSElement firstStationTitle;
 	// Search result elements
 	
 	// Search filters
@@ -39,12 +40,17 @@ public class Search extends Page {
 	}
 	
 	// Search methods
+	private IOSElement getSearchButton(){
+		return waitForVisible(driver, By.name("Search"), 10);
+	}
 	private void getToSearch(){
-		if(!searchButton.isDisplayed()){
+		IOSElement sb = getSearchButton();
+		if(sb == null || !sb.isDisplayed()){
 			sideNavigationBar.navIcon.click();
 			sideNavigationBar.home.click();
 		}
-		searchButton.click();
+		sb = getSearchButton();
+		sb.click();
 	}
 	/**
 	 * Search for an item, return the name of the selected result
@@ -55,7 +61,7 @@ public class Search extends Page {
 		getToSearch();
 		searchField.sendKeys(searchTerm);
 		waitForElementToBeVisible(firstStation, 10);
-		String selectedStation = firstStation.getText();
+		String selectedStation = firstStationTitle.getText();
 		firstStation.click();
 		return selectedStation;
 	}
@@ -76,5 +82,14 @@ public class Search extends Page {
 		return chosenEpisode;
 	}
 	
-	// Select search results
+	public IOSElement getSearchResult(int i){
+		return waitForVisible(driver, 
+					By.xpath("//UIAApplication[1]/UIAWindow[1]/UIATableView[2]/UIATableCell[" + i + "]"),
+					10);
+	}
+	public IOSElement getSearchResultTitle(int i){
+		return waitForVisible(driver, 
+					By.xpath("//UIAApplication[1]/UIAWindow[1]/UIATableView[2]/UIATableCell[" + i + "]/UIAStaticText[1]"),
+					10);
+	}
 }

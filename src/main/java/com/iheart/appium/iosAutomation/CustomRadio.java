@@ -1,7 +1,5 @@
 package com.iheart.appium.iosAutomation;
 
-import org.junit.Assert;
-
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
 
@@ -24,7 +22,7 @@ public class CustomRadio extends Page {
 		loginPage.dismissStayConnectedPopup();
 		// verify that it is playing: Get its attribute: class shall be 'pause'
 		if (!player.isPlaying("artist"))
-			Assert.fail("Station is not playing.");
+			return "";
 		
 		// Stop the station
 		player.playButton_artist.click();
@@ -36,9 +34,12 @@ public class CustomRadio extends Page {
 		if(chosenStation == null || chosenStation.length() <= 0){
 			return false;
 		}
+		// verify that login prompt has not popped up
+		if (isElementVisible(createAccount)){
+			return false;
+		}
 		
 		// Verify it is the first under My Station -> Recent Stations
-		// Click on top Bake
 		player.back.click();
 		search.cancel.click();
 		myStations.click();
@@ -46,20 +47,7 @@ public class CustomRadio extends Page {
 			System.err.println("Newly played custom station is not added under my Recent Stations.");
 			return false;
 		}
-		// logout
-		sideNavigationBar.gotoSettings();
-		sideNavigationBar.logout();
-
-		// Vefiry Login prompt
-		sideNavigationBar.gotoHomePage();
-		perfectFor.click();
-		// playAstation();
-		playACustomStation();
-		// verify that login prompt is popped up
-		if (!isElementVisible(createAccount)){
-			System.err.println("No login prompt is displayed for signed out users.");
-			return false;
-		}
+		
 		return true;
 	}
 }

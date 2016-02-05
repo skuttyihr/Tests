@@ -502,13 +502,25 @@ public class Player extends Page {
 			theOne = playButton_podcast;
 		else
 			theOne = playButton_artist;
-
+		try{
+			if(createAccount.isDisplayed()){
+				// User tried to play artist radio without logging in
+				return false;
+			}
+		}catch(Exception e){}
+		waitForElementToBeVisible(theOne, 5);
 		// verify that it is playing: Get its attribute: class shall be 'pause'
-		String klasses = theOne.getAttribute("name");
-		System.out.println("See playbutton classes:" + klasses);
-		if (klasses.contains("pause") || klasses.contains("stop"))
-			isPlaying = true;
-
+		try{
+			if(theOne != null && theOne.isDisplayed()){
+				String klasses = theOne.getAttribute("name");
+				System.out.println("See playbutton classes:" + klasses);
+				if (klasses.contains("pause") || klasses.contains("stop"))
+					isPlaying = true;
+			}
+		}
+		catch(Exception e){
+			return false;
+		}
 		return isPlaying;
 	}
 }

@@ -52,5 +52,8 @@ public class TestPlayback extends TestRoot {
 		Assert.assertTrue("Was not able to login", loginPage.login());
 		Assert.assertTrue("Was not able to play a custom station and load it into recent history", 
 				customRadio.canPlayCustomStation());
+		sideNavBar.logout();
+		Assert.assertFalse("Was able to play a custom station after loggingout", 
+				customRadio.canPlayCustomStation());
 	}
 }
