@@ -52,7 +52,8 @@ public class TestRoot {
 	protected static SideNavigationBar sideNavBar;
 
 	protected static ForYouPage forYouPage;
-	protected static PerfectForPage perfectForPage;
+	protected static CustomRadio customRadio;
+	protected static Search search;
 	protected static DeepLink deepLink;
 	protected static PodcastsPage podcastsPage;
 	protected static boolean useSimulator = false;
@@ -144,9 +145,9 @@ public class TestRoot {
 		sideNavBar = new SideNavigationBar(driver);
 
 		forYouPage = new ForYouPage(driver);
-		perfectForPage = new PerfectForPage(driver);
 		podcastsPage = new PodcastsPage(driver);
-
+		search = new Search(driver);
+		customRadio = new CustomRadio(driver);
 		deepLink = new DeepLink(driver);
 
 		driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);

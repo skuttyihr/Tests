@@ -213,14 +213,11 @@ public class LoginPage extends Page {
 
 	}
 
-	private void dismissStayConnectedPopup() {
+	public void dismissStayConnectedPopup() {
 		try {
 			driver.findElement(By.name("Maybe Later")).click();
 		} catch (Exception e) {
-
 		}
-
-		TestRoot.sleep(2000);
 	}
 
 	private void chooseStayConnected(boolean stayConnected) {

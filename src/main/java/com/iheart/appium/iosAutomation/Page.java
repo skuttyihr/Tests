@@ -14,11 +14,10 @@ import org.openqa.selenium.support.PageFactory;
 
 public class Page extends TestRoot{
 
-	// Search field
-	@iOSFindBy(name = "Search") public IOSElement searchButton;
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIASearchBar[1]") public IOSElement searchField;
-	@iOSFindBy(name = "Cancel") public IOSElement cancel;
-
+	// LOGIN PROMPT
+	@iOSFindBy(name = "Sign up for Free") protected IOSElement signUpPrompt;
+	@iOSFindBy(name = "Create Account") protected IOSElement createAccount;
+	
 	// SUB NAVIGATION bar
 	@iOSFindBy(name = "My Stations") public IOSElement myStations;
 	@iOSFindBy(name = "For You") public IOSElement forYou;
@@ -185,4 +184,5 @@ public class Page extends TestRoot{
 		String xpathForItem = "//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell[" + selector + "]";
 		return waitForVisible(driver, find(driver, xpathForItem, "xpath"), 5);
 	}
+	
 }

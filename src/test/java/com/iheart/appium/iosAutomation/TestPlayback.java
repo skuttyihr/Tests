@@ -50,6 +50,7 @@ public class TestPlayback extends TestRoot {
 	public void test_playCustomStation_search_logout() throws Exception {
 		System.out.println("test method:" + name.getMethodName());
 		Assert.assertTrue("Was not able to login", loginPage.login());
-		perfectForPage.playCustomStation();
+		Assert.assertTrue("Was not able to play a custom station and load it into recent history", 
+				customRadio.canPlayCustomStation());
 	}
 }

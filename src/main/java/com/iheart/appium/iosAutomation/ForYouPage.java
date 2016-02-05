@@ -27,9 +27,9 @@ public class ForYouPage extends Page {
 	// Returns true if the station was added
 	public boolean createArtistStation() {
 		String artist = "Josh Groban";
-		waitForElementToBeVisible(searchButton, 5);
-		searchButton.click();
-		searchField.sendKeys(artist);
+		waitForElementToBeVisible(search.searchButton, 5);
+		search.searchButton.click();
+		search.searchField.sendKeys(artist);
 		topHit.click();
 		// Verify PLAYER
 		player.verifyPlayer_artist(artist);
@@ -39,7 +39,7 @@ public class ForYouPage extends Page {
 		player.doSkip();
 		// Verify that this station is added under My Station
 		player.back.click();
-		player.cancel.click();
+		search.cancel.click();
 		player.myStations.click();
 		return isStationAFavorite(artist) > 0;
 	}

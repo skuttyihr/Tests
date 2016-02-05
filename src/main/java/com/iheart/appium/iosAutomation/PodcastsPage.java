@@ -6,6 +6,7 @@ import io.appium.java_client.pagefactory.*;
 
 import io.appium.java_client.ios.*;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.remote.RemoteWebElement;
 
@@ -84,5 +85,13 @@ public class PodcastsPage extends Page {
 		// 0.5", "element: " + ((RemoteWebElement)objSlider).getId()};
 		js.executeScript("mobile: swipe", swipeObject);
 
+	}
+	
+	public IOSElement getPodcastEpisode(int i){
+		i += 1; // First "podcast episode" is actually the station
+		//UIAApplication[1]/UIAWindow[1]/UIATableView[3]/UIATableCell[2]
+		return waitForVisible(driver, 
+					By.xpath("//UIAApplication[1]/UIAWindow[1]/UIATableView[3]/UIATableCell[" + i + "]"),
+					10);
 	}
 }
