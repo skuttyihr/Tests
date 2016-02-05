@@ -45,7 +45,7 @@ public class Player extends Page {
 
 //	@iOSFindBy(name = "Skip") public IOSElement skip;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAButton[6]") public IOSElement skip;
-	@iOSFindBy(name = "Scan") public IOSElement scan;
+	@iOSFindBy(name = "scan") public IOSElement scan;
 	@iOSFindBy(name = "Thumb up") public IOSElement thumbUp;
 	@iOSFindBy(name = "Thumb down") public IOSElement thumbDown;
 	// FOR SHARE
