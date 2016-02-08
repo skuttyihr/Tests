@@ -9,7 +9,8 @@ public class SideNavigationBar extends Page {
 
 	// ******* Side Navigation Bar *******
 	// @iOSFindBy(name="nav")
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIANavigationBar[1]/UIAButton[1]") public IOSElement navIcon;
+//	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIANavigationBar[1]/UIAButton[1]") public IOSElement navIcon;
+	@iOSFindBy(name = "Side Menu") public IOSElement navIcon;
 	@iOSFindBy(name = "Now Playing") public IOSElement playingIcon;
 
 	@iOSFindBy(name = "iheartradio_logo_full") public IOSElement iheartradio_logo_full;
@@ -72,6 +73,7 @@ public class SideNavigationBar extends Page {
 
 	public void gotoSettings() {
 		if(settings == null || !settings.isDisplayed()){
+			waitForElementToBeVisible(navIcon, 2);
 			navIcon.click();
 		}
 		waitForElementToBeVisible(settings, 5);

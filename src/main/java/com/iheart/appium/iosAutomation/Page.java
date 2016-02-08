@@ -33,6 +33,7 @@ public class Page extends TestRoot{
 	static final String USER_NAME = "iheartrocks999@gmail.com";
 	static final String PASSWORD = "iheart001";
 	static final String FACEBOOK_USER_NAME = USER_NAME;
+	static final String FACEBOOK_USER_PERSONAL_NAME = "Tony Sopranos";
 	static final String GOOGLE_USER_NAME = USER_NAME;
 
 	public static final String screenshot_folder = "iosScreenshots";

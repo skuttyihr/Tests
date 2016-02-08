@@ -108,10 +108,9 @@ public class ForYouPage extends Page {
 		// tap on My Station and make sure Station is added??
 		// Verify that this station is added under My Station
 		(player.back).click();
-		TestRoot.sleep(1000);
-		driver.findElement(By.name("My Stations")).click();
-		TestRoot.sleep(1000);
-		// if (!topHit.getText().equals(myStation))
+		waitForVisible(driver, By.name("My Stations"), 5).click();
+		// Wait for the list to be visible
+		getStationFromList(1); // Includes a wait
 		if (!driver.getPageSource().contains(myStation))
 			Assert.fail("Live station is not added under My Station.");
 	}

@@ -377,12 +377,18 @@ public class TestRoot {
 	}
 	
 	public static boolean isElementVisible(IOSElement ele){
+		boolean isDisplayed = false;
 		try{
-			return ele.isDisplayed();
+			driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
+			isDisplayed = ele.isDisplayed();
 		}
 		catch(Exception e){
-			return false;
+			// Is displayed is already false;
 		}
+		finally{
+			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
+		}
+		return isDisplayed;
 	}
 	
 	public static void waitForElementToBeVisible(IOSElement ele, int timeInSeconds){
@@ -400,12 +406,14 @@ public class TestRoot {
 		if(timeLeftMil >= 500){
 			timeInSeconds = 1;
 		}
-		
-		WebDriverWait wait = new WebDriverWait(driver, timeInSeconds);
-		try{
-			wait.until(ExpectedConditions.elementToBeClickable(ele));
-		}
-		catch(Exception e){
+		if(timeInSeconds >= 1){
+			WebDriverWait wait = new WebDriverWait(driver, timeInSeconds);
+			try{
+				wait.until(ExpectedConditions.elementToBeClickable(ele));
+			}
+			catch(Exception e){
+				return;
+			}
 		}
 	}
 	

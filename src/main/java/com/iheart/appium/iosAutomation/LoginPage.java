@@ -2,7 +2,8 @@ package com.iheart.appium.iosAutomation;
 
 import io.appium.java_client.pagefactory.*;
 
-import org.junit.Assert;
+import java.util.Set;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import io.appium.java_client.ios.*;
@@ -80,85 +81,104 @@ public class LoginPage extends Page {
 			return false;
 	}
 
-	public void loginViaFacebook_NEW() {
-		loginButton.click();
-		TestRoot.sleep(1000);
-		facebookButton.click();
-		TestRoot.sleep(2000);
+//	public void loginViaFacebook_NEW() {
+//		loginButton.click();
+//		waitForElementToBeVisible(facebookButton, 10);
+//		facebookButton.click();
+//		
+//		// Give Context time to switch
+//		TestRoot.sleep(2000);
+//		Set<String> handles = getContextHandles();
+//		if(handles.size() > 1){ 
+//			driver.context("WEBVIEW_1");
+//			sleep(2000);
+//		}
+//		/*
+//		 * //native view facebookEmail_native.sendKeys(FACEBOOK_USER_NAME);
+//		 * facebookPassword_native.sendKeys(PASSWORD); FBlogin_native.click();
+//		 * TestRoot.sleep(5000);
+//		 */
+//		waitForVisible(driver, By.name("email"), 5).sendKeys(FACEBOOK_USER_NAME);
+//		driver.findElement(By.name("pass")).sendKeys(PASSWORD);
+//		driver.findElement(By.name("login")).click();
+//
+//		// Handle Authorizaton confirm
+//		waitForVisible(driver, By.name("__CONFIRM__"), 5).click();
+//		
+//		// Now switch to native view
+//		if(handles.size() > 1){ 
+//			sleep(500);
+//			driver.context("NATIVE_APP");
+//			sleep(2000);
+//		}
+//
+//		handleWantYourLocalRadioPopup();
+//		tellUsWhatYouLike();
+//		dismissStayConnectedPopup();
+//
+//		// Now go to setting to check login status
+//		try {
+//			// In case navIcon is not showing up yet
+//			sideNavigationBar.navIcon.click();
+//		} catch (Exception e) {
+//			tellUsWhatYouLike();
+//		}
+//		sideNavigationBar.gotoSettings();
+//
+//		// check status
+//		String status = driver
+//				.findElement(
+//						By.xpath("//UIAApplication[1]/UIAWindow[1]/UIATableView[2]/UIATableCell[1]/UIAStaticText[2]"))
+//				.getText();
+//		System.out.println("Status:" + status);
+//		if (!status.equalsIgnoreCase("Logged In"))
+//			Assert.fail("Facebook login failed.");
+//	}
 
-		getContextHandles();
-
-		System.out.println("See context Now:" + driver.getContext());
-
-		driver.context("WEBVIEW_1");
-		TestRoot.sleep(5000);
-		System.out.println("After switch:" + driver.getContext());
-		/*
-		 * //native view facebookEmail_native.sendKeys(FACEBOOK_USER_NAME);
-		 * facebookPassword_native.sendKeys(PASSWORD); FBlogin_native.click();
-		 * TestRoot.sleep(5000);
-		 */
-		driver.findElement(By.name("email")).sendKeys(FACEBOOK_USER_NAME);
-		driver.findElement(By.name("pass")).sendKeys(PASSWORD);
-		driver.findElement(By.name("login")).click();
-
-		TestRoot.sleep(2000);
-		// Handle Authorizaton confirm
-		driver.findElement(By.name("__CONFIRM__")).click();
-
-		// Now switch to native view
-		driver.context("NATIVE_APP");
-		// System.out.println("See page:" + driver.getPageSource());
-
-		TestRoot.sleep(5000);
-
-		handleWantYourLocalRadioPopup();
-		tellUsWhatYouLike();
-		dismissStayConnectedPopup();
-
-		// Now go to setting to check login status
-		try {
-			// In case navIcon is not showing up yet
-			sideNavigationBar.navIcon.click();
-		} catch (Exception e) {
-			tellUsWhatYouLike();
-		}
-		sideNavigationBar.gotoSettings();
-
-		// check status
-		String status = driver
-				.findElement(
-						By.xpath("//UIAApplication[1]/UIAWindow[1]/UIATableView[2]/UIATableCell[1]/UIAStaticText[2]"))
-				.getText();
-		System.out.println("Status:" + status);
-		if (!status.equalsIgnoreCase("Logged In"))
-			Assert.fail("Facebook login failed.");
-	}
-
-	public void loginViaFacebook() {
-		System.out.println("See context:" + driver.getContext());
+	public boolean loginViaFacebook() {
+//		System.out.println("See context:" + driver.getContext());
 		// getContextHandles();
+		waitForElementToBeVisible(loginButton, 10);
 		loginButton.click();
-		TestRoot.sleep(1000);
+		waitForElementToBeVisible(userName, 5);
 		facebookButton.click();
+		
+		//Sleep to allow web to display, can't wait because context needs to switch
 		TestRoot.sleep(2000);
-
-		getContextHandles();
-		driver.context("WEBVIEW_1");
-		TestRoot.sleep(5000);
-		System.out.println("After switch:" + driver.getContext());
-		driver.findElement(By.name("email")).sendKeys(FACEBOOK_USER_NAME);
-		driver.findElement(By.name("pass")).sendKeys(PASSWORD);
-		driver.findElement(By.name("login")).click();
-
-		// Handle Authorizaton confirm
-		driver.findElement(By.name("__CONFIRM__")).click();
-
+		Set<String> handles = getContextHandles();
+		String webContext = "";
+		if(handles != null && handles.size() > 0){
+			for(String c : handles){
+				if(c.contains("WEB")){
+					webContext = c;
+					driver.context(c);
+				}
+			}
+			TestRoot.sleep(1000);
+		}
+		if(driver.getContext().equals(webContext)){
+			// Delay so we can give them time
+			sleep(1000);
+			driver.findElement(By.name("email")).sendKeys(FACEBOOK_USER_NAME); // iheartrocks999@gmail.com
+			driver.findElement(By.name("pass")).sendKeys(PASSWORD); // iheart001
+			driver.findElement(By.name("login")).click();
+			sleep(2000);
+			// Handle Authorizaton confirm
+			try{
+				driver.findElement(By.name("__CONFIRM__")).click();
+			}
+			catch(Exception e){}
+		}
+		else{
+			System.err.println("Could not switch to Facebook web view context.");
+			return false;
+		}
 		// Now switch to native view
-		driver.context("NATIVE_APP");
-		// System.out.println("See page:" + driver.getPageSource());
-
-		TestRoot.sleep(5000);
+		if(handles != null && handles.size() > 1){
+			sleep(1000);
+			driver.context("NATIVE_APP");
+			sleep(3000);
+		}
 
 		handleWantYourLocalRadioPopup();
 		tellUsWhatYouLike();
@@ -168,13 +188,14 @@ public class LoginPage extends Page {
 		sideNavigationBar.gotoSettings();
 
 		// check status
-		String status = driver
-				.findElement(
-						By.xpath("//UIAApplication[1]/UIAWindow[1]/UIATableView[2]/UIATableCell[1]/UIAStaticText[2]"))
+		String status = driver.findElement(
+						By.name("Logged In"))
 				.getText();
 		System.out.println("Status:" + status);
-		if (!status.equalsIgnoreCase("Logged In"))
-			Assert.fail("Facebook login failed.");
+		if (status == null || status.length() <= 0 || !status.equals("Logged In"))
+			return false;
+		else
+			return true;
 	}
 
 	private void handleWantYourLocalRadioPopup() {
