@@ -1,306 +1,274 @@
 package com.iheart.appium.iosAutomation;
 
-
-import java.util.List;
 import io.appium.java_client.pagefactory.*;
+
+import java.util.Set;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import io.appium.java_client.ios.*;
-
-import org.openqa.selenium.support.PageFactory;
 
 import org.openqa.selenium.support.FindBy;
 
 public class LoginPage extends Page {
 
-	@iOSFindBy(xpath="//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[1]/UIATextField[1]")
-	    private IOSElement userName;
-	@iOSFindBy(xpath="//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[2]/UIASecureTextField[1]")
-	   private IOSElement password;
-	@iOSFindBy(name="Log In") private IOSElement loginButton;
-	
-	
-	@iOSFindBy(name="Facebook") private WebElement facebookButton;
-	
-	@iOSFindBy(xpath="//UIAApplication[1]/UIAWindow[2]/UIAScrollView[1]/UIAScrollView[1]/UIAWebView[1]/UIATextField[1]")
-		private WebElement fbEmail;
-	@iOSFindBy(xpath="//UIAApplication[1]/UIAWindow[2]/UIAScrollView[1]/UIAScrollView[1]/UIAWebView[1]/UIASecureTextField[1]")
-	    private IOSElement fbPassword;
-	@iOSFindBy(xpath="//UIAApplication[1]/UIAWindow[2]/UIAScrollView[1]/UIAScrollView[1]/UIAWebView[1]/UIAButton[1]")
-		private IOSElement fbLogin;
-	
-	
-	//WEB version
-	@FindBy(name="email") private WebElement facebookEmail_web;
-	@FindBy(name="pass") private WebElement facebookPass_web;
-	@FindBy(name="login") private WebElement facebookLogin;
-	
-	
-	//Native version
-	
-	@iOSFindBy(xpath="//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIATextField[1]") 
-	   private WebElement facebookEmail_native;
-	@iOSFindBy(xpath="//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIASecureTextField[1]")
-	   private WebElement facebookPassword_native;
-	@iOSFindBy(xpath="//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIAButton[1]") 
-	   private WebElement FBlogin_native;
-	
-	
-	@iOSFindBy(name="Google") private WebElement googleButton;
-	@iOSFindBy(xpath="//UIAApplication[1]/UIAWindow[2]/UIAScrollView[1]/UIAScrollView[1]/UIAWebView[1]/UIATextField[1]")
-	   private WebElement googleEmail;
-	@iOSFindBy(name="Next") private WebElement nextButton;
-	@iOSFindBy(xpath="//UIAApplication[1]/UIAWindow[2]/UIAScrollView[1]/UIAScrollView[1]/UIAWebView[1]/UIASecureTextField[1]")
-	   private WebElement googlePassword;
-	@iOSFindBy(name="Sign in") private WebElement signIn;
-	//for first-timer
-	@iOSFindBy(name="Continue") private WebElement continueButton; //for first-time login user
-	@iOSFindBy(name="Allow") private WebElement allowButton;
-	
-	//for verification: Maybe shall move nav bar stuff up to the Page.java?
-	@iOSFindBy(name="For You") private WebElement forYou;
-	
-	
-	
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[1]/UIATextField[1]") private IOSElement userName;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[2]/UIASecureTextField[1]") private IOSElement password;
+	@iOSFindBy(name = "Log In") private IOSElement loginButton;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAButton[2]") private IOSElement logInFormButton;
+	@iOSFindBy(name = "Facebook") private WebElement facebookButton;
 
-	public LoginPage()
-	{
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[2]/UIAScrollView[1]/UIAScrollView[1]/UIAWebView[1]/UIATextField[1]") private WebElement fbEmail;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[2]/UIAScrollView[1]/UIAScrollView[1]/UIAWebView[1]/UIASecureTextField[1]") private IOSElement fbPassword;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[2]/UIAScrollView[1]/UIAScrollView[1]/UIAWebView[1]/UIAButton[1]") private IOSElement fbLogin;
+
+	// WEB version
+	@FindBy(name = "email") private WebElement facebookEmail_web;
+	@FindBy(name = "pass") private WebElement facebookPass_web;
+	@FindBy(name = "login") private WebElement facebookLogin;
+
+	// Native version
+
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIATextField[1]") private WebElement facebookEmail_native;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIASecureTextField[1]") private WebElement facebookPassword_native;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIAButton[1]") private WebElement FBlogin_native;
+
+	@iOSFindBy(name = "Google") private WebElement googleButton;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[2]/UIAScrollView[1]/UIAScrollView[1]/UIAWebView[1]/UIATextField[1]") private WebElement googleEmail;
+	@iOSFindBy(name = "Next") private WebElement nextButton;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[2]/UIAScrollView[1]/UIAScrollView[1]/UIAWebView[1]/UIASecureTextField[1]") private WebElement googlePassword;
+	@iOSFindBy(name = "Sign in") private WebElement signIn;
+	// for first-timer
+	@iOSFindBy(name = "Continue") private WebElement continueButton; // for first-time login user
+	@iOSFindBy(name = "Allow") private WebElement allowButton;
+
+	// for verification: Maybe shall move nav bar stuff up to the Page.java?
+	@iOSFindBy(name = "For You")
+	private WebElement forYou;
+
+	public LoginPage() {
 		super();
-		//PageFactory.initElements(new AppiumFieldDecorator(driver), this);
+		// PageFactory.initElements(new AppiumFieldDecorator(driver), this);
 	}
-	public LoginPage(IOSDriver _driver)
-	{
+
+	public LoginPage(IOSDriver<IOSElement> _driver) {
 		super(_driver);
-		//PageFactory.initElements(new AppiumFieldDecorator(driver), this);
+		// PageFactory.initElements(new AppiumFieldDecorator(driver), this);
 	}
-	
-	public void login()
-	{  //logger.info("About to login...");
-	   
-	   loginButton.click();
-	   
-	   	userName.sendKeys(USER_NAME);
+
+	public boolean login() { // logger.info("About to login...");
+		
+		waitForElementToBeVisible(loginButton, 20);
+		loginButton.click();
+		waitForElementToBeVisible(userName, 5);
+		userName.sendKeys(USER_NAME);
 		password.sendKeys(PASSWORD);
-		//loginButton.click();
-	    
-		driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAButton[1]")).click();
-		if (isRealDevice)
-		    WaitUtility.sleep(15000);
-		else
-		    WaitUtility.sleep(5000);
+		logInFormButton.click();
 		
 		chooseStayConnected(false);
 		
+		if(waitForVisible(driver, By.name("IHRiPhoneGenrePickerView"), 10) != null){
+			signupPage.selectGenre("Alternative");
+		}
 		
-		//verify we are in!
-	   
-	    driver.findElement(By.name("For You")).getText();
-	   try{
-		   driver.findElement(By.name("For You")).getText();
-	   }catch(Exception e)
-	   {
-		   errors.append("Home page is not shown.");
-	   }
+		chooseStayConnected(false);
+		
+		// verify we are in
+		IOSElement forYouTest = waitForVisible(driver, By.name("For You"), 35);
+		if(forYouTest != null)
+			return forYouTest.isDisplayed();
+		else
+			return false;
 	}
-	
-	
-	public void AIOS_22669_loginViaFacebook_NEW()
-	{  
+
+//	public void loginViaFacebook_NEW() {
+//		loginButton.click();
+//		waitForElementToBeVisible(facebookButton, 10);
+//		facebookButton.click();
+//		
+//		// Give Context time to switch
+//		TestRoot.sleep(2000);
+//		Set<String> handles = getContextHandles();
+//		if(handles.size() > 1){ 
+//			driver.context("WEBVIEW_1");
+//			sleep(2000);
+//		}
+//		/*
+//		 * //native view facebookEmail_native.sendKeys(FACEBOOK_USER_NAME);
+//		 * facebookPassword_native.sendKeys(PASSWORD); FBlogin_native.click();
+//		 * TestRoot.sleep(5000);
+//		 */
+//		waitForVisible(driver, By.name("email"), 5).sendKeys(FACEBOOK_USER_NAME);
+//		driver.findElement(By.name("pass")).sendKeys(PASSWORD);
+//		driver.findElement(By.name("login")).click();
+//
+//		// Handle Authorizaton confirm
+//		waitForVisible(driver, By.name("__CONFIRM__"), 5).click();
+//		
+//		// Now switch to native view
+//		if(handles.size() > 1){ 
+//			sleep(500);
+//			driver.context("NATIVE_APP");
+//			sleep(2000);
+//		}
+//
+//		handleWantYourLocalRadioPopup();
+//		tellUsWhatYouLike();
+//		dismissStayConnectedPopup();
+//
+//		// Now go to setting to check login status
+//		try {
+//			// In case navIcon is not showing up yet
+//			sideNavigationBar.navIcon.click();
+//		} catch (Exception e) {
+//			tellUsWhatYouLike();
+//		}
+//		sideNavigationBar.gotoSettings();
+//
+//		// check status
+//		String status = driver
+//				.findElement(
+//						By.xpath("//UIAApplication[1]/UIAWindow[1]/UIATableView[2]/UIATableCell[1]/UIAStaticText[2]"))
+//				.getText();
+//		System.out.println("Status:" + status);
+//		if (!status.equalsIgnoreCase("Logged In"))
+//			Assert.fail("Facebook login failed.");
+//	}
+
+	public boolean loginViaFacebook() {
+//		System.out.println("See context:" + driver.getContext());
+		// getContextHandles();
+		waitForElementToBeVisible(loginButton, 10);
 		loginButton.click();
-	    WaitUtility.sleep(1000);
-	    facebookButton.click();
-	    WaitUtility.sleep(2000);
-	   
-	    
-	    getContextHandles();
-	    
-	    System.out.println("See context Now:" + driver.getContext());
-	    
-	    driver.context("WEBVIEW_1");
-	    WaitUtility.sleep(5000);
-	    System.out.println("After switch:" + driver.getContext());
-	    /*//native view
-	    facebookEmail_native.sendKeys(FACEBOOK_USER_NAME);
-	    facebookPassword_native.sendKeys(PASSWORD);
-	    FBlogin_native.click();
-	    WaitUtility.sleep(5000);
-	    */
-	     driver.findElement(By.name("email")).sendKeys(FACEBOOK_USER_NAME);
-	    driver.findElement(By.name("pass")).sendKeys(PASSWORD);
-	    driver.findElement(By.name("login")).click();
-	    
-	    WaitUtility.sleep(2000);
-	    //Handle Authorizaton confirm
-	    driver.findElement(By.name("__CONFIRM__")).click();
-	   
-	    //Now switch to native view
-	    driver.context("NATIVE_APP");
-	 //   System.out.println("See page:" + driver.getPageSource());
-	 
-	    WaitUtility.sleep(5000);
-	    
-	    handleWantYourLocalRadioPopup();
-	    tellUsWhatYouLike();
-	    dismissStayConnectedPopup();
-	    
-	    
-	    //Now go to setting to check login status
-	    try {
-	    	//In case navIcon is not showing up yet
-	    	sideNavigationBar.navIcon.click();
-	    }catch(Exception e)
-	    {
-	    	tellUsWhatYouLike();
-	    }
-	    sideNavigationBar.gotoSettings();
-	    
-	    //check status
-	    String status = driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIATableView[2]/UIATableCell[1]/UIAStaticText[2]")).getText();
-	    System.out.println("Status:" + status);
-	    if (!status.equalsIgnoreCase("Logged In"))
-	    	handleError("Facebook login failed.", "AIOS_22669_loginViaFacebook");
+		waitForElementToBeVisible(userName, 5);
+		facebookButton.click();
+		
+		//Sleep to allow web to display, can't wait because context needs to switch
+		TestRoot.sleep(2000);
+		Set<String> handles = getContextHandles();
+		String webContext = "";
+		if(handles != null && handles.size() > 0){
+			for(String c : handles){
+				if(c.contains("WEB")){
+					webContext = c;
+					driver.context(c);
+				}
+			}
+			TestRoot.sleep(1000);
+		}
+		if(driver.getContext().equals(webContext)){
+			// Delay so we can give them time
+			sleep(1000);
+			driver.findElement(By.name("email")).sendKeys(FACEBOOK_USER_NAME); // iheartrocks999@gmail.com
+			driver.findElement(By.name("pass")).sendKeys(PASSWORD); // iheart001
+			driver.findElement(By.name("login")).click();
+			sleep(2000);
+			// Handle Authorizaton confirm
+			try{
+				driver.findElement(By.name("__CONFIRM__")).click();
+			}
+			catch(Exception e){}
+		}
+		else{
+			System.err.println("Could not switch to Facebook web view context.");
+			return false;
+		}
+		// Now switch to native view
+		if(handles != null && handles.size() > 1){
+			sleep(1000);
+			driver.context("NATIVE_APP");
+			sleep(3000);
+		}
+
+		handleWantYourLocalRadioPopup();
+		tellUsWhatYouLike();
+		dismissStayConnectedPopup();
+
+		// Now go to setting to check login status
+		sideNavigationBar.gotoSettings();
+
+		// check status
+		String status = driver.findElement(
+						By.name("Logged In"))
+				.getText();
+		System.out.println("Status:" + status);
+		if (status == null || status.length() <= 0 || !status.equals("Logged In"))
+			return false;
+		else
+			return true;
 	}
-	
-	public void AIOS_22669_loginViaFacebook()
-	{   System.out.println("See context:" + driver.getContext());
-		//getContextHandles();
+
+	private void handleWantYourLocalRadioPopup() {
+
+		try {
+			driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAButton[3]")).click();
+		} catch (Exception e) {
+
+		}
+
+	}
+
+	public void loginViaGoogle() {
 		loginButton.click();
-	    WaitUtility.sleep(1000);
-	    facebookButton.click();
-	    WaitUtility.sleep(2000);
-	   
-	    
-	    getContextHandles();
-	    driver.context("WEBVIEW_1");
-	    WaitUtility.sleep(5000);
-	    System.out.println("After switch:" + driver.getContext());
-	    driver.findElement(By.name("email")).sendKeys(FACEBOOK_USER_NAME);
-	    driver.findElement(By.name("pass")).sendKeys(PASSWORD);
-	    driver.findElement(By.name("login")).click();
-	    
-	    //Handle Authorizaton confirm
-	    driver.findElement(By.name("__CONFIRM__")).click();
-	    
-	    //Now switch to native view
-	    driver.context("NATIVE_APP");
-	  //  System.out.println("See page:" + driver.getPageSource());
-	 
-	    WaitUtility.sleep(5000);
-	    
-	    handleWantYourLocalRadioPopup();
-	    tellUsWhatYouLike();
-	    dismissStayConnectedPopup();
-	    
-	    //Now go to setting to check login status
-	    sideNavigationBar.gotoSettings();
-	    
-	    //check status
-	    String status = driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIATableView[2]/UIATableCell[1]/UIAStaticText[2]")).getText();
-	    System.out.println("Status:" + status);
-	    if (!status.equalsIgnoreCase("Logged In"))
-	    	handleError("Facebook login failed.", "AIOS_22669_loginViaFacebook");
-	}
-	
-	
-	private void handleWantYourLocalRadioPopup()
-	{
-		
-	  try{
-		  driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAButton[3]")).click();
-	  }catch(Exception e)
-	  {
-		  
-	  }
-		
-		
-	}
-	
-	public void loginViaGoogle()
-	{   loginButton.click();
-    	WaitUtility.sleep(1000);
+		TestRoot.sleep(1000);
 		googleButton.click();
-		WaitUtility.sleep(2000);
+		TestRoot.sleep(2000);
 		googleEmail.sendKeys(GOOGLE_USER_NAME);
 		nextButton.click();
-	    googlePassword.sendKeys(PASSWORD);
+		googlePassword.sendKeys(PASSWORD);
 		signIn.click();
-	    try{
-	    	continueButton.click();
-	    }catch(Exception e)
-	    {
-	    	
-	    }
-	    
-	    try{
-	    	allowButton.click();
-	    }catch(Exception e)
-	    {
-	    	
-	    }
-	    //verfiy that we are in Perfect for now!
-	    //See page source:
-	    logger.info("see page:" +  driver.getPageSource()) ;
-		
-	}
-	
-	
-	
-	private void dismissStayConnectedPopup()
-	{    
-		try{
-			 driver.findElement(By.name("Maybe Later")).click();
-		}catch(Exception e)
-		{
-			
+		try {
+			continueButton.click();
+		} catch (Exception e) {
+
 		}
-		
-		WaitUtility.sleep(2000);
+
+		try {
+			allowButton.click();
+		} catch (Exception e) {
+
+		}
+		// verfiy that we are in Perfect for now!
+		// See page source:
+//		logger.info("see page:" + driver.getPageSource());
+
 	}
-	
-	private void chooseStayConnected(boolean stayConnected)
-	{    handlePossiblePopUp();
+
+	public void dismissStayConnectedPopup() {
+		try {
+			driver.findElement(By.name("Maybe Later")).click();
+		} catch (Exception e) {
+		}
+	}
+
+	private void chooseStayConnected(boolean stayConnected) {
+		handlePossiblePopUp();
 		tellUsWhatYouLike();
-		try{
-			 if (stayConnected)
-				 driver.findElement(By.name("Get Notifications")).click();
-			 else 
-				 driver.findElement(By.name("Maybe Later")).click();
-		}catch(Exception e)
-		{
-			
-		}
-		
-		WaitUtility.sleep(2000);
-	}
-	
-	//Want your local radio?
-	private void handlePossiblePopUp()
-	{
-		try{
-			if (isRealDevice)
-				WaitUtility.sleep(10000);
+		try {
+			if (stayConnected)
+				waitForVisible(driver, By.name("Get Notifications"), 2).click();
 			else
-			    WaitUtility.sleep(1000);
-			driver.findElement(By.name("No Thanks")).click();
-		}catch(Exception e)
-		{
-			
+				waitForVisible(driver, By.name("Maybe Later"), 2).click();
+		} catch (Exception e) {
 		}
 	}
-	
-    //Tell us what you like
-	private void tellUsWhatYouLike()
-	{   WaitUtility.sleep(2000);
-		try{
-		  driver.findElement(By.name("Rock")).click();
-		  if (isRealDevice)
-			  WaitUtility.sleep(2000);
-		  driver.findElement(By.name("Done")).click();
-		  WaitUtility.sleep(2000);
-		}catch(Exception e)
-		{
-		  // e.printStackTrace();	
+
+	// Want your local radio?
+	private void handlePossiblePopUp() {
+		try {
+			waitForVisible(driver, By.name("No Thanks"), 5).click();
+		} catch (Exception e) {
 		}
 	}
-	
+
+	// Tell us what you like
+	private void tellUsWhatYouLike() {
+		try {
+			driver.findElement(By.name("Pop")).click();
+			driver.findElement(By.name("Done")).click();
+		} catch (Exception e) {
+			// e.printStackTrace();
+		}
+	}
+
 }

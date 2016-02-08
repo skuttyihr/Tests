@@ -1,39 +1,39 @@
 package com.iheart.appium.iosAutomation;
 
-
-import org.apache.log4j.Logger;
-
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
 
-import org.openqa.selenium.By;
+public class HomePage extends Page {
 
-import io.appium.java_client.pagefactory.*;
-import org.openqa.selenium.support.PageFactory;
-public class HomePage extends Page{
-
-	public HomePage()
-	{
+	public HomePage() {
 		super();
 	}
-	/*
-	public HomePage(IOSDriver _driver)
-	{
+	public HomePage(IOSDriver<IOSElement> _driver){
 		super(_driver);
 	}
-	*/
-	public void gotoMyStations()
-	{
+
+	/*
+	 * public HomePage(IOSDriver _driver) { super(_driver); }
+	 */
+	public void gotoHome(){
+		if(!forYou.isDisplayed()){
+			sideNavigationBar.navIcon.click();
+			sideNavigationBar.home.click();
+		}
+	}
+	public void gotoMyStations() {
+		gotoHome();
 		myStations.click();
 	}
-	public void gotoForYou()
-	{
+
+	public void gotoForYou() {
+		gotoHome();
 		forYou.click();
 	}
-	
-	public void gotoPerfectFor()
-	{
+
+	public void gotoPerfectFor() {
+		gotoHome();
 		perfectFor.click();
 	}
-	
+
 }
