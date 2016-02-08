@@ -36,7 +36,7 @@ public class TestPlayback extends TestRoot {
 	public void test_playPodcasts_skip_share() throws Exception {
 		System.out.println("test method:" + name.getMethodName());
 		Assert.assertTrue("Was not able to login", loginPage.login());
-		podcastsPage.playPodcasts();
+		Assert.assertTrue("Could not play a podcast episode", podcastsPage.playPodcasts());
 	}
 
 	@Test

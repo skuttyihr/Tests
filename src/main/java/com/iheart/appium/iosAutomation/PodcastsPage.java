@@ -13,61 +13,26 @@ import org.openqa.selenium.remote.RemoteWebElement;
 public class PodcastsPage extends Page {
 
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell[1]") private IOSElement firstPod;
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIATableView[2]/UIATableCell[2]") private IOSElement firstEpisode;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIATableView[3]/UIATableCell[2]/UIAButton[1]") private IOSElement firstEpisode;
 
 	public PodcastsPage(IOSDriver<IOSElement> _driver) {
 		super(_driver);
 	}
 
-	public void playPodcasts() {
+	public boolean playPodcasts() {
 		sideNavigationBar.gotoPodcastsPage();
 		String podName = firstPod.getAttribute("name");
 		System.out.println("See pod name:" + podName);
-		firstPod.click();
-		TestRoot.sleep(3000);
-
-		/*
-		 * List<WebElement> tables =
-		 * driver.findElements(By.className("UIATableView"));
-		 * 
-		 * int count = 0; for (WebElement table: tables) { count++;
-		 * System.out.println("TABLE:" + table.getText());
-		 * 
-		 * if (count ==2) { List<WebElement> cells =
-		 * table.findElements(By.className("UIATableCell")); for(WebElement
-		 * cell: cells) System.out.println("see cell:" + cell.getText()); } }
-		 * 
-		 * 
-		 * WebElement tableView2 = driver.findElement(By.xpath(
-		 * "//UIAApplication[1]/UIAWindow[1]/UIATableView[2]"));
-		 * List<WebElement> cells =
-		 * tableView2.findElements(By.className("UIATableCell"));
-		 * 
-		 * int count2 = 0; WebElement target = null; for (WebElement cell:
-		 * cells) { count2++;
-		 * 
-		 * System.out.println("cell TExt:" + cell.getText());
-		 * System.out.println("cell name:" + cell.getAttribute("name"));
-		 * System.out.println("cell value:" + cell.getAttribute("value"));
-		 * 
-		 * if (cell.getText().startsWith("Thursday")) { target = cell; break; }
-		 * 
-		 * }
-		 */
-		// target.click();
-
-		System.out
-				.println("Have problem clicking on the episode. Working on it. For now please play podcast manually.");
-		/*
-		 * firstEpisode.click(); //Wait for PREROLL waitForPreroll();
-		 * player.verifyPlayer_podcast(podName); //Swipe on the scrobber bar //
-		 * player.slideBar.swipe(SwipeElementDirection.RIGHT, 2); //
-		 * swipeSlide();
-		 * 
-		 * player.doSkip("podcast");
-		 * 
-		 * player.doShare();
-		 */
+		getPodcast(1).click();
+		waitForElementToBeVisible(firstEpisode, 5);
+		getPodcastEpisode(1).click();
+		waitForElementToBeVisible(player.thumbUp, 5);
+		if(player.playButton_podcast.isDisplayed()){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 
 	protected void swipeSlide() {
@@ -87,11 +52,16 @@ public class PodcastsPage extends Page {
 
 	}
 	
+	public IOSElement getPodcast(int i){
+		return waitForVisible(driver, 
+				By.xpath("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell[" + i + "]"), 
+				5);
+	}
 	public IOSElement getPodcastEpisode(int i){
 		i += 1; // First "podcast episode" is actually the station
-		//UIAApplication[1]/UIAWindow[1]/UIATableView[3]/UIATableCell[2]
 		return waitForVisible(driver, 
-					By.xpath("//UIAApplication[1]/UIAWindow[1]/UIATableView[3]/UIATableCell[" + i + "]"),
-					10);
+					By.xpath("//UIAApplication[1]/UIAWindow[1]/UIATableView[3]/UIATableCell[" + i + "]"
+							+ "/UIAButton[1]"),
+					5);
 	}
 }
