@@ -449,7 +449,7 @@ public class Player extends Page {
 
 	}
 
-	public void doSkip() {
+	public boolean doSkip() {
 		String currentSong = driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAStaticText[2]"))
 				.getText();
 
@@ -458,7 +458,9 @@ public class Player extends Page {
 		// Verify that new song is playing
 		String newSong = driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAStaticText[2]")).getText();
 		if (newSong.equals(currentSong))
-			Assert.fail("Skip is not working.");
+			return false;
+		else
+			return true;
 
 	}
 

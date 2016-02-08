@@ -447,8 +447,8 @@ public class TestRoot {
 				FileUtils.copyFile(screenshot, new File(fullFilePath));
 
 			} catch (Exception ex) {
-				System.out.println(ex.toString());
-				System.out.println(ex.getMessage());
+				System.err.println(ex.toString());
+				System.err.println(ex.getMessage());
 			}
 		}
 	};

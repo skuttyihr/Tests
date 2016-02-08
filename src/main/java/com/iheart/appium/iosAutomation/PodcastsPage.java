@@ -21,6 +21,7 @@ public class PodcastsPage extends Page {
 
 	public boolean playPodcasts() {
 		sideNavigationBar.gotoPodcastsPage();
+		waitForElementToBeVisible(firstPod, 5);
 		String podName = firstPod.getAttribute("name");
 		System.out.println("See pod name:" + podName);
 		getPodcast(1).click();

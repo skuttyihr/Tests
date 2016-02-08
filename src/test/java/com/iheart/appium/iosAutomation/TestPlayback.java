@@ -20,16 +20,25 @@ public class TestPlayback extends TestRoot {
 	}
 	@After
 	public void after() {
+		// Remove favorites
+		Page.removeAllFavorites();
 		TestRoot.tearDown();
 	}
 	
+	/**
+		Searches for and plays a custom artist based station
+		Thumbs up track
+		Thumbs down track
+		Favorites station
+		Skips track
+		Verifies that station has been favorited
+	 * @throws Exception
+	 */
 	@Test
-	public void test_createArtistStation_thumbUp_thumbDown_favorite_skip() throws Exception {
+	public void test_custom_artist_station() throws Exception {
 		System.out.println("test method:" + name.getMethodName());
 		Assert.assertTrue("Was not able to login", loginPage.login());
 		Assert.assertTrue("Artist was not added to favorites!", forYouPage.createArtistStation());
-		// Remove favorites
-		Page.removeAllFavorites();
 	}
 
 	@Test

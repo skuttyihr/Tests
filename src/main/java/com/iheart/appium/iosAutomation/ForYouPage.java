@@ -23,7 +23,15 @@ public class ForYouPage extends Page {
 		super(_driver);
 	}
 
-	// Returns true if the station was added
+	/**
+	 * Searches for and plays a custom artist based station
+	 * Thumbs up track
+	 * Thumbs down track
+	 * Favorites station
+	 * Skips track
+	 * Verifies that station has been favorited
+	 * @return true if station added
+	 */
 	public boolean createArtistStation() {
 		String artist = "Josh Groban";
 		waitForElementToBeVisible(search.searchButton, 5);
@@ -34,8 +42,14 @@ public class ForYouPage extends Page {
 		player.verifyPlayer_artist(artist);
 		player.doThumbUp();
 		player.doThumbDown("artist");
-		player.doFavorite();
-		player.doSkip();
+		if(!player.doFavorite()){
+			System.err.println("Could not favorite artist station!");
+			return false;
+		}
+		if(!player.doSkip()){
+			System.err.println("Could not skip!");
+			return false;
+		}
 		// Verify that this station is added under My Station
 		player.back.click();
 		search.cancel.click();
