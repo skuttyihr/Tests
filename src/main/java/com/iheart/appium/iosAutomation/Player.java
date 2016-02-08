@@ -148,7 +148,7 @@ public class Player extends Page {
 		currentTrack = getNowPlaying(type);
 
 		skip.tap(1, 1);
-		TestRoot.sleep(2000);
+		waitForTrackToLoad();
 		nowPlaying = getNowPlaying(type);
 		System.out.println("before/after:" + currentTrack + "/" + nowPlaying);
 		// Verify new episode is playing
@@ -184,11 +184,10 @@ public class Player extends Page {
 			System.out.println("thumbUp button is disabled. Scan now..");
 			try {
 				scan.click();
+				waitForTrackToLoad();
 			} catch (Exception e) {
-
 			}
 			count++;
-			TestRoot.sleep(3000);
 		}
 
 		// if it is still disabled, return
@@ -270,11 +269,11 @@ public class Player extends Page {
 			System.out.println("thumbDown button is disabled. Scan now..");
 			try {
 				scan.click();
+				waitForTrackToLoad();
 			} catch (Exception e) {
 
 			}
 			count++;
-			TestRoot.sleep(3000);
 		}
 
 		// if it is still disabled, return
@@ -311,15 +310,18 @@ public class Player extends Page {
 		while (isThumbDownDisabled() && count < 3) {
 			System.out.println("thumbDown button is disabled. Scan now..");
 			try {
-				if (stationType.equals("live"))
+				if (stationType.equals("live")){
 					scan.click();
-				else
+					waitForTrackToLoad();
+				}
+				else{
 					skip.click();
+					waitForTrackToLoad();
+				}
 			} catch (Exception e) {
 
 			}
 			count++;
-			TestRoot.sleep(3000);
 		}
 
 		// if it is still disabled, return
@@ -382,11 +384,9 @@ public class Player extends Page {
 		return isDone;
 	}
 
-	public void doFavorite() { // if faved before, its value is 1;
-		if (isFavDone()) // unfav it
-		{
+	public boolean doFavorite() { // if faved before, its value is 1;
+		if (isFavDone()){
 			favorite.click();
-			TestRoot.sleep(1000);
 			handleUnFavConfirmation();
 		}
 
@@ -395,26 +395,17 @@ public class Player extends Page {
 
 		// Verify that icon is filled
 		if (!favorite.getAttribute("value").equals("1"))
-			Assert.fail("Add to Favorite failed.");
-
-		/*
-		 * String response = ""; response = driver.findElement(By.xpath(
-		 * "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[8]")).getText();
-		 * System.out.println("See favorite growls:" + response);
-		 * 
-		 * 
-		 * //Station added to your favorites! if (!response.contains(
-		 * "Station added")) handleError("Add to Favorite failed.",
-		 * "doFavorite");
-		 * 
-		 */
-
+			return false;
+		else
+			return true;
 	}
 
 	// Are you sure you want to delete this preset?
 	private void handleUnFavConfirmation() {
 		try {
-			waitForVisible(driver, By.xpath("//UIAApplication[1]/UIAWindow[4]/UIAAlert[1]/UIACollectionView[1]/UIACollectionCell[2]/UIAButton[1]"), 3).click();
+			waitForVisible(driver, 
+					By.xpath("//UIAApplication[1]/UIAWindow[4]/UIAAlert[1]/UIACollectionView[1]/UIACollectionCell[2]/UIAButton[1]"), 
+					4).click();
 		} catch (Exception e) {
 		}
 	}
@@ -427,7 +418,6 @@ public class Player extends Page {
 			driver.findElement(By
 					.xpath("//UIAApplication[1]/UIAWindow[1]/UIAAlert[1]/UIACollectionView[1]/UIACollectionCell[1]/UIAButton[1]"))
 					.click();
-			TestRoot.sleep(1000);
 		} catch (Exception e) {
 
 		}
@@ -439,22 +429,23 @@ public class Player extends Page {
 		try {
 			isDone = favorite.getAttribute("value").equals("1");
 		} catch (Exception e) {
-
 		}
 
 		return isDone;
 	}
 
-	public void doScan() {
+	public boolean doScan() {
 		String currentSong = driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAStaticText[2]"))
 				.getText();
 
 		scan.click();
-		TestRoot.sleep(5000);
+		waitForTrackToLoad();
 		// Verify that new song is playing
-		String newSong = driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAStaticText[2]")).getText();
+		String newSong = waitForVisible(driver, By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAStaticText[2]"), 5).getText();
 		if (newSong.equals(currentSong))
-			Assert.fail("Scan is not working.");
+			return false;
+		else 
+			return true;
 
 	}
 
@@ -463,7 +454,7 @@ public class Player extends Page {
 				.getText();
 
 		skip.click();
-		TestRoot.sleep(5000);
+		waitForTrackToLoad();
 		// Verify that new song is playing
 		String newSong = driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAStaticText[2]")).getText();
 		if (newSong.equals(currentSong))
@@ -522,5 +513,11 @@ public class Player extends Page {
 			return false;
 		}
 		return isPlaying;
+	}
+	
+	public static void waitForTrackToLoad(){
+		//button buffering stop
+		waitForVisible(driver, By.name("button buggering stop"), 3);
+		waitForNotVisible(driver, By.name("button buffering stop"), 3);
 	}
 }

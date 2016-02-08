@@ -90,8 +90,14 @@ public class ForYouPage extends Page {
 
 		// Verify PLAYER
 		player.verifyPlayer_live(myStation);
-		player.doFavorite();
-		player.doScan();
+		if(!player.doFavorite()){
+			System.err.println("Could not favorite!");
+			return false;
+		}
+		if(!player.doScan()){
+			System.err.println("Could not scan!");
+			return false;
+		}
 		player.doThumbUp();
 		player.doThumbDown();
 		// player.doFavorite();
