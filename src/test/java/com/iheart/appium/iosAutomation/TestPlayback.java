@@ -43,7 +43,7 @@ public class TestPlayback extends TestRoot {
 	public void test_playLiveRadio_thumbUP_thumbDown_doFavorite() throws Exception {
 		System.out.println("test method:" + name.getMethodName());
 		Assert.assertTrue("Was not able to login", loginPage.login());
-		forYouPage.playLiveRadio();
+		Assert.assertTrue("Could not play a live radio station", forYouPage.playLiveRadio());
 	}
 
 	@Test

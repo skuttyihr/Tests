@@ -4,7 +4,6 @@ import java.util.List;
 
 import io.appium.java_client.pagefactory.*;
 
-import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -81,7 +80,7 @@ public class ForYouPage extends Page {
 
 	}
 
-	public void playLiveRadio() {
+	public boolean playLiveRadio() {
 		String myStation = "";
 		WebElement collectionView = driver
 				.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]"));
@@ -112,7 +111,9 @@ public class ForYouPage extends Page {
 		// Wait for the list to be visible
 		getStationFromList(1); // Includes a wait
 		if (!driver.getPageSource().contains(myStation))
-			Assert.fail("Live station is not added under My Station.");
+			return false;
+		else
+			return true;
 	}
 
 	public void comeToThisPage() {
