@@ -36,6 +36,9 @@ public class TestRoot {
 	
 	protected static IOSDriver<IOSElement> driver;
 
+	private static int appWidth = 0;
+	private static int appHeight = 0;
+	
 	// Desired Capabilities for Appium to be imported from properties
 	protected static String DEVICE_NAME;
 	protected static String UDID;
@@ -304,6 +307,86 @@ public class TestRoot {
 		else{
 			return By.className(locator);
 		}
+	}
+	
+	// General navigation
+	/**
+	 * Swipe in a direction from a start point
+	 * Directions: 0: up, 1: right, 2: down, 3: left
+	 * @param startx
+	 * @param starty
+	 * @param direction
+	 * @param duration
+	 */
+	public static void swipe(int startx, int starty, int direction, int duration){
+		int endx = 0;
+		int endy = 0;
+		switch (direction){
+		case 0:
+			endx = startx;
+			endy = starty - 300;
+			break;
+		case 1:
+			endx = startx + 300;
+			endy = starty;
+			break;
+		case 2: 
+			endx = startx;
+			endy = starty + 300;
+			break;
+		case 3:
+			endx = startx - 300;
+			endy = starty;
+			break;
+		}
+		if(endx < 0)
+			endx = 0;
+		if(endx > getAppWidth())
+			endx = getAppWidth();
+		if(endy < 0)
+			endy = 0;
+		if(endy > getAppHeight())
+			endy = getAppHeight();
+		
+		driver.swipe(startx, starty, endx, endy, duration);
+	}
+	public static void swipeUp(){
+		int startx = getAppWidth() / 2;
+		int starty = (getAppHeight() / 6) * 5;
+		swipe(startx, starty, 0, 500);
+	}
+	/**
+	 * Swipe left to right
+	 */
+	public static void swipeRight(){
+		int startx = getAppWidth() / 6;
+		int starty = getAppHeight() / 2;
+		swipe(startx, starty, 1, 500);
+	}
+	public static void swipeDown(){
+		int startx = getAppWidth() / 2;
+		int starty = getAppHeight() / 6;
+		swipe(startx, starty, 2, 500);
+	}
+	/**
+	 * Swipe right to left
+	 */
+	public static void swipeLeft(){
+		int startx = (getAppWidth() / 6) * 5;
+		int starty = getAppHeight() / 2;
+		swipe(startx, starty, 3, 500);
+	}
+	
+	
+	public static int getAppWidth(){
+		if(appWidth == 0)
+			appWidth = driver.manage().window().getSize().getWidth();
+		return appWidth;
+	}
+	public static int getAppHeight(){
+		if(appHeight == 0)
+			appHeight = driver.manage().window().getSize().getHeight();
+		return appHeight;
 	}
 	
 	//// Waiting Methods ////
