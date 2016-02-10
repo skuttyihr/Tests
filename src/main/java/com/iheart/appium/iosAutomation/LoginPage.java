@@ -16,6 +16,10 @@ public class LoginPage extends Page {
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[2]/UIASecureTextField[1]") private IOSElement password;
 	@iOSFindBy(name = "Log In") private IOSElement loginButton;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAButton[2]") private IOSElement logInFormButton;
+	@iOSFindBy(name = "Back") private IOSElement backButton;
+	@iOSFindBy(name = "Log In") private IOSElement logIn;
+	
+	
 	@iOSFindBy(name = "Facebook") private WebElement facebookButton;
 
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[2]/UIAScrollView[1]/UIAScrollView[1]/UIAWebView[1]/UIATextField[1]") private WebElement fbEmail;
@@ -208,6 +212,12 @@ public class LoginPage extends Page {
 
 	}
 
+	public boolean clickLogin(){
+		loginButton.click();
+		waitForElementToBeVisible(logIn, 2);
+		return logIn.isDisplayed();
+	}
+	
 	public void loginViaGoogle() {
 		loginButton.click();
 		TestRoot.sleep(1000);
@@ -269,6 +279,10 @@ public class LoginPage extends Page {
 		} catch (Exception e) {
 			// e.printStackTrace();
 		}
+	}
+	
+	public void tapBack(){
+		backButton.click();
 	}
 
 }

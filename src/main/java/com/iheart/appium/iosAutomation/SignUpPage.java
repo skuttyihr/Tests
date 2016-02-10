@@ -10,6 +10,8 @@ import io.appium.java_client.ios.*;
 public class SignUpPage extends Page {
 
 	@iOSFindBy(name = "Get Started") private IOSElement getStarted;
+	@iOSFindBy(name = "Back") private IOSElement backButton;
+	@iOSFindBy(name = "Create An Account") private IOSElement createAnAccount;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[1]/UIATextField[1]") private IOSElement email;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[2]/UIASecureTextField[1]") private IOSElement password;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[3]/UIATextField[1]") private IOSElement zip;
@@ -112,5 +114,13 @@ public class SignUpPage extends Page {
 
 	public IOSElement getGetStartedButton(){
 		return getStarted;
+	}
+	public boolean tapGetStarted(){
+		getStarted.click();
+		waitForElementToBeVisible(createAnAccount, 2);
+		return createAnAccount.isDisplayed();
+	}
+	public void tapBack(){
+		backButton.click();
 	}
 }

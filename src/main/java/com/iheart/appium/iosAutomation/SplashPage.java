@@ -35,6 +35,9 @@ public class SplashPage extends Page {
 //		}
 		return onboardingTextString;
 	}
+	public void waitForSplash(){
+		waitForVisible(driver, By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAImage[1]"), 5);
+	}
 	public boolean isBackgroundImagePresent(){
 		IOSElement backgroundImage = driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAImage[1]"));
 		if(backgroundImage != null){

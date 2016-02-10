@@ -123,11 +123,20 @@ public class TestGate extends TestRoot {
 		Assert.assertTrue("Did not find all cases we expected while swiping.", shouldBe.size() == 0);
 	}
 	
-	@Test 
-	public void verifyGate(){
-		// Checks all elements on gate, login screen, and signup screen
+	private void validateGate(){
 		String notVisible = splashPage.whatIsntVisible();
 		Assert.assertTrue("Not all items were visible on the splash page:\n" + notVisible,
 				notVisible != null && notVisible.length() <= 0);
+	}
+
+	@Test
+	public void testCreateAccountAndLogIn(){
+		splashPage.waitForSplash();
+		validateGate();
+		Assert.assertTrue("Could not click log in", loginPage.clickLogin());
+		loginPage.tapBack();
+		Assert.assertTrue("Could not click get started", signupPage.tapGetStarted());
+		signupPage.tapBack();
+		validateGate();
 	}
 }
