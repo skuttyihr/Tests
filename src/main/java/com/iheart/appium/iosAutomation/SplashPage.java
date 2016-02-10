@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
+import io.appium.java_client.pagefactory.iOSFindBy;
 
 public class SplashPage extends Page {
 
@@ -14,13 +15,25 @@ public class SplashPage extends Page {
 		super(_driver);
 	}
 	
+	// Elements
+	@iOSFindBy(name = "onboarding_logo") protected IOSElement onboardingLogo;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[2]") protected IOSElement onboardingText;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[3]") protected IOSElement additionalOnboardingText;
+	@iOSFindBy(name = "UIAPageIndicator") protected IOSElement splashPageIndicator;
+	@iOSFindBy(name = "Log In") protected IOSElement splashPageLogInButton;
+	@iOSFindBy(name = "Get Started") protected IOSElement splashPageGetStartedButton;
+	
+	// Behavioral and helper methods
 	public String getOnBoardingText(){
-		String onboardingText = "";
-		IOSElement titleText = driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAStaticText[2]"));
-		if(titleText != null){
-			onboardingText = titleText.getText();
+		String onboardingTextString = "";
+		if(onboardingText != null){
+			onboardingTextString = onboardingText.getText();
 		}
-		return onboardingText;
+//		IOSElement titleText = driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAStaticText[2]"));
+//		if(titleText != null){
+//			onboardingText = titleText.getText();
+//		}
+		return onboardingTextString;
 	}
 	public boolean isBackgroundImagePresent(){
 		IOSElement backgroundImage = driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAImage[1]"));
