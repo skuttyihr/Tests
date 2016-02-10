@@ -126,7 +126,8 @@ public class TestGate extends TestRoot {
 	@Test 
 	public void verifyGate(){
 		// Checks all elements on gate, login screen, and signup screen
-		Assert.assertTrue(splashPage.isBackgroundImagePresent());
-		
+		String notVisible = splashPage.whatIsntVisible();
+		Assert.assertTrue("Not all items were visible on the splash page:\n" + notVisible,
+				notVisible != null && notVisible.length() <= 0);
 	}
 }

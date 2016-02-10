@@ -19,13 +19,13 @@ public class SplashPage extends Page {
 	@iOSFindBy(name = "onboarding_logo") protected IOSElement onboardingLogo;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[2]") protected IOSElement onboardingText;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[3]") protected IOSElement additionalOnboardingText;
-	@iOSFindBy(name = "UIAPageIndicator") protected IOSElement splashPageIndicator;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAPageIndicator[1]") protected IOSElement splashPageIndicator;
 	@iOSFindBy(name = "Log In") protected IOSElement splashPageLogInButton;
 	@iOSFindBy(name = "Get Started") protected IOSElement splashPageGetStartedButton;
 	
 	// Behavioral and helper methods
 	public String getOnBoardingText(){
-		String onboardingTextString = "";
+		String onboardingTextString = null;
 		if(onboardingText != null){
 			onboardingTextString = onboardingText.getText();
 		}
@@ -44,5 +44,49 @@ public class SplashPage extends Page {
 			}
 		}
 		return false;
+	}
+	
+	public String whatIsntVisible(){
+		StringBuilder couldNotFind = new StringBuilder();
+		if(!isBackgroundImagePresent()){
+			couldNotFind.append("Background image was not present\n");
+		}
+		if(getOnBoardingText() == null){
+			couldNotFind.append("Onboarding text was not present\n");
+		}
+		try{
+			if(!onboardingLogo.isDisplayed()){
+				couldNotFind.append("Onboarding logo was not present\n");
+			}
+		}catch(Exception e){}
+		try{
+			if(!additionalOnboardingText.isDisplayed()){
+				couldNotFind.append("Onboarding additional text was not present\n");
+			}
+		}catch(Exception e){
+			couldNotFind.append("Onboarding additional text was not present\n");
+		}
+		try{
+			if(!splashPageIndicator.isDisplayed()){
+				couldNotFind.append("Page indicator was not present\n");
+			}
+		}catch(Exception e){
+			couldNotFind.append("Page indicator was not present\n");
+		}
+		try{
+			if(!splashPageLogInButton.isDisplayed()){
+				couldNotFind.append("Login button was not present\n");
+			}
+		}catch(Exception e){
+			couldNotFind.append("Login button was not present\n");
+		}
+		try{
+			if(!splashPageGetStartedButton.isDisplayed()){
+				couldNotFind.append("Get started button was not present\n");
+			}
+		}catch(Exception e){
+			couldNotFind.append("Get started button was not present\n");
+		}
+		return couldNotFind.toString();
 	}
 }
