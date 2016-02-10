@@ -59,6 +59,8 @@ public class TestRoot {
 	protected static Search search;
 	protected static DeepLink deepLink;
 	protected static PodcastsPage podcastsPage;
+	protected static SplashPage splashPage;
+	
 	protected static boolean useSimulator = false;
 	
 	protected static void setup() {
@@ -152,7 +154,8 @@ public class TestRoot {
 		search = new Search(driver);
 		customRadio = new CustomRadio(driver);
 		deepLink = new DeepLink(driver);
-
+		splashPage = new SplashPage(driver);
+		
 		driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 		
 		// Wait for login to display
@@ -162,6 +165,8 @@ public class TestRoot {
 	protected static void tearDown() {
 		if(driver != null){
 			try{
+				// If app isn't resetting through appium, try running a test with this un-commented
+//				driver.resetApp();
 				driver.quit();
 			}
 			catch(Exception e){

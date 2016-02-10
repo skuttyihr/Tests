@@ -10,7 +10,6 @@ import io.appium.java_client.ios.IOSElement;
 
 import io.appium.java_client.pagefactory.*;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.support.PageFactory;
 
 public class Page extends TestRoot{
@@ -186,13 +185,4 @@ public class Page extends TestRoot{
 		String xpathForItem = "//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell[" + selector + "]";
 		return waitForVisible(driver, find(driver, xpathForItem, "xpath"), 5);
 	}
-	
-	public static String getOnBoardingText(){
-		String onboardingText = "";
-		IOSElement titleText = driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAStaticText[2]"));
-		if(titleText != null){
-			onboardingText = titleText.getText();
-		}
-		return onboardingText;
-	}
-}
+}	
