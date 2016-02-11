@@ -7,9 +7,11 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Random;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
@@ -410,12 +412,49 @@ public class TestRoot {
 		return appHeight;
 	}
 	
-	//// Waiting Methods ////
-	public static boolean isVisible(IOSElement e){
-		boolean isVisible = false;
+	public static Set<String> getContextHandles() {
+		Set<String> contexts = new HashSet<String>();
 		try{
+			contexts = driver.getContextHandles(); // Errors here
+		}
+		catch(Exception e){
+		}
+
+		return contexts;
+	}
+	public static boolean switchToWebContext(){
+		Set<String> handles = getContextHandles();
+		String webContext = "";
+		if(handles != null && handles.size() > 0){
+			for(String c : handles){
+				if(c.contains("WEB")){
+					webContext = c;
+					driver.context(c);
+				}
+			}
+			sleep(1000);
+		}
+		return driver.getContext().equals(webContext);
+	}
+	public static boolean switchToNativeContext(){
+		driver.context("NATIVE_APP");
+		sleep(1000);
+		return driver.getContext().equals("NATIVE_APP");
+	}
+	
+	//// Waiting Methods ////
+	static boolean isVisible(IOSElement e){
+		boolean isVisible = false;
+		if(e == null){
+			return false;
+		}
+		try{
+			driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
 			isVisible = e.isDisplayed();
 		}catch(Exception x){}
+		finally{
+			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
+		}
 		return isVisible;
 	}
 	
@@ -488,26 +527,11 @@ public class TestRoot {
 		return returnElement;
 	}
 	
-	public static boolean isElementVisible(IOSElement ele){
-		boolean isDisplayed = false;
-		try{
-			driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
-			isDisplayed = ele.isDisplayed();
-		}
-		catch(Exception e){
-			// Is displayed is already false;
-		}
-		finally{
-			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
-		}
-		return isDisplayed;
-	}
-	
 	public static void waitForElementToBeVisible(IOSElement ele, int timeInSeconds){
 		
 		long timeLeftMil = timeInSeconds * 1000;
 		while(timeLeftMil > 0){
-			if(ele != null && isElementVisible(ele)){
+			if(ele != null && isVisible(ele)){
 				break;
 			}
 //			sleep(100); // Intentionally mismatched to make up for time searching for element

@@ -1,8 +1,5 @@
 package com.iheart.appium.iosAutomation;
 
-import java.util.HashSet;
-import java.util.Set;
-
 //import org.apache.log4j.Logger;
 
 import io.appium.java_client.ios.IOSDriver;
@@ -80,21 +77,6 @@ public class Page extends TestRoot{
 		return winHandleBefore;
 	}
 
-	public Set<String> getContextHandles() {
-		Set<String> contexts = new HashSet<String>();
-		try{
-			contexts = driver.getContextHandles(); // Errors here
-		}
-		catch(Exception e){
-		}
-
-//		for (String context : contexts){
-//			System.out.println(context);
-//		}
-
-		return contexts;
-	}
-	
 	private static int getRecentY(){
 		int recentY = 100000;
 		try{

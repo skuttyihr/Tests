@@ -72,7 +72,7 @@ public class SideNavigationBar extends Page {
 	}
 
 	public void gotoSettings() {
-		if(settings == null || !settings.isDisplayed()){
+		if(settings == null || !isVisible(settings)){
 			waitForElementToBeVisible(navIcon, 2);
 			navIcon.click();
 		}

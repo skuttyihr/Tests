@@ -35,7 +35,7 @@ public class CustomRadio extends Page {
 			return false;
 		}
 		// verify that login prompt has not popped up
-		if (isElementVisible(createAccount)){
+		if (isVisible(createAccount)){
 			return false;
 		}
 		

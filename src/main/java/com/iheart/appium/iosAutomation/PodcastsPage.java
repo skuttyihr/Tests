@@ -28,7 +28,7 @@ public class PodcastsPage extends Page {
 		waitForElementToBeVisible(firstEpisode, 5);
 		getPodcastEpisode(1).click();
 		waitForElementToBeVisible(player.thumbUp, 5);
-		if(player.playButton_podcast.isDisplayed()){
+		if(isVisible(player.playButton_podcast)){
 			return true;
 		}
 		else{

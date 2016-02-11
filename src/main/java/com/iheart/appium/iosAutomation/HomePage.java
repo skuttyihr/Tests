@@ -16,7 +16,7 @@ public class HomePage extends Page {
 	 * public HomePage(IOSDriver _driver) { super(_driver); }
 	 */
 	public void gotoHome(){
-		if(!forYou.isDisplayed()){
+		if(!isVisible(forYou)){
 			sideNavigationBar.navIcon.click();
 			sideNavigationBar.home.click();
 		}

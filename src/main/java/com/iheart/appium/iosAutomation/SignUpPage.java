@@ -66,7 +66,7 @@ public class SignUpPage extends Page {
 		TestRoot.waitForElementToBeVisible(genrePicker, 15);
 
 		// verify that tell us what you like page shows up
-		return TestRoot.isElementVisible(genrePicker);
+		return TestRoot.isVisible(genrePicker);
 	}
 
 	// By position in list
@@ -120,13 +120,13 @@ public class SignUpPage extends Page {
 	public boolean tapGetStarted(){
 		getStarted.click();
 		waitForElementToBeVisible(createAnAccount, 2);
-		return createAnAccount.isDisplayed();
+		return isVisible(createAnAccount);
 	}
 	public boolean tapMaybeLater(){
 		// Page factory fails miserably when trying to test elements that aren't present
 		// Doing this the more direct way than relying on page factory:
 		IOSElement testCreateAccount = waitForVisible(driver, By.name("createAccountName"), 1);
-		if(testCreateAccount == null || !testCreateAccount.isDisplayed()){
+		if(!isVisible(testCreateAccount)){
 			tapGetStarted();
 			waitForElementToBeVisible(createAnAccount, 2);
 		}

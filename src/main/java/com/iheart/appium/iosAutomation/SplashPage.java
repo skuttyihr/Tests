@@ -61,33 +61,33 @@ public class SplashPage extends Page {
 			couldNotFind.append("Onboarding text was not present\n");
 		}
 		try{
-			if(!onboardingLogo.isDisplayed()){
+			if(!isVisible(onboardingLogo)){
 				couldNotFind.append("Onboarding logo was not present\n");
 			}
 		}catch(Exception e){}
 		try{
-			if(!additionalOnboardingText.isDisplayed()){
+			if(!isVisible(additionalOnboardingText)){
 				couldNotFind.append("Onboarding additional text was not present\n");
 			}
 		}catch(Exception e){
 			couldNotFind.append("Onboarding additional text was not present\n");
 		}
 		try{
-			if(!splashPageIndicator.isDisplayed()){
+			if(!isVisible(splashPageIndicator)){
 				couldNotFind.append("Page indicator was not present\n");
 			}
 		}catch(Exception e){
 			couldNotFind.append("Page indicator was not present\n");
 		}
 		try{
-			if(!splashPageLogInButton.isDisplayed()){
+			if(!isVisible(splashPageLogInButton)){
 				couldNotFind.append("Login button was not present\n");
 			}
 		}catch(Exception e){
 			couldNotFind.append("Login button was not present\n");
 		}
 		try{
-			if(!splashPageGetStartedButton.isDisplayed()){
+			if(!isVisible(splashPageLogInButton)){
 				couldNotFind.append("Get started button was not present\n");
 			}
 		}catch(Exception e){

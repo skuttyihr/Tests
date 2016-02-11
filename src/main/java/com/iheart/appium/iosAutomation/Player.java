@@ -72,22 +72,22 @@ public class Player extends Page {
 														// name is not
 														// correct.");
 
-		if (!TestRoot.isElementVisible(songTrack_live)) {
-			if (!TestRoot.isElementVisible(songTrack2_live))
+		if (!TestRoot.isVisible(songTrack_live)) {
+			if (!TestRoot.isVisible(songTrack2_live))
 				Assert.fail("No sound track name is displayed.");
 		}
 
-		if (!TestRoot.isElementVisible(artist_live)) {
-			if (!TestRoot.isElementVisible(artist2_live))
+		if (!TestRoot.isVisible(artist_live)) {
+			if (!TestRoot.isVisible(artist2_live))
 				Assert.fail("Artist name is NOT displayed.");
 		}
-		if (!TestRoot.isElementVisible(playButton_live))
+		if (!TestRoot.isVisible(playButton_live))
 			Assert.fail("Play icon is not displayed.");
 
-		if (!TestRoot.isElementVisible(scan))
+		if (!TestRoot.isVisible(scan))
 			Assert.fail("Scan icon is not displayed.");
 
-		if (!TestRoot.isElementVisible(more_live))
+		if (!TestRoot.isVisible(more_live))
 			Assert.fail(".... is not displayed.");
 
 		verfiyCommonIcons("verifyPlayer_live");
@@ -98,16 +98,16 @@ public class Player extends Page {
 		if (!stationLabel.getText().contains(stationName))
 			Assert.fail("Station name is not correct.");
 
-		if (!TestRoot.isElementVisible(songTrack_artist))
+		if (!TestRoot.isVisible(songTrack_artist))
 			Assert.fail("No sound track name is displayed.");
 
-		if (!TestRoot.isElementVisible(artist_artist))
+		if (!TestRoot.isVisible(artist_artist))
 			Assert.fail("No artist name is displayed.");
 
-		if (!TestRoot.isElementVisible(playButton_artist))
+		if (!TestRoot.isVisible(playButton_artist))
 			Assert.fail("Play icon is not displayed.");
 
-		if (!TestRoot.isElementVisible(skip))
+		if (!TestRoot.isVisible(skip))
 			Assert.fail("Skip icon is not displayed.");
 
 		verfiyCommonIcons("verifyPlayer_custom");
@@ -117,29 +117,29 @@ public class Player extends Page {
 		if (!stationLabel.getText().contains(stationName.substring(0, 5)))
 			Assert.fail("Station name is not correct.");
 
-		if (!TestRoot.isElementVisible(episodeName_podcast))
+		if (!TestRoot.isVisible(episodeName_podcast))
 			Assert.fail("Episode name is not displayed.");
 
-		if (!TestRoot.isElementVisible(stationName_podcast))
+		if (!TestRoot.isVisible(stationName_podcast))
 			Assert.fail("Station name is Not displayed.");
 
-		if (!TestRoot.isElementVisible(slideBar))
+		if (!TestRoot.isVisible(slideBar))
 			Assert.fail("No Scrobber is displayed.");
 
-		if (!TestRoot.isElementVisible(playButton_podcast))
+		if (!TestRoot.isVisible(playButton_podcast))
 			Assert.fail("Play icon is not displayed.");
 
-		if (!TestRoot.isElementVisible(skip))
+		if (!TestRoot.isVisible(skip))
 			Assert.fail("Skip icon is not displayed.");
 
 		verfiyCommonIcons("verifyPlayer_podcast");
 	}
 
 	private void verfiyCommonIcons(String callingMethod) {
-		if (!TestRoot.isElementVisible(thumbUp))
+		if (!TestRoot.isVisible(thumbUp))
 			Assert.fail("No Thumb Up icon is displayed.");
 
-		if (!TestRoot.isElementVisible(thumbDown))
+		if (!TestRoot.isVisible(thumbDown))
 			Assert.fail("No Thumb Down icon is displayed.");
 	}
 
@@ -170,7 +170,7 @@ public class Player extends Page {
 	public void doShare() {
 		more_live.tap(1, 1);
 		share.tap(1, 1);
-		if (!TestRoot.isElementVisible(mail))
+		if (!TestRoot.isVisible(mail))
 			Assert.fail("Share button is not working.");
 	}
 
@@ -496,7 +496,7 @@ public class Player extends Page {
 		else
 			theOne = playButton_artist;
 		try{
-			if(createAccount.isDisplayed()){
+			if(isVisible(createAccount)){
 				// User tried to play artist radio without logging in
 				return false;
 			}
@@ -504,7 +504,7 @@ public class Player extends Page {
 		waitForElementToBeVisible(theOne, 5);
 		// verify that it is playing: Get its attribute: class shall be 'pause'
 		try{
-			if(theOne != null && theOne.isDisplayed()){
+			if(theOne != null && isVisible(theOne)){
 				String klasses = theOne.getAttribute("name");
 				System.out.println("See playbutton classes:" + klasses);
 				if (klasses.contains("pause") || klasses.contains("stop"))

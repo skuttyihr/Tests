@@ -2,8 +2,6 @@ package com.iheart.appium.iosAutomation;
 
 import io.appium.java_client.pagefactory.*;
 
-import java.util.Set;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import io.appium.java_client.ios.*;
@@ -59,6 +57,36 @@ public class LoginPage extends Page {
 		super(_driver);
 		// PageFactory.initElements(new AppiumFieldDecorator(driver), this);
 	}
+	
+	public boolean verifyLogin(){
+		// Now go to setting to check login status
+		sideNavigationBar.gotoSettings();
+
+		// check status
+		IOSElement loggedInStatus = waitForVisible(driver, By.name("Logged In"), 2); 
+		if(loggedInStatus != null){
+			String status = loggedInStatus.getText();
+			if (status == null || status.length() <= 0 || !status.equals("Logged In"))
+				return false;
+			else
+				return true;
+		}
+		else{
+			// Logged in via email
+			loggedInStatus = waitForVisible(driver, 
+							By.xpath("//UIAApplication[1]/UIAWindow[1]/UIATableView[2]/UIATableCell[1]/UIAStaticText[2]"), 2);
+			if(loggedInStatus != null){
+				String email = loggedInStatus.getText();
+				if (email == null || email.length() <= 0)
+					return false;
+				else
+					return true;
+			}
+			else{
+				return false;
+			}
+		}
+	}
 
 	public boolean login() { // logger.info("About to login...");
 		
@@ -75,73 +103,18 @@ public class LoginPage extends Page {
 			signupPage.selectGenre("Alternative");
 		}
 		
-		chooseStayConnected(false);
-		
+//		chooseStayConnected(false);
+		dismissLoginPopups();
 		// verify we are in
 		IOSElement forYouTest = waitForVisible(driver, By.name("For You"), 35);
-		if(forYouTest != null)
-			return forYouTest.isDisplayed();
+		if(forYouTest != null && isVisible(forYouTest)){
+			return verifyLogin();
+		}
 		else
 			return false;
 	}
 
-//	public void loginViaFacebook_NEW() {
-//		loginButton.click();
-//		waitForElementToBeVisible(facebookButton, 10);
-//		facebookButton.click();
-//		
-//		// Give Context time to switch
-//		TestRoot.sleep(2000);
-//		Set<String> handles = getContextHandles();
-//		if(handles.size() > 1){ 
-//			driver.context("WEBVIEW_1");
-//			sleep(2000);
-//		}
-//		/*
-//		 * //native view facebookEmail_native.sendKeys(FACEBOOK_USER_NAME);
-//		 * facebookPassword_native.sendKeys(PASSWORD); FBlogin_native.click();
-//		 * TestRoot.sleep(5000);
-//		 */
-//		waitForVisible(driver, By.name("email"), 5).sendKeys(FACEBOOK_USER_NAME);
-//		driver.findElement(By.name("pass")).sendKeys(PASSWORD);
-//		driver.findElement(By.name("login")).click();
-//
-//		// Handle Authorizaton confirm
-//		waitForVisible(driver, By.name("__CONFIRM__"), 5).click();
-//		
-//		// Now switch to native view
-//		if(handles.size() > 1){ 
-//			sleep(500);
-//			driver.context("NATIVE_APP");
-//			sleep(2000);
-//		}
-//
-//		handleWantYourLocalRadioPopup();
-//		tellUsWhatYouLike();
-//		dismissStayConnectedPopup();
-//
-//		// Now go to setting to check login status
-//		try {
-//			// In case navIcon is not showing up yet
-//			sideNavigationBar.navIcon.click();
-//		} catch (Exception e) {
-//			tellUsWhatYouLike();
-//		}
-//		sideNavigationBar.gotoSettings();
-//
-//		// check status
-//		String status = driver
-//				.findElement(
-//						By.xpath("//UIAApplication[1]/UIAWindow[1]/UIATableView[2]/UIATableCell[1]/UIAStaticText[2]"))
-//				.getText();
-//		System.out.println("Status:" + status);
-//		if (!status.equalsIgnoreCase("Logged In"))
-//			Assert.fail("Facebook login failed.");
-//	}
-
 	public boolean loginViaFacebook() {
-//		System.out.println("See context:" + driver.getContext());
-		// getContextHandles();
 		waitForElementToBeVisible(loginButton, 10);
 		loginButton.click();
 		waitForElementToBeVisible(userName, 5);
@@ -149,20 +122,7 @@ public class LoginPage extends Page {
 		
 		//Sleep to allow web to display, can't wait because context needs to switch
 		TestRoot.sleep(2000);
-		Set<String> handles = getContextHandles();
-		String webContext = "";
-		if(handles != null && handles.size() > 0){
-			for(String c : handles){
-				if(c.contains("WEB")){
-					webContext = c;
-					driver.context(c);
-				}
-			}
-			TestRoot.sleep(1000);
-		}
-		if(driver.getContext().equals(webContext)){
-			// Delay so we can give them time
-			sleep(1000);
+		if(switchToWebContext()){
 			driver.findElement(By.name("email")).sendKeys(FACEBOOK_USER_NAME); // iheartrocks999@gmail.com
 			driver.findElement(By.name("pass")).sendKeys(PASSWORD); // iheart001
 			driver.findElement(By.name("login")).click();
@@ -178,30 +138,18 @@ public class LoginPage extends Page {
 			return false;
 		}
 		// Now switch to native view
-		if(handles != null && handles.size() > 1){
-			sleep(1000);
-			driver.context("NATIVE_APP");
-			sleep(3000);
+		if(!switchToNativeContext()){
+			System.err.println("Could not switch back to native context!");
 		}
-
+		dismissLoginPopups();
+		// check status
+		return verifyLogin();
+	}
+	private void dismissLoginPopups(){
 		handleWantYourLocalRadioPopup();
 		tellUsWhatYouLike();
 		dismissStayConnectedPopup();
-
-		// Now go to setting to check login status
-		sideNavigationBar.gotoSettings();
-
-		// check status
-		String status = driver.findElement(
-						By.name("Logged In"))
-				.getText();
-		System.out.println("Status:" + status);
-		if (status == null || status.length() <= 0 || !status.equals("Logged In"))
-			return false;
-		else
-			return true;
 	}
-
 	private void handleWantYourLocalRadioPopup() {
 
 		try {
@@ -215,33 +163,43 @@ public class LoginPage extends Page {
 	public boolean clickLogin(){
 		loginButton.click();
 		waitForElementToBeVisible(logIn, 2);
-		return logIn.isDisplayed();
+		return isVisible(logIn);
 	}
 	
-	public void loginViaGoogle() {
-		loginButton.click();
-		TestRoot.sleep(1000);
+	public boolean loginViaGoogle() {
+		clickLogin();
 		googleButton.click();
-		TestRoot.sleep(2000);
-		googleEmail.sendKeys(GOOGLE_USER_NAME);
-		nextButton.click();
-		googlePassword.sendKeys(PASSWORD);
-		signIn.click();
-		try {
-			continueButton.click();
-		} catch (Exception e) {
 
+		if(switchToWebContext()){
+			googleEmail.sendKeys(GOOGLE_USER_NAME);
+			nextButton.click();
+			googlePassword.sendKeys(PASSWORD);
+			signIn.click();
+			try {
+				continueButton.click();
+			} catch (Exception e) {
+	
+			}
+	
+			try {
+				allowButton.click();
+			} catch (Exception e) {
+			}
+			
+			// Try to go back to iHeart (iOS 9 only button click)
+			findElement(driver, By.name("Back to iHeartRadio")).click();
+			if(switchToNativeContext()){
+				dismissLoginPopups();
+			}
+			else{
+				System.err.println("Could not switch back to native context after Google login!");
+			}
 		}
-
-		try {
-			allowButton.click();
-		} catch (Exception e) {
-
+		else{
+			System.err.println("Could not switch context for Google Login");
+			return false;
 		}
-		// verfiy that we are in Perfect for now!
-		// See page source:
-//		logger.info("see page:" + driver.getPageSource());
-
+		return verifyLogin();
 	}
 
 	public void dismissStayConnectedPopup() {
