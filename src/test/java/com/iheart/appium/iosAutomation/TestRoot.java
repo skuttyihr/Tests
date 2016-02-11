@@ -273,6 +273,22 @@ public class TestRoot {
 		System.out.println("Jquery is loaded.");
 	}
 	
+	public static IOSElement find(IOSDriver<IOSElement> d, String locator){
+		// Guess the locator, returns the element
+		if(locator.startsWith("//")){
+			return findElement(d, By.xpath(locator));
+		}
+		else{
+			// name or ID?
+			IOSElement testEle = findElement(d, By.name(locator));
+			if(testEle == null){
+				// try ID
+				testEle = findElement(d, By.id(locator));
+			}
+			return testEle; // null if we found nothing
+		}
+	}
+	
 	public static IOSElement findElement(IOSDriver<IOSElement> d, By by){
 		IOSElement e = null;
 		try{
@@ -395,6 +411,14 @@ public class TestRoot {
 	}
 	
 	//// Waiting Methods ////
+	public static boolean isVisible(IOSElement e){
+		boolean isVisible = false;
+		try{
+			isVisible = e.isDisplayed();
+		}catch(Exception x){}
+		return isVisible;
+	}
+	
 	public static void sleep(int timeInMs){
 		try{
 			Thread.sleep(timeInMs);

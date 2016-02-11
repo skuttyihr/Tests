@@ -123,20 +123,21 @@ public class TestGate extends TestRoot {
 		Assert.assertTrue("Did not find all cases we expected while swiping.", shouldBe.size() == 0);
 	}
 	
-	private void validateGate(){
-		String notVisible = splashPage.whatIsntVisible();
+	
+	private void validateGate(boolean wait){
+		String notVisible = splashPage.whatIsntVisible(wait);
 		Assert.assertTrue("Not all items were visible on the splash page:\n" + notVisible,
 				notVisible != null && notVisible.length() <= 0);
 	}
-
+	
 	@Test
-	public void testCreateAccountAndLogIn(){
-		splashPage.waitForSplash();
-		validateGate();
+	public void testCreateAccountLogInAndMaybeLater(){
+		validateGate(true);
 		Assert.assertTrue("Could not click log in", loginPage.clickLogin());
 		loginPage.tapBack();
+		validateGate(true);
 		Assert.assertTrue("Could not click get started", signupPage.tapGetStarted());
 		signupPage.tapBack();
-		validateGate();
+		Assert.assertTrue("Could not click maybe later", signupPage.tapMaybeLater());
 	}
 }

@@ -11,7 +11,8 @@ public class SignUpPage extends Page {
 
 	@iOSFindBy(name = "Get Started") private IOSElement getStarted;
 	@iOSFindBy(name = "Back") private IOSElement backButton;
-	@iOSFindBy(name = "Create An Account") private IOSElement createAnAccount;
+	private final String createAccountName = "Create An Account";
+	@iOSFindBy(name = createAccountName) private IOSElement createAnAccount;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[1]/UIATextField[1]") private IOSElement email;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[2]/UIASecureTextField[1]") private IOSElement password;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[3]/UIATextField[1]") private IOSElement zip;
@@ -25,7 +26,8 @@ public class SignUpPage extends Page {
 	@iOSFindBy(name = "Facebook") private IOSElement facebook;
 	@iOSFindBy(name = "Google") private IOSElement google;
 
-	@iOSFindBy(name = "Maybe Later") private IOSElement maybeLater;
+	private final String maybeLaterName = "Maybe Later";
+	@iOSFindBy(name = maybeLaterName) private IOSElement maybeLater;
 
 	// if account exists already
 	@iOSFindBy(name = "Okay") private IOSElement okay;
@@ -119,6 +121,25 @@ public class SignUpPage extends Page {
 		getStarted.click();
 		waitForElementToBeVisible(createAnAccount, 2);
 		return createAnAccount.isDisplayed();
+	}
+	public boolean tapMaybeLater(){
+		// Page factory fails miserably when trying to test elements that aren't present
+		// Doing this the more direct way than relying on page factory:
+		IOSElement testCreateAccount = waitForVisible(driver, By.name("createAccountName"), 1);
+		if(testCreateAccount == null || !testCreateAccount.isDisplayed()){
+			tapGetStarted();
+			waitForElementToBeVisible(createAnAccount, 2);
+		}
+		maybeLater.click();
+		waitForNotVisible(driver, By.name(maybeLaterName), 3);
+		
+		handlePossiblePopUp();
+		
+		boolean pastGate = false;
+		if(isVisible(forYou) || isVisible(genrePicker)){
+			pastGate = true;
+		}
+		return pastGate;
 	}
 	public void tapBack(){
 		backButton.click();

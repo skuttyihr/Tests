@@ -36,20 +36,23 @@ public class SplashPage extends Page {
 		return onboardingTextString;
 	}
 	public void waitForSplash(){
-		waitForVisible(driver, By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAImage[1]"), 5);
+		waitForVisible(driver, By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAImage[1]"), 20);
 	}
 	public boolean isBackgroundImagePresent(){
-		IOSElement backgroundImage = driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAImage[1]"));
+		IOSElement backgroundImage = findElement(driver, By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAImage[1]"));
 		if(backgroundImage != null){
-			if(backgroundImage.getLocation().getX() == 0 &&
-					backgroundImage.getLocation().getY() == 0){
-				return true;
-			}
+			return true;
 		}
 		return false;
 	}
 	
 	public String whatIsntVisible(){
+		return whatIsntVisible(false);
+	}
+	public String whatIsntVisible(boolean wait){
+		if(wait == true){
+			waitForSplash();
+		}
 		StringBuilder couldNotFind = new StringBuilder();
 		if(!isBackgroundImagePresent()){
 			couldNotFind.append("Background image was not present\n");

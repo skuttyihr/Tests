@@ -263,14 +263,6 @@ public class LoginPage extends Page {
 		}
 	}
 
-	// Want your local radio?
-	private void handlePossiblePopUp() {
-		try {
-			waitForVisible(driver, By.name("No Thanks"), 5).click();
-		} catch (Exception e) {
-		}
-	}
-
 	// Tell us what you like
 	private void tellUsWhatYouLike() {
 		try {

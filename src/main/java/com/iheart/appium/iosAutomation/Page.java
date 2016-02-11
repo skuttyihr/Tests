@@ -10,6 +10,7 @@ import io.appium.java_client.ios.IOSElement;
 
 import io.appium.java_client.pagefactory.*;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.support.PageFactory;
 
 public class Page extends TestRoot{
@@ -184,5 +185,13 @@ public class Page extends TestRoot{
 	public static IOSElement getStationFromList(int selector){
 		String xpathForItem = "//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell[" + selector + "]";
 		return waitForVisible(driver, find(driver, xpathForItem, "xpath"), 5);
+	}
+	
+	// Want your local radio?
+	public static void handlePossiblePopUp() {
+		try {
+			waitForVisible(driver, By.name("No Thanks"), 5).click();
+		} catch (Exception e) {
+		}
 	}
 }	
