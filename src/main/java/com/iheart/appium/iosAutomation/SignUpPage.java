@@ -32,11 +32,6 @@ public class SignUpPage extends Page {
 	// if account exists already
 	@iOSFindBy(name = "Okay") private IOSElement okay;
 
-	// After success signup
-	@iOSFindBy(name = "IHRiPhoneGenrePickerView") public IOSElement genrePicker;
-	@iOSFindBy(name = "Done") public IOSElement genreDone;
-	@iOSFindBy(name = "Cancel") public IOSElement genreCancel;
-
 	public SignUpPage() {
 		super();
 		// PageFactory.initElements(new AppiumFieldDecorator(driver), this);
@@ -63,52 +58,12 @@ public class SignUpPage extends Page {
 		iAgree.click();
 		TestRoot.waitForElementToBeVisible(create, 5);
 		create.click();
-		TestRoot.waitForElementToBeVisible(genrePicker, 15);
+		TestRoot.waitForElementToBeVisible(genrePage.genrePicker, 15);
 
 		// verify that tell us what you like page shows up
-		return TestRoot.isVisible(genrePicker);
+		return TestRoot.isVisible(genrePage.genrePicker);
 	}
 
-	// By position in list
-	public void selectGenre(int g){
-		selectGenre(g, false);
-	}
-	public void selectGenre(int g, boolean selectingMultiple){
-		// XPATH: //UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell[1]
-		waitForVisible(driver, 
-				By.xpath("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell[" + g + "]"),
-				10).click();
-
-		if(!selectingMultiple){
-			genreDone.click();
-		}
-	}
-	public void selectGenres(int[] gs){
-		for(int g : gs){
-			selectGenre(g, true);
-		}
-		genreDone.click();
-	}
-	
-	// By name
-	public void selectGenre(String g){
-		selectGenre(g, false);
-	}
-	public void selectGenre(String g, boolean selectingMultiple){
-		// Examples: Top 40 & Pop, Country, Hip Hop and R&B, Alternative, etc
-		waitForVisible(driver, By.name(g), 10).click();
-		if(!selectingMultiple){
-			genreDone.click();
-		}
-	}
-	public void selectGenres(String[] gs){
-		for(String g : gs){
-			selectGenre(g, true);
-		}
-		genreDone.click();
-	}
-	
-	
 	private String getCurrentDateInMilli() {
 		Date date = new Date();
 		return date.getTime() + "";
@@ -136,7 +91,7 @@ public class SignUpPage extends Page {
 		handlePossiblePopUp();
 		
 		boolean pastGate = false;
-		if(isVisible(forYou) || isVisible(genrePicker)){
+		if(isVisible(forYou) || isVisible(genrePage.genrePicker)){
 			pastGate = true;
 		}
 		return pastGate;

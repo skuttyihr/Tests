@@ -100,7 +100,7 @@ public class LoginPage extends Page {
 		chooseStayConnected(false);
 		
 		if(waitForVisible(driver, By.name("IHRiPhoneGenrePickerView"), 10) != null){
-			signupPage.selectGenre("Alternative");
+			genrePage.selectGenre("Alternative");
 		}
 		
 //		chooseStayConnected(false);

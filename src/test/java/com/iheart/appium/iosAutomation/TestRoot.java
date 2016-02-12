@@ -55,13 +55,13 @@ public class TestRoot {
 	protected static SignUpPage signupPage;
 	protected static Player player;
 	protected static SideNavigationBar sideNavBar;
-
 	protected static ForYouPage forYouPage;
 	protected static CustomRadio customRadio;
 	protected static Search search;
 	protected static DeepLink deepLink;
 	protected static PodcastsPage podcastsPage;
 	protected static SplashPage splashPage;
+	protected static GenrePage genrePage;
 	
 	protected static boolean useSimulator = false;
 	
@@ -157,6 +157,7 @@ public class TestRoot {
 		customRadio = new CustomRadio(driver);
 		deepLink = new DeepLink(driver);
 		splashPage = new SplashPage(driver);
+		genrePage = new GenrePage(driver);
 		
 		driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 		

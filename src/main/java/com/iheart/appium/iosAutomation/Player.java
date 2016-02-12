@@ -62,10 +62,11 @@ public class Player extends Page {
 
 	// ******* END OF PLAYER for live radio ********
 
-	/*
+	/**
 	 * Verify player info Station Name Artist name if available Thumb up and
 	 * Down Play/pause button Scan Button Share button iHeart button to Favorite
-	 * statio Volume control
+	 * station Volume control
+	 * **Calls assert statements, can fail tests from within method!
 	 */
 	public void verifyPlayer_live(String stationName) { // if(!stationLabel.getText().contains(stationName))
 														// Assert.fail("Station
@@ -94,6 +95,10 @@ public class Player extends Page {
 
 	}
 
+	/**
+	 * **Calls assert statements, can fail tests from within method!
+	 * @param stationName
+	 */
 	public void verifyPlayer_artist(String stationName) {
 		if (!stationLabel.getText().contains(stationName))
 			Assert.fail("Station name is not correct.");
@@ -113,6 +118,10 @@ public class Player extends Page {
 		verfiyCommonIcons("verifyPlayer_custom");
 	}
 
+	/**
+	 * **Calls assert statements, can fail tests from within method!
+	 * @param stationName
+	 */
 	public void verifyPlayer_podcast(String stationName) {
 		if (!stationLabel.getText().contains(stationName.substring(0, 5)))
 			Assert.fail("Station name is not correct.");
@@ -135,6 +144,10 @@ public class Player extends Page {
 		verfiyCommonIcons("verifyPlayer_podcast");
 	}
 
+	/**
+	 * **Calls assert statements, can fail tests from within method!
+	 * @param callingMethod
+	 */
 	private void verfiyCommonIcons(String callingMethod) {
 		if (!TestRoot.isVisible(thumbUp))
 			Assert.fail("No Thumb Up icon is displayed.");
@@ -143,7 +156,7 @@ public class Player extends Page {
 			Assert.fail("No Thumb Down icon is displayed.");
 	}
 
-	public void doSkip(String type) {
+	public boolean doSkip(String type) {
 		String currentTrack, nowPlaying;
 		currentTrack = getNowPlaying(type);
 
@@ -153,7 +166,8 @@ public class Player extends Page {
 		System.out.println("before/after:" + currentTrack + "/" + nowPlaying);
 		// Verify new episode is playing
 		if (currentTrack.equals(nowPlaying))
-			Assert.fail("Skip is not working.");
+			return false;
+		return true;
 	}
 
 	private String getNowPlaying(String type) {
@@ -167,16 +181,17 @@ public class Player extends Page {
 		return currentTrack;
 	}
 
-	public void doShare() {
+	public boolean doShare() {
 		more_live.tap(1, 1);
 		share.tap(1, 1);
-		if (!TestRoot.isVisible(mail))
-			Assert.fail("Share button is not working.");
+		if (!isVisible(mail))
+			return false;
+		return true;
 	}
 
 	public void doThumbUp() {
 		// Sometimes the thumbUp button is disabled, keep scan(At most 10 times
-		// though to avoid hang) until thumbUpiCON is enabled.
+		// though to avoid hang) until thumbUpicon is enabled.
 		int count = 0;
 
 		// Try a little bit more
