@@ -30,6 +30,11 @@ public class HomePage extends Page {
 		gotoHome();
 		forYou.click();
 	}
+	
+	public void gotoLocalRadio(){
+		gotoHome();
+		localRadio.click();
+	}
 
 	public void gotoPerfectFor() {
 		gotoHome();

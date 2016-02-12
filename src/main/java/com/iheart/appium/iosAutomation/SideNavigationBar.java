@@ -13,8 +13,6 @@ public class SideNavigationBar extends Page {
 	@iOSFindBy(name = "Side Menu") public IOSElement navIcon;
 	@iOSFindBy(name = "Now Playing") public IOSElement playingIcon;
 
-	@iOSFindBy(name = "iheartradio_logo_full") public IOSElement iheartradio_logo_full;
-
 	@iOSFindBy(name = "Home") public IOSElement home;
 	@iOSFindBy(name = "My Stations") public IOSElement myStations;
 	@iOSFindBy(name = "Live Radio") public IOSElement liveRadio;
@@ -59,6 +57,11 @@ public class SideNavigationBar extends Page {
 	public void gotoPodcastsPage() {
 		navIcon.click();
 		podcasts.click();
+	}
+	
+	public void gotoPerfectFor(){
+		navIcon.click();
+		perfectFor.click();
 	}
 
 	public void gotoListeningHistoryPage() {

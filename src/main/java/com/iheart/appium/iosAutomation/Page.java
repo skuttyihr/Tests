@@ -20,7 +20,10 @@ public class Page extends TestRoot{
 	@iOSFindBy(name = "My Stations") public IOSElement myStations;
 	@iOSFindBy(name = "For You") public IOSElement forYou;
 	@iOSFindBy(name = "Perfect For") public IOSElement perfectFor;
+	@iOSFindBy(name = "Local Radio") public IOSElement localRadio;
 
+	@iOSFindBy(name = "iheartradio_logo_full") public static IOSElement iheartradio_logo_full;
+	
 	static IOSDriver<IOSElement> driver;
 	static SideNavigationBar sideNavigationBar;
 	static Player player;
@@ -172,7 +175,11 @@ public class Page extends TestRoot{
 	// Want your local radio?
 	public static void handlePossiblePopUp() {
 		try {
-			waitForVisible(driver, By.name("No Thanks"), 5).click();
+			waitForVisible(driver, By.name("No Thanks"), 3).click();
+		} catch (Exception e) {
+		}
+		try {
+			waitForVisible(driver, By.name("Maybe Later"), 3).click();
 		} catch (Exception e) {
 		}
 	}
