@@ -73,7 +73,17 @@ public class SideNavigationBar extends Page {
 		navIcon.click();
 		myStations.click();
 	}
-
+	
+	public void gotoAlarm(){
+		navIcon.click();
+		alarm.click();
+	}
+	
+	public void gotoSleep(){
+		navIcon.click();
+		sleep.click();
+	}
+	
 	public void gotoSettings() {
 		if(settings == null || !isVisible(settings)){
 			waitForElementToBeVisible(navIcon, 2);

@@ -21,7 +21,7 @@ public class TestPages extends TestRoot {
 	}
 	
 	@Test
-	public void testForLogoOnPages(){
+	public void testForLogoAndTitleOnPages(){
 		signupPage.tapMaybeLater();
 		signupPage.selectGenre(1);
 		Page.handlePossiblePopUp();
@@ -55,6 +55,17 @@ public class TestPages extends TestRoot {
 		Assert.assertTrue("Listening History page title was not visible", isVisible(listeningHistory));
 		Assert.assertTrue("Listening History page did not have title of 'Listening History'", 
 								listeningHistory.getText().equals("Listening History"));
+		// Items that require login
+		sideNavBar.gotoAlarm();
+		loginPage.login(); // Login from popup
+		// We went into alarm, as expected
+		Assert.assertTrue("Podcast page should not have logo", !isVisible(Page.iheartradio_logo_full));
+		Assert.assertTrue("Artist Radio page did not have title of 'Artist Radio'", 
+				isVisible(findElement(driver, By.name("Alarm Clock"))));
+		sideNavBar.gotoSleep();
+		Assert.assertTrue("Podcast page should not have logo", !isVisible(Page.iheartradio_logo_full));
+		Assert.assertTrue("Artist Radio page did not have title of 'Artist Radio'", 
+				isVisible(findElement(driver, By.name("Sleep Timer"))));
 	}
 	
 }
