@@ -31,9 +31,8 @@ public class PodcastsPage extends Page {
 		if(isVisible(player.playButton_podcast)){
 			return true;
 		}
-		else{
-			return false;
-		}
+		System.err.println("Podcast play button was not visible!");
+		return false;
 	}
 
 	protected void swipeSlide() {

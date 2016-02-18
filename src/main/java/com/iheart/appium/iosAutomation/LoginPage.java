@@ -89,7 +89,7 @@ public class LoginPage extends Page {
 	}
 
 	public boolean login() { // logger.info("About to login...");
-		
+		boolean loggedIn = false;
 		waitForElementToBeVisible(loginButton, 20);
 		loginButton.click();
 		waitForElementToBeVisible(userName, 5);
@@ -97,21 +97,26 @@ public class LoginPage extends Page {
 		password.sendKeys(PASSWORD);
 		logInFormButton.click();
 		
-		chooseStayConnected(false);
+//		chooseStayConnected(false);
+		dismissLoginPopups();
 		
-		if(waitForVisible(driver, By.name("IHRiPhoneGenrePickerView"), 10) != null){
+		if(waitForVisible(driver, By.name("IHRiPhoneGenrePickerView"), 7) != null){
 			genrePage.selectGenre("Alternative");
 		}
 		
 //		chooseStayConnected(false);
 		dismissLoginPopups();
 		// verify we are in
-		IOSElement forYouTest = waitForVisible(driver, By.name("For You"), 35);
+		IOSElement forYouTest = waitForVisible(driver, By.name("For You"), 20);
 		if(forYouTest != null && isVisible(forYouTest)){
-			return verifyLogin();
+			loggedIn = verifyLogin();
 		}
-		else
-			return false;
+		
+		if(!isVisible(homePage.forYou)){
+			sideNavBar.gotoHomePage();
+		}
+		
+		return loggedIn;
 	}
 
 	public boolean loginViaFacebook() {
@@ -146,6 +151,7 @@ public class LoginPage extends Page {
 		return verifyLogin();
 	}
 	private void dismissLoginPopups(){
+		handlePossiblePopUp();
 		handleWantYourLocalRadioPopup();
 		tellUsWhatYouLike();
 		dismissStayConnectedPopup();
@@ -204,12 +210,12 @@ public class LoginPage extends Page {
 
 	public void dismissStayConnectedPopup() {
 		try {
-			driver.findElement(By.name("Maybe Later")).click();
+			waitForVisible(driver, By.name("Maybe Later"), 4).click();
 		} catch (Exception e) {
 		}
 	}
 
-	private void chooseStayConnected(boolean stayConnected) {
+	public void chooseStayConnected(boolean stayConnected) {
 		handlePossiblePopUp();
 		tellUsWhatYouLike();
 		try {
@@ -222,7 +228,7 @@ public class LoginPage extends Page {
 	}
 
 	// Tell us what you like
-	private void tellUsWhatYouLike() {
+	public void tellUsWhatYouLike() {
 		try {
 			driver.findElement(By.name("Pop")).click();
 			driver.findElement(By.name("Done")).click();

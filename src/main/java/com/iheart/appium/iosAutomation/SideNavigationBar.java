@@ -40,6 +40,7 @@ public class SideNavigationBar extends Page {
 
 	// Put header and player related methods here
 	public void gotoHomePage() {
+		waitForElementToBeVisible(navIcon, 2);
 		navIcon.click();
 		home.click();
 	}

@@ -33,9 +33,12 @@ public class ForYouPage extends Page {
 	 * @return true if station added
 	 */
 	public boolean createArtistStation() {
+		if(!isVisible(homePage.forYou)){
+			sideNavBar.gotoHomePage();
+		}
 		String artist = "Josh Groban";
 		waitForElementToBeVisible(search.searchButton, 5);
-		search.searchButton.click();
+		search.searchButton.click(); 
 		search.searchField.sendKeys(artist);
 		topHit.click();
 		// Verify PLAYER

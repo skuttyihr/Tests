@@ -161,6 +161,9 @@ public class TestRoot {
 		
 		driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 		
+		// Get rid of zip code request if it displays
+		Page.enterZip();
+
 		// Wait for login to display
 		waitForElementToBeVisible(signupPage.getGetStartedButton(), 40);
 	}
@@ -309,13 +312,27 @@ public class TestRoot {
 	}
 	
 	/**
+	 * Guesses, useful for only Xpaths or names.
+	 * @param locator
+	 * @return
+	 */
+	public static By find(String locator){
+		// Try to guess locator 
+		if(locator.startsWith("//")){
+			return find(locator, "xpath");
+		}
+		else{
+			return find(locator, "name");
+		}
+	}
+	/**
 	 * Driver, locator, method to locate BY
 	 * @param d
 	 * @param locator
 	 * @param method
 	 * @return
 	 */
-	public static By find(IOSDriver<IOSElement> d, String locator, String method){
+	public static By find(String locator, String method){
 		if(method.equalsIgnoreCase("name")){
 			return By.name(locator);
 		}

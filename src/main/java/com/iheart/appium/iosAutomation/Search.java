@@ -51,6 +51,7 @@ public class Search extends Page {
 		}
 		sb = getSearchButton();
 		sb.click();
+		waitForElementToBeVisible(searchField, 3);
 	}
 	/**
 	 * Search for an item, return the name of the selected result

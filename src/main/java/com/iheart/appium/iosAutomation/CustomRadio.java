@@ -29,25 +29,29 @@ public class CustomRadio extends Page {
 		return chosenStation;
 	}
 
-	public boolean canPlayCustomStation() {
+	public String canPlayCustomStation() {
 		String chosenStation = playACustomStation();
 		if(chosenStation == null || chosenStation.length() <= 0){
-			return false;
+			return "Could not choose a station.";
 		}
 		// verify that login prompt has not popped up
 		if (isVisible(createAccount)){
-			return false;
+			return "Create account should not have popped up here, as we're logged in";
 		}
 		
 		// Verify it is the first under My Station -> Recent Stations
 		player.back.click();
+		waitForElementToBeVisible(search.cancel, 2);
 		search.cancel.click();
+		waitForElementToBeVisible(myStations, 2);
+		if(!isVisible(myStations)){
+			sideNavBar.gotoHomePage();
+		}
 		myStations.click();
 		if (!driver.getPageSource().contains(chosenStation)){
-			System.err.println("Newly played custom station is not added under my Recent Stations.");
-			return false;
+			return "Newly played custom station, " + chosenStation + ", is not added under my Recent Stations.";
 		}
 		
-		return true;
+		return ""; // No errors
 	}
 }
