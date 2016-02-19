@@ -37,11 +37,14 @@ public class Page extends TestRoot{
 	static boolean isRealDevice = false;
 //	Logger logger = Logger.getLogger(Page.class);
 
-	static final String USER_NAME = "iheartrocks999@gmail.com";
-	static final String PASSWORD = "iheart001";
-	static final String FACEBOOK_USER_NAME = USER_NAME;
+	// Shorter account, easier to type in
+	static final String OLD_USER_NAME = "iheartrocks999@gmail.com";
+	static final String OLD_PASSWORD = "iheart001";
+	static final String USER_NAME = "ihrttr@gmail.com";
+	static final String PASSWORD = "tst7";
+	static final String FACEBOOK_USER_NAME = OLD_USER_NAME;
 	static final String FACEBOOK_USER_PERSONAL_NAME = "Tony Sopranos";
-	static final String GOOGLE_USER_NAME = USER_NAME;
+	static final String GOOGLE_USER_NAME = OLD_USER_NAME;
 
 	public static final String screenshot_folder = "iosScreenshots";
 

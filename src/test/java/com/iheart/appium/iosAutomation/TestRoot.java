@@ -546,10 +546,12 @@ public class TestRoot {
 	}
 	
 	public static void waitForElementToBeVisible(IOSElement ele, int timeInSeconds){
-		
+		if(isVisible(ele)){
+			timeInSeconds = 0; // Already visible
+		}
 		long timeLeftMil = timeInSeconds * 1000;
 		while(timeLeftMil > 0){
-			if(ele != null && isVisible(ele)){
+			if(isVisible(ele)){
 				break;
 			}
 //			sleep(100); // Intentionally mismatched to make up for time searching for element
