@@ -3,7 +3,6 @@ package com.iheart.appium.iosAutomation;
 import io.appium.java_client.ios.*;
 import io.appium.java_client.pagefactory.*;
 
-import org.junit.Assert;
 import org.openqa.selenium.support.PageFactory;
 
 public class DeepLink extends Page {
@@ -15,7 +14,7 @@ public class DeepLink extends Page {
 		PageFactory.initElements(new AppiumFieldDecorator(driver), this);
 	}
 
-	public void doDeepLink() throws Exception {
+	public boolean doDeepLink() throws Exception {
 		String deepLink = "http://www.iheart.com/live/1469";
 		// Open Safari, load link
 
@@ -26,7 +25,9 @@ public class DeepLink extends Page {
 
 		System.out.println("See page:" + driver.getPageSource());
 		if (!driver.getPageSource().contains("Get the App"))
-			Assert.fail("Get App page is not launched.");
+			return false;
+		else
+			return true;
 	}
 
 }

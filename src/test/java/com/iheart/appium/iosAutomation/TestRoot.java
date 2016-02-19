@@ -7,9 +7,11 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Random;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
@@ -36,6 +38,9 @@ public class TestRoot {
 	
 	protected static IOSDriver<IOSElement> driver;
 
+	private static int appWidth = 0;
+	private static int appHeight = 0;
+	
 	// Desired Capabilities for Appium to be imported from properties
 	protected static String DEVICE_NAME;
 	protected static String UDID;
@@ -50,12 +55,14 @@ public class TestRoot {
 	protected static SignUpPage signupPage;
 	protected static Player player;
 	protected static SideNavigationBar sideNavBar;
-
 	protected static ForYouPage forYouPage;
 	protected static CustomRadio customRadio;
 	protected static Search search;
 	protected static DeepLink deepLink;
 	protected static PodcastsPage podcastsPage;
+	protected static SplashPage splashPage;
+	protected static GenrePage genrePage;
+	
 	protected static boolean useSimulator = false;
 	
 	protected static void setup() {
@@ -149,9 +156,14 @@ public class TestRoot {
 		search = new Search(driver);
 		customRadio = new CustomRadio(driver);
 		deepLink = new DeepLink(driver);
-
+		splashPage = new SplashPage(driver);
+		genrePage = new GenrePage(driver);
+		
 		driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 		
+		// Get rid of zip code request if it displays
+		Page.enterZip();
+
 		// Wait for login to display
 		waitForElementToBeVisible(signupPage.getGetStartedButton(), 40);
 	}
@@ -159,6 +171,8 @@ public class TestRoot {
 	protected static void tearDown() {
 		if(driver != null){
 			try{
+				// If app isn't resetting through appium, try running a test with this un-commented
+//				driver.resetApp();
 				driver.quit();
 			}
 			catch(Exception e){
@@ -265,6 +279,22 @@ public class TestRoot {
 		System.out.println("Jquery is loaded.");
 	}
 	
+	public static IOSElement find(IOSDriver<IOSElement> d, String locator){
+		// Guess the locator, returns the element
+		if(locator.startsWith("//")){
+			return findElement(d, By.xpath(locator));
+		}
+		else{
+			// name or ID?
+			IOSElement testEle = findElement(d, By.name(locator));
+			if(testEle == null){
+				// try ID
+				testEle = findElement(d, By.id(locator));
+			}
+			return testEle; // null if we found nothing
+		}
+	}
+	
 	public static IOSElement findElement(IOSDriver<IOSElement> d, By by){
 		IOSElement e = null;
 		try{
@@ -282,13 +312,27 @@ public class TestRoot {
 	}
 	
 	/**
+	 * Guesses, useful for only Xpaths or names.
+	 * @param locator
+	 * @return
+	 */
+	public static By find(String locator){
+		// Try to guess locator 
+		if(locator.startsWith("//")){
+			return find(locator, "xpath");
+		}
+		else{
+			return find(locator, "name");
+		}
+	}
+	/**
 	 * Driver, locator, method to locate BY
 	 * @param d
 	 * @param locator
 	 * @param method
 	 * @return
 	 */
-	public static By find(IOSDriver<IOSElement> d, String locator, String method){
+	public static By find(String locator, String method){
 		if(method.equalsIgnoreCase("name")){
 			return By.name(locator);
 		}
@@ -306,7 +350,132 @@ public class TestRoot {
 		}
 	}
 	
+	// General navigation
+	/**
+	 * Swipe in a direction from a start point
+	 * Directions: 0: up, 1: right, 2: down, 3: left
+	 * @param startx
+	 * @param starty
+	 * @param direction
+	 * @param duration
+	 */
+	public static void swipe(int startx, int starty, int direction, int duration){
+		int endx = 0;
+		int endy = 0;
+		switch (direction){
+		case 0:
+			endx = startx;
+			endy = starty - 300;
+			break;
+		case 1:
+			endx = startx + 300;
+			endy = starty;
+			break;
+		case 2: 
+			endx = startx;
+			endy = starty + 300;
+			break;
+		case 3:
+			endx = startx - 300;
+			endy = starty;
+			break;
+		}
+		if(endx < 0)
+			endx = 0;
+		if(endx > getAppWidth())
+			endx = getAppWidth();
+		if(endy < 0)
+			endy = 0;
+		if(endy > getAppHeight())
+			endy = getAppHeight();
+		
+		driver.swipe(startx, starty, endx, endy, duration);
+	}
+	public static void swipeUp(){
+		int startx = getAppWidth() / 2;
+		int starty = (getAppHeight() / 6) * 5;
+		swipe(startx, starty, 0, 500);
+	}
+	/**
+	 * Swipe left to right
+	 */
+	public static void swipeRight(){
+		int startx = getAppWidth() / 6;
+		int starty = getAppHeight() / 2;
+		swipe(startx, starty, 1, 500);
+	}
+	public static void swipeDown(){
+		int startx = getAppWidth() / 2;
+		int starty = getAppHeight() / 6;
+		swipe(startx, starty, 2, 500);
+	}
+	/**
+	 * Swipe right to left
+	 */
+	public static void swipeLeft(){
+		int startx = (getAppWidth() / 6) * 5;
+		int starty = getAppHeight() / 2;
+		swipe(startx, starty, 3, 500);
+	}
+	
+	
+	public static int getAppWidth(){
+		if(appWidth == 0)
+			appWidth = driver.manage().window().getSize().getWidth();
+		return appWidth;
+	}
+	public static int getAppHeight(){
+		if(appHeight == 0)
+			appHeight = driver.manage().window().getSize().getHeight();
+		return appHeight;
+	}
+	
+	public static Set<String> getContextHandles() {
+		Set<String> contexts = new HashSet<String>();
+		try{
+			contexts = driver.getContextHandles(); // Errors here
+		}
+		catch(Exception e){
+		}
+
+		return contexts;
+	}
+	public static boolean switchToWebContext(){
+		Set<String> handles = getContextHandles();
+		String webContext = "";
+		if(handles != null && handles.size() > 0){
+			for(String c : handles){
+				if(c.contains("WEB")){
+					webContext = c;
+					driver.context(c);
+				}
+			}
+			sleep(1000);
+		}
+		return driver.getContext().equals(webContext);
+	}
+	public static boolean switchToNativeContext(){
+		driver.context("NATIVE_APP");
+		sleep(1000);
+		return driver.getContext().equals("NATIVE_APP");
+	}
+	
 	//// Waiting Methods ////
+	static boolean isVisible(IOSElement e){
+		boolean isVisible = false;
+		if(e == null){
+			return false;
+		}
+		try{
+			driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
+			isVisible = e.isDisplayed();
+		}catch(Exception x){}
+		finally{
+			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
+		}
+		return isVisible;
+	}
+	
 	public static void sleep(int timeInMs){
 		try{
 			Thread.sleep(timeInMs);
@@ -376,26 +545,11 @@ public class TestRoot {
 		return returnElement;
 	}
 	
-	public static boolean isElementVisible(IOSElement ele){
-		boolean isDisplayed = false;
-		try{
-			driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
-			isDisplayed = ele.isDisplayed();
-		}
-		catch(Exception e){
-			// Is displayed is already false;
-		}
-		finally{
-			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
-		}
-		return isDisplayed;
-	}
-	
 	public static void waitForElementToBeVisible(IOSElement ele, int timeInSeconds){
 		
 		long timeLeftMil = timeInSeconds * 1000;
 		while(timeLeftMil > 0){
-			if(ele != null && isElementVisible(ele)){
+			if(ele != null && isVisible(ele)){
 				break;
 			}
 //			sleep(100); // Intentionally mismatched to make up for time searching for element
@@ -431,6 +585,27 @@ public class TestRoot {
 		return elementGone;
 	}
 	
+	/**
+	 * If a string is not empty and not null ("good"), return true
+	 * @param s
+	 * @return
+	 */
+	public static boolean strGood(String s){
+		return s != null && s.length() > 0;
+	}
+	
+	/**
+	 * For test cases that return an error string, 
+	 * 		this gets a simple boolean by inverting the logic 
+	 * 		of the standard string test, 
+	 * 		returning TRUE if there are NO ERRORS.
+	 * @param s
+	 * @return
+	 */
+	public static boolean didPass(String s){
+		return !strGood(s);
+	}
+	
 	// Test Watcher control
 	@Rule
 	public TestRule watcher = new TestWatcher() {
@@ -447,8 +622,8 @@ public class TestRoot {
 				FileUtils.copyFile(screenshot, new File(fullFilePath));
 
 			} catch (Exception ex) {
-				System.out.println(ex.toString());
-				System.out.println(ex.getMessage());
+				System.err.println(ex.toString());
+				System.err.println(ex.getMessage());
 			}
 		}
 	};

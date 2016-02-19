@@ -1,8 +1,5 @@
 package com.iheart.appium.iosAutomation;
 
-import java.util.HashSet;
-import java.util.Set;
-
 //import org.apache.log4j.Logger;
 
 import io.appium.java_client.ios.IOSDriver;
@@ -10,6 +7,7 @@ import io.appium.java_client.ios.IOSElement;
 
 import io.appium.java_client.pagefactory.*;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.support.PageFactory;
 
 public class Page extends TestRoot{
@@ -18,11 +16,20 @@ public class Page extends TestRoot{
 	@iOSFindBy(name = "Sign up for Free") protected IOSElement signUpPrompt;
 	@iOSFindBy(name = "Create Account") protected IOSElement createAccount;
 	
+	// Zip Code info
+	@iOSFindBy(name = "Use Location") public IOSElement useLocation;
+	@iOSFindBy(name = "Allow") public IOSElement allowButton;
+	@iOSFindBy(name = "Don't Allow") public IOSElement dontAllowButton;
+	
+	
 	// SUB NAVIGATION bar
 	@iOSFindBy(name = "My Stations") public IOSElement myStations;
 	@iOSFindBy(name = "For You") public IOSElement forYou;
 	@iOSFindBy(name = "Perfect For") public IOSElement perfectFor;
+	@iOSFindBy(name = "Local Radio") public IOSElement localRadio;
 
+	@iOSFindBy(name = "iheartradio_logo_full") public static IOSElement iheartradio_logo_full;
+	
 	static IOSDriver<IOSElement> driver;
 	static SideNavigationBar sideNavigationBar;
 	static Player player;
@@ -79,31 +86,16 @@ public class Page extends TestRoot{
 		return winHandleBefore;
 	}
 
-	public Set<String> getContextHandles() {
-		Set<String> contexts = new HashSet<String>();
-		try{
-			contexts = driver.getContextHandles(); // Errors here
-		}
-		catch(Exception e){
-		}
-
-//		for (String context : contexts){
-//			System.out.println(context);
-//		}
-
-		return contexts;
-	}
-	
 	private static int getRecentY(){
 		int recentY = 100000;
 		try{
 			recentY = waitForVisible(driver, 
-								find(driver, "//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIAStaticText[2]", "xpath"), 
+								find("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIAStaticText[2]", "xpath"), 
 								2).getLocation().getY();
 		}
 		catch(Exception e){
 			IOSElement testElement = waitForVisible(driver, 
-					find(driver, "//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIAStaticText[1]", "xpath"), 
+					find("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIAStaticText[1]", "xpath"), 
 					2);
 			if(testElement != null){
 				if(testElement.getText().equalsIgnoreCase("Recent Stations")){
@@ -125,7 +117,7 @@ public class Page extends TestRoot{
 		 */
 		int foundStation = -1;
 		homePage.gotoMyStations();
-		IOSElement favorites = waitForVisible(driver, find(driver, "//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIAStaticText[1]", "xpath"), 10);
+		IOSElement favorites = waitForVisible(driver, find("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIAStaticText[1]", "xpath"), 10);
 		if(favorites != null && favorites.getText().equalsIgnoreCase("Favorite Stations")){
 			int recentY = getRecentY();
 			for(int i = 1; i <= 25; i++){
@@ -145,7 +137,7 @@ public class Page extends TestRoot{
 	public static boolean removeFavorite(int itemToRemove){
 		boolean removedFavorite = false;
 		// First assert that it is a favorite
-		IOSElement favorites = waitForVisible(driver, find(driver, "//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIAStaticText[1]", "xpath"), 10);
+		IOSElement favorites = waitForVisible(driver, find("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIAStaticText[1]", "xpath"), 10);
 		if(favorites != null){
 			int recentY = getRecentY();
 			IOSElement item = getStationFromList(itemToRemove);
@@ -183,7 +175,45 @@ public class Page extends TestRoot{
 	
 	public static IOSElement getStationFromList(int selector){
 		String xpathForItem = "//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell[" + selector + "]";
-		return waitForVisible(driver, find(driver, xpathForItem, "xpath"), 5);
+		return waitForVisible(driver, find(xpathForItem, "xpath"), 5);
 	}
 	
-}
+	// Want your local radio?
+	public static void handlePossiblePopUp() {
+		try {
+			waitForVisible(driver, By.name("No Thanks"), 3).click();
+		} catch (Exception e) {
+		}
+		try {
+			waitForVisible(driver, By.name("Maybe Later"), 3).click();
+		} catch (Exception e) {
+		}
+	}
+	
+	public void useLocation(){
+		if(!isVisible(useLocation)){
+			waitForElementToBeVisible(useLocation, 5);
+		}
+		if(isVisible(useLocation)){
+			useLocation.click();
+			allowButton.click();
+		}
+	}
+	public static void enterZip(){
+		enterZip("10013");
+	}
+	public static void enterZip(String zip){
+		IOSElement enterZip = waitForVisible(driver, find("Enter ZIP"), 3);
+		if(enterZip != null && isVisible(enterZip)){
+			enterZip.click();
+			IOSElement zipCodeEntry = waitForVisible(driver, 
+					find("//UIAApplication[1]/UIAWindow[1]/UIAAlert[1]/UIAScrollView[1]/UIACollectionView[1]/UIACollectionCell[1]/UIATextField[1]/UIATextField[1]"),
+					10);
+			if(zipCodeEntry != null){
+				zipCodeEntry.sendKeys(zip);
+				driver.findElement(By.name("OK"));
+			}
+		}
+	}
+}	
+

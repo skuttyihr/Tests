@@ -10,10 +10,9 @@ public class SideNavigationBar extends Page {
 	// ******* Side Navigation Bar *******
 	// @iOSFindBy(name="nav")
 //	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIANavigationBar[1]/UIAButton[1]") public IOSElement navIcon;
-	@iOSFindBy(name = "Side Menu") public IOSElement navIcon;
+	private final String navIconString = "Side Menu";
+	@iOSFindBy(name = navIconString) public IOSElement navIcon;
 	@iOSFindBy(name = "Now Playing") public IOSElement playingIcon;
-
-	@iOSFindBy(name = "iheartradio_logo_full") public IOSElement iheartradio_logo_full;
 
 	@iOSFindBy(name = "Home") public IOSElement home;
 	@iOSFindBy(name = "My Stations") public IOSElement myStations;
@@ -42,7 +41,7 @@ public class SideNavigationBar extends Page {
 
 	// Put header and player related methods here
 	public void gotoHomePage() {
-		navIcon.click();
+		waitForVisible(driver, find(navIconString), 5).click();
 		home.click();
 	}
 
@@ -60,6 +59,11 @@ public class SideNavigationBar extends Page {
 		navIcon.click();
 		podcasts.click();
 	}
+	
+	public void gotoPerfectFor(){
+		navIcon.click();
+		perfectFor.click();
+	}
 
 	public void gotoListeningHistoryPage() {
 		navIcon.click();
@@ -70,9 +74,19 @@ public class SideNavigationBar extends Page {
 		navIcon.click();
 		myStations.click();
 	}
-
+	
+	public void gotoAlarm(){
+		navIcon.click();
+		alarm.click();
+	}
+	
+	public void gotoSleep(){
+		navIcon.click();
+		sleep.click();
+	}
+	
 	public void gotoSettings() {
-		if(settings == null || !settings.isDisplayed()){
+		if(settings == null || !isVisible(settings)){
 			waitForElementToBeVisible(navIcon, 2);
 			navIcon.click();
 		}

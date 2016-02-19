@@ -20,40 +20,59 @@ public class TestPlayback extends TestRoot {
 	}
 	@After
 	public void after() {
+		// Remove favorites
+		Page.removeAllFavorites();
 		TestRoot.tearDown();
 	}
 	
+	/**
+		Searches for and plays a custom artist based station
+		Thumbs up track
+		Thumbs down track
+		Favorites station
+		Skips track
+		Verifies that station has been favorited
+	 * @throws Exception
+	 */
 	@Test
-	public void test_createArtistStation_thumbUp_thumbDown_favorite_skip() throws Exception {
+	public void test_custom_artist_station() throws Exception {
 		System.out.println("test method:" + name.getMethodName());
 		Assert.assertTrue("Was not able to login", loginPage.login());
 		Assert.assertTrue("Artist was not added to favorites!", forYouPage.createArtistStation());
-		// Remove favorites
-		Page.removeAllFavorites();
 	}
 
 	@Test
 	public void test_playPodcasts_skip_share() throws Exception {
 		System.out.println("test method:" + name.getMethodName());
 		Assert.assertTrue("Was not able to login", loginPage.login());
-		podcastsPage.playPodcasts();
+		String errorsWithPodcasts = podcastsPage.playPodcasts();
+		Assert.assertTrue("Could not play a podcast episode. Errors:\n" 
+							+ errorsWithPodcasts, didPass(errorsWithPodcasts));
 	}
 
 	@Test
 	public void test_playLiveRadio_thumbUP_thumbDown_doFavorite() throws Exception {
 		System.out.println("test method:" + name.getMethodName());
 		Assert.assertTrue("Was not able to login", loginPage.login());
-		forYouPage.playLiveRadio();
+		Assert.assertTrue("Could not play a live radio station", forYouPage.playLiveRadio());
 	}
 
 	@Test
 	public void test_playCustomStation_search_logout() throws Exception {
 		System.out.println("test method:" + name.getMethodName());
 		Assert.assertTrue("Was not able to login", loginPage.login());
-		Assert.assertTrue("Was not able to play a custom station and load it into recent history", 
-				customRadio.canPlayCustomStation());
+		
+		//Play radio, record errors.
+		String anyErrors = customRadio.canPlayCustomStation();
+		Assert.assertTrue("Was not able to play a custom station and load it into recent history. Errors: \n" 
+							+ anyErrors, 
+						didPass(anyErrors));
+		// Log out
 		sideNavBar.logout();
-		Assert.assertFalse("Was able to play a custom station after loggingout", 
-				customRadio.canPlayCustomStation());
+		
+		// Try to play a station while logged out
+		anyErrors = customRadio.canPlayCustomStation();
+		Assert.assertFalse("Was able to play a custom station after logging out", 
+				anyErrors == null || anyErrors.length() <= 0);
 	}
 }

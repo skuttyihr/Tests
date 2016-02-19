@@ -22,7 +22,7 @@ public class TestDeepLink extends TestRoot {
 	@Test
 	public void deepLinkTest() throws Exception {
 		System.out.println("test method:" + name.getMethodName());
-		deepLink.doDeepLink();
+		Assert.assertTrue("Could not completel deeplink test." , deepLink.doDeepLink());
 	}
 
 	@After

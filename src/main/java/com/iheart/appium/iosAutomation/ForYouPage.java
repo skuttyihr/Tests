@@ -4,7 +4,6 @@ import java.util.List;
 
 import io.appium.java_client.pagefactory.*;
 
-import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -24,19 +23,36 @@ public class ForYouPage extends Page {
 		super(_driver);
 	}
 
-	// Returns true if the station was added
+	/**
+	 * Searches for and plays a custom artist based station
+	 * Thumbs up track
+	 * Thumbs down track
+	 * Favorites station
+	 * Skips track
+	 * Verifies that station has been favorited
+	 * @return true if station added
+	 */
 	public boolean createArtistStation() {
+		if(!isVisible(homePage.forYou)){
+			sideNavBar.gotoHomePage();
+		}
 		String artist = "Josh Groban";
 		waitForElementToBeVisible(search.searchButton, 5);
-		search.searchButton.click();
+		search.searchButton.click(); 
 		search.searchField.sendKeys(artist);
 		topHit.click();
 		// Verify PLAYER
 		player.verifyPlayer_artist(artist);
 		player.doThumbUp();
 		player.doThumbDown("artist");
-		player.doFavorite();
-		player.doSkip();
+		if(!player.doFavorite()){
+			System.err.println("Could not favorite artist station!");
+			return false;
+		}
+		if(!player.doSkip()){
+			System.err.println("Could not skip!");
+			return false;
+		}
 		// Verify that this station is added under My Station
 		player.back.click();
 		search.cancel.click();
@@ -81,7 +97,7 @@ public class ForYouPage extends Page {
 
 	}
 
-	public void playLiveRadio() {
+	public boolean playLiveRadio() {
 		String myStation = "";
 		WebElement collectionView = driver
 				.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]"));
@@ -91,8 +107,14 @@ public class ForYouPage extends Page {
 
 		// Verify PLAYER
 		player.verifyPlayer_live(myStation);
-		player.doFavorite();
-		player.doScan();
+		if(!player.doFavorite()){
+			System.err.println("Could not favorite!");
+			return false;
+		}
+		if(!player.doScan()){
+			System.err.println("Could not scan!");
+			return false;
+		}
 		player.doThumbUp();
 		player.doThumbDown();
 		// player.doFavorite();
@@ -112,7 +134,9 @@ public class ForYouPage extends Page {
 		// Wait for the list to be visible
 		getStationFromList(1); // Includes a wait
 		if (!driver.getPageSource().contains(myStation))
-			Assert.fail("Live station is not added under My Station.");
+			return false;
+		else
+			return true;
 	}
 
 	public void comeToThisPage() {

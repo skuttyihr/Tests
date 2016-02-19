@@ -16,9 +16,8 @@ public class HomePage extends Page {
 	 * public HomePage(IOSDriver _driver) { super(_driver); }
 	 */
 	public void gotoHome(){
-		if(!forYou.isDisplayed()){
-			sideNavigationBar.navIcon.click();
-			sideNavigationBar.home.click();
+		if(!isVisible(forYou)){
+			sideNavBar.gotoHomePage();
 		}
 	}
 	public void gotoMyStations() {
@@ -29,6 +28,11 @@ public class HomePage extends Page {
 	public void gotoForYou() {
 		gotoHome();
 		forYou.click();
+	}
+	
+	public void gotoLocalRadio(){
+		gotoHome();
+		localRadio.click();
 	}
 
 	public void gotoPerfectFor() {

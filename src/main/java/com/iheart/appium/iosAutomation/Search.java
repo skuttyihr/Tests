@@ -45,12 +45,12 @@ public class Search extends Page {
 	}
 	private void getToSearch(){
 		IOSElement sb = getSearchButton();
-		if(sb == null || !sb.isDisplayed()){
-			sideNavigationBar.navIcon.click();
-			sideNavigationBar.home.click();
+		if(sb == null || !isVisible(sb)){
+			sideNavBar.gotoHomePage();
 		}
 		sb = getSearchButton();
 		sb.click();
+		waitForElementToBeVisible(searchField, 3);
 	}
 	/**
 	 * Search for an item, return the name of the selected result
