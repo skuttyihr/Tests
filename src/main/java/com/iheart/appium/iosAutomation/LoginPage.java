@@ -88,6 +88,10 @@ public class LoginPage extends Page {
 		}
 	}
 
+	/**
+	 * Logs in, verifies log in, and returns to home page
+	 * @return
+	 */
 	public boolean login() { // logger.info("About to login...");
 		boolean loggedIn = false;
 		waitForElementToBeVisible(loginButton, 20);
