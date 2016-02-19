@@ -97,14 +97,14 @@ public class LoginPage extends Page {
 		password.sendKeys(PASSWORD);
 		logInFormButton.click();
 		
-//		chooseStayConnected(false);
+		chooseStayConnected(false);
 		dismissLoginPopups();
 		
 		if(waitForVisible(driver, By.name("IHRiPhoneGenrePickerView"), 7) != null){
 			genrePage.selectGenre("Alternative");
 		}
 		
-//		chooseStayConnected(false);
+		chooseStayConnected(false);
 		dismissLoginPopups();
 		// verify we are in
 		IOSElement forYouTest = waitForVisible(driver, By.name("For You"), 20);
@@ -112,9 +112,7 @@ public class LoginPage extends Page {
 			loggedIn = verifyLogin();
 		}
 		
-		if(!isVisible(homePage.forYou)){
-			sideNavBar.gotoHomePage();
-		}
+		sideNavBar.gotoHomePage();
 		
 		return loggedIn;
 	}

@@ -45,9 +45,8 @@ public class Search extends Page {
 	}
 	private void getToSearch(){
 		IOSElement sb = getSearchButton();
-		if(!isVisible(sb)){
-			sideNavigationBar.navIcon.click();
-			sideNavigationBar.home.click();
+		if(sb == null || !isVisible(sb)){
+			sideNavBar.gotoHomePage();
 		}
 		sb = getSearchButton();
 		sb.click();

@@ -10,7 +10,8 @@ public class SideNavigationBar extends Page {
 	// ******* Side Navigation Bar *******
 	// @iOSFindBy(name="nav")
 //	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIANavigationBar[1]/UIAButton[1]") public IOSElement navIcon;
-	@iOSFindBy(name = "Side Menu") public IOSElement navIcon;
+	private final String navIconString = "Side Menu";
+	@iOSFindBy(name = navIconString) public IOSElement navIcon;
 	@iOSFindBy(name = "Now Playing") public IOSElement playingIcon;
 
 	@iOSFindBy(name = "Home") public IOSElement home;
@@ -40,8 +41,7 @@ public class SideNavigationBar extends Page {
 
 	// Put header and player related methods here
 	public void gotoHomePage() {
-		waitForElementToBeVisible(navIcon, 2);
-		navIcon.click();
+		waitForVisible(driver, find(navIconString), 5).click();
 		home.click();
 	}
 

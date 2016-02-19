@@ -17,8 +17,7 @@ public class HomePage extends Page {
 	 */
 	public void gotoHome(){
 		if(!isVisible(forYou)){
-			sideNavigationBar.navIcon.click();
-			sideNavigationBar.home.click();
+			sideNavBar.gotoHomePage();
 		}
 	}
 	public void gotoMyStations() {

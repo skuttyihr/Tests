@@ -15,7 +15,7 @@ public class CustomRadio extends Page {
 	
 	
 	public String playACustomStation(){
-		return playACustomStation("Taylor Swift");
+		return playACustomStation("Chvrches");
 	}
 	public String playACustomStation(String artist) {
 		String chosenStation = search.searchForStation(artist);

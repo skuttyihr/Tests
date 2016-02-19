@@ -585,6 +585,27 @@ public class TestRoot {
 		return elementGone;
 	}
 	
+	/**
+	 * If a string is not empty and not null ("good"), return true
+	 * @param s
+	 * @return
+	 */
+	public static boolean strGood(String s){
+		return s != null && s.length() > 0;
+	}
+	
+	/**
+	 * For test cases that return an error string, 
+	 * 		this gets a simple boolean by inverting the logic 
+	 * 		of the standard string test, 
+	 * 		returning TRUE if there are NO ERRORS.
+	 * @param s
+	 * @return
+	 */
+	public static boolean didPass(String s){
+		return !strGood(s);
+	}
+	
 	// Test Watcher control
 	@Rule
 	public TestRule watcher = new TestWatcher() {

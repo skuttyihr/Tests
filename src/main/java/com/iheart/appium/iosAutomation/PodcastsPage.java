@@ -19,20 +19,31 @@ public class PodcastsPage extends Page {
 		super(_driver);
 	}
 
-	public boolean playPodcasts() {
+	public String playPodcasts() {
 		sideNavigationBar.gotoPodcastsPage();
 		waitForElementToBeVisible(firstPod, 5);
 		String podName = firstPod.getAttribute("name");
 		System.out.println("See pod name:" + podName);
-		getPodcast(1).click();
+		IOSElement podcastSeries = getPodcast(1);
+		if(podcastSeries != null){
+			podcastSeries.click();
+		}
+		else{
+			return "Could not select a podcast series.";
+		}
 		waitForElementToBeVisible(firstEpisode, 5);
-		getPodcastEpisode(1).click();
+		IOSElement podcastEpisode = getPodcastEpisode(1);
+		if(podcastEpisode != null){
+			podcastEpisode.click();
+		}
+		else{
+			return "Could not load up a podcast episode.";
+		}
 		waitForElementToBeVisible(player.thumbUp, 5);
 		if(isVisible(player.playButton_podcast)){
-			return true;
+			return "";
 		}
-		System.err.println("Podcast play button was not visible!");
-		return false;
+		return "Did not enter a podcast playback view, podcast play button was not visible.";
 	}
 
 	protected void swipeSlide() {
@@ -55,13 +66,13 @@ public class PodcastsPage extends Page {
 	public IOSElement getPodcast(int i){
 		return waitForVisible(driver, 
 				By.xpath("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell[" + i + "]"), 
-				5);
+				7);
 	}
 	public IOSElement getPodcastEpisode(int i){
 		i += 1; // First "podcast episode" is actually the station
 		return waitForVisible(driver, 
 					By.xpath("//UIAApplication[1]/UIAWindow[1]/UIATableView[3]/UIATableCell[" + i + "]"
 							+ "/UIAButton[1]"),
-					5);
+					7);
 	}
 }

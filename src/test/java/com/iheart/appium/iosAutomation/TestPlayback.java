@@ -45,7 +45,9 @@ public class TestPlayback extends TestRoot {
 	public void test_playPodcasts_skip_share() throws Exception {
 		System.out.println("test method:" + name.getMethodName());
 		Assert.assertTrue("Was not able to login", loginPage.login());
-		Assert.assertTrue("Could not play a podcast episode", podcastsPage.playPodcasts());
+		String errorsWithPodcasts = podcastsPage.playPodcasts();
+		Assert.assertTrue("Could not play a podcast episode. Errors:\n" 
+							+ errorsWithPodcasts, didPass(errorsWithPodcasts));
 	}
 
 	@Test
@@ -62,8 +64,9 @@ public class TestPlayback extends TestRoot {
 		
 		//Play radio, record errors.
 		String anyErrors = customRadio.canPlayCustomStation();
-		Assert.assertTrue("Was not able to play a custom station and load it into recent history. Errors: \n" + anyErrors, 
-				anyErrors == null || anyErrors.length() <= 0);
+		Assert.assertTrue("Was not able to play a custom station and load it into recent history. Errors: \n" 
+							+ anyErrors, 
+						didPass(anyErrors));
 		// Log out
 		sideNavBar.logout();
 		
