@@ -38,6 +38,8 @@ public class Search extends Page {
 //	@iOSFindBy(name = "Podcasts") public IOSElement podcastsFilter; // For some reason, this one doesn't work
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIASegmentedControl[1]/UIAButton[5]") public IOSElement podcastsFilter;
 	
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIATableView[2]/UIATableCell[1]/UIAStaticText[1]") public IOSElement noResults;
+	
 	// Get a particular result
 	public IOSElement getResult(int i){
 		return waitForVisible(driver, 
@@ -50,15 +52,22 @@ public class Search extends Page {
 		return waitForVisible(driver, By.name("Search"), 10);
 	}
 	private void getToSearch(){
-		IOSElement sb = getSearchButton();
-		if(sb == null || !isVisible(sb)){
-			sideNavBar.gotoHomePage();
+		if(searchField == null || !isVisible(searchField)){
+			IOSElement sb = getSearchButton();
+			if(sb == null || !isVisible(sb)){
+				sideNavBar.gotoHomePage();
+			}
+			sb = getSearchButton();
+			sb.click();
+			waitForElementToBeVisible(searchField, 3);
 		}
-		sb = getSearchButton();
-		sb.click();
-		waitForElementToBeVisible(searchField, 3);
 	}
 	
+	/**
+	 * Returns true if search results in stations showing up in list
+	 * @param searchTerm
+	 * @return
+	 */
 	public boolean searchForStationWithoutSelecting(String searchTerm){
 		getToSearch();
 		if(searchTerm == null || searchTerm.length() == 0){
@@ -68,8 +77,18 @@ public class Search extends Page {
 			return (!firstResultText.contains("No results for")); // This method sends TRUE when it finds a result, so we use that logic here
 		}
 		searchField.sendKeys(searchTerm);
+		if(areResultsEmpty(searchTerm)){
+			return false;
+		}
 		waitForElementToBeVisible(firstStation, 7);
 		return getSearchResult(1) != null;
+	}
+	
+	public boolean areResultsEmpty(String searchTerm){
+		if(waitForVisible(driver, By.name("No results for \"" + searchTerm + "\""), 2) != null){
+			return true;
+		}
+		return false;
 	}
 	
 	/**
