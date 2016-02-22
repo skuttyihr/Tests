@@ -36,7 +36,10 @@ public class GenrePage extends Page {
 	public void selectGenre(int g, boolean selectingMultiple) {
 		// XPATH:
 		// //UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell[1]
-		getGenre(g).click();
+		IOSElement genre = getGenre(g);
+		if(!isGenreSelected(genre)){
+			genre.click();
+		}
 
 		if (!selectingMultiple) {
 			genreDone.click();
@@ -68,7 +71,10 @@ public class GenrePage extends Page {
 	public void selectGenre(String g, boolean clickDone) {
 		// Examples: Top 40 & Pop, Country, Hip Hop and R&B, Alternative, etc
 		try{
-			waitForVisible(driver, By.name(g), 10).click();
+			IOSElement genre = waitForVisible(driver, By.name(g), 10);
+			if(!isGenreSelected(genre)){
+				waitForVisible(driver, By.name(g), 10).click();
+			}
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -80,6 +86,7 @@ public class GenrePage extends Page {
 
 	/**
 	 * Selects genres, will only click done if told to do so
+	 * Will only select a genre if it is not already selected
 	 * @param gs
 	 * @param clickDone
 	 */
