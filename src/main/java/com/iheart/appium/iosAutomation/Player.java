@@ -1,6 +1,5 @@
 package com.iheart.appium.iosAutomation;
 
-import org.junit.Assert;
 import org.openqa.selenium.By;
 
 import io.appium.java_client.ios.IOSDriver;
@@ -66,94 +65,108 @@ public class Player extends Page {
 	 * Verify player info Station Name Artist name if available Thumb up and
 	 * Down Play/pause button Scan Button Share button iHeart button to Favorite
 	 * station Volume control
-	 * **Calls assert statements, can fail tests from within method!
+	 * Returns a String of any errors encountered. A blank string means a successful verification
 	 */
-	public void verifyPlayer_live(String stationName) { // if(!stationLabel.getText().contains(stationName))
-														// Assert.fail("Station
-														// name is not
-														// correct.");
+	public String verifyPlayer_live(String stationName) { 
+		StringBuilder errors = new StringBuilder();
+		if(!stationLabel.getText().contains(stationName)){
+			System.out.println("Station name: " + stationLabel.getText() + " wasn't what we expected: " + stationName);
+		}
 
 		if (!TestRoot.isVisible(songTrack_live)) {
 			if (!TestRoot.isVisible(songTrack2_live))
-				Assert.fail("No sound track name is displayed.");
+				errors.append("No sound track name is displayed.\n");
 		}
 
 		if (!TestRoot.isVisible(artist_live)) {
 			if (!TestRoot.isVisible(artist2_live))
-				Assert.fail("Artist name is NOT displayed.");
+				errors.append("Artist name is NOT displayed.\n");
 		}
 		if (!TestRoot.isVisible(playButton_live))
-			Assert.fail("Play icon is not displayed.");
+			errors.append("Play icon is not displayed.\n");
 
 		if (!TestRoot.isVisible(scan))
-			Assert.fail("Scan icon is not displayed.");
+			errors.append("Scan icon is not displayed.\n");
 
 		if (!TestRoot.isVisible(more_live))
-			Assert.fail(".... is not displayed.");
+			errors.append(".... is not displayed.\n");
 
-		verfiyCommonIcons("verifyPlayer_live");
-
+		errors.append(verfiyCommonIcons("verifyPlayer_live"));
+		
+		return errors.toString();
 	}
 
 	/**
-	 * **Calls assert statements, can fail tests from within method!
+	 * **Calls assert statements
+	 * Returns a String of any errors encountered. A blank string means a successful verification
 	 * @param stationName
 	 */
-	public void verifyPlayer_artist(String stationName) {
+	public String verifyPlayer_artist(String stationName) {
+		StringBuilder errors = new StringBuilder();
+		
 		if (!stationLabel.getText().contains(stationName))
-			Assert.fail("Station name is not correct.");
+			errors.append("Station name is not correct.\n");
 
 		if (!TestRoot.isVisible(songTrack_artist))
-			Assert.fail("No sound track name is displayed.");
+			errors.append("No sound track name is displayed.\n");
 
 		if (!TestRoot.isVisible(artist_artist))
-			Assert.fail("No artist name is displayed.");
+			errors.append("No artist name is displayed.\n");
 
 		if (!TestRoot.isVisible(playButton_artist))
-			Assert.fail("Play icon is not displayed.");
+			errors.append("Play icon is not displayed.\n");
 
 		if (!TestRoot.isVisible(skip))
-			Assert.fail("Skip icon is not displayed.");
+			errors.append("Skip icon is not displayed.\n");
 
-		verfiyCommonIcons("verifyPlayer_custom");
+		errors.append(verfiyCommonIcons("verifyPlayer_custom"));
+		
+		return errors.toString();
 	}
 
 	/**
 	 * **Calls assert statements, can fail tests from within method!
 	 * @param stationName
+	 * Returns a String of any errors encountered. A blank string means a successful verification
 	 */
-	public void verifyPlayer_podcast(String stationName) {
+	public String verifyPlayer_podcast(String stationName) {
+		StringBuilder errors = new StringBuilder();
 		if (!stationLabel.getText().contains(stationName.substring(0, 5)))
-			Assert.fail("Station name is not correct.");
+			errors.append("Station name is not correct.\n");
 
 		if (!TestRoot.isVisible(episodeName_podcast))
-			Assert.fail("Episode name is not displayed.");
+			errors.append("Episode name is not displayed.\n");
 
 		if (!TestRoot.isVisible(stationName_podcast))
-			Assert.fail("Station name is Not displayed.");
+			errors.append("Station name is Not displayed.\n");
 
 		if (!TestRoot.isVisible(slideBar))
-			Assert.fail("No Scrobber is displayed.");
+			errors.append("No Scrobber is displayed.\n");
 
 		if (!TestRoot.isVisible(playButton_podcast))
-			Assert.fail("Play icon is not displayed.");
+			errors.append("Play icon is not displayed.\n");
 
 		if (!TestRoot.isVisible(skip))
-			Assert.fail("Skip icon is not displayed.");
+			errors.append("Skip icon is not displayed.\n");
 
-		verfiyCommonIcons("verifyPlayer_podcast");
+		errors.append(verfiyCommonIcons("verifyPlayer_podcast"));
+		
+		return errors.toString();
 	}
 
 	/**
 	 * **Calls assert statements, can fail tests from within method!
 	 * @param callingMethod
 	 */
-	private void verfiyCommonIcons(String callingMethod) {
+	private String verfiyCommonIcons(String callingMethod) {
+		StringBuilder errors = new StringBuilder();
 		if (!TestRoot.isVisible(thumbUp))
-			Assert.fail("No Thumb Up icon is displayed.");
+			errors.append("No Thumb Up icon is displayed.\n");
 
 		if (!TestRoot.isVisible(thumbDown))
-			Assert.fail("No Thumb Down icon is displayed.");
+			errors.append("No Thumb Down icon is displayed.\n");
+		
+		return errors.toString();
 	}
 
 	public boolean doSkip(String type) {
@@ -316,7 +329,15 @@ public class Player extends Page {
 
 	}
 
-	public void doThumbDown(String stationType) {
+	/**
+	 * Returns an error string. Blank string means no errors encountered
+	 * @param stationType
+	 * @return
+	 */
+	public String doThumbDown(String stationType) {
+		
+		StringBuilder errors = new StringBuilder();
+		
 		// Sometimes the thumbUp button is disabled, keep scan(At most 10 times
 		// though to avoid hang) until thumbUpiCON is enabled.
 		int count = 0;
@@ -341,7 +362,7 @@ public class Player extends Page {
 
 		// if it is still disabled, return
 		if (isThumbDownDisabled())
-			return;
+			return "";
 
 		// If this is thumbUp before, double-click
 		if (isThumbDownDone()) {
@@ -361,8 +382,10 @@ public class Player extends Page {
 
 		if (stationType.equals("live")) {
 			if (!response.contains("heard enough"))
-				Assert.fail("Thump Down is not working properly.");
+				errors.append("Thump Down is not working properly.\n");
 		}
+		
+		return errors.toString();
 	}
 
 	private boolean isThumbUpDone() {
@@ -479,7 +502,13 @@ public class Player extends Page {
 
 	}
 
-	public void pauseAndResume(String type) {
+	/**
+	 * Returns an error string
+	 * A blank string means no errors
+	 * @param type
+	 * @return
+	 */
+	public String pauseAndResume(String type) {
 		IOSElement theOne;
 		if (type.equals("live"))
 			theOne = playButton_live;
@@ -491,13 +520,13 @@ public class Player extends Page {
 		theOne.click();
 		// verify it is paused
 		if (!theOne.getAttribute("name").contains("play"))
-			Assert.fail("Station playing is not paused.");
+			return "Station playing is not paused.";
 
 		theOne.click();
 		// verify it is resumed
 		if (!theOne.getAttribute("name").contains("pause"))
-			Assert.fail("Station playing is not RESUMED.");
-
+			return "Station playing is not RESUMED.";
+		return "";
 	}
 
 	public boolean isPlaying(String type) {
@@ -536,5 +565,29 @@ public class Player extends Page {
 		//button buffering stop
 		waitForVisible(driver, By.name("button buggering stop"), 3);
 		waitForNotVisible(driver, By.name("button buffering stop"), 3);
+	}
+
+	/**
+	 * Returns a blank string if there are no issues
+	 * All invisible elements or problem elements will be returned in a 
+	 * 	multi-line string for easy output and debugging
+	 * @return
+	 */
+	public String verifyArtistPlaybackControls(String artist){
+		StringBuilder errors = new StringBuilder();
+		errors.append(player.verifyPlayer_artist(artist));
+		player.doThumbUp();
+		errors.append(player.doThumbDown("artist"));
+		if(!player.doFavorite()){
+			errors.append("Could not favorite artist station!\n");
+		}
+		if(!player.doSkip()){
+			errors.append("Could not skip!\n");
+		}
+		
+		return errors.toString();
+	}
+	public String verifyArtistPlaybackControls(){
+		return verifyArtistPlaybackControls("");
 	}
 }

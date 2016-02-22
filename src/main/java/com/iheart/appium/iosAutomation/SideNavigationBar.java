@@ -70,8 +70,10 @@ public class SideNavigationBar extends Page {
 		listeningHistory.click();
 	}
 
-	public void gotoMyStationsPage() {
-		navIcon.click();
+	public void gotoMyStationsPage(){
+		if(!isVisible(myStations)){
+			gotoHomePage();
+		}
 		myStations.click();
 	}
 	

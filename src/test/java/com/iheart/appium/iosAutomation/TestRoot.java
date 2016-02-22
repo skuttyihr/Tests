@@ -607,6 +607,9 @@ public class TestRoot {
 	public static boolean didPass(String s){
 		return !strGood(s);
 	}
+	public static boolean passed(String s){ // A rose by any other name...
+		return didPass(s);
+	}
 	
 	// Test Watcher control
 	@Rule

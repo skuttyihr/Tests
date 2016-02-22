@@ -67,7 +67,12 @@ public class GenrePage extends Page {
 
 	public void selectGenre(String g, boolean clickDone) {
 		// Examples: Top 40 & Pop, Country, Hip Hop and R&B, Alternative, etc
-		waitForVisible(driver, By.name(g), 10).click();
+		try{
+			waitForVisible(driver, By.name(g), 10).click();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
 		if (clickDone) {
 			genreDone.click();
 		}

@@ -37,8 +37,22 @@ public class TestPlayback extends TestRoot {
 	@Test
 	public void test_custom_artist_station() throws Exception {
 		System.out.println("test method:" + name.getMethodName());
+		String artist = "Josh Groban";
 		Assert.assertTrue("Was not able to login", loginPage.login());
-		Assert.assertTrue("Artist was not added to favorites!", forYouPage.createArtistStation());
+		// Test that we can create an artist station
+		Assert.assertTrue("Could not play a custom station", forYouPage.createArtistStation(artist));
+		// Test that all playback elements are present on an artist station
+		// Verify method will "Favorite" the artist statiomn
+		String verifyPlaybackErrors = player.verifyArtistPlaybackControls();
+		Assert.assertTrue("Playback elements were not present: " + verifyPlaybackErrors, didPass(verifyPlaybackErrors));
+		
+		// Get back to home page / My Stations to verify favorited station
+		player.back.click();
+		search.cancel.click();
+		sideNavBar.gotoMyStationsPage();
+		
+		// Test that we can add to favorites from playback
+		Assert.assertTrue("Station was not added to favorites", homePage.isStationAFavorite(artist) > 0);
 	}
 
 	@Test
