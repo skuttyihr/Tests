@@ -18,9 +18,7 @@ public class TestHomePage extends TestRoot {
 	
 	@Test
 	public void testSearchFilters(){
-		long start = System.currentTimeMillis();
 		Assert.assertTrue("Was not able to login", loginPage.login()); // Log in so we can choose artist stations later
-		System.out.println("Login took " + ((System.currentTimeMillis() - start) / 1000) + " seconds");
 		/* Search for "Alt" because "Alt" could be:
 		 * The band Alt-J (Trivia: Named for the delta/triangle that comes from typing Alt + J on a Mac)
 		 * WFUV On-Air, a radio station, or The Alternative Project, a live station without radio

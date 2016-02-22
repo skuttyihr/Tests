@@ -41,7 +41,7 @@ public class Page extends TestRoot{
 	static final String OLD_USER_NAME = "iheartrocks999@gmail.com";
 	static final String OLD_PASSWORD = "iheart001";
 	static final String USER_NAME = "ihrttr@gmail.com";
-	static final String PASSWORD = "tst7";
+	static final String PASSWORD = "yrdy"; // test, one key to the right. Doesn't require caps or other keyboard changes for speed
 	static final String FACEBOOK_USER_NAME = OLD_USER_NAME;
 	static final String FACEBOOK_USER_PERSONAL_NAME = "Tony Sopranos";
 	static final String GOOGLE_USER_NAME = OLD_USER_NAME;
@@ -211,7 +211,7 @@ public class Page extends TestRoot{
 			enterZip.click();
 			IOSElement zipCodeEntry = waitForVisible(driver, 
 					find("//UIAApplication[1]/UIAWindow[1]/UIAAlert[1]/UIAScrollView[1]/UIACollectionView[1]/UIACollectionCell[1]/UIATextField[1]/UIATextField[1]"),
-					10);
+					5);
 			if(zipCodeEntry != null){
 				zipCodeEntry.sendKeys(zip);
 				driver.findElement(By.name("OK"));

@@ -12,6 +12,7 @@ public class LoginPage extends Page {
 
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[1]/UIATextField[1]") private IOSElement userName;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[2]/UIASecureTextField[1]") private IOSElement password;
+	public final String logInButtonName = "Log In";
 	@iOSFindBy(name = "Log In") private IOSElement loginButton;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAButton[2]") private IOSElement logInFormButton;
 	@iOSFindBy(name = "Back") private IOSElement backButton;
@@ -101,15 +102,14 @@ public class LoginPage extends Page {
 		password.sendKeys(PASSWORD);
 		logInFormButton.click();
 		
-		chooseStayConnected(false);
-		dismissLoginPopups();
-		
-		if(waitForVisible(driver, By.name("IHRiPhoneGenrePickerView"), 7) != null){
+		// Dismiss Genre
+		if(waitForVisible(driver, By.name("IHRiPhoneGenrePickerView"), 5) != null){
 			genrePage.selectGenre("Alternative");
 		}
-		
+		// Dismiss stay connected popup
 		chooseStayConnected(false);
-		dismissLoginPopups();
+//		dismissLoginPopups();
+		
 		// verify we are in
 		IOSElement forYouTest = waitForVisible(driver, By.name("For You"), 20);
 		if(forYouTest != null && isVisible(forYouTest)){
@@ -218,8 +218,6 @@ public class LoginPage extends Page {
 	}
 
 	public void chooseStayConnected(boolean stayConnected) {
-		handlePossiblePopUp();
-		tellUsWhatYouLike();
 		try {
 			if (stayConnected)
 				waitForVisible(driver, By.name("Get Notifications"), 2).click();
