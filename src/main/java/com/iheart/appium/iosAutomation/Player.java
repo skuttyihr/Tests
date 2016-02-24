@@ -28,9 +28,11 @@ public class Player extends Page {
 	// podcast specific
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAImage[4]") public IOSElement podcastImage;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIASlider[1]") public IOSElement slideBar;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[2]") public IOSElement elapsedTime;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[3]") public IOSElement totalTime;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[9]") public IOSElement episodeName_podcast;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[10]") public IOSElement stationName_podcast;
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAButton[5]") public IOSElement playButton_podcast;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAButton[3]") public IOSElement playButton_podcast;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAButton[9]") public IOSElement more_podcast;
 
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAButton[7]") public IOSElement playButton_live; // doesn't apply for podcast
@@ -141,7 +143,7 @@ public class Player extends Page {
 			errors.append("Station name is Not displayed.\n");
 
 		if (!TestRoot.isVisible(slideBar))
-			errors.append("No Scrobber is displayed.\n");
+			errors.append("No Scrubber is displayed.\n");
 
 		if (!TestRoot.isVisible(playButton_podcast))
 			errors.append("Play icon is not displayed.\n");
@@ -505,29 +507,35 @@ public class Player extends Page {
 	/**
 	 * Returns an error string
 	 * A blank string means no errors
+	 * "live" "podcast" or "artist" (can leave blank for artist)
 	 * @param type
 	 * @return
 	 */
-	public String pauseAndResume(String type) {
+	public void pause(String type) {
 		IOSElement theOne;
-		if (type.equals("live"))
+		if (strGood(type) && type.equals("live"))
 			theOne = playButton_live;
-		else if (type.equals("podcast"))
+		else if (strGood(type) && type.equals("podcast"))
 			theOne = playButton_podcast;
 		else
 			theOne = playButton_artist;
 
 		theOne.click();
-		// verify it is paused
-		if (!theOne.getAttribute("name").contains("play"))
-			return "Station playing is not paused.";
-
-		theOne.click();
-		// verify it is resumed
-		if (!theOne.getAttribute("name").contains("pause"))
-			return "Station playing is not RESUMED.";
-		return "";
 	}
+	public void pauseAndResume() {
+		pause("");
+	}
+	
+	//TODO 		
+//	// verify it is paused
+//	if (!theOne.getAttribute("name").contains("play"))
+//		return "Station playing is not paused.";
+//
+//	theOne.click();
+//	// verify it is resumed
+//	if (!theOne.getAttribute("name").contains("pause"))
+//		return "Station playing is not RESUMED.";
+	
 
 	public boolean isPlaying(String type) {
 		boolean isPlaying = false;
@@ -589,5 +597,86 @@ public class Player extends Page {
 	}
 	public String verifyArtistPlaybackControls(){
 		return verifyArtistPlaybackControls("");
+	}
+	
+	/**
+	 * Returns the position of the slider (as a percentage)
+	 * @return
+	 */
+	public int getPodcastScubberPostitionPercentage(){
+		int scrubberPos = -1;
+		
+		if(isVisible(slideBar)){
+			try{
+				String sliderValue = slideBar.getAttribute("value").replace("%", "").trim();
+				scrubberPos = Integer.parseInt(sliderValue);
+			}
+			catch(Exception e){
+				System.err.println("Could not get scrubber position as an integer!");
+			}
+		}
+		return scrubberPos;
+	}
+	
+	/**
+	 * Returns the current playback position in seconds
+	 * @return
+	 */
+	public int getElapsedTime(){
+		int timeElapsed = -1;
+		
+		// Grab the elapsed time, convert minutes & hours into seconds
+		if(isVisible(elapsedTime)){
+			timeElapsed = getTimeInSeconds(elapsedTime);
+		}
+		return timeElapsed;
+	}
+	
+	
+	/**
+	 * Returns the current playback position in Hours, Minutes, and Seconds format
+	 * Each one is an integer return[0] is hours, return[1] is minutes, etc
+	 * @return
+	 */
+	public int[] getPodcastTimeBreakdown(){
+		int hours = 0;
+		int minutes = 0;
+		int seconds = 0;
+		
+		//TODO
+		// Grab the elapsed time, split out string by ":"
+		
+		int[] returnTime = {hours, minutes, seconds};
+		return returnTime;
+	}
+	
+	public int getTotalTime(){
+		int totalTimeSec = -1;
+		
+		if(isVisible(totalTime)){
+			totalTimeSec = getTimeInSeconds(totalTime);
+		}
+		
+		return totalTimeSec;
+	}
+	
+	private int getTimeInSeconds(IOSElement e){
+		int time = -1;
+		String[] et = e.getAttribute("value").split(":");
+		if(et != null && et.length > 0){
+			time = Integer.parseInt(et[et.length - 1]);
+			if(et.length > 2){
+				// Get hours
+				int hours = Integer.parseInt(et[0]);
+				time += (hours * 360);
+				int minutes = Integer.parseInt(et[1]);
+				time += (minutes * 60);
+			}
+			else if(et.length >= 1){
+				int minutes = Integer.parseInt(et[0]);
+				time += (minutes * 60);
+			}
+		}
+		return time;
 	}
 }

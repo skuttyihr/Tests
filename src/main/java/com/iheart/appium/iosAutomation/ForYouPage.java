@@ -23,26 +23,6 @@ public class ForYouPage extends Page {
 		super(_driver);
 	}
 
-	/**
-	 * Searches for and plays a custom artist based station
-	 * Thumbs up track
-	 * Thumbs down track
-	 * Favorites station
-	 * Skips track
-	 * Verifies that station has been favorited
-	 * @return true if station added
-	 */
-	public boolean createArtistStation(String artist) {
-		if(!isVisible(homePage.forYou)){
-			sideNavBar.gotoHomePage();
-		}
-		waitForElementToBeVisible(search.searchButton, 5);
-		search.searchButton.click(); 
-		search.searchField.sendKeys(artist);
-		topHit.click();
-		return true; // Made it without error
-	}
-
 	private String chooseLiveRadioToPlay(List<WebElement> stations) {
 		String myStation = "";
 		String radioName = "";

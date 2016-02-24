@@ -611,6 +611,16 @@ public class TestRoot {
 		return didPass(s);
 	}
 	
+	public static boolean isAbout(int testing, int expected){
+		return isAbout(testing, expected, 2);
+	}
+	public static boolean isAbout(int testing, int expected, int variance){
+		if(testing == expected || testing + variance >= expected && testing - variance <= expected){
+			return true;
+		}
+		return false;
+	}
+	
 	// Test Watcher control
 	@Rule
 	public TestRule watcher = new TestWatcher() {
