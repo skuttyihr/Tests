@@ -186,10 +186,10 @@ public class Page extends TestRoot{
 		try {
 			waitForVisible(driver, By.name("No Thanks"), 3).click();
 		} catch (Exception e) {
-		}
-		try {
-			waitForVisible(driver, By.name("Maybe Later"), 3).click();
-		} catch (Exception e) {
+			try {
+				waitForVisible(driver, By.name("Maybe Later"), 3).click();
+			} catch (Exception e1) {
+			}
 		}
 	}
 	

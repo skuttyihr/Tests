@@ -76,11 +76,11 @@ public class TestPlayback extends TestRoot {
 		String errorsWithPodcasts = podcastsPage.playPodcasts();
 		Assert.assertTrue("Could not play a podcast episode. Errors:\n" 
 							+ errorsWithPodcasts, didPass(errorsWithPodcasts));
-		//TODO Make it do more. Where's the scrubbing?!
-		// TODO use math with percentage to figure out what we want here
-		sleep(2000); // So the podcast isn't at 0
-		player.pause("podcast");
+
 		// Test that the scrubber can advance on its own during playback
+		sleep(2000); // So the podcast isn't at 0
+		// Pause so we don't mess up the test
+		player.pause("podcast");
 		int scrubberPosPercent = player.getPodcastScubberPostitionPercentage();
 		Assert.assertTrue("Scrubber did not show playback", scrubberPosPercent > 0);
 		int timeElapsed = player.getElapsedTime();
@@ -88,6 +88,20 @@ public class TestPlayback extends TestRoot {
 		int estimatedTimePassed = (int) (totalTime * (float) scrubberPosPercent / 100);
 		Assert.assertTrue("Slider position did not accurately reflect the position", 
 					isAbout(timeElapsed, estimatedTimePassed, 5));
+		
+		// Slide the scrubber, then try a similar test to see if we're where we expect to be
+		player.scrubTo(50);
+		int expectedElapsedTime = totalTime / 2;
+		timeElapsed = player.getElapsedTime();
+		Assert.assertTrue("We couldn't scrub playback on podcast. "
+				+ "Got: " + timeElapsed + " Expected: " + expectedElapsedTime,
+				isAbout(timeElapsed, expectedElapsedTime, 15));
+		player.scrubTo(25);
+		expectedElapsedTime /= 2;
+		timeElapsed = player.getElapsedTime();
+		Assert.assertTrue("We couldn't scrub playback on podcast. "
+				+ "Got: " + timeElapsed + " Expected: " + expectedElapsedTime,
+				isAbout(timeElapsed, expectedElapsedTime, 15));
 	}
 
 	@Test

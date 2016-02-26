@@ -51,7 +51,10 @@ public class Player extends Page {
 	@iOSFindBy(name = "Thumb down") public IOSElement thumbDown;
 	// FOR SHARE
 	@iOSFindBy(name = "Mail") public IOSElement mail;
-
+	
+	private static final String growlResponse = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[8]";
+	
+	
 	public Player() {
 		super();
 	}
@@ -204,88 +207,61 @@ public class Player extends Page {
 		return true;
 	}
 
-	public void doThumbUp() {
-		// Sometimes the thumbUp button is disabled, keep scan(At most 10 times
-		// though to avoid hang) until thumbUpicon is enabled.
-		int count = 0;
-
-		// Try a little bit more
-		while (isThumbUpDisabled() && count < 3) {
-			System.out.println("thumbUp button is disabled. Scan now..");
-			try {
-				scan.click();
-				waitForTrackToLoad();
-			} catch (Exception e) {
+	private void scanUntilThumbAvailable(){
+		if(isVisible(playButton_live)){
+			int count = 0;
+			while ((isThumbUpDisabled() || isThumbDownDisabled()) && count < 3) {
+				System.out.println("thumbUp button is disabled. Scan now..");
+				try {
+					waitForElementToBeVisible(scan, 1);
+					scan.click();
+					waitForTrackToLoad();
+				}catch (Exception e) {
+				}
+				finally{
+					count++;
+				}
 			}
-			count++;
 		}
-
+	}
+	
+	public boolean doThumbUp() {
+		// Sometimes the thumbUp button is disabled, keep scan(At most 3 times
+		// 		though to avoid hang) until thumbUpicon is enabled.
+		// Only do this for live stations, not for artist radio or podcasts
+		scanUntilThumbAvailable();
+		
 		// if it is still disabled, return
 		if (isThumbUpDisabled())
-			return;
-
-		// If this is thumbUp before, double-click
-		if (isThumbUpDone()) {
-			thumbUp.click();
-			TestRoot.sleep(1000);
-			// Sometimes 'Like iheartRadio?" pops up
-			handleGladYouLikeItPopup();
-
-		}
-
+			return false;
+		
+		// Actually click on the thumb up
 		thumbUp.click();
-		// Glad you like it! We'll let our DJs know.
-		String response = driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAStaticText[8]")).getText();
+		
+		// Growl response: glad you like it! We'll let our DJs know.
+		String response = driver.findElement(By.xpath(growlResponse)).getText();
 		System.out.println("See growls:" + response);
 
 		// Sometimes 'Like iheartRadio?" pops up
-		handleGladYouLikeItPopup();
-
-		// FOR ARITST: Great, we’ll play you more songs like this.
-		// if (!(response.contains("Glad you like") || response.contains("Thanks
-		// for your feedback") || response.contains("Great")))
-		// handleError("Thump Up is not working properly.", "doThumbUp");
-
+		handleActionPopup();
+		
+		return strGood(response) && response.contains("like it");
 	}
 
 	// This happens when you thumbup a already thumbuped song track
-	private void handleGladYouLikeItPopup() {
+	private void handleActionPopup() {
 		try {
 			waitForVisible(driver, By.name("No Thanks"), 5).click();
-//			driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAButton[10]")).click();// No, thank you
 		} catch (Exception e) {}
-	}
-
-	private void handleGladAfterFavorite() {
-		try {
-			waitForVisible(driver, By.name("No Thanks"), 5).click();
-		} catch (Exception e) {
-		}
 	}
 
 	// this needs to be tested
 	private boolean isThumbUpDisabled() {
 		return !thumbUp.isEnabled();
-		/*
-		 * boolean isDisabled = false; try{ String value =
-		 * thumbUp.getAttribute("enabled");
-		 * System.out.println("isThumbUpDisabled:" + value); isDisabled =
-		 * !value.equals("true"); }catch(Exception e) { e.printStackTrace(); }
-		 * return isDisabled;
-		 */
 	}
 
 	private boolean isThumbDownDisabled() {
 		return !thumbDown.isEnabled();
-		/*
-		 * boolean isDisabled = false; try{
-		 * 
-		 * //Here, need debugging.. String value =
-		 * thumbDown.getAttribute("enabled");
-		 * System.out.println("isThumbDownDisabled:" + value); isDisabled =
-		 * !value.equals("true"); }catch(Exception e) { e.printStackTrace(); }
-		 * return isDisabled;
-		 */
 	}
 
 	// This is for live radio
@@ -315,8 +291,7 @@ public class Player extends Page {
 			thumbDown.click();
 			TestRoot.sleep(1000);
 			// Sometimes 'Like iheartRadio?" pops up
-			handleGladYouLikeItPopup();
-
+			handleActionPopup();
 		}
 
 		thumbDown.click();
@@ -371,7 +346,7 @@ public class Player extends Page {
 			thumbDown.click();
 			TestRoot.sleep(1000);
 			// Sometimes 'Like iheartRadio?" pops up
-			handleGladYouLikeItPopup();
+			handleActionPopup();
 		}
 
 		thumbDown.click();
@@ -390,7 +365,7 @@ public class Player extends Page {
 		return errors.toString();
 	}
 
-	private boolean isThumbUpDone() {
+	public boolean isThumbUpDone() {
 
 		boolean isDone = false;
 		try {
@@ -431,7 +406,7 @@ public class Player extends Page {
 		}
 
 		favorite.click();
-		handleGladAfterFavorite();
+		handleActionPopup();
 
 		// Verify that icon is filled
 		if (!favorite.getAttribute("value").equals("1"))
@@ -678,5 +653,26 @@ public class Player extends Page {
 			}
 		}
 		return time;
+	}
+	
+	/**
+	 * 
+	 * @param percentage
+	 */
+	public void scrubTo(int percentage){
+		if(percentage < 0 || percentage > 100){
+			return;
+		}
+		String floatingPercentage = String.valueOf((float) percentage / 100 + .0336);
+		if(isVisible(slideBar)){
+			slideBar.sendKeys(floatingPercentage);
+			Page.handlePossiblePopUp();
+			pause("podcast");
+			int testLoc = getPodcastScubberPostitionPercentage();
+			if(!isAbout(percentage, testLoc, 5)){
+				slideBar.sendKeys(floatingPercentage); // Try again
+				pause("podcast"); // Pause after moving slider again
+			}
+		}
 	}
 }
