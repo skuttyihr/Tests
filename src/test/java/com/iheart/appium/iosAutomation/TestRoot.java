@@ -62,6 +62,7 @@ public class TestRoot {
 	protected static PodcastsPage podcastsPage;
 	protected static SplashPage splashPage;
 	protected static GenrePage genrePage;
+	protected static MiniPlayer miniPlayer;
 	
 	protected static boolean useSimulator = false;
 	
@@ -158,6 +159,7 @@ public class TestRoot {
 		deepLink = new DeepLink(driver);
 		splashPage = new SplashPage(driver);
 		genrePage = new GenrePage(driver);
+		miniPlayer = new MiniPlayer(driver);
 		
 		driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 		

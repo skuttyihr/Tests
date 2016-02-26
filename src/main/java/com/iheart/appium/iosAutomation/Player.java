@@ -207,14 +207,31 @@ public class Player extends Page {
 		return true;
 	}
 
-	private void scanUntilThumbAvailable(){
+	
+	public boolean isThumbUpDisabled() {
+		return !thumbUp.isEnabled();
+	}
+
+	public boolean isThumbDownDisabled() {
+		return !thumbDown.isEnabled();
+	}
+	
+	
+	private void scanOrSkipUntilThumbAvailable(){
+		IOSElement skipOrScan;
+		if(isVisible(playButton_live)){
+			skipOrScan = scan;
+		}
+		else{
+			skipOrScan = skip;
+		}
 		if(isVisible(playButton_live)){
 			int count = 0;
 			while ((isThumbUpDisabled() || isThumbDownDisabled()) && count < 3) {
-				System.out.println("thumbUp button is disabled. Scan now..");
+				System.out.println("thumbUp button is disabled. Scanning/skipping now..");
 				try {
-					waitForElementToBeVisible(scan, 1);
-					scan.click();
+					waitForElementToBeVisible(skipOrScan, 1);
+					skipOrScan.click();
 					waitForTrackToLoad();
 				}catch (Exception e) {
 				}
@@ -225,11 +242,19 @@ public class Player extends Page {
 		}
 	}
 	
+	// This happens when you thumbup a already thumbuped song track
+	private void handleActionPopup() {
+		try {
+			waitForVisible(driver, By.name("No Thanks"), 5).click();
+		} catch (Exception e) {}
+	}
+
+		
 	public boolean doThumbUp() {
 		// Sometimes the thumbUp button is disabled, keep scan(At most 3 times
 		// 		though to avoid hang) until thumbUpicon is enabled.
 		// Only do this for live stations, not for artist radio or podcasts
-		scanUntilThumbAvailable();
+		scanOrSkipUntilThumbAvailable();
 		
 		// if it is still disabled, return
 		if (isThumbUpDisabled())
@@ -248,121 +273,26 @@ public class Player extends Page {
 		return strGood(response) && response.contains("like it");
 	}
 
-	// This happens when you thumbup a already thumbuped song track
-	private void handleActionPopup() {
-		try {
-			waitForVisible(driver, By.name("No Thanks"), 5).click();
-		} catch (Exception e) {}
-	}
-
-	// this needs to be tested
-	private boolean isThumbUpDisabled() {
-		return !thumbUp.isEnabled();
-	}
-
-	private boolean isThumbDownDisabled() {
-		return !thumbDown.isEnabled();
-	}
-
-	// This is for live radio
-	public void doThumbDown() {
-		// Sometimes the thumbUp button is disabled, keep scan(At most 10 times
-		// though to avoid hang) until thumbUpiCON is enabled.
-		int count = 0;
-
-		// Try a little bit more
-		while (isThumbDownDisabled() && count < 3) {
-			System.out.println("thumbDown button is disabled. Scan now..");
-			try {
-				scan.click();
-				waitForTrackToLoad();
-			} catch (Exception e) {
-
-			}
-			count++;
-		}
-
+	public boolean doThumbDown() {
+		// Sometimes the thumbDown button is disabled, keep scan(At most 3 times
+		// 		though to avoid hang) until thumbDownicon is enabled.
+		// Only do this for live stations, not for artist radio or podcasts
+		scanOrSkipUntilThumbAvailable();
+		
 		// if it is still disabled, return
 		if (isThumbDownDisabled())
-			return;
-
-		// If this is thumbUp before, double-click
-		if (isThumbDownDone()) {
-			thumbDown.click();
-			TestRoot.sleep(1000);
-			// Sometimes 'Like iheartRadio?" pops up
-			handleActionPopup();
-		}
-
+			return false;
+		
+		// Actually click on the thumb up
 		thumbDown.click();
-//		TestRoot.sleep(1000);
-
-		// String response =
-		// driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAStaticText[8]")).getText();
-		// System.out.println("See thumbDOWN DOWN growls:" + response);
-
-		// if (! response.contains("heard enough"))
-		// handleError("Thump Down is not working properly.", "doThumbDown");
-
-	}
-
-	/**
-	 * Returns an error string. Blank string means no errors encountered
-	 * @param stationType
-	 * @return
-	 */
-	public String doThumbDown(String stationType) {
 		
-		StringBuilder errors = new StringBuilder();
-		
-		// Sometimes the thumbUp button is disabled, keep scan(At most 10 times
-		// though to avoid hang) until thumbUpiCON is enabled.
-		int count = 0;
+		// Growl response: glad you like it! We'll let our DJs know.
+		String response = driver.findElement(By.xpath(growlResponse)).getText();
+		System.out.println("See growls:" + response);
 
-		// Try a little bit more
-		while (isThumbDownDisabled() && count < 3) {
-			System.out.println("thumbDown button is disabled. Scan now..");
-			try {
-				if (stationType.equals("live")){
-					scan.click();
-					waitForTrackToLoad();
-				}
-				else{
-					skip.click();
-					waitForTrackToLoad();
-				}
-			} catch (Exception e) {
-
-			}
-			count++;
-		}
-
-		// if it is still disabled, return
-		if (isThumbDownDisabled())
-			return "";
-
-		// If this is thumbUp before, double-click
-		if (isThumbDownDone()) {
-			thumbDown.click();
-			TestRoot.sleep(1000);
-			// Sometimes 'Like iheartRadio?" pops up
-			handleActionPopup();
-		}
-
-		thumbDown.click();
-		TestRoot.sleep(1000);
-		if (stationType.equals("artist"))
-			handleThumbDownPopUpForArtistStation();
-
-		String response = driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAStaticText[8]")).getText();
-		System.out.println("See thumbDOWN DOWN growls:" + response);
-
-		if (stationType.equals("live")) {
-			if (!response.contains("heard enough"))
-				errors.append("Thump Down is not working properly.\n");
-		}
-		
-		return errors.toString();
+		// Sometimes 'Like iheartRadio?" pops up
+		handleActionPopup();
+		return strGood(response) && response.contains("heard enough");
 	}
 
 	public boolean isThumbUpDone() {
@@ -382,7 +312,7 @@ public class Player extends Page {
 		return isDone;
 	}
 
-	private boolean isThumbDownDone() {
+	public boolean isThumbDownDone() {
 
 		boolean isDone = false;
 		try {
@@ -426,17 +356,17 @@ public class Player extends Page {
 	}
 
 	// Thumbing down customizes your station without using a skip.
-	private void handleThumbDownPopUpForArtistStation() {
-		try {
-			// click on OKAY BUTTON of alert box: Thumbing down customizes your
-			// station without using a skip.
-			driver.findElement(By
-					.xpath("//UIAApplication[1]/UIAWindow[1]/UIAAlert[1]/UIACollectionView[1]/UIACollectionCell[1]/UIAButton[1]"))
-					.click();
-		} catch (Exception e) {
-
-		}
-	}
+//	private void handleThumbDownPopUpForArtistStation() {
+//		try {
+//			// click on OKAY BUTTON of alert box: Thumbing down customizes your
+//			// station without using a skip.
+//			driver.findElement(By
+//					.xpath("//UIAApplication[1]/UIAWindow[1]/UIAAlert[1]/UIACollectionView[1]/UIACollectionCell[1]/UIAButton[1]"))
+//					.click();
+//		} catch (Exception e) {
+//
+//		}
+//	}
 
 	private boolean isFavDone() {
 		boolean isDone = false;
@@ -501,17 +431,6 @@ public class Player extends Page {
 		pause("");
 	}
 	
-	//TODO 		
-//	// verify it is paused
-//	if (!theOne.getAttribute("name").contains("play"))
-//		return "Station playing is not paused.";
-//
-//	theOne.click();
-//	// verify it is resumed
-//	if (!theOne.getAttribute("name").contains("pause"))
-//		return "Station playing is not RESUMED.";
-	
-
 	public boolean isPlaying(String type) {
 		boolean isPlaying = false;
 
@@ -559,8 +478,12 @@ public class Player extends Page {
 	public String verifyArtistPlaybackControls(String artist){
 		StringBuilder errors = new StringBuilder();
 		errors.append(player.verifyPlayer_artist(artist));
-		player.doThumbUp();
-		errors.append(player.doThumbDown("artist"));
+		if(!doThumbUp()){
+			errors.append("Could not thumb up!\n");
+		}
+		if(!doThumbDown()){
+			errors.append("Could not thumb down!\n");
+		}
 		if(!player.doFavorite()){
 			errors.append("Could not favorite artist station!\n");
 		}
@@ -618,9 +541,25 @@ public class Player extends Page {
 		int minutes = 0;
 		int seconds = 0;
 		
-		//TODO
 		// Grab the elapsed time, split out string by ":"
-		
+		if(isVisible(elapsedTime)){
+			String[] times = elapsedTime.getText().split(":");
+			if(times.length == 1){
+				seconds = Integer.parseInt(times[1]);
+			}
+			else if(times.length == 2){
+				minutes = Integer.parseInt(times[0]);
+				seconds = Integer.parseInt(times[1]);
+			}
+			else if(times.length == 3){
+				hours = Integer.parseInt(times[0]);
+				minutes = Integer.parseInt(times[1]);
+				seconds = Integer.parseInt(times[2]);
+			}
+			else{
+				System.err.println("Error fetching time!");
+			}
+		}
 		int[] returnTime = {hours, minutes, seconds};
 		return returnTime;
 	}

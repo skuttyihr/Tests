@@ -68,9 +68,23 @@ public class TestPlayback extends TestRoot {
 		Assert.assertFalse("Was able to play a custom station after logging out", 
 				anyErrors == null || anyErrors.length() <= 0);
 	}
+	
+	@Test
+	public void testCustomArtistStationMiniPlayer(){
+		String artist = "Halsey";
+		// Log in
+		Assert.assertTrue("Was not able to login", loginPage.login());
+		// Create an aritst
+		Assert.assertTrue("Could not play a custom artist station based on the artist: " + artist,
+				customRadio.playACustomStation(artist).contains(artist));
+		//TODO
+		// Minimize player
+		// Go home, verify mini player
+		// Go to other pages, verify mini player is still displayed. 
+	}
 
 	@Test
-	public void testPodcastPlaybackAndControls() throws Exception {
+	public void testPodcastPlaybackAndControls() {
 		System.out.println("test method:" + name.getMethodName());
 		Assert.assertTrue("Was not able to login", loginPage.login());
 		String errorsWithPodcasts = podcastsPage.playPodcasts();
