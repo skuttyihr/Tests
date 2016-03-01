@@ -370,7 +370,7 @@ public class TestRoot {
 			endy = starty - 300;
 			break;
 		case 1:
-			endx = startx + 300;
+			endx = startx + 150;
 			endy = starty;
 			break;
 		case 2: 
@@ -378,7 +378,7 @@ public class TestRoot {
 			endy = starty + 300;
 			break;
 		case 3:
-			endx = startx - 300;
+			endx = startx - 150;
 			endy = starty;
 			break;
 		}

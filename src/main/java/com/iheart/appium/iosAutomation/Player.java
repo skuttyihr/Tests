@@ -52,6 +52,9 @@ public class Player extends Page {
 	// FOR SHARE
 	@iOSFindBy(name = "Mail") public IOSElement mail;
 	
+	// If loaded from mini player
+	@iOSFindBy(name = "downarrow button") public IOSElement minimizeButton;
+	
 	private static final String growlResponse = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[8]";
 	
 	
@@ -431,6 +434,26 @@ public class Player extends Page {
 		pause("");
 	}
 	
+	/**
+	 * Tests to see if we're actually streaming music
+	 * @return
+	 */
+	public boolean isStreaming(){
+		int currentTime = getElapsedTime();
+		sleep(1100);
+		return currentTime != getElapsedTime();
+	}
+	
+	public boolean isPlaying(){
+		waitForElementToBeVisible(playButton_artist, 4);
+		if ( isVisible(playButton_artist) 
+				|| isVisible(playButton_live)
+				|| isVisible(playButton_podcast)){
+			return true;
+		}
+		return false;
+	}
+	
 	public boolean isPlaying(String type) {
 		boolean isPlaying = false;
 
@@ -530,7 +553,6 @@ public class Player extends Page {
 		return timeElapsed;
 	}
 	
-	
 	/**
 	 * Returns the current playback position in Hours, Minutes, and Seconds format
 	 * Each one is an integer return[0] is hours, return[1] is minutes, etc
@@ -612,6 +634,17 @@ public class Player extends Page {
 				slideBar.sendKeys(floatingPercentage); // Try again
 				pause("podcast"); // Pause after moving slider again
 			}
+		}
+	}
+	
+	public boolean minimizePlayer(){
+		waitForElementToBeVisible(minimizeButton, 3);
+		if(isVisible(minimizeButton)){
+			minimizeButton.click();
+			return isVisible(miniPlayer.miniPlayerBar);
+		}
+		else{
+			return false;
 		}
 	}
 }

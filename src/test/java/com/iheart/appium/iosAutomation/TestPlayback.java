@@ -74,13 +74,34 @@ public class TestPlayback extends TestRoot {
 		String artist = "Halsey";
 		// Log in
 		Assert.assertTrue("Was not able to login", loginPage.login());
-		// Create an aritst
-		Assert.assertTrue("Could not play a custom artist station based on the artist: " + artist,
-				customRadio.playACustomStation(artist).contains(artist));
-		//TODO
-		// Minimize player
-		// Go home, verify mini player
-		// Go to other pages, verify mini player is still displayed. 
+		// Play an artist and minimize playback
+		Assert.assertTrue("Could not load up an artist station", 
+				didPass(miniPlayer.loadUpMiniPlayer(artist)));
+		// Maximize the mini player
+		Assert.assertTrue("Could not load up full sized player from mini player. ",
+				miniPlayer.maximizeMiniPlayer());
+		// Minimize full sized player
+		Assert.assertTrue("Could not minimize full sized player to mini player. ",
+				miniPlayer.minimizePlayer());
+		// Thumb up and down
+		Assert.assertTrue("Could not thumb down track on mini player", miniPlayer.thumbDown());
+		Assert.assertTrue("Could not thumb up track on mini player", miniPlayer.thumbUp()); // After thumb down so it ends up a thumbs up
+		Assert.assertTrue("Thumbs did not toggle", !miniPlayer.isThumbedDown()); // Should have toggled, only thumbs up
+		// Play and pause
+		Assert.assertTrue("Could not pause mini player.", miniPlayer.pause());
+		Assert.assertTrue("Could not pause mini player.", miniPlayer.play());
+		
+		// Verify info
+		String miniArtistName = miniPlayer.getArtist();
+		String miniSongTitle = miniPlayer.getSongName();
+		
+		Assert.assertTrue("Artist name was not visible", miniArtistName != null && miniArtistName.length() > 0);
+		Assert.assertTrue("Song name was not visible", miniSongTitle != null && miniSongTitle.length() > 0);
+		
+		// Skip
+		Assert.assertTrue("Could not skip", miniPlayer.skip());
+		
+		// TODO Go to other pages, verify mini player is still displayed. 
 	}
 
 	@Test
