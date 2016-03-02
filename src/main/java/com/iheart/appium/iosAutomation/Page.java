@@ -206,7 +206,7 @@ public class Page extends TestRoot{
 		enterZip("10013");
 	}
 	public static void enterZip(String zip){
-		IOSElement enterZip = waitForVisible(driver, find("Enter ZIP"), 3);
+		IOSElement enterZip = waitForVisible(driver, find("Enter ZIP"), 7);
 		if(enterZip != null && isVisible(enterZip)){
 			enterZip.click();
 			IOSElement zipCodeEntry = waitForVisible(driver, 

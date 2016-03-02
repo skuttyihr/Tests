@@ -101,7 +101,18 @@ public class TestPlayback extends TestRoot {
 		// Skip
 		Assert.assertTrue("Could not skip", miniPlayer.skip());
 		
-		// TODO Go to other pages, verify mini player is still displayed. 
+		// Check that mini bar is on every page we expect it to be on
+		sideNavBar.gotoLiveRadioPage();
+		//TODO
+		Assert.assertTrue("Mini player was not visible on live radio page", isVisible(miniPlayer.miniPlayerBar));
+		sideNavBar.gotoLiveArtistPage();
+		Assert.assertTrue("Mini player was not visible on artist radio page", isVisible(miniPlayer.miniPlayerBar));
+		sideNavBar.gotoPodcastsPage();
+		Assert.assertTrue("Mini player was not visible on podcasts page", isVisible(miniPlayer.miniPlayerBar));
+		sideNavBar.gotoPerfectFor();
+		Assert.assertTrue("Mini player was not visible on perfect for page", isVisible(miniPlayer.miniPlayerBar));
+		sideNavBar.gotoListeningHistoryPage();
+		Assert.assertTrue("Mini player was not visible on listening history page", isVisible(miniPlayer.miniPlayerBar));
 	}
 
 	@Test

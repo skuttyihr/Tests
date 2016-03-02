@@ -48,6 +48,7 @@ public class SideNavigationBar extends Page {
 	public void gotoLiveRadioPage() {
 		navIcon.click();
 		liveRadio.click();
+		Page.handlePossiblePopUp();
 	}
 
 	public void gotoLiveArtistPage() {
