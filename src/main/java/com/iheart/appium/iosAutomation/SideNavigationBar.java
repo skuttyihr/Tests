@@ -48,6 +48,7 @@ public class SideNavigationBar extends Page {
 	public void gotoLiveRadioPage() {
 		navIcon.click();
 		liveRadio.click();
+		Page.handlePossiblePopUp();
 	}
 
 	public void gotoLiveArtistPage() {
@@ -70,8 +71,10 @@ public class SideNavigationBar extends Page {
 		listeningHistory.click();
 	}
 
-	public void gotoMyStationsPage() {
-		navIcon.click();
+	public void gotoMyStationsPage(){
+		if(!isVisible(myStations)){
+			gotoHomePage();
+		}
 		myStations.click();
 	}
 	

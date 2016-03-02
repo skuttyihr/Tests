@@ -19,7 +19,7 @@ public class CustomRadio extends Page {
 	}
 	public String playACustomStation(String artist) {
 		String chosenStation = search.searchForStation(artist);
-		loginPage.dismissStayConnectedPopup();
+		loginPage.dismissStayConnectedPopup(); // Pretty good universal popup dismisser
 		// verify that it is playing: Get its attribute: class shall be 'pause'
 		if (!player.isPlaying("artist"))
 			return "";

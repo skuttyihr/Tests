@@ -62,6 +62,7 @@ public class TestRoot {
 	protected static PodcastsPage podcastsPage;
 	protected static SplashPage splashPage;
 	protected static GenrePage genrePage;
+	protected static MiniPlayer miniPlayer;
 	
 	protected static boolean useSimulator = false;
 	
@@ -158,6 +159,7 @@ public class TestRoot {
 		deepLink = new DeepLink(driver);
 		splashPage = new SplashPage(driver);
 		genrePage = new GenrePage(driver);
+		miniPlayer = new MiniPlayer(driver);
 		
 		driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 		
@@ -368,7 +370,7 @@ public class TestRoot {
 			endy = starty - 300;
 			break;
 		case 1:
-			endx = startx + 300;
+			endx = startx + 150;
 			endy = starty;
 			break;
 		case 2: 
@@ -376,7 +378,7 @@ public class TestRoot {
 			endy = starty + 300;
 			break;
 		case 3:
-			endx = startx - 300;
+			endx = startx - 150;
 			endy = starty;
 			break;
 		}
@@ -606,6 +608,19 @@ public class TestRoot {
 	 */
 	public static boolean didPass(String s){
 		return !strGood(s);
+	}
+	public static boolean passed(String s){ // A rose by any other name...
+		return didPass(s);
+	}
+	
+	public static boolean isAbout(int testing, int expected){
+		return isAbout(testing, expected, 2);
+	}
+	public static boolean isAbout(int testing, int expected, int variance){
+		if(testing == expected || testing + variance >= expected && testing - variance <= expected){
+			return true;
+		}
+		return false;
 	}
 	
 	// Test Watcher control

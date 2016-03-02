@@ -101,13 +101,19 @@ public class LoginPage extends Page {
 		userName.sendKeys(USER_NAME);
 		password.sendKeys(PASSWORD);
 		logInFormButton.click();
+
+		// Dismiss zip code
+		Page.enterZip();
+		// Dismiss stay connected popup
+		chooseStayConnected(false);
 		
-		// Dismiss Genre
+		// Select Genre
 		if(waitForVisible(driver, By.name("IHRiPhoneGenrePickerView"), 5) != null){
 			genrePage.selectGenre("Alternative");
 		}
-		// Dismiss stay connected popup
+		// Dismiss stay connected popup that sometimes shows up AFTER genre picker
 		chooseStayConnected(false);
+		
 //		dismissLoginPopups();
 		
 		// verify we are in

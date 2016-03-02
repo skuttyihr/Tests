@@ -17,7 +17,7 @@ public class TestHomePage extends TestRoot {
 	}
 	
 	@Test
-	public void testSearchFilters(){
+	public void testHomeSearch(){
 		Assert.assertTrue("Was not able to login", loginPage.login()); // Log in so we can choose artist stations later
 		/* Search for "Alt" because "Alt" could be:
 		 * The band Alt-J (Trivia: Named for the delta/triangle that comes from typing Alt + J on a Mac)
@@ -33,5 +33,11 @@ public class TestHomePage extends TestRoot {
 		errors = search.applyFilters();
 		Assert.assertTrue("Filters should have returned no results for blank search",
 				errors.contains("Filters had no effect."));
+		
+		// Search that garbage input gives us nothing
+		search.applyFilter("all");
+		String badSearch = "dfgkjhqz";
+		Assert.assertFalse("Garbage search should have returned no results.", search.searchForStationWithoutSelecting(badSearch));
+		Assert.assertTrue("Results were returned for bad input", search.areResultsEmpty(badSearch));
 	}
 }
