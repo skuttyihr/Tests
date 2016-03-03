@@ -60,15 +60,23 @@ public class ForYouPage extends Page {
 
 	}
 
+	public String playLiveRadio(){
+		String myStation = "";
+		WebElement collectionView = waitForVisible(driver,
+				By.xpath("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]"),
+				10);
+		if(collectionView != null){
+			List<WebElement> stations = collectionView.findElements(By.className("UIACollectionCell"));
+			myStation = chooseLiveRadioToPlay(stations);
+		}
+		return myStation;
+	}
+	
 	public String playAndVerifyLiveRadio() {
 		StringBuilder errors = new StringBuilder();
-		String myStation = "";
-		WebElement collectionView = driver
-				.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]"));
-		List<WebElement> stations = collectionView.findElements(By.className("UIACollectionCell"));
-		myStation = chooseLiveRadioToPlay(stations);
+		String myStation = playLiveRadio();
 		System.out.println("Starting with:" + myStation);
-
+		
 		// Verify PLAYER
 		errors.append(player.verifyPlaybackControls(myStation));
 		if(errors.length() > 0){
@@ -97,14 +105,23 @@ public class ForYouPage extends Page {
 		}
 
 		// Verify that this station is added under My Station
-		(player.back).click();
-		waitForVisible(driver, By.name("My Stations"), 5).click();
-		// Wait for the list to be visible
-		getStationFromList(1); // Includes a wait
-		if (!driver.getPageSource().contains(myStation))
-			errors.append("Did not load station into recents.\n");
+		player.back.click();
+		if(!verifyInForYou(myStation)){
+			errors.append("Could not find station: " + myStation + " in my stations page.\n");
+		}
 		
 		return errors.toString();
+	}
+	
+	public boolean verifyInForYou(String station){
+		if(!isVisible(sideNavBar.navIcon)){
+			player.back.click();
+		}
+		sideNavBar.gotoMyStationsPage();
+		getStationFromList(1); // Includes a wait
+		if (!driver.getPageSource().contains(station))
+			return false;
+		return true;
 	}
 
 	public void comeToThisPage() {

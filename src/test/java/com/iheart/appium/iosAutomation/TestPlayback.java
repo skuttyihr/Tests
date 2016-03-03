@@ -83,23 +83,10 @@ public class TestPlayback extends TestRoot {
 		// Minimize full sized player
 		Assert.assertTrue("Could not minimize full sized player to mini player. ",
 				miniPlayer.minimizePlayer());
-		// Thumb up and down
-		Assert.assertTrue("Could not thumb down track on mini player", miniPlayer.thumbDown());
-		Assert.assertTrue("Could not thumb up track on mini player", miniPlayer.thumbUp()); // After thumb down so it ends up a thumbs up
-		Assert.assertTrue("Thumbs did not toggle", !miniPlayer.isThumbedDown()); // Should have toggled, only thumbs up
-		// Play and pause
-		Assert.assertTrue("Could not pause mini player.", miniPlayer.pause());
-		Assert.assertTrue("Could not pause mini player.", miniPlayer.play());
 		
-		// Verify info
-		String miniArtistName = miniPlayer.getArtist();
-		String miniSongTitle = miniPlayer.getSongName();
-		
-		Assert.assertTrue("Artist name was not visible", miniArtistName != null && miniArtistName.length() > 0);
-		Assert.assertTrue("Song name was not visible", miniSongTitle != null && miniSongTitle.length() > 0);
-		
-		// Skip
-		Assert.assertTrue("Could not skip", miniPlayer.skip());
+		// Verify the controls on the mini player
+		String miniPlayerControls = miniPlayer.verifyControls();
+		Assert.assertTrue("Mini player control issues:\n" + miniPlayerControls, didPass(miniPlayerControls));
 		
 		// Check that mini bar is on every page we expect it to be on
 		sideNavBar.gotoLiveRadioPage();
@@ -175,12 +162,36 @@ public class TestPlayback extends TestRoot {
 		System.out.println("test method:" + name.getMethodName());
 		Assert.assertTrue("Was not able to login", loginPage.login());
 		// Play a live radio station and verify it.
-		String verifyRadio = forYouPage.playAndVerifyLiveRadio();
-		Assert.assertTrue("Could not play a live radio station:\n" + verifyRadio + ".", didPass(verifyRadio));
-		// Load up the mini player
+		String playedStation = forYouPage.playLiveRadio();
+		Assert.assertTrue("Could not play a live radio station.", strGood(playedStation));
 		
-		// Scan more than 6 times 
+		String verifyPlayer = player.verifyPlaybackControls();
+		Assert.assertTrue("Could not verify live radio controls:\n" + verifyPlayer, didPass(verifyPlayer));
+		
+		// Get to the mini player
+		player.minimizePlayer();
+				
+		// Assert the mini player is visible
+		Assert.assertTrue("Mini player was not displayed.", isVisible(miniPlayer.miniPlayerBar));
+		miniPlayer.miniPlayerBar.click();
+		
+		// Scan more than 6 times
+		for (int i = 0; i < 7; i++){
+			Assert.assertTrue("Could not scan to a new station after " + i + " loops.", player.doScan());
+		}
+		
+		// Get back to mini player
+		player.minimizePlayer();
+		
+		// Verify mini player controls
+		String miniPlayerControls = miniPlayer.verifyControls();
+		Assert.assertTrue("Mini player control issues:\n" + miniPlayerControls, didPass(miniPlayerControls));
+		
 		
 		// Log out and verify that we can still play radio
+		sideNavBar.logout();
+		sideNavBar.gotoHomePage();
+		playedStation = forYouPage.playLiveRadio();
+		Assert.assertTrue("Could not play a live radio station after logging out.", strGood(playedStation));
 	}
 }
