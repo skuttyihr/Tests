@@ -51,8 +51,6 @@ public class TestPlayback extends TestRoot {
 		// Verify method will "Favorite" the artist statiomn
 		String verifyPlaybackErrors = player.verifyPlaybackControls();
 		Assert.assertTrue("Playback elements were not present: " + verifyPlaybackErrors, didPass(verifyPlaybackErrors));
-
-		// Can we skip 6 times? TODO
 		
 		// Get back to home page / My Stations to verify favorited station
 		player.back.click();
@@ -115,6 +113,23 @@ public class TestPlayback extends TestRoot {
 		sideNavBar.gotoListeningHistoryPage();
 		Assert.assertTrue("Mini player was not visible on listening history page", isVisible(miniPlayer.miniPlayerBar));
 	}
+	
+	@Test
+	public void testArtistRadioSkipLimit(){
+		System.out.println("test method:" + name.getMethodName());
+		Assert.assertTrue("Could not create a new account", signupPage.createAnAccount());
+		genrePage.selectGenre(1);
+		Page.handlePossiblePopUp();
+		
+		String artist = "Matt and Kim";
+		Assert.assertTrue("Could not play a custom artist station based on the artist: " + artist,
+				customRadio.playACustomStation(artist).contains(artist));
+		for(int i = 0; i < 6; i++){
+			Assert.assertTrue("Could not skip for the " + i + " time.", player.doSkip());
+		}
+		player.pause();
+		Assert.assertTrue("Should not have been able to skip", !player.doSkip());
+	}
 
 	////  Podcast Tests  ////
 	
@@ -125,7 +140,6 @@ public class TestPlayback extends TestRoot {
 		String errorsWithPodcasts = podcastsPage.playPodcasts();
 		Assert.assertTrue("Could not play a podcast episode. Errors:\n" 
 							+ errorsWithPodcasts, didPass(errorsWithPodcasts));
-
 		// Test that the scrubber can advance on its own during playback
 		sleep(2000); // So the podcast isn't at 0
 		// Pause so we don't mess up the test
@@ -137,7 +151,6 @@ public class TestPlayback extends TestRoot {
 		int estimatedTimePassed = (int) (totalTime * (float) scrubberPosPercent / 100);
 		Assert.assertTrue("Slider position did not accurately reflect the position", 
 					isAbout(timeElapsed, estimatedTimePassed, 5));
-		
 		// Slide the scrubber, then try a similar test to see if we're where we expect to be
 		player.scrubTo(50);
 		int expectedElapsedTime = totalTime / 2;
@@ -148,6 +161,7 @@ public class TestPlayback extends TestRoot {
 		player.scrubTo(25);
 		expectedElapsedTime /= 2;
 		timeElapsed = player.getElapsedTime();
+		
 		Assert.assertTrue("We couldn't scrub playback on podcast. "
 				+ "Got: " + timeElapsed + " Expected: " + expectedElapsedTime,
 				isAbout(timeElapsed, expectedElapsedTime, 15));
@@ -157,13 +171,12 @@ public class TestPlayback extends TestRoot {
 	////  Live Radio Tests  ////
 	
 	@Test
-	public void testLiveRadioControls() throws Exception {
+	public void testLiveRadioPlayback() throws Exception {
 		System.out.println("test method:" + name.getMethodName());
 		Assert.assertTrue("Was not able to login", loginPage.login());
 		// Play a live radio station and verify it.
 		String verifyRadio = forYouPage.playAndVerifyLiveRadio();
 		Assert.assertTrue("Could not play a live radio station:\n" + verifyRadio + ".", didPass(verifyRadio));
-		
 		// Load up the mini player
 		
 		// Scan more than 6 times 

@@ -8,6 +8,10 @@ import io.appium.java_client.pagefactory.iOSFindBy;
 
 public class Player extends Page {
 
+	// Player Identifiers
+	@iOSFindBy(name = "CustomMusicPlayerView") public IOSElement artistPlayerView;
+	@iOSFindBy(name = "LivePlayerView") public IOSElement radioPlayerView;
+	@iOSFindBy(name = "CustomTalkPlayerView") public IOSElement podcastPlayerView;
 	// Player for live radio
 	// @iOSFindBy(name="Back") public IOSElement back;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIANavigationBar[1]/UIAButton[1]") public IOSElement back;
@@ -26,7 +30,6 @@ public class Player extends Page {
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[3]") public IOSElement artist2_live;
 
 	// podcast specific
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAImage[4]") public IOSElement podcastImage;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIASlider[1]") public IOSElement slideBar;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[2]") public IOSElement elapsedTime;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[3]") public IOSElement totalTime;
@@ -54,6 +57,12 @@ public class Player extends Page {
 	
 	// If loaded from mini player
 	@iOSFindBy(name = "downarrow button") public IOSElement minimizeButton;
+	
+	// Images 
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAImage[3]") public IOSElement radioImage;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAImage[4]") public IOSElement artistAlbumArt;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAImage[4]") public IOSElement podcastImage; // Same as above, but named to assist in any possible issues
+	
 	
 	public Player() {
 		super();
@@ -97,6 +106,11 @@ public class Player extends Page {
 		if (!TestRoot.isVisible(more_live))
 			errors.append(".... is not displayed.\n");
 
+		if(!isVisible(radioImage)){
+			errors.append("Could not load live radio image\n");
+		}
+		
+		
 		return errors.toString();
 	}
 
@@ -123,6 +137,10 @@ public class Player extends Page {
 		if (!TestRoot.isVisible(skip))
 			errors.append("Skip icon is not displayed.\n");
 
+		if(!isVisible(artistAlbumArt)){
+			errors.append("Could not load artist album artwork.\n");
+		}
+		
 		return errors.toString();
 	}
 
@@ -152,6 +170,10 @@ public class Player extends Page {
 		if (!TestRoot.isVisible(skip))
 			errors.append("Skip icon is not displayed.\n");
 
+		if(!isVisible(podcastImage)){
+			errors.append("Could not load podcast image\n");
+		}
+		
 		return errors.toString();
 	}
 
@@ -223,7 +245,7 @@ public class Player extends Page {
 		}
 		if(isVisible(playButton_live)){
 			int count = 0;
-			while ((isThumbUpDisabled() || isThumbDownDisabled()) && count < 3) {
+			while ((isThumbUpDisabled() || isThumbDownDisabled()) && count < 5) {
 				System.out.println("thumb buttons are disabled. Scanning/skipping now..");
 				try {
 					waitForElementToBeVisible(skipOrScan, 1);
@@ -404,6 +426,22 @@ public class Player extends Page {
 	public void pauseAndResume() {
 		pause("");
 	}
+	public void pause(){
+		switch(getType()){
+		case "artist":
+			waitForElementToBeVisible(playButton_artist, 1);
+			playButton_artist.click();
+			break;
+		case "podcast":
+			waitForElementToBeVisible(playButton_podcast, 1);
+			playButton_podcast.click();
+			break;
+		case "live":
+			waitForElementToBeVisible(playButton_live, 1);
+			playButton_live.click();
+			break;
+		}
+	}
 	
 	/**
 	 * Tests to see if we're actually streaming music
@@ -463,13 +501,17 @@ public class Player extends Page {
 		waitForNotVisible(driver, By.name("button buffering stop"), 3);
 	}
 
+	/**
+	 * Returns "artist", "podcast", or "live" for the station type
+	 * @return
+	 */
 	public String getType(){
 		String[] types = {"artist", "podcast", "live"};
-		int type = 0;
-		if(isVisible(playButton_podcast)){
+		int type = 0; // Default to artist
+		if(isVisible(podcastPlayerView)){
 			type = 1;
 		}
-		else if(isVisible(playButton_live)){
+		else if(isVisible(radioPlayerView)){
 			type = 2;
 		}
 		
@@ -497,18 +539,18 @@ public class Player extends Page {
 		// Verify based on type (Artist, Podcast, Radio)
 		switch(getType()){
 		case "artist":
-			verifyPlayer_artist(station);
+			errors.append(verifyPlayer_artist(station));
 			break;
 		case "podcast":
-			verifyPlayer_podcast(station);
+			errors.append(verifyPlayer_podcast(station));
 			break;
 		case "live":
-			verifyPlayer_live(station);
+			errors.append(verifyPlayer_live(station));
 			break;
 		}
 		
 		// Verify that the elements they share are present
-		verfiyCommonIcons();
+		errors.append(verfiyCommonIcons());
 		
 		// Verify that we can use the controls
 		if(!doThumbDown()){
@@ -523,7 +565,6 @@ public class Player extends Page {
 		if(!player.doSkip()){
 			errors.append("Could not skip!\n");
 		}
-		
 		
 		return errors.toString();
 	}

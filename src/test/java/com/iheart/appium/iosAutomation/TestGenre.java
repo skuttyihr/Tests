@@ -50,10 +50,7 @@ public class TestGenre extends TestRoot{
 	@Test
 	public void testGenreGameForMaybeLater(){
 		// Anonymous users get love too
-		signupPage.tapMaybeLater();
-		genrePage.selectGenre("Top 40 & Pop"); // This one will click done
-		Assert.assertTrue("Could not select genre", isVisible(Page.iheartradio_logo_full));
-		Page.handlePossiblePopUp();
+		signupPage.skipLogin();
 		Assert.assertTrue("Could not click improve recommendations to get to genre selection page", genrePage.improveRecommendations());
 		Assert.assertTrue("Could not verify genre!", genrePage.isGenreSelected("Top 40 & Pop"));
 	}

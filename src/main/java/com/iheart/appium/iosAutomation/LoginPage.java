@@ -14,10 +14,11 @@ public class LoginPage extends Page {
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[2]/UIASecureTextField[1]") private IOSElement password;
 	public final String logInButtonName = "Log In";
 	@iOSFindBy(name = "Log In") private IOSElement loginButton;
+	@iOSFindBy(name = "Get Started") private IOSElement getStarted;
+	@iOSFindBy(name = "Maybe Later") private IOSElement maybeLater;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAButton[2]") private IOSElement logInFormButton;
 	@iOSFindBy(name = "Back") private IOSElement backButton;
 	@iOSFindBy(name = "Log In") private IOSElement logIn;
-	
 	
 	@iOSFindBy(name = "Facebook") private WebElement facebookButton;
 
@@ -88,7 +89,7 @@ public class LoginPage extends Page {
 			}
 		}
 	}
-
+	
 	/**
 	 * Logs in, verifies log in, and returns to home page
 	 * @return
