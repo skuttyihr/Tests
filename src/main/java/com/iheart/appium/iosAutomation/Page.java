@@ -44,6 +44,7 @@ public class Page extends TestRoot{
 	static final String PASSWORD = "yrdy"; // test, one key to the right. Doesn't require caps or other keyboard changes for speed
 	static final String FACEBOOK_USER_NAME = OLD_USER_NAME;
 	static final String FACEBOOK_USER_PERSONAL_NAME = "Tony Sopranos";
+	static final String FACEBOOK_PASSWORD = OLD_PASSWORD;
 	static final String GOOGLE_USER_NAME = OLD_USER_NAME;
 
 	public static final String screenshot_folder = "iosScreenshots";

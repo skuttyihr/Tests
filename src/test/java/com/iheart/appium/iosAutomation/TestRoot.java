@@ -63,6 +63,7 @@ public class TestRoot {
 	protected static SplashPage splashPage;
 	protected static GenrePage genrePage;
 	protected static MiniPlayer miniPlayer;
+	protected static SettingsPage settings;
 	
 	protected static boolean useSimulator = false;
 	
@@ -160,6 +161,7 @@ public class TestRoot {
 		splashPage = new SplashPage(driver);
 		genrePage = new GenrePage(driver);
 		miniPlayer = new MiniPlayer(driver);
+		settings = new SettingsPage(driver);
 		
 		driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 		
