@@ -25,6 +25,8 @@ public class TestPlayback extends TestRoot {
 		TestRoot.tearDown();
 	}
 	
+	////  Artist Station Tests  ////
+	
 	/**
 		Searches for and plays a custom artist based station
 		Thumbs up track
@@ -39,7 +41,7 @@ public class TestPlayback extends TestRoot {
 	@Test
 	public void testCustomArtistStationPlaybackAndLogout() throws Exception {
 		System.out.println("test method:" + name.getMethodName());
-		String artist = "Josh Groban";
+		String artist = "Florence + the Machine";
 		Assert.assertTrue("Was not able to login", loginPage.login());
 		// Test that we can create an artist station
 		Assert.assertTrue("Could not play a custom artist station based on the artist: " + artist,
@@ -47,7 +49,7 @@ public class TestPlayback extends TestRoot {
 		
 		// Test that all playback elements are present on an artist station
 		// Verify method will "Favorite" the artist statiomn
-		String verifyPlaybackErrors = player.verifyArtistPlaybackControls();
+		String verifyPlaybackErrors = player.verifyPlaybackControls();
 		Assert.assertTrue("Playback elements were not present: " + verifyPlaybackErrors, didPass(verifyPlaybackErrors));
 
 		// Can we skip 6 times? TODO
@@ -103,7 +105,6 @@ public class TestPlayback extends TestRoot {
 		
 		// Check that mini bar is on every page we expect it to be on
 		sideNavBar.gotoLiveRadioPage();
-		//TODO
 		Assert.assertTrue("Mini player was not visible on live radio page", isVisible(miniPlayer.miniPlayerBar));
 		sideNavBar.gotoLiveArtistPage();
 		Assert.assertTrue("Mini player was not visible on artist radio page", isVisible(miniPlayer.miniPlayerBar));
@@ -115,6 +116,8 @@ public class TestPlayback extends TestRoot {
 		Assert.assertTrue("Mini player was not visible on listening history page", isVisible(miniPlayer.miniPlayerBar));
 	}
 
+	////  Podcast Tests  ////
+	
 	@Test
 	public void testPodcastPlaybackAndControls() {
 		System.out.println("test method:" + name.getMethodName());
@@ -150,11 +153,21 @@ public class TestPlayback extends TestRoot {
 				isAbout(timeElapsed, expectedElapsedTime, 15));
 	}
 
+	
+	////  Live Radio Tests  ////
+	
 	@Test
-	public void test_playLiveRadio_thumbUP_thumbDown_doFavorite() throws Exception {
+	public void testLiveRadioControls() throws Exception {
 		System.out.println("test method:" + name.getMethodName());
 		Assert.assertTrue("Was not able to login", loginPage.login());
-		Assert.assertTrue("Could not play a live radio station", forYouPage.playLiveRadio());
+		// Play a live radio station and verify it.
+		String verifyRadio = forYouPage.playAndVerifyLiveRadio();
+		Assert.assertTrue("Could not play a live radio station:\n" + verifyRadio + ".", didPass(verifyRadio));
+		
+		// Load up the mini player
+		
+		// Scan more than 6 times 
+		
+		// Log out and verify that we can still play radio
 	}
-
 }

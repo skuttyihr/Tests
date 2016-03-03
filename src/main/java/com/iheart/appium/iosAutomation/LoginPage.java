@@ -101,11 +101,11 @@ public class LoginPage extends Page {
 		userName.sendKeys(USER_NAME);
 		password.sendKeys(PASSWORD);
 		logInFormButton.click();
-
+		chooseStayConnected(false);
 		// Dismiss zip code
 		Page.enterZip();
 		// Dismiss stay connected popup
-		chooseStayConnected(false);
+		Page.handlePossiblePopUp();
 		
 		// Select Genre
 		if(waitForVisible(driver, By.name("IHRiPhoneGenrePickerView"), 5) != null){
@@ -113,8 +113,6 @@ public class LoginPage extends Page {
 		}
 		// Dismiss stay connected popup that sometimes shows up AFTER genre picker
 		chooseStayConnected(false);
-		
-//		dismissLoginPopups();
 		
 		// verify we are in
 		IOSElement forYouTest = waitForVisible(driver, By.name("For You"), 20);

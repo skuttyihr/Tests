@@ -203,9 +203,15 @@ public class Page extends TestRoot{
 		}
 	}
 	public static void enterZip(){
-		enterZip("10013");
+		enterZip("");
 	}
 	public static void enterZip(String zip){
+		if(!strGood(zip)){
+			try{
+				waitForVisible(driver, By.name("No Thanks"), 4).click();
+			}
+			catch(Exception e){}
+		}
 		IOSElement enterZip = waitForVisible(driver, find("Enter ZIP"), 7);
 		if(enterZip != null && isVisible(enterZip)){
 			enterZip.click();

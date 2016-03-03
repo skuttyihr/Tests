@@ -60,46 +60,51 @@ public class ForYouPage extends Page {
 
 	}
 
-	public boolean playLiveRadio() {
+	public String playAndVerifyLiveRadio() {
+		StringBuilder errors = new StringBuilder();
 		String myStation = "";
 		WebElement collectionView = driver
 				.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]"));
 		List<WebElement> stations = collectionView.findElements(By.className("UIACollectionCell"));
 		myStation = chooseLiveRadioToPlay(stations);
-		System.out.println("MySTATION:" + myStation);
+		System.out.println("Starting with:" + myStation);
 
 		// Verify PLAYER
-		player.verifyPlayer_live(myStation);
+		errors.append(player.verifyPlaybackControls(myStation));
+		if(errors.length() > 0){
+			errors.append("\n");
+		}
 		if(!player.doFavorite()){
-			System.err.println("Could not favorite!");
-			return false;
+			errors.append("Could not favorite!\n");
 		}
 		if(!player.doScan()){
-			System.err.println("Could not scan!");
-			return false;
+			errors.append("Could not scan!\n");
 		}
-		player.doThumbUp();
-		player.doThumbDown();
-		// player.doFavorite();
+		if(!player.doThumbUp()){
+			errors.append("Could not do thumbs up!\n");
+		}
+		if(!player.doThumbDown()){
+			errors.append("Could not do thumbs down!\n");
+		}
 
 		// Here, remember the playing station name:
-		myStation = driver
+		String newStation = driver
 				.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIANavigationBar[1]/UIAStaticText[1]"))
 				.getText();
-		System.out.println("playing station:" + myStation);
+		if(!newStation.equals(myStation)){
+			System.out.println("Had to switch to new station due to disabled thumb buttons. New station: " + newStation);
+			myStation = newStation;
+		}
 
-		// player.pauseAndResume("live");
-
-		// tap on My Station and make sure Station is added??
 		// Verify that this station is added under My Station
 		(player.back).click();
 		waitForVisible(driver, By.name("My Stations"), 5).click();
 		// Wait for the list to be visible
 		getStationFromList(1); // Includes a wait
 		if (!driver.getPageSource().contains(myStation))
-			return false;
-		else
-			return true;
+			errors.append("Did not load station into recents.\n");
+		
+		return errors.toString();
 	}
 
 	public void comeToThisPage() {

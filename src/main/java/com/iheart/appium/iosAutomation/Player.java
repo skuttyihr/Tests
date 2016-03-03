@@ -55,9 +55,6 @@ public class Player extends Page {
 	// If loaded from mini player
 	@iOSFindBy(name = "downarrow button") public IOSElement minimizeButton;
 	
-	private static final String growlResponse = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[8]";
-	
-	
 	public Player() {
 		super();
 	}
@@ -75,9 +72,10 @@ public class Player extends Page {
 	 * station Volume control
 	 * Returns a String of any errors encountered. A blank string means a successful verification
 	 */
-	public String verifyPlayer_live(String stationName) { 
+	private String verifyPlayer_live(String stationName) { 
 		StringBuilder errors = new StringBuilder();
-		if(!stationLabel.getText().contains(stationName)){
+		if(stationName != null && stationName.length() > 0 
+				&& !stationLabel.getText().contains(stationName)){
 			System.out.println("Station name: " + stationLabel.getText() + " wasn't what we expected: " + stationName);
 		}
 
@@ -99,20 +97,18 @@ public class Player extends Page {
 		if (!TestRoot.isVisible(more_live))
 			errors.append(".... is not displayed.\n");
 
-		errors.append(verfiyCommonIcons("verifyPlayer_live"));
-		
 		return errors.toString();
 	}
 
 	/**
-	 * **Calls assert statements
 	 * Returns a String of any errors encountered. A blank string means a successful verification
 	 * @param stationName
 	 */
-	public String verifyPlayer_artist(String stationName) {
+	private String verifyPlayer_artist(String stationName) {
 		StringBuilder errors = new StringBuilder();
 		
-		if (!stationLabel.getText().contains(stationName))
+		if(stationName != null && stationName.length() > 0
+				&& !stationLabel.getText().contains(stationName))
 			errors.append("Station name is not correct.\n");
 
 		if (!TestRoot.isVisible(songTrack_artist))
@@ -127,8 +123,6 @@ public class Player extends Page {
 		if (!TestRoot.isVisible(skip))
 			errors.append("Skip icon is not displayed.\n");
 
-		errors.append(verfiyCommonIcons("verifyPlayer_custom"));
-		
 		return errors.toString();
 	}
 
@@ -137,9 +131,10 @@ public class Player extends Page {
 	 * @param stationName
 	 * Returns a String of any errors encountered. A blank string means a successful verification
 	 */
-	public String verifyPlayer_podcast(String stationName) {
+	private String verifyPlayer_podcast(String stationName) {
 		StringBuilder errors = new StringBuilder();
-		if (!stationLabel.getText().contains(stationName.substring(0, 5)))
+		if(stationName != null && stationName.length() > 0
+				&& !stationLabel.getText().contains(stationName.substring(0, 5)))
 			errors.append("Station name is not correct.\n");
 
 		if (!TestRoot.isVisible(episodeName_podcast))
@@ -157,8 +152,6 @@ public class Player extends Page {
 		if (!TestRoot.isVisible(skip))
 			errors.append("Skip icon is not displayed.\n");
 
-		errors.append(verfiyCommonIcons("verifyPlayer_podcast"));
-		
 		return errors.toString();
 	}
 
@@ -166,7 +159,7 @@ public class Player extends Page {
 	 * **Calls assert statements, can fail tests from within method!
 	 * @param callingMethod
 	 */
-	private String verfiyCommonIcons(String callingMethod) {
+	private String verfiyCommonIcons() {
 		StringBuilder errors = new StringBuilder();
 		if (!TestRoot.isVisible(thumbUp))
 			errors.append("No Thumb Up icon is displayed.\n");
@@ -231,7 +224,7 @@ public class Player extends Page {
 		if(isVisible(playButton_live)){
 			int count = 0;
 			while ((isThumbUpDisabled() || isThumbDownDisabled()) && count < 3) {
-				System.out.println("thumbUp button is disabled. Scanning/skipping now..");
+				System.out.println("thumb buttons are disabled. Scanning/skipping now..");
 				try {
 					waitForElementToBeVisible(skipOrScan, 1);
 					skipOrScan.click();
@@ -248,7 +241,10 @@ public class Player extends Page {
 	// This happens when you thumbup a already thumbuped song track
 	private void handleActionPopup() {
 		try {
-			waitForVisible(driver, By.name("No Thanks"), 5).click();
+			waitForVisible(driver, By.name("No Thanks"), 3).click();
+		} catch (Exception e) {}
+		try {
+			waitForVisible(driver, By.name("Okay"), 1).click();
 		} catch (Exception e) {}
 	}
 
@@ -266,14 +262,9 @@ public class Player extends Page {
 		// Actually click on the thumb up
 		thumbUp.click();
 		
-		// Growl response: glad you like it! We'll let our DJs know.
-		String response = driver.findElement(By.xpath(growlResponse)).getText();
-		System.out.println("See growls:" + response);
-
 		// Sometimes 'Like iheartRadio?" pops up
 		handleActionPopup();
-		
-		return strGood(response) && response.contains("like it");
+		return isThumbUpDone();
 	}
 
 	public boolean doThumbDown() {
@@ -289,13 +280,9 @@ public class Player extends Page {
 		// Actually click on the thumb up
 		thumbDown.click();
 		
-		// Growl response: glad you like it! We'll let our DJs know.
-		String response = driver.findElement(By.xpath(growlResponse)).getText();
-		System.out.println("See growls:" + response);
-
 		// Sometimes 'Like iheartRadio?" pops up
 		handleActionPopup();
-		return strGood(response) && response.contains("heard enough");
+		return isThumbDownDone();
 	}
 
 	public boolean isThumbUpDone() {
@@ -304,13 +291,9 @@ public class Player extends Page {
 		try {
 			// if yes, its value is 1; otherwise, blank
 			String value = thumbUp.getAttribute("value");
-
-			System.out.println("Is thumpUp done:" + value);
-
 			isDone = value.equals("1");
 
 		} catch (Exception e) {
-
 		}
 		return isDone;
 	}
@@ -321,13 +304,8 @@ public class Player extends Page {
 		try {
 			// if yes, its value is 1; otherwise, blank
 			String value = thumbDown.getAttribute("value");
-
-			System.out.println("Is thumpDown done:" + value);
-
 			isDone = value.equals("1");
-
 		} catch (Exception e) {
-
 		}
 		return isDone;
 	}
@@ -357,19 +335,6 @@ public class Player extends Page {
 		} catch (Exception e) {
 		}
 	}
-
-	// Thumbing down customizes your station without using a skip.
-//	private void handleThumbDownPopUpForArtistStation() {
-//		try {
-//			// click on OKAY BUTTON of alert box: Thumbing down customizes your
-//			// station without using a skip.
-//			driver.findElement(By
-//					.xpath("//UIAApplication[1]/UIAWindow[1]/UIAAlert[1]/UIACollectionView[1]/UIACollectionCell[1]/UIAButton[1]"))
-//					.click();
-//		} catch (Exception e) {
-//
-//		}
-//	}
 
 	private boolean isFavDone() {
 		boolean isDone = false;
@@ -401,7 +366,13 @@ public class Player extends Page {
 		String currentSong = driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAStaticText[2]"))
 				.getText();
 
-		skip.click();
+		if(isVisible(scan)){
+			scan.click();
+		}
+		else if(isVisible(skip)){
+			skip.click();
+		}
+		
 		waitForTrackToLoad();
 		// Verify that new song is playing
 		String newSong = driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAStaticText[2]")).getText();
@@ -492,20 +463,59 @@ public class Player extends Page {
 		waitForNotVisible(driver, By.name("button buffering stop"), 3);
 	}
 
+	public String getType(){
+		String[] types = {"artist", "podcast", "live"};
+		int type = 0;
+		if(isVisible(playButton_podcast)){
+			type = 1;
+		}
+		else if(isVisible(playButton_live)){
+			type = 2;
+		}
+		
+		return types[type];
+	}
+	
+	public String verifyPlaybackControls(){
+		return verifyPlaybackControls("");
+	}
 	/**
-	 * Returns a blank string if there are no issues
-	 * All invisible elements or problem elements will be returned in a 
-	 * 	multi-line string for easy output and debugging
+	 * Verifies the playback controls for any playback view
+	 * @param station
 	 * @return
 	 */
-	public String verifyArtistPlaybackControls(String artist){
-		StringBuilder errors = new StringBuilder();
-		errors.append(player.verifyPlayer_artist(artist));
-		if(!doThumbUp()){
-			errors.append("Could not thumb up!\n");
+	public String verifyPlaybackControls(String station){
+		StringBuilder errors = new StringBuilder(); 
+		
+		// Verify that the controls are present
+		if (!TestRoot.isVisible(thumbUp))
+			errors.append("No Thumb Up icon is displayed.\n");
+
+		if (!TestRoot.isVisible(thumbDown))
+			errors.append("No Thumb Down icon is displayed.\n");
+		
+		// Verify based on type (Artist, Podcast, Radio)
+		switch(getType()){
+		case "artist":
+			verifyPlayer_artist(station);
+			break;
+		case "podcast":
+			verifyPlayer_podcast(station);
+			break;
+		case "live":
+			verifyPlayer_live(station);
+			break;
 		}
+		
+		// Verify that the elements they share are present
+		verfiyCommonIcons();
+		
+		// Verify that we can use the controls
 		if(!doThumbDown()){
 			errors.append("Could not thumb down!\n");
+		}
+		if(!doThumbUp()){ // End on a good note :)
+			errors.append("Could not thumb up!\n");
 		}
 		if(!player.doFavorite()){
 			errors.append("Could not favorite artist station!\n");
@@ -514,10 +524,8 @@ public class Player extends Page {
 			errors.append("Could not skip!\n");
 		}
 		
+		
 		return errors.toString();
-	}
-	public String verifyArtistPlaybackControls(){
-		return verifyArtistPlaybackControls("");
 	}
 	
 	/**
