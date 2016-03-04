@@ -52,6 +52,8 @@ public class Player extends Page {
 	@iOSFindBy(name = "scan") public IOSElement scan;
 	@iOSFindBy(name = "Thumb up") public IOSElement thumbUp;
 	@iOSFindBy(name = "Thumb down") public IOSElement thumbDown;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIASlider[2]") public IOSElement volume;
+	
 	// FOR SHARE
 	@iOSFindBy(name = "Mail") public IOSElement mail;
 	
@@ -63,6 +65,13 @@ public class Player extends Page {
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAImage[4]") public IOSElement artistAlbumArt;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAImage[4]") public IOSElement podcastImage; // Same as above, but named to assist in any possible issues
 	
+	// Growl Messages (Use Xpath only as backup)
+	@iOSFindBy(name = "Great, we’ll play you more  songs like this.") public IOSElement artistThumbUpGrowl; // //UIAApplication[1]/UIAWindow[1]/UIAStaticText[10]
+	@iOSFindBy(name = "OK, we'll adjust your music mix.") public IOSElement artistThumbDownGrowl;
+	@iOSFindBy(name = "Glad you like it!  We'll let our DJs know.") public IOSElement liveThumbUpGrowl; // //UIAApplication[1]/UIAWindow[1]/UIAStaticText[8]
+	@iOSFindBy(name = "Thanks for the feedback. We'll let our DJs know you've  heard enough of this song.") public IOSElement liveThumbDownGrowl;
+	@iOSFindBy(name = "Great, we’ll play you more  episodes like this.") public IOSElement podcastThumbUpGrowl; // //UIAApplication[1]/UIAWindow[1]/UIAStaticText[10]
+	@iOSFindBy(name = "OK, we’ll adjust your station.") public IOSElement podcastThumbDownGrowl;
 	
 	public Player() {
 		super();
@@ -82,7 +91,7 @@ public class Player extends Page {
 	 * Returns a String of any errors encountered. A blank string means a successful verification
 	 */
 	private String verifyPlayer_live(String stationName) { 
-		StringBuilder errors = new StringBuilder();
+		Errors errors = new Errors();
 		if(stationName != null && stationName.length() > 0 
 				&& !stationLabel.getText().contains(stationName)){
 			System.out.println("Station name: " + stationLabel.getText() + " wasn't what we expected: " + stationName);
@@ -119,7 +128,7 @@ public class Player extends Page {
 	 * @param stationName
 	 */
 	private String verifyPlayer_artist(String stationName) {
-		StringBuilder errors = new StringBuilder();
+		Errors errors = new Errors();
 		
 		if(stationName != null && stationName.length() > 0
 				&& !stationLabel.getText().contains(stationName))
@@ -150,7 +159,7 @@ public class Player extends Page {
 	 * Returns a String of any errors encountered. A blank string means a successful verification
 	 */
 	private String verifyPlayer_podcast(String stationName) {
-		StringBuilder errors = new StringBuilder();
+		Errors errors = new Errors();
 		if(stationName != null && stationName.length() > 0
 				&& !stationLabel.getText().contains(stationName.substring(0, 5)))
 			errors.append("Station name is not correct.\n");
@@ -182,7 +191,7 @@ public class Player extends Page {
 	 * @param callingMethod
 	 */
 	private String verfiyCommonIcons() {
-		StringBuilder errors = new StringBuilder();
+		Errors errors = new Errors();
 		if (!TestRoot.isVisible(thumbUp))
 			errors.append("No Thumb Up icon is displayed.\n");
 
@@ -271,12 +280,16 @@ public class Player extends Page {
 	}
 
 		
+	/**
+	 * Thumb up a track, tests that thumb up was recorded
+	 * @return
+	 */
 	public boolean doThumbUp() {
 		// Sometimes the thumbUp button is disabled, keep scan(At most 3 times
 		// 		though to avoid hang) until thumbUpicon is enabled.
 		// Only do this for live stations, not for artist radio or podcasts
 		scanOrSkipUntilThumbAvailable();
-		
+		String type = getType();
 		// if it is still disabled, return
 		if (isThumbUpDisabled())
 			return false;
@@ -286,15 +299,20 @@ public class Player extends Page {
 		
 		// Sometimes 'Like iheartRadio?" pops up
 		handleActionPopup();
-		return isThumbUpDone();
+		
+		return verifyThumbUpGrowl(type) && isThumbUpDone();
 	}
 
+	/**
+	 * Thumb down a track, tests that thumb down was recorded. 
+	 * @return
+	 */
 	public boolean doThumbDown() {
 		// Sometimes the thumbDown button is disabled, keep scan(At most 3 times
 		// 		though to avoid hang) until thumbDownicon is enabled.
 		// Only do this for live stations, not for artist radio or podcasts
 		scanOrSkipUntilThumbAvailable();
-		
+		String type = getType();
 		// if it is still disabled, return
 		if (isThumbDownDisabled())
 			return false;
@@ -304,7 +322,7 @@ public class Player extends Page {
 		
 		// Sometimes 'Like iheartRadio?" pops up
 		handleActionPopup();
-		return isThumbDownDone();
+		return verifyThumbDownGrowl(type) && isThumbDownDone();
 	}
 
 	public boolean isThumbUpDone() {
@@ -518,6 +536,72 @@ public class Player extends Page {
 		return types[type];
 	}
 	
+	public boolean verifyThumbUpGrowl(){
+		return verifyThumbUpGrowl("");
+	}
+	/**
+	 * 
+	 * @param type (From Player.getType(), "artist" "live" or "podcast")
+	 * 		Type can be passed in as "" (use verifyThumbUpGrowl() for this as well),
+	 * 			 which will test for any thumb up growl
+	 * @return True if 
+	 */
+	public boolean verifyThumbUpGrowl(String type){
+		boolean foundGrowl = false;
+		
+		switch(type){
+		case "artist":
+			foundGrowl = isVisible(artistThumbUpGrowl);
+			break;
+		case "live":
+			foundGrowl = isVisible(liveThumbUpGrowl);
+			break;
+		case "podcast":
+			foundGrowl = isVisible(podcastThumbUpGrowl);
+			break;
+		default:
+			foundGrowl = isVisible(artistThumbUpGrowl)
+				|| isVisible(liveThumbUpGrowl)
+				|| isVisible(podcastThumbUpGrowl); 
+			break;
+		}
+		
+		return foundGrowl;
+	}
+	
+	public boolean verifyThumbDownGrowl(){
+		return verifyThumbDownGrowl("");
+	}
+	/**
+	 * 
+	 * @param type (From Player.getType(), "artist" "live" or "podcast")
+	 * 		Type can be passed in as "" (use verifyThumbDownGrowl() for this as well),
+	 * 			 which will test for any thumb down growl
+	 * @return True if 
+	 */
+	public boolean verifyThumbDownGrowl(String type){
+		boolean foundGrowl = false;
+		
+		switch(type){
+		case "artist":
+			foundGrowl = isVisible(artistThumbDownGrowl);
+			break;
+		case "live":
+			foundGrowl = isVisible(liveThumbDownGrowl);
+			break;
+		case "podcast":
+			foundGrowl = isVisible(podcastThumbDownGrowl);
+			break;
+		default:
+			foundGrowl = isVisible(artistThumbDownGrowl)
+				|| isVisible(liveThumbDownGrowl)
+				|| isVisible(podcastThumbDownGrowl); 
+			break;
+		}
+		
+		return foundGrowl;
+	}
+	
 	public String verifyPlaybackControls(){
 		return verifyPlaybackControls("");
 	}
@@ -527,43 +611,43 @@ public class Player extends Page {
 	 * @return
 	 */
 	public String verifyPlaybackControls(String station){
-		StringBuilder errors = new StringBuilder(); 
+		Errors errors = new Errors();
 		
 		// Verify that the controls are present
 		if (!TestRoot.isVisible(thumbUp))
-			errors.append("No Thumb Up icon is displayed.\n");
+			errors.add("No Thumb Up icon is displayed.");
 
 		if (!TestRoot.isVisible(thumbDown))
-			errors.append("No Thumb Down icon is displayed.\n");
+			errors.add("No Thumb Down icon is displayed.");
 		
 		// Verify based on type (Artist, Podcast, Radio)
 		switch(getType()){
 		case "artist":
-			errors.append(verifyPlayer_artist(station));
+			errors.add(verifyPlayer_artist(station));
 			break;
 		case "podcast":
-			errors.append(verifyPlayer_podcast(station));
+			errors.add(verifyPlayer_podcast(station));
 			break;
 		case "live":
-			errors.append(verifyPlayer_live(station));
+			errors.add(verifyPlayer_live(station));
 			break;
 		}
 		
 		// Verify that the elements they share are present
-		errors.append(verfiyCommonIcons());
+		errors.add(verfiyCommonIcons());
 		
 		// Verify that we can use the controls
 		if(!doThumbDown()){
-			errors.append("Could not thumb down!\n");
+			errors.add("Could not thumb down!");
 		}
 		if(!doThumbUp()){ // End on a good note :)
-			errors.append("Could not thumb up!\n");
+			errors.add("Could not thumb up!");
 		}
 		if(!player.doFavorite()){
-			errors.append("Could not favorite artist station!\n");
+			errors.add("Could not favorite artist station!");
 		}
 		if(!player.doSkip()){
-			errors.append("Could not skip!\n");
+			errors.add("Could not skip!");
 		}
 		
 		return errors.toString();
