@@ -673,13 +673,14 @@ public class Player extends Page {
 		if(percentage < 0 || percentage > 100){
 			return;
 		}
-		String floatingPercentage = String.valueOf((float) percentage / 100 + .0336);
+		// Add a little to adjust for consistently lower than requested position
+		String floatingPercentage = String.valueOf((float) percentage / 100 + .0336); 
 		if(isVisible(slideBar)){
 			slideBar.sendKeys(floatingPercentage);
 			Page.handlePossiblePopUp();
 			pause("podcast");
 			int testLoc = getPodcastScubberPostitionPercentage();
-			if(!isAbout(percentage, testLoc, 5)){
+			if(!isAbout(percentage, testLoc, 6)){
 				slideBar.sendKeys(floatingPercentage); // Try again
 				pause("podcast"); // Pause after moving slider again
 			}

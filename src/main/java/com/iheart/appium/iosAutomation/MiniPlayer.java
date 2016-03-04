@@ -240,6 +240,9 @@ public class MiniPlayer extends Page {
 		}
 		
 		// Play and pause
+		if(isVisible(miniPlayerPlay)){
+			miniPlayer.play();
+		}
 		if(!isVisible(miniPlayerStop)){
 			if(!miniPlayer.pause()){
 				errors.append("Could not pause from mini player.\n");

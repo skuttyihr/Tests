@@ -225,5 +225,18 @@ public class Page extends TestRoot{
 			}
 		}
 	}
+	
+	public void getBack(){
+		try{
+			player.back.click();
+		}
+		catch(Exception e){}
+		try{
+			waitForVisible(driver, By.name("Back"), 1).click();
+		}catch(Exception e){}
+		try{
+			search.cancel.click();
+		}catch(Exception e){}
+	}
 }	
 

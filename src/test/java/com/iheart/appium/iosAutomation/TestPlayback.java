@@ -149,9 +149,21 @@ public class TestPlayback extends TestRoot {
 		expectedElapsedTime /= 2;
 		timeElapsed = player.getElapsedTime();
 		
-		Assert.assertTrue("We couldn't scrub playback on podcast. "
-				+ "Got: " + timeElapsed + " Expected: " + expectedElapsedTime,
+		Assert.assertTrue("We couldn't scrub playback on podcast.\n"
+				+ "Got: " + timeElapsed + "\nExpected: " + expectedElapsedTime,
 				isAbout(timeElapsed, expectedElapsedTime, 15));
+		
+		// TODO Mini player verification
+		player.minimizePlayer();
+		String miniPlayerVerification = miniPlayer.verifyControls();
+		Assert.assertTrue("Mini player controls were not available:\n" + miniPlayerVerification,
+				didPass(miniPlayerVerification));
+		
+		// Log out and verify playback stops
+		sideNavBar.logout();
+		sideNavBar.gotoHomePage();
+		Assert.assertTrue("Mini player was still visible, podcast still playing, after logging out.", 
+				!isVisible(miniPlayer.miniPlayerBar));
 	}
 
 	
