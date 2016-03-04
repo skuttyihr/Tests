@@ -52,6 +52,19 @@ public class TestPlayback extends TestRoot {
 		String verifyPlaybackErrors = player.verifyPlaybackControls();
 		Assert.assertTrue("Playback elements were not present: " + verifyPlaybackErrors, didPass(verifyPlaybackErrors));
 		
+		int currentVolume = player.getVolume();
+		int expectedVolume = 50;
+		if(currentVolume == 50){
+			expectedVolume = 25;
+		}
+		String testVolume = player.setVolume(expectedVolume);
+		Assert.assertTrue(testVolume, didPass(testVolume));
+		currentVolume = player.getVolume();
+		Assert.assertTrue("Volume was not within range:\n" +
+						"Current Volume: " + currentVolume +
+						"\nExpected Volume: " + expectedVolume,
+					isAbout(currentVolume, expectedVolume, 7));
+		
 		// Get back to home page / My Stations to verify favorited station
 		player.back.click();
 		search.cancel.click();

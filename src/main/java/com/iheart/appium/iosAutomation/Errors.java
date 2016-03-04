@@ -12,11 +12,11 @@ public class Errors {
 	
 	public Errors(){
 		numberOfErrors = 0;
-		err = new StringBuilder("\n");
+		err = new StringBuilder();
 	}
 	public Errors(String s){
 		numberOfErrors = 0;
-		err = new StringBuilder("\n" + s);
+		err = new StringBuilder(s);
 	}
 	
 	public String getErrors(){
@@ -42,11 +42,16 @@ public class Errors {
 	}
 	
 	public void add(String s){
-		numberOfErrors++;
-		if(s.endsWith("\n"))
-			err.append(s);
-		else
-			err.append(s + "\n");
+		if(s != null && s.length() > 0){
+			if(numberOfErrors == 0){
+				err.append("\n"); // Make sure the string will start on a new line, for assert output
+			}
+			numberOfErrors++;
+			if(s.endsWith("\n"))
+				err.append(s);
+			else
+				err.append(s + "\n");
+		}
 	}
 	// Added to make converting from StringBuilder easier, but the add is likely preferred (less typing)
 	public void append(String s){

@@ -786,4 +786,35 @@ public class Player extends Page {
 			return false;
 		}
 	}
+	
+	public int getVolume(){
+		int vol = -1;
+		waitForElementToBeVisible(volume, 5);
+		String volVal = volume.getAttribute("value");
+		volVal = volVal.replace("%", "");
+		try{
+			vol = Integer.parseInt(volVal);
+		}
+		catch(Exception e){}
+		return vol;
+	}
+	
+	public String setVolume(int volumeLevel){
+		Errors err = new Errors();
+		waitForElementToBeVisible(volume, 5);
+		if(!isVisible(volume)){
+			err.add("Volume slider was not present.");
+		}
+		else{
+			try{
+				String floatingPercentage = String.valueOf((float) volumeLevel / 100); 
+				volume.sendKeys(String.valueOf(floatingPercentage));
+			}
+			catch(Exception e){
+				err.add("Failure to set volume: " + e.getMessage());
+			}
+		}
+		
+		return err.getErrors();
+	}
 }
