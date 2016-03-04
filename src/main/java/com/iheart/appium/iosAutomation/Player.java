@@ -299,8 +299,10 @@ public class Player extends Page {
 		
 		// Sometimes 'Like iheartRadio?" pops up
 		handleActionPopup();
-		
-		return verifyThumbUpGrowl(type) && isThumbUpDone();
+		if (!verifyThumbUpGrowl(type)){
+			System.err.println("Expected a growl but could not find one, might have been an error.");
+		}
+		return isThumbUpDone();
 	}
 
 	/**
@@ -322,7 +324,10 @@ public class Player extends Page {
 		
 		// Sometimes 'Like iheartRadio?" pops up
 		handleActionPopup();
-		return verifyThumbDownGrowl(type) && isThumbDownDone();
+		if (!verifyThumbDownGrowl(type)){
+			System.err.println("Expected a growl but could not find one, might have been an error.");
+		}
+		return isThumbDownDone();
 	}
 
 	public boolean isThumbUpDone() {
