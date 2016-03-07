@@ -764,13 +764,14 @@ public class Player extends Page {
 		// Add a little to adjust for consistently lower than requested position
 		String floatingPercentage = String.valueOf((float) percentage / 100 + .0336); 
 		if(isVisible(slideBar)){
-			slideBar.sendKeys(floatingPercentage);
-			Page.handlePossiblePopUp();
-			pause("podcast");
 			int testLoc = getPodcastScubberPostitionPercentage();
-			if(!isAbout(percentage, testLoc, 6)){
-				slideBar.sendKeys(floatingPercentage); // Try again
-				pause("podcast"); // Pause after moving slider again
+			int count = 0;
+			while(count < 3 && !isAbout(percentage, testLoc, 6)){
+				count++;
+				slideBar.sendKeys(floatingPercentage);
+				Page.handlePossiblePopUp();
+				pause("podcast");
+				testLoc = getPodcastScubberPostitionPercentage();
 			}
 		}
 	}
@@ -805,12 +806,21 @@ public class Player extends Page {
 			err.add("Volume slider was not present.");
 		}
 		else{
-			try{
-				String floatingPercentage = String.valueOf((float) volumeLevel / 100); 
-				volume.sendKeys(String.valueOf(floatingPercentage));
+			String floatingPercentage = String.valueOf((float) volumeLevel / 100);
+			int count = 0;
+			int testVolume = getVolume();
+			while (count < 3 && !isAbout(volumeLevel, testVolume, 6)){
+				count++;
+				try{
+					volume.sendKeys(String.valueOf(floatingPercentage));
+				}
+				catch(Exception e){
+					err.add("Failure to set volume: " + e.getMessage());
+				}
+				testVolume = getVolume();
 			}
-			catch(Exception e){
-				err.add("Failure to set volume: " + e.getMessage());
+			if(!isAbout(volumeLevel, testVolume, 6)){
+				err.add("Could not set volume within volume levels.\nExpected: " + volumeLevel + "\nFound: " + testVolume);
 			}
 		}
 		
