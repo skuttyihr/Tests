@@ -25,6 +25,21 @@ public class TestPlayback extends TestRoot {
 		TestRoot.tearDown();
 	}
 	
+	private void assertPlaybackVolume(){
+		int currentVolume = player.getVolume();
+		int expectedVolume = 50;
+		if(currentVolume == 50){
+			expectedVolume = 25;
+		}
+		String testVolume = player.setVolume(expectedVolume);
+		Assert.assertTrue(testVolume, didPass(testVolume));
+		currentVolume = player.getVolume();
+		Assert.assertTrue("Volume was not within range:\n" +
+						"Current Volume: " + currentVolume +
+						"\nExpected Volume: " + expectedVolume,
+					isAbout(currentVolume, expectedVolume, 7));
+	}
+	
 	////  Artist Station Tests  ////
 	
 	/**
@@ -52,18 +67,12 @@ public class TestPlayback extends TestRoot {
 		String verifyPlaybackErrors = player.verifyPlaybackControls();
 		Assert.assertTrue("Playback elements were not present: " + verifyPlaybackErrors, didPass(verifyPlaybackErrors));
 		
-		int currentVolume = player.getVolume();
-		int expectedVolume = 50;
-		if(currentVolume == 50){
-			expectedVolume = 25;
-		}
-		String testVolume = player.setVolume(expectedVolume);
-		Assert.assertTrue(testVolume, didPass(testVolume));
-		currentVolume = player.getVolume();
-		Assert.assertTrue("Volume was not within range:\n" +
-						"Current Volume: " + currentVolume +
-						"\nExpected Volume: " + expectedVolume,
-					isAbout(currentVolume, expectedVolume, 7));
+		// Test we can modify the volume
+		assertPlaybackVolume();
+		
+		// Test that AirPlay is available
+		String airPlayTest = player.streamOverAirPlay();
+		Assert.assertTrue("AirPlay was not an available option. ", didPass(airPlayTest));
 		
 		// Get back to home page / My Stations to verify favorited station
 		player.back.click();
@@ -166,7 +175,9 @@ public class TestPlayback extends TestRoot {
 				+ "Got: " + timeElapsed + "\nExpected: " + expectedElapsedTime,
 				isAbout(timeElapsed, expectedElapsedTime, 15));
 		
-		// TODO Mini player verification
+		assertPlaybackVolume();
+		
+		// Mini player verification
 		player.minimizePlayer();
 		String miniPlayerVerification = miniPlayer.verifyControls();
 		Assert.assertTrue("Mini player controls were not available:\n" + miniPlayerVerification,
@@ -192,6 +203,8 @@ public class TestPlayback extends TestRoot {
 		
 		String verifyPlayer = player.verifyPlaybackControls();
 		Assert.assertTrue("Could not verify live radio controls:\n" + verifyPlayer, didPass(verifyPlayer));
+		
+		assertPlaybackVolume();
 		
 		// Get to the mini player
 		player.minimizePlayer();

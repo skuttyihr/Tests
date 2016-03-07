@@ -18,6 +18,7 @@ public class Player extends Page {
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIANavigationBar[1]/UIAStaticText[1]") public IOSElement stationLabel;
 	@iOSFindBy(name = "Share") public IOSElement share;
 	@iOSFindBy(name = "Favorite") public IOSElement favorite;
+	@iOSFindBy(name = "airplay") public IOSElement airPlay;
 
 	// Seems that this is depending upon from where the player is launched
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[4]") public IOSElement songTrack_artist;
@@ -296,12 +297,11 @@ public class Player extends Page {
 		
 		// Actually click on the thumb up
 		thumbUp.click();
-		
+		if (!verifyThumbUpGrowl(type)){
+			System.out.println("Expected a thumb up growl but could not find one, likely just a matter of timing.");
+		}
 		// Sometimes 'Like iheartRadio?" pops up
 		handleActionPopup();
-		if (!verifyThumbUpGrowl(type)){
-			System.err.println("Expected a growl but could not find one, might have been an error.");
-		}
 		return isThumbUpDone();
 	}
 
@@ -321,12 +321,11 @@ public class Player extends Page {
 		
 		// Actually click on the thumb up
 		thumbDown.click();
-		
+		if (!verifyThumbDownGrowl(type)){
+			System.out.println("Expected a thumb down growl but could not find one, likely just a matter of timing.");
+		}
 		// Sometimes 'Like iheartRadio?" pops up
 		handleActionPopup();
-		if (!verifyThumbDownGrowl(type)){
-			System.err.println("Expected a growl but could not find one, might have been an error.");
-		}
 		return isThumbDownDone();
 	}
 
@@ -812,6 +811,34 @@ public class Player extends Page {
 			}
 			catch(Exception e){
 				err.add("Failure to set volume: " + e.getMessage());
+			}
+		}
+		
+		return err.getErrors();
+	}
+	
+	/**
+	 * From playback screen, check that we can stream over airplay
+	 * Likely won't work with the simulator, and a physical device must have an AirPlay device within range.
+	 * @return
+	 */
+	public String streamOverAirPlay(){
+		Errors err = new Errors();
+		
+		if(isVisible(airPlay)){
+			airPlay.click();
+			// Check that the airplay dialog is now visible and close it
+			IOSElement cancelAirPlay = waitForVisible(driver, By.name("Cancel"), 5);
+			if(cancelAirPlay != null){
+				cancelAirPlay.click();
+			}
+			else{
+				err.add("Clicking AirPlay button did not bring up AirPlay dialog.");
+			}
+		}
+		else{
+			if(airPlay == null){ // If we have it but it's not visible, pass it anyway
+				err.add("AirPlay button was not visible. Is this disabled?");
 			}
 		}
 		
