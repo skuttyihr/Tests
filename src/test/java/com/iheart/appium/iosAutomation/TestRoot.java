@@ -614,6 +614,12 @@ public class TestRoot {
 	public static boolean passed(String s){ // A rose by any other name...
 		return didPass(s);
 	}
+	public static boolean didPass(Errors err){
+		return err.howMany() == 0;
+	}
+	public static boolean passed(Errors err){
+		return didPass(err);
+	}
 	
 	public static boolean isAbout(int testing, int expected){
 		return isAbout(testing, expected, 2);
