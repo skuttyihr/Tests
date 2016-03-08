@@ -77,24 +77,32 @@ public class SignUpPage extends Page {
 		waitForElementToBeVisible(createAnAccount, 2);
 		return isVisible(createAnAccount);
 	}
-	public boolean tapMaybeLater(){
-		// Page factory fails miserably when trying to test elements that aren't present
-		// Doing this the more direct way than relying on page factory:
-		IOSElement testCreateAccount = waitForVisible(driver, By.name("createAccountName"), 1);
-		if(!isVisible(testCreateAccount)){
-			tapGetStarted();
-			waitForElementToBeVisible(createAnAccount, 2);
-		}
+	/**
+	 * Skips the login page
+	 * @return true if lands on home page
+	 */
+	public boolean skipLogin(){
+		// Click Get Started
+		waitForElementToBeVisible(getStarted, 20);
+		getStarted.click();
+		// Click Maybe Later
 		maybeLater.click();
-		waitForNotVisible(driver, By.name(maybeLaterName), 3);
+		loginPage.chooseStayConnected(false);
 		
+		// Dismiss zip code entry
+		Page.enterZip();
 		handlePossiblePopUp();
 		
-		boolean pastGate = false;
-		if(isVisible(forYou) || isVisible(genrePage.genrePicker)){
-			pastGate = true;
+		// Select Genre
+		if(waitForVisible(driver, By.name("IHRiPhoneGenrePickerView"), 5) != null){
+			genrePage.selectGenre(1);
 		}
-		return pastGate;
+		
+		// Dismiss popups
+		loginPage.chooseStayConnected(false);
+		
+		waitForVisible(driver, By.name("For You"), 15);
+		return isVisible(homePage.forYou);
 	}
 	public void tapBack(){
 		backButton.click();

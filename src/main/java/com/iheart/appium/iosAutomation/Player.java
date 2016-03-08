@@ -8,12 +8,17 @@ import io.appium.java_client.pagefactory.iOSFindBy;
 
 public class Player extends Page {
 
+	// Player Identifiers
+	@iOSFindBy(name = "CustomMusicPlayerView") public IOSElement artistPlayerView;
+	@iOSFindBy(name = "LivePlayerView") public IOSElement radioPlayerView;
+	@iOSFindBy(name = "CustomTalkPlayerView") public IOSElement podcastPlayerView;
 	// Player for live radio
 	// @iOSFindBy(name="Back") public IOSElement back;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIANavigationBar[1]/UIAButton[1]") public IOSElement back;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIANavigationBar[1]/UIAStaticText[1]") public IOSElement stationLabel;
 	@iOSFindBy(name = "Share") public IOSElement share;
 	@iOSFindBy(name = "Favorite") public IOSElement favorite;
+	@iOSFindBy(name = "airplay") public IOSElement airPlay;
 
 	// Seems that this is depending upon from where the player is launched
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[4]") public IOSElement songTrack_artist;
@@ -26,7 +31,6 @@ public class Player extends Page {
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[3]") public IOSElement artist2_live;
 
 	// podcast specific
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAImage[4]") public IOSElement podcastImage;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIASlider[1]") public IOSElement slideBar;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[2]") public IOSElement elapsedTime;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[3]") public IOSElement totalTime;
@@ -49,14 +53,26 @@ public class Player extends Page {
 	@iOSFindBy(name = "scan") public IOSElement scan;
 	@iOSFindBy(name = "Thumb up") public IOSElement thumbUp;
 	@iOSFindBy(name = "Thumb down") public IOSElement thumbDown;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIASlider[2]") public IOSElement volume;
+	
 	// FOR SHARE
 	@iOSFindBy(name = "Mail") public IOSElement mail;
 	
 	// If loaded from mini player
 	@iOSFindBy(name = "downarrow button") public IOSElement minimizeButton;
 	
-	private static final String growlResponse = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[8]";
+	// Images 
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAImage[3]") public IOSElement radioImage;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAImage[4]") public IOSElement artistAlbumArt;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAImage[4]") public IOSElement podcastImage; // Same as above, but named to assist in any possible issues
 	
+	// Growl Messages (Use Xpath only as backup)
+	@iOSFindBy(name = "Great, we’ll play you more  songs like this.") public IOSElement artistThumbUpGrowl; // //UIAApplication[1]/UIAWindow[1]/UIAStaticText[10]
+	@iOSFindBy(name = "OK, we'll adjust your music mix.") public IOSElement artistThumbDownGrowl;
+	@iOSFindBy(name = "Glad you like it!  We'll let our DJs know.") public IOSElement liveThumbUpGrowl; // //UIAApplication[1]/UIAWindow[1]/UIAStaticText[8]
+	@iOSFindBy(name = "Thanks for the feedback. We'll let our DJs know you've  heard enough of this song.") public IOSElement liveThumbDownGrowl;
+	@iOSFindBy(name = "Great, we’ll play you more  episodes like this.") public IOSElement podcastThumbUpGrowl; // //UIAApplication[1]/UIAWindow[1]/UIAStaticText[10]
+	@iOSFindBy(name = "OK, we’ll adjust your station.") public IOSElement podcastThumbDownGrowl;
 	
 	public Player() {
 		super();
@@ -75,9 +91,10 @@ public class Player extends Page {
 	 * station Volume control
 	 * Returns a String of any errors encountered. A blank string means a successful verification
 	 */
-	public String verifyPlayer_live(String stationName) { 
-		StringBuilder errors = new StringBuilder();
-		if(!stationLabel.getText().contains(stationName)){
+	private String verifyPlayer_live(String stationName) { 
+		Errors errors = new Errors();
+		if(stationName != null && stationName.length() > 0 
+				&& !stationLabel.getText().contains(stationName)){
 			System.out.println("Station name: " + stationLabel.getText() + " wasn't what we expected: " + stationName);
 		}
 
@@ -99,20 +116,23 @@ public class Player extends Page {
 		if (!TestRoot.isVisible(more_live))
 			errors.append(".... is not displayed.\n");
 
-		errors.append(verfiyCommonIcons("verifyPlayer_live"));
+		if(!isVisible(radioImage)){
+			errors.append("Could not load live radio image\n");
+		}
+		
 		
 		return errors.toString();
 	}
 
 	/**
-	 * **Calls assert statements
 	 * Returns a String of any errors encountered. A blank string means a successful verification
 	 * @param stationName
 	 */
-	public String verifyPlayer_artist(String stationName) {
-		StringBuilder errors = new StringBuilder();
+	private String verifyPlayer_artist(String stationName) {
+		Errors errors = new Errors();
 		
-		if (!stationLabel.getText().contains(stationName))
+		if(stationName != null && stationName.length() > 0
+				&& !stationLabel.getText().contains(stationName))
 			errors.append("Station name is not correct.\n");
 
 		if (!TestRoot.isVisible(songTrack_artist))
@@ -127,7 +147,9 @@ public class Player extends Page {
 		if (!TestRoot.isVisible(skip))
 			errors.append("Skip icon is not displayed.\n");
 
-		errors.append(verfiyCommonIcons("verifyPlayer_custom"));
+		if(!isVisible(artistAlbumArt)){
+			errors.append("Could not load artist album artwork.\n");
+		}
 		
 		return errors.toString();
 	}
@@ -137,9 +159,10 @@ public class Player extends Page {
 	 * @param stationName
 	 * Returns a String of any errors encountered. A blank string means a successful verification
 	 */
-	public String verifyPlayer_podcast(String stationName) {
-		StringBuilder errors = new StringBuilder();
-		if (!stationLabel.getText().contains(stationName.substring(0, 5)))
+	private String verifyPlayer_podcast(String stationName) {
+		Errors errors = new Errors();
+		if(stationName != null && stationName.length() > 0
+				&& !stationLabel.getText().contains(stationName.substring(0, 5)))
 			errors.append("Station name is not correct.\n");
 
 		if (!TestRoot.isVisible(episodeName_podcast))
@@ -157,7 +180,9 @@ public class Player extends Page {
 		if (!TestRoot.isVisible(skip))
 			errors.append("Skip icon is not displayed.\n");
 
-		errors.append(verfiyCommonIcons("verifyPlayer_podcast"));
+		if(!isVisible(podcastImage)){
+			errors.append("Could not load podcast image\n");
+		}
 		
 		return errors.toString();
 	}
@@ -166,8 +191,8 @@ public class Player extends Page {
 	 * **Calls assert statements, can fail tests from within method!
 	 * @param callingMethod
 	 */
-	private String verfiyCommonIcons(String callingMethod) {
-		StringBuilder errors = new StringBuilder();
+	private String verfiyCommonIcons() {
+		Errors errors = new Errors();
 		if (!TestRoot.isVisible(thumbUp))
 			errors.append("No Thumb Up icon is displayed.\n");
 
@@ -230,8 +255,8 @@ public class Player extends Page {
 		}
 		if(isVisible(playButton_live)){
 			int count = 0;
-			while ((isThumbUpDisabled() || isThumbDownDisabled()) && count < 3) {
-				System.out.println("thumbUp button is disabled. Scanning/skipping now..");
+			while ((isThumbUpDisabled() || isThumbDownDisabled()) && count < 5) {
+				System.out.println("thumb buttons are disabled. Scanning/skipping now..");
 				try {
 					waitForElementToBeVisible(skipOrScan, 1);
 					skipOrScan.click();
@@ -248,54 +273,60 @@ public class Player extends Page {
 	// This happens when you thumbup a already thumbuped song track
 	private void handleActionPopup() {
 		try {
-			waitForVisible(driver, By.name("No Thanks"), 5).click();
+			waitForVisible(driver, By.name("No Thanks"), 3).click();
+		} catch (Exception e) {}
+		try {
+			waitForVisible(driver, By.name("Okay"), 1).click();
 		} catch (Exception e) {}
 	}
 
 		
+	/**
+	 * Thumb up a track, tests that thumb up was recorded
+	 * @return
+	 */
 	public boolean doThumbUp() {
 		// Sometimes the thumbUp button is disabled, keep scan(At most 3 times
 		// 		though to avoid hang) until thumbUpicon is enabled.
 		// Only do this for live stations, not for artist radio or podcasts
 		scanOrSkipUntilThumbAvailable();
-		
+		String type = getType();
 		// if it is still disabled, return
 		if (isThumbUpDisabled())
 			return false;
 		
 		// Actually click on the thumb up
 		thumbUp.click();
-		
-		// Growl response: glad you like it! We'll let our DJs know.
-		String response = driver.findElement(By.xpath(growlResponse)).getText();
-		System.out.println("See growls:" + response);
-
+		if (!verifyThumbUpGrowl(type)){
+			System.out.println("Expected a thumb up growl but could not find one, likely just a matter of timing.");
+		}
 		// Sometimes 'Like iheartRadio?" pops up
 		handleActionPopup();
-		
-		return strGood(response) && response.contains("like it");
+		return isThumbUpDone();
 	}
 
+	/**
+	 * Thumb down a track, tests that thumb down was recorded. 
+	 * @return
+	 */
 	public boolean doThumbDown() {
 		// Sometimes the thumbDown button is disabled, keep scan(At most 3 times
 		// 		though to avoid hang) until thumbDownicon is enabled.
 		// Only do this for live stations, not for artist radio or podcasts
 		scanOrSkipUntilThumbAvailable();
-		
+		String type = getType();
 		// if it is still disabled, return
 		if (isThumbDownDisabled())
 			return false;
 		
 		// Actually click on the thumb up
 		thumbDown.click();
-		
-		// Growl response: glad you like it! We'll let our DJs know.
-		String response = driver.findElement(By.xpath(growlResponse)).getText();
-		System.out.println("See growls:" + response);
-
+		if (!verifyThumbDownGrowl(type)){
+			System.out.println("Expected a thumb down growl but could not find one, likely just a matter of timing.");
+		}
 		// Sometimes 'Like iheartRadio?" pops up
 		handleActionPopup();
-		return strGood(response) && response.contains("heard enough");
+		return isThumbDownDone();
 	}
 
 	public boolean isThumbUpDone() {
@@ -304,13 +335,9 @@ public class Player extends Page {
 		try {
 			// if yes, its value is 1; otherwise, blank
 			String value = thumbUp.getAttribute("value");
-
-			System.out.println("Is thumpUp done:" + value);
-
 			isDone = value.equals("1");
 
 		} catch (Exception e) {
-
 		}
 		return isDone;
 	}
@@ -321,13 +348,8 @@ public class Player extends Page {
 		try {
 			// if yes, its value is 1; otherwise, blank
 			String value = thumbDown.getAttribute("value");
-
-			System.out.println("Is thumpDown done:" + value);
-
 			isDone = value.equals("1");
-
 		} catch (Exception e) {
-
 		}
 		return isDone;
 	}
@@ -357,19 +379,6 @@ public class Player extends Page {
 		} catch (Exception e) {
 		}
 	}
-
-	// Thumbing down customizes your station without using a skip.
-//	private void handleThumbDownPopUpForArtistStation() {
-//		try {
-//			// click on OKAY BUTTON of alert box: Thumbing down customizes your
-//			// station without using a skip.
-//			driver.findElement(By
-//					.xpath("//UIAApplication[1]/UIAWindow[1]/UIAAlert[1]/UIACollectionView[1]/UIACollectionCell[1]/UIAButton[1]"))
-//					.click();
-//		} catch (Exception e) {
-//
-//		}
-//	}
 
 	private boolean isFavDone() {
 		boolean isDone = false;
@@ -401,7 +410,13 @@ public class Player extends Page {
 		String currentSong = driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAStaticText[2]"))
 				.getText();
 
-		skip.click();
+		if(isVisible(scan)){
+			scan.click();
+		}
+		else if(isVisible(skip)){
+			skip.click();
+		}
+		
 		waitForTrackToLoad();
 		// Verify that new song is playing
 		String newSong = driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAStaticText[2]")).getText();
@@ -432,6 +447,22 @@ public class Player extends Page {
 	}
 	public void pauseAndResume() {
 		pause("");
+	}
+	public void pause(){
+		switch(getType()){
+		case "artist":
+			waitForElementToBeVisible(playButton_artist, 1);
+			playButton_artist.click();
+			break;
+		case "podcast":
+			waitForElementToBeVisible(playButton_podcast, 1);
+			playButton_podcast.click();
+			break;
+		case "live":
+			waitForElementToBeVisible(playButton_live, 1);
+			playButton_live.click();
+			break;
+		}
 	}
 	
 	/**
@@ -493,31 +524,137 @@ public class Player extends Page {
 	}
 
 	/**
-	 * Returns a blank string if there are no issues
-	 * All invisible elements or problem elements will be returned in a 
-	 * 	multi-line string for easy output and debugging
+	 * Returns "artist", "podcast", or "live" for the station type
 	 * @return
 	 */
-	public String verifyArtistPlaybackControls(String artist){
-		StringBuilder errors = new StringBuilder();
-		errors.append(player.verifyPlayer_artist(artist));
-		if(!doThumbUp()){
-			errors.append("Could not thumb up!\n");
+	public String getType(){
+		String[] types = {"artist", "podcast", "live"};
+		int type = 0; // Default to artist
+		if(isVisible(podcastPlayerView)){
+			type = 1;
 		}
+		else if(isVisible(radioPlayerView)){
+			type = 2;
+		}
+		
+		return types[type];
+	}
+	
+	public boolean verifyThumbUpGrowl(){
+		return verifyThumbUpGrowl("");
+	}
+	/**
+	 * 
+	 * @param type (From Player.getType(), "artist" "live" or "podcast")
+	 * 		Type can be passed in as "" (use verifyThumbUpGrowl() for this as well),
+	 * 			 which will test for any thumb up growl
+	 * @return True if 
+	 */
+	public boolean verifyThumbUpGrowl(String type){
+		boolean foundGrowl = false;
+		
+		switch(type){
+		case "artist":
+			foundGrowl = isVisible(artistThumbUpGrowl);
+			break;
+		case "live":
+			foundGrowl = isVisible(liveThumbUpGrowl);
+			break;
+		case "podcast":
+			foundGrowl = isVisible(podcastThumbUpGrowl);
+			break;
+		default:
+			foundGrowl = isVisible(artistThumbUpGrowl)
+				|| isVisible(liveThumbUpGrowl)
+				|| isVisible(podcastThumbUpGrowl); 
+			break;
+		}
+		
+		return foundGrowl;
+	}
+	
+	public boolean verifyThumbDownGrowl(){
+		return verifyThumbDownGrowl("");
+	}
+	/**
+	 * 
+	 * @param type (From Player.getType(), "artist" "live" or "podcast")
+	 * 		Type can be passed in as "" (use verifyThumbDownGrowl() for this as well),
+	 * 			 which will test for any thumb down growl
+	 * @return True if 
+	 */
+	public boolean verifyThumbDownGrowl(String type){
+		boolean foundGrowl = false;
+		
+		switch(type){
+		case "artist":
+			foundGrowl = isVisible(artistThumbDownGrowl);
+			break;
+		case "live":
+			foundGrowl = isVisible(liveThumbDownGrowl);
+			break;
+		case "podcast":
+			foundGrowl = isVisible(podcastThumbDownGrowl);
+			break;
+		default:
+			foundGrowl = isVisible(artistThumbDownGrowl)
+				|| isVisible(liveThumbDownGrowl)
+				|| isVisible(podcastThumbDownGrowl); 
+			break;
+		}
+		
+		return foundGrowl;
+	}
+	
+	public String verifyPlaybackControls(){
+		return verifyPlaybackControls("");
+	}
+	/**
+	 * Verifies the playback controls for any playback view
+	 * @param station
+	 * @return
+	 */
+	public String verifyPlaybackControls(String station){
+		Errors errors = new Errors();
+		
+		// Verify that the controls are present
+		if (!TestRoot.isVisible(thumbUp))
+			errors.add("No Thumb Up icon is displayed.");
+
+		if (!TestRoot.isVisible(thumbDown))
+			errors.add("No Thumb Down icon is displayed.");
+		
+		// Verify based on type (Artist, Podcast, Radio)
+		switch(getType()){
+		case "artist":
+			errors.add(verifyPlayer_artist(station));
+			break;
+		case "podcast":
+			errors.add(verifyPlayer_podcast(station));
+			break;
+		case "live":
+			errors.add(verifyPlayer_live(station));
+			break;
+		}
+		
+		// Verify that the elements they share are present
+		errors.add(verfiyCommonIcons());
+		
+		// Verify that we can use the controls
 		if(!doThumbDown()){
-			errors.append("Could not thumb down!\n");
+			errors.add("Could not thumb down!");
+		}
+		if(!doThumbUp()){ // End on a good note :)
+			errors.add("Could not thumb up!");
 		}
 		if(!player.doFavorite()){
-			errors.append("Could not favorite artist station!\n");
+			errors.add("Could not favorite artist station!");
 		}
 		if(!player.doSkip()){
-			errors.append("Could not skip!\n");
+			errors.add("Could not skip!");
 		}
 		
 		return errors.toString();
-	}
-	public String verifyArtistPlaybackControls(){
-		return verifyArtistPlaybackControls("");
 	}
 	
 	/**
@@ -624,15 +761,17 @@ public class Player extends Page {
 		if(percentage < 0 || percentage > 100){
 			return;
 		}
-		String floatingPercentage = String.valueOf((float) percentage / 100 + .0336);
+		// Add a little to adjust for consistently lower than requested position
+		String floatingPercentage = String.valueOf((float) percentage / 100 + .0336); 
 		if(isVisible(slideBar)){
-			slideBar.sendKeys(floatingPercentage);
-			Page.handlePossiblePopUp();
-			pause("podcast");
 			int testLoc = getPodcastScubberPostitionPercentage();
-			if(!isAbout(percentage, testLoc, 5)){
-				slideBar.sendKeys(floatingPercentage); // Try again
-				pause("podcast"); // Pause after moving slider again
+			int count = 0;
+			while(count < 3 && !isAbout(percentage, testLoc, 6)){
+				count++;
+				slideBar.sendKeys(floatingPercentage);
+				Page.handlePossiblePopUp();
+				pause("podcast");
+				testLoc = getPodcastScubberPostitionPercentage();
 			}
 		}
 	}
@@ -646,5 +785,73 @@ public class Player extends Page {
 		else{
 			return false;
 		}
+	}
+	
+	public int getVolume(){
+		int vol = -1;
+		waitForElementToBeVisible(volume, 5);
+		String volVal = volume.getAttribute("value");
+		volVal = volVal.replace("%", "");
+		try{
+			vol = Integer.parseInt(volVal);
+		}
+		catch(Exception e){}
+		return vol;
+	}
+	
+	public String setVolume(int volumeLevel){
+		Errors err = new Errors();
+		waitForElementToBeVisible(volume, 5);
+		if(!isVisible(volume)){
+			err.add("Volume slider was not present.");
+		}
+		else{
+			String floatingPercentage = String.valueOf((float) volumeLevel / 100);
+			int count = 0;
+			int testVolume = getVolume();
+			while (count < 3 && !isAbout(volumeLevel, testVolume, 6)){
+				count++;
+				try{
+					volume.sendKeys(String.valueOf(floatingPercentage));
+				}
+				catch(Exception e){
+					err.add("Failure to set volume: " + e.getMessage());
+				}
+				testVolume = getVolume();
+			}
+			if(!isAbout(volumeLevel, testVolume, 6)){
+				err.add("Could not set volume within volume levels.\nExpected: " + volumeLevel + "\nFound: " + testVolume);
+			}
+		}
+		
+		return err.getErrors();
+	}
+	
+	/**
+	 * From playback screen, check that we can stream over airplay
+	 * Likely won't work with the simulator, and a physical device must have an AirPlay device within range.
+	 * @return
+	 */
+	public String streamOverAirPlay(){
+		Errors err = new Errors();
+		
+		if(isVisible(airPlay)){
+			airPlay.click();
+			// Check that the airplay dialog is now visible and close it
+			IOSElement cancelAirPlay = waitForVisible(driver, By.name("Cancel"), 5);
+			if(cancelAirPlay != null){
+				cancelAirPlay.click();
+			}
+			else{
+				err.add("Clicking AirPlay button did not bring up AirPlay dialog.");
+			}
+		}
+		else{
+			if(airPlay == null){ // If we have it but it's not visible, pass it anyway
+				err.add("AirPlay button was not visible. Is this disabled?");
+			}
+		}
+		
+		return err.getErrors();
 	}
 }

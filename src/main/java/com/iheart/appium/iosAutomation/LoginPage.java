@@ -14,10 +14,11 @@ public class LoginPage extends Page {
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[2]/UIASecureTextField[1]") private IOSElement password;
 	public final String logInButtonName = "Log In";
 	@iOSFindBy(name = "Log In") private IOSElement loginButton;
+	@iOSFindBy(name = "Get Started") private IOSElement getStarted;
+	@iOSFindBy(name = "Maybe Later") private IOSElement maybeLater;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAButton[2]") private IOSElement logInFormButton;
 	@iOSFindBy(name = "Back") private IOSElement backButton;
 	@iOSFindBy(name = "Log In") private IOSElement logIn;
-	
 	
 	@iOSFindBy(name = "Facebook") private WebElement facebookButton;
 
@@ -59,36 +60,6 @@ public class LoginPage extends Page {
 		// PageFactory.initElements(new AppiumFieldDecorator(driver), this);
 	}
 	
-	public boolean verifyLogin(){
-		// Now go to setting to check login status
-		sideNavigationBar.gotoSettings();
-
-		// check status
-		IOSElement loggedInStatus = waitForVisible(driver, By.name("Logged In"), 2); 
-		if(loggedInStatus != null){
-			String status = loggedInStatus.getText();
-			if (status == null || status.length() <= 0 || !status.equals("Logged In"))
-				return false;
-			else
-				return true;
-		}
-		else{
-			// Logged in via email
-			loggedInStatus = waitForVisible(driver, 
-							By.xpath("//UIAApplication[1]/UIAWindow[1]/UIATableView[2]/UIATableCell[1]/UIAStaticText[2]"), 2);
-			if(loggedInStatus != null){
-				String email = loggedInStatus.getText();
-				if (email == null || email.length() <= 0)
-					return false;
-				else
-					return true;
-			}
-			else{
-				return false;
-			}
-		}
-	}
-
 	/**
 	 * Logs in, verifies log in, and returns to home page
 	 * @return
@@ -101,11 +72,11 @@ public class LoginPage extends Page {
 		userName.sendKeys(USER_NAME);
 		password.sendKeys(PASSWORD);
 		logInFormButton.click();
-
+		chooseStayConnected(false);
 		// Dismiss zip code
 		Page.enterZip();
 		// Dismiss stay connected popup
-		chooseStayConnected(false);
+		Page.handlePossiblePopUp();
 		
 		// Select Genre
 		if(waitForVisible(driver, By.name("IHRiPhoneGenrePickerView"), 5) != null){
@@ -114,12 +85,10 @@ public class LoginPage extends Page {
 		// Dismiss stay connected popup that sometimes shows up AFTER genre picker
 		chooseStayConnected(false);
 		
-//		dismissLoginPopups();
-		
 		// verify we are in
 		IOSElement forYouTest = waitForVisible(driver, By.name("For You"), 20);
 		if(forYouTest != null && isVisible(forYouTest)){
-			loggedIn = verifyLogin();
+			loggedIn = settings.isLoggedIn();
 		}
 		
 		sideNavBar.gotoHomePage();
@@ -137,10 +106,10 @@ public class LoginPage extends Page {
 		TestRoot.sleep(2000);
 		if(switchToWebContext()){
 			driver.findElement(By.name("email")).sendKeys(FACEBOOK_USER_NAME); // iheartrocks999@gmail.com
-			driver.findElement(By.name("pass")).sendKeys(PASSWORD); // iheart001
+			driver.findElement(By.name("pass")).sendKeys(FACEBOOK_PASSWORD); // iheart001
 			driver.findElement(By.name("login")).click();
 			sleep(2000);
-			// Handle Authorizaton confirm
+			// Handle Authorization confirm
 			try{
 				driver.findElement(By.name("__CONFIRM__")).click();
 			}
@@ -154,9 +123,12 @@ public class LoginPage extends Page {
 		if(!switchToNativeContext()){
 			System.err.println("Could not switch back to native context!");
 		}
+		try{
+			genrePage.selectGenre(1);
+		}catch(Exception e){} // This doens't always display
 		dismissLoginPopups();
 		// check status
-		return verifyLogin();
+		return settings.isLoggedIn();
 	}
 	private void dismissLoginPopups(){
 		handlePossiblePopUp();
@@ -213,7 +185,7 @@ public class LoginPage extends Page {
 			System.err.println("Could not switch context for Google Login");
 			return false;
 		}
-		return verifyLogin();
+		return settings.isLoggedIn();
 	}
 
 	public void dismissStayConnectedPopup() {

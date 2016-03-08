@@ -91,6 +91,9 @@ public class SideNavigationBar extends Page {
 	public void gotoSettings() {
 		if(settings == null || !isVisible(settings)){
 			waitForElementToBeVisible(navIcon, 2);
+			if(!isVisible(navIcon)){
+				getBack();
+			}
 			navIcon.click();
 		}
 		waitForElementToBeVisible(settings, 5);

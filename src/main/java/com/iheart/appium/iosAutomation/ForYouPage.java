@@ -60,46 +60,68 @@ public class ForYouPage extends Page {
 
 	}
 
-	public boolean playLiveRadio() {
+	public String playLiveRadio(){
 		String myStation = "";
-		WebElement collectionView = driver
-				.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]"));
-		List<WebElement> stations = collectionView.findElements(By.className("UIACollectionCell"));
-		myStation = chooseLiveRadioToPlay(stations);
-		System.out.println("MySTATION:" + myStation);
-
+		WebElement collectionView = waitForVisible(driver,
+				By.xpath("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]"),
+				10);
+		if(collectionView != null){
+			List<WebElement> stations = collectionView.findElements(By.className("UIACollectionCell"));
+			myStation = chooseLiveRadioToPlay(stations);
+		}
+		return myStation;
+	}
+	
+	public String playAndVerifyLiveRadio() {
+		StringBuilder errors = new StringBuilder();
+		String myStation = playLiveRadio();
+		System.out.println("Starting with:" + myStation);
+		
 		// Verify PLAYER
-		player.verifyPlayer_live(myStation);
+		errors.append(player.verifyPlaybackControls(myStation));
+		if(errors.length() > 0){
+			errors.append("\n");
+		}
 		if(!player.doFavorite()){
-			System.err.println("Could not favorite!");
-			return false;
+			errors.append("Could not favorite!\n");
 		}
 		if(!player.doScan()){
-			System.err.println("Could not scan!");
-			return false;
+			errors.append("Could not scan!\n");
 		}
-		player.doThumbUp();
-		player.doThumbDown();
-		// player.doFavorite();
+		if(!player.doThumbUp()){
+			errors.append("Could not do thumbs up!\n");
+		}
+		if(!player.doThumbDown()){
+			errors.append("Could not do thumbs down!\n");
+		}
 
 		// Here, remember the playing station name:
-		myStation = driver
+		String newStation = driver
 				.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIANavigationBar[1]/UIAStaticText[1]"))
 				.getText();
-		System.out.println("playing station:" + myStation);
+		if(!newStation.equals(myStation)){
+			System.out.println("Had to switch to new station due to disabled thumb buttons. New station: " + newStation);
+			myStation = newStation;
+		}
 
-		// player.pauseAndResume("live");
-
-		// tap on My Station and make sure Station is added??
 		// Verify that this station is added under My Station
-		(player.back).click();
-		waitForVisible(driver, By.name("My Stations"), 5).click();
-		// Wait for the list to be visible
+		player.back.click();
+		if(!verifyInForYou(myStation)){
+			errors.append("Could not find station: " + myStation + " in my stations page.\n");
+		}
+		
+		return errors.toString();
+	}
+	
+	public boolean verifyInForYou(String station){
+		if(!isVisible(sideNavBar.navIcon)){
+			player.back.click();
+		}
+		sideNavBar.gotoMyStationsPage();
 		getStationFromList(1); // Includes a wait
-		if (!driver.getPageSource().contains(myStation))
+		if (!driver.getPageSource().contains(station))
 			return false;
-		else
-			return true;
+		return true;
 	}
 
 	public void comeToThisPage() {

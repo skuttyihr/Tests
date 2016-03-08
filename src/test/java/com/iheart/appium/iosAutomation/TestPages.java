@@ -22,9 +22,7 @@ public class TestPages extends TestRoot {
 	
 	@Test
 	public void testForLogoAndTitleOnPages(){
-		signupPage.tapMaybeLater();
-		genrePage.selectGenre(1);
-		Page.handlePossiblePopUp();
+		signupPage.skipLogin();
 		// Verify each page
 		Assert.assertTrue("Logo was not visible", isVisible(Page.iheartradio_logo_full));
 		homePage.gotoMyStations();

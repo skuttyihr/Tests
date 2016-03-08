@@ -15,6 +15,7 @@ public class MiniPlayer extends Page {
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]") public IOSElement miniPlayerBar;
 	@iOSFindBy(name = "Pause") public IOSElement miniPlayerPause;
 	@iOSFindBy(name = "Play") public IOSElement miniPlayerPlay;
+	@iOSFindBy(name = "Stop") public IOSElement miniPlayerStop;
 	@iOSFindBy(name = "Thumb up") public IOSElement miniPlayerThumbUp;
 	@iOSFindBy(name = "Thumb down") public IOSElement miniPlayerThumbDown;
 	@iOSFindBy(name = "Skip") public IOSElement miniPlayerSkip;
@@ -212,9 +213,67 @@ public class MiniPlayer extends Page {
 				e.printStackTrace();
 			}
 		}
+		else{
+			return false;
+		}
 		miniPlayerSkip.click();
 		songSkipped = !(getSongName().equals(firstSong));
 		
 		return songSkipped;
+	}
+	
+	public String verifyControls(){
+		StringBuilder errors = new StringBuilder();
+		
+		// Thumb up and down (if they're not disabled)
+		if(miniPlayerThumbDown.isEnabled()
+				&& miniPlayerThumbUp.isEnabled()){
+			if(!thumbDown()){
+				errors.append("Could not thumb down track on mini player.\n");
+			}
+			if(!thumbUp()){ // Do this so we're not downvoting all the tracks
+				errors.append("Could not thumb up track on mini player.\n"); 
+			}
+			if(isThumbedDown()){
+				errors.append("Mini player thumbs did nopt toggle when we thumbed up a track.\n");
+			}
+		}
+		
+		// Play and pause
+		if(isVisible(miniPlayerPlay)){
+			miniPlayer.play();
+		}
+		if(!isVisible(miniPlayerStop)){
+			if(!miniPlayer.pause()){
+				errors.append("Could not pause from mini player.\n");
+			}
+			if(!miniPlayer.play()){
+				errors.append("Could not play from mini player\n");
+			}
+		}
+		else{
+			try{
+				miniPlayerStop.click();
+				miniPlayerPlay.click();
+			}
+			catch(Exception e){
+				errors.append("Could not stop/play live radio station.\n");
+			}
+		}
+		
+		// Verify info
+		if(!strGood(getArtist())){
+			errors.append("Was not displaying artist.\n");
+		}
+		if(!strGood(getSongName())){
+			errors.append("Was not displaying song.\n");
+		}
+		
+		// Skip
+		if(!skip()){
+			errors.append("Could not skip.\n");
+		}
+		
+		return errors.toString();
 	}
 }

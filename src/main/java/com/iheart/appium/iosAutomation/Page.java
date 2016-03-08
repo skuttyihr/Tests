@@ -44,6 +44,7 @@ public class Page extends TestRoot{
 	static final String PASSWORD = "yrdy"; // test, one key to the right. Doesn't require caps or other keyboard changes for speed
 	static final String FACEBOOK_USER_NAME = OLD_USER_NAME;
 	static final String FACEBOOK_USER_PERSONAL_NAME = "Tony Sopranos";
+	static final String FACEBOOK_PASSWORD = OLD_PASSWORD;
 	static final String GOOGLE_USER_NAME = OLD_USER_NAME;
 
 	public static final String screenshot_folder = "iosScreenshots";
@@ -203,9 +204,15 @@ public class Page extends TestRoot{
 		}
 	}
 	public static void enterZip(){
-		enterZip("10013");
+		enterZip("");
 	}
 	public static void enterZip(String zip){
+		if(!strGood(zip)){
+			try{
+				waitForVisible(driver, By.name("No Thanks"), 4).click();
+			}
+			catch(Exception e){}
+		}
 		IOSElement enterZip = waitForVisible(driver, find("Enter ZIP"), 7);
 		if(enterZip != null && isVisible(enterZip)){
 			enterZip.click();
@@ -217,6 +224,19 @@ public class Page extends TestRoot{
 				driver.findElement(By.name("OK"));
 			}
 		}
+	}
+	
+	public void getBack(){
+		try{
+			player.back.click();
+		}
+		catch(Exception e){}
+		try{
+			waitForVisible(driver, By.name("Back"), 1).click();
+		}catch(Exception e){}
+		try{
+			search.cancel.click();
+		}catch(Exception e){}
 	}
 }	
 

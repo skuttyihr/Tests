@@ -25,6 +25,23 @@ public class TestPlayback extends TestRoot {
 		TestRoot.tearDown();
 	}
 	
+	private void assertPlaybackVolume(){
+		int currentVolume = player.getVolume();
+		int expectedVolume = 50;
+		if(currentVolume == 50){
+			expectedVolume = 25;
+		}
+		String testVolume = player.setVolume(expectedVolume);
+		Assert.assertTrue(testVolume, didPass(testVolume));
+		currentVolume = player.getVolume();
+		Assert.assertTrue("Volume was not within range:\n" +
+						"Current Volume: " + currentVolume +
+						"\nExpected Volume: " + expectedVolume,
+					isAbout(currentVolume, expectedVolume, 7));
+	}
+	
+	////  Artist Station Tests  ////
+	
 	/**
 		Searches for and plays a custom artist based station
 		Thumbs up track
@@ -39,7 +56,7 @@ public class TestPlayback extends TestRoot {
 	@Test
 	public void testCustomArtistStationPlaybackAndLogout() throws Exception {
 		System.out.println("test method:" + name.getMethodName());
-		String artist = "Josh Groban";
+		String artist = "Florence + the Machine";
 		Assert.assertTrue("Was not able to login", loginPage.login());
 		// Test that we can create an artist station
 		Assert.assertTrue("Could not play a custom artist station based on the artist: " + artist,
@@ -47,10 +64,15 @@ public class TestPlayback extends TestRoot {
 		
 		// Test that all playback elements are present on an artist station
 		// Verify method will "Favorite" the artist statiomn
-		String verifyPlaybackErrors = player.verifyArtistPlaybackControls();
+		String verifyPlaybackErrors = player.verifyPlaybackControls();
 		Assert.assertTrue("Playback elements were not present: " + verifyPlaybackErrors, didPass(verifyPlaybackErrors));
-
-		// Can we skip 6 times? TODO
+		
+		// Test we can modify the volume
+		assertPlaybackVolume();
+		
+		// Test that AirPlay is available
+		String airPlayTest = player.streamOverAirPlay();
+		Assert.assertTrue("AirPlay was not an available option. ", didPass(airPlayTest));
 		
 		// Get back to home page / My Stations to verify favorited station
 		player.back.click();
@@ -83,27 +105,13 @@ public class TestPlayback extends TestRoot {
 		// Minimize full sized player
 		Assert.assertTrue("Could not minimize full sized player to mini player. ",
 				miniPlayer.minimizePlayer());
-		// Thumb up and down
-		Assert.assertTrue("Could not thumb down track on mini player", miniPlayer.thumbDown());
-		Assert.assertTrue("Could not thumb up track on mini player", miniPlayer.thumbUp()); // After thumb down so it ends up a thumbs up
-		Assert.assertTrue("Thumbs did not toggle", !miniPlayer.isThumbedDown()); // Should have toggled, only thumbs up
-		// Play and pause
-		Assert.assertTrue("Could not pause mini player.", miniPlayer.pause());
-		Assert.assertTrue("Could not pause mini player.", miniPlayer.play());
 		
-		// Verify info
-		String miniArtistName = miniPlayer.getArtist();
-		String miniSongTitle = miniPlayer.getSongName();
-		
-		Assert.assertTrue("Artist name was not visible", miniArtistName != null && miniArtistName.length() > 0);
-		Assert.assertTrue("Song name was not visible", miniSongTitle != null && miniSongTitle.length() > 0);
-		
-		// Skip
-		Assert.assertTrue("Could not skip", miniPlayer.skip());
+		// Verify the controls on the mini player
+		String miniPlayerControls = miniPlayer.verifyControls();
+		Assert.assertTrue("Mini player control issues:\n" + miniPlayerControls, didPass(miniPlayerControls));
 		
 		// Check that mini bar is on every page we expect it to be on
 		sideNavBar.gotoLiveRadioPage();
-		//TODO
 		Assert.assertTrue("Mini player was not visible on live radio page", isVisible(miniPlayer.miniPlayerBar));
 		sideNavBar.gotoLiveArtistPage();
 		Assert.assertTrue("Mini player was not visible on artist radio page", isVisible(miniPlayer.miniPlayerBar));
@@ -114,7 +122,26 @@ public class TestPlayback extends TestRoot {
 		sideNavBar.gotoListeningHistoryPage();
 		Assert.assertTrue("Mini player was not visible on listening history page", isVisible(miniPlayer.miniPlayerBar));
 	}
+	
+	@Test
+	public void testArtistRadioSkipLimit(){
+		System.out.println("test method:" + name.getMethodName());
+		Assert.assertTrue("Could not create a new account", signupPage.createAnAccount());
+		genrePage.selectGenre(1);
+		Page.handlePossiblePopUp();
+		
+		String artist = "Matt and Kim";
+		Assert.assertTrue("Could not play a custom artist station based on the artist: " + artist,
+				customRadio.playACustomStation(artist).contains(artist));
+		for(int i = 0; i < 6; i++){
+			Assert.assertTrue("Could not skip for the " + i + " time.", player.doSkip());
+		}
+		player.pause();
+		Assert.assertTrue("Should not have been able to skip", !player.doSkip());
+	}
 
+	////  Podcast Tests  ////
+	
 	@Test
 	public void testPodcastPlaybackAndControls() {
 		System.out.println("test method:" + name.getMethodName());
@@ -122,7 +149,6 @@ public class TestPlayback extends TestRoot {
 		String errorsWithPodcasts = podcastsPage.playPodcasts();
 		Assert.assertTrue("Could not play a podcast episode. Errors:\n" 
 							+ errorsWithPodcasts, didPass(errorsWithPodcasts));
-
 		// Test that the scrubber can advance on its own during playback
 		sleep(2000); // So the podcast isn't at 0
 		// Pause so we don't mess up the test
@@ -134,7 +160,6 @@ public class TestPlayback extends TestRoot {
 		int estimatedTimePassed = (int) (totalTime * (float) scrubberPosPercent / 100);
 		Assert.assertTrue("Slider position did not accurately reflect the position", 
 					isAbout(timeElapsed, estimatedTimePassed, 5));
-		
 		// Slide the scrubber, then try a similar test to see if we're where we expect to be
 		player.scrubTo(50);
 		int expectedElapsedTime = totalTime / 2;
@@ -145,16 +170,66 @@ public class TestPlayback extends TestRoot {
 		player.scrubTo(25);
 		expectedElapsedTime /= 2;
 		timeElapsed = player.getElapsedTime();
-		Assert.assertTrue("We couldn't scrub playback on podcast. "
-				+ "Got: " + timeElapsed + " Expected: " + expectedElapsedTime,
+		
+		Assert.assertTrue("We couldn't scrub playback on podcast.\n"
+				+ "Got: " + timeElapsed + "\nExpected: " + expectedElapsedTime,
 				isAbout(timeElapsed, expectedElapsedTime, 15));
+		
+		assertPlaybackVolume();
+		
+		// Mini player verification
+		player.minimizePlayer();
+		String miniPlayerVerification = miniPlayer.verifyControls();
+		Assert.assertTrue("Mini player controls were not available:\n" + miniPlayerVerification,
+				didPass(miniPlayerVerification));
+		
+		// Log out and verify playback stops
+		sideNavBar.logout();
+		sideNavBar.gotoHomePage();
+		Assert.assertTrue("Mini player was still visible, podcast still playing, after logging out.", 
+				!isVisible(miniPlayer.miniPlayerBar));
 	}
 
+	
+	////  Live Radio Tests  ////
+	
 	@Test
-	public void test_playLiveRadio_thumbUP_thumbDown_doFavorite() throws Exception {
+	public void testLiveRadioPlayback() throws Exception {
 		System.out.println("test method:" + name.getMethodName());
 		Assert.assertTrue("Was not able to login", loginPage.login());
-		Assert.assertTrue("Could not play a live radio station", forYouPage.playLiveRadio());
+		// Play a live radio station and verify it.
+		String playedStation = forYouPage.playLiveRadio();
+		Assert.assertTrue("Could not play a live radio station.", strGood(playedStation));
+		
+		String verifyPlayer = player.verifyPlaybackControls();
+		Assert.assertTrue("Could not verify live radio controls:\n" + verifyPlayer, didPass(verifyPlayer));
+		
+		assertPlaybackVolume();
+		
+		// Get to the mini player
+		player.minimizePlayer();
+				
+		// Assert the mini player is visible
+		Assert.assertTrue("Mini player was not displayed.", isVisible(miniPlayer.miniPlayerBar));
+		miniPlayer.miniPlayerBar.click();
+		
+		// Scan more than 6 times
+		for (int i = 0; i < 7; i++){
+			Assert.assertTrue("Could not scan to a new station after " + i + " loops.", player.doScan());
+		}
+		
+		// Get back to mini player
+		player.minimizePlayer();
+		
+		// Verify mini player controls
+		String miniPlayerControls = miniPlayer.verifyControls();
+		Assert.assertTrue("Mini player control issues:\n" + miniPlayerControls, didPass(miniPlayerControls));
+		
+		
+		// Log out and verify that we can still play radio
+		sideNavBar.logout();
+		sideNavBar.gotoHomePage();
+		playedStation = forYouPage.playLiveRadio();
+		Assert.assertTrue("Could not play a live radio station after logging out.", strGood(playedStation));
 	}
-
 }
