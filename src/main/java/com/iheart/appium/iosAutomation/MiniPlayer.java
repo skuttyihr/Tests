@@ -223,19 +223,19 @@ public class MiniPlayer extends Page {
 	}
 	
 	public String verifyControls(){
-		StringBuilder errors = new StringBuilder();
+		Errors errors = new Errors();
 		
 		// Thumb up and down (if they're not disabled)
 		if(miniPlayerThumbDown.isEnabled()
 				&& miniPlayerThumbUp.isEnabled()){
 			if(!thumbDown()){
-				errors.append("Could not thumb down track on mini player.\n");
+				errors.add("Could not thumb down track on mini player.\n");
 			}
 			if(!thumbUp()){ // Do this so we're not downvoting all the tracks
-				errors.append("Could not thumb up track on mini player.\n"); 
+				errors.add("Could not thumb up track on mini player.\n"); 
 			}
 			if(isThumbedDown()){
-				errors.append("Mini player thumbs did nopt toggle when we thumbed up a track.\n");
+				errors.add("Mini player thumbs did nopt toggle when we thumbed up a track.\n");
 			}
 		}
 		
@@ -245,10 +245,10 @@ public class MiniPlayer extends Page {
 		}
 		if(!isVisible(miniPlayerStop)){
 			if(!miniPlayer.pause()){
-				errors.append("Could not pause from mini player.\n");
+				errors.add("Could not pause from mini player.\n");
 			}
 			if(!miniPlayer.play()){
-				errors.append("Could not play from mini player\n");
+				errors.add("Could not play from mini player\n");
 			}
 		}
 		else{
@@ -257,23 +257,23 @@ public class MiniPlayer extends Page {
 				miniPlayerPlay.click();
 			}
 			catch(Exception e){
-				errors.append("Could not stop/play live radio station.\n");
+				errors.add("Could not stop/play live radio station.\n");
 			}
 		}
 		
 		// Verify info
 		if(!strGood(getArtist())){
-			errors.append("Was not displaying artist.\n");
+			errors.add("Was not displaying artist.\n");
 		}
 		if(!strGood(getSongName())){
-			errors.append("Was not displaying song.\n");
+			errors.add("Was not displaying song.\n");
 		}
 		
 		// Skip
 		if(!skip()){
-			errors.append("Could not skip.\n");
+			errors.add("Could not skip.\n");
 		}
 		
-		return errors.toString();
+		return errors.getErrors();
 	}
 }

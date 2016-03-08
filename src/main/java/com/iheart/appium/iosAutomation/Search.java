@@ -108,7 +108,7 @@ public class Search extends Page {
 	 * @return An error string, empty if no errors
 	 */
 	public String applyFilters(){
-		StringBuilder errors = new StringBuilder();
+		Errors errors = new Errors();
 		// Use a set to make sure we don't get all of the same results with the filter
 		Set<String> topResults = new HashSet<String>();
 		
@@ -117,18 +117,18 @@ public class Search extends Page {
 			String foundStation = applyFilter(f);
 			topResults.add(foundStation);
 			if(!strGood(foundStation)){
-				errors.append("Could not find a station with the filter: " + f + "\n");
+				errors.add("Could not find a station with the filter: " + f);
 			}
 		}
 		
 		// Ensure the filter changed the top result at least once
 		if(topResults.size() <= 1){
-			errors.append("Filters had no effect.\n");
+			errors.add("Filters had no effect.");
 		}
 		
-		if(errors == null || errors.toString().length() == 0)
+		if(errors.howMany() == 0)
 			return null;
-		return errors.toString();
+		return errors.getErrors();
 	}
 	
 	/**

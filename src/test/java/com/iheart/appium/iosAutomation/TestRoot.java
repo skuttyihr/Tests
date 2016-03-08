@@ -422,6 +422,67 @@ public class TestRoot {
 		swipe(startx, starty, 3, 500);
 	}
 	
+	/**
+	 * Swipes on an element, keeping within the bounds of the element, if possible
+	 * Will try to swipe to/from 10%-90% of the element +/- 4/5 from center
+	 * 0=Up 1=Right 2=Down 3=Left
+	 * @param item
+	 * @param direction
+	 */
+	public static void swipeOnItem(IOSElement item, int direction){
+		int x = item.getLocation().getX();
+		int y = item.getLocation().getY();
+		int w = item.getSize().getWidth();
+		int h = item.getSize().getHeight();
+		int tenthX = (w / 10); // Add X after calculation
+		int tenthY = (h / 10); // Add Y after calculation
+		int centerX = tenthX * 5 + x;
+		int centerY = tenthY * 5 + y;
+		// The parts we're going to figure out
+		int startX = centerX;
+		int startY = centerY;
+		int endX = centerX;
+		int endY = centerY;
+		switch(direction){
+		case 0: // Up ^
+			startX = centerX;
+			startY = (tenthY * 9) + y;
+			endX = centerX;
+			endY = tenthY + y;
+			break;
+		case 1: // Right ----->
+			startX = tenthX + x;
+			startY = centerY;
+			endX = (tenthX * 9) + x;
+			endY = centerY;
+			break;
+		case 2: // Down V
+			startX = centerX;
+			startY = tenthY + y;
+			endX = centerX;
+			endY = (tenthY * 9) + y;
+			break;
+		case 3: // Left <-----
+			startX = (tenthX * 9) + x;
+			startY = centerY;
+			endX = tenthX + x;
+			endY = centerY;
+			break;
+		default:
+			System.err.println("Direction must be 0, 1, 2, or 3 for Up, Right, Down, or Left, respectively.");
+			break;
+		}
+		
+		if(startX != endX || startY != endY){
+			try{
+				driver.swipe(startX, startY, endX, endY, 500);
+			}
+			catch(Exception e){
+				System.err.println("Error trying to swipe on element!\n");
+				e.printStackTrace();
+			}
+		}
+	}
 	
 	public static int getAppWidth(){
 		if(appWidth == 0)
