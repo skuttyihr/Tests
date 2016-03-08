@@ -52,18 +52,34 @@ public class HomePage extends Page {
 	
 	// Behavior Methods
 	
-	public String addListItemToFavorites(int x){
+	public String toggleListItemFavorites(int x){
 		Errors err = new Errors();
 		IOSElement item = getListItem(x);
 		if(item != null){
 			// Expose the hidden buttons with a swipe
 			swipeOnItem(item, 3);
 			IOSElement add = waitForVisible(driver, By.name("Add to Favorites"), 5);
-			if(add != null){
-				clickAddToFavorites(x);
+			if(add == null){
+				String returnMessage = toggleFavorites(x);
+				if(strGood(returnMessage) 
+						&& !returnMessage.equals("added") 
+						&& !returnMessage.equals("removed")){
+					if(returnMessage.contains("Had to get out of player")){
+						if(x != 1){
+							return "switch to 1";
+						}
+						else{
+							return "";
+						}
+					}
+					err.add(returnMessage);
+				}
+				else{
+					System.out.println(returnMessage);
+				}
 			}
 			else{
-				err.add("Could not locate 'Add to Favorites' button after swiping.");
+				add.click();
 			}
 		}
 		else{
@@ -74,9 +90,59 @@ public class HomePage extends Page {
 	}
 	
 	
-	private String clickAddToFavorites(int x){
+	private String toggleFavorites(int x){
 		Errors err = new Errors();
-		// T
+		// TODO
+		// Button width ratio to item ratio is 0.24154589372
+		// Leftmost button is the add to favorites, unless it's already a favorite (Unfavorite) 
+		// Unfavorite: will be the only button. 
+		// Name: Station added to your favorites!
+		// Name: Station deleted from favorites.
+		/*
+		 * The process:
+		 * Find the X location of the first button in a pair
+		 * Click it
+		 * If the player loads, go back
+		 * Grab the FIRST item this time, 
+		 * Click the Second block. That should toggle. 
+		 */
+		IOSElement item = getListItem(x);
+		int width = item.getSize().getWidth();
+		int height = item.getSize().getHeight();
+		int ix = item.getLocation().getX();
+		int iy = item.getLocation().getY();
+		double ratio = 0.24154589372;
+		int firstButtonX = (int) ((ix + width) - (((double) width * ratio) * 2));
+		int secondButtonX = (int) ((ix + width) - ((double) width * ratio));
+		// Find the center of each button
+		int clickFirstButtonX = (firstButtonX + secondButtonX) / 2;
+		int clickSecondButtonX = (secondButtonX + (ix + width)) / 2;
+		int clickY = iy + (height / 2);
+		
+		// Start clicking (ok, tapping)
+		driver.tap(1, clickFirstButtonX, clickY, 500);
+		// First see if the growl came up
+		IOSElement growlAdd = findElement(driver, By.name("Station added to your favorites!"));
+		if(isVisible(growlAdd)){
+			return "added";
+		}
+		IOSElement growlRemove = findElement(driver, By.name("Station added to your favorites!"));
+		if(isVisible(growlRemove)){
+			return "removed";
+		}
+		
+		if(player.isPlaying()){
+			player.minimizePlayer();
+			err.add("Had to get out of player");
+		}
+		
+		// Try again, there was only one swiped button
+		item = getListItem(1); // The last played station is the first item
+		swipeOnItem(item, 3);
+		iy = item.getLocation().getY();
+		clickY = iy + (height / 2);
+		driver.tap(1, clickSecondButtonX, clickY, 500);
+		Page.handlePossiblePopUp();
 		
 		return err.getErrors();
 	}

@@ -34,6 +34,12 @@ import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
 
 public class TestRoot {
+	
+	protected static final int UP = 0;
+	protected static final int RIGHT = 1;
+	protected static final int DOWN = 2;
+	protected static final int LEFT = 3;
+	
 	protected static int implicitWaitTimeout = 375;
 	
 	protected static IOSDriver<IOSElement> driver;

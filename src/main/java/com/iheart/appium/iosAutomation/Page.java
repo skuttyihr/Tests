@@ -91,22 +91,21 @@ public class Page extends TestRoot{
 	}
 
 	private static int getRecentY(){
-		int recentY = 100000;
-		try{
-			recentY = waitForVisible(driver, 
-								find("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIAStaticText[2]", "xpath"), 
-								2).getLocation().getY();
-		}
-		catch(Exception e){
+		int recentY = 100; // When in doubt, remove nothing
+		//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIAStaticText[1]
+		for(int i = 1; i < 4; i++){
 			IOSElement testElement = waitForVisible(driver, 
-					find("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIAStaticText[1]", "xpath"), 
+					By.xpath("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIAStaticText[" + i + "]"),
 					2);
 			if(testElement != null){
-				if(testElement.getText().equalsIgnoreCase("Recent Stations")){
+				if(testElement.getText().equals("Recent Stations")){
 					recentY = testElement.getLocation().getY();
+					break;
 				}
 			}
 		}
+		
+		
 		return recentY;
 	}
 	public int isStationAFavorite(String artist){
@@ -126,8 +125,8 @@ public class Page extends TestRoot{
 			int recentY = getRecentY();
 			for(int i = 1; i <= 25; i++){
 				IOSElement item = getStationFromList(i);
-				if(item.getText().contains(artist)){
-					if(item.getLocation().getY() < recentY){
+				if(item.getLocation().getY() < recentY){
+					if(item.getText().contains(artist)){ 
 						foundStation = i;
 					}
 					break;
@@ -141,8 +140,8 @@ public class Page extends TestRoot{
 	public static boolean removeFavorite(int itemToRemove){
 		boolean removedFavorite = false;
 		// First assert that it is a favorite
-		IOSElement favorites = waitForVisible(driver, find("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIAStaticText[1]", "xpath"), 10);
-		if(favorites != null){
+		IOSElement favorites = waitForVisible(driver, By.name("Favorite Stations"), 10);
+		if(favorites != null && isVisible(favorites) && favorites.getText().equals("Favorite Stations")){
 			int recentY = getRecentY();
 			IOSElement item = getStationFromList(itemToRemove);
 			if(item != null){
@@ -152,13 +151,17 @@ public class Page extends TestRoot{
 					int w = item.getSize().getWidth();
 					int h = item.getSize().getHeight();
 					int clickX = x + w - (w / 10);
-					int swipeToX = x + w - (w / 2);
+//					int swipeToX = x + w - (w / 2);
 					int clickY = y + h - (h / 2);
 					// Swipe to reveal unfavorite
-					driver.swipe(clickX, clickY, swipeToX, clickY, 500);
+//					driver.swipe(clickX, clickY, swipeToX, clickY, 500);
+					TestRoot.swipeOnItem(item, LEFT);
 					// Tap unfavorite
 					driver.tap(1, clickX, clickY, 150);
 					removedFavorite = true;
+				}
+				else{
+					return false;
 				}
 			}
 		}
@@ -167,7 +170,13 @@ public class Page extends TestRoot{
 	}
 	
 	public static void removeAllFavorites(){
+		homePage.gotoMyStations();
 		IOSElement itemToRemove = getStationFromList(1);
+		int recent = Page.getRecentY();
+		if(recent <= itemToRemove.getLocation().getY()){
+			return;
+		}
+		
 		int count = 100; // let's be safe here
 		while(itemToRemove != null && count > 0){
 			count--;
