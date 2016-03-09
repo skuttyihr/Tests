@@ -170,19 +170,25 @@ public class Page extends TestRoot{
 	}
 	
 	public static void removeAllFavorites(){
-		homePage.gotoMyStations();
-		IOSElement itemToRemove = getStationFromList(1);
-		int recent = Page.getRecentY();
-		if(recent <= itemToRemove.getLocation().getY()){
-			return;
-		}
-		
-		int count = 100; // let's be safe here
-		while(itemToRemove != null && count > 0){
-			count--;
-			if(!removeFavorite(1)){
-				break;
+		try{ // We don't want a test to fail if this has an issue
+			homePage.gotoMyStations();
+			IOSElement itemToRemove = getStationFromList(1);
+			int recent = Page.getRecentY();
+			if(recent <= itemToRemove.getLocation().getY()){
+				return;
 			}
+			
+			int count = 100; // let's be safe here
+			while(itemToRemove != null && count > 0){
+				count--;
+				if(!removeFavorite(1)){
+					break;
+				}
+			}
+		}
+		catch(Exception e){
+			System.err.println("\nCould not remove favorites!\n");
+			e.printStackTrace();
 		}
 	}
 	

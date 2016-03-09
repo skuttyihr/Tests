@@ -19,7 +19,13 @@ public class HomePage extends Page {
 
 	public void gotoHome(){
 		if(!isVisible(forYou)){
-			sideNavBar.gotoHomePage();
+			if(isVisible(sideNavBar.navIcon)){
+				sideNavBar.gotoHomePage();
+			}
+			else{
+				getBack();
+				sideNavBar.gotoHomePage();
+			}
 		}
 	}
 	public void gotoMyStations() {
