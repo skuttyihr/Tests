@@ -77,11 +77,40 @@ public class HomePage extends Page {
 		perfectFor.click();
 	}
 
+	/**
+	 * Xpath to work with: //UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell[XXXXX]
+	 * 
+	 * @param x
+	 * @return
+	 */
 	public IOSElement getListItem(int x){
 		return waitForVisible(driver, 
 					By.xpath(listItemXpath.replace("[XXXXX]", "[" + x + "]")),
 					5
 				);
+	}
+	
+	public boolean selectListItem(int x){
+		IOSElement li = getListItem(x);
+		if(isVisible(li)){
+			li.click();
+			return true;
+		}
+		return false;
+	}
+	
+	public String getStationNameFromListItem(int x){
+		IOSElement li = getListItem(x);
+		if(isVisible(li)){
+			String station = li.getText();
+			if(strGood(station)){
+				if(station.contains(",")){
+					station = station.substring(0, station.indexOf(","));
+				}
+				return station;
+			}
+		}
+		return "";
 	}
 	
 	/**

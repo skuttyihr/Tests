@@ -115,7 +115,7 @@ public class TestHomePage extends TestRoot {
 		int artistValue = homePage.isStationARecent(artist);
 		Assert.assertTrue(artist + " was not a recent station.", artistValue > 0);
 		String toggleErrors = homePage.toggleListItemFavorites(artistValue);
-		Assert.assertTrue("Encountered errors adding recent item to favorites by swiping and tappiung button.",
+		Assert.assertTrue("Encountered errors adding recent item to favorites by swiping and tapping button.",
 				didPass(toggleErrors));
 		Assert.assertTrue("Station was not added to favorites", homePage.isStationAFavorite(artist) > 0);
 		// Should still be in recents
@@ -125,5 +125,35 @@ public class TestHomePage extends TestRoot {
 		// Now remove from favorites
 		toggleErrors = homePage.toggleListItemFavorites(1);
 		Assert.assertTrue("Station was not removed from favorites", homePage.isStationAFavorite(artist) < 0);
+	}
+	
+	@Test
+	public void testAddToFavoritesFromLocalRadio(){
+		// Log in, go to Live/Local Radio tab, add a station, check my stations for it being there
+		Assert.assertTrue("Was not able to login", loginPage.login());
+		sideNavBar.gotoHomePage();
+		homePage.gotoLocalRadio();
+		Page.enterZip();
+		// Grab the name of the station
+		String stationName = homePage.getStationNameFromListItem(1);
+		Assert.assertTrue("Station name was empty", strGood(stationName));
+		// Play the first station
+		Assert.assertTrue("Could not play the first local radio station.", homePage.selectListItem(1));
+		Assert.assertTrue("Did not start playing", player.isPlaying());
+		// Only minimize if we have to
+		if(player.isPlayingInPlayer()){
+			player.minimizePlayer();
+		}
+		if(stationName.contains(",")){
+			stationName = stationName.substring(0,  stationName.indexOf(","));
+		}
+		Assert.assertTrue("Could not grab a station name", strGood(stationName));
+		// Add to favorites
+		String toggleErrors = homePage.toggleListItemFavorites(1);
+		Assert.assertTrue("Encountered errors adding recent item to favorites by swiping and tapping button.",
+				didPass(toggleErrors));
+		homePage.gotoMyStations();
+		Assert.assertTrue("Station was not added to favorites", homePage.isStationAFavorite(stationName) > 0);
+		Assert.assertTrue("Station was not in recents as well as favorites", homePage.isStationARecent(stationName) > 0);
 	}
 }
