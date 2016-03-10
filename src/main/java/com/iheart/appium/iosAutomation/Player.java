@@ -475,6 +475,17 @@ public class Player extends Page {
 		return currentTime != getElapsedTime();
 	}
 	
+	public boolean isPlayingInPlayer(){
+		if(isPlaying()){
+			if(isVisible(artistPlayerView)
+					|| isVisible(podcastPlayerView)
+					|| isVisible(player.radioPlayerView)){
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public boolean isPlaying(){
 		waitForElementToBeVisible(playButton_artist, 4);
 		if ( isVisible(playButton_artist) 

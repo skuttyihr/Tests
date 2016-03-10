@@ -14,8 +14,16 @@ public class TestHomePage extends TestRoot {
 	@After
 	public void after() {
 		// Remove favorites
-		Page.removeAllFavorites();
+		homePage.removeAllFavorites();
 		TestRoot.tearDown();
+	}
+	
+	private void searchAndGoHome(String s){
+		search.searchForStation(s);
+		player.minimizePlayer();
+		search.cancel.click();
+		
+		sideNavBar.gotoHomePage(); // Ensure we're on the home page
 	}
 	
 	@Test
@@ -50,11 +58,8 @@ public class TestHomePage extends TestRoot {
 		Assert.assertTrue("Was not able to login", loginPage.login()); // Log in so we can favorite stations
 		
 		// Search for an item so we know what we're working with
-		search.searchForStation("Tegan and Sara");
-		player.minimizePlayer();
-		search.cancel.click();
-		
-		sideNavBar.gotoHomePage(); // Ensure we're on the home page 
+		String artist = "Tegan and Sara";
+		searchAndGoHome(artist); 
 		homePage.gotoForYou();
 		int listItem = 1;
 		String addErrors = homePage.toggleListItemFavorites(listItem);
@@ -96,5 +101,29 @@ public class TestHomePage extends TestRoot {
 		}
 		Assert.assertTrue("Could not tap add to favorites for this item." + addErrors, didPass(addErrors));
 		Assert.assertFalse("Station was still in favorites", homePage.isStationAFavorite(station) > 0);
+	}
+	
+	@Test
+	public void testAddToFavoritesFromRecents(){
+		// Log in, load up a station, check that it's in recents, add it to favorites, check that it's a favorite as well as a recent. 
+		Assert.assertTrue("Was not able to login", loginPage.login()); 
+		
+		String artist = "Tegan and Sara";
+		searchAndGoHome(artist);
+		// Get to my stations (favorites and recents)
+		homePage.gotoMyStations();
+		int artistValue = homePage.isStationARecent(artist);
+		Assert.assertTrue(artist + " was not a recent station.", artistValue > 0);
+		String toggleErrors = homePage.toggleListItemFavorites(artistValue);
+		Assert.assertTrue("Encountered errors adding recent item to favorites by swiping and tappiung button.",
+				didPass(toggleErrors));
+		Assert.assertTrue("Station was not added to favorites", homePage.isStationAFavorite(artist) > 0);
+		// Should still be in recents
+		artistValue = homePage.isStationARecent(artist);
+		Assert.assertTrue(artist + " was not a recent station.", artistValue > 0);
+		
+		// Now remove from favorites
+		toggleErrors = homePage.toggleListItemFavorites(1);
+		Assert.assertTrue("Station was not removed from favorites", homePage.isStationAFavorite(artist) < 0);
 	}
 }

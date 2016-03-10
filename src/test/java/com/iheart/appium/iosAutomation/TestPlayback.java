@@ -21,7 +21,7 @@ public class TestPlayback extends TestRoot {
 	@After
 	public void after() {
 		// Remove favorites
-		Page.removeAllFavorites();
+		homePage.removeAllFavorites();
 		TestRoot.tearDown();
 	}
 	

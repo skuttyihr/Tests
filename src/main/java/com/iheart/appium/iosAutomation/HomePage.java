@@ -17,6 +17,35 @@ public class HomePage extends Page {
 		super(_driver);
 	}
 
+	private IOSElement getRecent(){
+		IOSElement recent = null;
+		for(int i = 1; i < 4; i++){
+			IOSElement testElement = waitForVisible(driver, 
+					By.xpath("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIAStaticText[" + i + "]"),
+					2);
+			if(testElement != null){
+				if(isVisible(testElement) && testElement.getText().equals("Recent Stations")){
+					recent = testElement;
+					break;
+				}
+			}
+		}
+		
+		return recent;
+	}
+	
+	private int getRecentY(){
+		int recentY = 100; // When in doubt, remove nothing
+		//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIAStaticText[1]
+		IOSElement recent = getRecent();
+		if(recent != null){
+			recentY = recent.getLocation().getY();
+		}
+		
+		return recentY;
+	}
+	
+	
 	public void gotoHome(){
 		if(!isVisible(forYou)){
 			if(isVisible(sideNavBar.navIcon)){
@@ -55,6 +84,32 @@ public class HomePage extends Page {
 				);
 	}
 	
+	/**
+	 * Removes all favorites, useful at the end of testing
+	 */
+	public void removeAllFavorites(){
+		try{ // We don't want a test to fail if this has an issue
+			homePage.gotoMyStations();
+			IOSElement itemToRemove = getStationFromList(1);
+			int recent = getRecentY();
+			if(recent <= itemToRemove.getLocation().getY()){
+				return;
+			}
+			
+			int count = 100; // let's be safe here
+			while(itemToRemove != null && count > 0){
+				count--;
+				if(!removeFavorite(1)){
+					break;
+				}
+			}
+		}
+		catch(Exception e){
+			System.err.println("\nCould not remove favorites!\n");
+			e.printStackTrace();
+		}
+	}
+	
 	
 	// Behavior Methods
 	
@@ -63,7 +118,7 @@ public class HomePage extends Page {
 		IOSElement item = getListItem(x);
 		if(item != null){
 			// Expose the hidden buttons with a swipe
-			swipeOnItem(item, 3);
+			swipeOnItem(item, LEFT);
 			IOSElement add = waitForVisible(driver, By.name("Add to Favorites"), 5);
 			if(add == null){
 				String returnMessage = toggleFavorites(x);
@@ -80,7 +135,7 @@ public class HomePage extends Page {
 					}
 					err.add(returnMessage);
 				}
-				else{
+				else if(strGood(returnMessage)){
 					System.out.println(returnMessage);
 				}
 			}
@@ -98,7 +153,6 @@ public class HomePage extends Page {
 	
 	private String toggleFavorites(int x){
 		Errors err = new Errors();
-		// TODO
 		// Button width ratio to item ratio is 0.24154589372
 		// Leftmost button is the add to favorites, unless it's already a favorite (Unfavorite) 
 		// Unfavorite: will be the only button. 
@@ -137,19 +191,167 @@ public class HomePage extends Page {
 			return "removed";
 		}
 		
-		if(player.isPlaying()){
+		if(player.isPlayingInPlayer()){
 			player.minimizePlayer();
 			err.add("Had to get out of player");
+			
+			// Try again, there was only one swiped button
+			item = getListItem(1); // The last played station is the first item
+			swipeOnItem(item, 3);
+			iy = item.getLocation().getY();
+			clickY = iy + (height / 2);
+			driver.tap(1, clickSecondButtonX, clickY, 500);
+			Page.handlePossiblePopUp();
 		}
 		
-		// Try again, there was only one swiped button
-		item = getListItem(1); // The last played station is the first item
-		swipeOnItem(item, 3);
-		iy = item.getLocation().getY();
-		clickY = iy + (height / 2);
-		driver.tap(1, clickSecondButtonX, clickY, 500);
-		Page.handlePossiblePopUp();
-		
 		return err.getErrors();
+	}
+	
+	
+	/**
+	 * Returns an integer 1+ for the list item ONLY if it is a recent station
+	 * @param artist
+	 * @return
+	 */
+	public int isStationARecent(String artist){
+		int station = -1;
+		IOSElement recent = getRecent();
+		if(isVisible(recent)){
+			for(int i = 1; i < 20; i++){
+				IOSElement test = getListItem(i);
+				if(!isVisible(test)){
+					break;
+				}
+				if(test.getText().toLowerCase().contains(artist.toLowerCase())){
+					if(test.getLocation().getY() > getRecentY()){
+						station = i;
+						break;
+					}
+					// Keep searching because multiple stations could match the artist/podcast name that was passed in
+				}
+			}
+		}
+		return station;
+	}
+	
+	public boolean isStationARecent(int n){
+		IOSElement listItem = getListItem(n);
+		if(isVisible(listItem)){
+			if(listItem.getLocation().getY() > getRecentY()){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
+	/**
+	 * gets the nth recent station, if possible
+	 * If list item n is a recent station, return it, otherwise, return nothing
+	 * @param n
+	 * @return IOSElement, the list item
+	 */
+	public IOSElement getRecentStation(int n){
+		int startOfRecents = -1;
+		// Find first recent
+		// Increment from there
+		for(int i = 1; i < 20; i++){
+			if(!isVisible(getListItem(i))){
+				break;
+			}
+			if(isStationARecent(i)){
+				startOfRecents = i;
+				break;
+			}
+		}
+		
+		if(startOfRecents > 0){
+			if(n == 1){
+				return getListItem(startOfRecents);
+			}
+			else{
+				IOSElement test = getListItem(startOfRecents + n);
+				if(isVisible(test)){
+					return test;
+				}
+			}
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * Always returns the first recent station (if it exists and is visible)
+	 * @return
+	 */
+	public IOSElement getFirstRecentStation(){
+		return getRecentStation(1);
+	}
+	
+	
+	public int isStationAFavorite(String artist){
+		/*
+		 * Click my Station if on home
+		 * Ensure there are favorite stations
+		 * Get Y of "recent stations"
+		 * Find the item matching the artist
+		 * Get the Y of that artist
+		 * If it's above recent stations: YES
+		 * Return the item number, so we can use it later, if need be
+		 */
+		int foundStation = -1;
+		homePage.gotoMyStations();
+		// TODO Fix favorite grabbing, make like recents
+		IOSElement favorites = waitForVisible(driver, find("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIAStaticText[1]", "xpath"), 10);
+		if(favorites != null && favorites.getText().equalsIgnoreCase("Favorite Stations")){
+			int recentY = getRecentY();
+			for(int i = 1; i <= 25; i++){
+				IOSElement item = getStationFromList(i);
+				if(!isVisible(item)){
+					break;
+				}
+				if(item.getLocation().getY() >= recentY){
+					break;
+				}
+				
+				if(item.getText().contains(artist)){ 
+					foundStation = i;
+				}
+			}
+		}
+		
+		return foundStation;
+	}
+	
+	public boolean removeFavorite(int itemToRemove){
+		boolean removedFavorite = false;
+		// First assert that it is a favorite
+		IOSElement favorites = waitForVisible(driver, By.name("Favorite Stations"), 10);
+		if(favorites != null && isVisible(favorites) && favorites.getText().equals("Favorite Stations")){
+			int recentY = getRecentY();
+			IOSElement item = getStationFromList(itemToRemove);
+			if(item != null){
+				int x = item.getLocation().getX();
+				int y = item.getLocation().getY();
+				if(y < recentY){
+					int w = item.getSize().getWidth();
+					int h = item.getSize().getHeight();
+					int clickX = x + w - (w / 10);
+//					int swipeToX = x + w - (w / 2);
+					int clickY = y + h - (h / 2);
+					// Swipe to reveal unfavorite
+//					driver.swipe(clickX, clickY, swipeToX, clickY, 500);
+					TestRoot.swipeOnItem(item, LEFT);
+					// Tap unfavorite
+					driver.tap(1, clickX, clickY, 150);
+					removedFavorite = true;
+				}
+				else{
+					return false;
+				}
+			}
+		}
+		
+		return removedFavorite;
 	}
 }
