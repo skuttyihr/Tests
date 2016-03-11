@@ -415,12 +415,15 @@ public class HomePage extends Page {
 	}
 	
 	public String loadUpStations(){
+		return loadUpStations(5);
+	}
+	public String loadUpStations(int n){
 		Errors err = new Errors();
 		
 		sideNavBar.gotoHomePage();
 		gotoForYou();
 	
-		for(int stations = 1; stations < 5; stations++){
+		for(int stations = 1; stations < n; stations++){
 			IOSElement listItem = getListItem(stations);
 			if(!isVisible(listItem)){
 				break;

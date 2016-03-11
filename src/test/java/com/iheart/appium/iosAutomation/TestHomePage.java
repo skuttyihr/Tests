@@ -28,10 +28,7 @@ public class TestHomePage extends TestRoot {
 		sideNavBar.gotoHomePage(); // Ensure we're on the home page
 	}
 	
-	private void assertScrollAndShowMore(boolean loadUpStations){
-		if(loadUpStations){
-			Assert.assertTrue("Could not load up some stations in history.", didPass(homePage.loadUpStations()));
-		}
+	private void assertScrollAndShowMore(){
 		List<String> visibleItems = homePage.getVisibleListItems();
 		Assert.assertTrue(visibleItems.size() > 0);
 		Assert.assertTrue("Could not swipe to Show More button", Page.swipeToShowMore());
@@ -184,12 +181,15 @@ public class TestHomePage extends TestRoot {
 		// Use XPath to grab visible names, as any other method will hold them even if they're not visible
 		loginPage.loginWithoutVerifying();
 		sideNavBar.gotoHomePage();
+		// Play some stations to be sure we have a history of at least a few stations.
+		Assert.assertTrue("Could not load up some stations in history.", didPass(homePage.loadUpStations(3)));
+		
 		// Test scroll and show more for For You section
-		assertScrollAndShowMore(true);
+		assertScrollAndShowMore();
 
 		// Doing the same for the mystations page
 		homePage.gotoMyStations();
-		assertScrollAndShowMore(false);
+		assertScrollAndShowMore();
 	}
 	
 	@Test
