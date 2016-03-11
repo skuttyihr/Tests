@@ -1,15 +1,16 @@
 package com.iheart.appium.iosAutomation;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.openqa.selenium.By;
 
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
+import io.appium.java_client.pagefactory.iOSFindBy;
 
 public class HomePage extends Page {
 
-	// Use the getListItem(int x) method to get these items. 
-	private final String listItemXpath = "//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell[XXXXX]";
-	
 	public HomePage() {
 		super();
 	}
@@ -17,6 +18,11 @@ public class HomePage extends Page {
 		super(_driver);
 	}
 
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[3]/UIAStatusBar[1]") public IOSElement statusBar;
+	// Use the getListItem(int x) method to get these items. 
+	private final String listItemXpath = "//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell[XXXXX]";
+	
+	
 	private IOSElement getRecent(){
 		IOSElement recent = null;
 		for(int i = 1; i < 4; i++){
@@ -120,6 +126,9 @@ public class HomePage extends Page {
 		try{ // We don't want a test to fail if this has an issue
 			homePage.gotoMyStations();
 			IOSElement itemToRemove = getStationFromList(1);
+			if(itemToRemove == null){
+				return; // No items to remove
+			}
 			int recent = getRecentY();
 			if(recent <= itemToRemove.getLocation().getY()){
 				return;
@@ -382,5 +391,62 @@ public class HomePage extends Page {
 		}
 		
 		return removedFavorite;
+	}
+	
+	public List<String> getVisibleListItems(){
+		List<String> visibleItems = new ArrayList<String>();
+		List<IOSElement> allItemsInContainer = driver.findElements(By.xpath(listItemXpath.replace("[XXXXX]", "")));
+		boolean foundVisible = false;
+		for(IOSElement item : allItemsInContainer){
+			if(isVisible(item)){
+				String itemName = item.getText();
+				if(itemName.contains(",")){
+					itemName = itemName.substring(0, itemName.indexOf(","));
+				}
+				visibleItems.add(itemName);
+				foundVisible = true;
+			}
+			else if(foundVisible){
+				break;
+			}
+		}
+		
+		return visibleItems;
+	}
+	
+	public String loadUpStations(){
+		Errors err = new Errors();
+		
+		sideNavBar.gotoHomePage();
+		gotoForYou();
+	
+		for(int stations = 1; stations < 5; stations++){
+			IOSElement listItem = getListItem(stations);
+			if(!isVisible(listItem)){
+				break;
+			}
+			if(listItem.getText().contains("iHeartRadio Music Awards")){
+				continue;
+			}
+			
+			listItem.click();
+			
+			// If it was a favorites station, we're going to get a popup. Dismiss it
+			if(isVisible(waitForVisible(driver, By.name("favorites_radio"), 1))){
+				findElement(driver, By.name("Save")).click();
+				waitForVisible(driver, By.name("Got It"), 2).click();
+			}
+			
+			if(player.isPlayingInPlayer() 
+					&& !player.minimizePlayer()){
+				err.add("Could not minimize player.");
+			}
+		}
+			
+		
+		if(player.isPlaying()){
+			miniPlayer.pause();
+		}
+		return err.getErrors();
 	}
 }

@@ -1,5 +1,7 @@
 package com.iheart.appium.iosAutomation;
 
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -24,6 +26,24 @@ public class TestHomePage extends TestRoot {
 		search.cancel.click();
 		
 		sideNavBar.gotoHomePage(); // Ensure we're on the home page
+	}
+	
+	private void assertScrollAndShowMore(boolean loadUpStations){
+		if(loadUpStations){
+			Assert.assertTrue("Could not load up some stations in history.", didPass(homePage.loadUpStations()));
+		}
+		List<String> visibleItems = homePage.getVisibleListItems();
+		Assert.assertTrue(visibleItems.size() > 0);
+		Assert.assertTrue("Could not swipe to Show More button", Page.swipeToShowMore());
+		List<String> visibleItemsAfterSwipe = homePage.getVisibleListItems();
+		Assert.assertTrue("Lists before and after swiping should not have been identical!", 
+				!visibleItems.equals(visibleItemsAfterSwipe));
+		Assert.assertTrue("Could not click show more", Page.clickShowMore());
+		swipeUp(); // just to be sure we could load more
+		visibleItems = homePage.getVisibleListItems();
+		Assert.assertTrue("One or both lists of visible items was null!", visibleItems != null && visibleItemsAfterSwipe != null);
+		Assert.assertTrue("Lists before and after swiping and clicking show more should not have been identical!", 
+				!visibleItems.equals(visibleItemsAfterSwipe));
 	}
 	
 	@Test
@@ -155,5 +175,37 @@ public class TestHomePage extends TestRoot {
 		homePage.gotoMyStations();
 		Assert.assertTrue("Station was not added to favorites", homePage.isStationAFavorite(stationName) > 0);
 		Assert.assertTrue("Station was not in recents as well as favorites", homePage.isStationARecent(stationName) > 0);
+	}
+	
+	@Test
+	public void testShowMore(){
+		// Show More is on For You and My Stations
+		// Scroll to bottom of each list, verify what's visible, then keep scrolling
+		// Use XPath to grab visible names, as any other method will hold them even if they're not visible
+		loginPage.loginWithoutVerifying();
+		sideNavBar.gotoHomePage();
+		// Test scroll and show more for For You section
+		assertScrollAndShowMore(true);
+
+		// Doing the same for the mystations page
+		homePage.gotoMyStations();
+		assertScrollAndShowMore(false);
+	}
+	
+	@Test
+	public void testScrollAndTapBar(){
+		// Test that we can scroll to the bottom, then jump back to the top
+		signupPage.skipLogin();
+		sideNavBar.gotoHomePage();
+		List<String> topItems = homePage.getVisibleListItems();
+		for(int i = 0; i < 3; i++)
+			swipeUp();
+		List<String> bottomItems = homePage.getVisibleListItems();
+		Assert.assertTrue("Could not scroll!", !topItems.equals(bottomItems));
+		// Tap the top status bar
+		homePage.statusBar.click();
+		// We're back at the top
+		List<String> newTopItems = homePage.getVisibleListItems();
+		Assert.assertTrue("Could not scroll back to top!", topItems.equals(newTopItems));
 	}
 }

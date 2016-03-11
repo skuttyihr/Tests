@@ -151,5 +151,56 @@ public class Page extends TestRoot{
 			search.cancel.click();
 		}catch(Exception e){}
 	}
+	
+	/**
+	 * Scroll to the bottom of a list until a show more button displays
+	 * @return
+	 */
+	public static boolean swipeToShowMore(){
+		IOSElement showMore = null;
+		for(int i = 0; i < 7; i++){
+			swipeUp();
+			showMore = findElement(driver, By.name("Show More"));
+			if(isVisible(showMore)){
+				break;
+			}
+			else{
+				// There's a chance that we're on My Stations, and it found the For You show more button by name
+				showMore = findElement(driver, By.xpath("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIAButton[4]"));
+				if(isVisible(showMore)){
+					break;
+				}
+			}
+		}
+		
+		if(showMore == null){
+			return false;
+		}
+		swipeUp(); // In case mini player is hiding it
+		return true;
+	}
+	
+	public static boolean clickShowMore(){
+		IOSElement showMore = findElement(driver, By.name("Show More"));
+		IOSElement showMoreMyStations = findElement(driver, By.xpath("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIAButton[4]"));
+		if(isVisible(showMore)){
+			showMore.click();
+			return true;
+		}
+		else if(isVisible(showMoreMyStations)){
+			showMoreMyStations.click();
+			return true;
+		}
+		else{
+			swipeToShowMore();
+			showMore = waitForVisible(driver, By.name("Show More"), 2);
+			if(isVisible(showMore)){
+				showMore.click();
+				return true;
+			}
+		}
+		
+		return false;
+	}
 }	
 
