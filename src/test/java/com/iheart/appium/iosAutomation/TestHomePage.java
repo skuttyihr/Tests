@@ -96,7 +96,7 @@ public class TestHomePage extends TestRoot {
 	@Test
 	public void testAddToFavoritesFromRecents(){
 		// Log in, load up a station, check that it's in recents, add it to favorites, check that it's a favorite as well as a recent. 
-		Assert.assertTrue("Was not able to login", loginPage.login()); 
+		loginPage.loginWithoutVerifying();
 		
 		String artist = "Tegan and Sara";
 		searchAndGoHome(artist);
@@ -113,7 +113,10 @@ public class TestHomePage extends TestRoot {
 		Assert.assertTrue(artist + " was not a recent station.", artistValue > 0);
 		
 		// Now remove from favorites
-		toggleErrors = homePage.toggleListItemFavorites(1);
+		// Might not be the first element
+		int removeItem = homePage.searchForStation(artist);
+		Assert.assertTrue(removeItem > 0);
+		toggleErrors = homePage.toggleListItemFavorites(removeItem);
 		Assert.assertTrue("Station was not removed from favorites", homePage.isStationAFavorite(artist) < 0);
 	}
 	

@@ -90,10 +90,14 @@ public class HomePage extends Page {
 	 * @return
 	 */
 	public IOSElement getListItem(int x){
-		return waitForVisible(driver, 
-					By.xpath(listItemXpath.replace("[XXXXX]", "[" + x + "]")),
-					5
-				);
+		IOSElement returnElement = findElement(driver, By.xpath(listItemXpath.replace("[XXXXX]", "[" + x + "]")));
+		if(returnElement == null){
+			returnElement = waitForVisible(driver, 
+								By.xpath(listItemXpath.replace("[XXXXX]", "[" + x + "]")),
+								5
+							);
+		}
+		return returnElement;
 	}
 	
 	public boolean selectListItem(int x){
@@ -255,13 +259,16 @@ public class HomePage extends Page {
 		int station = -1;
 		IOSElement recent = getRecent();
 		if(isVisible(recent)){
-			for(int i = 1; i < 20; i++){
+			for(int i = 1;  i <= 17; i++){
 				IOSElement test = getListItem(i);
+				if(test != null && test.getText().length() <= 0){
+					continue;
+				}
 				if(!isVisible(test)){
 					break;
 				}
 				if(test.getText().toLowerCase().contains(artist.toLowerCase())){
-					if(test.getLocation().getY() > getRecentY()){
+					if(test.getLocation().getY() > recent.getLocation().getY()){
 						station = i;
 						break;
 					}
@@ -327,7 +334,7 @@ public class HomePage extends Page {
 	}
 	
 	
-	public int isStationAFavorite(String artist){
+	public int isStationAFavorite(String artist){ //TODO, SPEED UP
 		/*
 		 * Click my Station if on home
 		 * Ensure there are favorite stations
@@ -339,8 +346,10 @@ public class HomePage extends Page {
 		 */
 		int foundStation = -1;
 		homePage.gotoMyStations();
-		// TODO Fix favorite grabbing, make like recents
-		IOSElement favorites = waitForVisible(driver, find("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIAStaticText[1]", "xpath"), 10);
+		if(!driver.getPageSource().contains(artist)){
+			return foundStation;
+		}
+		IOSElement favorites = waitForVisible(driver, find("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIAStaticText[1]", "xpath"), 3);
 		if(favorites != null && favorites.getText().equalsIgnoreCase("Favorite Stations")){
 			int recentY = getRecentY();
 			for(int i = 1; i <= 25; i++){
@@ -395,7 +404,7 @@ public class HomePage extends Page {
 	
 	public List<String> getVisibleListItems(){
 		List<String> visibleItems = new ArrayList<String>();
-		List<IOSElement> allItemsInContainer = driver.findElements(By.xpath(listItemXpath.replace("[XXXXX]", "")));
+		List<IOSElement> allItemsInContainer = findElements(driver, By.xpath(listItemXpath.replace("[XXXXX]", "")));
 		boolean foundVisible = false;
 		for(IOSElement item : allItemsInContainer){
 			if(isVisible(item)){
@@ -412,6 +421,21 @@ public class HomePage extends Page {
 		}
 		
 		return visibleItems;
+	}
+	
+	public int searchForStation(String station){
+		int foundStation = -1;
+		
+		if(driver.getPageSource().contains(station)){
+			for(int i = 1; i < 17; i++){
+				IOSElement item = getListItem(i);
+				if(item.getText().contains(station)){
+					foundStation = i;
+					break;
+				}
+			}
+		}
+		return foundStation;
 	}
 	
 	public String loadUpStations(){

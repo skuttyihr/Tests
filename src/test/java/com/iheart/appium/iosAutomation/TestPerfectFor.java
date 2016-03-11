@@ -25,6 +25,9 @@ public class TestPerfectFor extends TestRoot{
 	@Test
 	public void testPlayingFromPerfectFor(){
 		// plays a few stations from different categories for perfect for tests
+		loginPage.loginWithoutVerifying();
+		sideNavBar.gotoPerfectFor();
+		// Verify we're looking at perfect for
 		
 	}
 }

@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Random;
@@ -310,15 +311,29 @@ public class TestRoot {
 		try{
 			d.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
 			e = d.findElement(by);
-			if(e != null){
-				return e;
-			}
 		}
 		catch(Exception exc){}
 		finally{
 			d.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 		}
 		return e;
+	}
+	
+	public static List<IOSElement> findElements(IOSDriver<IOSElement> d, By by){
+		List<IOSElement> foundElements = null;
+		
+		try{
+			d.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
+			foundElements = d.findElements(by);
+		}
+		catch(Exception e){
+			System.out.println("Could not find elements");
+		}
+		finally{
+			d.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
+		}
+		
+		return foundElements;
 	}
 	
 	/**
