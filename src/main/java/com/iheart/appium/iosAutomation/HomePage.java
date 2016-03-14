@@ -138,9 +138,12 @@ public class HomePage extends Page {
 				return;
 			}
 			
-			int count = 100; // let's be safe here
+			int count = 20; // let's be safe here
 			while(itemToRemove != null && count > 0){
 				count--;
+				if(recent <= itemToRemove.getLocation().getY()){
+					return;
+				}
 				if(!removeFavorite(1)){
 					break;
 				}
