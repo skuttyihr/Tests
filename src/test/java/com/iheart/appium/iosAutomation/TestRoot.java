@@ -451,6 +451,9 @@ public class TestRoot {
 	 * @param direction
 	 */
 	public static void swipeOnItem(IOSElement item, int direction){
+		if(!isVisible(item)){
+			return;
+		}
 		int x = item.getLocation().getX();
 		int y = item.getLocation().getY();
 		int w = item.getSize().getWidth();

@@ -102,7 +102,7 @@ public class TestHomePage extends TestRoot {
 		searchAndGoHome(artist);
 		// Get to my stations (favorites and recents)
 		homePage.gotoMyStations();
-		int artistValue = homePage.isStationARecent(artist);
+		int artistValue = homePage.isStationARecent(artist); 
 		Assert.assertTrue(artist + " was not a recent station.", artistValue > 0);
 		String toggleErrors = homePage.toggleListItemFavorites(artistValue);
 		Assert.assertTrue("Encountered errors adding recent item to favorites by swiping and tapping button.",

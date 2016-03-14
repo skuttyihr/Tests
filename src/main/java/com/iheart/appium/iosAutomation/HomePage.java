@@ -161,7 +161,7 @@ public class HomePage extends Page {
 		if(item != null){
 			// Expose the hidden buttons with a swipe
 			swipeOnItem(item, LEFT);
-			IOSElement add = waitForVisible(driver, By.name("Add to Favorites"), 5);
+			IOSElement add = waitForVisible(driver, By.name("Add to Favorites"), 2);
 			if(add == null){
 				String returnMessage = toggleFavorites(x);
 				if(strGood(returnMessage) 
@@ -259,8 +259,11 @@ public class HomePage extends Page {
 		int station = -1;
 		IOSElement recent = getRecent();
 		if(isVisible(recent)){
-			for(int i = 1;  i <= 17; i++){
-				IOSElement test = getListItem(i);
+			int recentY = recent.getLocation().getY();
+			List<IOSElement> allMyStations = findElements(driver, By.xpath("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell"));
+			int i = 0;
+			for(IOSElement test : allMyStations){
+				i++;
 				if(test != null && test.getText().length() <= 0){
 					continue;
 				}
@@ -268,11 +271,10 @@ public class HomePage extends Page {
 					break;
 				}
 				if(test.getText().toLowerCase().contains(artist.toLowerCase())){
-					if(test.getLocation().getY() > recent.getLocation().getY()){
+					if(test.getLocation().getY() > recentY){
 						station = i;
 						break;
 					}
-					// Keep searching because multiple stations could match the artist/podcast name that was passed in
 				}
 			}
 		}
@@ -352,8 +354,10 @@ public class HomePage extends Page {
 		IOSElement favorites = waitForVisible(driver, find("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIAStaticText[1]", "xpath"), 3);
 		if(favorites != null && favorites.getText().equalsIgnoreCase("Favorite Stations")){
 			int recentY = getRecentY();
-			for(int i = 1; i <= 25; i++){
-				IOSElement item = getStationFromList(i);
+			List<IOSElement> allMyStations = findElements(driver, By.xpath("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell"));
+			
+			int i = 1;
+			for(IOSElement item : allMyStations){
 				if(!isVisible(item)){
 					break;
 				}
@@ -363,7 +367,9 @@ public class HomePage extends Page {
 				
 				if(item.getText().contains(artist)){ 
 					foundStation = i;
+					break;
 				}
+				i++;
 			}
 		}
 		
