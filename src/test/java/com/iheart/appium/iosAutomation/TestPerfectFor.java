@@ -32,8 +32,6 @@ public class TestPerfectFor extends TestRoot{
 		Assert.assertTrue("Could not favorite station", player.doFavorite());
 		String favoritedStation = player.getStationTitle();
 		Assert.assertTrue("Could not get station title.", strGood(favoritedStation));
-		String playbackControlErrors = player.verifyPlaybackControls();
-		Assert.assertTrue("Could not verify playback controls: " + playbackControlErrors, didPass(playbackControlErrors));
 		// minimize, select another station, verify it's in mini player, maximize
 		player.minimizePlayer();
 		perfectFor.getBack();

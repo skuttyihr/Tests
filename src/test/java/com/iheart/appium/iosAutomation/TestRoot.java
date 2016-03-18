@@ -678,6 +678,15 @@ public class TestRoot {
 		return elementGone;
 	}
 	
+	public static boolean click(IOSDriver<IOSElement> d, By by){
+		IOSElement clickMe = findElement(d, by);
+		if(isVisible(clickMe)){
+			clickMe.click();
+			return true;
+		}
+		return false;
+	}
+	
 	/**
 	 * If a string is not empty and not null ("good"), return true
 	 * @param s

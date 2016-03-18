@@ -104,11 +104,6 @@ public class Player extends Page {
 			if (!TestRoot.isVisible(songTrack2_live))
 				errors.append("No sound track name is displayed.\n");
 		}
-
-		if (!TestRoot.isVisible(artist_live)) {
-			if (!TestRoot.isVisible(artist2_live))
-				errors.append("Artist name is NOT displayed.\n");
-		}
 		if (!TestRoot.isVisible(playButton_live))
 			errors.append("Play icon is not displayed.\n");
 
@@ -185,21 +180,6 @@ public class Player extends Page {
 		if(!isVisible(podcastImage)){
 			errors.append("Could not load podcast image\n");
 		}
-		
-		return errors.toString();
-	}
-
-	/**
-	 * **Calls assert statements, can fail tests from within method!
-	 * @param callingMethod
-	 */
-	private String verfiyCommonIcons() {
-		Errors errors = new Errors();
-		if (!TestRoot.isVisible(thumbUp))
-			errors.append("No Thumb Up icon is displayed.\n");
-
-		if (!TestRoot.isVisible(thumbDown))
-			errors.append("No Thumb Down icon is displayed.\n");
 		
 		return errors.toString();
 	}
@@ -542,12 +522,26 @@ public class Player extends Page {
 	 */
 	public String getType(){
 		String[] types = {"artist", "podcast", "live"};
-		int type = 0; // Default to artist
+		int type = 0; 
+		if(isVisible(artistPlayerView)){
+			type = 0;
+		}
 		if(isVisible(podcastPlayerView)){
 			type = 1;
 		}
 		else if(isVisible(radioPlayerView)){
 			type = 2;
+		}
+		else{
+			// Try to do it a different way
+			IOSElement liveRadioPlayer = findElement(driver, By.name("Live Radio"));
+			IOSElement podcastPlayer = findElement(driver, By.name("Podcast"));
+			if(isVisible(podcastPlayer)){
+				type = 1;
+			}
+			else if(isVisible(liveRadioPlayer)){
+				type = 2;
+			}
 		}
 		
 		return types[type];
@@ -649,9 +643,6 @@ public class Player extends Page {
 			errors.add(verifyPlayer_live(station));
 			break;
 		}
-		
-		// Verify that the elements they share are present
-		errors.add(verfiyCommonIcons());
 		
 		// Verify that we can use the controls
 		if(!doThumbDown()){

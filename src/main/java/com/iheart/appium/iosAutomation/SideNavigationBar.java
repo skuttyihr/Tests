@@ -41,8 +41,12 @@ public class SideNavigationBar extends Page {
 
 	// Put header and player related methods here
 	public void gotoHomePage() {
-		waitForVisible(driver, find(navIconString), 5).click();
-		home.click();
+		if(!isVisible(waitForVisible(driver, find(navIconString), 2))){
+			getBack();
+		}
+		if(click(driver, find(navIconString))){
+			home.click();
+		}
 	}
 
 	public void gotoLiveRadioPage() {
