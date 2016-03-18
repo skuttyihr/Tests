@@ -71,6 +71,7 @@ public class TestRoot {
 	protected static GenrePage genrePage;
 	protected static MiniPlayer miniPlayer;
 	protected static SettingsPage settings;
+	protected static PerfectFor perfectFor;
 	
 	protected static boolean useSimulator = false;
 	
@@ -169,6 +170,7 @@ public class TestRoot {
 		genrePage = new GenrePage(driver);
 		miniPlayer = new MiniPlayer(driver);
 		settings = new SettingsPage(driver);
+		perfectFor = new PerfectFor(driver);
 		
 		driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 		

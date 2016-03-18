@@ -47,6 +47,8 @@ public class Page extends TestRoot{
 	static final String FACEBOOK_PASSWORD = OLD_PASSWORD;
 	static final String GOOGLE_USER_NAME = OLD_USER_NAME;
 
+	public static final String baseListItemXpath = "//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell";
+	
 	public static final String screenshot_folder = "iosScreenshots";
 
 	public Page() {

@@ -59,7 +59,7 @@ public class Player extends Page {
 	@iOSFindBy(name = "Mail") public IOSElement mail;
 	
 	// If loaded from mini player
-	@iOSFindBy(name = "downarrow button") public IOSElement minimizeButton;
+	@iOSFindBy(name = "player downarrow") public IOSElement minimizeButton;
 	
 	// Images 
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAImage[3]") public IOSElement radioImage;
@@ -73,6 +73,8 @@ public class Player extends Page {
 	@iOSFindBy(name = "Thanks for the feedback. We'll let our DJs know you've  heard enough of this song.") public IOSElement liveThumbDownGrowl;
 	@iOSFindBy(name = "Great, we’ll play you more  episodes like this.") public IOSElement podcastThumbUpGrowl; // //UIAApplication[1]/UIAWindow[1]/UIAStaticText[10]
 	@iOSFindBy(name = "OK, we’ll adjust your station.") public IOSElement podcastThumbDownGrowl;
+	
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIANavigationBar[1]/UIAStaticText[1]") public IOSElement stationTitle;
 	
 	public Player() {
 		super();
@@ -864,5 +866,14 @@ public class Player extends Page {
 		}
 		
 		return err.getErrors();
+	}
+	
+	public String getStationTitle(){
+		String title = "";
+		waitForElementToBeVisible(stationTitle, 3);
+		if(isVisible(stationTitle)){
+			title = stationTitle.getText();
+		}
+		return title;
 	}
 }
