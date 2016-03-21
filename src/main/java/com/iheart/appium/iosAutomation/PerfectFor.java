@@ -31,6 +31,7 @@ public class PerfectFor extends Page {
 	public String pfSubStationLabelX = pfSubStationLabelBaseX + "[XXXXX]/UIAStaticText[1]";
 	
 	
+	@iOSFindBy(name = "Perfect For") public IOSElement perfectForHeading;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIAStaticText[1]") public IOSElement pfCategoryHeading;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIANavigationBar[1]/UIAStaticText[2]") public IOSElement pfSubStationHeading;
 	@iOSFindBy(name = "Back") public IOSElement pfSubCatBack;

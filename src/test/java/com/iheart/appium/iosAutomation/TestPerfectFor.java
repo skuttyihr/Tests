@@ -52,5 +52,8 @@ public class TestPerfectFor extends TestRoot{
 		// Assert that we can see the favorited station in the My Stations section 
 		sideNavBar.gotoMyStationsPage();
 		Assert.assertTrue("Station: " + favoritedStation + " was not a favorite.", homePage.isStationAFavorite(favoritedStation) > 0);
+		// Assert that we can search for Perfect For and the link will bring us to the perfect for page
+		search.searchForStation("Perfect For");
+		Assert.assertTrue("Cold not get to perfect for from search", isVisible(perfectFor.perfectForHeading));
 	}
 }
