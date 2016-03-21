@@ -21,34 +21,27 @@ public class Player extends Page {
 	@iOSFindBy(name = "airplay") public IOSElement airPlay;
 
 	// Seems that this is depending upon from where the player is launched
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[4]") public IOSElement songTrack_artist;
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[5]") public IOSElement artist_artist;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[3]") public IOSElement songTrack_artist;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[4]") public IOSElement artist_artist;
 
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[6]") public IOSElement songTrack_live;
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[7]") public IOSElement artist_live;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[1]") public IOSElement songTrack_live;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[2]") public IOSElement artist_live;
 
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[2]") public IOSElement songTrack2_live;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[3]") public IOSElement artist2_live;
 
 	// podcast specific
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIASlider[1]") public IOSElement slideBar;
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[2]") public IOSElement elapsedTime;
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[3]") public IOSElement totalTime;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[1]") public IOSElement elapsedTime;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[2]") public IOSElement totalTime;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[9]") public IOSElement episodeName_podcast;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[10]") public IOSElement stationName_podcast;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAButton[3]") public IOSElement playButton_podcast;
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAButton[9]") public IOSElement more_podcast;
 
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAButton[7]") public IOSElement playButton_live; // doesn't apply for podcast
-	// @iOSFindBy(xpath="//UIAApplication[1]/UIAWindow[1]/UIAButton[9]") public
-	// IOSElement playButton_artist;
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAButton[3]") public IOSElement playButton_artist;
-	// @iOSFindBy(xpath="//UIAApplication[1]/UIAWindow[1]/UIAButton[11]") public
-	// IOSElement more;
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAButton[6]") public IOSElement more_live;
-	// @iOSFindBy(name="more") public IOSElement more;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAButton[5]") public IOSElement playButton_live; 
+	@iOSFindBy(xpath="//UIAApplication[1]/UIAWindow[1]/UIAButton[7]") public IOSElement more;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAButton[5]") public IOSElement playButton_artist; 
 
-//	@iOSFindBy(name = "Skip") public IOSElement skip;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAButton[6]") public IOSElement skip;
 	@iOSFindBy(name = "scan") public IOSElement scan;
 	@iOSFindBy(name = "Thumb up") public IOSElement thumbUp;
@@ -63,7 +56,7 @@ public class Player extends Page {
 	
 	// Images 
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAImage[3]") public IOSElement radioImage;
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAImage[4]") public IOSElement artistAlbumArt;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAImage[3]") public IOSElement artistAlbumArt;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAImage[4]") public IOSElement podcastImage; // Same as above, but named to assist in any possible issues
 	
 	// Growl Messages (Use Xpath only as backup)
@@ -110,7 +103,7 @@ public class Player extends Page {
 		if (!TestRoot.isVisible(scan))
 			errors.append("Scan icon is not displayed.\n");
 
-		if (!TestRoot.isVisible(more_live))
+		if (!TestRoot.isVisible(more))
 			errors.append(".... is not displayed.\n");
 
 		if(!isVisible(radioImage)){
@@ -210,7 +203,7 @@ public class Player extends Page {
 	}
 
 	public boolean doShare() {
-		more_live.tap(1, 1);
+		more.tap(1, 1);
 		share.tap(1, 1);
 		if (!isVisible(mail))
 			return false;
@@ -342,6 +335,9 @@ public class Player extends Page {
 			handleUnFavConfirmation();
 		}
 
+		if(!isVisible(favorite)){
+			return false;
+		}
 		favorite.click();
 		handleActionPopup();
 
@@ -469,19 +465,13 @@ public class Player extends Page {
 	}
 	
 	public boolean isPlaying(){
-		waitForElementToBeVisible(playButton_artist, 4);
-		if ( isVisible(playButton_artist) 
-				|| isVisible(playButton_live)
-				|| isVisible(playButton_podcast)){
-			return true;
-		}
-		return false;
+		return isPlaying(getType());
 	}
 	
 	public boolean isPlaying(String type) {
 		boolean isPlaying = false;
-
-		IOSElement theOne;
+		handlePossiblePopUp();
+		IOSElement theOne = null;
 		if (type.equals("live"))
 			theOne = playButton_live;
 		else if (type.equals("podcast"))
@@ -494,8 +484,13 @@ public class Player extends Page {
 				return false;
 			}
 		}catch(Exception e){}
+		
 		waitForElementToBeVisible(theOne, 5);
+		if(!isVisible(theOne)){
+			return false;
+		}
 		// verify that it is playing: Get its attribute: class shall be 'pause'
+		// TODO Check this, it's failing
 		try{
 			if(theOne != null && isVisible(theOne)){
 				String klasses = theOne.getAttribute("name");
@@ -739,7 +734,7 @@ public class Player extends Page {
 	
 	private int getTimeInSeconds(IOSElement e){
 		int time = -1;
-		String[] et = e.getAttribute("value").split(":");
+		String[] et = e.getAttribute("value").trim().split(":");
 		if(et != null && et.length > 0){
 			time = Integer.parseInt(et[et.length - 1]);
 			if(et.length > 2){

@@ -108,6 +108,7 @@ public class TestPlayback extends TestRoot {
 		
 		// Verify the controls on the mini player
 		String miniPlayerControls = miniPlayer.verifyControls();
+		// TODO This is failing too
 		Assert.assertTrue("Mini player control issues:\n" + miniPlayerControls, didPass(miniPlayerControls));
 		
 		// Check that mini bar is on every page we expect it to be on
@@ -130,6 +131,7 @@ public class TestPlayback extends TestRoot {
 		genrePage.selectGenre(1);
 		Page.handlePossiblePopUp();
 		
+		//TODO Wha?! Failing here too
 		String artist = "Matt and Kim";
 		Assert.assertTrue("Could not play a custom artist station based on the artist: " + artist,
 				customRadio.playACustomStation(artist).contains(artist));
@@ -231,5 +233,13 @@ public class TestPlayback extends TestRoot {
 		sideNavBar.gotoHomePage();
 		playedStation = forYouPage.playLiveRadio();
 		Assert.assertTrue("Could not play a live radio station after logging out.", strGood(playedStation));
+	}
+	
+	@Test
+	public void testAdditionalInfo(){
+		// Tests that the additional info ellipsis is present and functional for live stations, podcasts, and artist radio
+		loginPage.loginWithoutVerifying();
+		
+		
 	}
 }
