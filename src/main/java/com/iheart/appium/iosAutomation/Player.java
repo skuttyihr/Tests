@@ -806,8 +806,16 @@ public class Player extends Page {
 		}
 		else{
 			String floatingPercentage = String.valueOf((float) volumeLevel / 100);
-			int count = 0;
+			
+			// Try this method. If it works, break
+			// Sometimes this method is required before trying to set it the other way, to enable it
+			volume.setValue(String.valueOf(floatingPercentage));
 			int testVolume = getVolume();
+			if(isAbout(volumeLevel, testVolume, 6)){
+				return "";
+			}
+			int count = 0;
+			testVolume = getVolume();
 			while (count < 3 && !isAbout(volumeLevel, testVolume, 6)){
 				count++;
 				try{
