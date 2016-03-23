@@ -108,7 +108,6 @@ public class TestPlayback extends TestRoot {
 		
 		// Verify the controls on the mini player
 		String miniPlayerControls = miniPlayer.verifyControls();
-		// TODO This is failing too
 		Assert.assertTrue("Mini player control issues:\n" + miniPlayerControls, didPass(miniPlayerControls));
 		
 		// Check that mini bar is on every page we expect it to be on
@@ -131,7 +130,6 @@ public class TestPlayback extends TestRoot {
 		genrePage.selectGenre(1);
 		Page.handlePossiblePopUp();
 		
-		//TODO Wha?! Failing here too
 		String artist = "Matt and Kim";
 		Assert.assertTrue("Could not play a custom artist station based on the artist: " + artist,
 				customRadio.playACustomStation(artist).contains(artist));
@@ -147,7 +145,7 @@ public class TestPlayback extends TestRoot {
 	@Test
 	public void testPodcastPlaybackAndControls() {
 		System.out.println("test method:" + name.getMethodName());
-		Assert.assertTrue("Was not able to login", loginPage.login());
+		loginPage.loginWithoutVerifying();
 		String errorsWithPodcasts = podcastsPage.playPodcasts();
 		Assert.assertTrue("Could not play a podcast episode. Errors:\n" 
 							+ errorsWithPodcasts, didPass(errorsWithPodcasts));
@@ -239,7 +237,11 @@ public class TestPlayback extends TestRoot {
 	public void testAdditionalInfo(){
 		// Tests that the additional info ellipsis is present and functional for live stations, podcasts, and artist radio
 		loginPage.loginWithoutVerifying();
-		
-		
+		// Artist radio
+		String artist = "The Killers";
+		Assert.assertTrue("Could not play a custom artist station based on the artist: " + artist,
+				customRadio.playACustomStation(artist).contains(artist));
+		String moreInfoErrors = player.verifyAllMoreInfoItems();
+		Assert.assertTrue("Errors with More Info page: " + moreInfoErrors, didPass(moreInfoErrors));
 	}
 }

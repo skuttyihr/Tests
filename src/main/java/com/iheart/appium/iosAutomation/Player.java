@@ -69,6 +69,37 @@ public class Player extends Page {
 	
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIANavigationBar[1]/UIAStaticText[1]") public IOSElement stationTitle;
 	
+	// More info pane
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAImage[4]") public IOSElement moreInfoAlbumArtwork;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[9]") public IOSElement moreInfoSong;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[10]") public IOSElement moreInfoArtist;
+	@iOSFindBy(name = "Tune Station") public IOSElement moreInfoTuneStation;
+	@iOSFindBy(name = "Lyrics") public IOSElement moreInfoLyrics;
+	@iOSFindBy(name = "Artist Bio") public IOSElement moreInfoArtistBio;
+	@iOSFindBy(name = "Share") public IOSElement moreInfoShare;
+	@iOSFindBy(name = "Buy Song") public IOSElement moreInfoBuy;
+	@iOSFindBy(name = "Close") public IOSElement moreInfoClose;
+	
+	// Tune station controls
+	@iOSFindBy(name = "close inactive") public IOSElement tuneStationClose;
+	@iOSFindBy(name = "Discovery Tuner") public IOSElement tuneStationLabel;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[10]") public IOSElement tuneStationDescription;
+	@iOSFindBy(name = "Top Hits") public IOSElement tuneStationTopHits;
+	@iOSFindBy(name = "Mix") public IOSElement tuneStationMix;
+	@iOSFindBy(name = "Variety") public IOSElement tuneStationVariety;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[11]") public IOSElement tuneStationFeatured;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[12]") public IOSElement tuneStationListOfArtists;
+	// Lyrics Elements
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[1]") public IOSElement lyricsSong;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[2]") public IOSElement lyricsArtist;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAScrollView[2]/UIAWebView[1]") public IOSElement lyricsView;
+	@iOSFindBy(name="Back") public IOSElement moreBack;
+	// Artist bio elements
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[1]") public IOSElement artistBioArtist;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAScrollView[2]/UIAWebView[1]") public IOSElement artistBioBio; 
+	// Share pane and buy song handled by Page class
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAActivityView[1]/UIAActionSheet[1]/UIAButton[1]") public IOSElement shareCancel;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAActivityView[1]/UIAActionSheet[1]/UIAScrollView[1]/UIACollectionView[1]") public IOSElement shareOptions;
 	public Player() {
 		super();
 	}
@@ -763,6 +794,7 @@ public class Player extends Page {
 		// Add a little to adjust for consistently lower than requested position
 		String floatingPercentage = String.valueOf((float) percentage / 100 + .0336); 
 		if(isVisible(slideBar)){
+			slideBar.setValue(floatingPercentage); // Done to enable our ability to change this
 			int testLoc = getPodcastScubberPostitionPercentage();
 			int count = 0;
 			while(count < 3 && !isAbout(percentage, testLoc, 6)){
@@ -869,5 +901,238 @@ public class Player extends Page {
 			title = stationTitle.getText();
 		}
 		return title;
+	}
+	
+	public String openMoreInfo(){
+		Errors err = new Errors();
+		
+		if(isVisible(more)){
+			more.click();
+			// Check that all options are present
+			// They may not all be clickable though...
+			if(!isVisible(moreInfoAlbumArtwork)){
+				err.add("Album artwork was not displayed on more info screen.");
+			}
+			if(!isVisible(moreInfoSong)){
+				err.add("Song name was not displayed on more info screen.");
+			}
+			if(!isVisible(moreInfoArtist)){
+				err.add("Artist name was not displayed on more info screen.");
+			}
+			if(!isVisible(moreInfoTuneStation)){
+				err.add("Tune Station was not displayed on more info screen.");
+			}
+			if(!isVisible(moreInfoLyrics)){
+				err.add("Lyrics button was not displayed on more info screen.");
+			}
+			if(!isVisible(moreInfoArtistBio)){
+				err.add("Artist bio was not displayed on more info screen.");
+			}
+			if(!isVisible(moreInfoShare)){
+				err.add("Share button was not displayed on more info screen.");
+			}
+			if(!isVisible(moreInfoBuy)){
+				err.add("Buy Song button was not displayed on more info screen.");
+			}
+			if(!isVisible(moreInfoClose)){
+				err.add("Close button was not displayed on more info screen.");
+			}
+		}
+		else{
+			err.add("More (...) button was not visible");
+		}
+		
+		return err.getErrors();
+	}
+	public String closeMoreInfo(){
+		Errors err = new Errors();
+		
+		if(isVisible(moreInfoClose)){
+			moreInfoClose.click();
+			if(isVisible(moreInfoClose)){
+				err.add("Clicking on close button did not close more info dialog.");
+			}
+		}
+		else{
+			err.add("More info button was not visible.");
+		}
+		
+		return err.getErrors();
+	}
+	public String verifyAllMoreInfoItems(){
+		Errors err = new Errors();
+		
+		// If the more info button is present, open the more info dialog and verify that everything is present
+		if(isVisible(more)){
+			err.add(openMoreInfo());
+		}
+		
+		String[] testItems = {
+			"Tune Station",
+			"Lyrics",
+			"Artist Bio",
+			"Share",
+			"Buy Song"
+		};
+		
+		for(String t : testItems){
+			err.add(verifyMoreInfoItem(t));
+			handlePossiblePopUp();
+			if(isVisible(more)){
+				err.add(openMoreInfo());
+			}
+		}
+		
+		return err. getErrors();
+	}
+	
+	private void skipUntilEnabled(IOSElement ele){
+		int enabledCount = 0;
+		while (enabledCount < 4 && !ele.isEnabled()){
+			enabledCount++;
+			moreInfoClose.click();
+			if(isVisible(skip)){
+				skip.click();
+			}
+			else if(isVisible(scan)){
+				scan.click();
+			}
+			openMoreInfo();
+		}
+	}
+	
+	public String verifyMoreInfoItem(String itemName){
+		Errors err = new Errors();
+		
+		switch(itemName){
+		case "Tune Station":
+			if(isVisible(moreInfoTuneStation)){
+				moreInfoTuneStation.click();
+				// Test that X is present
+				// Test the description of the tuner
+				// Test the three options
+				// Test the artist list (and that it changes if options are clicked)
+				if(!isVisible(tuneStationClose)){
+					err.add("Tune Station close button was not present");
+				}
+				if(!isVisible(tuneStationLabel)){
+					err.add("Tune Station label was not present");
+				}
+				if(!isVisible(tuneStationDescription)){
+					err.add("Tune Station description was not present");
+				}
+				if(!isVisible(tuneStationTopHits)){
+					err.add("Tune Station Top Hits button was not present");
+				}
+				if(!isVisible(tuneStationMix)){
+					err.add("Tune Station Mix button was not present");
+				}
+				if(!isVisible(tuneStationVariety)){
+					err.add("Tune Station Variety button was not present");
+				}
+				if(!isVisible(tuneStationFeatured)){
+					err.add("Tune Station featured artists label was not present");
+				}
+				if(!isVisible(tuneStationListOfArtists)){
+					err.add("Tune Station list of featured artists was not present");
+				}
+				if(err.howMany() == 0){
+					String artists = tuneStationListOfArtists.getText();
+					tuneStationMix.click();
+					if(artists.equals(tuneStationListOfArtists.getText())){
+						err.add("List of artists did not change when selecing different tuning method (Mix).");
+					}
+					tuneStationVariety.click();
+					if(artists.equals(tuneStationListOfArtists.getText())){
+						err.add("List of artists did not change when selecing different tuning method (Variety).");
+					}
+					tuneStationTopHits.click();
+					if(!artists.equals(tuneStationListOfArtists.getText())){
+						err.add("List of artists did not change when selecing different tuning method (Top Hits).");
+					}
+				}
+				
+				tuneStationClose.click();
+			}
+			else{
+				err.add("Tune Station is not visible");				
+			}
+			break;
+		case "Lyrics":
+			// Lyrics may not always be available. Only test if they are. Try to skip if not
+			if(isVisible(moreInfoLyrics)){
+				
+				// Skip songs until we find one with lyrics
+				skipUntilEnabled(moreInfoLyrics);
+				
+				if(isVisible(moreInfoLyrics) && !moreInfoLyrics.isEnabled()){
+					err.add("More info lyrics were not enabled.");
+				}
+				moreInfoLyrics.click();
+				waitForElementToBeVisible(lyricsSong, 1);
+				if(!isVisible(lyricsSong)){
+					err.add("Lyrics song title was not displayed");
+				}
+				if(!isVisible(lyricsArtist)){
+					err.add("Lyrics artist name was not displayed");
+				}
+				if(!isVisible(lyricsView)){
+					err.add("Lyrics were not displayed.");
+				}
+				moreBack.click();
+			}
+			else{
+				 err.add("More info lyrics were not visible at all.");
+			}
+			break;
+		case "Artist Bio":
+			if(isVisible(moreInfoArtistBio)){
+				// Skip until we find a song with an artist bio
+				skipUntilEnabled(moreInfoArtistBio);
+				if(isVisible(moreInfoArtistBio) && !moreInfoArtistBio.isEnabled()){
+					err.add("More info artist bio button could not be enabled");
+				}
+				// Click
+				moreInfoArtistBio.click();
+				waitForElementToBeVisible(artistBioArtist, 1);
+				// Test for the artist bio elements
+				if(!isVisible(artistBioArtist)){
+					err.add("Artist bio label was not visible");
+				}
+				if(!isVisible(artistBioBio)){
+					err.add("Text for artist bio was not visible");
+				}
+				moreBack.click();
+			}
+			else{
+				err.add("Artist Bio button was not visible.");
+			}
+			break;
+		case "Share": 
+			if(isVisible(moreInfoShare)){
+				moreInfoShare.click();
+				waitForElementToBeVisible(shareOptions, 2);
+				if(!isVisible(shareOptions)){
+					err.add("Sharing options were not visible");
+				}
+				if(!isVisible(shareCancel)){
+					err.add("Share cancel button was not visible");
+				}
+				else{
+					shareCancel.click();
+				}
+			}
+			else{
+				err.add("Share option was not visible");
+			}
+			break;
+		case "Buy Song":// Not much to test here since it exits the app, leaving Appium automation behind
+			if(!isVisible(moreInfoBuy)){
+				err.add("Option to buy song was not present");
+			}
+			break;
+		}
+		
+		return err.getErrors();
 	}
 }
