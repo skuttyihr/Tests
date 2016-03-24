@@ -56,8 +56,8 @@ public class Search extends Page {
 			IOSElement sb = getSearchButton();
 			if(sb == null || !isVisible(sb)){
 				sideNavBar.gotoHomePage();
+				sb = getSearchButton();
 			}
-			sb = getSearchButton();
 			sb.click();
 			waitForElementToBeVisible(searchField, 3);
 		}
@@ -185,11 +185,14 @@ public class Search extends Page {
 		// Select first result
 		firstStation.click();
 		// Select the first podcast episode 
-		IOSElement podcastEpisode = podcastsPage.getPodcastEpisode(1);
+		IOSElement podcastEpisode = podcastsPage.getPodcastEpisode(2);
 		String chosenEpisode = "";
-		if(podcastEpisode != null){
-			podcastEpisode.getText();
-			podcastEpisode.click();
+		if(isVisible(podcastEpisode)){
+			chosenEpisode = podcastEpisode.getAttribute("name");
+			podcastEpisode.click(); //TODO Make this the text, not the button, so we can grab the title
+		}
+		else{
+			System.err.println("Could not get podcast episode!");
 		}
 		return chosenEpisode;
 	}

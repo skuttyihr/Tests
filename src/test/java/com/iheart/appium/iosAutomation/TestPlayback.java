@@ -242,6 +242,21 @@ public class TestPlayback extends TestRoot {
 		Assert.assertTrue("Could not play a custom artist station based on the artist: " + artist,
 				customRadio.playACustomStation(artist).contains(artist));
 		String moreInfoErrors = player.verifyAllMoreInfoItems();
-		Assert.assertTrue("Errors with More Info page: " + moreInfoErrors, didPass(moreInfoErrors));
+		Assert.assertTrue("Errors with More Info page for artist radio: " + moreInfoErrors, didPass(moreInfoErrors));
+		player.closeMoreInfo();
+		// Load up a podcast and test that we cannot see the more info button
+		player.getBack();
+//		sideNavBar.gotoPodcastsPage();
+		sideNavBar.gotoHomePage();
+		Assert.assertTrue(strGood(search.searchForPodCast("Elvis Duran on Demand")));
+		Assert.assertTrue("More Info button was not disabled, as we expected it to be",
+				isVisible(player.more) && !player.more.isEnabled());
+		
+		// Check live radio playback
+		player.getBack();
+		sideNavBar.gotoHomePage();
+		search.searchForStation("Z100");
+		moreInfoErrors = player.verifyAllMoreInfoItems();
+		Assert.assertTrue("Errors with More Info page for live radio: " + moreInfoErrors, didPass(moreInfoErrors));
 	}
 }

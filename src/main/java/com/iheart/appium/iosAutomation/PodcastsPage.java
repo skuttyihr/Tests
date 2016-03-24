@@ -69,10 +69,19 @@ public class PodcastsPage extends Page {
 				7);
 	}
 	public IOSElement getPodcastEpisode(int i){
-		i += 1; // First "podcast episode" is actually the station
-		return waitForVisible(driver, 
-					By.xpath("//UIAApplication[1]/UIAWindow[1]/UIATableView[3]/UIATableCell[" + i + "]"
-							+ "/UIAButton[1]"),
-					7);
+		// i = 1 is a title bar, start at i = 2
+		i++;
+		IOSElement episode = waitForVisible(driver, By.xpath("//UIAApplication[1]/UIAWindow[1]/UIATableView[3]/UIATableCell[" + i + "]"), 10);
+		int attempts = 10;
+		while(attempts > 0 && episode == null || !strGood(episode.getAttribute("name"))){
+			System.out.println("Trying to select again... why is this necessary?!");
+			attempts--;
+			// Try again
+			episode = waitForVisible(driver, By.xpath("//UIAApplication[1]/UIAWindow[1]/UIATableView[3]/UIATableCell[" + i + "]"), 5);
+		}
+		if(episode != null){
+			System.out.println("Got element with name: " + episode.getAttribute("name"));
+		}
+		return episode;
 	}
 }
