@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Random;
@@ -34,6 +35,12 @@ import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
 
 public class TestRoot {
+	
+	protected static final int UP = 0;
+	protected static final int RIGHT = 1;
+	protected static final int DOWN = 2;
+	protected static final int LEFT = 3;
+	
 	protected static int implicitWaitTimeout = 375;
 	
 	protected static IOSDriver<IOSElement> driver;
@@ -64,6 +71,7 @@ public class TestRoot {
 	protected static GenrePage genrePage;
 	protected static MiniPlayer miniPlayer;
 	protected static SettingsPage settings;
+	protected static PerfectFor perfectFor;
 	
 	protected static boolean useSimulator = false;
 	
@@ -162,6 +170,7 @@ public class TestRoot {
 		genrePage = new GenrePage(driver);
 		miniPlayer = new MiniPlayer(driver);
 		settings = new SettingsPage(driver);
+		perfectFor = new PerfectFor(driver);
 		
 		driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 		
@@ -304,15 +313,29 @@ public class TestRoot {
 		try{
 			d.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
 			e = d.findElement(by);
-			if(e != null){
-				return e;
-			}
 		}
 		catch(Exception exc){}
 		finally{
 			d.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 		}
 		return e;
+	}
+	
+	public static List<IOSElement> findElements(IOSDriver<IOSElement> d, By by){
+		List<IOSElement> foundElements = null;
+		
+		try{
+			d.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
+			foundElements = d.findElements(by);
+		}
+		catch(Exception e){
+			System.out.println("Could not find elements");
+		}
+		finally{
+			d.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
+		}
+		
+		return foundElements;
 	}
 	
 	/**
@@ -422,6 +445,70 @@ public class TestRoot {
 		swipe(startx, starty, 3, 500);
 	}
 	
+	/**
+	 * Swipes on an element, keeping within the bounds of the element, if possible
+	 * Will try to swipe to/from 10%-90% of the element +/- 4/5 from center
+	 * 0=Up 1=Right 2=Down 3=Left
+	 * @param item
+	 * @param direction
+	 */
+	public static void swipeOnItem(IOSElement item, int direction){
+		if(!isVisible(item)){
+			return;
+		}
+		int x = item.getLocation().getX();
+		int y = item.getLocation().getY();
+		int w = item.getSize().getWidth();
+		int h = item.getSize().getHeight();
+		int tenthX = (w / 10); // Add X after calculation
+		int tenthY = (h / 10); // Add Y after calculation
+		int centerX = tenthX * 5 + x;
+		int centerY = tenthY * 5 + y;
+		// The parts we're going to figure out
+		int startX = centerX;
+		int startY = centerY;
+		int endX = centerX;
+		int endY = centerY;
+		switch(direction){
+		case 0: // Up ^
+			startX = centerX;
+			startY = (tenthY * 9) + y;
+			endX = centerX;
+			endY = tenthY + y;
+			break;
+		case 1: // Right ----->
+			startX = tenthX + x;
+			startY = centerY;
+			endX = (tenthX * 9) + x;
+			endY = centerY;
+			break;
+		case 2: // Down V
+			startX = centerX;
+			startY = tenthY + y;
+			endX = centerX;
+			endY = (tenthY * 9) + y;
+			break;
+		case 3: // Left <-----
+			startX = (tenthX * 9) + x;
+			startY = centerY;
+			endX = tenthX + x;
+			endY = centerY;
+			break;
+		default:
+			System.err.println("Direction must be 0, 1, 2, or 3 for Up, Right, Down, or Left, respectively.");
+			break;
+		}
+		
+		if(startX != endX || startY != endY){
+			try{
+				driver.swipe(startX, startY, endX, endY, 500);
+			}
+			catch(Exception e){
+				System.err.println("Error trying to swipe on element!\n");
+				e.printStackTrace();
+			}
+		}
+	}
 	
 	public static int getAppWidth(){
 		if(appWidth == 0)
@@ -589,6 +676,15 @@ public class TestRoot {
 			}catch(Exception e){}
 		}
 		return elementGone;
+	}
+	
+	public static boolean click(IOSDriver<IOSElement> d, By by){
+		IOSElement clickMe = findElement(d, by);
+		if(isVisible(clickMe)){
+			clickMe.click();
+			return true;
+		}
+		return false;
 	}
 	
 	/**

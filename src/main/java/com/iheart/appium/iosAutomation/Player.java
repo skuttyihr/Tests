@@ -21,34 +21,27 @@ public class Player extends Page {
 	@iOSFindBy(name = "airplay") public IOSElement airPlay;
 
 	// Seems that this is depending upon from where the player is launched
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[4]") public IOSElement songTrack_artist;
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[5]") public IOSElement artist_artist;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[3]") public IOSElement songTrack_artist;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[4]") public IOSElement artist_artist;
 
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[6]") public IOSElement songTrack_live;
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[7]") public IOSElement artist_live;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[1]") public IOSElement songTrack_live;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[2]") public IOSElement artist_live;
 
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[2]") public IOSElement songTrack2_live;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[3]") public IOSElement artist2_live;
 
 	// podcast specific
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIASlider[1]") public IOSElement slideBar;
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[2]") public IOSElement elapsedTime;
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[3]") public IOSElement totalTime;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[1]") public IOSElement elapsedTime;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[2]") public IOSElement totalTime;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[9]") public IOSElement episodeName_podcast;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[10]") public IOSElement stationName_podcast;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAButton[3]") public IOSElement playButton_podcast;
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAButton[9]") public IOSElement more_podcast;
 
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAButton[7]") public IOSElement playButton_live; // doesn't apply for podcast
-	// @iOSFindBy(xpath="//UIAApplication[1]/UIAWindow[1]/UIAButton[9]") public
-	// IOSElement playButton_artist;
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAButton[3]") public IOSElement playButton_artist;
-	// @iOSFindBy(xpath="//UIAApplication[1]/UIAWindow[1]/UIAButton[11]") public
-	// IOSElement more;
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAButton[6]") public IOSElement more_live;
-	// @iOSFindBy(name="more") public IOSElement more;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAButton[5]") public IOSElement playButton_live; 
+	@iOSFindBy(xpath="//UIAApplication[1]/UIAWindow[1]/UIAButton[7]") public IOSElement more;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAButton[5]") public IOSElement playButton_artist; 
 
-//	@iOSFindBy(name = "Skip") public IOSElement skip;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAButton[6]") public IOSElement skip;
 	@iOSFindBy(name = "scan") public IOSElement scan;
 	@iOSFindBy(name = "Thumb up") public IOSElement thumbUp;
@@ -59,11 +52,11 @@ public class Player extends Page {
 	@iOSFindBy(name = "Mail") public IOSElement mail;
 	
 	// If loaded from mini player
-	@iOSFindBy(name = "downarrow button") public IOSElement minimizeButton;
+	@iOSFindBy(name = "player downarrow") public IOSElement minimizeButton;
 	
 	// Images 
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAImage[3]") public IOSElement radioImage;
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAImage[4]") public IOSElement artistAlbumArt;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAImage[3]") public IOSElement artistAlbumArt;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAImage[4]") public IOSElement podcastImage; // Same as above, but named to assist in any possible issues
 	
 	// Growl Messages (Use Xpath only as backup)
@@ -73,6 +66,55 @@ public class Player extends Page {
 	@iOSFindBy(name = "Thanks for the feedback. We'll let our DJs know you've  heard enough of this song.") public IOSElement liveThumbDownGrowl;
 	@iOSFindBy(name = "Great, we’ll play you more  episodes like this.") public IOSElement podcastThumbUpGrowl; // //UIAApplication[1]/UIAWindow[1]/UIAStaticText[10]
 	@iOSFindBy(name = "OK, we’ll adjust your station.") public IOSElement podcastThumbDownGrowl;
+	
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIANavigationBar[1]/UIAStaticText[1]") public IOSElement stationTitle;
+	
+	// More info pane
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAImage[4]") public IOSElement moreInfoAlbumArtwork;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[9]") public IOSElement moreInfoSong;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[10]") public IOSElement moreInfoArtist;
+	@iOSFindBy(name = "Tune Station") public IOSElement moreInfoTuneStation;
+	@iOSFindBy(name = "Lyrics") public IOSElement moreInfoLyrics;
+	@iOSFindBy(name = "Artist Bio") public IOSElement moreInfoArtistBio;
+	@iOSFindBy(name = "Share") public IOSElement moreInfoShare;
+	@iOSFindBy(name = "Buy Song") public IOSElement moreInfoBuy;
+	@iOSFindBy(name = "Close") public IOSElement moreInfoClose;
+	// More info for Live Radio
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[7]") public IOSElement moreInfoRadioSong;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[8]") public IOSElement moreInfoRadioArtist;
+	@iOSFindBy(name = "Station Info") public IOSElement moreInfoRadioStationInfo;
+
+	// Tune station controls
+	@iOSFindBy(name = "close inactive") public IOSElement tuneStationClose;
+	@iOSFindBy(name = "Discovery Tuner") public IOSElement tuneStationLabel;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[10]") public IOSElement tuneStationDescription;
+	@iOSFindBy(name = "Top Hits") public IOSElement tuneStationTopHits;
+	@iOSFindBy(name = "Mix") public IOSElement tuneStationMix;
+	@iOSFindBy(name = "Variety") public IOSElement tuneStationVariety;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[11]") public IOSElement tuneStationFeatured;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[12]") public IOSElement tuneStationListOfArtists;
+	// Lyrics Elements
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[1]") public IOSElement lyricsSong;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[2]") public IOSElement lyricsArtist;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAScrollView[2]/UIAWebView[1]") public IOSElement lyricsView;
+	@iOSFindBy(name="Back") public IOSElement moreBack;
+	// Artist bio elements
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[1]") public IOSElement artistBioArtist;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAScrollView[2]/UIAWebView[1]") public IOSElement artistBioBio; 
+	// Share pane and buy song handled by Page class
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAActivityView[1]/UIAActionSheet[1]/UIAButton[1]") public IOSElement shareCancel;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAActivityView[1]/UIAActionSheet[1]/UIAScrollView[1]/UIACollectionView[1]") public IOSElement shareOptions;
+	
+	// Station Info
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIANavigationBar[1]/UIAStaticText[2]") public IOSElement stationInfoName;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAScrollView[2]/UIAImage[6]") public IOSElement stationInfoLogo;
+	@iOSFindBy(name = "Now Playing") public IOSElement stationInfoNowPlaying;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAScrollView[2]/UIAStaticText[2]") public IOSElement stationInfoSong;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAScrollView[2]/UIAStaticText[3]") public IOSElement stationInfoArtist;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAScrollView[2]/UIAScrollView[1]/UIAWebView[1]") public IOSElement stationInfoView;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAScrollView[2]/UIAStaticText[4]") public IOSElement stationInfoNoContent;
+	@iOSFindBy(name = "The Feed") public IOSElement stationInfoTheFeed;
+	@iOSFindBy(name = "On Air") public IOSElement stationInfoOnAir;
 	
 	public Player() {
 		super();
@@ -102,18 +144,13 @@ public class Player extends Page {
 			if (!TestRoot.isVisible(songTrack2_live))
 				errors.append("No sound track name is displayed.\n");
 		}
-
-		if (!TestRoot.isVisible(artist_live)) {
-			if (!TestRoot.isVisible(artist2_live))
-				errors.append("Artist name is NOT displayed.\n");
-		}
 		if (!TestRoot.isVisible(playButton_live))
 			errors.append("Play icon is not displayed.\n");
 
 		if (!TestRoot.isVisible(scan))
 			errors.append("Scan icon is not displayed.\n");
 
-		if (!TestRoot.isVisible(more_live))
+		if (!TestRoot.isVisible(more))
 			errors.append(".... is not displayed.\n");
 
 		if(!isVisible(radioImage)){
@@ -187,21 +224,6 @@ public class Player extends Page {
 		return errors.toString();
 	}
 
-	/**
-	 * **Calls assert statements, can fail tests from within method!
-	 * @param callingMethod
-	 */
-	private String verfiyCommonIcons() {
-		Errors errors = new Errors();
-		if (!TestRoot.isVisible(thumbUp))
-			errors.append("No Thumb Up icon is displayed.\n");
-
-		if (!TestRoot.isVisible(thumbDown))
-			errors.append("No Thumb Down icon is displayed.\n");
-		
-		return errors.toString();
-	}
-
 	public boolean doSkip(String type) {
 		String currentTrack, nowPlaying;
 		currentTrack = getNowPlaying(type);
@@ -228,7 +250,7 @@ public class Player extends Page {
 	}
 
 	public boolean doShare() {
-		more_live.tap(1, 1);
+		more.tap(1, 1);
 		share.tap(1, 1);
 		if (!isVisible(mail))
 			return false;
@@ -360,6 +382,9 @@ public class Player extends Page {
 			handleUnFavConfirmation();
 		}
 
+		if(!isVisible(favorite)){
+			return false;
+		}
 		favorite.click();
 		handleActionPopup();
 
@@ -475,20 +500,25 @@ public class Player extends Page {
 		return currentTime != getElapsedTime();
 	}
 	
-	public boolean isPlaying(){
-		waitForElementToBeVisible(playButton_artist, 4);
-		if ( isVisible(playButton_artist) 
-				|| isVisible(playButton_live)
-				|| isVisible(playButton_podcast)){
-			return true;
+	public boolean isPlayingInPlayer(){
+		if(isPlaying()){
+			if(isVisible(artistPlayerView)
+					|| isVisible(podcastPlayerView)
+					|| isVisible(player.radioPlayerView)){
+				return true;
+			}
 		}
 		return false;
 	}
 	
+	public boolean isPlaying(){
+		return isPlaying(getType());
+	}
+	
 	public boolean isPlaying(String type) {
 		boolean isPlaying = false;
-
-		IOSElement theOne;
+		handlePossiblePopUp();
+		IOSElement theOne = null;
 		if (type.equals("live"))
 			theOne = playButton_live;
 		else if (type.equals("podcast"))
@@ -501,8 +531,13 @@ public class Player extends Page {
 				return false;
 			}
 		}catch(Exception e){}
+		
 		waitForElementToBeVisible(theOne, 5);
+		if(!isVisible(theOne)){
+			return false;
+		}
 		// verify that it is playing: Get its attribute: class shall be 'pause'
+		// TODO Check this, it's failing
 		try{
 			if(theOne != null && isVisible(theOne)){
 				String klasses = theOne.getAttribute("name");
@@ -529,13 +564,21 @@ public class Player extends Page {
 	 */
 	public String getType(){
 		String[] types = {"artist", "podcast", "live"};
-		int type = 0; // Default to artist
-		if(isVisible(podcastPlayerView)){
+		int type = 0; 
+		
+		// Try to do it a different way
+		IOSElement liveRadioPlayer = findElement(driver, By.name("Live Radio"));
+		IOSElement podcastPlayer = findElement(driver, By.name("Podcast"));
+		if(isVisible(podcastPlayer)){
 			type = 1;
 		}
-		else if(isVisible(radioPlayerView)){
+		else if(isVisible(liveRadioPlayer)){
 			type = 2;
 		}
+		else if(isVisible(artistPlayerView)){
+			type = 0;
+		}
+	
 		
 		return types[type];
 	}
@@ -637,9 +680,6 @@ public class Player extends Page {
 			break;
 		}
 		
-		// Verify that the elements they share are present
-		errors.add(verfiyCommonIcons());
-		
 		// Verify that we can use the controls
 		if(!doThumbDown()){
 			errors.add("Could not thumb down!");
@@ -735,7 +775,7 @@ public class Player extends Page {
 	
 	private int getTimeInSeconds(IOSElement e){
 		int time = -1;
-		String[] et = e.getAttribute("value").split(":");
+		String[] et = e.getAttribute("value").trim().split(":");
 		if(et != null && et.length > 0){
 			time = Integer.parseInt(et[et.length - 1]);
 			if(et.length > 2){
@@ -764,6 +804,7 @@ public class Player extends Page {
 		// Add a little to adjust for consistently lower than requested position
 		String floatingPercentage = String.valueOf((float) percentage / 100 + .0336); 
 		if(isVisible(slideBar)){
+			slideBar.setValue(floatingPercentage); // Done to enable our ability to change this
 			int testLoc = getPodcastScubberPostitionPercentage();
 			int count = 0;
 			while(count < 3 && !isAbout(percentage, testLoc, 6)){
@@ -807,8 +848,16 @@ public class Player extends Page {
 		}
 		else{
 			String floatingPercentage = String.valueOf((float) volumeLevel / 100);
-			int count = 0;
+			
+			// Try this method. If it works, break
+			// Sometimes this method is required before trying to set it the other way, to enable it
+			volume.setValue(String.valueOf(floatingPercentage));
 			int testVolume = getVolume();
+			if(isAbout(volumeLevel, testVolume, 6)){
+				return "";
+			}
+			int count = 0;
+			testVolume = getVolume();
 			while (count < 3 && !isAbout(volumeLevel, testVolume, 6)){
 				count++;
 				try{
@@ -850,6 +899,352 @@ public class Player extends Page {
 			if(airPlay == null){ // If we have it but it's not visible, pass it anyway
 				err.add("AirPlay button was not visible. Is this disabled?");
 			}
+		}
+		
+		return err.getErrors();
+	}
+	
+	public String getStationTitle(){
+		String title = "";
+		waitForElementToBeVisible(stationTitle, 3);
+		if(isVisible(stationTitle)){
+			title = stationTitle.getText();
+		}
+		return title;
+	}
+	
+	public String openMoreInfo(){
+		return openMoreInfo(getType());
+	}
+	public String openMoreInfo(String type){
+		Errors err = new Errors();
+		
+		if(isVisible(more)){
+			more.click();
+			// Check that all options are present
+			// They may not all be clickable though...
+			IOSElement song = moreInfoSong;
+			IOSElement artist = moreInfoArtist;
+			IOSElement station = moreInfoTuneStation;
+			if(type.equals("live")){
+				song = moreInfoRadioSong;
+				artist = moreInfoRadioArtist;
+				station = moreInfoRadioStationInfo;
+			}
+			if(!isVisible(moreInfoAlbumArtwork)){
+				err.add("Album artwork was not displayed on more info screen.");
+			}
+			if(!isVisible(song)){
+				err.add("Song name was not displayed on more info screen.");
+			}
+			if(!isVisible(artist)){
+				err.add("Artist name was not displayed on more info screen.");
+			}
+			if(!isVisible(station)){
+				err.add("Tune Station/Station Info was not displayed on more info screen.");
+			}
+			if(!isVisible(moreInfoLyrics)){
+				err.add("Lyrics button was not displayed on more info screen.");
+			}
+			if(!isVisible(moreInfoArtistBio)){
+				err.add("Artist bio was not displayed on more info screen.");
+			}
+			if(!isVisible(moreInfoShare)){
+				err.add("Share button was not displayed on more info screen.");
+			}
+			if(!isVisible(moreInfoBuy)){
+				err.add("Buy Song button was not displayed on more info screen.");
+			}
+			if(!isVisible(moreInfoClose)){
+				err.add("Close button was not displayed on more info screen.");
+			}
+		}
+		else{
+			err.add("More (...) button was not visible");
+		}
+		
+		return err.getErrors();
+	}
+	public String closeMoreInfo(){
+		Errors err = new Errors();
+		
+		if(isVisible(moreInfoClose)){
+			moreInfoClose.click();
+			if(isVisible(moreInfoClose)){
+				err.add("Clicking on close button did not close more info dialog.");
+			}
+		}
+		else{
+			err.add("More info button was not visible.");
+		}
+		
+		return err.getErrors();
+	}
+	public String verifyAllMoreInfoItems(){
+		Errors err = new Errors();
+		String type = getType();
+		// If the more info button is present, open the more info dialog and verify that everything is present
+		if(isVisible(more)){
+			err.add(openMoreInfo(type));
+		}
+		
+		String station = "Tune Station";
+		String lyrics = "Lyrics"; // Usually aren't present on live
+		String buy = "Buy Song";
+		if(type.equals("live")){
+			station = "Station Info";
+			lyrics = "";
+			buy = ""; // If it's on a commercial or segment, you can't buy anyway
+		}
+	
+		String[] testItems = {
+			station,
+			lyrics,
+			"Artist Bio",
+			"Share",
+			buy
+		};
+		
+		for(String t : testItems){
+			if(!strGood(t)){
+				continue;
+			}
+			err.add(verifyMoreInfoItem(t));
+			handlePossiblePopUp();
+			if(isVisible(more)){
+				err.add(openMoreInfo());
+			}
+		}
+		
+		return err. getErrors();
+	}
+	
+	private void skipUntilEnabled(IOSElement ele){
+		if(!isVisible(ele)){
+			return;
+		}
+		int enabledCount = 0;
+		while (enabledCount < 7 && !ele.isEnabled()){
+			enabledCount++;
+			moreInfoClose.click();
+			if(isVisible(skip)){
+				skip.click();
+			}
+			else if(isVisible(scan)){
+				scan.click();
+			}
+			openMoreInfo();
+		}
+		if(!ele.isEnabled()){
+			System.out.println("After trying a number of stations, could not find enabled version of element.");
+			try{
+				String text = ele.getText();
+				if(strGood(text)){
+					System.out.println("Check element with text: " + text);
+				}
+			}
+			catch(Exception e){}
+		}
+	}
+	
+	public String verifyMoreInfoItem(String itemName){
+		Errors err = new Errors();
+		
+		switch(itemName){
+		case "Tune Station":
+			if(isVisible(moreInfoTuneStation)){
+				moreInfoTuneStation.click();
+				// Test that X is present
+				// Test the description of the tuner
+				// Test the three options
+				// Test the artist list (and that it changes if options are clicked)
+				if(!isVisible(tuneStationClose)){
+					err.add("Tune Station close button was not present");
+				}
+				if(!isVisible(tuneStationLabel)){
+					err.add("Tune Station label was not present");
+				}
+				if(!isVisible(tuneStationDescription)){
+					err.add("Tune Station description was not present");
+				}
+				if(!isVisible(tuneStationTopHits)){
+					err.add("Tune Station Top Hits button was not present");
+				}
+				if(!isVisible(tuneStationMix)){
+					err.add("Tune Station Mix button was not present");
+				}
+				if(!isVisible(tuneStationVariety)){
+					err.add("Tune Station Variety button was not present");
+				}
+				if(!isVisible(tuneStationFeatured)){
+					err.add("Tune Station featured artists label was not present");
+				}
+				if(!isVisible(tuneStationListOfArtists)){
+					err.add("Tune Station list of featured artists was not present");
+				}
+				if(err.howMany() == 0){
+					String artists = tuneStationListOfArtists.getText();
+					tuneStationMix.click();
+					if(artists.equals(tuneStationListOfArtists.getText())){
+						err.add("List of artists did not change when selecing different tuning method (Mix).");
+					}
+					tuneStationVariety.click();
+					if(artists.equals(tuneStationListOfArtists.getText())){
+						err.add("List of artists did not change when selecing different tuning method (Variety).");
+					}
+					tuneStationTopHits.click();
+					if(!artists.equals(tuneStationListOfArtists.getText())){
+						err.add("List of artists did not change when selecing different tuning method (Top Hits).");
+					}
+				}
+				
+				tuneStationClose.click();
+			}
+			else{
+				err.add("Tune Station is not visible");				
+			}
+			break;
+		case "Station Info":
+			if(isVisible(moreInfoRadioStationInfo)){
+				if(!moreInfoRadioStationInfo.isEnabled()){
+					skipUntilEnabled(moreInfoRadioStationInfo);
+				}
+				moreInfoRadioStationInfo.click();
+				waitForElementToBeVisible(moreBack, 5);
+				if(!isVisible(moreBack)){
+					err.add("Back button for Station Info is not visible");
+				}
+				if(isVisible(stationInfoName)){
+					if(!strGood(stationInfoName.getText())){
+						err.add("Station title at top of station info page was empty.");
+					}
+				}
+				else{
+					err.add("Station title is not at the top of station info page.");
+				}
+				if(!isVisible(stationInfoLogo)){
+					err.add("Station logo was not present in station info");
+				}
+				if(!isVisible(stationInfoNowPlaying)){
+					if(isVisible(stationInfoSong)){
+						err.add("\"Now Playing\" label was not displayed on station info page, though a song or segment was displayed as currently playing.");
+					}
+				}
+				else{
+					if(!isVisible(stationInfoSong)){
+						err.add("Song or segment is not displayed under now playing label in station info");
+					}
+					if(!isVisible(stationInfoArtist)){
+						err.add("Artist or station description was not visible under now playing segment in station info.");
+					}
+				}
+				if(!isVisible(stationInfoView)){
+					if(!isVisible(stationInfoNoContent)){
+						err.add("Station info viewer is not visible in Station Info section "
+								+ "and information telling the user that station content "
+								+ "is not available is not present either.");
+					}
+					else{
+						// Verify elements that display if we have station info
+						// Just the basics, as this is the entire website and testing it would be like testing... well, the entire website... To do?
+						// Check that The Feed and On Air tabs are available
+						if(!isVisible(stationInfoTheFeed)){
+							err.add("Station Info \"The Feed\" tab is not visible");
+						}
+						if(!isVisible(stationInfoOnAir)){
+							err.add("Station Info \"The Feed\" tab is not visible");
+						}
+					}
+				}
+				
+				moreBack.click();
+			}
+			else{
+				err.add("Could not find Station Info button on more info page for live radio.");
+			}
+			break; 
+		case "Lyrics":
+			// Lyrics may not always be available. Only test if they are. Try to skip if not
+			if(isVisible(moreInfoLyrics)){
+				
+				// Skip songs until we find one with lyrics
+				skipUntilEnabled(moreInfoLyrics);
+				
+				if(isVisible(moreInfoLyrics) && !moreInfoLyrics.isEnabled()){
+					err.add("More info lyrics were not enabled.");
+				}
+				moreInfoLyrics.click();
+				waitForElementToBeVisible(lyricsSong, 1);
+				if(!isVisible(lyricsSong)){
+					err.add("Lyrics song title was not displayed");
+				}
+				if(!isVisible(lyricsArtist)){
+					err.add("Lyrics artist name was not displayed");
+				}
+				if(!isVisible(lyricsView)){
+					err.add("Lyrics were not displayed.");
+				}
+				if(isVisible(moreBack)){
+					moreBack.click();
+				}
+				else{
+					getBack(); // Tries a few ways
+				}
+			}
+			else{
+				 err.add("More info lyrics were not visible at all.");
+			}
+			break;
+		case "Artist Bio":
+			if(isVisible(moreInfoArtistBio)){
+				// Skip until we find a song with an artist bio
+				skipUntilEnabled(moreInfoArtistBio);
+				if(isVisible(moreInfoArtistBio) && !moreInfoArtistBio.isEnabled()){
+					err.add("More info artist bio button could not be enabled");
+				}
+				// Click
+				moreInfoArtistBio.click();
+				waitForElementToBeVisible(artistBioArtist, 1);
+				// Test for the artist bio elements
+				if(!isVisible(artistBioArtist)){
+					err.add("Artist bio label was not visible");
+				}
+				if(!isVisible(artistBioBio)){
+					err.add("Text for artist bio was not visible");
+				}
+				moreBack.click();
+			}
+			else{
+				err.add("Artist Bio button was not visible.");
+			}
+			break;
+		case "Share": 
+			if(isVisible(moreInfoShare)){
+				moreInfoShare.click();
+				waitForElementToBeVisible(shareOptions, 2);
+				if(!isVisible(shareOptions)){
+					err.add("Sharing options were not visible");
+				}
+				if(!isVisible(shareCancel)){
+					err.add("Share cancel button was not visible");
+				}
+				else{
+					shareCancel.click();
+				}
+			}
+			else{
+				err.add("Share option was not visible");
+			}
+			break;
+		case "Buy Song":// Not much to test here since it exits the app, leaving Appium automation behind
+			if(!isVisible(moreInfoBuy)){
+				err.add("Option to buy song was not present");
+			}
+			break;
+		}
+		
+		if(isVisible(moreBack)){
+			moreBack.click();
 		}
 		
 		return err.getErrors();

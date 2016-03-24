@@ -21,7 +21,7 @@ public class TestPlayback extends TestRoot {
 	@After
 	public void after() {
 		// Remove favorites
-		Page.removeAllFavorites();
+		homePage.removeAllFavorites();
 		TestRoot.tearDown();
 	}
 	
@@ -145,7 +145,7 @@ public class TestPlayback extends TestRoot {
 	@Test
 	public void testPodcastPlaybackAndControls() {
 		System.out.println("test method:" + name.getMethodName());
-		Assert.assertTrue("Was not able to login", loginPage.login());
+		loginPage.loginWithoutVerifying();
 		String errorsWithPodcasts = podcastsPage.playPodcasts();
 		Assert.assertTrue("Could not play a podcast episode. Errors:\n" 
 							+ errorsWithPodcasts, didPass(errorsWithPodcasts));
@@ -231,5 +231,32 @@ public class TestPlayback extends TestRoot {
 		sideNavBar.gotoHomePage();
 		playedStation = forYouPage.playLiveRadio();
 		Assert.assertTrue("Could not play a live radio station after logging out.", strGood(playedStation));
+	}
+	
+	@Test
+	public void testAdditionalInfo(){
+		// Tests that the additional info ellipsis is present and functional for live stations, podcasts, and artist radio
+		loginPage.loginWithoutVerifying();
+		// Artist radio
+		String artist = "The Killers";
+		Assert.assertTrue("Could not play a custom artist station based on the artist: " + artist,
+				customRadio.playACustomStation(artist).contains(artist));
+		String moreInfoErrors = player.verifyAllMoreInfoItems();
+		Assert.assertTrue("Errors with More Info page for artist radio: " + moreInfoErrors, didPass(moreInfoErrors));
+		player.closeMoreInfo();
+		// Load up a podcast and test that we cannot see the more info button
+		player.getBack();
+//		sideNavBar.gotoPodcastsPage();
+		sideNavBar.gotoHomePage();
+		Assert.assertTrue(strGood(search.searchForPodCast("Elvis Duran on Demand")));
+		Assert.assertTrue("More Info button was not disabled, as we expected it to be",
+				isVisible(player.more) && !player.more.isEnabled());
+		
+		// Check live radio playback
+		player.getBack();
+		sideNavBar.gotoHomePage();
+		search.searchForStation("Z100");
+		moreInfoErrors = player.verifyAllMoreInfoItems();
+		Assert.assertTrue("Errors with More Info page for live radio: " + moreInfoErrors, didPass(moreInfoErrors));
 	}
 }

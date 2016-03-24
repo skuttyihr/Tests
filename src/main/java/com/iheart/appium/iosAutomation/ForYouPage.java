@@ -73,26 +73,23 @@ public class ForYouPage extends Page {
 	}
 	
 	public String playAndVerifyLiveRadio() {
-		StringBuilder errors = new StringBuilder();
+		Errors errors = new Errors();
 		String myStation = playLiveRadio();
 		System.out.println("Starting with:" + myStation);
 		
 		// Verify PLAYER
-		errors.append(player.verifyPlaybackControls(myStation));
-		if(errors.length() > 0){
-			errors.append("\n");
-		}
+		errors.add(player.verifyPlaybackControls(myStation));
 		if(!player.doFavorite()){
-			errors.append("Could not favorite!\n");
+			errors.add("Could not favorite!\n");
 		}
 		if(!player.doScan()){
-			errors.append("Could not scan!\n");
+			errors.add("Could not scan!\n");
 		}
 		if(!player.doThumbUp()){
-			errors.append("Could not do thumbs up!\n");
+			errors.add("Could not do thumbs up!\n");
 		}
 		if(!player.doThumbDown()){
-			errors.append("Could not do thumbs down!\n");
+			errors.add("Could not do thumbs down!\n");
 		}
 
 		// Here, remember the playing station name:
@@ -107,10 +104,10 @@ public class ForYouPage extends Page {
 		// Verify that this station is added under My Station
 		player.back.click();
 		if(!verifyInForYou(myStation)){
-			errors.append("Could not find station: " + myStation + " in my stations page.\n");
+			errors.add("Could not find station: " + myStation + " in my stations page.\n");
 		}
 		
-		return errors.toString();
+		return errors.getErrors();
 	}
 	
 	public boolean verifyInForYou(String station){

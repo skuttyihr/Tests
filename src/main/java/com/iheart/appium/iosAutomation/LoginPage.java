@@ -66,6 +66,22 @@ public class LoginPage extends Page {
 	 */
 	public boolean login() { // logger.info("About to login...");
 		boolean loggedIn = false;
+		
+		// Log in
+		loginWithoutVerifying();
+		
+		// verify we are in
+		IOSElement forYouTest = waitForVisible(driver, By.name("For You"), 20);
+		if(forYouTest != null && isVisible(forYouTest)){
+			loggedIn = settings.isLoggedIn();
+		}
+		
+		sideNavBar.gotoHomePage();
+		
+		return loggedIn;
+	}
+	
+	public void loginWithoutVerifying(){
 		waitForElementToBeVisible(loginButton, 20);
 		loginButton.click();
 		waitForElementToBeVisible(userName, 5);
@@ -84,16 +100,6 @@ public class LoginPage extends Page {
 		}
 		// Dismiss stay connected popup that sometimes shows up AFTER genre picker
 		chooseStayConnected(false);
-		
-		// verify we are in
-		IOSElement forYouTest = waitForVisible(driver, By.name("For You"), 20);
-		if(forYouTest != null && isVisible(forYouTest)){
-			loggedIn = settings.isLoggedIn();
-		}
-		
-		sideNavBar.gotoHomePage();
-		
-		return loggedIn;
 	}
 
 	public boolean loginViaFacebook() {
