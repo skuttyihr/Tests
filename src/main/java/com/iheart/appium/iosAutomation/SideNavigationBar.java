@@ -24,7 +24,7 @@ public class SideNavigationBar extends Page {
 	@iOSFindBy(name = "Alarm Clock") public IOSElement alarm;
 	@iOSFindBy(name = "Sleep Timer") public IOSElement sleep;
 //	@iOSFindBy(name = "Songs") public IOSElement songs;
-	@iOSFindBy(name = "Account Settings") public IOSElement settings;
+	@iOSFindBy(name = "Settings") public IOSElement settings;
 
 	// ****** End of Side Nav page ******
 

@@ -57,6 +57,7 @@ public class TestPlayback extends TestRoot {
 	public void testCustomArtistStationPlaybackAndLogout() throws Exception {
 		System.out.println("test method:" + name.getMethodName());
 		String artist = "Florence + the Machine";
+		
 		Assert.assertTrue("Was not able to login", loginPage.login());
 		// Test that we can create an artist station
 		Assert.assertTrue("Could not play a custom artist station based on the artist: " + artist,

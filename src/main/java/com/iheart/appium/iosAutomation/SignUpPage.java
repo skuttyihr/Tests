@@ -58,6 +58,7 @@ public class SignUpPage extends Page {
 		iAgree.click();
 		TestRoot.waitForElementToBeVisible(create, 5);
 		create.click();
+		enterZip();
 		TestRoot.waitForElementToBeVisible(genrePage.genrePicker, 15);
 
 		// verify that tell us what you like page shows up

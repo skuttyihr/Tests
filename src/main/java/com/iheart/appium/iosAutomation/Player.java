@@ -1131,7 +1131,13 @@ public class Player extends Page {
 				if(!moreInfoRadioStationInfo.isEnabled()){
 					skipUntilEnabled(moreInfoRadioStationInfo);
 				}
-				moreInfoRadioStationInfo.click();
+				if(moreInfoRadioStationInfo.isEnabled()){
+					moreInfoRadioStationInfo.click();
+				}
+				else{
+					err.add("Could not find a station where Station Info was enabled.");
+					break;
+				}
 				waitForElementToBeVisible(moreBack, 5);
 				if(!isVisible(moreBack)){
 					err.add("Back button for Station Info is not visible");
@@ -1234,7 +1240,6 @@ public class Player extends Page {
 				if(!isVisible(artistBioBio)){
 					err.add("Text for artist bio was not visible");
 				}
-				moreBack.click();
 			}
 			else{
 				err.add("Artist Bio button was not visible.");
