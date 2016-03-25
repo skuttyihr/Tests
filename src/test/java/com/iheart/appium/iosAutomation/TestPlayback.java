@@ -246,7 +246,6 @@ public class TestPlayback extends TestRoot {
 		player.closeMoreInfo();
 		// Load up a podcast and test that we cannot see the more info button
 		player.getBack();
-//		sideNavBar.gotoPodcastsPage();
 		sideNavBar.gotoHomePage();
 		Assert.assertTrue(strGood(search.searchForPodCast("Elvis Duran on Demand")));
 		Assert.assertTrue("More Info button was not disabled, as we expected it to be",

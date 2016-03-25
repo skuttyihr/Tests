@@ -45,6 +45,7 @@ public class SideNavigationBar extends Page {
 			getBack();
 		}
 		if(click(driver, find(navIconString))){
+			waitForElementToBeVisible(home, 1);
 			home.click();
 		}
 	}

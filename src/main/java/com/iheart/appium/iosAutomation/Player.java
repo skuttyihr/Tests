@@ -914,49 +914,25 @@ public class Player extends Page {
 	}
 	
 	public String openMoreInfo(){
-		return openMoreInfo(getType());
+		return openMoreInfo(getType(), true);
+	}
+	public String openMoreInfo(boolean verify){
+		return openMoreInfo(getType(), verify);
 	}
 	public String openMoreInfo(String type){
+		return openMoreInfo(type, true);
+	}
+	public String openMoreInfo(String type, boolean verify){
 		Errors err = new Errors();
-		
+		if(!isVisible(more)){
+			handlePossiblePopUp();
+		}
 		if(isVisible(more)){
 			more.click();
 			// Check that all options are present
 			// They may not all be clickable though...
-			IOSElement song = moreInfoSong;
-			IOSElement artist = moreInfoArtist;
-			IOSElement station = moreInfoTuneStation;
-			if(type.equals("live")){
-				song = moreInfoRadioSong;
-				artist = moreInfoRadioArtist;
-				station = moreInfoRadioStationInfo;
-			}
-			if(!isVisible(moreInfoAlbumArtwork)){
-				err.add("Album artwork was not displayed on more info screen.");
-			}
-			if(!isVisible(song)){
-				err.add("Song name was not displayed on more info screen.");
-			}
-			if(!isVisible(artist)){
-				err.add("Artist name was not displayed on more info screen.");
-			}
-			if(!isVisible(station)){
-				err.add("Tune Station/Station Info was not displayed on more info screen.");
-			}
-			if(!isVisible(moreInfoLyrics)){
-				err.add("Lyrics button was not displayed on more info screen.");
-			}
-			if(!isVisible(moreInfoArtistBio)){
-				err.add("Artist bio was not displayed on more info screen.");
-			}
-			if(!isVisible(moreInfoShare)){
-				err.add("Share button was not displayed on more info screen.");
-			}
-			if(!isVisible(moreInfoBuy)){
-				err.add("Buy Song button was not displayed on more info screen.");
-			}
-			if(!isVisible(moreInfoClose)){
-				err.add("Close button was not displayed on more info screen.");
+			if(verify){ // May want to skip if executing verify all elements to save time
+				err.add(verifyMoreInfoElementsVisible(type));
 			}
 		}
 		else{
@@ -965,6 +941,49 @@ public class Player extends Page {
 		
 		return err.getErrors();
 	}
+	
+	public String verifyMoreInfoElementsVisible(String type){
+		Errors err = new Errors();
+		IOSElement song = moreInfoSong;
+		IOSElement artist = moreInfoArtist;
+		IOSElement station = moreInfoTuneStation;
+		if(type.equals("live")){
+			song = moreInfoRadioSong;
+			artist = moreInfoRadioArtist;
+			station = moreInfoRadioStationInfo;
+		}
+		waitForElementToBeVisible(moreInfoAlbumArtwork, 3);
+		if(!isVisible(moreInfoAlbumArtwork)){
+			err.add("Album artwork was not displayed on more info screen.");
+		}
+		if(!isVisible(song)){
+			err.add("Song name was not displayed on more info screen.");
+		}
+		if(!isVisible(artist)){
+			err.add("Artist name was not displayed on more info screen.");
+		}
+		if(!isVisible(station)){
+			err.add("Tune Station/Station Info was not displayed on more info screen.");
+		}
+		if(!isVisible(moreInfoLyrics)){
+			err.add("Lyrics button was not displayed on more info screen.");
+		}
+		if(!isVisible(moreInfoArtistBio)){
+			err.add("Artist bio was not displayed on more info screen.");
+		}
+		if(!isVisible(moreInfoShare)){
+			err.add("Share button was not displayed on more info screen.");
+		}
+		if(!isVisible(moreInfoBuy)){
+			err.add("Buy Song button was not displayed on more info screen.");
+		}
+		if(!isVisible(moreInfoClose)){
+			err.add("Close button was not displayed on more info screen.");
+		}
+		
+		return err.getErrors();
+	}
+	
 	public String closeMoreInfo(){
 		Errors err = new Errors();
 		
@@ -985,7 +1004,7 @@ public class Player extends Page {
 		String type = getType();
 		// If the more info button is present, open the more info dialog and verify that everything is present
 		if(isVisible(more)){
-			err.add(openMoreInfo(type));
+			err.add(openMoreInfo(type, false));
 		}
 		
 		String station = "Tune Station";
@@ -1012,7 +1031,7 @@ public class Player extends Page {
 			err.add(verifyMoreInfoItem(t));
 			handlePossiblePopUp();
 			if(isVisible(more)){
-				err.add(openMoreInfo());
+				err.add(openMoreInfo(type, false));
 			}
 		}
 		
@@ -1026,14 +1045,17 @@ public class Player extends Page {
 		int enabledCount = 0;
 		while (enabledCount < 7 && !ele.isEnabled()){
 			enabledCount++;
-			moreInfoClose.click();
+			if(isVisible(moreInfoClose)){
+				moreInfoClose.click();
+			}
 			if(isVisible(skip)){
 				skip.click();
 			}
 			else if(isVisible(scan)){
 				scan.click();
 			}
-			openMoreInfo();
+			openMoreInfo(false); // This is called exclusively in a method that verifies this anyway
+			waitForElementToBeEnabled(ele, 2); // Some elements may not be immediately enabled
 		}
 		if(!ele.isEnabled()){
 			System.out.println("After trying a number of stations, could not find enabled version of element.");
@@ -1221,6 +1243,8 @@ public class Player extends Page {
 		case "Share": 
 			if(isVisible(moreInfoShare)){
 				moreInfoShare.click();
+				// Share may not be available if a station is on a commercial break
+				skipUntilEnabled(moreInfoShare);
 				waitForElementToBeVisible(shareOptions, 2);
 				if(!isVisible(shareOptions)){
 					err.add("Sharing options were not visible");

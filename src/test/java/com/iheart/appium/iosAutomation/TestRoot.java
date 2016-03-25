@@ -664,6 +664,30 @@ public class TestRoot {
 		}
 	}
 	
+	public static void waitForElementToBeEnabled(IOSElement ele, int maxWaitTimeSeconds){
+		if(!isVisible(ele)){
+			waitForElementToBeVisible(ele, maxWaitTimeSeconds);
+			maxWaitTimeSeconds = 1;
+		}
+		if(ele.isEnabled()){
+			return;
+		}
+		
+		while(maxWaitTimeSeconds > 0){
+			try{
+				driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
+				if(ele.isEnabled()){
+					break;
+				}
+			}
+			catch(Exception e){}
+			finally{
+				maxWaitTimeSeconds -= 1;
+				driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
+			}
+		}
+	}
+	
 	public static boolean waitForNotVisible(IOSDriver<IOSElement> d, By by, int maxWaitTimeSeconds){
 		boolean elementGone = false;
 		for(int i = 0; i < maxWaitTimeSeconds; i++){
