@@ -17,8 +17,8 @@ public class SplashPage extends Page {
 	
 	// Elements
 	@iOSFindBy(name = "onboarding_logo") protected IOSElement onboardingLogo;
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[2]") protected IOSElement onboardingText;
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[3]") protected IOSElement additionalOnboardingText;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[1]") protected IOSElement onboardingText;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[2]") protected IOSElement additionalOnboardingText;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAPageIndicator[1]") protected IOSElement splashPageIndicator;
 	@iOSFindBy(name = "Log In") protected IOSElement splashPageLogInButton;
 	@iOSFindBy(name = "Get Started") protected IOSElement splashPageGetStartedButton;
