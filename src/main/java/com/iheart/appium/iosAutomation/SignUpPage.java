@@ -84,8 +84,10 @@ public class SignUpPage extends Page {
 	 */
 	public boolean skipLogin(){
 		// Click Get Started
-		waitForElementToBeVisible(getStarted, 20);
-		getStarted.click();
+		if(!isVisible(maybeLater)){
+			waitForElementToBeVisible(getStarted, 20);
+			getStarted.click();
+		}
 		// Click Maybe Later
 		maybeLater.click();
 		loginPage.chooseStayConnected(false);

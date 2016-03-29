@@ -119,8 +119,8 @@ public class TestGate extends TestRoot {
 			}
 			swipeLeft();
 		}
-		Assert.assertTrue("Did not see all three entry panes while swiping.", foundCases == 3);
-		Assert.assertTrue("Did not find all cases we expected while swiping.", shouldBe.size() == 0);
+		Assert.assertTrue("Did not see all three entry panes while swiping, only found: " + foundCases + ".", foundCases == 3);
+		Assert.assertTrue("Did not find all cases we expected while swiping:" + shouldBe.size() + ".", shouldBe.size() == 0);
 	}
 	
 	
