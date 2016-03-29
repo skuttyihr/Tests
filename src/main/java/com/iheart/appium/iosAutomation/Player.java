@@ -518,6 +518,17 @@ public class Player extends Page {
 	public boolean isPlaying(String type) {
 		boolean isPlaying = false;
 		handlePossiblePopUp();
+		
+		// If it's playing in the mini player, skip the other assessments
+		if(isVisible(miniPlayer.miniPlayerBar)){
+			if(isVisible(miniPlayer.miniPlayerStop) || isVisible(miniPlayer.miniPlayerPause)){
+				return true;
+			}
+			else{
+				return false;
+			}
+		}
+		
 		IOSElement theOne = null;
 		if (type.equals("live"))
 			theOne = playButton_live;
