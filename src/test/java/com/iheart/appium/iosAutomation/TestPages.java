@@ -55,14 +55,14 @@ public class TestPages extends TestRoot {
 								listeningHistory.getText().equals("Listening History"));
 		// Items that require login
 		sideNavBar.gotoAlarm();
-		loginPage.login(); // Login from popup
+		loginPage.loginWithoutVerifying();
 		// We went into alarm, as expected
-		Assert.assertTrue("Podcast page should not have logo", !isVisible(Page.iheartradio_logo_full));
-		Assert.assertTrue("Artist Radio page did not have title of 'Artist Radio'", 
+		Assert.assertTrue("Alarm page should not have logo", !isVisible(Page.iheartradio_logo_full));
+		Assert.assertTrue("Alarm Clock page did not have title of 'Alarm Clock'", 
 				isVisible(findElement(driver, By.name("Alarm Clock"))));
 		sideNavBar.gotoSleep();
-		Assert.assertTrue("Podcast page should not have logo", !isVisible(Page.iheartradio_logo_full));
-		Assert.assertTrue("Artist Radio page did not have title of 'Artist Radio'", 
+		Assert.assertTrue("Sleep page should not have logo", !isVisible(Page.iheartradio_logo_full));
+		Assert.assertTrue("Sleep Timer page did not have title of 'Sleep Timer'", 
 				isVisible(findElement(driver, By.name("Sleep Timer"))));
 	}
 	

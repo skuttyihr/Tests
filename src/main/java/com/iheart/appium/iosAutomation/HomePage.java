@@ -76,6 +76,7 @@ public class HomePage extends Page {
 	public void gotoLocalRadio(){
 		gotoHome();
 		localRadio.click();
+		quickDismissPopUp();
 	}
 
 	public void gotoPerfectFor() {
