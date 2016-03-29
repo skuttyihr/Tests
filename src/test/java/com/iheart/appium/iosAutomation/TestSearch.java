@@ -44,4 +44,19 @@ public class TestSearch extends TestRoot {
 		Assert.assertFalse("Garbage search should have returned no results.", search.searchForStationWithoutSelecting(badSearch));
 		Assert.assertTrue("Results were returned for bad input", search.areResultsEmpty(badSearch));
 	}
+	
+	@Test
+	public void testSearchForLiveStation(){
+		// Tests ability to search for live stations based on:
+		//	Keyword, name, station frequency, and song title
+		// Tests search filters, to only show live stations
+		
+		// log in, as anonymous use will be phased out
+		loginPage.loginWithoutVerifying();
+		// TODO Ensure we're getting 10013 zipcode results... may have to actually... enter a zipcode!
+		String[] searchFor = {"100.3", "Z100"};
+		search.searchForStationWithoutSelecting(searchFor[0]); 
+		// Check that Z100 is the first result under "All" and "Stations" filters.
+		Assert.assertTrue(searchFor[1] + " was not found for frequency search of " + searchFor[0], search.isResultListed(searchFor[1]));
+	}
 }

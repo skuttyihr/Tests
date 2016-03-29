@@ -184,16 +184,4 @@ public class TestHomePage extends TestRoot {
 		List<String> newTopItems = homePage.getVisibleListItems();
 		Assert.assertTrue("Could not scroll back to top!", topItems.equals(newTopItems));
 	}
-	
-	@Test
-	public void testSearchForLiveStation(){
-		// Tests ability to search for live stations based on:
-		//	Keyword, name, station frequency, and song title
-		// Tests search filters, to only show live stations
-		
-		// log in, as anonymous use will be phased out
-		loginPage.loginWithoutVerifying();
-		search.searchForStationWithoutSelecting("100.3"); // Z100 Frequency in NY
-		// Check that Z100 is the first result under "All" and "Stations" filters.
-	}
 }

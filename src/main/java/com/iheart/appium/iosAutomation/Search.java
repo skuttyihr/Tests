@@ -21,7 +21,7 @@ public class Search extends Page {
 	
 	// Search field
 	@iOSFindBy(name = "Search") public IOSElement searchButton;
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIASearchBar[1]") public IOSElement searchField;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIASearchBar[1]/UIASearchBar[1]") public IOSElement searchField;
 	@iOSFindBy(name = "Cancel") public IOSElement cancel;
 	// Search Elements, used to create custom stations
 //	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell[1]") public IOSElement firstElement;
@@ -74,9 +74,14 @@ public class Search extends Page {
 			searchField.clear();
 			waitForNotVisible(driver, By.xpath(firstResultXpath), 1);
 			String firstResultText = waitForVisible(driver, By.xpath(firstResultXpath + "/UIAStaticText[1]"), 1).getText();
-			return (!firstResultText.contains("No results for")); // This method sends TRUE when it finds a result, so we use that logic here
+			return (!firstResultText.contains("Check your spelling or try another search")); // This method sends TRUE when it finds a result, so we use that logic here
 		}
-		searchField.sendKeys(searchTerm);
+		if(isVisible(searchField)){
+			searchField.sendKeys(searchTerm);
+		}
+		else{
+			return false;
+		}
 		if(areResultsEmpty(searchTerm)){
 			return false;
 		}
@@ -206,5 +211,12 @@ public class Search extends Page {
 		return waitForVisible(driver, 
 					By.xpath("//UIAApplication[1]/UIAWindow[1]/UIATableView[2]/UIATableCell[" + i + "]/UIAStaticText[1]"),
 					10);
+	}
+	
+	public boolean isResultListed(String expectedResult){
+		boolean foundResult = false;
+		// TODO 
+		
+		return foundResult;
 	}
 }
