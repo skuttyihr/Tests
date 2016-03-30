@@ -153,14 +153,15 @@ public class TestPlayback extends TestRoot {
 		// Test that the scrubber can advance on its own during playback
 		sleep(2000); // So the podcast isn't at 0
 		// Pause so we don't mess up the test
-		player.pause("podcast");
+		player.pause();
+		miniPlayer.maximizeMiniPlayer();
 		int scrubberPosPercent = player.getPodcastScubberPostitionPercentage();
 		Assert.assertTrue("Scrubber did not show playback", scrubberPosPercent > 0);
 		int timeElapsed = player.getElapsedTime();
 		int totalTime = player.getTotalTime();
 		int estimatedTimePassed = (int) (totalTime * (float) scrubberPosPercent / 100);
 		Assert.assertTrue("Slider position did not accurately reflect the position", 
-					isAbout(timeElapsed, estimatedTimePassed, 5));
+					isAbout(timeElapsed, estimatedTimePassed, 7));
 		// Slide the scrubber, then try a similar test to see if we're where we expect to be
 		player.scrubTo(50);
 		int expectedElapsedTime = totalTime / 2;
@@ -202,6 +203,15 @@ public class TestPlayback extends TestRoot {
 		String playedStation = forYouPage.playLiveRadio();
 		Assert.assertTrue("Could not play a live radio station.", strGood(playedStation));
 		
+		// TODO
+		/* Live radio errors:
+		 * Could not verify live radio controls:
+		 * Play icon is not displayed
+		 * Skip icon is not displayed
+		 * Could not load artist album artwork
+		 * Could not favorite artist station
+		 * could not skip
+		 */
 		String verifyPlayer = player.verifyPlaybackControls();
 		Assert.assertTrue("Could not verify live radio controls:\n" + verifyPlayer, didPass(verifyPlayer));
 		

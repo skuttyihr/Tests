@@ -124,6 +124,12 @@ public class MiniPlayer extends Page {
 		}
 		return false;
 	}
+	public boolean stop(){
+		if(isVisible(miniPlayerStop)){
+			miniPlayerStop.click();
+		}
+		return isVisible(miniPlayerPlay);
+	}
 	
 	public boolean isStreaming(){
 		return isVisible(miniPlayerPause);

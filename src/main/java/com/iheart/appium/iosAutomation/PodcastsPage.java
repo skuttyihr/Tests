@@ -40,7 +40,7 @@ public class PodcastsPage extends Page {
 			return "Could not load up a podcast episode.";
 		}
 		waitForElementToBeVisible(player.thumbUp, 5);
-		if(isVisible(player.playButton_podcast)){
+		if(player.isPlaying()){
 			return "";
 		}
 		return "Did not enter a podcast playback view, podcast play button was not visible.";

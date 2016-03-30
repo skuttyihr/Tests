@@ -36,17 +36,19 @@ public class Player extends Page {
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[2]") public IOSElement totalTime;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[9]") public IOSElement episodeName_podcast;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[10]") public IOSElement stationName_podcast;
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAButton[3]") public IOSElement playButton_podcast;
-
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAButton[5]") public IOSElement playButton_live; 
 	@iOSFindBy(xpath="//UIAApplication[1]/UIAWindow[1]/UIAButton[7]") public IOSElement more;
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAButton[5]") public IOSElement playButton_artist; 
 
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAButton[6]") public IOSElement skip;
 	@iOSFindBy(name = "scan") public IOSElement scan;
 	@iOSFindBy(name = "Thumb up") public IOSElement thumbUp;
 	@iOSFindBy(name = "Thumb down") public IOSElement thumbDown;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIASlider[2]") public IOSElement volume;
+
+	// Play/Pause/Stop buttons
+	public final String playPauseStopXpath = "//UIAApplication[1]/UIAWindow[1]/UIAButton[5]"; // Works for all, but subject to change
+	@iOSFindBy(name = "player pause") public IOSElement pause; // Used for Podcasts and Artist Radio
+	@iOSFindBy(name = "player play") public IOSElement play; // Used for Podcasts, Live Radio, and Artist Radio
+	@iOSFindBy(name = "player stop") public IOSElement stop; // Used for Live Radio
 	
 	// FOR SHARE
 	@iOSFindBy(name = "Mail") public IOSElement mail;
@@ -140,18 +142,18 @@ public class Player extends Page {
 			System.out.println("Station name: " + stationLabel.getText() + " wasn't what we expected: " + stationName);
 		}
 
-		if (!TestRoot.isVisible(songTrack_live)) {
-			if (!TestRoot.isVisible(songTrack2_live))
+		if (!isVisible(songTrack_live)) {
+			if (!isVisible(songTrack2_live))
 				errors.append("No sound track name is displayed.\n");
 		}
-		if (!TestRoot.isVisible(playButton_live))
-			errors.append("Play icon is not displayed.\n");
+		if (!isVisible(play) && !isVisible(stop))
+			errors.append("Play/Stop buttonis not displayed.\n");
 
-		if (!TestRoot.isVisible(scan))
-			errors.append("Scan icon is not displayed.\n");
+		if (!isVisible(scan))
+			errors.append("Scan button is not displayed.\n");
 
-		if (!TestRoot.isVisible(more))
-			errors.append(".... is not displayed.\n");
+		if (!isVisible(more))
+			errors.append("More button (...) is not displayed.\n");
 
 		if(!isVisible(radioImage)){
 			errors.append("Could not load live radio image\n");
@@ -172,17 +174,17 @@ public class Player extends Page {
 				&& !stationLabel.getText().contains(stationName))
 			errors.append("Station name is not correct.\n");
 
-		if (!TestRoot.isVisible(songTrack_artist))
+		if (!isVisible(songTrack_artist))
 			errors.append("No sound track name is displayed.\n");
 
-		if (!TestRoot.isVisible(artist_artist))
+		if (!isVisible(artist_artist))
 			errors.append("No artist name is displayed.\n");
 
-		if (!TestRoot.isVisible(playButton_artist))
-			errors.append("Play icon is not displayed.\n");
+		if (!isVisible(play) && !isVisible(pause))
+			errors.append("Play/Pause button is not displayed.\n");
 
-		if (!TestRoot.isVisible(skip))
-			errors.append("Skip icon is not displayed.\n");
+		if (!isVisible(skip))
+			errors.append("Skip button is not displayed.\n");
 
 		if(!isVisible(artistAlbumArt)){
 			errors.append("Could not load artist album artwork.\n");
@@ -202,20 +204,20 @@ public class Player extends Page {
 				&& !stationLabel.getText().contains(stationName.substring(0, 5)))
 			errors.append("Station name is not correct.\n");
 
-		if (!TestRoot.isVisible(episodeName_podcast))
+		if (!isVisible(episodeName_podcast))
 			errors.append("Episode name is not displayed.\n");
 
-		if (!TestRoot.isVisible(stationName_podcast))
+		if (!isVisible(stationName_podcast))
 			errors.append("Station name is Not displayed.\n");
 
-		if (!TestRoot.isVisible(slideBar))
+		if (!isVisible(slideBar))
 			errors.append("No Scrubber is displayed.\n");
 
-		if (!TestRoot.isVisible(playButton_podcast))
-			errors.append("Play icon is not displayed.\n");
+		if (!isVisible(play) && !isVisible(pause))
+			errors.append("Play/Play button is not displayed.\n");
 
-		if (!TestRoot.isVisible(skip))
-			errors.append("Skip icon is not displayed.\n");
+		if (!isVisible(skip))
+			errors.append("Skip button is not displayed.\n");
 
 		if(!isVisible(podcastImage)){
 			errors.append("Could not load podcast image\n");
@@ -269,25 +271,26 @@ public class Player extends Page {
 	
 	private void scanOrSkipUntilThumbAvailable(){
 		IOSElement skipOrScan;
-		if(isVisible(playButton_live)){
+		String type = getType();
+		
+		if(type.equalsIgnoreCase("live")){
 			skipOrScan = scan;
 		}
 		else{
 			skipOrScan = skip;
 		}
-		if(isVisible(playButton_live)){
-			int count = 0;
-			while ((isThumbUpDisabled() || isThumbDownDisabled()) && count < 5) {
-				System.out.println("thumb buttons are disabled. Scanning/skipping now..");
-				try {
-					waitForElementToBeVisible(skipOrScan, 1);
-					skipOrScan.click();
-					waitForTrackToLoad();
-				}catch (Exception e) {
-				}
-				finally{
-					count++;
-				}
+		
+		int count = 0;
+		while ((isThumbUpDisabled() || isThumbDownDisabled()) && count < 5) {
+			System.out.println("thumb buttons are disabled. Scanning/skipping now..");
+			try {
+				waitForElementToBeVisible(skipOrScan, 1);
+				skipOrScan.click();
+				waitForTrackToLoad();
+			}catch (Exception e) {
+			}
+			finally{
+				count++;
 			}
 		}
 	}
@@ -453,40 +456,78 @@ public class Player extends Page {
 	}
 
 	/**
-	 * Returns an error string
-	 * A blank string means no errors
-	 * "live" "podcast" or "artist" (can leave blank for artist)
-	 * @param type
-	 * @return
+	 * Pauses Podcasts and Artist Radio
+	 * Will do nothing if already paused
 	 */
-	public void pause(String type) {
-		IOSElement theOne;
-		if (strGood(type) && type.equals("live"))
-			theOne = playButton_live;
-		else if (strGood(type) && type.equals("podcast"))
-			theOne = playButton_podcast;
-		else
-			theOne = playButton_artist;
-
-		theOne.click();
-	}
-	public void pauseAndResume() {
-		pause("");
-	}
 	public void pause(){
+		if(isVisible(pause)){
+			pause.click();
+		}
+		else if(isVisible(stop)){
+			// We know what you meant
+			System.out.println("Note:\nPlease use the 'stop()' method when stopping live radio playback, not 'pause()'");
+			stop();
+		}
+		else if(isVisible(miniPlayer.miniPlayerPause)){
+			miniPlayer.pause();
+		}
+	}
+	
+	/**
+	 * Stops live radio
+	 * Will do nothing if live radio is already stopped
+	 */
+	public void stop(){
+		if(isVisible(stop)){
+			stop.click();
+		}
+		else if(isVisible(pause)){
+			// We know what you meant
+			System.out.println("Note:\nPlease use the 'pause()' method when pausing a podcast or artist station playback, not 'stop()'");
+			pause();
+		}
+		else if(isVisible(miniPlayer.miniPlayerStop)){
+			miniPlayer.stop();
+		}
+	}
+	
+	/**
+	 * Plays station
+	 * Will do nothing if station is already playing
+	 */
+	public void play(){
+		if(isVisible(play)){
+			play.click();
+		}
+		else if(isVisible(miniPlayer.miniPlayerPlay)){
+			miniPlayer.play();
+		}
+	}
+	
+	public void pauseOrStop(){
 		switch(getType()){
 		case "artist":
-			waitForElementToBeVisible(playButton_artist, 1);
-			playButton_artist.click();
-			break;
 		case "podcast":
-			waitForElementToBeVisible(playButton_podcast, 1);
-			playButton_podcast.click();
+			pause();
 			break;
 		case "live":
-			waitForElementToBeVisible(playButton_live, 1);
-			playButton_live.click();
+			stop();
 			break;
+		}
+	}
+	
+	/**
+	 * If it's playing stop or pause it. If it's stopped or paused, play
+	 */
+	public void togglePlaying(){
+		if(isVisible(play)){
+			play();
+		}
+		else if(isVisible(pause)){
+			pause();
+		}
+		else if(isVisible(stop)){
+			stop();
 		}
 	}
 	
@@ -529,37 +570,18 @@ public class Player extends Page {
 			}
 		}
 		
-		IOSElement theOne = null;
-		if (type.equals("live"))
-			theOne = playButton_live;
-		else if (type.equals("podcast"))
-			theOne = playButton_podcast;
-		else
-			theOne = playButton_artist;
-		try{
-			if(isVisible(createAccount)){
-				// User tried to play artist radio without logging in
-				return false;
-			}
-		}catch(Exception e){}
+		switch(type){
+		case "artist":
+		case "podcast":
+			if(isVisible(pause))
+				isPlaying = true;
+			break;
+		case "live":
+			if(isVisible(stop))
+				isPlaying = true;
+			break;
+		}
 		
-		waitForElementToBeVisible(theOne, 5);
-		if(!isVisible(theOne)){
-			return false;
-		}
-		// verify that it is playing: Get its attribute: class shall be 'pause'
-		// TODO Check this, it's failing
-		try{
-			if(theOne != null && isVisible(theOne)){
-				String klasses = theOne.getAttribute("name");
-				System.out.println("See playbutton classes:" + klasses);
-				if (klasses.contains("pause") || klasses.contains("stop"))
-					isPlaying = true;
-			}
-		}
-		catch(Exception e){
-			return false;
-		}
 		return isPlaying;
 	}
 	
@@ -672,10 +694,10 @@ public class Player extends Page {
 		Errors errors = new Errors();
 		
 		// Verify that the controls are present
-		if (!TestRoot.isVisible(thumbUp))
+		if (!isVisible(thumbUp))
 			errors.add("No Thumb Up icon is displayed.");
 
-		if (!TestRoot.isVisible(thumbDown))
+		if (!isVisible(thumbDown))
 			errors.add("No Thumb Down icon is displayed.");
 		
 		// Verify based on type (Artist, Podcast, Radio)
@@ -821,8 +843,9 @@ public class Player extends Page {
 			while(count < 3 && !isAbout(percentage, testLoc, 6)){
 				count++;
 				slideBar.sendKeys(floatingPercentage);
-				Page.handlePossiblePopUp();
-				pause("podcast");
+				pause(); // Get it in as soon as possible
+				Page.quickDismissPopUp(); // If there was a popup, quickly dismiss it
+				pause(); // Try pausing again. 
 				testLoc = getPodcastScubberPostitionPercentage();
 			}
 		}
