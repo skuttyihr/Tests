@@ -147,7 +147,7 @@ public class Player extends Page {
 				errors.append("No sound track name is displayed.\n");
 		}
 		if (!isVisible(play) && !isVisible(stop))
-			errors.append("Play/Stop buttonis not displayed.\n");
+			errors.append("Play/Stop button is not displayed.\n");
 
 		if (!isVisible(scan))
 			errors.append("Scan button is not displayed.\n");
@@ -852,7 +852,7 @@ public class Player extends Page {
 	}
 	
 	public boolean minimizePlayer(){
-		waitForElementToBeVisible(minimizeButton, 3);
+		waitForElementToBeVisible(minimizeButton, 4);
 		if(isVisible(minimizeButton)){
 			minimizeButton.click();
 			return isVisible(miniPlayer.miniPlayerBar);

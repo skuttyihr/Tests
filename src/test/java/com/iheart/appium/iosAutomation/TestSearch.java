@@ -58,5 +58,10 @@ public class TestSearch extends TestRoot {
 		search.searchForStationWithoutSelecting(searchFor[0]); 
 		// Check that Z100 is the first result under "All" and "Stations" filters.
 		Assert.assertTrue(searchFor[1] + " was not found for frequency search of " + searchFor[0], search.isResultListed(searchFor[1]));
+		search.searchForStationWithoutSelecting(searchFor[1]);
+		Assert.assertTrue(searchFor[1] + " was not found for frequency search of " + searchFor[0], search.isResultListed(searchFor[1]));
+		// TODO Search for a song, select radio, see what we get
+		// In 20 years, something that turns up pop radio will turn up classic radio... just a thought. 
+		// ... In 1996, the year end Billboard hot 100 #1 song was... the Macarena. I'm sorry. 
 	}
 }

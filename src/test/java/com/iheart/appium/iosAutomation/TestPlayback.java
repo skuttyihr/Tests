@@ -217,12 +217,9 @@ public class TestPlayback extends TestRoot {
 		
 		assertPlaybackVolume();
 		
-		// Get to the mini player
-		player.minimizePlayer();
-				
-		// Assert the mini player is visible
-		Assert.assertTrue("Mini player was not displayed.", isVisible(miniPlayer.miniPlayerBar));
-		miniPlayer.miniPlayerBar.click();
+		// Get to the mini player and assert it's visible
+		Assert.assertTrue("Mini player was not displayed.", player.minimizePlayer());
+		miniPlayer.maximizeMiniPlayer();
 		
 		// Scan more than 6 times
 		for (int i = 0; i < 7; i++){

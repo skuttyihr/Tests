@@ -19,6 +19,7 @@ public class MiniPlayer extends Page {
 	@iOSFindBy(name = "Thumb up") public IOSElement miniPlayerThumbUp;
 	@iOSFindBy(name = "Thumb down") public IOSElement miniPlayerThumbDown;
 	@iOSFindBy(name = "Skip") public IOSElement miniPlayerSkip;
+	@iOSFindBy(name = "Player_Scan") public IOSElement miniPlayerScan;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAStaticText[1]") public IOSElement miniPlayerSongTitle;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAStaticText[2]") public IOSElement miniPlayerArtist;
 	
@@ -222,7 +223,13 @@ public class MiniPlayer extends Page {
 		else{
 			return false;
 		}
-		miniPlayerSkip.click();
+		
+		if(isVisible(miniPlayerSkip)){
+			miniPlayerSkip.click();
+		}
+		else if(isVisible(miniPlayerScan)){
+			miniPlayerScan.click();
+		}
 		songSkipped = !(getSongName().equals(firstSong));
 		
 		return songSkipped;
