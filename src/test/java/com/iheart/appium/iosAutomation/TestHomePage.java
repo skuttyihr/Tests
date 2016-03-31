@@ -9,14 +9,19 @@ import org.junit.Test;
 
 public class TestHomePage extends TestRoot {
 
+	boolean createdFavorite = false; // Set to true by tests that add to favorites
+	
 	@Before
 	public void setUp() throws Exception {
 		TestRoot.setup();
+		createdFavorite = false;
 	}
 	@After
 	public void after() {
 		// Remove favorites
-		homePage.removeAllFavorites();
+		if(createdFavorite){
+			homePage.removeAllFavorites();
+		}
 		TestRoot.tearDown();
 	}
 	
@@ -46,25 +51,19 @@ public class TestHomePage extends TestRoot {
 	@Test
 	public void testAddToFavoritesFromHome(){
 		Assert.assertTrue("Was not able to login", loginPage.login()); // Log in so we can favorite stations
-		
+		createdFavorite = true; // This test will create a favorite
 		// Search for an item so we know what we're working with
 		String artist = "Tegan and Sara";
 		searchAndGoHome(artist); 
 		homePage.gotoForYou();
 		int listItem = 1;
-		String addErrors = homePage.toggleListItemFavorites(listItem);
-		if(addErrors.startsWith("switch to")){
-			try{
-				listItem = Integer.parseInt(addErrors.replace("switch to ", ""));
-			}
-			catch(Exception e){
-				System.err.println(addErrors);
-			}
-			finally{
-				addErrors = "";
-			}
+		String addErrors = homePage.toggleListItemFavorites(listItem); 
+		if(addErrors.equals("\n1\n")){ // Means we had to switch to different list item
+			addErrors = "";
+			listItem = 1;
 		}
-		String station = homePage.getListItem(listItem).getText();
+		String station = homePage.getListItemText(listItem);
+		Assert.assertTrue("Could not get station", strGood(station));
 		if(station.contains(",")){
 			station = station.substring(0, station.indexOf(","));
 		}
@@ -74,16 +73,9 @@ public class TestHomePage extends TestRoot {
 		// Remove the station through the toggle now
 		homePage.gotoForYou();
 		addErrors = homePage.toggleListItemFavorites(listItem);
-		if(addErrors.startsWith("switch to")){
-			try{
-				listItem = Integer.parseInt(addErrors.replace("switch to ", ""));
-			}
-			catch(Exception e){
-				System.err.println(addErrors);
-			}
-			finally{
-				addErrors = "";
-			}
+		if(addErrors.equals("\n1\n")){ // Means we had to switch to different list item
+			addErrors = "";
+			listItem = 1;
 		}
 		station = homePage.getListItem(listItem).getText();
 		if(station.contains(",")){
@@ -97,6 +89,7 @@ public class TestHomePage extends TestRoot {
 	public void testAddToFavoritesFromRecents(){
 		// Log in, load up a station, check that it's in recents, add it to favorites, check that it's a favorite as well as a recent. 
 		loginPage.loginWithoutVerifying();
+		createdFavorite = true;
 		
 		String artist = "Tegan and Sara";
 		searchAndGoHome(artist);
@@ -123,7 +116,8 @@ public class TestHomePage extends TestRoot {
 	@Test
 	public void testAddToFavoritesFromLocalRadio(){
 		// Log in, go to Live/Local Radio tab, add a station, check my stations for it being there
-		Assert.assertTrue("Was not able to login", loginPage.login());
+		loginPage.loginWithoutVerifying();
+		createdFavorite = true;
 		sideNavBar.gotoHomePage();
 		homePage.gotoLocalRadio();
 		Page.enterZip();

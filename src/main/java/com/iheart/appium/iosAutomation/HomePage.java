@@ -92,13 +92,21 @@ public class HomePage extends Page {
 	 */
 	public IOSElement getListItem(int x){
 		IOSElement returnElement = findElement(driver, By.xpath(listItemXpath.replace("[XXXXX]", "[" + x + "]")));
-		if(returnElement == null){
+		if(!isVisible(returnElement)){
 			returnElement = waitForVisible(driver, 
 								By.xpath(listItemXpath.replace("[XXXXX]", "[" + x + "]")),
 								5
 							);
 		}
 		return returnElement;
+	}
+	public String getListItemText(int x){
+		String text = "";
+		IOSElement listItem = getListItem(x);
+		if(isVisible(listItem)){
+			text = listItem.getText();
+		}
+		return text;
 	}
 	
 	public boolean selectListItem(int x){
@@ -166,24 +174,9 @@ public class HomePage extends Page {
 			// Expose the hidden buttons with a swipe
 			swipeOnItem(item, LEFT);
 			IOSElement add = waitForVisible(driver, By.name("Add to Favorites"), 2);
-			if(add == null){
-				String returnMessage = toggleFavorites(x);
-				if(strGood(returnMessage) 
-						&& !returnMessage.equals("added") 
-						&& !returnMessage.equals("removed")){
-					if(returnMessage.contains("Had to get out of player")){
-						if(x != 1){
-							return "switch to 1";
-						}
-						else{
-							return "";
-						}
-					}
-					err.add(returnMessage);
-				}
-				else if(strGood(returnMessage)){
-					System.out.println(returnMessage);
-				}
+			if(!isVisible(add)){
+				String message = toggleFavorites(item, x);
+				err.add(message);
 			}
 			else{
 				add.click();
@@ -197,22 +190,22 @@ public class HomePage extends Page {
 	}
 	
 	
-	private String toggleFavorites(int x){
-		Errors err = new Errors();
-		// Button width ratio to item ratio is 0.24154589372
-		// Leftmost button is the add to favorites, unless it's already a favorite (Unfavorite) 
-		// Unfavorite: will be the only button. 
-		// Name: Station added to your favorites!
-		// Name: Station deleted from favorites.
-		/*
-		 * The process:
-		 * Find the X location of the first button in a pair
-		 * Click it
-		 * If the player loads, go back
-		 * Grab the FIRST item this time, 
-		 * Click the Second block. That should toggle. 
-		 */
-		IOSElement item = getListItem(x);
+	private String toggleFavorites(IOSElement item, int x){
+		/* 
+		 * Button width ratio to item ratio is 0.24154589372
+		 * Since our developers did not give us a way to easily access this...
+		 * 1) Open an item
+		 * 2) Is it favorited? Skip to step 7
+		 * 3) Is it not a favorite? Make it a favorite
+		 * 4) Go back
+		 * 5) Go into same station, now at position 1
+		 * 6) Un favorite
+		 * 7) Go back
+		 * 8) Swipe
+		 * 9) Click button 2 to toggle
+		 * *All of this could be done in one line if we had a name/xpath for these elements *
+		*/
+		String returnMessage = "";
 		int width = item.getSize().getWidth();
 		int height = item.getSize().getHeight();
 		int ix = item.getLocation().getX();
@@ -225,32 +218,46 @@ public class HomePage extends Page {
 		int clickSecondButtonX = (secondButtonX + (ix + width)) / 2;
 		int clickY = iy + (height / 2);
 		
-		// Start clicking (ok, tapping)
-		driver.tap(1, clickFirstButtonX, clickY, 500);
-		// First see if the growl came up
-		IOSElement growlAdd = findElement(driver, By.name("Station added to your favorites!"));
-		if(isVisible(growlAdd)){
-			return "added";
-		}
-		IOSElement growlRemove = findElement(driver, By.name("Station added to your favorites!"));
-		if(isVisible(growlRemove)){
-			return "removed";
-		}
+		int tries = 0;
+		boolean execute = false;
 		
-		if(player.isPlayingInPlayer()){
+		do{
+			tries++;
+			item.click();
+			if(!player.isFavorite()){
+				x = 1;
+				returnMessage = "1";
+				player.doFavorite();
+				player.minimizePlayer();
+				item = null;
+				item = getListItem(x);
+				item.click();
+				player.unFavorite();
+			}
 			player.minimizePlayer();
-			err.add("Had to get out of player");
-			
-			// Try again, there was only one swiped button
-			item = getListItem(1); // The last played station is the first item
-			swipeOnItem(item, 3);
-			iy = item.getLocation().getY();
-			clickY = iy + (height / 2);
-			driver.tap(1, clickSecondButtonX, clickY, 500);
-			Page.handlePossiblePopUp();
-		}
+			item = null;
+			item = getListItem(x);
 		
-		return err.getErrors();
+			// Now we can swipe and click button 2
+			swipeOnItem(item, LEFT);
+			sleep(100); // Since we can't wait for visible
+			// Get the name of the station
+			String text = item.getText();
+			if(!execute)
+				driver.tap(1, clickSecondButtonX, clickY, 300);
+			else
+				driver.tap(1, clickFirstButtonX, clickY, 300);
+			item = null;
+			item = getListItem(x);
+			// If the name isn't the same, we need to re-try, because it unfavorited
+			if(strGood(text) && !text.equals(item.getText())){
+				//  The item was removed, retry with the first button
+				execute = true;
+			}
+		}while(tries < 2 && execute);
+		
+		
+		return returnMessage;
 	}
 	
 	
@@ -340,7 +347,7 @@ public class HomePage extends Page {
 	}
 	
 	
-	public int isStationAFavorite(String artist){ //TODO, SPEED UP
+	public int isStationAFavorite(String artist){
 		/*
 		 * Click my Station if on home
 		 * Ensure there are favorite stations

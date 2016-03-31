@@ -380,24 +380,22 @@ public class Player extends Page {
 	}
 
 	public boolean doFavorite() { // if faved before, its value is 1;
-		if (isFavDone()){
+		if (!isFavorite()){
+			favorite.click();
+			handleActionPopup();
+		}
+		// Verify that icon is filled
+		return favorite.getAttribute("value").equals("1");
+	}
+
+	public boolean unFavorite(){
+		if(isFavorite()){
 			favorite.click();
 			handleUnFavConfirmation();
 		}
-
-		if(!isVisible(favorite)){
-			return false;
-		}
-		favorite.click();
-		handleActionPopup();
-
-		// Verify that icon is filled
-		if (!favorite.getAttribute("value").equals("1"))
-			return false;
-		else
-			return true;
+		return favorite.getAttribute("value").equals("0");
 	}
-
+	
 	// Are you sure you want to delete this preset?
 	private void handleUnFavConfirmation() {
 		try {
@@ -408,15 +406,16 @@ public class Player extends Page {
 		}
 	}
 
-	private boolean isFavDone() {
-		boolean isDone = false;
-
+	public boolean isFavorite() {
+		boolean isFav = false;
+		
+		waitForElementToBeVisible(favorite, 2);
 		try {
-			isDone = favorite.getAttribute("value").equals("1");
+			isFav = favorite.getAttribute("value").equals("1");
 		} catch (Exception e) {
 		}
 
-		return isDone;
+		return isFav;
 	}
 
 	public boolean doScan() {
@@ -453,6 +452,19 @@ public class Player extends Page {
 		else
 			return true;
 
+	}
+	
+	public boolean share(){
+		boolean couldShare = false;
+		if(isVisible(share)){
+			share.click();
+			waitForElementToBeVisible(shareCancel, 3);
+			if(isVisible(shareCancel)){
+				shareCancel.click();
+				couldShare = true;
+			}
+		}
+		return couldShare;
 	}
 
 	/**
@@ -725,6 +737,10 @@ public class Player extends Page {
 		}
 		if(!player.doSkip()){
 			errors.add("Could not skip!");
+		}
+		
+		if(!player.share()){
+			errors.add("Could not share!");
 		}
 		
 		return errors.toString();
