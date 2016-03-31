@@ -50,7 +50,7 @@ public class TestHomePage extends TestRoot {
 	
 	@Test
 	public void testAddToFavoritesFromHome(){
-		Assert.assertTrue("Was not able to login", loginPage.login()); // Log in so we can favorite stations
+		loginPage.loginWithoutVerifying();
 		createdFavorite = true; // This test will create a favorite
 		// Search for an item so we know what we're working with
 		String artist = "Tegan and Sara";
@@ -77,8 +77,9 @@ public class TestHomePage extends TestRoot {
 			addErrors = "";
 			listItem = 1;
 		}
-		station = homePage.getListItem(listItem).getText();
-		if(station.contains(",")){
+		station = homePage.getListItemText(listItem);
+		Assert.assertTrue("Could not get station", strGood(station));
+		if(strGood(station) && station.contains(",")){
 			station = station.substring(0, station.indexOf(","));
 		}
 		Assert.assertTrue("Could not tap add to favorites for this item." + addErrors, didPass(addErrors));
