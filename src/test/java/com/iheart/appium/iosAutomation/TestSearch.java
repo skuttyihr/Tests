@@ -44,8 +44,11 @@ public class TestSearch extends TestRoot {
 		Assert.assertFalse("Garbage search should have returned no results.", search.searchForStationWithoutSelecting(badSearch));
 		Assert.assertTrue("Results were returned for bad input", search.areResultsEmpty(badSearch));
 		
-		// Search for an artist based on song title TODO
-		
+		// Search for an artist based on song title 
+		search.clearSearch();
+		String searchSong = "Basket Case";
+		search.searchForStationWithoutSelecting(searchSong);
+		Assert.assertTrue(searchSong + " was not found in results.", search.isResultListed(searchSong));
 	}
 	
 	@Test
