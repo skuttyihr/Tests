@@ -14,7 +14,7 @@ public class TestSearch extends TestRoot {
 	@After
 	public void after() {
 		// Remove favorites
-		homePage.removeAllFavorites();
+//		homePage.removeAllFavorites();
 		TestRoot.tearDown();
 	}
 
@@ -43,25 +43,30 @@ public class TestSearch extends TestRoot {
 		String badSearch = "dfgkjhqz";
 		Assert.assertFalse("Garbage search should have returned no results.", search.searchForStationWithoutSelecting(badSearch));
 		Assert.assertTrue("Results were returned for bad input", search.areResultsEmpty(badSearch));
+		
+		// Search for an artist based on song title TODO
+		
 	}
 	
 	@Test
 	public void testSearchForLiveStation(){
-		// Tests ability to search for live stations based on:
-		//	Keyword, name, station frequency, and song title
-		// Tests search filters, to only show live stations
-		
+		// Tests live stations can be searched for by name, keyword, and frequency.
 		// log in, as anonymous use will be phased out
 		loginPage.loginWithoutVerifying();
-		// TODO Ensure we're getting 10013 zipcode results... may have to actually... enter a zipcode!
-		String[] searchFor = {"100.3", "Z100"};
+		// Get to the live radio page via sidebar and enter zip if requested
+		sideNavBar.getToAndEnterZip("10013");
+		// Go back to home page to search
+		sideNavBar.gotoHomePage();
+		String[] searchFor = {"100.3", "Z100", "Hit Music"};
 		search.searchForStationWithoutSelecting(searchFor[0]); 
 		// Check that Z100 is the first result under "All" and "Stations" filters.
 		Assert.assertTrue(searchFor[1] + " was not found for frequency search of " + searchFor[0], search.isResultListed(searchFor[1]));
+		search.clearSearch();
 		search.searchForStationWithoutSelecting(searchFor[1]);
-		Assert.assertTrue(searchFor[1] + " was not found for frequency search of " + searchFor[0], search.isResultListed(searchFor[1]));
-		// TODO Search for a song, select radio, see what we get
-		// In 20 years, something that turns up pop radio will turn up classic radio... just a thought. 
-		// ... In 1996, the year end Billboard hot 100 #1 song was... the Macarena. I'm sorry. 
+		Assert.assertTrue(searchFor[1] + " was not found", search.isResultListed(searchFor[1]));
+		// Search for key phrase
+		search.clearSearch();
+		search.searchForStationWithoutSelecting(searchFor[2]);
+		Assert.assertTrue(searchFor[1] + " was not found", search.isResultListed(searchFor[1]));
 	}
 }

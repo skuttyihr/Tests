@@ -1,6 +1,7 @@
 package com.iheart.appium.iosAutomation;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.openqa.selenium.By;
@@ -60,6 +61,12 @@ public class Search extends Page {
 			}
 			sb.click();
 			waitForElementToBeVisible(searchField, 3);
+		}
+	}
+	
+	public void clearSearch(){
+		if(isVisible(searchField)){
+			searchField.clear();
 		}
 	}
 	
@@ -215,8 +222,18 @@ public class Search extends Page {
 	
 	public boolean isResultListed(String expectedResult){
 		boolean foundResult = false;
-		// TODO 
-		
+		if(driver.getPageSource().contains(expectedResult)){
+			List<IOSElement> results = findElements(driver, By.xpath("//UIAApplication[1]/UIAWindow[1]/UIATableView[2]/UIATableCell"));
+			for(IOSElement r : results){
+				if(!isVisible(r)){
+					continue;
+				}
+				if(r.getAttribute("name").contains(expectedResult)){
+					foundResult = true;
+					break;
+				}
+			}
+		}
 		return foundResult;
 	}
 }

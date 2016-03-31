@@ -89,6 +89,7 @@ public class LoginPage extends Page {
 		password.sendKeys(PASSWORD);
 		logInFormButton.click();
 		chooseStayConnected(false);
+		player.minimizePlayer();
 		// Dismiss zip code
 		Page.enterZip();
 		// Dismiss stay connected popup
