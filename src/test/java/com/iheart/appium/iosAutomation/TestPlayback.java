@@ -202,16 +202,7 @@ public class TestPlayback extends TestRoot {
 		// Play a live radio station and verify it.
 		String playedStation = forYouPage.playLiveRadio();
 		Assert.assertTrue("Could not play a live radio station.", strGood(playedStation));
-		
-		// TODO
-		/* Live radio errors:
-		 * Could not verify live radio controls:
-		 * Play icon is not displayed
-		 * Skip icon is not displayed
-		 * Could not load artist album artwork
-		 * Could not favorite artist station
-		 * could not skip
-		 */
+
 		String verifyPlayer = player.verifyPlaybackControls();
 		Assert.assertTrue("Could not verify live radio controls:\n" + verifyPlayer, didPass(verifyPlayer));
 		
