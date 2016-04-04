@@ -434,20 +434,39 @@ public class Player extends Page {
 	}
 
 	public boolean doSkip() {
-		String currentSong = driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAStaticText[2]"))
-				.getText();
 
-		if(isVisible(scan)){
-			scan.click();
+		String current = "";
+		String type = getType();
+		IOSElement track = null;
+		switch(type){
+		case "artist":
+			waitForElementToBeVisible(songTrack_artist, 3);
+			track = songTrack_artist;
+			break;
+		case "live":
+			waitForElementToBeVisible(songTrack_live, 3);
+			track = songTrack_live;
+			break;
+		case "podcast":
+			waitForElementToBeVisible(episodeName_podcast, 3);
+			track = episodeName_podcast;
+			break;
 		}
-		else if(isVisible(skip)){
+
+		if(isVisible(track))
+			current = track.getText();
+		
+		if(type.equals("artist") || type.equals("podcast")){
 			skip.click();
+		}
+		else{
+			scan.click();
 		}
 		
 		waitForTrackToLoad();
 		// Verify that new song is playing
-		String newSong = driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAStaticText[2]")).getText();
-		if (newSong.equals(currentSong))
+		String newSong = track.getText();
+		if (newSong.equals(current))
 			return false;
 		else
 			return true;

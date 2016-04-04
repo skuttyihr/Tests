@@ -751,6 +751,28 @@ public class TestRoot {
 		return false;
 	}
 	
+	public static String getTextOfInt(int x){
+		String returnString = "";
+		
+		returnString = String.valueOf(x);
+		switch(returnString.charAt(returnString.length() -1)){
+		case '1':
+			returnString += "st";
+			break;
+		case '2':
+			returnString += "nd";
+			break;
+		case '3':
+			returnString += "rd";
+			break;
+		default:
+			returnString += "th";
+			break;
+		}
+		
+		return returnString;
+	}
+	
 	// Test Watcher control
 	@Rule
 	public TestRule watcher = new TestWatcher() {

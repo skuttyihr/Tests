@@ -127,6 +127,7 @@ public class TestPlayback extends TestRoot {
 	@Test
 	public void testArtistRadioSkipLimit(){
 		System.out.println("test method:" + name.getMethodName());
+		// Create an account so we start with a fresh number of skips
 		Assert.assertTrue("Could not create a new account", signupPage.createAnAccount());
 		genrePage.selectGenre(1);
 		Page.handlePossiblePopUp();
@@ -134,8 +135,9 @@ public class TestPlayback extends TestRoot {
 		String artist = "Matt and Kim";
 		Assert.assertTrue("Could not play a custom artist station based on the artist: " + artist,
 				customRadio.playACustomStation(artist).contains(artist));
-		for(int i = 0; i < 6; i++){
-			Assert.assertTrue("Could not skip for the " + i + " time.", player.doSkip());
+		// Make sure we can keep scanning
+		for(int i = 1; i < 7; i++){
+			Assert.assertTrue("Could not skip for the " + getTextOfInt(i) + " time.", player.doSkip());
 		}
 		player.pause();
 		Assert.assertTrue("Should not have been able to skip", !player.doSkip());
@@ -246,7 +248,7 @@ public class TestPlayback extends TestRoot {
 		// Load up a podcast and test that we cannot see the more info button
 		player.getBack();
 		sideNavBar.gotoHomePage();
-		Assert.assertTrue(strGood(search.searchForPodCast("Elvis Duran on Demand")));
+		Assert.assertTrue("Did not select a podcast episode.", strGood(search.searchForPodCast("Elvis Duran on Demand")));
 		Assert.assertTrue("More Info button was not disabled, as we expected it to be",
 				isVisible(player.more) && !player.more.isEnabled());
 		
