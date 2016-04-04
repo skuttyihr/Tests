@@ -112,9 +112,29 @@ public class LoginPage extends Page {
 		//Sleep to allow web to display, can't wait because context needs to switch
 		TestRoot.sleep(2000);
 		if(switchToWebContext()){
-			driver.findElement(By.name("email")).sendKeys(FACEBOOK_USER_NAME); // iheartrocks999@gmail.com
-			driver.findElement(By.name("pass")).sendKeys(FACEBOOK_PASSWORD); // iheart001
-			driver.findElement(By.name("login")).click();
+//			driver.findElement(By.name("email")).sendKeys(FACEBOOK_USER_NAME); // iheartrocks999@gmail.com
+//			driver.findElement(By.name("pass")).sendKeys(FACEBOOK_PASSWORD); // iheart001
+//			driver.findElement(By.name("login")).click();
+			// Facebook changed their page
+			IOSElement fbemailField = findElement(driver, By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIATextField[1]"));
+			IOSElement fbpasswordField = findElement(driver, By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIASecureTextField[1]"));
+			IOSElement fbloginButton = findElement(driver, By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIAButton[1]"));
+			if(fbemailField == null){
+				fbemailField = findElement(driver, By.name("email"));
+			}
+			if(fbpasswordField == null){
+				fbpasswordField = findElement(driver, By.name("pass"));
+			}
+			if(fbloginButton == null){
+				fbloginButton = findElement(driver, By.name("login"));
+			}
+			
+			if(fbemailField != null && fbpasswordField != null && fbloginButton != null){
+				fbemailField.sendKeys(FACEBOOK_USER_NAME);
+				fbpasswordField.sendKeys(FACEBOOK_PASSWORD);
+				fbloginButton.click();
+			}
+		
 			sleep(2000);
 			// Handle Authorization confirm
 			try{
