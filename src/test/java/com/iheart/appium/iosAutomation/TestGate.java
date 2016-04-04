@@ -1,8 +1,7 @@
 package com.iheart.appium.iosAutomation;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
+import java.util.Iterator;
 import java.util.Set;
 
 import org.junit.After;
@@ -25,7 +24,7 @@ public class TestGate extends TestRoot {
 	private void resetBackground(){
 		// Swipe so we're back to square 1
 		for(int i = 0; i < 3; i++){
-			swipeRight();
+			pageSwipe(RIGHT);
 		}
 	}
 	/**
@@ -33,96 +32,89 @@ public class TestGate extends TestRoot {
 	 * Make sure background transitions on its own as well
 	 */
 	@Test
-	public void testBackground() {
+	public void  testBackground() {
 		Set<String> shouldBe = new HashSet<String>();
 		shouldBe.add("Music to your ears.");
 		shouldBe.add("Don't miss a beat.");
 		shouldBe.add("Join the party.");
-		List<String> alreadyTested = new ArrayList<String>();
-		int foundCases = 0;
+		Set<String> found = new HashSet<String>();
+
+		// Assert background image is present
 		Assert.assertTrue("Background image was not present!", splashPage.isBackgroundImagePresent());
 		
 		// Reset so we're back to the first pane
 		resetBackground();
-		for(int i = 0; i < 3; i++){
-			if(shouldBe.size() == 0){
+		
+		long duration = 75000; // 75 seconds max (will be shorter if items are found)
+		long startTime = System.currentTimeMillis();
+		// Grab all the text we can see
+		while(System.currentTimeMillis() - startTime < duration){
+			String onboardingText = splashPage.getOnBoardingText();
+			if(strGood(onboardingText)){
+				found.add(onboardingText);
+				System.out.println("Found: " + onboardingText);
+			}
+			if(found.size() == shouldBe.size()){
 				break;
 			}
-			String onboardingText = splashPage.getOnBoardingText();
-			
-			if(onboardingText != null){
-				System.out.println("Testing: " + onboardingText);
-				if(alreadyTested.contains(onboardingText)){
-					if(alreadyTested.size() < 4){ // limit retries
-						i--;
-					}
-					System.out.println("Already tested: " + onboardingText + ", continuing...");
-					sleep(3000);
-					alreadyTested.add(onboardingText);
-					continue;
-				}
-				alreadyTested.add(onboardingText);
-				if(shouldBe.contains(onboardingText)){
-					shouldBe.remove(onboardingText);
-					foundCases++;
-				}
-				else{
-					Assert.fail("Found string (" + onboardingText + ") was not in list of acceptable strings.");
-				}
-			}
-			else{
-				Assert.fail("Failed while waiting for text matching: " + shouldBe);
+		}
+		
+		// Report errors if they exist
+		StringBuilder couldntFind = new StringBuilder();
+		Iterator<String> itr = shouldBe.iterator();
+		while(itr.hasNext()){
+			String shouldHaveFound = itr.next();
+			if(!found.contains(shouldHaveFound)){
+				couldntFind.append(shouldHaveFound + "\n");
 			}
 		}
-		Assert.assertTrue("Did not see all three entry panes.", foundCases == 3);
-		Assert.assertTrue("Did not find all cases we expected.", shouldBe.size() == 0);
+		if(couldntFind.length() > 0){
+			Assert.fail("Could not find the following expected text:\n" + couldntFind.toString());
+		}
 		
-		
-		
-		// Do test again, this time swiping between pages
-		shouldBe.add("Music to your ears.");
-		shouldBe.add("Don't miss a beat.");
-		shouldBe.add("Join the party.");
-		alreadyTested = null;
-		alreadyTested = new ArrayList<String>();
-		foundCases = 0;
-		// Reset so we're back to the first pane
-		resetBackground();
-		for(int i = 0; i < 3; i++){
-			if(shouldBe.size() == 0){
+		// Now test that swiping is possible
+		// Method: Just prove that swiping changes things. 
+		// Get text. Swipe. Get text again. Should be different. 
+		// Timeout of 75 seconds again, can be quicker
+		found = null;
+		found = new HashSet<String>();
+		duration = 75000;
+		startTime = System.currentTimeMillis();
+		while(System.currentTimeMillis() - startTime < duration){
+			String beforeSwipe = splashPage.getOnBoardingText();
+			System.out.println("Before swipe: " + beforeSwipe);
+			pageSwipe(LEFT);
+			String afterSwipe = splashPage.getOnBoardingText();
+			System.out.println("After swipe: " + afterSwipe);
+			if(!beforeSwipe.equals(afterSwipe)){
+				found.add(afterSwipe);
+			}
+			else{
+				System.out.println("Waiting for it to change, can't swipe from last item to first item");
+				sleep(2000);
+				afterSwipe = splashPage.getOnBoardingText();
+				if(!beforeSwipe.equals(afterSwipe)){
+					found.add(afterSwipe);
+				}
+			}
+			if(found.size() == shouldBe.size()){
 				break;
 			}
-			
-			String onboardingText = splashPage.getOnBoardingText();
-			if(onboardingText != null){
-				System.out.println("Testing with swipe: " + onboardingText);
-				if(alreadyTested.contains(onboardingText)){
-					if(alreadyTested.size() < 4){ // limit retries
-						i--;
-					}
-					System.out.println("Already tested: " + onboardingText + " while swiping, continuing...");
-					alreadyTested.add(onboardingText);
-					swipeLeft();
-					continue;
-				}
-				alreadyTested.add(onboardingText);
-				if(shouldBe.contains(onboardingText)){
-					shouldBe.remove(onboardingText);
-					foundCases++;
-				}
-				else{
-					Assert.fail("Found string (" + onboardingText + ") was not in list of acceptable strings.");
-				}
-			}
-			else{
-				Assert.fail("Failed while swiping for text matching: " + shouldBe);
-			}
-			swipeLeft();
+			sleep(1667);
 		}
-		Assert.assertTrue("Did not see all three entry panes while swiping, only found: " + foundCases + ".", foundCases == 3);
-		Assert.assertTrue("Did not find all cases we expected while swiping:" + shouldBe.size() + ".", shouldBe.size() == 0);
+		
+		itr = shouldBe.iterator();
+		while(itr.hasNext()){
+			String shouldHaveFound = itr.next();
+			if(!found.contains(shouldHaveFound)){
+				couldntFind.append(shouldHaveFound + "\n");
+			}
+		}
+		if(couldntFind.length() > 0){
+			Assert.fail("Could not find the following expected text while swiping:\n" + couldntFind.toString());
+		}
+		
 	}
-	
 	
 	private void validateGate(boolean wait){
 		String notVisible = splashPage.whatIsntVisible(wait);

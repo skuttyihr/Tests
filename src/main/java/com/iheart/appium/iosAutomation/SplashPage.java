@@ -29,10 +29,6 @@ public class SplashPage extends Page {
 		if(onboardingText != null){
 			onboardingTextString = onboardingText.getText();
 		}
-//		IOSElement titleText = driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAStaticText[2]"));
-//		if(titleText != null){
-//			onboardingText = titleText.getText();
-//		}
 		return onboardingTextString;
 	}
 	public void waitForSplash(){

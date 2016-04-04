@@ -446,6 +446,29 @@ public class TestRoot {
 	}
 	
 	/**
+	 * Does a large swipe in the desired direction, used for paging left or right
+	 * @param direction
+	 */
+	public static void pageSwipe(int direction){
+		int y = getAppHeight() / 2;
+		int startX = 0;
+		int endX = 0;
+		if(direction == 1){
+			// left to right
+			startX = getAppWidth() / 10;
+			endX = (getAppWidth() / 10) * 9;
+		}
+		else{
+			// right to left
+			startX = (getAppWidth() / 10) * 9;
+			endX = getAppWidth() / 10;
+		}
+		try{
+			driver.swipe(startX, y, endX, y, 500);
+		}catch(Exception e){}
+	}
+	
+	/**
 	 * Swipes on an element, keeping within the bounds of the element, if possible
 	 * Will try to swipe to/from 10%-90% of the element +/- 4/5 from center
 	 * 0=Up 1=Right 2=Down 3=Left
