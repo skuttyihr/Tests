@@ -22,11 +22,11 @@ dependencies {
 sourceSets {
     test{
         java{
-            srcDirs = ['src/']
+            srcDirs = ['src/test/java', 'src/main/java']
             
         }
         resources{
-            srcDirs = ['src/']
+            srcDirs = ['properties/', 'src/main/resources']
             exclude '**/*.java'
         }
     }
