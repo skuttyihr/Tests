@@ -166,7 +166,7 @@ public class TestHomePage extends TestRoot {
 	@Test
 	public void testScrollAndTapBar(){
 		// Test that we can scroll to the bottom, then jump back to the top
-		signupPage.skipLogin();
+		loginPage.loginWithoutVerifying();
 		sideNavBar.gotoHomePage();
 		List<String> topItems = homePage.getVisibleListItems();
 		for(int i = 0; i < 3; i++)
