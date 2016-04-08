@@ -129,7 +129,5 @@ public class TestGate extends TestRoot {
 		loginPage.tapBack();
 		validateGate(true);
 		Assert.assertTrue("Could not click get started", signupPage.tapGetStarted());
-//		signupPage.tapBack();
-		Assert.assertTrue("Could not click maybe later", signupPage.skipLogin());
 	}
 }
