@@ -382,6 +382,7 @@ public class HomePage extends Page {
 		if(!driver.getPageSource().contains(artist)){
 			return foundStation;
 		}
+		
 		IOSElement favorites = waitForVisible(driver, find("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIAStaticText[1]", "xpath"), 3);
 		if(favorites != null && favorites.getText().equalsIgnoreCase("Favorite Stations")){
 			int recentY = getRecentY();
