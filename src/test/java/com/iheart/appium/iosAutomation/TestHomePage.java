@@ -110,7 +110,7 @@ public class TestHomePage extends TestRoot {
 		// Might not be the first element
 		int removeItem = homePage.searchForStation(artist);
 		Assert.assertTrue(removeItem > 0);
-		toggleErrors = homePage.toggleListItemFavorites(removeItem);
+		toggleErrors = homePage.toggleListItemFavorites(removeItem, true);
 		Assert.assertTrue("Station was not removed from favorites", homePage.isStationAFavorite(artist) < 0);
 	}
 	

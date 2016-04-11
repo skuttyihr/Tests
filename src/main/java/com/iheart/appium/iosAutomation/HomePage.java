@@ -166,8 +166,10 @@ public class HomePage extends Page {
 	
 	
 	// Behavior Methods
-	
 	public String toggleListItemFavorites(int x){
+		return toggleListItemFavorites(x, false);
+	}
+	public String toggleListItemFavorites(int x, boolean removing){
 		Errors err = new Errors();
 		IOSElement item = getListItem(x);
 		if(item != null){
@@ -175,7 +177,7 @@ public class HomePage extends Page {
 			swipeOnItem(item, LEFT);
 			IOSElement add = waitForVisible(driver, By.name("Add to Favorites"), 2);
 			if(!isVisible(add)){
-				String message = toggleFavorites(item, x);
+				String message = toggleFavorites(item, x, removing);
 				err.add(message);
 			}
 			else{
@@ -189,8 +191,7 @@ public class HomePage extends Page {
 		return err.getErrors();
 	}
 	
-	
-	private String toggleFavorites(IOSElement item, int x){
+	private String toggleFavorites(IOSElement item, int x, boolean remove){
 		/* 
 		 * Button width ratio to item ratio is 0.24154589372
 		 * Since our developers did not give us a way to easily access this...
@@ -205,6 +206,10 @@ public class HomePage extends Page {
 		 * 9) Click button 2 to toggle
 		 * *All of this could be done in one line if we had a name/xpath for these elements *
 		*/
+		if(!isVisible(item) || !isEnabled(item)){
+			item = null;
+			item = getListItem(x);
+		}
 		String returnMessage = "";
 		int width = item.getSize().getWidth();
 		int height = item.getSize().getHeight();
@@ -224,10 +229,8 @@ public class HomePage extends Page {
 		if(!homePage.isStationARecent(x)){
 			do{
 				tries++;
-				if(!isVisible(item) || !isEnabled(item)){
-					item = null;
-					item = getListItem(x);
-				}
+				item = null;
+				item = getListItem(x);
 				click(driver, item);
 				if (!player.isPlayingInPlayer()){
 					click(driver, item);
@@ -247,6 +250,9 @@ public class HomePage extends Page {
 				player.minimizePlayer();
 				item = null;
 				item = getListItem(x);
+				if(item == null){
+					System.err.println("Item is still null!");
+				}
 				// Now we can swipe and click button 2
 				swipeOnItem(item, LEFT);
 				sleep(100); // Since we can't wait for visible
@@ -262,7 +268,7 @@ public class HomePage extends Page {
 				if(item == null){
 					returnMessage += "\nCould not load item while trying to toggle favorite status."; 
 				}
-				else if(strGood(text) && !text.equals(item.getText())){
+				else if(!remove && strGood(text) && !text.equals(item.getText())){ 
 					//  The item was removed, retry with the first button
 					execute = true;
 				}

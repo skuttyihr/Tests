@@ -576,11 +576,17 @@ public class Player extends Page {
 	
 	public boolean isPlayingInPlayer(){
 		if(isPlaying()){
-			if(isVisible(artistPlayerView)
-					|| isVisible(podcastPlayerView)
-					|| isVisible(player.radioPlayerView)){
+			// Try this first. Type uses the string in the player view
+			String type = getType();
+			if(strGood(type)){
 				return true;
 			}
+			// This doesn't work anymore, all use the same player view now. Must use type 
+//			if(isVisible(artistPlayerView)
+//					|| isVisible(podcastPlayerView)
+//					|| isVisible(radioPlayerView)){
+//				return true;
+//			}
 		}
 		return false;
 	}
