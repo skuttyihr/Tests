@@ -220,43 +220,57 @@ public class HomePage extends Page {
 		
 		int tries = 0;
 		boolean execute = false;
-		
-		do{
-			tries++;
-			item.click();
-			if(!player.isFavorite()){
-				x = 1;
-				returnMessage = "1";
-				player.doFavorite();
+
+		if(!homePage.isStationARecent(x)){
+			do{
+				tries++;
+				if(!isVisible(item) || !isEnabled(item)){
+					item = null;
+					item = getListItem(x);
+				}
+				click(driver, item);
+				if (!player.isPlayingInPlayer()){
+					click(driver, item);
+				}
+				Player.waitForTrackToLoad();
+				if(!player.isFavorite()){
+					handlePossiblePopUp();
+					player.doFavorite();
+					player.minimizePlayer();
+					item = null;
+					item = getListItem(1);
+					x = 1;
+					returnMessage = "1";
+					item.click();
+					player.unFavorite();
+				}
 				player.minimizePlayer();
 				item = null;
 				item = getListItem(x);
-				item.click();
-				player.unFavorite();
-			}
-			player.minimizePlayer();
-			item = null;
-			item = getListItem(x);
-		
-			// Now we can swipe and click button 2
-			swipeOnItem(item, LEFT);
-			sleep(100); // Since we can't wait for visible
-			// Get the name of the station
-			String text = item.getText();
-			if(!execute)
-				driver.tap(1, clickSecondButtonX, clickY, 300);
-			else
-				driver.tap(1, clickFirstButtonX, clickY, 300);
-			item = null;
-			item = getListItem(x);
-			// If the name isn't the same, we need to re-try, because it unfavorited
-			if(strGood(text) && !text.equals(item.getText())){
-				//  The item was removed, retry with the first button
-				execute = true;
-			}
-		}while(tries < 2 && execute);
-		
-		
+				// Now we can swipe and click button 2
+				swipeOnItem(item, LEFT);
+				sleep(100); // Since we can't wait for visible
+				// Get the name of the station
+				String text = item.getText();
+				if(!execute)
+					driver.tap(1, clickSecondButtonX, clickY, 300);
+				else
+					driver.tap(1, clickFirstButtonX, clickY, 300);
+				item = null;
+				item = getListItem(x);
+				// If the name isn't the same, we need to re-try, because it unfavorited
+				if(item == null){
+					returnMessage += "\nCould not load item while trying to toggle favorite status."; 
+				}
+				else if(strGood(text) && !text.equals(item.getText())){
+					//  The item was removed, retry with the first button
+					execute = true;
+				}
+			}while(tries < 2 && execute);
+		}
+		else{
+			driver.tap(1, clickFirstButtonX, clickY, 300);
+		}
 		return returnMessage;
 	}
 	

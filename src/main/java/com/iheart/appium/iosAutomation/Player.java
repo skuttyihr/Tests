@@ -381,8 +381,10 @@ public class Player extends Page {
 
 	public boolean doFavorite() { // if faved before, its value is 1;
 		if (!isFavorite()){
-			favorite.click();
-			handleActionPopup();
+			if(isVisible(favorite)){
+				favorite.click();
+				handleActionPopup();
+			}
 		}
 		// Verify that icon is filled
 		return favorite.getAttribute("value").equals("1");

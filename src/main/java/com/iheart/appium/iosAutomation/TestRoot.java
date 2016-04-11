@@ -590,6 +590,21 @@ public class TestRoot {
 		return isVisible;
 	}
 	
+	static boolean isEnabled(IOSElement e){
+		boolean isEnabled = false;
+		if( e == null)
+			return false;
+		try{
+			driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
+			isEnabled = e.isEnabled();
+		}catch(Exception x){}
+		finally{
+			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
+		}
+		
+		return isEnabled;
+	}
+	
 	public static void sleep(int timeInMs){
 		try{
 			Thread.sleep(timeInMs);
@@ -732,6 +747,36 @@ public class TestRoot {
 			return true;
 		}
 		return false;
+	}
+	
+	public static boolean click(IOSDriver<IOSElement> d, IOSElement ele){
+		boolean couldClick = false;
+		
+		if(isVisible(ele)){
+			try{
+				ele.click();
+				couldClick = true;
+			}
+			catch(Exception e){
+				try{
+					System.out.println("Error clicking element (see below), retyring.");
+					System.out.println(e.getMessage());
+					int x = ele.getLocation().getX();
+					int y = ele.getLocation().getY();
+					d.tap(1, x, y, 300);
+					couldClick = true;
+				}
+				catch(Exception e1){
+					System.err.println("Could not click element!");
+					System.out.println("Error 1:");
+					e.printStackTrace();
+					System.out.println("\n\nError 2:");
+					e1.printStackTrace();
+				}
+			}
+		}
+		
+		return couldClick;
 	}
 	
 	/**
