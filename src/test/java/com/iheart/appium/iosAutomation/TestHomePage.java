@@ -105,7 +105,10 @@ public class TestHomePage extends TestRoot {
 		// Should still be in recents
 		artistValue = homePage.isStationARecent(artist);
 		if(artistValue <= 0){
-			System.out.println("Check this");
+			System.out.println("Could not find station in recent, trying again.");
+			// Try again. 
+			sideNavBar.gotoMyStationsPage();
+			artistValue = homePage.isStationARecent(artist);
 		}
 		Assert.assertTrue(artist + " was not a recent station.", artistValue > 0);
 		
@@ -117,7 +120,10 @@ public class TestHomePage extends TestRoot {
 		Assert.assertTrue("Was not able to remove favorite without errors: " + toggleErrors, didPass(toggleErrors));
 		int favoritePos = homePage.isStationAFavorite(artist);
 		if(favoritePos >= 0){
-			System.out.println("Check this");
+			System.out.println("Could not find station in favorites, trying again.");
+			// Try again. 
+			sideNavBar.gotoMyStationsPage();
+			favoritePos = homePage.isStationAFavorite(artist);
 		}
 		Assert.assertTrue("Station was not removed from favorites", favoritePos < 0);
 	}
