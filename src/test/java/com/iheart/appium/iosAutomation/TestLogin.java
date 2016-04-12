@@ -18,8 +18,12 @@ public class TestLogin extends TestRoot {
 		TestRoot.tearDown();
 	}
 	
+	// Can't always switch context, Appium bug
+	// Only fails when ran in a suite
+	// Starting with a reset seems to help
 	@Test
 	public void testLoginViaFacebook() {
+		driver.resetApp(); // Strange fix for context issue?
 		Assert.assertTrue("Could not log in via Facebook", loginPage.loginViaFacebook());
 	}
 	

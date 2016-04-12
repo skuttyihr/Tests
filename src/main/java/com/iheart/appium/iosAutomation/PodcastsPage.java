@@ -40,7 +40,7 @@ public class PodcastsPage extends Page {
 			return "Could not load up a podcast episode.";
 		}
 		waitForElementToBeVisible(player.thumbUp, 5);
-		if(isVisible(player.playButton_podcast)){
+		if(player.isPlaying()){
 			return "";
 		}
 		return "Did not enter a podcast playback view, podcast play button was not visible.";
@@ -74,7 +74,7 @@ public class PodcastsPage extends Page {
 		IOSElement episode = waitForVisible(driver, By.xpath("//UIAApplication[1]/UIAWindow[1]/UIATableView[3]/UIATableCell[" + i + "]"), 10);
 		int attempts = 10;
 		while(attempts > 0 && episode == null || !strGood(episode.getAttribute("name"))){
-			System.out.println("Trying to select again... why is this necessary?!");
+			System.out.println("Trying to select podcast again.");
 			attempts--;
 			// Try again
 			episode = waitForVisible(driver, By.xpath("//UIAApplication[1]/UIAWindow[1]/UIATableView[3]/UIATableCell[" + i + "]"), 5);

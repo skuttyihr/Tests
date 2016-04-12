@@ -32,7 +32,7 @@ public class ForYouPage extends Page {
 		for (WebElement station : stations) {
 			// radioName = station.getAttribute("name");
 			radioName = station.getText();
-			System.out.println("See station:" + radioName);
+//			System.out.println("See station:" + radioName);
 			if (!radioName.contains(" Radio")) {
 				// Any station contains numbers?
 				if (radioName.matches(".*\\d+.*")) {
@@ -56,6 +56,8 @@ public class ForYouPage extends Page {
 			}
 		} // for
 
+		miniPlayer.maximizeMiniPlayer();
+		
 		return myStation;
 
 	}
@@ -69,6 +71,7 @@ public class ForYouPage extends Page {
 			List<WebElement> stations = collectionView.findElements(By.className("UIACollectionCell"));
 			myStation = chooseLiveRadioToPlay(stations);
 		}
+		miniPlayer.maximizeMiniPlayer();
 		return myStation;
 	}
 	

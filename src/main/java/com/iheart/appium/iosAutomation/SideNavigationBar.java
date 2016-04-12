@@ -3,6 +3,8 @@ package com.iheart.appium.iosAutomation;
 import io.appium.java_client.ios.IOSElement;
 import io.appium.java_client.pagefactory.iOSFindBy;
 
+import org.openqa.selenium.By;
+
 import io.appium.java_client.ios.IOSDriver;
 
 public class SideNavigationBar extends Page {
@@ -24,7 +26,7 @@ public class SideNavigationBar extends Page {
 	@iOSFindBy(name = "Alarm Clock") public IOSElement alarm;
 	@iOSFindBy(name = "Sleep Timer") public IOSElement sleep;
 //	@iOSFindBy(name = "Songs") public IOSElement songs;
-	@iOSFindBy(name = "Account Settings") public IOSElement settings;
+	@iOSFindBy(name = "Settings") public IOSElement settings;
 
 	// ****** End of Side Nav page ******
 
@@ -39,12 +41,35 @@ public class SideNavigationBar extends Page {
 		setSideNavigationBar(this);
 	}
 
+	public void getToAndEnterZip(String zip){
+		if(!isVisible(waitForVisible(driver, find(navIconString), 2))){
+			getBack();
+		}
+		if(isVisible(navIcon)){
+			navIcon.click();
+			liveRadio.click();
+		}
+		IOSElement enterZip = waitForVisible(driver, find("Enter ZIP"), 3);
+		if(!isVisible(enterZip)){
+			enterZip = waitForVisible(driver, find("Use ZIP"), 1);
+		}
+		if(isVisible(enterZip)){
+			enterZip.click();
+			IOSElement zipEntry = waitForVisible(driver, find("//UIAApplication[1]/UIAWindow[1]/UIAAlert[1]/UIAScrollView[1]/UIACollectionView[1]/UIACollectionCell[1]/UIATextField[1]"), 5);
+			if(isVisible(zipEntry)){
+				zipEntry.sendKeys(zip);
+				findElement(driver, By.name("OK")).click();
+			}
+		}
+	}
+	
 	// Put header and player related methods here
 	public void gotoHomePage() {
 		if(!isVisible(waitForVisible(driver, find(navIconString), 2))){
 			getBack();
 		}
 		if(click(driver, find(navIconString))){
+			waitForElementToBeVisible(home, 1);
 			home.click();
 		}
 	}

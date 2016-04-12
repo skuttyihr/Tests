@@ -9,14 +9,19 @@ import org.junit.Test;
 
 public class TestHomePage extends TestRoot {
 
+	boolean createdFavorite = false; // Set to true by tests that add to favorites
+	
 	@Before
 	public void setUp() throws Exception {
 		TestRoot.setup();
+		createdFavorite = false;
 	}
 	@After
 	public void after() {
 		// Remove favorites
-		homePage.removeAllFavorites();
+		if(createdFavorite){
+			homePage.removeAllFavorites();
+		}
 		TestRoot.tearDown();
 	}
 	
@@ -45,26 +50,20 @@ public class TestHomePage extends TestRoot {
 	
 	@Test
 	public void testAddToFavoritesFromHome(){
-		Assert.assertTrue("Was not able to login", loginPage.login()); // Log in so we can favorite stations
-		
+		loginPage.loginWithoutVerifying();
+		createdFavorite = true; // This test will create a favorite
 		// Search for an item so we know what we're working with
 		String artist = "Tegan and Sara";
 		searchAndGoHome(artist); 
 		homePage.gotoForYou();
 		int listItem = 1;
-		String addErrors = homePage.toggleListItemFavorites(listItem);
-		if(addErrors.startsWith("switch to")){
-			try{
-				listItem = Integer.parseInt(addErrors.replace("switch to ", ""));
-			}
-			catch(Exception e){
-				System.err.println(addErrors);
-			}
-			finally{
-				addErrors = "";
-			}
+		String addErrors = homePage.toggleListItemFavorites(listItem); 
+		if(addErrors.equals("\n1\n")){ // Means we had to switch to different list item
+			addErrors = "";
+			listItem = 1;
 		}
-		String station = homePage.getListItem(listItem).getText();
+		String station = homePage.getListItemText(listItem);
+		Assert.assertTrue("Could not get station", strGood(station));
 		if(station.contains(",")){
 			station = station.substring(0, station.indexOf(","));
 		}
@@ -74,19 +73,13 @@ public class TestHomePage extends TestRoot {
 		// Remove the station through the toggle now
 		homePage.gotoForYou();
 		addErrors = homePage.toggleListItemFavorites(listItem);
-		if(addErrors.startsWith("switch to")){
-			try{
-				listItem = Integer.parseInt(addErrors.replace("switch to ", ""));
-			}
-			catch(Exception e){
-				System.err.println(addErrors);
-			}
-			finally{
-				addErrors = "";
-			}
+		if(addErrors.equals("\n1\n")){ // Means we had to switch to different list item
+			addErrors = "";
+			listItem = 1;
 		}
-		station = homePage.getListItem(listItem).getText();
-		if(station.contains(",")){
+		station = homePage.getListItemText(listItem);
+		Assert.assertTrue("Could not get station", strGood(station));
+		if(strGood(station) && station.contains(",")){
 			station = station.substring(0, station.indexOf(","));
 		}
 		Assert.assertTrue("Could not tap add to favorites for this item." + addErrors, didPass(addErrors));
@@ -97,6 +90,7 @@ public class TestHomePage extends TestRoot {
 	public void testAddToFavoritesFromRecents(){
 		// Log in, load up a station, check that it's in recents, add it to favorites, check that it's a favorite as well as a recent. 
 		loginPage.loginWithoutVerifying();
+		createdFavorite = true;
 		
 		String artist = "Tegan and Sara";
 		searchAndGoHome(artist);
@@ -110,20 +104,35 @@ public class TestHomePage extends TestRoot {
 		Assert.assertTrue("Station was not added to favorites", homePage.isStationAFavorite(artist) > 0);
 		// Should still be in recents
 		artistValue = homePage.isStationARecent(artist);
+		if(artistValue <= 0){
+			System.out.println("Could not find station in recent, trying again.");
+			// Try again. 
+			sideNavBar.gotoMyStationsPage();
+			artistValue = homePage.isStationARecent(artist);
+		}
 		Assert.assertTrue(artist + " was not a recent station.", artistValue > 0);
 		
 		// Now remove from favorites
 		// Might not be the first element
 		int removeItem = homePage.searchForStation(artist);
 		Assert.assertTrue(removeItem > 0);
-		toggleErrors = homePage.toggleListItemFavorites(removeItem);
-		Assert.assertTrue("Station was not removed from favorites", homePage.isStationAFavorite(artist) < 0);
+		toggleErrors = homePage.toggleListItemFavorites(removeItem, true);
+		Assert.assertTrue("Was not able to remove favorite without errors: " + toggleErrors, didPass(toggleErrors));
+		int favoritePos = homePage.isStationAFavorite(artist);
+		if(favoritePos >= 0){
+			System.out.println("Could not find station in favorites, trying again.");
+			// Try again. 
+			sideNavBar.gotoMyStationsPage();
+			favoritePos = homePage.isStationAFavorite(artist);
+		}
+		Assert.assertTrue("Station was not removed from favorites", favoritePos < 0);
 	}
 	
 	@Test
 	public void testAddToFavoritesFromLocalRadio(){
 		// Log in, go to Live/Local Radio tab, add a station, check my stations for it being there
-		Assert.assertTrue("Was not able to login", loginPage.login());
+		loginPage.loginWithoutVerifying();
+		createdFavorite = true;
 		sideNavBar.gotoHomePage();
 		homePage.gotoLocalRadio();
 		Page.enterZip();
@@ -171,7 +180,7 @@ public class TestHomePage extends TestRoot {
 	@Test
 	public void testScrollAndTapBar(){
 		// Test that we can scroll to the bottom, then jump back to the top
-		signupPage.skipLogin();
+		loginPage.loginWithoutVerifying();
 		sideNavBar.gotoHomePage();
 		List<String> topItems = homePage.getVisibleListItems();
 		for(int i = 0; i < 3; i++)

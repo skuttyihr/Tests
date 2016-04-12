@@ -24,8 +24,8 @@ public class CustomRadio extends Page {
 		if (!player.isPlaying("artist"))
 			return "";
 		
-		// Stop the station
-		player.playButton_artist.click();
+		// Pause the station
+		player.pause();
 		return chosenStation;
 	}
 

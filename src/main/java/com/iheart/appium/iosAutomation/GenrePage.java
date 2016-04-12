@@ -282,6 +282,7 @@ public class GenrePage extends Page {
 			swipeUp();
 		}
 		improveRecommendationsButton.click();
+		handlePossiblePopUp();
 		if(!isVisible(genrePicker)){
 			return false;
 		}

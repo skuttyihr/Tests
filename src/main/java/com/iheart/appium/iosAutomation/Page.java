@@ -99,13 +99,24 @@ public class Page extends TestRoot{
 	
 	// Want your local radio?
 	public static void handlePossiblePopUp() {
-		try {
-			waitForVisible(driver, By.name("No Thanks"), 3).click();
-		} catch (Exception e) {
-			try {
-				waitForVisible(driver, By.name("Maybe Later"), 3).click();
-			} catch (Exception e1) {
+		try{
+			IOSElement dismiss = waitForVisible(driver, By.name("No Thanks"), 3);
+			if(!isVisible(dismiss)){
+				dismiss = findElement(driver, By.name("Maybe Later")); // Has already waited 3 seconds
 			}
+			if(isVisible(dismiss)){
+				dismiss.click();
+			}
+		}catch(Exception e){} // No chance of this failing a test
+	}
+	public static void quickDismissPopUp(){
+		IOSElement noThanks = findElement(driver, By.name("No Thanks"));
+		IOSElement maybeLater = findElement(driver, By.name("Maybe Later"));
+		if(isVisible(noThanks)){
+			noThanks.click();
+		}
+		else if(isVisible(maybeLater)){
+			maybeLater.click();
 		}
 	}
 	

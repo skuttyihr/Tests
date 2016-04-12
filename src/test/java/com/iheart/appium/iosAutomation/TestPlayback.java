@@ -57,6 +57,7 @@ public class TestPlayback extends TestRoot {
 	public void testCustomArtistStationPlaybackAndLogout() throws Exception {
 		System.out.println("test method:" + name.getMethodName());
 		String artist = "Florence + the Machine";
+		
 		Assert.assertTrue("Was not able to login", loginPage.login());
 		// Test that we can create an artist station
 		Assert.assertTrue("Could not play a custom artist station based on the artist: " + artist,
@@ -126,6 +127,7 @@ public class TestPlayback extends TestRoot {
 	@Test
 	public void testArtistRadioSkipLimit(){
 		System.out.println("test method:" + name.getMethodName());
+		// Create an account so we start with a fresh number of skips
 		Assert.assertTrue("Could not create a new account", signupPage.createAnAccount());
 		genrePage.selectGenre(1);
 		Page.handlePossiblePopUp();
@@ -133,8 +135,9 @@ public class TestPlayback extends TestRoot {
 		String artist = "Matt and Kim";
 		Assert.assertTrue("Could not play a custom artist station based on the artist: " + artist,
 				customRadio.playACustomStation(artist).contains(artist));
-		for(int i = 0; i < 6; i++){
-			Assert.assertTrue("Could not skip for the " + i + " time.", player.doSkip());
+		// Make sure we can keep scanning
+		for(int i = 1; i < 7; i++){
+			Assert.assertTrue("Could not skip for the " + getTextOfInt(i) + " time.", player.doSkip());
 		}
 		player.pause();
 		Assert.assertTrue("Should not have been able to skip", !player.doSkip());
@@ -152,14 +155,15 @@ public class TestPlayback extends TestRoot {
 		// Test that the scrubber can advance on its own during playback
 		sleep(2000); // So the podcast isn't at 0
 		// Pause so we don't mess up the test
-		player.pause("podcast");
+		player.pause();
+		miniPlayer.maximizeMiniPlayer();
 		int scrubberPosPercent = player.getPodcastScubberPostitionPercentage();
 		Assert.assertTrue("Scrubber did not show playback", scrubberPosPercent > 0);
 		int timeElapsed = player.getElapsedTime();
 		int totalTime = player.getTotalTime();
 		int estimatedTimePassed = (int) (totalTime * (float) scrubberPosPercent / 100);
 		Assert.assertTrue("Slider position did not accurately reflect the position", 
-					isAbout(timeElapsed, estimatedTimePassed, 5));
+					isAbout(timeElapsed, estimatedTimePassed, 7));
 		// Slide the scrubber, then try a similar test to see if we're where we expect to be
 		player.scrubTo(50);
 		int expectedElapsedTime = totalTime / 2;
@@ -200,18 +204,15 @@ public class TestPlayback extends TestRoot {
 		// Play a live radio station and verify it.
 		String playedStation = forYouPage.playLiveRadio();
 		Assert.assertTrue("Could not play a live radio station.", strGood(playedStation));
-		
+
 		String verifyPlayer = player.verifyPlaybackControls();
 		Assert.assertTrue("Could not verify live radio controls:\n" + verifyPlayer, didPass(verifyPlayer));
 		
 		assertPlaybackVolume();
 		
-		// Get to the mini player
-		player.minimizePlayer();
-				
-		// Assert the mini player is visible
-		Assert.assertTrue("Mini player was not displayed.", isVisible(miniPlayer.miniPlayerBar));
-		miniPlayer.miniPlayerBar.click();
+		// Get to the mini player and assert it's visible
+		Assert.assertTrue("Mini player was not displayed.", player.minimizePlayer());
+		miniPlayer.maximizeMiniPlayer();
 		
 		// Scan more than 6 times
 		for (int i = 0; i < 7; i++){
@@ -246,9 +247,8 @@ public class TestPlayback extends TestRoot {
 		player.closeMoreInfo();
 		// Load up a podcast and test that we cannot see the more info button
 		player.getBack();
-//		sideNavBar.gotoPodcastsPage();
 		sideNavBar.gotoHomePage();
-		Assert.assertTrue(strGood(search.searchForPodCast("Elvis Duran on Demand")));
+		Assert.assertTrue("Did not select a podcast episode.", strGood(search.searchForPodCast("Elvis Duran on Demand")));
 		Assert.assertTrue("More Info button was not disabled, as we expected it to be",
 				isVisible(player.more) && !player.more.isEnabled());
 		

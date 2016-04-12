@@ -167,7 +167,7 @@ public class PerfectFor extends Page {
 			else{
 				selectedStation.click();
 				
-				if(!player.isPlaying()){
+				if(!player.isPlaying()){ // TODO this isn't detecting playback of live station
 					err.add("Could not load station.");
 				}
 			}

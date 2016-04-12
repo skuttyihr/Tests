@@ -2,8 +2,6 @@ package com.iheart.appium.iosAutomation;
 
 import java.util.Date;
 
-import org.openqa.selenium.By;
-
 import io.appium.java_client.pagefactory.*;
 import io.appium.java_client.ios.*;
 
@@ -26,8 +24,8 @@ public class SignUpPage extends Page {
 	@iOSFindBy(name = "Facebook") private IOSElement facebook;
 	@iOSFindBy(name = "Google") private IOSElement google;
 
-	private final String maybeLaterName = "Maybe Later";
-	@iOSFindBy(name = maybeLaterName) private IOSElement maybeLater;
+//	private final String maybeLaterName = "Maybe Later";
+//	@iOSFindBy(name = maybeLaterName) private IOSElement maybeLater;
 
 	// if account exists already
 	@iOSFindBy(name = "Okay") private IOSElement okay;
@@ -58,6 +56,7 @@ public class SignUpPage extends Page {
 		iAgree.click();
 		TestRoot.waitForElementToBeVisible(create, 5);
 		create.click();
+		enterZip();
 		TestRoot.waitForElementToBeVisible(genrePage.genrePicker, 15);
 
 		// verify that tell us what you like page shows up
@@ -77,33 +76,37 @@ public class SignUpPage extends Page {
 		waitForElementToBeVisible(createAnAccount, 2);
 		return isVisible(createAnAccount);
 	}
+	
 	/**
 	 * Skips the login page
+	 * The ability to skip logins were removed during Q2 (Sprint 8) of 2016
 	 * @return true if lands on home page
 	 */
-	public boolean skipLogin(){
-		// Click Get Started
-		waitForElementToBeVisible(getStarted, 20);
-		getStarted.click();
-		// Click Maybe Later
-		maybeLater.click();
-		loginPage.chooseStayConnected(false);
-		
-		// Dismiss zip code entry
-		Page.enterZip();
-		handlePossiblePopUp();
-		
-		// Select Genre
-		if(waitForVisible(driver, By.name("IHRiPhoneGenrePickerView"), 5) != null){
-			genrePage.selectGenre(1);
-		}
-		
-		// Dismiss popups
-		loginPage.chooseStayConnected(false);
-		
-		waitForVisible(driver, By.name("For You"), 15);
-		return isVisible(homePage.forYou);
-	}
+//	public boolean skipLogin(){
+//		// Click Get Started
+//		if(!isVisible(maybeLater)){
+//			waitForElementToBeVisible(getStarted, 20);
+//			getStarted.click();
+//		}
+//		// Click Maybe Later
+//		maybeLater.click();
+//		loginPage.chooseStayConnected(false);
+//		
+//		// Dismiss zip code entry
+//		Page.enterZip();
+//		handlePossiblePopUp();
+//		
+//		// Select Genre
+//		if(waitForVisible(driver, By.name("IHRiPhoneGenrePickerView"), 5) != null){
+//			genrePage.selectGenre(1);
+//		}
+//		
+//		// Dismiss popups
+//		loginPage.chooseStayConnected(false);
+//		
+//		waitForVisible(driver, By.name("For You"), 15);
+//		return isVisible(homePage.forYou);
+//	}
 	public void tapBack(){
 		backButton.click();
 	}

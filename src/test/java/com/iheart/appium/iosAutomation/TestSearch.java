@@ -14,7 +14,7 @@ public class TestSearch extends TestRoot {
 	@After
 	public void after() {
 		// Remove favorites
-		homePage.removeAllFavorites();
+//		homePage.removeAllFavorites();
 		TestRoot.tearDown();
 	}
 
@@ -43,5 +43,33 @@ public class TestSearch extends TestRoot {
 		String badSearch = "dfgkjhqz";
 		Assert.assertFalse("Garbage search should have returned no results.", search.searchForStationWithoutSelecting(badSearch));
 		Assert.assertTrue("Results were returned for bad input", search.areResultsEmpty(badSearch));
+		
+		// Search for an artist based on song title 
+		search.clearSearch();
+		String searchSong = "Basket Case";
+		search.searchForStationWithoutSelecting(searchSong);
+		Assert.assertTrue(searchSong + " was not found in results.", search.isResultListed(searchSong));
+	}
+	
+	@Test
+	public void testSearchForLiveStation(){
+		// Tests live stations can be searched for by name, keyword, and frequency.
+		// log in, as anonymous use will be phased out
+		loginPage.loginWithoutVerifying();
+		// Get to the live radio page via sidebar and enter zip if requested
+		sideNavBar.getToAndEnterZip("10013");
+		// Go back to home page to search
+		sideNavBar.gotoHomePage();
+		String[] searchFor = {"100.3", "Z100", "Hit Music"};
+		search.searchForStationWithoutSelecting(searchFor[0]); 
+		// Check that Z100 is the first result under "All" and "Stations" filters.
+		Assert.assertTrue(searchFor[1] + " was not found for frequency search of " + searchFor[0], search.isResultListed(searchFor[1]));
+		search.clearSearch();
+		search.searchForStationWithoutSelecting(searchFor[1]);
+		Assert.assertTrue(searchFor[1] + " was not found", search.isResultListed(searchFor[1]));
+		// Search for key phrase
+		search.clearSearch();
+		search.searchForStationWithoutSelecting(searchFor[2]);
+		Assert.assertTrue(searchFor[1] + " was not found", search.isResultListed(searchFor[1]));
 	}
 }

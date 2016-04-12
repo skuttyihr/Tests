@@ -1,6 +1,7 @@
 package com.iheart.appium.iosAutomation;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.openqa.selenium.By;
@@ -21,11 +22,12 @@ public class Search extends Page {
 	
 	// Search field
 	@iOSFindBy(name = "Search") public IOSElement searchButton;
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIASearchBar[1]") public IOSElement searchField;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIASearchBar[1]/UIASearchBar[1]") public IOSElement searchField;
 	@iOSFindBy(name = "Cancel") public IOSElement cancel;
 	// Search Elements, used to create custom stations
 //	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell[1]") public IOSElement firstElement;
 	private final String firstResultXpath = "//UIAApplication[1]/UIAWindow[1]/UIATableView[2]/UIATableCell[1]";
+	private final String allResultsXpath = "//UIAApplication[1]/UIAWindow[1]/UIATableView[2]/UIATableCell";
 	@iOSFindBy(xpath = firstResultXpath) public IOSElement firstStation;
 	@iOSFindBy(xpath = firstResultXpath + "/UIAStaticText[1]") public IOSElement firstStationTitle;
 	// Search result elements
@@ -42,8 +44,9 @@ public class Search extends Page {
 	
 	// Get a particular result
 	public IOSElement getResult(int i){
+		String resultPath = "//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell";
 		return waitForVisible(driver, 
-				By.xpath("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell[" + i + "]"),
+				By.xpath(resultPath + "[" + i + "]"),
 				10);
 	}
 	
@@ -63,6 +66,12 @@ public class Search extends Page {
 		}
 	}
 	
+	public void clearSearch(){
+		if(isVisible(searchField)){
+			searchField.clear();
+		}
+	}
+	
 	/**
 	 * Returns true if search results in stations showing up in list
 	 * @param searchTerm
@@ -74,9 +83,14 @@ public class Search extends Page {
 			searchField.clear();
 			waitForNotVisible(driver, By.xpath(firstResultXpath), 1);
 			String firstResultText = waitForVisible(driver, By.xpath(firstResultXpath + "/UIAStaticText[1]"), 1).getText();
-			return (!firstResultText.contains("No results for")); // This method sends TRUE when it finds a result, so we use that logic here
+			return (!firstResultText.contains("Check your spelling or try another search")); // This method sends TRUE when it finds a result, so we use that logic here
 		}
-		searchField.sendKeys(searchTerm);
+		if(isVisible(searchField)){
+			searchField.sendKeys(searchTerm);
+		}
+		else{
+			return false;
+		}
 		if(areResultsEmpty(searchTerm)){
 			return false;
 		}
@@ -189,7 +203,7 @@ public class Search extends Page {
 		String chosenEpisode = "";
 		if(isVisible(podcastEpisode)){
 			chosenEpisode = podcastEpisode.getAttribute("name");
-			podcastEpisode.click(); //TODO Make this the text, not the button, so we can grab the title
+			podcastEpisode.click(); 
 		}
 		else{
 			System.err.println("Could not get podcast episode!");
@@ -199,12 +213,29 @@ public class Search extends Page {
 	
 	public IOSElement getSearchResult(int i){
 		return waitForVisible(driver, 
-					By.xpath("//UIAApplication[1]/UIAWindow[1]/UIATableView[2]/UIATableCell[" + i + "]"),
+					By.xpath(allResultsXpath + "[" + i + "]"),
 					10);
 	}
 	public IOSElement getSearchResultTitle(int i){
 		return waitForVisible(driver, 
-					By.xpath("//UIAApplication[1]/UIAWindow[1]/UIATableView[2]/UIATableCell[" + i + "]/UIAStaticText[1]"),
+					By.xpath(allResultsXpath + "[" + i + "]/UIAStaticText[1]"),
 					10);
+	}
+	
+	public boolean isResultListed(String expectedResult){
+		boolean foundResult = false;
+		if(driver.getPageSource().contains(expectedResult)){
+			List<IOSElement> results = findElements(driver, By.xpath(allResultsXpath));
+			for(IOSElement r : results){
+				if(!isVisible(r)){
+					continue;
+				}
+				if(r.getAttribute("name").contains(expectedResult)){
+					foundResult = true;
+					break;
+				}
+			}
+		}
+		return foundResult;
 	}
 }

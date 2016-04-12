@@ -178,7 +178,7 @@ public class TestRoot {
 		Page.enterZip();
 
 		// Wait for login to display
-		waitForElementToBeVisible(signupPage.getGetStartedButton(), 15);
+		waitForElementToBeVisible(signupPage.getGetStartedButton(), 10);
 	}
 
 	protected static void tearDown() {
@@ -446,6 +446,29 @@ public class TestRoot {
 	}
 	
 	/**
+	 * Does a large swipe in the desired direction, used for paging left or right
+	 * @param direction
+	 */
+	public static void pageSwipe(int direction){
+		int y = getAppHeight() / 2;
+		int startX = 0;
+		int endX = 0;
+		if(direction == 1){
+			// left to right
+			startX = getAppWidth() / 10;
+			endX = (getAppWidth() / 10) * 9;
+		}
+		else{
+			// right to left
+			startX = (getAppWidth() / 10) * 9;
+			endX = getAppWidth() / 10;
+		}
+		try{
+			driver.swipe(startX, y, endX, y, 500);
+		}catch(Exception e){}
+	}
+	
+	/**
 	 * Swipes on an element, keeping within the bounds of the element, if possible
 	 * Will try to swipe to/from 10%-90% of the element +/- 4/5 from center
 	 * 0=Up 1=Right 2=Down 3=Left
@@ -567,6 +590,21 @@ public class TestRoot {
 		return isVisible;
 	}
 	
+	static boolean isEnabled(IOSElement e){
+		boolean isEnabled = false;
+		if( e == null)
+			return false;
+		try{
+			driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
+			isEnabled = e.isEnabled();
+		}catch(Exception x){}
+		finally{
+			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
+		}
+		
+		return isEnabled;
+	}
+	
 	public static void sleep(int timeInMs){
 		try{
 			Thread.sleep(timeInMs);
@@ -664,6 +702,30 @@ public class TestRoot {
 		}
 	}
 	
+	public static void waitForElementToBeEnabled(IOSElement ele, int maxWaitTimeSeconds){
+		if(!isVisible(ele)){
+			waitForElementToBeVisible(ele, maxWaitTimeSeconds);
+			maxWaitTimeSeconds = 1;
+		}
+		if(ele.isEnabled()){
+			return;
+		}
+		
+		while(maxWaitTimeSeconds > 0){
+			try{
+				driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
+				if(ele.isEnabled()){
+					break;
+				}
+			}
+			catch(Exception e){}
+			finally{
+				maxWaitTimeSeconds -= 1;
+				driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
+			}
+		}
+	}
+	
 	public static boolean waitForNotVisible(IOSDriver<IOSElement> d, By by, int maxWaitTimeSeconds){
 		boolean elementGone = false;
 		for(int i = 0; i < maxWaitTimeSeconds; i++){
@@ -685,6 +747,36 @@ public class TestRoot {
 			return true;
 		}
 		return false;
+	}
+	
+	public static boolean click(IOSDriver<IOSElement> d, IOSElement ele){
+		boolean couldClick = false;
+		
+		if(isVisible(ele)){
+			try{
+				ele.click();
+				couldClick = true;
+			}
+			catch(Exception e){
+				try{
+					System.out.println("Error clicking element (see below), retyring.");
+					System.out.println(e.getMessage());
+					int x = ele.getLocation().getX();
+					int y = ele.getLocation().getY();
+					d.tap(1, x, y, 300);
+					couldClick = true;
+				}
+				catch(Exception e1){
+					System.err.println("Could not click element!");
+					System.out.println("Error 1:");
+					e.printStackTrace();
+					System.out.println("\n\nError 2:");
+					e1.printStackTrace();
+				}
+			}
+		}
+		
+		return couldClick;
 	}
 	
 	/**
@@ -725,6 +817,28 @@ public class TestRoot {
 			return true;
 		}
 		return false;
+	}
+	
+	public static String getTextOfInt(int x){
+		String returnString = "";
+		
+		returnString = String.valueOf(x);
+		switch(returnString.charAt(returnString.length() -1)){
+		case '1':
+			returnString += "st";
+			break;
+		case '2':
+			returnString += "nd";
+			break;
+		case '3':
+			returnString += "rd";
+			break;
+		default:
+			returnString += "th";
+			break;
+		}
+		
+		return returnString;
 	}
 	
 	// Test Watcher control

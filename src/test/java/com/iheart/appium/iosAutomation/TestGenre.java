@@ -25,11 +25,12 @@ public class TestGenre extends TestRoot{
 		Assert.assertTrue("Not all expected genres were present!\nMissing:\n" + missingGenres, missingGenres.length() <= 0);
 		// Select multiple genres, both by name and by position on list.
 		for(int i = 0; i < 4; i++){
-			swipeDown();
+			swipeDown(); // Scrolls back to the top of the genre page
 		}
 		int[] genres = {3, 4};
 		genrePage.selectGenres(genres, false);
 		genrePage.selectGenre("Top 40 & Pop"); // This one will click done
+		Page.handlePossiblePopUp(); // Yet another popup
 		Assert.assertTrue("Could not select genre", isVisible(Page.iheartradio_logo_full));
 	
 		// Perish pesky popups!
@@ -41,18 +42,9 @@ public class TestGenre extends TestRoot{
 		Assert.assertTrue("Could not verify genre!", genrePage.isGenreSelected(3));
 		Assert.assertTrue("Could not verify genre!", genrePage.isGenreSelected(4));
 		Assert.assertTrue("Could not verify genre!", genrePage.isGenreSelected("Top 40 & Pop"));
-		genrePage.selectGenre("Top 40 & Pop", false);
+		genrePage.deselectGenre("Top 40 & Pop", false);
 		Assert.assertTrue("Could not deselect genre!", !genrePage.isGenreSelected("Top 40 & Pop"));
 		genrePage.selectGenre("Top 40 & Pop", false);
 		Assert.assertTrue("Could not verify genre after deselecting and selecting again!", genrePage.isGenreSelected("Top 40 & Pop"));
 	}
-	
-	@Test
-	public void testGenreGameForMaybeLater(){
-		// Anonymous users get love too
-		signupPage.skipLogin();
-		Assert.assertTrue("Could not click improve recommendations to get to genre selection page", genrePage.improveRecommendations());
-		Assert.assertTrue("Could not verify genre!", genrePage.isGenreSelected("Top 40 & Pop"));
-	}
-	
 }
