@@ -57,7 +57,7 @@ public class TestHomePage extends TestRoot {
 		searchAndGoHome(artist); 
 		homePage.gotoForYou();
 		int listItem = 1;
-		String addErrors = homePage.toggleListItemFavorites(listItem); 
+		String addErrors = homePage.toggleListItemFavorites(listItem, false); 
 		if(addErrors.equals("\n1\n")){ // Means we had to switch to different list item
 			addErrors = "";
 			listItem = 1;
@@ -72,7 +72,7 @@ public class TestHomePage extends TestRoot {
 		
 		// Remove the station through the toggle now
 		homePage.gotoForYou();
-		addErrors = homePage.toggleListItemFavorites(listItem);
+		addErrors = homePage.toggleListItemFavorites(listItem, true);
 		if(addErrors.equals("\n1\n")){ // Means we had to switch to different list item
 			addErrors = "";
 			listItem = 1;

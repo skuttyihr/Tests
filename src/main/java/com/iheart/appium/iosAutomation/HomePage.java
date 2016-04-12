@@ -226,7 +226,8 @@ public class HomePage extends Page {
 		int tries = 0;
 		boolean execute = false;
 
-		if(!homePage.isStationARecent(x)){
+		if(!isVisible(homePage.getRecent()) || 
+				!homePage.isStationARecent(x)){
 			do{
 				tries++;
 				item = null;
@@ -235,7 +236,7 @@ public class HomePage extends Page {
 				if (!player.isPlayingInPlayer()){
 					click(driver, item);
 				}
-				Player.waitForTrackToLoad();
+//				Player.waitForTrackToLoad();
 				if(!player.isFavorite()){
 					handlePossiblePopUp();
 					player.doFavorite();
