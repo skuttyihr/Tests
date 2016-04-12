@@ -129,5 +129,7 @@ public class TestGate extends TestRoot {
 		loginPage.tapBack();
 		validateGate(true);
 		Assert.assertTrue("Could not click get started", signupPage.tapGetStarted());
+		// Assert that maybe later is no longer an element here. 
+		Assert.assertFalse("Maybe Later was visible, but it  should not be visible for new app installs", signupPage.isMaybeLaterVisible());
 	}
 }

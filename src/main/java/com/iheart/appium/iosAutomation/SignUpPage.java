@@ -2,6 +2,8 @@ package com.iheart.appium.iosAutomation;
 
 import java.util.Date;
 
+import org.openqa.selenium.By;
+
 import io.appium.java_client.pagefactory.*;
 import io.appium.java_client.ios.*;
 
@@ -109,5 +111,9 @@ public class SignUpPage extends Page {
 //	}
 	public void tapBack(){
 		backButton.click();
+	}
+	
+	public boolean isMaybeLaterVisible(){
+		return isVisible(findElement(driver, By.name("Maybe Later")));
 	}
 }
