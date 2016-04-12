@@ -152,6 +152,9 @@ public class TestHomePage extends TestRoot {
 		Assert.assertTrue("Could not grab a station name", strGood(stationName));
 		// Add to favorites
 		String toggleErrors = homePage.toggleListItemFavorites(1);
+		if(toggleErrors.equals("\n1\n")){ // Means we had to switch to different list item
+			toggleErrors = "";
+		}
 		Assert.assertTrue("Encountered errors adding recent item to favorites by swiping and tapping button.",
 				didPass(toggleErrors));
 		homePage.gotoMyStations();
