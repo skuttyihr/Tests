@@ -256,7 +256,7 @@ public class HomePage extends Page {
 				}
 				// Now we can swipe and click button 2
 				swipeOnItem(item, LEFT);
-				sleep(100); // Since we can't wait for visible
+				sleep(750); // Since we can't wait for visible
 				// Get the name of the station
 				String text = item.getText();
 				if(!execute)

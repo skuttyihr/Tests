@@ -71,7 +71,11 @@ public class TestHomePage extends TestRoot {
 			station = station.substring(0, station.indexOf(","));
 		}
 		Assert.assertTrue("Could not tap add to favorites for this item." + addErrors, didPass(addErrors));
-		Assert.assertTrue("Station was not added to favorites", homePage.isStationAFavorite(station) > 0);
+		int stationLocation = homePage.isStationAFavorite(station);
+		if(stationLocation > 0){
+			System.out.println("Found station in favorites, but should have been removed.");
+		}
+		Assert.assertTrue("Station was not added to favorites", stationLocation > 0);
 		
 		// Remove the station through the toggle now
 		homePage.gotoForYou();
@@ -86,7 +90,11 @@ public class TestHomePage extends TestRoot {
 			station = station.substring(0, station.indexOf(","));
 		}
 		Assert.assertTrue("Could not tap add to favorites for this item." + addErrors, didPass(addErrors));
-		Assert.assertFalse("Station was still in favorites", homePage.isStationAFavorite(station) > 0);
+		stationLocation = homePage.isStationAFavorite(station);
+		if(stationLocation <= 0){
+			System.out.println("Could not find station in favroites.");
+		}
+		Assert.assertFalse("Station was not added to favorites", stationLocation > 0);
 	}
 	
 	@Test
