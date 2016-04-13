@@ -7,6 +7,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import io.appium.java_client.ios.IOSElement;
+
 public class TestHomePage extends TestRoot {
 
 	boolean createdFavorite = false; // Set to true by tests that add to favorites
@@ -33,10 +35,11 @@ public class TestHomePage extends TestRoot {
 		sideNavBar.gotoHomePage(); // Ensure we're on the home page
 	}
 	
-	private void assertScrollAndShowMore(){
+	private void assertScrollAndShowMore(){ 
 		List<String> visibleItems = homePage.getVisibleListItems();
 		Assert.assertTrue(visibleItems.size() > 0);
-		Assert.assertTrue("Could not swipe to Show More button", Page.swipeToShowMore());
+		IOSElement showMore = Page.swipeToShowMore();
+		Assert.assertTrue("Could not swipe to Show More button", showMore != null);
 		List<String> visibleItemsAfterSwipe = homePage.getVisibleListItems();
 		Assert.assertTrue("Lists before and after swiping should not have been identical!", 
 				!visibleItems.equals(visibleItemsAfterSwipe));
