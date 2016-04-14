@@ -255,7 +255,9 @@ public class HomePage extends Page {
 					System.err.println("Item is still null!");
 				}
 				// Now we can swipe and click button 2
+				// Intentionally doubled up, to reduce chance of failure (doesn't always swipe, Appium has consistency issues with swiping)nd 
 				swipeOnItem(item, LEFT);
+				swipeOnItem(item, LEFT); 
 				sleep(750); // Since we can't wait for visible
 				// Get the name of the station
 				String text = item.getText();

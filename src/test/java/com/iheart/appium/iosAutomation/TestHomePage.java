@@ -166,7 +166,9 @@ public class TestHomePage extends TestRoot {
 		if(toggleErrors.equals("\n1\n")){ // Means we had to switch to different list item
 			toggleErrors = "";
 		}
-		Assert.assertTrue("Encountered errors adding recent item to favorites by swiping and tapping button.",
+		Assert.assertTrue(
+				"Encountered errors adding recent item to favorites by swiping and tapping button.\n" 
+							+ toggleErrors,
 				didPass(toggleErrors));
 		homePage.gotoMyStations();
 		Assert.assertTrue("Station was not added to favorites", homePage.isStationAFavorite(stationName) > 0);
