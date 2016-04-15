@@ -129,6 +129,9 @@ public class Page extends TestRoot{
 			allowButton.click();
 		}
 	}
+	/**
+	 * Enters "No Thanks" for zip code popup
+	 */
 	public static void enterZip(){
 		enterZip("");
 	}
