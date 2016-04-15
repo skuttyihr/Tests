@@ -7,6 +7,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import io.appium.java_client.ios.IOSElement;
+
 public class TestHomePage extends TestRoot {
 
 	boolean createdFavorite = false; // Set to true by tests that add to favorites
@@ -33,10 +35,11 @@ public class TestHomePage extends TestRoot {
 		sideNavBar.gotoHomePage(); // Ensure we're on the home page
 	}
 	
-	private void assertScrollAndShowMore(){
+	private void assertScrollAndShowMore(){ 
 		List<String> visibleItems = homePage.getVisibleListItems();
 		Assert.assertTrue(visibleItems.size() > 0);
-		Assert.assertTrue("Could not swipe to Show More button", Page.swipeToShowMore());
+		IOSElement showMore = Page.swipeToShowMore();
+		Assert.assertTrue("Could not swipe to Show More button", showMore != null);
 		List<String> visibleItemsAfterSwipe = homePage.getVisibleListItems();
 		Assert.assertTrue("Lists before and after swiping should not have been identical!", 
 				!visibleItems.equals(visibleItemsAfterSwipe));
@@ -57,7 +60,7 @@ public class TestHomePage extends TestRoot {
 		searchAndGoHome(artist); 
 		homePage.gotoForYou();
 		int listItem = 1;
-		String addErrors = homePage.toggleListItemFavorites(listItem); 
+		String addErrors = homePage.toggleListItemFavorites(listItem, false); 
 		if(addErrors.equals("\n1\n")){ // Means we had to switch to different list item
 			addErrors = "";
 			listItem = 1;
@@ -68,11 +71,15 @@ public class TestHomePage extends TestRoot {
 			station = station.substring(0, station.indexOf(","));
 		}
 		Assert.assertTrue("Could not tap add to favorites for this item." + addErrors, didPass(addErrors));
-		Assert.assertTrue("Station was not added to favorites", homePage.isStationAFavorite(station) > 0);
+		int stationLocation = homePage.isStationAFavorite(station);
+		if(stationLocation > 0){
+			System.out.println("Found station in favorites, but should have been removed.");
+		}
+		Assert.assertTrue("Station was not added to favorites", stationLocation > 0);
 		
 		// Remove the station through the toggle now
 		homePage.gotoForYou();
-		addErrors = homePage.toggleListItemFavorites(listItem);
+		addErrors = homePage.toggleListItemFavorites(listItem, true);
 		if(addErrors.equals("\n1\n")){ // Means we had to switch to different list item
 			addErrors = "";
 			listItem = 1;
@@ -83,7 +90,11 @@ public class TestHomePage extends TestRoot {
 			station = station.substring(0, station.indexOf(","));
 		}
 		Assert.assertTrue("Could not tap add to favorites for this item." + addErrors, didPass(addErrors));
-		Assert.assertFalse("Station was still in favorites", homePage.isStationAFavorite(station) > 0);
+		stationLocation = homePage.isStationAFavorite(station);
+		if(stationLocation <= 0){
+			System.out.println("Could not find station in favroites.");
+		}
+		Assert.assertFalse("Station was not added to favorites", stationLocation > 0);
 	}
 	
 	@Test
@@ -152,7 +163,12 @@ public class TestHomePage extends TestRoot {
 		Assert.assertTrue("Could not grab a station name", strGood(stationName));
 		// Add to favorites
 		String toggleErrors = homePage.toggleListItemFavorites(1);
-		Assert.assertTrue("Encountered errors adding recent item to favorites by swiping and tapping button.",
+		if(toggleErrors.equals("\n1\n")){ // Means we had to switch to different list item
+			toggleErrors = "";
+		}
+		Assert.assertTrue(
+				"Encountered errors adding recent item to favorites by swiping and tapping button.\n" 
+							+ toggleErrors,
 				didPass(toggleErrors));
 		homePage.gotoMyStations();
 		Assert.assertTrue("Station was not added to favorites", homePage.isStationAFavorite(stationName) > 0);

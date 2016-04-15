@@ -129,6 +129,9 @@ public class Page extends TestRoot{
 			allowButton.click();
 		}
 	}
+	/**
+	 * Enters "No Thanks" for zip code popup
+	 */
 	public static void enterZip(){
 		enterZip("");
 	}
@@ -169,28 +172,39 @@ public class Page extends TestRoot{
 	 * Scroll to the bottom of a list until a show more button displays
 	 * @return
 	 */
-	public static boolean swipeToShowMore(){
+	public static IOSElement swipeToShowMore(){ //TODO
 		IOSElement showMore = null;
+		boolean foundShowMore = false;
 		for(int i = 0; i < 7; i++){
+			if(foundShowMore){
+				break;
+			}
 			swipeUp();
 			showMore = findElement(driver, By.name("Show More"));
 			if(isVisible(showMore)){
+				foundShowMore = true;
 				break;
 			}
 			else{
 				// There's a chance that we're on My Stations, and it found the For You show more button by name
-				showMore = findElement(driver, By.xpath("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIAButton[4]"));
-				if(isVisible(showMore)){
-					break;
-				}
+				int offset = 2;
+				do{
+					showMore = findElement(driver, 
+								By.xpath("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIAButton[" + offset + "]"));
+					if(isVisible(showMore)){
+						foundShowMore = true;
+						break;
+					}
+					offset++;
+				}while (!isVisible(showMore) && offset < 5);
 			}
 		}
 		
 		if(showMore == null){
-			return false;
+			return null;
 		}
 		swipeUp(); // In case mini player is hiding it
-		return true;
+		return showMore;
 	}
 	
 	public static boolean clickShowMore(){
@@ -205,8 +219,7 @@ public class Page extends TestRoot{
 			return true;
 		}
 		else{
-			swipeToShowMore();
-			showMore = waitForVisible(driver, By.name("Show More"), 2);
+			showMore = swipeToShowMore();
 			if(isVisible(showMore)){
 				showMore.click();
 				return true;

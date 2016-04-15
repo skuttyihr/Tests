@@ -175,7 +175,7 @@ public class HomePage extends Page {
 		if(item != null){
 			// Expose the hidden buttons with a swipe
 			swipeOnItem(item, LEFT);
-			IOSElement add = waitForVisible(driver, By.name("Add to Favorites"), 2);
+			IOSElement add = waitForVisible(driver, By.name("Add to Favorites"), 1);
 			if(!isVisible(add)){
 				String message = toggleFavorites(item, x, removing);
 				err.add(message);
@@ -226,7 +226,8 @@ public class HomePage extends Page {
 		int tries = 0;
 		boolean execute = false;
 
-		if(!homePage.isStationARecent(x)){
+		if(!isVisible(homePage.getRecent()) || 
+				!homePage.isStationARecent(x)){
 			do{
 				tries++;
 				item = null;
@@ -235,7 +236,7 @@ public class HomePage extends Page {
 				if (!player.isPlayingInPlayer()){
 					click(driver, item);
 				}
-				Player.waitForTrackToLoad();
+//				Player.waitForTrackToLoad();
 				if(!player.isFavorite()){
 					handlePossiblePopUp();
 					player.doFavorite();
@@ -254,8 +255,10 @@ public class HomePage extends Page {
 					System.err.println("Item is still null!");
 				}
 				// Now we can swipe and click button 2
+				// Intentionally doubled up, to reduce chance of failure (doesn't always swipe, Appium has consistency issues with swiping)nd 
 				swipeOnItem(item, LEFT);
-				sleep(100); // Since we can't wait for visible
+				swipeOnItem(item, LEFT); 
+				sleep(750); // Since we can't wait for visible
 				// Get the name of the station
 				String text = item.getText();
 				if(!execute)

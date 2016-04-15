@@ -62,7 +62,7 @@ public class SignUpPage extends Page {
 		TestRoot.waitForElementToBeVisible(genrePage.genrePicker, 15);
 
 		// verify that tell us what you like page shows up
-		return TestRoot.isVisible(genrePage.genrePicker);
+		return TestRoot.isVisible(genrePage.genrePicker) || TestRoot.isVisible(homePage.forYou);
 	}
 
 	private String getCurrentDateInMilli() {
