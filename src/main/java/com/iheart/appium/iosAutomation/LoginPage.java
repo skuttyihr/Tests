@@ -110,7 +110,7 @@ public class LoginPage extends Page {
 		facebookButton.click();
 		
 		//Sleep to allow web to display, can't wait because context needs to switch
-		TestRoot.sleep(2000);
+		TestRoot.sleep(7500);
 		if(switchToWebContext()){
 //			driver.findElement(By.name("email")).sendKeys(FACEBOOK_USER_NAME); // iheartrocks999@gmail.com
 //			driver.findElement(By.name("pass")).sendKeys(FACEBOOK_PASSWORD); // iheart001
@@ -150,6 +150,7 @@ public class LoginPage extends Page {
 		if(!switchToNativeContext()){
 			System.err.println("Could not switch back to native context!");
 		}
+		dismissLoginPopups();
 		try{
 			genrePage.selectGenre(1);
 		}catch(Exception e){} // This doens't always display
