@@ -21,7 +21,7 @@ public class Errors {
 	}
 	public Errors(String s){
 		numberOfErrors = 0;
-		err = new StringBuilder(s);
+		err = new StringBuilder("\n" + s);
 	}
 	
 	/**
@@ -121,5 +121,9 @@ public class Errors {
 				numberOfErrors--;
 			}
 		}
+	}
+	
+	public boolean noErrors(){
+		return numberOfErrors == 0;
 	}
 }

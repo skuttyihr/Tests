@@ -42,7 +42,6 @@ public class TestPerfectFor extends TestRoot{
 		// First check that the above label says "Find a station Perfect For <Day of Week> <Time of Day>"
 		// Example: "Find a station Perfect For Wednesday Morning"
 		String labelErrors = perfectFor.checkCategoryLabel();
-		//TODO
 		Assert.assertTrue("Could not get category header text: " + labelErrors, didPass(labelErrors));
 		// Select a specific station, verify subheading labels
 		Assert.assertTrue("Could not select 'Decades' category.", perfectFor.selectCategory("Decades"));
