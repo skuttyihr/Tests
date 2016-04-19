@@ -87,9 +87,9 @@ public class TestPlayback extends TestRoot {
 		sideNavBar.logout();
 		
 		// Try to play a station while logged out (should not play)
-		String anyErrors = customRadio.canPlayCustomStation();
-		Assert.assertFalse("Was able to play a custom station after logging out", 
-				anyErrors == null || anyErrors.length() <= 0);
+//		String anyErrors = customRadio.canPlayCustomStation();
+//		Assert.assertFalse("Was able to play a custom station after logging out", 
+//				anyErrors == null || anyErrors.length() <= 0);
 	}
 	
 	@Test
@@ -189,9 +189,9 @@ public class TestPlayback extends TestRoot {
 		
 		// Log out and verify playback stops
 		sideNavBar.logout();
-		sideNavBar.gotoHomePage();
-		Assert.assertTrue("Mini player was still visible, podcast still playing, after logging out.", 
-				!isVisible(miniPlayer.miniPlayerBar));
+		// Login gate should now be visible
+		String loginPageErrors = splashPage.whatIsntVisible();
+		Assert.assertTrue("Login gate wasn't visible after logout.", didPass(loginPageErrors));
 	}
 
 	
@@ -229,9 +229,9 @@ public class TestPlayback extends TestRoot {
 		
 		// Log out and verify that we can still play radio
 		sideNavBar.logout();
-		sideNavBar.gotoHomePage();
-		playedStation = forYouPage.playLiveRadio();
-		Assert.assertTrue("Could not play a live radio station after logging out.", strGood(playedStation));
+		// Login gate should now be visible
+		String loginPageErrors = splashPage.whatIsntVisible();
+		Assert.assertTrue("Login gate wasn't visible after logout.", didPass(loginPageErrors));
 	}
 	
 	@Test

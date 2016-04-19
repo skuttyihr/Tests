@@ -17,11 +17,11 @@ public class TestLogin extends TestRoot {
 	public void after() {
 		TestRoot.tearDown();
 	}
-	
-	// Can't always switch context, Appium bug
+        // Can't always switch context, Appium bug
 	// Only fails when ran in a suite
-	// Starting with a reset seems to help
-	@Test
+        // Starting with a reset seems to help
+
+        @Test(timeout=200000)
 	public void testLoginViaFacebook() {
 		System.out.println("Testing login via Facebook.");
 		Assert.assertTrue("Could not log in via Facebook", loginPage.loginViaFacebook());
