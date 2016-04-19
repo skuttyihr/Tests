@@ -20,6 +20,10 @@ public class TestDeepLink extends TestRoot {
 
 	@Ignore
 	@Test
+	/**
+	 * Deep Link doesn't currently work. 
+	 * @throws Exception
+	 */
 	public void deepLinkTest() throws Exception {
 		System.out.println("test method:" + name.getMethodName());
 		Assert.assertTrue("Could not completel deeplink test." , deepLink.doDeepLink());

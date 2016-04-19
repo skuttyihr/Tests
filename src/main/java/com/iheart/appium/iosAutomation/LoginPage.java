@@ -135,6 +135,7 @@ public class LoginPage extends Page {
 				fbemailField.sendKeys(FACEBOOK_USER_NAME);
 				fbpasswordField.sendKeys(FACEBOOK_PASSWORD);
 				fbloginButton.click();
+				System.out.println("Testing Facebook login. Entered FBEmail, Password, and Clicked Login.");
 			}
 		
 			sleep(2000);

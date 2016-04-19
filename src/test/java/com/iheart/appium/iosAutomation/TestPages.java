@@ -21,6 +21,11 @@ public class TestPages extends TestRoot {
 	}
 	
 	@Test
+	/**
+	 * Test for Logo and Title on Pages. Checks a variety of Logos and Titles and whether they are visible or not. 
+	 * Includes MyStations, Local Radio, Live Radio, Live Artist Page, Podcasts Page, Perfect  For, Listening History, Alarm, & Sleep
+	 * 
+	 */
 	public void testForLogoAndTitleOnPages(){
 		loginPage.loginWithoutVerifying();
 		// Verify each page

@@ -17,15 +17,19 @@ public class TestLogin extends TestRoot {
 	public void after() {
 		TestRoot.tearDown();
 	}
-	
-	// Can't always switch context, Appium bug, ignore failure if it suffered a long timeout
-	@Test(timeout=200000)
+        // Can't always switch context, Appium bug
+	// Only fails when ran in a suite
+        // Starting with a reset seems to help
+
+        @Test(timeout=200000)
 	public void testLoginViaFacebook() {
+		System.out.println("Testing login via Facebook.");
 		Assert.assertTrue("Could not log in via Facebook", loginPage.loginViaFacebook());
 	}
 	
 	@Test 
 	public void testLoginViaEmail(){
+		System.out.println("Testing login via Email Address.");
 		Assert.assertTrue("Could not log in with email and password", loginPage.login());
 	}
 	
@@ -33,11 +37,13 @@ public class TestLogin extends TestRoot {
 	@Ignore
 	@Test
 	public void testLoginViaGoogle(){
+		System.out.println("Testing login Via Google.");
 		int iOSVersion = 0;
 		try{
 			iOSVersion = Integer.parseInt(PLATFORM_VERSION.charAt(0) + "");
 		}catch(Exception e){}
 		if(iOSVersion >= 9){
+			System.out.println("Testing login Via Google for iOS Platform Version: "+iOSVersion);		
 			Assert.assertTrue("Could not log in via Google+", loginPage.loginViaGoogle());
 		}
 		else{
