@@ -55,7 +55,6 @@ public class TestPages extends TestRoot {
 								listeningHistory.getText().equals("Listening History"));
 		// Items that require login
 		sideNavBar.gotoAlarm();
-		loginPage.loginWithoutVerifying();
 		// We went into alarm, as expected
 		Assert.assertTrue("Alarm page should not have logo", !isVisible(Page.iheartradio_logo_full));
 		Assert.assertTrue("Alarm Clock page did not have title of 'Alarm Clock'", 

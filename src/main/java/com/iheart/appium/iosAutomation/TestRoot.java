@@ -550,23 +550,20 @@ public class TestRoot {
 			contexts = driver.getContextHandles(); // Errors here
 		}
 		catch(Exception e){
+			e.printStackTrace();
 		}
 
 		return contexts;
 	}
 	public static boolean switchToWebContext(){
-		Set<String> handles = getContextHandles();
-		String webContext = "";
-		if(handles != null && handles.size() > 0){
-			for(String c : handles){
-				if(c.contains("WEB")){
-					webContext = c;
-					driver.context(c);
-				}
-			}
-			sleep(1000);
+		try{
+			driver.context("WEBVIEW_1");
+			sleep(1500);
 		}
-		return driver.getContext().equals(webContext);
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return driver.getContext().equals("WEBVIEW_1");
 	}
 	public static boolean switchToNativeContext(){
 		driver.context("NATIVE_APP");

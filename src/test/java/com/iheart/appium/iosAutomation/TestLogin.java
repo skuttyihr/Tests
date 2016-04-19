@@ -23,7 +23,6 @@ public class TestLogin extends TestRoot {
 	// Starting with a reset seems to help
 	@Test
 	public void testLoginViaFacebook() {
-		driver.resetApp(); // Strange fix for context issue?
 		Assert.assertTrue("Could not log in via Facebook", loginPage.loginViaFacebook());
 	}
 	
