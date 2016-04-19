@@ -21,6 +21,11 @@ public class TestPages extends TestRoot {
 	}
 	
 	@Test
+	/**
+	 * Test for Logo and Title on Pages. Checks a variety of Logos and Titles and whether they are visible or not. 
+	 * Includes MyStations, Local Radio, Live Radio, Live Artist Page, Podcasts Page, Perfect  For, Listening History, Alarm, & Sleep
+	 * 
+	 */
 	public void testForLogoAndTitleOnPages(){
 		loginPage.loginWithoutVerifying();
 		// Verify each page
@@ -54,8 +59,7 @@ public class TestPages extends TestRoot {
 		Assert.assertTrue("Listening History page did not have title of 'Listening History'", 
 								listeningHistory.getText().equals("Listening History"));
 		// Items that require login
-		sideNavBar.gotoAlarm();
-		//loginPage.loginWithoutVerifying();  //Failed here when in, TC passed when commented out. 
+		sideNavBar.gotoAlarm(); 
 		// We went into alarm, as expected
 		Assert.assertTrue("Alarm page should not have logo", !isVisible(Page.iheartradio_logo_full));
 		Assert.assertTrue("Alarm Clock page did not have title of 'Alarm Clock'", 
