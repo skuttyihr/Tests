@@ -1,6 +1,5 @@
 package com.iheart.appium.iosAutomation;
 
-import java.util.HashSet;
 import java.util.List;
 
 import org.junit.After;
@@ -26,31 +25,6 @@ public class TestHomePage extends TestRoot {
 			homePage.removeAllFavorites();
 		}
 		TestRoot.tearDown();
-	}
-	private StringBuilder stuff(String input){
-		StringBuilder output = new StringBuilder();
-		HashSet<String> set = new HashSet<String>();
-		set.add("e");
-		set.add("a");
-		set.add("o");
-		set.add("i");
-		set.add("u");
-		int counter = 0;
-		for(int i= 0; i<10 ; i++){
-			if(!set.contains(input.charAt(i))){
-				output.append(input.charAt(i));
-			}
-			else{
-				counter++;
-				output.append(counter);
-			}
-		}	
-		return output;
-	}
-	
-	public void main(String args[]){
-		
-		System.out.println(stuff("The quick brown fox jumps over the lazy dog").toString());
 	}
 	
 	private void searchAndGoHome(String s){
