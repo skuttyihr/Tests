@@ -19,7 +19,7 @@ public class TestLogin extends TestRoot {
 	}
 	
 	// Can't always switch context, Appium bug, ignore failure if it suffered a long timeout
-	@Test
+	@Test(timeout=200000)
 	public void testLoginViaFacebook() {
 		Assert.assertTrue("Could not log in via Facebook", loginPage.loginViaFacebook());
 	}
