@@ -43,6 +43,7 @@ public class SignUpPage extends Page {
 	}
 
 	public boolean createAnAccount() {
+		
 		TestRoot.waitForElementToBeVisible(getStarted, 10);
 		getStarted.click();
 
@@ -50,18 +51,22 @@ public class SignUpPage extends Page {
 		String _email = getCurrentDateInMilli() + "@mailinator.com";
 		System.out.println("See randomEmail:" + _email);
 
+		//Fill out create account form with email, password, zip, birthyear, gender, and clicking I Agree.
 		email.sendKeys(_email);
 		password.sendKeys("iheart234");
 		zip.sendKeys("10001");
 		birthYear.sendKeys("1988");
 		gender_male.click();
 		iAgree.click();
+		//Wait  for Create button to be visible
 		TestRoot.waitForElementToBeVisible(create, 5);
+		//Click Create button, the enter Zip to prepare GenrePage 
 		create.click();
+		System.out.println("Creating an account. Email:["+_email+"Pw:[iheart234],Zip:[10001],BYear:[1988],Male.");
 		enterZip();
 		TestRoot.waitForElementToBeVisible(genrePage.genrePicker, 15);
 
-		// verify that tell us what you like page shows up
+		// verify that 'Tell us what you like' page shows up
 		return TestRoot.isVisible(genrePage.genrePicker) || TestRoot.isVisible(homePage.forYou);
 	}
 

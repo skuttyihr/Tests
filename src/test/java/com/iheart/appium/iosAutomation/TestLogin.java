@@ -23,12 +23,15 @@ public class TestLogin extends TestRoot {
 	// Starting with a reset seems to help
 	@Test
 	public void testLoginViaFacebook() {
-		driver.resetApp(); // Strange fix for context issue?
+		System.out.println("Testing login via Facebook.");
+		//driver.resetApp(); // Strange fix for context issue?
 		Assert.assertTrue("Could not log in via Facebook", loginPage.loginViaFacebook());
 	}
 	
 	@Test 
 	public void testLoginViaEmail(){
+		System.out.println("Testing login via Email Address.");
+		
 		Assert.assertTrue("Could not log in with email and password", loginPage.login());
 	}
 	
@@ -36,11 +39,14 @@ public class TestLogin extends TestRoot {
 	@Ignore
 	@Test
 	public void testLoginViaGoogle(){
+		System.out.println("Testing login Via Google.");
 		int iOSVersion = 0;
 		try{
 			iOSVersion = Integer.parseInt(PLATFORM_VERSION.charAt(0) + "");
 		}catch(Exception e){}
 		if(iOSVersion >= 9){
+			System.out.println("Testing login Via Google for iOS Platform Version: "+iOSVersion);
+			
 			Assert.assertTrue("Could not log in via Google+", loginPage.loginViaGoogle());
 		}
 		else{
