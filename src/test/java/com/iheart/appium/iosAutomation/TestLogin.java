@@ -1,5 +1,7 @@
 package com.iheart.appium.iosAutomation;
 
+import java.time.LocalDateTime;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -21,23 +23,25 @@ public class TestLogin extends TestRoot {
 	// Only fails when ran in a suite
         // Starting with a reset seems to help
 
-        @Test(timeout=200000)
+    @Test(timeout=200000)
 	public void testLoginViaFacebook() {
-		System.out.println("Testing login via Facebook.");
+		System.out.println("Testing login via Facebook. Starting:[" + LocalDateTime.now().toString() +"]");
 		Assert.assertTrue("Could not log in via Facebook", loginPage.loginViaFacebook());
+		System.out.println("Tested login via Facebook. Ended:[" + LocalDateTime.now().toString() +"]");
 	}
-	
+
 	@Test 
 	public void testLoginViaEmail(){
-		System.out.println("Testing login via Email Address.");
+		System.out.println("Testing login via Email Address. Starting:[" + LocalDateTime.now().toString() +"]");
 		Assert.assertTrue("Could not log in with email and password", loginPage.login());
+		System.out.println("Tested login via Email Address. Ended:[" + LocalDateTime.now().toString() +"]");
 	}
 	
 	// Since Google opens Safari, we can't access those elements. 
 	@Ignore
 	@Test
 	public void testLoginViaGoogle(){
-		System.out.println("Testing login Via Google.");
+		System.out.println("Testing login Via Google. Starting:[" + LocalDateTime.now().toString() +"]");
 		int iOSVersion = 0;
 		try{
 			iOSVersion = Integer.parseInt(PLATFORM_VERSION.charAt(0) + "");
@@ -49,5 +53,6 @@ public class TestLogin extends TestRoot {
 		else{
 			System.out.println("Skipping Google+ login for older OS: " + iOSVersion);
 		}
+		System.out.println("Tested login via Google. Ended:[" + LocalDateTime.now().toString() +"]");
 	}
 }

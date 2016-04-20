@@ -65,6 +65,7 @@ public class LoginPage extends Page {
 	 * @return
 	 */
 	public boolean login() { // logger.info("About to login...");
+		System.out.println("About to login()");
 		boolean loggedIn = false;
 		
 		// Log in
@@ -80,27 +81,37 @@ public class LoginPage extends Page {
 		
 		return loggedIn;
 	}
-	
+	/**
+	 * Logs in without checking settings.isLoggedIn(). 
+	 * Enters userName and password and clicks Log in. 
+	 * Minimizes player, handles pop-ups.
+	 * Selects Alternative genre. 
+	 */
 	public void loginWithoutVerifying(){
+		System.out.println("about to loginWithoutVerifying()");
 		waitForElementToBeVisible(loginButton, 20);
 		loginButton.click();
 		waitForElementToBeVisible(userName, 5);
 		userName.sendKeys(USER_NAME);
 		password.sendKeys(PASSWORD);
+		System.out.println("Sent keys for Username and Password.");
 		logInFormButton.click();
+		System.out.println("Clicked Log In form button.");
 		chooseStayConnected(false);
 		player.minimizePlayer();
 		// Dismiss zip code
 		Page.enterZip();
 		// Dismiss stay connected popup
 		Page.handlePossiblePopUp();
-		
+		System.out.println("Dismissed Zip code and handled possible popups.");
 		// Select Genre
 		if(waitForVisible(driver, By.name("IHRiPhoneGenrePickerView"), 5) != null){
 			genrePage.selectGenre("Alternative");
+			System.out.println("Selected 'Alternative' genre.");
 		}
 		// Dismiss stay connected popup that sometimes shows up AFTER genre picker
 		chooseStayConnected(false);
+		System.out.println("Logged in without verifying");
 	}
 
 	public boolean loginViaFacebook() {
@@ -135,7 +146,7 @@ public class LoginPage extends Page {
 				fbemailField.sendKeys(FACEBOOK_USER_NAME);
 				fbpasswordField.sendKeys(FACEBOOK_PASSWORD);
 				fbloginButton.click();
-				System.out.println("Testing Facebook login. Entered FBEmail, Password, and Clicked Login.");
+				System.out.println("Testing Facebook login. Entered FB Email, Password, and Clicked Login.");
 			}
 		
 			sleep(2000);
@@ -156,7 +167,7 @@ public class LoginPage extends Page {
 		dismissLoginPopups();
 		try{
 			genrePage.selectGenre(1);
-		}catch(Exception e){} // This doens't always display
+		}catch(Exception e){} // This doesn't always display
 		dismissLoginPopups();
 		System.out.println("Current context: " + driver.getContext());
 		// check status
