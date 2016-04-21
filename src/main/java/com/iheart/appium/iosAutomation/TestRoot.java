@@ -189,7 +189,7 @@ public class TestRoot {
 		Page.enterZip();
 
 		// Wait for login to display
-		waitForElementToBeVisible(signupPage.getGetStartedButton(), 10);
+		waitForElementToBeVisible(splashPage.onboardingLogo, 10);
 	}
 
 	protected static void tearDown() {

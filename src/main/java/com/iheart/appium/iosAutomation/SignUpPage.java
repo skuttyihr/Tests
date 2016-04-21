@@ -9,7 +9,6 @@ import io.appium.java_client.ios.*;
 
 public class SignUpPage extends Page {
 
-	@iOSFindBy(name = "Get Started") private IOSElement getStarted;
 	@iOSFindBy(name = "Back") private IOSElement backButton;
 	private final String createAccountName = "Create An Account";
 	@iOSFindBy(name = createAccountName) private IOSElement createAnAccount;
@@ -44,8 +43,7 @@ public class SignUpPage extends Page {
 
 	public boolean createAnAccount() {
 		
-		TestRoot.waitForElementToBeVisible(getStarted, 10);
-		getStarted.click();
+		splashPage.clickCreateAccount();
 
 		// Generate a random email
 		String _email = getCurrentDateInMilli() + "@mailinator.com";
@@ -75,14 +73,6 @@ public class SignUpPage extends Page {
 		return date.getTime() + "";
 	}
 
-	public IOSElement getGetStartedButton(){
-		return getStarted;
-	}
-	public boolean tapGetStarted(){
-		getStarted.click();
-		waitForElementToBeVisible(createAnAccount, 2);
-		return isVisible(createAnAccount);
-	}
 	
 	/**
 	 * Skips the login page
@@ -120,5 +110,9 @@ public class SignUpPage extends Page {
 	
 	public boolean isMaybeLaterVisible(){
 		return isVisible(findElement(driver, By.name("Maybe Later")));
+	}
+	
+	public IOSElement getCreateAccount(){
+		return createAnAccount;
 	}
 }
