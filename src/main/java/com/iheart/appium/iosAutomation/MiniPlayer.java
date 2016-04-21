@@ -235,7 +235,7 @@ public class MiniPlayer extends Page {
 		return songSkipped;
 	}
 	
-	public String verifyControls(){
+	public Errors verifyControls(){
 		Errors errors = new Errors();
 		
 		// Thumb up and down (if they're not disabled)
@@ -287,6 +287,6 @@ public class MiniPlayer extends Page {
 			errors.add("Could not skip.\n");
 		}
 		
-		return errors.getErrors();
+		return errors;
 	}
 }

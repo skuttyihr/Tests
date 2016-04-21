@@ -21,7 +21,7 @@ public class SplashPage extends Page {
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[2]") protected IOSElement additionalOnboardingText;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAPageIndicator[1]") protected IOSElement splashPageIndicator;
 	@iOSFindBy(name = "Log In") protected IOSElement splashPageLogInButton;
-	@iOSFindBy(name = "Get Started") protected IOSElement splashPageGetStartedButton;
+	@iOSFindBy(name = "Create Account") protected IOSElement splashPageGetStartedButton;
 	
 	// Behavioral and helper methods
 	public String getOnBoardingText(){
