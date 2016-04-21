@@ -108,8 +108,8 @@ public class TestPlayback extends TestRoot {
 				miniPlayer.minimizePlayer());
 		
 		// Verify the controls on the mini player
-		String miniPlayerControls = miniPlayer.verifyControls();
-		Assert.assertTrue("Mini player control issues:\n" + miniPlayerControls, didPass(miniPlayerControls));
+		Errors miniPlayerControls = miniPlayer.verifyControls();
+		Assert.assertTrue("Mini player control issues:\n" + miniPlayerControls, miniPlayerControls.noErrors());
 		
 		// Check that mini bar is on every page we expect it to be on
 		sideNavBar.gotoLiveRadioPage();
@@ -183,9 +183,9 @@ public class TestPlayback extends TestRoot {
 		
 		// Mini player verification
 		player.minimizePlayer();
-		String miniPlayerVerification = miniPlayer.verifyControls();
+		Errors miniPlayerVerification = miniPlayer.verifyControls();
 		Assert.assertTrue("Mini player controls were not available:\n" + miniPlayerVerification,
-				didPass(miniPlayerVerification));
+				miniPlayerVerification.noErrors());
 		
 		// Log out and verify playback stops
 		sideNavBar.logout();
@@ -223,8 +223,8 @@ public class TestPlayback extends TestRoot {
 		player.minimizePlayer();
 		
 		// Verify mini player controls
-		String miniPlayerControls = miniPlayer.verifyControls();
-		Assert.assertTrue("Mini player control issues:\n" + miniPlayerControls, didPass(miniPlayerControls));
+		Errors miniPlayerControls = miniPlayer.verifyControls();
+		Assert.assertTrue("Mini player control issues:\n" + miniPlayerControls, miniPlayerControls.noErrors());
 		
 		
 		// Log out and verify that we can still play radio
