@@ -55,7 +55,8 @@ public class TestRoot {
 	protected static String BUNDLE_ID;
 	protected static String IPA_NAME;
 	protected static boolean SIMULATOR = true;
-
+	protected static String MODEL;
+	
 	// Page elements
 	protected static HomePage homePage;
 	protected static LoginPage loginPage;
@@ -97,6 +98,9 @@ public class TestRoot {
 			SIMULATOR = Boolean.parseBoolean(props.getProperty("APPIUM.USESIMULATOR"));
 			appiumUrl = props.getProperty("APPIUM.WEBDRIVER.URL");
 			appiumPort = props.getProperty("APPIUM.WEBDRIVER.PORT");
+			try{
+				MODEL = props.getProperty("APPIUM.DEVICE.MODEL");
+			}catch(Exception e){}
 		}
 		else{
 			// Use system properties
@@ -109,6 +113,9 @@ public class TestRoot {
 			SIMULATOR = Boolean.parseBoolean(System.getProperty("APPIUM.USESIMULATOR"));
 			appiumUrl = System.getProperty("APPIUM.URL");
 			appiumPort = System.getProperty("APPIUM.PORT");
+			try{
+				MODEL = System.getProperty("APPIUM.DEVICE.MODEL");
+			}catch(Exception e){}
 		}
 		
 		// Create a new driver object
@@ -173,6 +180,8 @@ public class TestRoot {
 		perfectFor = new PerfectFor(driver);
 		
 		driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
+		
+		System.out.println("Testing on: " + MODEL);
 		
 		// Get rid of zip code request if it displays
 		Page.enterZip();
