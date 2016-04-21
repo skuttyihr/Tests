@@ -16,12 +16,12 @@ public class SplashPage extends Page {
 	}
 	
 	// Elements
-	@iOSFindBy(name = "onboarding_logo") protected IOSElement onboardingLogo;
+	@iOSFindBy(name = "onboarding_logo") public IOSElement onboardingLogo;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[1]") protected IOSElement onboardingText;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[2]") protected IOSElement additionalOnboardingText;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAPageIndicator[1]") protected IOSElement splashPageIndicator;
 	@iOSFindBy(name = "Log In") protected IOSElement splashPageLogInButton;
-	@iOSFindBy(name = "Create Account") protected IOSElement splashPageGetStartedButton;
+	@iOSFindBy(name = "Create Account") protected IOSElement createAccount;
 	
 	// Behavioral and helper methods
 	public String getOnBoardingText(){
@@ -90,5 +90,12 @@ public class SplashPage extends Page {
 			couldNotFind.append("Get started button was not present\n");
 		}
 		return couldNotFind.toString();
+	}
+	
+	public boolean clickCreateAccount(){
+		waitForElementToBeVisible(createAccount, 10);
+		createAccount.click();
+		waitForElementToBeVisible(signupPage.getCreateAccount(), 2);
+		return isVisible(signupPage.getCreateAccount());
 	}
 }

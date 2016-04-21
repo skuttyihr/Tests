@@ -128,7 +128,7 @@ public class TestGate extends TestRoot {
 		Assert.assertTrue("Could not click log in", loginPage.clickLogin());
 		loginPage.tapBack();
 		validateGate(true);
-		Assert.assertTrue("Could not click get started", signupPage.tapGetStarted());
+		Assert.assertTrue("Could not click get started", splashPage.clickCreateAccount());
 		// Assert that maybe later is no longer an element here. 
 		Assert.assertFalse("Maybe Later was visible, but it  should not be visible for new app installs", signupPage.isMaybeLaterVisible());
 	}
