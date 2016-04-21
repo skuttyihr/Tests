@@ -1,6 +1,8 @@
 package com.iheart.appium.iosAutomation;
 
-import java.time.LocalDateTime;
+
+
+import java.time.LocalTime;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -25,23 +27,27 @@ public class TestLogin extends TestRoot {
 
     @Test(timeout=200000)
 	public void testLoginViaFacebook() {
-		System.out.println("Testing login via Facebook. Starting:[" + LocalDateTime.now().toString() +"]");
-		Assert.assertTrue("Could not log in via Facebook", loginPage.loginViaFacebook());
-		System.out.println("Tested login via Facebook. Ended:[" + LocalDateTime.now().toString() +"]");
+
+		LocalTime before = consoleLogStart("Testing login via Facebook.");
+		boolean testResult = loginPage.loginViaFacebook();
+		Assert.assertTrue("Could not log in via Facebook", testResult);
+		consoleLogEnd(before, testResult,  "Tested login via Facebook.");
 	}
 
 	@Test 
 	public void testLoginViaEmail(){
-		System.out.println("Testing login via Email Address. Starting:[" + LocalDateTime.now().toString() +"]");
-		Assert.assertTrue("Could not log in with email and password", loginPage.login());
-		System.out.println("Tested login via Email Address. Ended:[" + LocalDateTime.now().toString() +"]");
+		LocalTime before = consoleLogStart("Testing login via Facebook.");
+		boolean testResult = loginPage.login();
+		Assert.assertTrue("Could not log in with email and password", testResult);
+		consoleLogEnd(before, testResult, "Tested Log In via Email.");
+		
 	}
 	
 	// Since Google opens Safari, we can't access those elements. 
 	@Ignore
 	@Test
 	public void testLoginViaGoogle(){
-		System.out.println("Testing login Via Google. Starting:[" + LocalDateTime.now().toString() +"]");
+		
 		int iOSVersion = 0;
 		try{
 			iOSVersion = Integer.parseInt(PLATFORM_VERSION.charAt(0) + "");
@@ -53,6 +59,6 @@ public class TestLogin extends TestRoot {
 		else{
 			System.out.println("Skipping Google+ login for older OS: " + iOSVersion);
 		}
-		System.out.println("Tested login via Google. Ended:[" + LocalDateTime.now().toString() +"]");
+		
 	}
 }
