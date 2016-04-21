@@ -5,6 +5,8 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -845,6 +847,17 @@ public class TestRoot {
 		}
 		
 		return returnString;
+	}
+	
+	public static LocalTime consoleLogStart(String consoleMessage){
+		System.out.println(consoleMessage);
+		return LocalTime.now();
+	}
+	public static void consoleLogEnd(LocalTime begin, boolean testResult, String endMessage){
+		Duration seconds = Duration.between(begin, LocalTime.now());
+		String result = testResult ? "Test Passed. " : "Test Failed. ";
+		System.out.println(result + endMessage + "    [ "+ seconds.getSeconds() + " seconds ]");
+		
 	}
 	
 	// Test Watcher control
