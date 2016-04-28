@@ -88,7 +88,8 @@ public class TestRoot {
 		try {
 			props = loadProperties("ios.properties.local");
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("Could not load properties, defaulting to system properties.");
+			props = null;
 		}
 		// Create the desired capabilities
 		if(props != null){
@@ -111,7 +112,6 @@ public class TestRoot {
 			PLATFORM_VERSION = System.getProperty("APPIUM.DEVICE.PLATFORMVERSION");
 			BUNDLE_ID = System.getProperty("APPIUM.APP.BUNDLEID");
 			IPA_NAME = System.getProperty("APPIUM.APP.PATH");
-			
 			SIMULATOR = Boolean.parseBoolean(System.getProperty("APPIUM.USESIMULATOR"));
 			appiumUrl = System.getProperty("APPIUM.URL");
 			appiumPort = System.getProperty("APPIUM.PORT");
@@ -151,7 +151,19 @@ public class TestRoot {
         	driver = new IOSDriver<IOSElement>(url, capabilities);
         }
         catch(Exception e){
-        	System.err.println("Could not start driver. Emulator or device may be unavailable. Appium may have disconnected or stopped. Sleeping 30 seconds to retry.");
+        	
+        	System.err.println("Could not start driver. Emulator or device may be unavailable. Appium may have disconnected or stopped. Sleeping 30 seconds to retry.\n"
+        			+ "Properties:\n"
+        			+ "Device name: " + DEVICE_NAME + "\n"
+        			+ "UDID: " + UDID + "\n"
+        			+ "Platform version: " + PLATFORM_VERSION+ "\n"
+        			+ "Bundle ID: " + BUNDLE_ID + "\n"
+        			+ "IPA/App file name: " + IPA_NAME + "\n"
+        			+ "Using simulator: " + SIMULATOR + "\n"
+        			+ "Appium URL: " + appiumUrl + "\n"
+        			+ "Appium port: " + appiumPort + "\n"
+        			+ "Model name: " + MODEL + "\n"
+        			);
         	for(int i = 30; i > 0; i -= 5){
         		System.err.println("Retrying in: " + i + "...");
         		sleep(5000);
