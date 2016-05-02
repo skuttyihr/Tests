@@ -202,7 +202,7 @@ public class LoginPage extends Page {
 		if(switchToWebContext()){
 			googleEmail.sendKeys(GOOGLE_USER_NAME);
 			nextButton.click();
-			googlePassword.sendKeys(OLD_PASSWORD);
+			googlePassword.sendKeys(GOOGLE_PASSWORD);
 			signIn.click();
 			try {
 				continueButton.click();
