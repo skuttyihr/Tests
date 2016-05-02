@@ -37,15 +37,6 @@ public class Page extends TestRoot{
 	static boolean isRealDevice = false;
 //	Logger logger = Logger.getLogger(Page.class);
 
-	// Shorter account, easier to type in
-	static final String USER_NAME = "ihrttr@gmail.com";
-	static final String PASSWORD = "yrdy"; // test, one key to the right. Doesn't require caps or other keyboard changes for speed
-	static final String FACEBOOK_USER_NAME = "iheartrocks999@gmail.com";
-	static final String FACEBOOK_USER_PERSONAL_NAME = "Tony Sopranos";
-	static final String FACEBOOK_PASSWORD = "iheart001";
-	static final String GOOGLE_USER_NAME = "iheartrocks999@gmail.com";
-	static final String GOOGLE_PASSWORD = "iheart001";
-
 	public static final String baseListItemXpath = "//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell";
 	
 	public static final String screenshot_folder = "iosScreenshots";

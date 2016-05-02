@@ -36,11 +36,10 @@ public class TestLogin extends TestRoot {
 
 	@Test 
 	public void testLoginViaEmail(){
-		LocalTime before = consoleLogStart("Testing login via Facebook.");
+		LocalTime before = consoleLogStart("Testing login via Email.");
 		boolean testResult = loginPage.login();
 		Assert.assertTrue("Could not log in with email and password", testResult);
 		consoleLogEnd(before, testResult, "Tested Log In via Email.");
-		
 	}
 	
 	// Since Google opens Safari, we can't access those elements. 

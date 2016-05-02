@@ -92,8 +92,8 @@ public class LoginPage extends Page {
 		waitForElementToBeVisible(loginButton, 20);
 		loginButton.click();
 		waitForElementToBeVisible(userName, 5);
-		userName.sendKeys(USER_NAME);
-		password.sendKeys(PASSWORD);
+		userName.sendKeys(IHEARTUSERNAME);
+		password.sendKeys(IHEARTPASSWORD);
 		System.out.println("Sent keys for Username and Password.");
 		logInFormButton.click();
 		System.out.println("Clicked Log In form button.");
@@ -143,8 +143,8 @@ public class LoginPage extends Page {
 			}
 			
 			if(fbemailField != null && fbpasswordField != null && fbloginButton != null){
-				fbemailField.sendKeys(FACEBOOK_USER_NAME);
-				fbpasswordField.sendKeys(FACEBOOK_PASSWORD);
+				fbemailField.sendKeys(FACEBOOKUSERNAME);
+				fbpasswordField.sendKeys(FACEBOOKPASSWORD);
 				fbloginButton.click();
 				System.out.println("Testing Facebook login. Entered FB Email, Password, and Clicked Login.");
 			}
@@ -200,9 +200,9 @@ public class LoginPage extends Page {
 		googleButton.click();
 
 		if(switchToWebContext()){
-			googleEmail.sendKeys(GOOGLE_USER_NAME);
+			googleEmail.sendKeys(GOOGLEUSERNAME);
 			nextButton.click();
-			googlePassword.sendKeys(GOOGLE_PASSWORD);
+			googlePassword.sendKeys(GOOGLEPASSWORD);
 			signIn.click();
 			try {
 				continueButton.click();

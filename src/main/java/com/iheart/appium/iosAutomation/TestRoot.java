@@ -78,6 +78,15 @@ public class TestRoot {
 	
 	protected static boolean useSimulator = false;
 	
+	// Login Info
+	protected static String IHEARTUSERNAME;
+	protected static String IHEARTPASSWORD;
+	protected static String FACEBOOKUSERNAME;
+	protected static String FACEBOOKFULLNAME;
+	protected static String FACEBOOKPASSWORD;
+	protected static String GOOGLEUSERNAME;
+	protected static String GOOGLEPASSWORD;
+	
 	protected static void setup() {
 		
 		String appiumUrl = "";
@@ -118,6 +127,36 @@ public class TestRoot {
 			try{
 				MODEL = System.getProperty("APPIUM.DEVICE.MODEL");
 			}catch(Exception e){}
+		}
+		
+		// Load the passwords
+		Properties passwords = null;
+		try{
+			passwords = loadProperties("passwords.local");
+		}
+		catch(Exception e){
+			System.out.println("Could not load passwords, defaulting to system properties to load passwords.");
+			passwords = null;
+		}
+		if(passwords != null){
+			// Use decrypted local properties
+			IHEARTUSERNAME = passwords.getProperty("IHEART.USERNAME");
+			IHEARTPASSWORD = passwords.getProperty("IHEART.PASSWORD");
+			FACEBOOKUSERNAME = passwords.getProperty("FACEBOOK.USERNAME");
+			FACEBOOKFULLNAME = passwords.getProperty("FACEBOOK.FULLNAME");
+			FACEBOOKPASSWORD = passwords.getProperty("FACEBOOK.PASSWORD");
+			GOOGLEUSERNAME = passwords.getProperty("GOOGLE.USERNAME");
+			GOOGLEPASSWORD = passwords.getProperty("GOOGLE.PASSWORD");
+		}
+		else{
+			// Use system properties
+			IHEARTUSERNAME = System.getProperty("IHEART.USERNAME");
+			IHEARTPASSWORD = System.getProperty("IHEART.PASSWORD");
+			FACEBOOKUSERNAME = System.getProperty("FACEBOOK.USERNAME");
+			FACEBOOKFULLNAME = System.getProperty("FACEBOOK.FULLNAME");
+			FACEBOOKPASSWORD = System.getProperty("FACEBOOK.PASSWORD");
+			GOOGLEUSERNAME = System.getProperty("GOOGLE.USERNAME");
+			GOOGLEPASSWORD = System.getProperty("GOOGLE.PASSWORD");
 		}
 		
 		// Create a new driver object
