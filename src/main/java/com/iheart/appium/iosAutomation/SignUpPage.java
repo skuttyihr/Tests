@@ -19,7 +19,7 @@ public class SignUpPage extends Page {
 	// @iOSFindBy(xpath="//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[4]/UIAButton[1]")
 	@iOSFindBy(name = "Male") private IOSElement gender_male;
 	@iOSFindBy(name = "Female") private IOSElement gender_female;
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAElement[1]") private IOSElement iAgree;
+	//@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAElement[1]") private IOSElement iAgree;
 	@iOSFindBy(name = "Create Account") private IOSElement create;
 
 	@iOSFindBy(name = "Facebook") private IOSElement facebook;
@@ -55,7 +55,7 @@ public class SignUpPage extends Page {
 		zip.sendKeys("10001");
 		birthYear.sendKeys("1988");
 		gender_male.click();
-		iAgree.click();
+		//iAgree.click();
 		//Wait  for Create button to be visible
 		TestRoot.waitForElementToBeVisible(create, 5);
 		//Click Create button, the enter Zip to prepare GenrePage 
