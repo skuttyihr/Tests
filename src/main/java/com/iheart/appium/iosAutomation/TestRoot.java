@@ -86,6 +86,7 @@ public class TestRoot {
 	protected static String FACEBOOKPASSWORD;
 	protected static String GOOGLEUSERNAME;
 	protected static String GOOGLEPASSWORD;
+	protected static String NEWACCOUNTPASSWORD;
 	
 	protected static void setup() {
 		
@@ -147,6 +148,7 @@ public class TestRoot {
 			FACEBOOKPASSWORD = passwords.getProperty("FACEBOOK.PASSWORD");
 			GOOGLEUSERNAME = passwords.getProperty("GOOGLE.USERNAME");
 			GOOGLEPASSWORD = passwords.getProperty("GOOGLE.PASSWORD");
+			NEWACCOUNTPASSWORD = passwords.getProperty("NEWACCOUNT.PASSWORD");
 		}
 		else{
 			// Use system properties
@@ -157,6 +159,7 @@ public class TestRoot {
 			FACEBOOKPASSWORD = System.getProperty("FACEBOOK.PASSWORD");
 			GOOGLEUSERNAME = System.getProperty("GOOGLE.USERNAME");
 			GOOGLEPASSWORD = System.getProperty("GOOGLE.PASSWORD");
+			NEWACCOUNTPASSWORD = System.getProperty("NEWACCOUNT.PASSWORD");
 		}
 		
 		// Create a new driver object

@@ -51,7 +51,7 @@ public class SignUpPage extends Page {
 
 		//Fill out create account form with email, password, zip, birthyear, gender, and clicking I Agree.
 		email.sendKeys(_email);
-		password.sendKeys("iheart234");
+		password.sendKeys(NEWACCOUNTPASSWORD);
 		zip.sendKeys("10001");
 		birthYear.sendKeys("1988");
 		gender_male.click();
