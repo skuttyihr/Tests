@@ -26,7 +26,7 @@ sourceSets {
             
         }
         resources{
-            srcDirs = ['properties/', 'src/main/resources']
+            srcDirs = ['properties/', 'passwords/', 'src/main/resources']
             exclude '**/*.java'
         }
     }
