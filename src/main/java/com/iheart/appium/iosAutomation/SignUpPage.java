@@ -55,7 +55,7 @@ public class SignUpPage extends Page {
 		zip.sendKeys("10001");
 		birthYear.sendKeys("1988");
 		gender_male.click();
-		iAgree.click();
+		//iAgree.click();  --box is no longer showing
 		//Wait  for Create button to be visible
 		TestRoot.waitForElementToBeVisible(create, 5);
 		//Click Create button, the enter Zip to prepare GenrePage 

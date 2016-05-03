@@ -396,12 +396,12 @@ public class HomePage extends Page {
 				if(!isVisible(item)){
 					break;
 				}
-				if(item.getLocation().getY() >= recentY){
-					break;
-				}
-				
 				if(item.getText().contains(artist)){ 
 					foundStation = i;
+					break;
+				}
+				if(item.getLocation().getY() >= recentY){   //this is not working. 
+					System.out.println("item y location is: " + item.getLocation().getY() + " text: " + item.getText());
 					break;
 				}
 				i++;

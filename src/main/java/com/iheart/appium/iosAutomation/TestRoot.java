@@ -134,8 +134,11 @@ public class TestRoot {
 		capabilities.setCapability("deviceName", DEVICE_NAME);
 		capabilities.setCapability("platformName", "iOS");
 		capabilities.setCapability("platformVersion", PLATFORM_VERSION);
+		//capabilities.setCapability("interKeyDelay", 0); //Should input text faster
 		capabilities.setCapability("bundleId", BUNDLE_ID);
         capabilities.setCapability("app", IPA_NAME);
+        
+        System.out.println(DEVICE_NAME + ":iOS:" + PLATFORM_VERSION +":"+ BUNDLE_ID +":"+ IPA_NAME);
         
         if(SIMULATOR){
         	capabilities.setCapability("sendKeyStrategy", "oneByOne");

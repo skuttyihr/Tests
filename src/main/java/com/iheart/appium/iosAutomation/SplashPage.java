@@ -84,10 +84,10 @@ public class SplashPage extends Page {
 		}
 		try{
 			if(!isVisible(splashPageLogInButton)){
-				couldNotFind.append("Get started button was not present\n");
+				couldNotFind.append("'Create Account' button was not present\n");
 			}
 		}catch(Exception e){
-			couldNotFind.append("Get started button was not present\n");
+			couldNotFind.append("'Create Account' button was not present\n");
 		}
 		return couldNotFind.toString();
 	}
