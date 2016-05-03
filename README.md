@@ -15,6 +15,18 @@ You may need to remove the src/ folder from your build path from within Eclipse.
 Properties files are copied from templates to the properties directory. You only edit templates if you're adding properties that everyone will need access to. Set the device name, UDID, path to app, etc in the "local" properties flile, which will be in properties/ios.properties.local. Git knows to ignore all *.local files.
 
 
+## Passwords (Vital, please read)
+Passwords are no longer stored in the code. In fact, the way we store them and commit them to GitHub has changed dramatically. The system in place is just like that for the properties file. There's a file that's committed to GitHub, and there's a *.local version that you may update on your own machine. **However** there is a large *key* difference (pun intended!). The version that gets committed is *encrypted*. If a password is stored in plain text on GitHub, even on a private repository under the iHeart organization, there could be reprocussions. *Always* use encrypted passwords. An encrptionTool.jar file has been added to this repository. It uses symmetrical hashed (SHA256) encryption keys based on a user password. Passwords must be at least 8 characters in length, with upper and lower case, although use of spaces, symbols, and numbers is encouraged. Every encrypted password file will have a password that is *shared by the team*. If you make changes or additions to your local file, you must re-run the encryption jar. If you don't want to run setup, and you just want to encrypt or decrypt a file, you can do so with this:
+
+	java -jar encryptionTool.jar
+	
+It's that easy. NO AWS or Internal iHeart usernames or passwords should be committed, even encrypted. This is pretty decent encryption, but has a huge security flaw, and that's the fact that we're all sharing a password for it. If one person lets that password slip, our entire infrastructure could be compromised. Do not share your AWS or iHeart logins with GitHub, even with this encryption tool.
+
+The tool is simple to use. A Passowrds directory will need to be added to the classpath as a resource. 
+
+**From now on, no one will commit a password that is in the code or hardcoded in a properties file. All passwords will be encrypted using this tool and a strong password, sdhared with the team on confluence.**
+
+
 
 ### Importing to Eclipse, fixing Build Path
 
@@ -33,7 +45,7 @@ After cloning and running ./setup.sh, you may still have issues importing the pr
 	1. Right click on the project (that has the '!')
 	2. Go to Build Path > Configure Build Path
 	3. Go to the "Source" view (Java build path should be selected in the left pane automatically)
-	4. Select ios-automation/src/main/resources (there should be two of them) and click the Remove button. 
+	4. Select ios-automation/src/main/resources (there should be two of them) and click the Remove button. Remove the one that does NOT have excluded files. Either will work, but the other ensures that java files misplaced in here will not be compiled. 
 	5. (Delete any other duplicates, if they exist)
 	6. Click apply
 	7. Click OK
