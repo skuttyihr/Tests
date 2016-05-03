@@ -78,6 +78,16 @@ public class TestRoot {
 	
 	protected static boolean useSimulator = false;
 	
+	// Login Info
+	protected static String IHEARTUSERNAME;
+	protected static String IHEARTPASSWORD;
+	protected static String FACEBOOKUSERNAME;
+	protected static String FACEBOOKFULLNAME;
+	protected static String FACEBOOKPASSWORD;
+	protected static String GOOGLEUSERNAME;
+	protected static String GOOGLEPASSWORD;
+	protected static String NEWACCOUNTPASSWORD;
+	
 	protected static void setup() {
 		
 		String appiumUrl = "";
@@ -88,7 +98,8 @@ public class TestRoot {
 		try {
 			props = loadProperties("ios.properties.local");
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("Could not load properties, defaulting to system properties.");
+			props = null;
 		}
 		// Create the desired capabilities
 		if(props != null){
@@ -111,13 +122,44 @@ public class TestRoot {
 			PLATFORM_VERSION = System.getProperty("APPIUM.DEVICE.PLATFORMVERSION");
 			BUNDLE_ID = System.getProperty("APPIUM.APP.BUNDLEID");
 			IPA_NAME = System.getProperty("APPIUM.APP.PATH");
-			
 			SIMULATOR = Boolean.parseBoolean(System.getProperty("APPIUM.USESIMULATOR"));
 			appiumUrl = System.getProperty("APPIUM.URL");
 			appiumPort = System.getProperty("APPIUM.PORT");
 			try{
 				MODEL = System.getProperty("APPIUM.DEVICE.MODEL");
 			}catch(Exception e){}
+		}
+		
+		// Load the passwords
+		Properties passwords = null;
+		try{
+			passwords = loadProperties("passwords.local");
+		}
+		catch(Exception e){
+			System.out.println("Could not load passwords, defaulting to system properties to load passwords.");
+			passwords = null;
+		}
+		if(passwords != null){
+			// Use decrypted local properties
+			IHEARTUSERNAME = passwords.getProperty("IHEART.USERNAME");
+			IHEARTPASSWORD = passwords.getProperty("IHEART.PASSWORD");
+			FACEBOOKUSERNAME = passwords.getProperty("FACEBOOK.USERNAME");
+			FACEBOOKFULLNAME = passwords.getProperty("FACEBOOK.FULLNAME");
+			FACEBOOKPASSWORD = passwords.getProperty("FACEBOOK.PASSWORD");
+			GOOGLEUSERNAME = passwords.getProperty("GOOGLE.USERNAME");
+			GOOGLEPASSWORD = passwords.getProperty("GOOGLE.PASSWORD");
+			NEWACCOUNTPASSWORD = passwords.getProperty("NEWACCOUNT.PASSWORD");
+		}
+		else{
+			// Use system properties
+			IHEARTUSERNAME = System.getProperty("IHEART.USERNAME");
+			IHEARTPASSWORD = System.getProperty("IHEART.PASSWORD");
+			FACEBOOKUSERNAME = System.getProperty("FACEBOOK.USERNAME");
+			FACEBOOKFULLNAME = System.getProperty("FACEBOOK.FULLNAME");
+			FACEBOOKPASSWORD = System.getProperty("FACEBOOK.PASSWORD");
+			GOOGLEUSERNAME = System.getProperty("GOOGLE.USERNAME");
+			GOOGLEPASSWORD = System.getProperty("GOOGLE.PASSWORD");
+			NEWACCOUNTPASSWORD = System.getProperty("NEWACCOUNT.PASSWORD");
 		}
 		
 		// Create a new driver object
@@ -151,7 +193,19 @@ public class TestRoot {
         	driver = new IOSDriver<IOSElement>(url, capabilities);
         }
         catch(Exception e){
-        	System.err.println("Could not start driver. Emulator or device may be unavailable. Appium may have disconnected or stopped. Sleeping 30 seconds to retry.");
+        	
+        	System.err.println("Could not start driver. Emulator or device may be unavailable. Appium may have disconnected or stopped. Sleeping 30 seconds to retry.\n"
+        			+ "Properties:\n"
+        			+ "Device name: " + DEVICE_NAME + "\n"
+        			+ "UDID: " + UDID + "\n"
+        			+ "Platform version: " + PLATFORM_VERSION+ "\n"
+        			+ "Bundle ID: " + BUNDLE_ID + "\n"
+        			+ "IPA/App file name: " + IPA_NAME + "\n"
+        			+ "Using simulator: " + SIMULATOR + "\n"
+        			+ "Appium URL: " + appiumUrl + "\n"
+        			+ "Appium port: " + appiumPort + "\n"
+        			+ "Model name: " + MODEL + "\n"
+        			);
         	for(int i = 30; i > 0; i -= 5){
         		System.err.println("Retrying in: " + i + "...");
         		sleep(5000);
