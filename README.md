@@ -34,7 +34,7 @@ It's that easy. NO AWS or Internal iHeart usernames or passwords should be commi
 
 The tool is simple to use. A Passowrds directory will need to be added to the classpath as a resource. 
 
-**From now on, no one will commit a password that is in the code or hardcoded in a properties file. All passwords will be encrypted using this tool and a strong password, sdhared with the team on confluence.**
+**From now on, no one will commit a password that is in the code or hardcoded in a properties file. All passwords will be encrypted using this tool and a strong password, shared with the team on confluence.**
 
 
 
