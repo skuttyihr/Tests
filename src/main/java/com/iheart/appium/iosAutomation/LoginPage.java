@@ -10,17 +10,12 @@ import org.openqa.selenium.support.FindBy;
 
 public class LoginPage extends Page {
 
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[1]/UIATextField[1]") private IOSElement userName;
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[2]/UIASecureTextField[1]") private IOSElement password;
-	public final String logInButtonName = "Log In";
-	@iOSFindBy(name = "Log In") private IOSElement loginButton;
-	@iOSFindBy(name = "Get Started") private IOSElement getStarted;
-	@iOSFindBy(name = "Maybe Later") private IOSElement maybeLater;
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAButton[2]") private IOSElement logInFormButton;
-	@iOSFindBy(name = "Back") private IOSElement backButton;
-	@iOSFindBy(name = "Log In") private IOSElement logIn;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[1]/UIATextField[1]") public IOSElement userName;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[2]/UIASecureTextField[1]") public IOSElement password;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAButton[2]") public IOSElement logInFormButton;
+	@iOSFindBy(accessibility = "Back") public IOSElement backButton;
 	
-	@iOSFindBy(name = "Facebook") private WebElement facebookButton;
+	@iOSFindBy(accessibility = "Facebook") private WebElement facebookButton;
 
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[2]/UIAScrollView[1]/UIAScrollView[1]/UIAWebView[1]/UIATextField[1]") private WebElement fbEmail;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[2]/UIAScrollView[1]/UIAScrollView[1]/UIAWebView[1]/UIASecureTextField[1]") private IOSElement fbPassword;
@@ -37,17 +32,17 @@ public class LoginPage extends Page {
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIASecureTextField[1]") private WebElement facebookPassword_native;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIAButton[1]") private WebElement FBlogin_native;
 
-	@iOSFindBy(name = "Google") private WebElement googleButton;
+	@iOSFindBy(accessibility = "Google") private WebElement googleButton;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[2]/UIAScrollView[1]/UIAScrollView[1]/UIAWebView[1]/UIATextField[1]") private WebElement googleEmail;
-	@iOSFindBy(name = "Next") private WebElement nextButton;
+	@iOSFindBy(accessibility = "Next") private WebElement nextButton;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[2]/UIAScrollView[1]/UIAScrollView[1]/UIAWebView[1]/UIASecureTextField[1]") private WebElement googlePassword;
-	@iOSFindBy(name = "Sign in") private WebElement signIn;
+	@iOSFindBy(accessibility = "Sign in") private WebElement signIn;
 	// for first-timer
-	@iOSFindBy(name = "Continue") private WebElement continueButton; // for first-time login user
-	@iOSFindBy(name = "Allow") private WebElement allowButton;
+	@iOSFindBy(accessibility = "Continue") private WebElement continueButton; // for first-time login user
+	@iOSFindBy(accessibility = "Allow") private WebElement allowButton;
 
 	// for verification: Maybe shall move nav bar stuff up to the Page.java?
-	@iOSFindBy(name = "For You")
+	@iOSFindBy(accessibility = "For You")
 	private WebElement forYou;
 
 	public LoginPage() {
@@ -89,8 +84,7 @@ public class LoginPage extends Page {
 	 */
 	public void loginWithoutVerifying(){
 		System.out.println("about to loginWithoutVerifying()");
-		waitForElementToBeVisible(loginButton, 20);
-		loginButton.click();
+		splashPage.clickLogIn();
 		waitForElementToBeVisible(userName, 5);
 		userName.sendKeys(IHEARTUSERNAME);
 		password.sendKeys(IHEARTPASSWORD);
@@ -115,9 +109,7 @@ public class LoginPage extends Page {
 	}
 
 	public boolean loginViaFacebook() {
-		waitForElementToBeVisible(loginButton, 10);
-		loginButton.click();
-		waitForElementToBeVisible(userName, 5);
+		splashPage.clickLogIn();
 		facebookButton.click();
 		
 		//Sleep to allow web to display, can't wait because context needs to switch
@@ -189,14 +181,8 @@ public class LoginPage extends Page {
 
 	}
 
-	public boolean clickLogin(){
-		loginButton.click();
-		waitForElementToBeVisible(logIn, 2);
-		return isVisible(logIn);
-	}
-	
 	public boolean loginViaGoogle() {
-		clickLogin();
+		splashPage.clickLogIn();
 		googleButton.click();
 
 		if(switchToWebContext()){

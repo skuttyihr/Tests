@@ -125,7 +125,7 @@ public class TestGate extends TestRoot {
 	@Test
 	public void testCreateAccountLogInAndMaybeLater(){
 		validateGate(true);
-		Assert.assertTrue("Could not click log in", loginPage.clickLogin());
+		Assert.assertTrue("Could not click log in", splashPage.clickLogIn());
 		loginPage.tapBack();
 		validateGate(true);
 		Assert.assertTrue("Could not click get started", splashPage.clickCreateAccount());
