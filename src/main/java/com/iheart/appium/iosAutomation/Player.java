@@ -383,6 +383,7 @@ public class Player extends Page {
 		if (!isFavorite()){
 			if(isVisible(favorite)){
 				favorite.click();
+				System.out.println("Favorite Heart clicked.");
 				handleActionPopup();
 			}
 		}
@@ -424,14 +425,20 @@ public class Player extends Page {
 		String currentSong = driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAStaticText[2]"))
 				.getText();
 
+		System.out.print("player.doScan()    ");
 		scan.click();
 		waitForTrackToLoad();
 		// Verify that new song is playing
 		String newSong = waitForVisible(driver, By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAStaticText[2]"), 5).getText();
-		if (newSong.equals(currentSong))
-			return false;
-		else 
+		if (newSong.equals(currentSong)){
+			System.out.println("Scanning to a new track didn't work. Same track playing");
+					return false;
+		}
+		else {
+			System.out.println("Track: '" + currentSong + "' scanned by. Now playing: '" + newSong +"'");
 			return true;
+		}
+			
 
 	}
 
@@ -440,6 +447,7 @@ public class Player extends Page {
 		String current = "";
 		String type = getType();
 		IOSElement track = null;
+
 		switch(type){
 		case "artist":
 			waitForElementToBeVisible(songTrack_artist, 3);
@@ -459,23 +467,33 @@ public class Player extends Page {
 			current = track.getText();
 		
 		if(type.equals("artist") || type.equals("podcast")){
+			System.out.print("Player.doSkip     ");
+			waitForElementToBeVisible(skip, 3);
 			skip.click();
+
 		}
 		else{
+			System.out.print("Player.doScan     ");
 			scan.click();
 		}
 		
 		waitForTrackToLoad();
 		// Verify that new song is playing
 		String newSong = track.getText();
-		if (newSong.equals(current))
+		if (newSong.equals(current)){ //Skip didn't work because the songs are the same
+			System.out.println("Could not skip the track");
 			return false;
-		else
+		}
+		else{ //songs are not the same, therefore, skip worked. 
+			System.out.println("Track '"+current+"' Skipped/Scanned.");
 			return true;
+		}
+			
 
 	}
 	
 	public boolean share(){
+		System.out.println("Testing if you can share a Favorite");
 		boolean couldShare = false;
 		if(isVisible(share)){
 			share.click();
@@ -493,6 +511,7 @@ public class Player extends Page {
 	 * Will do nothing if already paused
 	 */
 	public void pause(){
+		System.out.println("Trying to pause");
 		if(isVisible(pause)){
 			pause.click();
 		}
@@ -616,7 +635,7 @@ public class Player extends Page {
 	
 	public static void waitForTrackToLoad(){
 		//button buffering stop
-		waitForVisible(driver, By.name("button buggering stop"), 3);
+		waitForVisible(driver, By.name("button buffering stop"), 3);
 		waitForNotVisible(driver, By.name("button buffering stop"), 3);
 	}
 
@@ -720,10 +739,11 @@ public class Player extends Page {
 	 * @return
 	 */
 	public String verifyPlaybackControls(String station){
+		System.out.println("Verifying Player Controls");
 		Errors errors = new Errors();
 		
 		// Verify that the controls are present
-		if (!isVisible(thumbUp))
+	if (!isVisible(thumbUp))
 			errors.add("No Thumb Up icon is displayed.");
 
 		if (!isVisible(thumbDown))
@@ -871,6 +891,7 @@ public class Player extends Page {
 		String floatingPercentage = String.valueOf((float) percentage / 100 + .0336); 
 		if(isVisible(slideBar)){
 			slideBar.setValue(floatingPercentage); // Done to enable our ability to change this
+			Page.quickDismissPopUp();  //Glad you like this page happens when the slidebar is set. 
 			int testLoc = getPodcastScubberPostitionPercentage();
 			int count = 0;
 			while(count < 3 && !isAbout(percentage, testLoc, 6)){
@@ -949,6 +970,7 @@ public class Player extends Page {
 	 * @return
 	 */
 	public String streamOverAirPlay(){
+		System.out.println("Testing streamOverAirPlay()-may not work with Simulator");
 		Errors err = new Errors();
 		
 		if(isVisible(airPlay)){
@@ -1067,6 +1089,7 @@ public class Player extends Page {
 		return err.getErrors();
 	}
 	public String verifyAllMoreInfoItems(){
+		System.out.println("verifyAllMoreInfoItems()");
 		Errors err = new Errors();
 		String type = getType();
 		// If the more info button is present, open the more info dialog and verify that everything is present
@@ -1095,6 +1118,7 @@ public class Player extends Page {
 			if(!strGood(t)){
 				continue;
 			}
+			System.out.println("Testing item:"+ t);
 			err.add(verifyMoreInfoItem(t));
 			handlePossiblePopUp();
 			if(isVisible(more)){
@@ -1102,7 +1126,7 @@ public class Player extends Page {
 			}
 		}
 		
-		return err. getErrors();
+		return err.getErrors();
 	}
 	
 	private void skipUntilEnabled(IOSElement ele){
@@ -1175,15 +1199,15 @@ public class Player extends Page {
 					String artists = tuneStationListOfArtists.getText();
 					tuneStationMix.click();
 					if(artists.equals(tuneStationListOfArtists.getText())){
-						err.add("List of artists did not change when selecing different tuning method (Mix).");
+						err.add("List of artists did not change when selecting different tuning method (Mix).");
 					}
 					tuneStationVariety.click();
 					if(artists.equals(tuneStationListOfArtists.getText())){
-						err.add("List of artists did not change when selecing different tuning method (Variety).");
+						err.add("List of artists did not change when selecting different tuning method (Variety).");
 					}
 					tuneStationTopHits.click();
 					if(!artists.equals(tuneStationListOfArtists.getText())){
-						err.add("List of artists did not change when selecing different tuning method (Top Hits).");
+						err.add("List of artists did not change when selecting different tuning method (Top Hits).");
 					}
 				}
 				
@@ -1289,6 +1313,7 @@ public class Player extends Page {
 			else{
 				 err.add("More info lyrics were not visible at all.");
 			}
+			
 			break;
 		case "Artist Bio":
 			if(isVisible(moreInfoArtistBio)){
@@ -1299,7 +1324,7 @@ public class Player extends Page {
 				}
 				// Click
 				moreInfoArtistBio.click();
-				waitForElementToBeVisible(artistBioArtist, 1);
+				waitForElementToBeVisible(artistBioArtist, 3);
 				// Test for the artist bio elements
 				if(!isVisible(artistBioArtist)){
 					err.add("Artist bio label was not visible");
@@ -1331,6 +1356,7 @@ public class Player extends Page {
 			else{
 				err.add("Share option was not visible");
 			}
+			handlePossiblePopUp();
 			break;
 		case "Buy Song":// Not much to test here since it exits the app, leaving Appium automation behind
 			if(!isVisible(moreInfoBuy)){

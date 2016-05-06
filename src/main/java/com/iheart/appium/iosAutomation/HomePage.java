@@ -155,6 +155,7 @@ public class HomePage extends Page {
 	 */
 	public void removeAllFavorites(){
 		try{ // We don't want a test to fail if this has an issue
+			System.out.println("Removing all favorites.");
 			homePage.gotoMyStations();
 			IOSElement itemToRemove = getStationFromList(1);
 			if(itemToRemove == null){
@@ -414,14 +415,14 @@ public class HomePage extends Page {
 				if(!isVisible(item)){
 					break;
 				}
-				if(item.getLocation().getY() >= recentY){
+				if(item.getLocation().getY() >= recentY){  
 					break;
 				}
-				
 				if(item.getText().contains(artist)){ 
 					foundStation = i;
 					break;
 				}
+				
 				i++;
 			}
 		}

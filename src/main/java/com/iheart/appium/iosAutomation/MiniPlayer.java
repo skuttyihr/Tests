@@ -30,28 +30,48 @@ public class MiniPlayer extends Page {
 	/**
 	 * Plays a song and returns to the home screen
 	 * 
+	 * A note: Full player will always load the first time you play a station on an install(a fresh emulator instance). After, it will load miniplayer. 
+	 * 
 	 */
 	public String loadUpMiniPlayer(String searchTerm){
+		System.out.println("Loading up Mini Player");
 		if(search.searchForStation(searchTerm) == null){
 			return "Could not search for: " + searchTerm + ". ";
 		}
+		System.out.println("About to wait for Track to load");
 		Player.waitForTrackToLoad();
+		System.out.println("Track is loaded");
+		if(!isVisible(miniPlayerBar)){
+			//This means full player is visible
+			player.minimizePlayer();
+			System.out.println("Miniplayer did not display after Search because when Simulator is rebuilt, Full Player always starts!");
+			//return "Mini player did not display! ";
+		}
+		sideNavBar.gotoHomePage();
+		return "";
+		
+		/*
+		
 		if(isVisible(player.back)){
 			player.back.click();
+			System.out.println("Player.back.click() has been clicked");
 		}
 		else{
 			return "Could not load player. ";
 		}
 		waitForElementToBeVisible(search.cancel, 3);
 		search.cancel.click();
+		System.out.println("Clicked Search - Cancel");
 		sideNavBar.gotoHomePage(); // Ensure we're on home page
 		if(!isVisible(miniPlayerBar)){
 			return "Mini player did not display! ";
 		}
 		return "";
+		*/
 	}
 	
 	public boolean maximizeMiniPlayer(){
+		System.out.println("Maximizing the mini player");
 		waitForElementToBeVisible(miniPlayerBar, 3);
 		if(!isVisible(miniPlayerBar)){
 			return false;
@@ -61,6 +81,7 @@ public class MiniPlayer extends Page {
 	}
 	
 	public boolean minimizePlayer(){
+		System.out.println("Minimizing the player");
 		return player.minimizePlayer();
 	}
 	
@@ -239,8 +260,10 @@ public class MiniPlayer extends Page {
 		Errors errors = new Errors();
 		
 		// Thumb up and down (if they're not disabled)
+		System.out.println("Verifying controls for the Miniplayer");
 		if(miniPlayerThumbDown.isEnabled()
 				&& miniPlayerThumbUp.isEnabled()){
+			System.out.println("Verifying MiniPlayer ThumbDown and ThumbUp");
 			if(!thumbDown()){
 				errors.add("Could not thumb down track on mini player.\n");
 			}
@@ -253,6 +276,7 @@ public class MiniPlayer extends Page {
 		}
 		
 		// Play and pause
+		System.out.println("Verifying Play and Pause for MiniPlayer");
 		if(isVisible(miniPlayerPlay)){
 			miniPlayer.play();
 		}
@@ -275,6 +299,7 @@ public class MiniPlayer extends Page {
 		}
 		
 		// Verify info
+		System.out.println("Verifying Artist, Song Name, and Skip feature.");
 		if(!strGood(getArtist())){
 			errors.add("Was not displaying artist.\n");
 		}
