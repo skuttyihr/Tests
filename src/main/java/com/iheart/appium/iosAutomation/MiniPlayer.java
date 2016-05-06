@@ -13,13 +13,13 @@ public class MiniPlayer extends Page {
 	}
 	
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]") public IOSElement miniPlayerBar;
-	@iOSFindBy(name = "Pause") public IOSElement miniPlayerPause;
-	@iOSFindBy(name = "Play") public IOSElement miniPlayerPlay;
-	@iOSFindBy(name = "Stop") public IOSElement miniPlayerStop;
-	@iOSFindBy(name = "Thumb up") public IOSElement miniPlayerThumbUp;
-	@iOSFindBy(name = "Thumb down") public IOSElement miniPlayerThumbDown;
-	@iOSFindBy(name = "Skip") public IOSElement miniPlayerSkip;
-	@iOSFindBy(name = "Player_Scan") public IOSElement miniPlayerScan;
+	@iOSFindBy(accessibility = "Pause") public IOSElement miniPlayerPause;
+	@iOSFindBy(accessibility = "Play") public IOSElement miniPlayerPlay;
+	@iOSFindBy(accessibility = "Stop") public IOSElement miniPlayerStop;
+	@iOSFindBy(accessibility = "Thumb up") public IOSElement miniPlayerThumbUp;
+	@iOSFindBy(accessibility = "Thumb down") public IOSElement miniPlayerThumbDown;
+	@iOSFindBy(accessibility = "Skip") public IOSElement miniPlayerSkip;
+	@iOSFindBy(accessibility = "Player_Scan") public IOSElement miniPlayerScan;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAStaticText[1]") public IOSElement miniPlayerSongTitle;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAStaticText[2]") public IOSElement miniPlayerArtist;
 	

@@ -7,7 +7,7 @@ import io.appium.java_client.pagefactory.iOSFindBy;
 public class SettingsPage extends Page {
 
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIATableView[2]/UIATableCell[1]/UIAStaticText[2]") public IOSElement loggedInAs;
-	@iOSFindBy(name = "Logged In") public IOSElement thirdPartyLoggedIn;
+	@iOSFindBy(accessibility = "Logged In") public IOSElement thirdPartyLoggedIn;
 	
 	public SettingsPage(){
 		super();

@@ -13,7 +13,8 @@ public class LoginPage extends Page {
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[1]/UIATextField[1]") public IOSElement userName;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[2]/UIASecureTextField[1]") public IOSElement password;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAButton[2]") public IOSElement logInFormButton;
-	@iOSFindBy(accessibility = "Back") public IOSElement backButton;
+//	@iOSFindBy(accessibility = "Back") public IOSElement backButton;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIANavigationBar[1]/UIAButton[2]") public IOSElement backButton;
 	
 	@iOSFindBy(accessibility = "Facebook") private WebElement facebookButton;
 

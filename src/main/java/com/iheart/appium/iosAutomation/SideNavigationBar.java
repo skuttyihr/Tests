@@ -10,28 +10,28 @@ import io.appium.java_client.ios.IOSDriver;
 public class SideNavigationBar extends Page {
 
 	// ******* Side Navigation Bar *******
-	// @iOSFindBy(name="nav")
+	// @iOSFindBy(accessibility="nav")
 //	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIANavigationBar[1]/UIAButton[1]") public IOSElement navIcon;
 	private final String navIconString = "Side Menu";
-	@iOSFindBy(name = navIconString) public IOSElement navIcon;
-	@iOSFindBy(name = "Now Playing") public IOSElement playingIcon;
+	@iOSFindBy(accessibility = navIconString) public IOSElement navIcon;
+	@iOSFindBy(accessibility = "Now Playing") public IOSElement playingIcon;
 
-	@iOSFindBy(name = "Home") public IOSElement home;
-	@iOSFindBy(name = "My Stations") public IOSElement myStations;
-	@iOSFindBy(name = "Live Radio") public IOSElement liveRadio;
-	@iOSFindBy(name = "Artist Radio") public IOSElement artistRadio;
-	@iOSFindBy(name = "Podcasts") public IOSElement podcasts;
-	@iOSFindBy(name = "Perfect For") public IOSElement perfectFor;
-	@iOSFindBy(name = "Listening History") public IOSElement listeningHistory;
-	@iOSFindBy(name = "Alarm Clock") public IOSElement alarm;
-	@iOSFindBy(name = "Sleep Timer") public IOSElement sleep;
-//	@iOSFindBy(name = "Songs") public IOSElement songs;
-	@iOSFindBy(name = "Settings") public IOSElement settings;
+	@iOSFindBy(accessibility = "Home") public IOSElement home;
+	@iOSFindBy(accessibility = "My Stations") public IOSElement myStations;
+	@iOSFindBy(accessibility = "Live Radio") public IOSElement liveRadio;
+	@iOSFindBy(accessibility = "Artist Radio") public IOSElement artistRadio;
+	@iOSFindBy(accessibility = "Podcasts") public IOSElement podcasts;
+	@iOSFindBy(accessibility = "Perfect For") public IOSElement perfectFor;
+	@iOSFindBy(accessibility = "Listening History") public IOSElement listeningHistory;
+	@iOSFindBy(accessibility = "Alarm Clock") public IOSElement alarm;
+	@iOSFindBy(accessibility = "Sleep Timer") public IOSElement sleep;
+//	@iOSFindBy(accessibility = "Songs") public IOSElement songs;
+	@iOSFindBy(accessibility = "Settings") public IOSElement settings;
 
 	// ****** End of Side Nav page ******
 
 	// Fields in Settings page
-	@iOSFindBy(name = "Logged In As")
+	@iOSFindBy(accessibility = "Logged In As")
 	private IOSElement loggedInAs;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[4]/UIAAlert[1]/UIACollectionView[1]/UIACollectionCell[2]/UIAButton[1]")
 	private IOSElement logout;
