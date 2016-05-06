@@ -32,7 +32,7 @@ public class TestGate extends TestRoot {
 	 * Swipe background
 	 * Make sure background transitions on its own as well
 	 */
-	@Ignore
+	//@Ignore
 	@Test
 	public void  testBackground() {
 		Set<String> shouldBe = new HashSet<String>();

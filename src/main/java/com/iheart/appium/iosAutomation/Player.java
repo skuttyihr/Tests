@@ -102,6 +102,7 @@ public class Player extends Page {
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[2]") public IOSElement lyricsArtist;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAScrollView[2]/UIAWebView[1]") public IOSElement lyricsView;
 	@iOSFindBy( name= "Back" ) public IOSElement moreBack; //this isn't visible for some reason. visible: false
+	//moreLyricsBack xpath = UIAApplication[1]/UIAWindow[1]/UIANavigationBar[1]/UIAButton[2]
 	//name: Back type: UIAButton value: label: Back  enabled: true  visible: false   valid: true
 	// Artist bio elements
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[1]") public IOSElement artistBioArtist;
@@ -1306,25 +1307,12 @@ public class Player extends Page {
 				if(!isVisible(lyricsView)){
 					err.add("Lyrics were not displayed.");
 				}
-				if(!isVisible(moreBack)){
-					System.out.println("moreBack button for Lyrics is not visible.");
-					player.getBack();
+				if(isVisible(moreBack)){
 					moreBack.click();
-					System.out.println("moreBack was clicked...apparently.");
-					getBack();
-					System.out.println("getBack method called because it's fun!");
-					
 				}
 				else{
-					System.out.println("MoreBack id:"+ moreBack.getId());
-					moreBack.click();
-					getBack();
+					getBack(); // Tries a few ways
 				}
-				//else{
-					//getBack(); // Tries a few ways
-				//}
-				//moreInfoLyrics.
-				//moreBack.click();
 			}
 			else{
 				 err.add("More info lyrics were not visible at all.");

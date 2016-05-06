@@ -19,7 +19,7 @@ public class Page extends TestRoot{
 	// Zip Code info
 	@iOSFindBy(name = "Use Location") public IOSElement useLocation;
 	@iOSFindBy(name = "Allow") public IOSElement allowButton;
-	@iOSFindBy(name = "Don't Allow") public IOSElement dontAllowButton;
+	@iOSFindBy( accessibility = "Don't Allow") public IOSElement dontAllowButton;
 	
 	
 	// SUB NAVIGATION bar
