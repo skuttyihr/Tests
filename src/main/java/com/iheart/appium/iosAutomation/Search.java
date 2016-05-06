@@ -89,7 +89,7 @@ public class Search extends Page {
 			searchField.sendKeys(searchTerm);
 		}
 		else{
-			return false;
+			return false; //Logged out user should return false - can't search. 
 		}
 		if(areResultsEmpty(searchTerm)){
 			return false;
@@ -111,10 +111,13 @@ public class Search extends Page {
 	 * @return
 	 */
 	public String searchForStation(String searchTerm){
+		
 		searchForStationWithoutSelecting(searchTerm);
 		String selectedStation = firstStationTitle.getText();
 		firstStation.click();
 		return selectedStation;
+		
+		
 	}
 	
 	/**
