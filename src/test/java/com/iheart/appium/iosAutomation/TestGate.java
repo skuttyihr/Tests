@@ -7,7 +7,6 @@ import java.util.Set;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class TestGate extends TestRoot {
@@ -32,7 +31,6 @@ public class TestGate extends TestRoot {
 	 * Swipe background
 	 * Make sure background transitions on its own as well
 	 */
-	//@Ignore
 	@Test
 	public void  testBackground() {
 		Set<String> shouldBe = new HashSet<String>();
