@@ -19,10 +19,10 @@ public class GenrePage extends Page {
 	}
 
 	// Elements
-	@iOSFindBy(name = "IHRiPhoneGenrePickerView") public IOSElement genrePicker;
-	@iOSFindBy(name = "Done") public IOSElement genreDone;
-	@iOSFindBy(name = "Cancel") public IOSElement genreCancel;
-	@iOSFindBy(name = "Improve Recommendations") public IOSElement improveRecommendationsButton;
+	@iOSFindBy(accessibility = "IHRiPhoneGenrePickerView") public IOSElement genrePicker;
+	@iOSFindBy(accessibility = "Done") public IOSElement genreDone;
+	@iOSFindBy(accessibility = "Cancel") public IOSElement genreCancel;
+	@iOSFindBy(accessibility = "Improve Recommendations") public IOSElement improveRecommendationsButton;
 	
 	// Behavior methods
 	// By position in list

@@ -16,12 +16,12 @@ public class SplashPage extends Page {
 	}
 	
 	// Elements
-	@iOSFindBy(name = "onboarding_logo") public IOSElement onboardingLogo;
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[1]") protected IOSElement onboardingText;
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[2]") protected IOSElement additionalOnboardingText;
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAPageIndicator[1]") protected IOSElement splashPageIndicator;
-	@iOSFindBy(name = "Log In") protected IOSElement splashPageLogInButton;
-	@iOSFindBy(name = "Create Account") protected IOSElement createAccount;
+	@iOSFindBy(accessibility = "onboarding_logo") public IOSElement onboardingLogo;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[1]") public IOSElement onboardingText;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[2]") public IOSElement additionalOnboardingText;
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAPageIndicator[1]") public IOSElement splashPageIndicator;
+	@iOSFindBy(accessibility = "Log In") public IOSElement logIn;
+	@iOSFindBy(accessibility = "Create Account") public IOSElement createAccount;
 	
 	// Behavioral and helper methods
 	public String getOnBoardingText(){
@@ -76,20 +76,27 @@ public class SplashPage extends Page {
 			couldNotFind.append("Page indicator was not present\n");
 		}
 		try{
-			if(!isVisible(splashPageLogInButton)){
+			if(!isVisible(logIn)){
 				couldNotFind.append("Login button was not present\n");
 			}
 		}catch(Exception e){
 			couldNotFind.append("Login button was not present\n");
 		}
 		try{
-			if(!isVisible(splashPageLogInButton)){
-				couldNotFind.append("'Create Account' button was not present\n");
+			if(!isVisible(logIn)){
+				couldNotFind.append("Get started button was not present\n");
 			}
 		}catch(Exception e){
 			couldNotFind.append("'Create Account' button was not present\n");
 		}
 		return couldNotFind.toString();
+	}
+	
+	public boolean clickLogIn(){
+		waitForElementToBeVisible(logIn, 10);
+		logIn.click();
+		waitForElementToBeVisible(loginPage.userName, 2);
+		return isVisible(loginPage.userName);
 	}
 	
 	public boolean clickCreateAccount(){

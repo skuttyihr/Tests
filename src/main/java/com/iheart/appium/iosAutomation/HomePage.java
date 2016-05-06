@@ -23,6 +23,24 @@ public class HomePage extends Page {
 	private final String listItemXpath = "//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell[XXXXX]";
 	
 	
+	private IOSElement getFavorite(){
+		IOSElement favorite = null;
+		for(int i = 1; i < 4; i++){
+			IOSElement testElement = waitForVisible(driver, 
+					By.xpath("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIAStaticText[" + i + "]"),
+					2);
+			if(testElement != null){
+				if(isVisible(testElement) && testElement.getText().equals("Favorite Stations")){
+					favorite = testElement;
+					break;
+				}
+			}
+		}
+		
+		return favorite;
+	}
+	
+	
 	private IOSElement getRecent(){
 		IOSElement recent = null;
 		for(int i = 1; i < 4; i++){
@@ -41,11 +59,17 @@ public class HomePage extends Page {
 	}
 	
 	private int getRecentY(){
-		int recentY = 100; // When in doubt, remove nothing
+		int recentY = getAppHeight() + 1; 
 		//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIAStaticText[1]
 		IOSElement recent = getRecent();
 		if(recent != null){
 			recentY = recent.getLocation().getY();
+		}
+		else{
+			IOSElement favorites = getFavorite();
+			if(favorites == null){
+				recentY = 0; // A low value, because there are no favorites, all are recents 
+			}
 		}
 		
 		return recentY;

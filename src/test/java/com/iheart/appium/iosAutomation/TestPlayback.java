@@ -3,7 +3,6 @@ package com.iheart.appium.iosAutomation;
 
 import org.junit.Test;
 import org.junit.Before;
-import org.junit.Ignore;
 
 import java.time.LocalTime;
 
@@ -68,7 +67,6 @@ public class TestPlayback extends TestRoot {
 	 */
 	//Station was not added to favorites
 	@Test
-	//@Ignore
 	public void testCustomArtistStationPlaybackAndLogout() throws Exception {
 		LocalTime before = consoleLogStart("Testing Custom Artist Station Playback, and then logging out:"+ name.getMethodName());
 		String artist = "Florence + the Machine";
@@ -106,7 +104,6 @@ public class TestPlayback extends TestRoot {
 	 * Check SidenavBar - LiveRadioPage, LiveArtistPage, PodcastsPage, PerfectFor, Listening history page. 
 	 */
 	@Test
-	//@Ignore //This now works well. 
 	public void testCustomArtistStationMiniPlayer(){
 		LocalTime before = consoleLogStart("Testing Custom Artist Station - Mini Player :"+ name.getMethodName());
 		String artist = "Halsey";  
@@ -156,7 +153,6 @@ public class TestPlayback extends TestRoot {
 	 */
 
 	@Test
-	//@Ignore //This now works well. 
 	public void testArtistRadioSkipLimit(){
 		LocalTime before = consoleLogStart("Testing Artist Radio Skip Limit :"+ name.getMethodName());
 		// Create an account so we start with a fresh number of skips
@@ -190,7 +186,6 @@ public class TestPlayback extends TestRoot {
 	 * verifyControls
 	 */
 	@Test
-	//@Ignore  //This now works well, removed Logout method. Fixed popups during scrubber causing failures. 
 	public void testPodcastPlaybackAndControls() {
 		LocalTime before = consoleLogStart("Testing Podcast Playback and Controls :"+ name.getMethodName());
 		
@@ -249,7 +244,6 @@ public class TestPlayback extends TestRoot {
 	 */
 	
 	@Test
-   //@Ignore //This now works well. 
 	public void testLiveRadioPlayback() throws Exception {
 		LocalTime before = consoleLogStart("Testing Live Radio Playback features :"+ name.getMethodName());
 		Assert.assertTrue("Was not able to login", loginPage.login());

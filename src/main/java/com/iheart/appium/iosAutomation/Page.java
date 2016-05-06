@@ -13,22 +13,22 @@ import org.openqa.selenium.support.PageFactory;
 public class Page extends TestRoot{
 
 	// LOGIN PROMPT
-	@iOSFindBy(name = "Sign up for Free") protected IOSElement signUpPrompt;
-	@iOSFindBy(name = "Create Account") protected IOSElement createAccount;
+	@iOSFindBy(accessibility = "Sign up for Free") protected IOSElement signUpPrompt;
+	@iOSFindBy(accessibility = "Create Account") protected IOSElement createAccount;
 	
 	// Zip Code info
-	@iOSFindBy(name = "Use Location") public IOSElement useLocation;
-	@iOSFindBy(name = "Allow") public IOSElement allowButton;
-	@iOSFindBy( accessibility = "Don't Allow") public IOSElement dontAllowButton;
+	@iOSFindBy(accessibility = "Use Location") public IOSElement useLocation;
+	@iOSFindBy(accessibility = "Allow") public IOSElement allowButton;
+	@iOSFindBy(accessibility = "Don't Allow") public IOSElement dontAllowButton;
 	
 	
 	// SUB NAVIGATION bar
-	@iOSFindBy(name = "My Stations") public IOSElement myStations;
-	@iOSFindBy(name = "For You") public IOSElement forYou;
-	@iOSFindBy(name = "Perfect For") public IOSElement perfectFor;
-	@iOSFindBy(name = "Local Radio") public IOSElement localRadio;
+	@iOSFindBy(accessibility = "My Stations") public IOSElement myStations;
+	@iOSFindBy(accessibility = "For You") public IOSElement forYou;
+	@iOSFindBy(accessibility = "Perfect For") public IOSElement perfectFor;
+	@iOSFindBy(accessibility = "Local Radio") public IOSElement localRadio;
 
-	@iOSFindBy(name = "iheartradio_logo_full") public static IOSElement iheartradio_logo_full;
+	@iOSFindBy(accessibility = "iheartradio_logo_full") public static IOSElement iheartradio_logo_full;
 	
 	static IOSDriver<IOSElement> driver;
 	static SideNavigationBar sideNavigationBar;

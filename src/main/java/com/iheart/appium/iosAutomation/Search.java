@@ -21,9 +21,9 @@ public class Search extends Page {
 	}
 	
 	// Search field
-	@iOSFindBy(name = "Search") public IOSElement searchButton;
+	@iOSFindBy(accessibility = "Search") public IOSElement searchButton;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIASearchBar[1]/UIASearchBar[1]") public IOSElement searchField;
-	@iOSFindBy(name = "Cancel") public IOSElement cancel;
+	@iOSFindBy(accessibility = "Cancel") public IOSElement cancel;
 	// Search Elements, used to create custom stations
 //	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell[1]") public IOSElement firstElement;
 	private final String firstResultXpath = "//UIAApplication[1]/UIAWindow[1]/UIATableView[2]/UIATableCell[1]";
@@ -33,11 +33,11 @@ public class Search extends Page {
 	// Search result elements
 	
 	// Search filters
-	@iOSFindBy(name = "All") public IOSElement allFilter;
-	@iOSFindBy(name = "Stations") public IOSElement stationsFilter;
-	@iOSFindBy(name = "Artists") public IOSElement artistsFilter;
-	@iOSFindBy(name = "Songs") public IOSElement songsFilter;
-//	@iOSFindBy(name = "Podcasts") public IOSElement podcastsFilter; // For some reason, this one doesn't work
+	@iOSFindBy(accessibility = "All") public IOSElement allFilter;
+	@iOSFindBy(accessibility = "Stations") public IOSElement stationsFilter;
+	@iOSFindBy(accessibility = "Artists") public IOSElement artistsFilter;
+	@iOSFindBy(accessibility = "Songs") public IOSElement songsFilter;
+//	@iOSFindBy(accessibility = "Podcasts") public IOSElement podcastsFilter; // For some reason, this one doesn't work
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIASegmentedControl[1]/UIAButton[5]") public IOSElement podcastsFilter;
 	
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIATableView[2]/UIATableCell[1]/UIAStaticText[1]") public IOSElement noResults;

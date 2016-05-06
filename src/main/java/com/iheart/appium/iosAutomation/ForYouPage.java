@@ -12,7 +12,7 @@ import io.appium.java_client.ios.*;
 public class ForYouPage extends Page {
 
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell[1]") private IOSElement firstStation;
-	// @iOSFindBy(name="Sign in") private WebElement signIn;
+	// @iOSFindBy(accessibility="Sign in") private WebElement signIn;
 
 	// for search
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIATableView[2]/UIATableCell[1]/UIAStaticText[1]") private IOSElement topHit;

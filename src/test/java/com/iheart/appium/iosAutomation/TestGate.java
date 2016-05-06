@@ -7,7 +7,6 @@ import java.util.Set;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class TestGate extends TestRoot {
@@ -32,7 +31,6 @@ public class TestGate extends TestRoot {
 	 * Swipe background
 	 * Make sure background transitions on its own as well
 	 */
-	//@Ignore
 	@Test
 	public void  testBackground() {
 		Set<String> shouldBe = new HashSet<String>();
@@ -127,9 +125,8 @@ public class TestGate extends TestRoot {
 	@Test
 	public void testCreateAccountLogInAndMaybeLater(){
 		validateGate(true);
-		Assert.assertTrue("Could not click log in", loginPage.clickLogin());
+		Assert.assertTrue("Could not click log in", splashPage.clickLogIn());
 		loginPage.tapBack();
-		validateGate(true);
 		Assert.assertTrue("Could not click get started", splashPage.clickCreateAccount());
 		// Assert that maybe later is no longer an element here. 
 		Assert.assertFalse("Maybe Later was visible, but it  should not be visible for new app installs", signupPage.isMaybeLaterVisible());

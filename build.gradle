@@ -6,7 +6,7 @@ repositories {
 }
 
 dependencies {
-    compile 'io.appium:java-client:3.2.0'
+    compile 'io.appium:java-client:3.4.1'
     compile 'junit:junit:4.12'
     compile 'log4j:log4j:1.2.17'
     compile 'com.github.detro.ghostdriver:phantomjsdriver:1.1.0'

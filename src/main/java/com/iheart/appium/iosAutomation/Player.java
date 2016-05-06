@@ -9,16 +9,16 @@ import io.appium.java_client.pagefactory.iOSFindBy;
 public class Player extends Page {
 
 	// Player Identifiers
-	@iOSFindBy(name = "CustomMusicPlayerView") public IOSElement artistPlayerView;
-	@iOSFindBy(name = "LivePlayerView") public IOSElement radioPlayerView;
-	@iOSFindBy(name = "CustomTalkPlayerView") public IOSElement podcastPlayerView;
+	@iOSFindBy(accessibility = "CustomMusicPlayerView") public IOSElement artistPlayerView;
+	@iOSFindBy(accessibility = "LivePlayerView") public IOSElement radioPlayerView;
+	@iOSFindBy(accessibility = "CustomTalkPlayerView") public IOSElement podcastPlayerView;
 	// Player for live radio
-	// @iOSFindBy(name="Back") public IOSElement back;
+	// @iOSFindBy(accessibility="Back") public IOSElement back;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIANavigationBar[1]/UIAButton[1]") public IOSElement back;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIANavigationBar[1]/UIAStaticText[1]") public IOSElement stationLabel;
-	@iOSFindBy(name = "Share") public IOSElement share;
-	@iOSFindBy(name = "Favorite") public IOSElement favorite;
-	@iOSFindBy(name = "airplay") public IOSElement airPlay;
+	@iOSFindBy(accessibility = "Share") public IOSElement share;
+	@iOSFindBy(accessibility = "Favorite") public IOSElement favorite;
+	@iOSFindBy(accessibility = "airplay") public IOSElement airPlay;
 
 	// Seems that this is depending upon from where the player is launched
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[3]") public IOSElement songTrack_artist;
@@ -39,23 +39,22 @@ public class Player extends Page {
 	@iOSFindBy(xpath="//UIAApplication[1]/UIAWindow[1]/UIAButton[7]") public IOSElement more;
 
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAButton[6]") public IOSElement skip;
-	//@iOSFindBy(name = "Skip") public IOSElement skip;
-	@iOSFindBy(name = "scan") public IOSElement scan;
-	@iOSFindBy(name = "Thumb up") public IOSElement thumbUp;
-	@iOSFindBy(name = "Thumb down") public IOSElement thumbDown;
+	@iOSFindBy(accessibility = "scan") public IOSElement scan;
+	@iOSFindBy(accessibility = "Thumb up") public IOSElement thumbUp;
+	@iOSFindBy(accessibility = "Thumb down") public IOSElement thumbDown;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIASlider[2]") public IOSElement volume;
 
 	// Play/Pause/Stop buttons
 	public final String playPauseStopXpath = "//UIAApplication[1]/UIAWindow[1]/UIAButton[5]"; // Works for all, but subject to change
-	@iOSFindBy(name = "player pause") public IOSElement pause; // Used for Podcasts and Artist Radio
-	@iOSFindBy(name = "player play") public IOSElement play; // Used for Podcasts, Live Radio, and Artist Radio
-	@iOSFindBy(name = "player stop") public IOSElement stop; // Used for Live Radio
+	@iOSFindBy(accessibility = "player pause") public IOSElement pause; // Used for Podcasts and Artist Radio
+	@iOSFindBy(accessibility = "player play") public IOSElement play; // Used for Podcasts, Live Radio, and Artist Radio
+	@iOSFindBy(accessibility = "player stop") public IOSElement stop; // Used for Live Radio
 	
 	// FOR SHARE
-	@iOSFindBy(name = "Mail") public IOSElement mail;
+	@iOSFindBy(accessibility = "Mail") public IOSElement mail;
 	
 	// If loaded from mini player
-	@iOSFindBy(name = "player downarrow") public IOSElement minimizeButton;
+	@iOSFindBy(accessibility = "player downarrow") public IOSElement minimizeButton;
 	
 	// Images 
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAImage[3]") public IOSElement radioImage;
@@ -63,12 +62,12 @@ public class Player extends Page {
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAImage[4]") public IOSElement podcastImage; // Same as above, but named to assist in any possible issues
 	
 	// Growl Messages (Use Xpath only as backup)
-	@iOSFindBy(name = "Great, we’ll play you more  songs like this.") public IOSElement artistThumbUpGrowl; // //UIAApplication[1]/UIAWindow[1]/UIAStaticText[10]
-	@iOSFindBy(name = "OK, we'll adjust your music mix.") public IOSElement artistThumbDownGrowl;
-	@iOSFindBy(name = "Glad you like it!  We'll let our DJs know.") public IOSElement liveThumbUpGrowl; // //UIAApplication[1]/UIAWindow[1]/UIAStaticText[8]
-	@iOSFindBy(name = "Thanks for the feedback. We'll let our DJs know you've  heard enough of this song.") public IOSElement liveThumbDownGrowl;
-	@iOSFindBy(name = "Great, we’ll play you more  episodes like this.") public IOSElement podcastThumbUpGrowl; // //UIAApplication[1]/UIAWindow[1]/UIAStaticText[10]
-	@iOSFindBy(name = "OK, we’ll adjust your station.") public IOSElement podcastThumbDownGrowl;
+	@iOSFindBy(accessibility = "Great, we’ll play you more  songs like this.") public IOSElement artistThumbUpGrowl; // //UIAApplication[1]/UIAWindow[1]/UIAStaticText[10]
+	@iOSFindBy(accessibility = "OK, we'll adjust your music mix.") public IOSElement artistThumbDownGrowl;
+	@iOSFindBy(accessibility = "Glad you like it!  We'll let our DJs know.") public IOSElement liveThumbUpGrowl; // //UIAApplication[1]/UIAWindow[1]/UIAStaticText[8]
+	@iOSFindBy(accessibility = "Thanks for the feedback. We'll let our DJs know you've  heard enough of this song.") public IOSElement liveThumbDownGrowl;
+	@iOSFindBy(accessibility = "Great, we’ll play you more  episodes like this.") public IOSElement podcastThumbUpGrowl; // //UIAApplication[1]/UIAWindow[1]/UIAStaticText[10]
+	@iOSFindBy(accessibility = "OK, we’ll adjust your station.") public IOSElement podcastThumbDownGrowl;
 	
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIANavigationBar[1]/UIAStaticText[1]") public IOSElement stationTitle;
 	
@@ -76,34 +75,31 @@ public class Player extends Page {
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAImage[4]") public IOSElement moreInfoAlbumArtwork;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[9]") public IOSElement moreInfoSong;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[10]") public IOSElement moreInfoArtist;
-	@iOSFindBy(name = "Tune Station") public IOSElement moreInfoTuneStation;
-	@iOSFindBy(name = "Lyrics") public IOSElement moreInfoLyrics;
-	@iOSFindBy(name = "Artist Bio") public IOSElement moreInfoArtistBio;
-	@iOSFindBy(name = "Share") public IOSElement moreInfoShare;
-	@iOSFindBy(name = "Buy Song") public IOSElement moreInfoBuy;
-	@iOSFindBy(name = "Close") public IOSElement moreInfoClose;
-	@iOSFindBy(xpath = "UIAApplication[1]/UIAWindow[1]/UIANavigationBar[1]/UIAButton[2]") public IOSElement moreInfoLyricsBack; ///
+	@iOSFindBy(accessibility = "Tune Station") public IOSElement moreInfoTuneStation;
+	@iOSFindBy(accessibility = "Lyrics") public IOSElement moreInfoLyrics;
+	@iOSFindBy(accessibility = "Artist Bio") public IOSElement moreInfoArtistBio;
+	@iOSFindBy(accessibility = "Share") public IOSElement moreInfoShare;
+	@iOSFindBy(accessibility = "Buy Song") public IOSElement moreInfoBuy;
+	@iOSFindBy(accessibility = "Close") public IOSElement moreInfoClose;
 	// More info for Live Radio
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[7]") public IOSElement moreInfoRadioSong;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[8]") public IOSElement moreInfoRadioArtist;
-	@iOSFindBy(name = "Station Info") public IOSElement moreInfoRadioStationInfo;
+	@iOSFindBy(accessibility = "Station Info") public IOSElement moreInfoRadioStationInfo;
 
 	// Tune station controls
-	@iOSFindBy(name = "close inactive") public IOSElement tuneStationClose;
-	@iOSFindBy(name = "Discovery Tuner") public IOSElement tuneStationLabel;
+	@iOSFindBy(accessibility = "close inactive") public IOSElement tuneStationClose;
+	@iOSFindBy(accessibility = "Discovery Tuner") public IOSElement tuneStationLabel;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[10]") public IOSElement tuneStationDescription;
-	@iOSFindBy(name = "Top Hits") public IOSElement tuneStationTopHits;
-	@iOSFindBy(name = "Mix") public IOSElement tuneStationMix;
-	@iOSFindBy(name = "Variety") public IOSElement tuneStationVariety;
+	@iOSFindBy(accessibility = "Top Hits") public IOSElement tuneStationTopHits;
+	@iOSFindBy(accessibility = "Mix") public IOSElement tuneStationMix;
+	@iOSFindBy(accessibility = "Variety") public IOSElement tuneStationVariety;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[11]") public IOSElement tuneStationFeatured;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[12]") public IOSElement tuneStationListOfArtists;
 	// Lyrics Elements
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[1]") public IOSElement lyricsSong;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[2]") public IOSElement lyricsArtist;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAScrollView[2]/UIAWebView[1]") public IOSElement lyricsView;
-	@iOSFindBy( name= "Back" ) public IOSElement moreBack; //this isn't visible for some reason. visible: false
-	//moreLyricsBack xpath = UIAApplication[1]/UIAWindow[1]/UIANavigationBar[1]/UIAButton[2]
-	//name: Back type: UIAButton value: label: Back  enabled: true  visible: false   valid: true
+	@iOSFindBy(accessibility="Back") public IOSElement moreBack;
 	// Artist bio elements
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[1]") public IOSElement artistBioArtist;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAScrollView[2]/UIAWebView[1]") public IOSElement artistBioBio; 
@@ -114,13 +110,13 @@ public class Player extends Page {
 	// Station Info
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIANavigationBar[1]/UIAStaticText[2]") public IOSElement stationInfoName;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAScrollView[2]/UIAImage[6]") public IOSElement stationInfoLogo;
-	@iOSFindBy(name = "Now Playing") public IOSElement stationInfoNowPlaying;
+	@iOSFindBy(accessibility = "Now Playing") public IOSElement stationInfoNowPlaying;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAScrollView[2]/UIAStaticText[2]") public IOSElement stationInfoSong;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAScrollView[2]/UIAStaticText[3]") public IOSElement stationInfoArtist;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAScrollView[2]/UIAScrollView[1]/UIAWebView[1]") public IOSElement stationInfoView;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAScrollView[2]/UIAStaticText[4]") public IOSElement stationInfoNoContent;
-	@iOSFindBy(name = "The Feed") public IOSElement stationInfoTheFeed;
-	@iOSFindBy(name = "On Air") public IOSElement stationInfoOnAir;
+	@iOSFindBy(accessibility = "The Feed") public IOSElement stationInfoTheFeed;
+	@iOSFindBy(accessibility = "On Air") public IOSElement stationInfoOnAir;
 	
 	public Player() {
 		super();

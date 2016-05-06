@@ -9,27 +9,27 @@ import io.appium.java_client.ios.*;
 
 public class SignUpPage extends Page {
 
-	@iOSFindBy(name = "Back") private IOSElement backButton;
+	@iOSFindBy(accessibility = "Back") private IOSElement backButton;
 	private final String createAccountName = "Create An Account";
-	@iOSFindBy(name = createAccountName) private IOSElement createAnAccount;
+	@iOSFindBy(accessibility = createAccountName) private IOSElement createAnAccount;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[1]/UIATextField[1]") private IOSElement email;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[2]/UIASecureTextField[1]") private IOSElement password;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[3]/UIATextField[1]") private IOSElement zip;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[3]/UIATextField[2]") private IOSElement birthYear;
 	// @iOSFindBy(xpath="//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[4]/UIAButton[1]")
-	@iOSFindBy(name = "Male") private IOSElement gender_male;
-	@iOSFindBy(name = "Female") private IOSElement gender_female;
+	@iOSFindBy(accessibility = "Male") private IOSElement gender_male;
+	@iOSFindBy(accessibility = "Female") private IOSElement gender_female;
 	//@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAElement[1]") private IOSElement iAgree;
-	@iOSFindBy(name = "Create Account") private IOSElement create;
+	@iOSFindBy(accessibility = "Create Account") private IOSElement create;
 
-	@iOSFindBy(name = "Facebook") private IOSElement facebook;
-	@iOSFindBy(name = "Google") private IOSElement google;
+	@iOSFindBy(accessibility = "Facebook") private IOSElement facebook;
+	@iOSFindBy(accessibility = "Google") private IOSElement google;
 
 //	private final String maybeLaterName = "Maybe Later";
-//	@iOSFindBy(name = maybeLaterName) private IOSElement maybeLater;
+//	@iOSFindBy(accessibility = maybeLaterName) private IOSElement maybeLater;
 
 	// if account exists already
-	@iOSFindBy(name = "Okay") private IOSElement okay;
+	@iOSFindBy(accessibility = "Okay") private IOSElement okay;
 
 	public SignUpPage() {
 		super();
