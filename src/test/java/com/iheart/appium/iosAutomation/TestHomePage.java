@@ -1,5 +1,6 @@
 package com.iheart.appium.iosAutomation;
 
+import java.time.LocalTime;
 import java.util.List;
 
 import org.junit.After;
@@ -50,9 +51,12 @@ public class TestHomePage extends TestRoot {
 		Assert.assertTrue("Lists before and after swiping and clicking show more should not have been identical!", 
 				!visibleItems.equals(visibleItemsAfterSwipe));
 	}
-	
+	/**
+	 * Log in, add to favorites from home, checks if sattion is in favorites. 
+	 */
 	@Test
 	public void testAddToFavoritesFromHome(){
+		LocalTime before = consoleLogStart("testAddToFavoritesFromHome() - Login, Swipe Station and try to Add to Favorites ");
 		loginPage.loginWithoutVerifying();
 		createdFavorite = true; // This test will create a favorite
 		// Search for an item so we know what we're working with
@@ -74,9 +78,9 @@ public class TestHomePage extends TestRoot {
 		Assert.assertTrue("Could not tap add to favorites for this item." + addErrors, didPass(addErrors));
 		int stationLocation = homePage.isStationAFavorite(station);
 		if(stationLocation > 0){
-			System.out.println("Found station in favorites, but should have been removed.");
+			System.out.println("Found station in 'Favorites', but should have been removed.");
 		}
-		Assert.assertTrue("Station was not added to favorites", stationLocation > 0);
+		Assert.assertTrue("Station was not added to Favorites", stationLocation > 0);
 		
 		// Remove the station through the toggle now
 		homePage.gotoForYou();
@@ -90,17 +94,22 @@ public class TestHomePage extends TestRoot {
 		if(strGood(station) && station.contains(",")){
 			station = station.substring(0, station.indexOf(","));
 		}
-		Assert.assertTrue("Could not tap add to favorites for this item." + addErrors, didPass(addErrors));
+		Assert.assertTrue("Could not tap 'Add to Favorites' for this item." + addErrors, didPass(addErrors));
 		stationLocation = homePage.isStationAFavorite(station);
 		if(stationLocation <= 0){
-			System.out.println("Could not find station in favroites.");
+			System.out.println("Could not find station in 'Favorites'.");
 		}
-		Assert.assertFalse("Station was not added to favorites", stationLocation > 0);
+		Assert.assertFalse("Station was not added to 'Favorites'", stationLocation > 0);
+		consoleLogEnd(before, stationLocation <= 0 ,  "Tested testAddToFavoritesFromHome() in TestHomePage.java."); //Testing the inverse because it's assertFalse
 	}
 	
+	/**
+	 * Log in, load up a station, check that it's in recents, add it to favorites, check that it's a favorite as well as a recent. 
+	 */
 	@Test
 	public void testAddToFavoritesFromRecents(){
-		// Log in, load up a station, check that it's in recents, add it to favorites, check that it's a favorite as well as a recent. 
+		LocalTime before = consoleLogStart("testAddToFavoritesFromRecents() - Log in, load up a station, check that it's in recents, add it to favorites, check that it's a favorite as well as a recent. ");
+		
 		loginPage.loginWithoutVerifying();
 		createdFavorite = true;
 		
@@ -138,11 +147,14 @@ public class TestHomePage extends TestRoot {
 			favoritePos = homePage.isStationAFavorite(artist);
 		}
 		Assert.assertTrue("Station was not removed from favorites", favoritePos < 0);
+		consoleLogEnd(before, favoritePos < 0,  "Tested testAddToFavoritesFromRecents() in TestHomePage.java.");
 	}
-	
+	/**
+	 * testAddToFavoritesFromLocalRadio- Log in, go to Live/Local Radio tab, add a station, check my stations for it being there
+	 */
 	@Test
-	public void testAddToFavoritesFromLocalRadio(){  //Passes - 630 seconds
-		// Log in, go to Live/Local Radio tab, add a station, check my stations for it being there
+	public void testAddToFavoritesFromLocalRadio(){  
+		LocalTime before = consoleLogStart("testAddToFavoritesFromLocalRadio- Log in, go to Live/Local Radio tab, add a station, check my stations for it being there ");
 		loginPage.loginWithoutVerifying();
 		createdFavorite = true;
 		sideNavBar.gotoHomePage();
@@ -172,15 +184,22 @@ public class TestHomePage extends TestRoot {
 							+ toggleErrors,
 				didPass(toggleErrors));
 		homePage.gotoMyStations();
-		Assert.assertTrue("Station was not added to favorites", homePage.isStationAFavorite(stationName) > 0);
-		Assert.assertTrue("Station was not in recents as well as favorites", homePage.isStationARecent(stationName) > 0);
+		boolean stationIsAFavorite = homePage.isStationAFavorite(stationName) > 0;
+		boolean stationIsARecent = homePage.isStationARecent(stationName) > 0 ;
+		Assert.assertTrue("Station was not added to favorites", stationIsAFavorite);
+		Assert.assertTrue("Station was not in recents as well as favorites", stationIsARecent);
+		consoleLogEnd(before, stationIsAFavorite && stationIsARecent,  "Tested testAddToFavoritesFromLocalRadio() in TestHomePage.java.");
 	}
 	
-	@Test
-	public void testShowMore(){  //Passes - 455 seconds
-		// Show More is on For You and My Stations
+	/**
+	 * // Show More is on For You and My Stations
 		// Scroll to bottom of each list, verify what's visible, then keep scrolling
 		// Use XPath to grab visible names, as any other method will hold them even if they're not visible
+	 */
+	@Test
+	public void testShowMore(){  
+		LocalTime before = consoleLogStart("testShowMore() is testing the Show More on the For You and My Stations");
+		
 		loginPage.loginWithoutVerifying();
 		sideNavBar.gotoHomePage();
 		// Play some stations to be sure we have a history of at least a few stations.
@@ -192,11 +211,16 @@ public class TestHomePage extends TestRoot {
 		// Doing the same for the mystations page
 		homePage.gotoMyStations();
 		assertScrollAndShowMore();
+		consoleLogEnd(before, true,  "Tested testShowMore() in TestHomePage.java");
 	}
 	
+	/**
+	 * // Test that we can scroll to the bottom, then jump back to the top
+	 */
 	@Test
-	public void testScrollAndTapBar(){   //Passes - 209 seconds
-		// Test that we can scroll to the bottom, then jump back to the top
+	public void testScrollAndTapBar(){   
+		LocalTime before = consoleLogStart("testScrollAndTapBar()");
+		
 		loginPage.loginWithoutVerifying();
 		sideNavBar.gotoHomePage();
 		List<String> topItems = homePage.getVisibleListItems();
@@ -209,5 +233,6 @@ public class TestHomePage extends TestRoot {
 		// We're back at the top
 		List<String> newTopItems = homePage.getVisibleListItems();
 		Assert.assertTrue("Could not scroll back to top!", topItems.equals(newTopItems));
+		consoleLogEnd(before, topItems.equals(newTopItems),  "Tested testScrollAndTapBar() in TestHomePage.java");
 	}
 }
