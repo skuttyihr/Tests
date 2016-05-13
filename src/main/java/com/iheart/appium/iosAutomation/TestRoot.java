@@ -377,9 +377,6 @@ public class TestRoot {
 	}
 	
 	public static IOSElement findElement(IOSDriver<IOSElement> d, By by){
-		return findElement(d, (MobileBy) by);
-	}
-	public static IOSElement findElement(IOSDriver<IOSElement> d, MobileBy by){
 		IOSElement e = null;
 		try{
 			d.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
@@ -699,7 +696,7 @@ public class TestRoot {
 	}
 
 	
-	public static IOSElement waitForPresent(IOSDriver<IOSElement> d, MobileBy by, long timeoutInSec){
+	public static IOSElement waitForPresent(IOSDriver<IOSElement> d, By by, long timeoutInSec){
 		long timeLeftMil = timeoutInSec * 1000;
 		while(timeLeftMil > 0){
 			if(findElement(d, by) != null){
@@ -710,10 +707,8 @@ public class TestRoot {
 		}
 		return (IOSElement) d.findElement(by);
 	}
+	
 	public static IOSElement waitForVisible(IOSDriver<IOSElement> d, By by, long timeoutInSec){
-		return waitForVisible(d, (MobileBy) by, timeoutInSec);
-	}
-	public static IOSElement waitForVisible(IOSDriver<IOSElement> d, MobileBy by, long timeoutInSec){
 		// Wait for it to be present (not just clickable/visible, but loaded)
 		long timeLeftMil = timeoutInSec * 1000;
 		while(timeLeftMil > 0){
