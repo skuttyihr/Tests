@@ -1,5 +1,6 @@
 package com.iheart.appium.iosAutomation;
 
+import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -33,6 +34,7 @@ public class TestGate extends TestRoot {
 	 */
 	@Test
 	public void  testBackground() {
+		LocalTime before = consoleLogStart("Testing Gate and backgrounds in testBackground().");
 		Set<String> shouldBe = new HashSet<String>();
 		shouldBe.add("Music to your ears.");
 		shouldBe.add("Don't miss a beat.");
@@ -113,6 +115,7 @@ public class TestGate extends TestRoot {
 		if(couldntFind.length() > 0){
 			Assert.fail("Could not find the following expected text while swiping:\n" + couldntFind.toString());
 		}
+		consoleLogEnd(before, true,  "Tested Background in TestGate.java");
 		
 	}
 	
@@ -124,11 +127,13 @@ public class TestGate extends TestRoot {
 	
 	@Test
 	public void testCreateAccountLogInAndMaybeLater(){
+		LocalTime before = consoleLogStart("Testing testCreateAccountLogInAndMaybeLater().");
 		validateGate(true);
 		Assert.assertTrue("Could not click log in", splashPage.clickLogIn());
 		loginPage.tapBack();
 		Assert.assertTrue("Could not click get started", splashPage.clickCreateAccount());
 		// Assert that maybe later is no longer an element here. 
 		Assert.assertFalse("Maybe Later was visible, but it  should not be visible for new app installs", signupPage.isMaybeLaterVisible());
+		consoleLogEnd(before, true,  "Tested CreateAccountLogInAndMaybeLater in TestPlayback.java");
 	}
 }

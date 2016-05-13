@@ -21,7 +21,6 @@ public class Page extends TestRoot{
 	@iOSFindBy(accessibility = "Allow") public IOSElement allowButton;
 	@iOSFindBy(accessibility = "Don't Allow") public IOSElement dontAllowButton;
 	
-	
 	// SUB NAVIGATION bar
 	@iOSFindBy(accessibility = "My Stations") public IOSElement myStations;
 	@iOSFindBy(accessibility = "For You") public IOSElement forYou;

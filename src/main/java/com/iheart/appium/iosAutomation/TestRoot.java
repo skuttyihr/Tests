@@ -89,6 +89,8 @@ public class TestRoot {
 	protected static String NEWACCOUNTPASSWORD;
 	
 	protected static void setup() {
+		System.out.println("TestRoot.setup()");
+		
 		
 		String appiumUrl = "";
 		String appiumPort = "";
@@ -250,6 +252,7 @@ public class TestRoot {
 	}
 
 	protected static void tearDown() {
+		System.out.println("after()::Tearing down TestRoot.");
 		if(driver != null){
 			try{
 				// If app isn't resetting through appium, try running a test with this un-commented
@@ -261,6 +264,7 @@ public class TestRoot {
 				e.printStackTrace();
 			}
 		}
+		System.out.println("######################################################################");
 	}
 	
 	//// Utility Methods ////

@@ -66,6 +66,7 @@ public class TestHomePage extends TestRoot {
 			listItem = 1;
 		}
 		String station = homePage.getListItemText(listItem);
+		System.out.println("getListItemText() found [" + station + "].");
 		Assert.assertTrue("Could not get station", strGood(station));
 		if(station.contains(",")){
 			station = station.substring(0, station.indexOf(","));
@@ -140,7 +141,7 @@ public class TestHomePage extends TestRoot {
 	}
 	
 	@Test
-	public void testAddToFavoritesFromLocalRadio(){
+	public void testAddToFavoritesFromLocalRadio(){  //Passes - 630 seconds
 		// Log in, go to Live/Local Radio tab, add a station, check my stations for it being there
 		loginPage.loginWithoutVerifying();
 		createdFavorite = true;
@@ -176,7 +177,7 @@ public class TestHomePage extends TestRoot {
 	}
 	
 	@Test
-	public void testShowMore(){
+	public void testShowMore(){  //Passes - 455 seconds
 		// Show More is on For You and My Stations
 		// Scroll to bottom of each list, verify what's visible, then keep scrolling
 		// Use XPath to grab visible names, as any other method will hold them even if they're not visible
@@ -194,7 +195,7 @@ public class TestHomePage extends TestRoot {
 	}
 	
 	@Test
-	public void testScrollAndTapBar(){
+	public void testScrollAndTapBar(){   //Passes - 209 seconds
 		// Test that we can scroll to the bottom, then jump back to the top
 		loginPage.loginWithoutVerifying();
 		sideNavBar.gotoHomePage();

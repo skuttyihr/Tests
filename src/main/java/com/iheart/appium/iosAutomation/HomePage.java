@@ -195,6 +195,7 @@ public class HomePage extends Page {
 		return toggleListItemFavorites(x, false);
 	}
 	public String toggleListItemFavorites(int x, boolean removing){
+		System.out.println("toggleListItemFavorites() - Swipes item to left, Adds to Favorites if visible");
 		Errors err = new Errors();
 		IOSElement item = getListItem(x);
 		if(item != null){
@@ -394,17 +395,17 @@ public class HomePage extends Page {
 		return getRecentStation(1);
 	}
 	
-	
+	/**
+	 * Click my Station if on home
+	 * Ensure there are favorite stations
+	 * Get Y of "recent stations"
+	 * Find the item matching the artist
+	 * Get the Y of that artist
+	 * If it's above recent stations: YES
+	 * Return the item number, so we can use it later, if need be
+	 */
 	public int isStationAFavorite(String artist){
-		/*
-		 * Click my Station if on home
-		 * Ensure there are favorite stations
-		 * Get Y of "recent stations"
-		 * Find the item matching the artist
-		 * Get the Y of that artist
-		 * If it's above recent stations: YES
-		 * Return the item number, so we can use it later, if need be
-		 */
+		System.out.print("Seeing if artist: "+ artist + " is a favorite. foundStation item number is: ");
 		int foundStation = -1;
 		homePage.gotoMyStations();
 		if(!driver.getPageSource().contains(artist)){
