@@ -1,5 +1,7 @@
 package com.iheart.appium.iosAutomation;
 
+import java.time.LocalTime;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -17,8 +19,14 @@ public class TestGenre extends TestRoot{
 		TestRoot.tearDown();
 	}
 	
+	/**
+	 * Verifies all the genres on the genre page and ensures that all are present. 
+	 * Then it swipes to the top of the page, selects some genres, handles popups, 
+	 * improvesRecommendations, and deselects and reselects Top 40.
+	 */
 	@Test
 	public void testGenreGameForNewAccount(){
+		LocalTime before = consoleLogStart("Testing Genre Game for New Account.");
 		Assert.assertTrue("Could not create a new account and get the genre picker", signupPage.createAnAccount());
 		// Assert all genres are present
 		String missingGenres = genrePage.verifyGenres();
@@ -46,5 +54,7 @@ public class TestGenre extends TestRoot{
 		Assert.assertTrue("Could not deselect genre!", !genrePage.isGenreSelected("Top 40 & Pop"));
 		genrePage.selectGenre("Top 40 & Pop", false);
 		Assert.assertTrue("Could not verify genre after deselecting and selecting again!", genrePage.isGenreSelected("Top 40 & Pop"));
+		
+		consoleLogEnd(before, true,  "Tested Genre Game for New Account"); 
 	}
 }

@@ -19,17 +19,13 @@ public class TestPlayback extends TestRoot {
 
 	@Before
 	public void setUp() throws Exception {
-		System.out.println("TestRoot.setup()");
 		TestRoot.setup();
 	}
 	@After
 	public void after() {
-		// Remove favorites
-		System.out.println("in after(), removing all favorites");
+		// Remove favorites, logout, and tearDown
 		homePage.removeAllFavorites();
-		System.out.println("Logging out through SideNavBar");
 		sideNavBar.logout();
-		System.out.println("after()::Tearing down TestRoot.");
 		TestRoot.tearDown();
 	}
 	
@@ -97,7 +93,7 @@ public class TestPlayback extends TestRoot {
 		// Test that we can add to favorites from playback
 		Assert.assertTrue("Station was not added to favorites", homePage.isStationAFavorite(artist) > 0);
 		
-		consoleLogEnd(before, true,  "Tested Custom Artist Station Playback in TestPlayback.java"); //Not TestResult because we want a negative here. 
+		consoleLogEnd(before, true,  "Tested Custom Artist Station Playback in TestPlayback.java");
 	}
 	/**
 	 * Login to existing account, LoadUp Mini Player with an artist. Maximize mini Player to Full Size. Minimize Full Size. Verify the controls.
@@ -276,13 +272,7 @@ public class TestPlayback extends TestRoot {
 		Errors miniPlayerControls = miniPlayer.verifyControls();
 		Assert.assertTrue("Mini player control issues:\n" + miniPlayerControls, miniPlayerControls.noErrors());
 		
-		// Log out and verify that we can still play radio
-		//sideNavBar.logout(); <-testing if I can take this out. 
-		// Login gate should now be visible
-		String loginPageErrors = splashPage.whatIsntVisible();
-		boolean testResult = didPass(loginPageErrors);
-		Assert.assertTrue("Login gate wasn't visible after logout.", testResult);
-		consoleLogEnd(before, testResult,  "Tested Live Radio Playback in TestPlayback.java");
+		consoleLogEnd(before, miniPlayerControls.noErrors(),  "Tested Live Radio Playback in TestPlayback.java");
 	}
 	
 	/**

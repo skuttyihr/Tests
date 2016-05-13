@@ -235,6 +235,7 @@ public class GenrePage extends Page {
 	
 	
 	public String verifyGenres(){
+		System.out.println("Verifying genres.");
 		List<String> genreList = new ArrayList<String>();
 		StringBuilder missingGenres = new StringBuilder();
 		// Add all genres
@@ -276,6 +277,7 @@ public class GenrePage extends Page {
 	}
 	
 	public boolean improveRecommendations(){
+		System.out.println("Testing Improve Recommendations.");
 		int maxSwipes = 10;
 		while(maxSwipes > 0 && !isVisible(improveRecommendationsButton)){
 			maxSwipes--;

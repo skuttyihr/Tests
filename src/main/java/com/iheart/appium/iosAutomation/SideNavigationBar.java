@@ -130,6 +130,7 @@ public class SideNavigationBar extends Page {
 	}
 
 	public void logout() {
+		System.out.println("Logging out through SideNavBar");
 		gotoSettings();
 		loggedInAs.click();
 		logout.click();
