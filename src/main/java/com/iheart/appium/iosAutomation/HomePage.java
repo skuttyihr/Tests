@@ -22,6 +22,9 @@ public class HomePage extends Page {
 	// Use the getListItem(int x) method to get these items. 
 	private final String listItemXpath = "//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell[XXXXX]";
 	
+	@iOSFindBy(accessibility = "Add to Favorites") public IOSElement addToFavorites;
+	@iOSFindBy(accessibility = "Not for Me") public IOSElement notForMe;
+	
 	
 	private IOSElement getFavorite(){
 		IOSElement favorite = null;
@@ -195,24 +198,25 @@ public class HomePage extends Page {
 		return toggleListItemFavorites(x, false);
 	}
 	public String toggleListItemFavorites(int x, boolean removing){
+		System.out.println("Toggling favorites...");
 		Errors err = new Errors();
 		IOSElement item = getListItem(x);
 		if(item != null){
 			// Expose the hidden buttons with a swipe
 			swipeOnItem(item, LEFT);
-			IOSElement add = waitForVisible(driver, By.name("Add to Favorites"), 1);
-			if(!isVisible(add)){
+			// TODO we will fix this once the format for it changes
+			if(!isVisible(addToFavorites)){
 				String message = toggleFavorites(item, x, removing);
 				err.add(message);
 			}
 			else{
-				add.click();
+				addToFavorites.click();
 			}
 		}
 		else{
 			err.add("Selected item was not visible on the screen.");
 		}
-		
+		System.out.println("Done toggling favorites...");
 		return err.getErrors();
 	}
 	
