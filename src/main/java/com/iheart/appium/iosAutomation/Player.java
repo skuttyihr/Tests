@@ -13,8 +13,8 @@ public class Player extends Page {
 	@iOSFindBy(accessibility = "LivePlayerView") public IOSElement radioPlayerView;
 	@iOSFindBy(accessibility = "CustomTalkPlayerView") public IOSElement podcastPlayerView;
 	// Player for live radio
-	// @iOSFindBy(accessibility="Back") public IOSElement back;
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIANavigationBar[1]/UIAButton[1]") public IOSElement back;
+	@iOSFindBy(accessibility="NavBarBackButton") public IOSElement back;
+	//@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIANavigationBar[1]/UIAButton[1]") public IOSElement back;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIANavigationBar[1]/UIAStaticText[1]") public IOSElement stationLabel;
 	@iOSFindBy(accessibility = "Share") public IOSElement share;
 	@iOSFindBy(accessibility = "Favorite") public IOSElement favorite;
@@ -99,7 +99,7 @@ public class Player extends Page {
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[1]") public IOSElement lyricsSong;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[2]") public IOSElement lyricsArtist;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAScrollView[2]/UIAWebView[1]") public IOSElement lyricsView;
-	@iOSFindBy(accessibility="Back") public IOSElement moreBack;
+	@iOSFindBy(accessibility="NavBarBackButton") public IOSElement moreBack;
 	// Artist bio elements
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[1]") public IOSElement artistBioArtist;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAScrollView[2]/UIAWebView[1]") public IOSElement artistBioBio; 

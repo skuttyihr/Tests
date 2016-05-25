@@ -145,16 +145,30 @@ public class Page extends TestRoot{
 	}
 	
 	public void getBack(){
+		System.out.println("Page.getBack()");
 		try{
 			player.back.click();
 		}
-		catch(Exception e){}
+		catch(Exception e){
+			System.out.println("catch exception in getBack1 e" + e.getStackTrace());
+		}
+		/*try{
+			IOSElement backButton = findElement(driver, By.xpath("UIAApplication[1]/UIAWindow[1]/UIANavigationBar[1]/UIAButton[2]"));
+			backButton.click();
+		}
+		catch(Exception e){
+			System.out.println("Attempting to use Xpath second button to click back. " + e.getStackTrace());
+		}
 		try{
 			waitForVisible(driver, By.name("Back"), 1).click();
-		}catch(Exception e){}
+		}catch(Exception e){
+			System.out.println("catch exception in getBack2  " + e.getStackTrace());
+		}
 		try{
 			search.cancel.click();
-		}catch(Exception e){}
+		}catch(Exception e){
+			System.out.println("catch exception in getBack3  " + e.getStackTrace());
+		}*/
 	}
 	
 	/**

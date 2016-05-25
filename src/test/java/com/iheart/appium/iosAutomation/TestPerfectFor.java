@@ -1,5 +1,7 @@
 package com.iheart.appium.iosAutomation;
 
+import java.time.LocalTime;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -14,12 +16,12 @@ public class TestPerfectFor extends TestRoot{
 	@After
 	public void after() {
 		// Remove favorites
-		homePage.removeAllFavorites();
 		TestRoot.tearDown();
 	}
 	
 	@Test
 	public void testPlayingFromPerfectFor(){
+		LocalTime before = consoleLogStart("testPerfectFor() - Login, select Perfect For categories, doFavorite, getStationTitle, checkCategoryLabel, selectCategory, isStationAFavorite ");
 		// plays a few stations from different categories for perfect for tests
 		loginPage.loginWithoutVerifying();
 		// Select a station from perfect for
@@ -34,8 +36,10 @@ public class TestPerfectFor extends TestRoot{
 		Assert.assertTrue("Could not get station title.", strGood(favoritedStation));
 		// minimize, select another station, verify it's in mini player, maximize
 		player.minimizePlayer();
-		perfectFor.getBack();
-		playErrors = perfectFor.selectPerfectForCategories(3, 4);
+		System.out.println("player.back.click()");
+		player.back.click();
+		//perfectFor.getBack();
+		playErrors = perfectFor.selectPerfectForCategories(3, 3);  //was 3, 4
 		Assert.assertTrue("Could not play a station from perfect for." + playErrors, didPass(playErrors));
 		// Go back to check labels
 		perfectFor.getBack();
@@ -54,6 +58,7 @@ public class TestPerfectFor extends TestRoot{
 		Assert.assertTrue("Station: " + favoritedStation + " was not a favorite.", homePage.isStationAFavorite(favoritedStation) > 0);
 		// Assert that we can search for Perfect For and the link will bring us to the perfect for page
 		search.searchForStation("Perfect For");
-		Assert.assertTrue("Cold not get to perfect for from search", isVisible(perfectFor.perfectForHeading));
+		Assert.assertTrue("Could not get to perfect for from search", isVisible(perfectFor.perfectForHeading));
+		consoleLogEnd(before, isVisible(perfectFor.perfectForHeading),  "Tested testPerfectFor() in TestPerfectFor.java.");
 	}
 }
