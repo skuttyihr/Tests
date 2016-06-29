@@ -1,21 +1,39 @@
 package com.iheart.appium.iosAutomation;
 
-import io.appium.java_client.pagefactory.*;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import io.appium.java_client.ios.*;
-
 import org.openqa.selenium.support.FindBy;
+
+import io.appium.java_client.ios.IOSDriver;
+import io.appium.java_client.ios.IOSElement;
+import io.appium.java_client.pagefactory.iOSFindBy;
 
 public class LoginPage extends Page {
 
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[1]/UIATextField[1]") public IOSElement userName;
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[2]/UIASecureTextField[1]") public IOSElement password;
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAButton[2]") public IOSElement logInFormButton;
-//	@iOSFindBy(accessibility = "Back") public IOSElement backButton;
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIANavigationBar[1]/UIAButton[2]") public IOSElement backButton;
 	
+	@iOSFindBy(accessibility = "IHRAuthorizationView-EmailAddress-TextField") public IOSElement IHRAuthorizationViewEmailAddressTextField;
+	@iOSFindBy(accessibility = "IHRAuthorizationView-Password-TextField")     public IOSElement IHRAuthorizationViewPasswordTextField;
+	@iOSFindBy(accessibility = "IHRAuthorizationView-EmailAddressCell-UITableViewCell") public IOSElement IHRAuthorizationViewEmailAddressCell;
+	@iOSFindBy(accessibility = "IHRAuthorizationView-PasswordCell-UITableViewCell")     public IOSElement IHRAuthorizationViewPasswordCell;
+	@iOSFindBy(accessibility = "IHRAuthorizationView-LogInAuthButton-UIButton")  public IOSElement IHRAuthorizationViewLogInAuthButtonUIButton;
+	@iOSFindBy(accessibility = "IHRAuthorizationView-OrConnectWithLabel-UILabel") public IOSElement IHRAuthorizationViewOrConnectWithLabelUILabel;
+	@iOSFindBy(accessibility = "IHRAuthorizationView-SocialContainer-UIView") public IOSElement IHRAuthorizationViewSocialContainerUIView;
+	@iOSFindBy(accessibility = "IHRAuthorizationView-FacebookButton-UIButton") public IOSElement IHRAuthorizationViewFacebookButtonUIButton;
+	@iOSFindBy(accessibility = "IHRAuthorizationView-GoogleButton-UIButton")   public IOSElement IHRAuthorizationViewGoogleButtonUIButton;
+	@iOSFindBy(accessibility = "IHRAuthorizationView-ForgotPasswordButton-UIButton") public IOSElement IHRAuthorizationViewForgotPasswordButtonUIButton;
+	@iOSFindBy(accessibility = "NavBarBackButton") public IOSElement NavBarBackButton;
+
+	//old xpath
+	//@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[1]/UIATextField[1]") public IOSElement userName;
+	//@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAElement[1]/UIATableView[1]/UIATableCell[1]/UIATextField[1]/UIATextField[1]") public IOSElement userName;
+	
+	//old xpath
+	//@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[2]/UIASecureTextField[1]") public IOSElement password;
+	//@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAElement[1]/UIATableView[1]/UIATableCell[2]/UIASecureTextField[1]/UIASecureTextField[1]") public IOSElement password;
+	
+	//@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAButton[2]") public IOSElement logInFormButton;
+//	@iOSFindBy(accessibility = "Back") public IOSElement backButton;
+	//@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIANavigationBar[1]/UIAButton[2]") public IOSElement backButton;
 	@iOSFindBy(accessibility = "Facebook") private WebElement facebookButton;
 
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[2]/UIAScrollView[1]/UIAScrollView[1]/UIAWebView[1]/UIATextField[1]") private WebElement fbEmail;
@@ -43,8 +61,8 @@ public class LoginPage extends Page {
 	@iOSFindBy(accessibility = "Allow") private WebElement allowButton;
 
 	// for verification: Maybe shall move nav bar stuff up to the Page.java?
-	@iOSFindBy(accessibility = "For You")
-	private WebElement forYou;
+	//@iOSFindBy(accessibility = "For You")
+	//private WebElement forYou;
 
 	public LoginPage() {
 		super();
@@ -78,6 +96,56 @@ public class LoginPage extends Page {
 		return loggedIn;
 	}
 	/**
+	 * If String emailAddress is null, it will use default system property email address. 
+	 * @param emailAddress
+	 */
+	public void enterLoginEmailAddress(String emailAddress){
+		IHRAuthorizationViewEmailAddressTextField.click();
+		if(emailAddress!= null){
+			IHRAuthorizationViewEmailAddressTextField.sendKeys(emailAddress);
+		}
+		else IHRAuthorizationViewEmailAddressTextField.sendKeys(IHEARTUSERNAME);
+	
+	}
+	
+	/**
+	 * If String password is null, it will use default system property password. 
+	 * @param password
+	 */
+	public void enterLoginPassword(String password){
+		IHRAuthorizationViewPasswordTextField.click();
+		if(password!= null){
+			IHRAuthorizationViewPasswordTextField.sendKeys(password);
+		}
+		else IHRAuthorizationViewPasswordTextField.sendKeys(IHEARTPASSWORD);
+	}
+	/**
+	 * Click Facebook Login Button
+	 */
+	public void clickFacebookLoginButton(){
+		IHRAuthorizationViewFacebookButtonUIButton.click();
+	}
+	
+	/**
+	 * Click Google Login Button
+	 */
+	public void clickGoogleLoginButton(){
+		IHRAuthorizationViewGoogleButtonUIButton.click();
+	}
+	/**
+	 * Click the regular Log In Auth Button. This will only appear once text has been entered into the Email Address and Password text fields above it. 
+	 */
+	public void clickLogInAuthButton(){
+		IHRAuthorizationViewLogInAuthButtonUIButton.click();
+	}
+	
+	/**
+	 * Click the Forgot your Password? button to reset your account's password. 
+	 */
+	public void clickForgotYourPasswordButton(){
+		IHRAuthorizationViewForgotPasswordButtonUIButton.click();
+	}
+	/**
 	 * Logs in without checking settings.isLoggedIn(). 
 	 * Enters userName and password and clicks Log in. 
 	 * Minimizes player, handles pop-ups.
@@ -86,11 +154,11 @@ public class LoginPage extends Page {
 	public void loginWithoutVerifying(){
 		System.out.println("about to loginWithoutVerifying()");
 		splashPage.clickLogIn();
-		waitForElementToBeVisible(userName, 5);
-		userName.sendKeys(IHEARTUSERNAME);
-		password.sendKeys(IHEARTPASSWORD);
+		waitForElementToBeVisible(IHRAuthorizationViewEmailAddressTextField, 5);
+		enterLoginEmailAddress(IHEARTUSERNAME);
+		enterLoginPassword(IHEARTPASSWORD);
 		System.out.println("Sent keys for Username and Password.");
-		logInFormButton.click();
+		clickLogInAuthButton();
 		System.out.println("Clicked Log In form button.");
 		chooseStayConnected(false);
 		player.minimizePlayer();
@@ -109,9 +177,46 @@ public class LoginPage extends Page {
 		System.out.println("Logged in without verifying");
 	}
 
+	public String stringifyElementInformation(IOSElement iosElement){
+		return "TagName=["+iosElement.getTagName()+ "] Text=["+ iosElement.getText() + "] Object:"  + iosElement.toString() ;
+	}
+	
+	public void printElementInformation(IOSElement iosElement){
+		System.out.println("Text=["+ iosElement.getText() + "]  TagName=["+iosElement.getTagName()+ "]  ||||||  Object:"  + iosElement.toString()) ;
+	}
+	
+	public boolean checkValuesOfElements(){
+		splashPage.clickLogIn();
+		waitForElementToBeVisible(IHRAuthorizationViewEmailAddressTextField, 5);
+		printElementInformation(IHRAuthorizationViewEmailAddressTextField);
+		printElementInformation(IHRAuthorizationViewPasswordTextField);
+		printElementInformation(IHRAuthorizationViewEmailAddressCell);
+		printElementInformation(IHRAuthorizationViewPasswordCell);
+		printElementInformation(IHRAuthorizationViewLogInAuthButtonUIButton);
+		printElementInformation(IHRAuthorizationViewOrConnectWithLabelUILabel);
+		printElementInformation(IHRAuthorizationViewSocialContainerUIView);
+		printElementInformation(IHRAuthorizationViewFacebookButtonUIButton);
+		printElementInformation(IHRAuthorizationViewGoogleButtonUIButton);
+		printElementInformation(IHRAuthorizationViewForgotPasswordButtonUIButton);
+		printElementInformation(NavBarBackButton);
+
+		enterLoginEmailAddress("test66@gmail.com");
+		enterLoginPassword("test");
+
+		sleep(5000);
+		clickLogInAuthButton();
+		chooseStayConnected(false);
+		sleep(5000);
+		if(HomePage.forYouTab.isDisplayed()){
+			System.out.println("For You Tab on Home is displayed- Log In worked!");
+			return true;
+		}
+		return false;
+	}
 	public boolean loginViaFacebook() {
 		splashPage.clickLogIn();
-		facebookButton.click();
+		waitForElementToBeVisible(IHRAuthorizationViewEmailAddressTextField, 5);
+		clickFacebookLoginButton();
 		
 		//Sleep to allow web to display, can't wait because context needs to switch
 		TestRoot.sleep(10000);
@@ -184,7 +289,8 @@ public class LoginPage extends Page {
 
 	public boolean loginViaGoogle() {
 		splashPage.clickLogIn();
-		googleButton.click();
+		waitForElementToBeVisible(IHRAuthorizationViewEmailAddressTextField, 5);
+		clickGoogleLoginButton();
 
 		if(switchToWebContext()){
 			googleEmail.sendKeys(GOOGLEUSERNAME);
@@ -246,7 +352,7 @@ public class LoginPage extends Page {
 	}
 	
 	public void tapBack(){
-		backButton.click();
+		NavBarBackButton.click();
 	}
 
 }
