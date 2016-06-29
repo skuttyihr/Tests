@@ -1,14 +1,13 @@
 package com.iheart.appium.iosAutomation;
 
 
-import org.junit.Test;
-import org.junit.Before;
-
 import java.time.LocalTime;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.rules.TestName;
 
 
@@ -240,7 +239,7 @@ public class TestPlayback extends TestRoot {
 	 */
 	
 	@Test
-	public void testLiveRadioPlayback() throws Exception {
+	public void testLiveRadioPlayback() {
 		LocalTime before = consoleLogStart("Testing Live Radio Playback features :"+ name.getMethodName());
 		Assert.assertTrue("Was not able to login", loginPage.login());
 		// Play a live radio station and verify it.
@@ -279,6 +278,7 @@ public class TestPlayback extends TestRoot {
 	 * Test Additional Info
 	 * Play a custom station, verifyAllMoreInfoItems, closeMoreInfo, 
 	 * gotoHomePage, searchForPodCast, searchForStation, verifyAllMoreInfoItems again
+	 * 
 	 */
 	@Test
 	 //Can't exit Lyrics view for some reason. Artist Bio button was not visible, Share option was not visible, Option to buy song was not present. 
