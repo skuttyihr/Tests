@@ -1,14 +1,14 @@
 package com.iheart.appium.iosAutomation;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.support.PageFactory;
+
 //import org.apache.log4j.Logger;
 
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
-
-import io.appium.java_client.pagefactory.*;
-
-import org.openqa.selenium.By;
-import org.openqa.selenium.support.PageFactory;
+import io.appium.java_client.pagefactory.AppiumFieldDecorator;
+import io.appium.java_client.pagefactory.iOSFindBy;
 
 public class Page extends TestRoot{
 
@@ -150,7 +150,7 @@ public class Page extends TestRoot{
 			player.back.click();
 		}
 		catch(Exception e){
-			System.out.println("catch exception in getBack1 e" + e.getStackTrace());
+			System.out.println("caught exception in getBack()");
 		}
 		/*try{
 			IOSElement backButton = findElement(driver, By.xpath("UIAApplication[1]/UIAWindow[1]/UIANavigationBar[1]/UIAButton[2]"));
