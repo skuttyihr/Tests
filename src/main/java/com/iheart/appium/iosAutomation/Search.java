@@ -78,6 +78,7 @@ public class Search extends Page {
 	 * @return
 	 */
 	public boolean searchForStationWithoutSelecting(String searchTerm){
+		System.out.println("searchForStationWithoutSelecting( "+ searchTerm + ").");
 		getToSearch();
 		if(searchTerm == null || searchTerm.length() == 0){
 			searchField.clear();

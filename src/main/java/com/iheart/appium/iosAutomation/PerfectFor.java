@@ -60,6 +60,7 @@ public class PerfectFor extends Page {
 	}
 	
 	private IOSElement searchForGeneric(String name, String xpath){
+		System.out.println("searchForGeneric("+name+") using xpath: " + xpath);
 		IOSElement listItem = null;
 		if (driver.getPageSource().contains(name)){
 			List<IOSElement> listItems = findElements(driver, By.xpath(xpath));
@@ -84,6 +85,7 @@ public class PerfectFor extends Page {
 	}
 	
 	public IOSElement searchForListLabel(String label){
+		System.out.println("searchForListLabel("+ label + ") - looks for label and returns IOSElement.");
 		
 		// If the exact name has been passed in, we don't even have to search much
 		IOSElement testName = findElement(driver, By.name(label));
@@ -147,6 +149,7 @@ public class PerfectFor extends Page {
 	// Behavior
 	
 	public String selectPerfectForCategories(int firstCategory, int station){
+		System.out.println("selectPerfectForCategories : firstCategory[" + firstCategory + "] Station: [" + station + "].");
 		Errors err = new Errors();
 		sideNavBar.gotoPerfectFor();
 		IOSElement first = getPFListItem(firstCategory);
@@ -177,6 +180,7 @@ public class PerfectFor extends Page {
 	}
 	
 	public String checkCategoryLabel(){
+		System.out.println("checkCategoryLabel() - get current Time and determine dayOfWeek and timeOfDay for PerfectFor");
 		Errors err = new Errors();
 		
 		Date today = new Date();
@@ -228,6 +232,7 @@ public class PerfectFor extends Page {
 	}
 	
 	public boolean selectCategory(String name){
+		System.out.println("selectCategory(" + name + ") - Searches for category, then clicks it and checks Perfect For Substation Heading");
 		IOSElement item = searchForCategory(name);
 		if(item != null){
 			item.click();

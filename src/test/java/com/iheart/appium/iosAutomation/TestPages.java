@@ -1,5 +1,7 @@
 package com.iheart.appium.iosAutomation;
 
+import java.time.LocalTime;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -27,6 +29,7 @@ public class TestPages extends TestRoot {
 	 * 
 	 */
 	public void testForLogoAndTitleOnPages(){
+		LocalTime before = consoleLogStart("Testing testForLogoAndTitleOnPages()- checks Logos and Titles for MyStations, Local Radio, Live Radio, Live Artist Page, Podcasts Page, Perfect  For, Listening History, Alarm, & Sleep");
 		loginPage.loginWithoutVerifying();
 		// Verify each page
 		Assert.assertTrue("Logo was not visible", isVisible(Page.iheartradio_logo_full));
@@ -68,6 +71,7 @@ public class TestPages extends TestRoot {
 		Assert.assertTrue("Sleep page should not have logo", !isVisible(Page.iheartradio_logo_full));
 		Assert.assertTrue("Sleep Timer page did not have title of 'Sleep Timer'", 
 				isVisible(findElement(driver, By.name("Sleep Timer"))));
+		consoleLogEnd(before, true,  "Tested testForLogoAndTitleOnPages()"); 
 	}
 	
 }

@@ -98,6 +98,7 @@ public class TestRoot {
 		// Load up the properties file
 		Properties props = null;
 		try {
+			System.out.println("Loading properties at ios.properties.local");
 			props = loadProperties("ios.properties.local");
 		} catch (Exception e) {
 			System.out.println("Could not load properties, defaulting to system properties.");
@@ -309,7 +310,7 @@ public class TestRoot {
 			in = TestRoot.class.getClassLoader().getResourceAsStream(propFile);
 			loadedProps.load(in);
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("Properties couldn't be loaded - most likely the propFile: " + propFile + " couldn't be found.");
 		} finally {
 			in.close();
 		}
@@ -897,9 +898,11 @@ public class TestRoot {
 		Duration seconds = Duration.between(begin, LocalTime.now());
 		String result = testResult ? "Test Passed. " : "Test Failed. ";
 		System.out.println(result + endMessage + "    [ "+ seconds.getSeconds() + " seconds ]");
+	
 		
 	}
 	
+
 	// Test Watcher control
 	@Rule
 	public TestRule watcher = new TestWatcher() {

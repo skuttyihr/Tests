@@ -1,5 +1,7 @@
 package com.iheart.appium.iosAutomation;
 
+import java.time.LocalTime;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -18,16 +20,19 @@ public class TestSearch extends TestRoot {
 		TestRoot.tearDown();
 	}
 
+	/**
+	* Search for "Alt" because "Alt" could be:
+	* The band Alt-J (Trivia: Named for the delta/triangle that comes from typing Alt + J on a Mac)
+	* WFUV On-Air, a radio station, or The Alternative Project, a live station without radio
+	* Alternative Girlfriend by the Barenaked Ladies
+	* The 102.DLG Radio FM Show podcast
+	* And many more, making it good for testing every possible filter for results
+	*/
+	 
 	@Test
 	public void testHomeSearch(){
 		Assert.assertTrue("Was not able to login", loginPage.login()); // Log in so we can choose artist stations later
-		/* Search for "Alt" because "Alt" could be:
-		 * The band Alt-J (Trivia: Named for the delta/triangle that comes from typing Alt + J on a Mac)
-		 * WFUV On-Air, a radio station, or The Alternative Project, a live station without radio
-		 * Alternative Girlfriend by the Barenaked Ladies
-		 * The 102.DLG Radio FM Show podcast
-		 * And many more, making it good for testing every possible filter for results
-		 */
+	
 		Assert.assertTrue("Could not search for a term", search.searchForStationWithoutSelecting("Alt"));
 		// Assert that we can filter the search results
 		String errors = search.applyFilters();
@@ -51,10 +56,13 @@ public class TestSearch extends TestRoot {
 		Assert.assertTrue(searchSong + " was not found in results.", search.isResultListed(searchSong));
 	}
 	
+	/**
+	 * Tests live stations can be searched for by name, keyword, and frequency.
+	 */
 	@Test
 	public void testSearchForLiveStation(){
-		// Tests live stations can be searched for by name, keyword, and frequency.
-		// log in, as anonymous use will be phased out
+		LocalTime before = consoleLogStart("testSearchForLiveStation - tests name, keyword, and frequency");
+		// log in
 		loginPage.loginWithoutVerifying();
 		// Get to the live radio page via sidebar and enter zip if requested
 		sideNavBar.getToAndEnterZip("10013");

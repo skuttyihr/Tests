@@ -16,13 +16,21 @@ public class SplashPage extends Page {
 	}
 	
 	// Elements
+	
 	@iOSFindBy(accessibility = "onboarding_logo") public IOSElement onboardingLogo;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[1]") public IOSElement onboardingText;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[2]") public IOSElement additionalOnboardingText;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAPageIndicator[1]") public IOSElement splashPageIndicator;
 	@iOSFindBy(accessibility = "Log In") public IOSElement logIn;
 	@iOSFindBy(accessibility = "Create Account") public IOSElement createAccount;
-	
+	/*
+	@iOSFindBy(accessibility = "SplashPageOnboardingLogoUIAImage") public IOSElement onboardingLogo;
+	@iOSFindBy(accessibility = "SplashPageTitleLabel") public IOSElement onboardingText;
+	@iOSFindBy(accessibility = "SplashPageDescriptionLabel") public IOSElement additionalOnboardingText;
+	@iOSFindBy(accessibility = "SplashPagePageControl") public IOSElement splashPageIndicator;
+	@iOSFindBy(accessibility = "SplashPageLogInButton") public IOSElement logIn;
+	@iOSFindBy(accessibility = "SplashPageSignUpButton") public IOSElement createAccount;
+	*/
 	// Behavioral and helper methods
 	public String getOnBoardingText(){
 		String onboardingTextString = null;
@@ -95,8 +103,8 @@ public class SplashPage extends Page {
 	public boolean clickLogIn(){
 		waitForElementToBeVisible(logIn, 10);
 		logIn.click();
-		waitForElementToBeVisible(loginPage.userName, 2);
-		return isVisible(loginPage.userName);
+		waitForElementToBeVisible(loginPage.IHRAuthorizationViewEmailAddressTextField, 2);
+		return isVisible(loginPage.IHRAuthorizationViewEmailAddressTextField);
 	}
 	
 	public boolean clickCreateAccount(){

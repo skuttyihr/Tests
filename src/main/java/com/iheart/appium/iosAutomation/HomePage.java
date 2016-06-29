@@ -18,12 +18,13 @@ public class HomePage extends Page {
 		super(_driver);
 	}
 
+	@iOSFindBy(accessibility = "Add to Favorites") public IOSElement addToFavorites;
+	@iOSFindBy(accessibility="For You") public static IOSElement forYouTab;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[3]/UIAStatusBar[1]") public IOSElement statusBar;
+	@iOSFindBy(accessibility="Search") public IOSElement searchButton;
+	
 	// Use the getListItem(int x) method to get these items. 
 	private final String listItemXpath = "//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell[XXXXX]";
-	
-	@iOSFindBy(accessibility = "Add to Favorites") public IOSElement addToFavorites;
-	@iOSFindBy(accessibility = "Not for Me") public IOSElement notForMe;
 	
 	
 	private IOSElement getFavorite(){
@@ -201,15 +202,18 @@ public class HomePage extends Page {
 		System.out.println("toggleListItemFavorites() - Swipes item to left, Adds to Favorites if visible");
 		Errors err = new Errors();
 		IOSElement item = getListItem(x);
-		if(item != null){
+			if(item != null){
 			// Expose the hidden buttons with a swipe
 			swipeOnItem(item, LEFT);
-			// TODO we will fix this once the format for it changes
+			IOSElement add = waitForVisible(driver, By.name("Add to Favorites"), 1);
+			waitForVisible()
 			if(!isVisible(addToFavorites)){
+				System.out.println("addToFavorites is not visible - trying to toggleFavorites()");
 				String message = toggleFavorites(item, x, removing);
 				err.add(message);
 			}
 			else{
+				System.out.println("addToFavorites.click()");
 				addToFavorites.click();
 			}
 		}
@@ -408,10 +412,11 @@ public class HomePage extends Page {
 	 * Return the item number, so we can use it later, if need be
 	 */
 	public int isStationAFavorite(String artist){
-		System.out.print("Seeing if artist: "+ artist + " is a favorite. foundStation item number is: ");
+		System.out.println("Seeing if artist: '"+ artist + "' is a favorite.");
 		int foundStation = -1;
 		homePage.gotoMyStations();
 		if(!driver.getPageSource().contains(artist)){
+			System.out.println("foundStation is: "+ foundStation);
 			return foundStation;
 		}
 		
@@ -436,11 +441,12 @@ public class HomePage extends Page {
 				i++;
 			}
 		}
-		
+		System.out.println("foundStation is: "+ foundStation);
 		return foundStation;
 	}
 	
 	public boolean removeFavorite(int itemToRemove){
+		System.out.println("removeFavorite("+ itemToRemove + ")");
 		boolean removedFavorite = false;
 		// First assert that it is a favorite
 		IOSElement favorites = waitForVisible(driver, By.name("Favorite Stations"), 10);
