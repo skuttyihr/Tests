@@ -29,10 +29,10 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import io.appium.java_client.MobileBy;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
 
@@ -368,14 +368,14 @@ public class TestRoot {
 	public static IOSElement find(IOSDriver<IOSElement> d, String locator){
 		// Guess the locator, returns the element
 		if(locator.startsWith("//")){
-			return findElement(d, By.xpath(locator));
+			return findElement(d, MobileBy.xpath(locator));
 		}
 		else{
 			// name or ID?
-			IOSElement testEle = findElement(d, By.name(locator));
+			IOSElement testEle = findElement(d, MobileBy.AccessibilityId(locator));
 			if(testEle == null){
-				// try ID
-				testEle = findElement(d, By.id(locator));
+				// try Name
+				testEle = findElement(d, MobileBy.name(locator));
 			}
 			return testEle; // null if we found nothing
 		}
@@ -393,10 +393,9 @@ public class TestRoot {
 		}
 		return e;
 	}
-	
+
 	public static List<IOSElement> findElements(IOSDriver<IOSElement> d, By by){
 		List<IOSElement> foundElements = null;
-		
 		try{
 			d.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
 			foundElements = d.findElements(by);
@@ -434,19 +433,19 @@ public class TestRoot {
 	 */
 	public static By find(String locator, String method){
 		if(method.equalsIgnoreCase("name")){
-			return By.name(locator);
+			return MobileBy.name(locator);
 		}
 		else if(method.equalsIgnoreCase("name")){
-			return By.id(locator);
+			return MobileBy.id(locator);
 		}
 		else if(method.equalsIgnoreCase("xpath")){
-			return By.xpath(locator);
+			return MobileBy.xpath(locator);
 		}
 		else if(method.toLowerCase().contains("css")){
-			return By.cssSelector(locator);
+			return MobileBy.cssSelector(locator);
 		}
 		else{
-			return By.className(locator);
+			return MobileBy.className(locator);
 		}
 	}
 	
@@ -723,30 +722,18 @@ public class TestRoot {
 			}
 			timeLeftMil -= 1000; // Takes about a second each time
 		}
-		
-		timeoutInSec = (timeLeftMil / 1000);
-		if(timeLeftMil >= 500){
-			timeoutInSec = 1;
-		}
 	
 		IOSElement returnElement = null;
-		WebDriverWait wait = new WebDriverWait(d, timeoutInSec);
 		try{
-			returnElement = (IOSElement) wait.until(ExpectedConditions.elementToBeClickable(d.findElement(by)));
+			returnElement = findElement(d, by);
 		}
-		catch(Exception e){
-			// Attempt to grab it anyway
-			try{
-				returnElement = (IOSElement) d.findElement(by);
-			}
-			catch(Exception e1){}
-		}
+		catch(Exception e){}
 		return returnElement;
 	}
 	
-	public static void waitForElementToBeVisible(IOSElement ele, int timeInSeconds){
+	public static boolean waitForElementToBeVisible(IOSElement ele, int timeInSeconds){
 		if(isVisible(ele)){
-			timeInSeconds = 0; // Already visible
+			return true; // Already visible
 		}
 		long timeLeftMil = timeInSeconds * 1000;
 		while(timeLeftMil > 0){
@@ -757,28 +744,16 @@ public class TestRoot {
 			timeLeftMil -= 1000;
 		}
 		
-		timeInSeconds = (int) (timeLeftMil / 1000);
-		if(timeLeftMil >= 500){
-			timeInSeconds = 1;
-		}
-		if(timeInSeconds >= 1){
-			WebDriverWait wait = new WebDriverWait(driver, timeInSeconds);
-			try{
-				wait.until(ExpectedConditions.elementToBeClickable(ele));
-			}
-			catch(Exception e){
-				return;
-			}
-		}
+		return isVisible(ele);
 	}
 	
-	public static void waitForElementToBeEnabled(IOSElement ele, int maxWaitTimeSeconds){
+	public static boolean waitForElementToBeEnabled(IOSElement ele, int maxWaitTimeSeconds){
 		if(!isVisible(ele)){
 			waitForElementToBeVisible(ele, maxWaitTimeSeconds);
 			maxWaitTimeSeconds = 1;
 		}
 		if(ele.isEnabled()){
-			return;
+			return true;
 		}
 		
 		while(maxWaitTimeSeconds > 0){
@@ -794,6 +769,10 @@ public class TestRoot {
 				driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 			}
 		}
+		if(!isVisible(ele)){
+			return false;
+		}
+		return ele.isEnabled();
 	}
 	
 	public static boolean waitForNotVisible(IOSDriver<IOSElement> d, By by, int maxWaitTimeSeconds){

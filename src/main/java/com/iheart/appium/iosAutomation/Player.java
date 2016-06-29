@@ -297,12 +297,14 @@ public class Player extends Page {
 	
 	// This happens when you thumbup a already thumbuped song track
 	private void handleActionPopup() {
+		System.out.println("Handling action based popup");
 		try {
 			waitForVisible(driver, By.name("No Thanks"), 3).click();
 		} catch (Exception e) {}
 		try {
 			waitForVisible(driver, By.name("Okay"), 1).click();
 		} catch (Exception e) {}
+		System.out.println("Done handling action based popup");
 	}
 
 		
@@ -380,15 +382,18 @@ public class Player extends Page {
 	}
 
 	public boolean doFavorite() { // if faved before, its value is 1;
+		boolean favorited = false;
 		if (!isFavorite()){
 			if(isVisible(favorite)){
-				favorite.click();
+				favorite.getLocation().getX(); //TODO crazy fix
+				favorite.click(); // TODO Crashing here
 				System.out.println("Favorite Heart clicked.");
 				handleActionPopup();
+				favorited = favorite.getAttribute("value").equals("1");
 			}
 		}
 		// Verify that icon is filled
-		return favorite.getAttribute("value").equals("1");
+		return favorited;
 	}
 
 	public boolean unFavorite(){

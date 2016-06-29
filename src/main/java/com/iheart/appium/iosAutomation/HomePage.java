@@ -11,8 +11,6 @@ import io.appium.java_client.pagefactory.iOSFindBy;
 
 public class HomePage extends Page {
 
-	
-	
 	public HomePage() {
 		super();
 	}
@@ -28,10 +26,7 @@ public class HomePage extends Page {
 	// Use the getListItem(int x) method to get these items. 
 	private final String listItemXpath = "//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell[XXXXX]";
 	
-
-	public void clickSearchButton(){
-		searchButton.click();
-	}
+	
 	private IOSElement getFavorite(){
 		IOSElement favorite = null;
 		for(int i = 1; i < 4; i++){
@@ -207,11 +202,11 @@ public class HomePage extends Page {
 		System.out.println("toggleListItemFavorites() - Swipes item to left, Adds to Favorites if visible");
 		Errors err = new Errors();
 		IOSElement item = getListItem(x);
-		if(item != null){
+			if(item != null){
 			// Expose the hidden buttons with a swipe
 			swipeOnItem(item, LEFT);
-			//IOSElement add = waitForVisible(driver, By.name("Add to Favorites"), 1);
-			//waitForVisible()
+			IOSElement add = waitForVisible(driver, By.name("Add to Favorites"), 1);
+			waitForVisible()
 			if(!isVisible(addToFavorites)){
 				System.out.println("addToFavorites is not visible - trying to toggleFavorites()");
 				String message = toggleFavorites(item, x, removing);
@@ -225,7 +220,7 @@ public class HomePage extends Page {
 		else{
 			err.add("Selected item was not visible on the screen.");
 		}
-		
+		System.out.println("Done toggling favorites...");
 		return err.getErrors();
 	}
 	
