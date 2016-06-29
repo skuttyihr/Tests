@@ -205,8 +205,6 @@ public class HomePage extends Page {
 			if(item != null){
 			// Expose the hidden buttons with a swipe
 			swipeOnItem(item, LEFT);
-			IOSElement add = waitForVisible(driver, By.name("Add to Favorites"), 1);
-			waitForVisible()
 			if(!isVisible(addToFavorites)){
 				System.out.println("addToFavorites is not visible - trying to toggleFavorites()");
 				String message = toggleFavorites(item, x, removing);
