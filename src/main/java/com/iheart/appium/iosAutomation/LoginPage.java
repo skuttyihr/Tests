@@ -98,7 +98,6 @@ public class LoginPage extends Page {
 	 */
 	public void enterLoginEmailAddress(String emailAddress){
 		IHRAuthorizationViewEmailAddressTextField.click();
-		sleep(1000);
 		if(emailAddress!= null){
 			IHRAuthorizationViewEmailAddressTextField.sendKeys(emailAddress);
 		}
@@ -113,7 +112,6 @@ public class LoginPage extends Page {
 	 */
 	public void enterLoginPassword(String password){
 		IHRAuthorizationViewPasswordTextField.click();
-		sleep(1000);
 		if(password!= null){
 			IHRAuthorizationViewPasswordTextField.sendKeys(password);
 		}
@@ -210,7 +208,7 @@ public class LoginPage extends Page {
 		Page.enterZip();
 		// Dismiss stay connected popup
 		Page.handlePossiblePopUp();
-		sleep(5000);
+		waitForElementToBeVisible(HomePage.forYouTab, 5);
 		if(HomePage.forYouTab.isDisplayed()){
 			System.out.println("For You Tab on Home is displayed- Log In worked!");
 			return true;
