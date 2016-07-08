@@ -126,14 +126,12 @@ public class TestGate extends TestRoot {
 	}
 	
 	@Test
-	public void testCreateAccountLogInAndMaybeLater(){
+	public void testCreateAccountAndLogInButtons(){
 		LocalTime before = consoleLogStart("Testing testCreateAccountLogInAndMaybeLater().");
 		validateGate(true);
-		Assert.assertTrue("Could not click log in", splashPage.clickLogIn());
+		Assert.assertTrue("Could not click 'Log In' Button", splashPage.clickLogIn());
 		loginPage.tapBack();
-		Assert.assertTrue("Could not click get started", splashPage.clickCreateAccount());
-		// Assert that maybe later is no longer an element here. 
-		Assert.assertFalse("Maybe Later was visible, but it  should not be visible for new app installs", signupPage.isMaybeLaterVisible());
-		consoleLogEnd(before, true,  "Tested CreateAccountLogInAndMaybeLater in TestPlayback.java");
+		Assert.assertTrue("Could not click 'Create Account' Button", splashPage.clickCreateAccount());
+		consoleLogEnd(before, true,  "Tested CreateAccountAndLogInButtons in TestGate.java");
 	}
 }

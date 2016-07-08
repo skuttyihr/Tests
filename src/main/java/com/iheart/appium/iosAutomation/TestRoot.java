@@ -251,6 +251,13 @@ public class TestRoot {
 		// Wait for login to display
 		waitForElementToBeVisible(splashPage.onboardingLogo, 10);
 	}
+	public String stringifyElementInformation(IOSElement iosElement){
+		return "TagName=["+iosElement.getTagName()+ "] Text=["+ iosElement.getText() + "] Object:"  + iosElement.toString() ;
+	}
+	
+	public void printElementInformation(IOSElement iosElement){
+		System.out.println("Text=["+ iosElement.getText() + "]  TagName=["+iosElement.getTagName()+ "]  ||||||  Object:"  + iosElement.toString()) ;
+	}
 
 	protected static void tearDown() {
 		System.out.println("after()::Tearing down TestRoot.");

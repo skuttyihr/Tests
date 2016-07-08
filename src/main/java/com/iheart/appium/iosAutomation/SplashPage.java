@@ -103,14 +103,12 @@ public class SplashPage extends Page {
 	public boolean clickLogIn(){
 		waitForElementToBeVisible(logIn, 10);
 		logIn.click();
-		waitForElementToBeVisible(loginPage.IHRAuthorizationViewEmailAddressTextField, 2);
-		return isVisible(loginPage.IHRAuthorizationViewEmailAddressTextField);
+		return loginPage.currentlyOnLoginPage();
 	}
 	
 	public boolean clickCreateAccount(){
 		waitForElementToBeVisible(createAccount, 10);
 		createAccount.click();
-		waitForElementToBeVisible(signupPage.getCreateAccount(), 2);
-		return isVisible(signupPage.getCreateAccount());
+		return signupPage.currentlyOnSignUpPage();
 	}
 }
