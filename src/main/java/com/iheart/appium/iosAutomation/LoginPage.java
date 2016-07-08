@@ -97,6 +97,7 @@ public class LoginPage extends Page {
 	 * @param emailAddress
 	 */
 	public void enterLoginEmailAddress(String emailAddress){
+		System.out.println("enterLoginEmailAddress()");
 		IHRAuthorizationViewEmailAddressTextField.click();
 		if(emailAddress!= null){
 			IHRAuthorizationViewEmailAddressTextField.sendKeys(emailAddress);
@@ -106,11 +107,17 @@ public class LoginPage extends Page {
 		}
 	}
 	
+	public void clearLoginEmailAddress(){
+		System.out.println("clearLoginEmailAddress()");
+		IHRAuthorizationViewEmailAddressTextField.clear();
+	}
+	
 	/**
 	 * If String password is null, it will use default system property password. 
 	 * @param password
 	 */
 	public void enterLoginPassword(String password){
+		System.out.println("enterLoginPassword()");
 		IHRAuthorizationViewPasswordTextField.click();
 		if(password!= null){
 			IHRAuthorizationViewPasswordTextField.sendKeys(password);
@@ -119,10 +126,15 @@ public class LoginPage extends Page {
 			IHRAuthorizationViewPasswordTextField.sendKeys(IHEARTPASSWORD);
 		}
 	}
+	public void clearLoginPassword(){
+		System.out.println("clearLoginPassword()");
+		IHRAuthorizationViewPasswordTextField.clear();
+	}
 	/**
 	 * Click Facebook Login Button
 	 */
 	public void clickFacebookLoginButton(){
+		System.out.println("clickFacebookLoginButton()");
 		IHRAuthorizationViewFacebookButtonUIButton.click();
 	}
 	
@@ -130,12 +142,14 @@ public class LoginPage extends Page {
 	 * Click Google Login Button
 	 */
 	public void clickGoogleLoginButton(){
+		System.out.println("clickGoogleLoginButton()");
 		IHRAuthorizationViewGoogleButtonUIButton.click();
 	}
 	/**
 	 * Click the regular Log In Auth Button. This will only appear once text has been entered into the Email Address and Password text fields above it. 
 	 */
 	public void clickLogInAuthButton(){
+		System.out.println("clickLogInAuthButton()");
 		IHRAuthorizationViewLogInAuthButtonUIButton.click();
 	}
 	
@@ -143,6 +157,7 @@ public class LoginPage extends Page {
 	 * Click the Forgot your Password? button to reset your account's password. 
 	 */
 	public void clickForgotYourPasswordButton(){
+		System.out.println("clickForgotYourPasswordButton()");
 		IHRAuthorizationViewForgotPasswordButtonUIButton.click();
 	}
 	/**
@@ -354,7 +369,9 @@ public class LoginPage extends Page {
 			System.out.println("Currently on LoginPage");
 			return true;
 		}
-		else return false;
+		else{
+			return false;
+		}
 		
 	}
 	

@@ -37,9 +37,9 @@ public class SignUpPage extends Page {
 				@iOSFindBy(accessibility = "Female") private IOSElement IHRiPhoneSignUpViewFemaleButtonUIButton;
 		//UI View  with Agreement Container
 		@iOSFindBy(accessibility = "IHRiPhoneSignUpView-agreementContainer-UIView") private IOSElement IHRiPhoneSignUpViewAgreementContainerUIView;
-			@iOSFindBy(accessibility = "IHRiPhoneSignUpView-iAgreeToTheTermsLabel-UILabel") private IOSElement IHRiPhoneSignUpViewIAgreeToTheTermsLabelUILabel; //By creating an account, you also agree to our
-			@iOSFindBy(accessibility = "IHRiPhoneSignUpView-termsOfServiceButton-UIButton") private IOSElement IHRiPhoneSignUpViewTermsOfServiceButtonUIButton; //Terms of Service underlined link / button to ToS
-			@iOSFindBy(accessibility = "IHRiPhoneSignUpView-andLabel-UILabel") private IOSElement IHRiPhoneSignUpViewAndLabelUILabel; //and
+			@iOSFindBy(accessibility = "IHRiPhoneSignUpView-iAgreeToTheTermsLabel-UILabel") private IOSElement IHRiPhoneSignUpViewIAgreeToTheTermsLabelUILabel; 
+			@iOSFindBy(accessibility = "IHRiPhoneSignUpView-termsOfServiceButton-UIButton") private IOSElement IHRiPhoneSignUpViewTermsOfServiceButtonUIButton; 
+			@iOSFindBy(accessibility = "IHRiPhoneSignUpView-andLabel-UILabel") private IOSElement IHRiPhoneSignUpViewAndLabelUILabel; 
 			@iOSFindBy(accessibility = "IHRiPhoneSignUpView-privacyPolicyButton-UIButton") private IOSElement IHRiPhoneSignUpViewPrivacyPolicyButtonUIButton;
 		//LogInAuthButton / Create Account Button is only visible after the Table View elements are filled out. 
 		@iOSFindBy(accessibility = "IHRAuthorizationView-LogInAuthButton-UIButton") private IOSElement IHRAuthorizationViewLogInAuthButtonUIButton;
@@ -71,8 +71,7 @@ public class SignUpPage extends Page {
 	}
 	public void clearNewAccountEmailAddress(){
 		System.out.println("clearNewAccountEmailAddress()");
-		IHRAuthorizationViewEmailAddressTextField.click();
-		IHRAuthorizationViewEmailAddressTextField.sendKeys(" ");
+		IHRAuthorizationViewEmailAddressTextField.clear();
 	}
 	//Mutate Password Text Field
 	public void enterNewAccountPassword(String password){
@@ -87,8 +86,7 @@ public class SignUpPage extends Page {
 	}
 	public void clearNewAccountPassword(){
 		System.out.println("clearNewAccountPassword()");
-		IHRAuthorizationViewPasswordTextField.click();
-		IHRAuthorizationViewPasswordTextField.sendKeys(" ");
+		IHRAuthorizationViewPasswordTextField.clear();
 	}
 	//Mutate Zip Code Text Field
 	public void enterNewAccountZipcode(String zipcode){
@@ -103,8 +101,7 @@ public class SignUpPage extends Page {
 	}
 	public void clearNewAccountZipcode(){
 		System.out.println("clearNewAccountZipcode()");
-		IHRiPhoneSignUpViewZipCodeTextFieldUITextField.click();
-		IHRiPhoneSignUpViewZipCodeTextFieldUITextField.sendKeys(" ");
+		IHRiPhoneSignUpViewZipCodeTextFieldUITextField.clear();
 	}
 	
 	//Mutate Birth Year Text Field
@@ -120,8 +117,7 @@ public class SignUpPage extends Page {
 	}
 	public void clearNewAccountBirthYear(){
 		System.out.println("clearNewAccountBirthYear()");
-		IHRiPhoneSignUpViewBirthYearTextFieldUITextField.click();
-		IHRiPhoneSignUpViewBirthYearTextFieldUITextField.sendKeys(" ");
+		IHRiPhoneSignUpViewBirthYearTextFieldUITextField.clear();
 	}
 	
 	public void clickMaleGenderButton(){
@@ -209,6 +205,8 @@ public class SignUpPage extends Page {
 		enterNewAccountEmailAddress(null);
 		enterNewAccountPassword(null);
 		enterNewAccountZipcode(null);
+		clearNewAccountZipcode();
+		enterNewAccountZipcode(null);
 		enterNewAccountBirthYear(null);
 		clickMaleGenderButton();
 		waitForCreateAccountButtonToAppear();
@@ -260,7 +258,9 @@ public class SignUpPage extends Page {
 			System.out.println("Currently on SignUpPage");
 			return true;
 		}
-		else return false;
+		else {
+			return false;
+		}
 	}
 
 	public SignUpPage() {
