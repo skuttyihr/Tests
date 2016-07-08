@@ -152,7 +152,7 @@ public class TestPlayback extends TestRoot {
 		LocalTime before = consoleLogStart("Testing Artist Radio Skip Limit :"+ name.getMethodName());
 		// Create an account so we start with a fresh number of skips
 		System.out.println("Creating an account");
-		Assert.assertTrue("Could not create a new account", signupPage.createAnAccount());
+		Assert.assertTrue("Could not create a new account", signupPage.createNewAccount());
 		System.out.println("Selecting 1 genre, and handling possible popups.");
 		genrePage.selectGenre(1);
 		Page.handlePossiblePopUp();

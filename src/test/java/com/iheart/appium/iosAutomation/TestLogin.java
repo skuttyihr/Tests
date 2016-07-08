@@ -1,9 +1,6 @@
 package com.iheart.appium.iosAutomation;
 
-
-
 import java.time.LocalTime;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -11,8 +8,6 @@ import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
-import org.junit.rules.TestRule;
-import org.junit.rules.TestWatcher;
 
 public class TestLogin extends TestRoot {
 	
@@ -21,14 +16,13 @@ public class TestLogin extends TestRoot {
 	
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		setup();
 	}
 
 	@After
-	public void after() throws Exception {
-		
-		TestRoot.tearDown();
+	public void after(){
+		tearDown();
 	}
 	
         // Can't always switch context, Appium bug
