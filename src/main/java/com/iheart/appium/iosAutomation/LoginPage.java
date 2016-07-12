@@ -19,8 +19,8 @@ public class LoginPage extends Page {
 	@iOSFindBy(accessibility = "NavBarBackButton") private IOSElement NavBarBackButton;
 	@iOSFindBy(xpath="//UIAApplication[1]/UIAWindow[1]/UIANavigationBar[1]/UIAStaticText[2]") private IOSElement NavBarTitle;
 	//Main container contains Email, Password, Log In and Forgot your password?
-	
 	@iOSFindBy(accessibility = "IHRiPhoneLoginView-MainContainer-UIView") private IOSElement IHRiPhoneLoginViewMainContainerUIView;
+	    //TableView contains Email and Password Cells and their TextFields
 		@iOSFindBy(accessibility = "IHRAuthorizationView-TableView-UITableView") private IOSElement IHRAuthorizationViewTableViewUITableView;
 			@iOSFindBy(accessibility = "IHRAuthorizationView-EmailAddress-UITableViewCell") private IOSElement IHRAuthorizationViewEmailAddressCell;
 				@iOSFindBy(accessibility = "IHRAuthorizationView-EmailAddress-TextField") private IOSElement IHRAuthorizationViewEmailAddressTextField;
@@ -168,7 +168,7 @@ public class LoginPage extends Page {
 	 */
 	public void loginWithoutVerifying(){
 		System.out.println("about to loginWithoutVerifying()");
-		splashPage.clickLogIn();
+		onboardingPage.clickOnboardingLoginButton();
 		waitForElementToBeVisible(IHRAuthorizationViewEmailAddressTextField, 5);
 		enterLoginEmailAddress(IHEARTUSERNAME);
 		enterLoginPassword(IHEARTPASSWORD);
@@ -195,8 +195,7 @@ public class LoginPage extends Page {
 
 	
 	public boolean checkValuesOfElements(){
-		splashPage.clickLogIn();
-		waitForElementToBeVisible(IHRAuthorizationViewEmailAddressTextField, 5);
+		onboardingPage.clickOnboardingLoginButton();
 		System.out.println("On LoginPage, checking elements...");
 		printElementInformation(IHRiPhoneLoginViewMainContainerUIView);
 		printElementInformation(IHRAuthorizationViewTableViewUITableView);
@@ -231,7 +230,7 @@ public class LoginPage extends Page {
 		return false;
 	}
 	public boolean loginViaFacebook() {
-		splashPage.clickLogIn();
+		onboardingPage.clickOnboardingLoginButton();
 		waitForElementToBeVisible(IHRAuthorizationViewEmailAddressTextField, 5);
 		clickFacebookLoginButton();
 		
@@ -302,8 +301,7 @@ public class LoginPage extends Page {
 	}
 
 	public boolean loginViaGoogle() {
-		splashPage.clickLogIn();
-		waitForElementToBeVisible(IHRAuthorizationViewEmailAddressTextField, 5);
+		onboardingPage.clickOnboardingLoginButton();
 		clickGoogleLoginButton();
 
 		if(switchToWebContext()){

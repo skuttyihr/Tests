@@ -70,7 +70,7 @@ public class TestRoot {
 	protected static Search search;
 	protected static DeepLink deepLink;
 	protected static PodcastsPage podcastsPage;
-	protected static SplashPage splashPage;
+	protected static OnboardingPage onboardingPage;
 	protected static GenrePage genrePage;
 	protected static MiniPlayer miniPlayer;
 	protected static SettingsPage settings;
@@ -235,7 +235,7 @@ public class TestRoot {
 		search = new Search(driver);
 		customRadio = new CustomRadio(driver);
 		deepLink = new DeepLink(driver);
-		splashPage = new SplashPage(driver);
+		onboardingPage = new OnboardingPage(driver);
 		genrePage = new GenrePage(driver);
 		miniPlayer = new MiniPlayer(driver);
 		settings = new SettingsPage(driver);
@@ -248,19 +248,28 @@ public class TestRoot {
 		// Get rid of zip code request if it displays
 		Page.enterZip();
 
-		// Wait for login to display
-		waitForElementToBeVisible(splashPage.onboardingLogo, 10);
+		// Wait for OnboardingPage to display
+		onboardingPage.waitForOnboardingPage();
 	}
 	public String stringifyElementInformation(IOSElement iosElement){
 		return "TagName=["+iosElement.getTagName()+ "] Text=["+ iosElement.getText() + "] Object:"  + iosElement.toString() ;
 	}
 	
 	public void printElementInformation(IOSElement iosElement){
-		System.out.println("Text=["+ iosElement.getText() + "]  TagName=["+iosElement.getTagName()+ "]  ||||||  Object:"  + iosElement.toString()) ;
+		String[] aId = iosElement.toString().split(">");
+		String getText = iosElement.getText();
+		if(!getText.equals("")){
+			System.out.println( aId[1] + "  text: ["+ iosElement.getText() + "]  tagName: ["+iosElement.getTagName()+ "] isDisplayed: [" +iosElement.isDisplayed() + "]" ) ;
+		}
+		else{ //Element has no Text, not printing it. 
+		System.out.println( aId[1] + " tagName: ["+iosElement.getTagName()+ "] isDisplayed: [" +iosElement.isDisplayed() + "]") ;
+		}
+	
+		//return iosElement.isDisplayed();
 	}
 
 	protected static void tearDown() {
-		System.out.println("after()::Tearing down TestRoot.");
+		System.out.println("Testcase finished. Testroot.after():: Quitting driver.");
 		if(driver != null){
 			try{
 				// If app isn't resetting through appium, try running a test with this un-commented

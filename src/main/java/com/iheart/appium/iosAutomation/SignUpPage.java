@@ -7,6 +7,7 @@ import io.appium.java_client.ios.*;
  * SignUpPage refactored by Travis Statham to use AccessibilityIdentifers that are now in ios-flagship master.
  * Elements listed in order as they are shown in app.
  * Methods added to mutate all private IOSElements
+ * This page is reached by going through onboardingPage.clickOnCreateAccountButton()
  * @author travisstatham
  *
  */
@@ -157,7 +158,7 @@ public class SignUpPage extends Page {
 	
 	public void checkAllElements(){
 		System.out.println("Checking all elements in SignUpPage to verify they are in iOS app");
-		splashPage.clickCreateAccount();
+		onboardingPage.clickOnboardingCreateAccountButton();
 		printElementInformation(NavBarBackButton);
 		printElementInformation(NavBarTitleCreateAccount);
 		//Main Container with Table View and Agreement Container
@@ -199,8 +200,7 @@ public class SignUpPage extends Page {
 	}
 	
 	public boolean createNewAccount(){
-		//Should really assume we've already clicked this button.
-		splashPage.clickCreateAccount();
+		onboardingPage.clickOnboardingCreateAccountButton();
 		System.out.println("Creating a new account with default parameters.");
 		enterNewAccountEmailAddress(null);
 		enterNewAccountPassword(null);
@@ -229,8 +229,7 @@ public class SignUpPage extends Page {
 	 * @return
 	 */
 	public boolean createNewAccount(String email, String password, String zipcode, String birthyear, String gender){
-		//Should really assume we've already clicked this button.
-		splashPage.clickCreateAccount();
+		onboardingPage.clickOnboardingCreateAccountButton();
 		System.out.println("Creating a new account[ email:"+ email + "  Pw: " + password + "  Zipcode: "+ zipcode + "  birthyear:" + "  gender:" + gender + "].");
 		enterNewAccountEmailAddress(email);
 		enterNewAccountPassword(password);
