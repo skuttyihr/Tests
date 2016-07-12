@@ -255,17 +255,17 @@ public class TestRoot {
 		return "TagName=["+iosElement.getTagName()+ "] Text=["+ iosElement.getText() + "] Object:"  + iosElement.toString() ;
 	}
 	
-	public void printElementInformation(IOSElement iosElement){
+	public boolean printElementInformation(IOSElement iosElement){
 		String[] aId = iosElement.toString().split(">");
 		String getText = iosElement.getText();
 		if(!getText.equals("")){
 			System.out.println( aId[1] + "  text: ["+ iosElement.getText() + "]  tagName: ["+iosElement.getTagName()+ "] isDisplayed: [" +iosElement.isDisplayed() + "]" ) ;
 		}
 		else{ //Element has no Text, not printing it. 
-		System.out.println( aId[1] + " tagName: ["+iosElement.getTagName()+ "] isDisplayed: [" +iosElement.isDisplayed() + "]") ;
+			System.out.println( aId[1] + " tagName: ["+iosElement.getTagName()+ "] isDisplayed: [" +iosElement.isDisplayed() + "]") ;
 		}
 	
-		//return iosElement.isDisplayed();
+		return iosElement.isDisplayed();
 	}
 
 	protected static void tearDown() {
