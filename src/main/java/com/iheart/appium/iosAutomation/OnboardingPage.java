@@ -28,10 +28,18 @@ public class OnboardingPage extends Page {
 	@iOSFindBy(accessibility = "IHROnboardingSlideView-LandscapeImageView-UIImageView") private IOSElement IHROnboardingSlideViewLandscapeImageViewUIImageView;
 	@iOSFindBy(accessibility = "IHROnboardingSlideView-PortraitImageView-UIImageView") private IOSElement IHROnboardingSlideViewPortraitImageViewUIImageView;
 	
+	/**
+	 * Gets the Title UILabel Text. This call will change as the page slides to each view. 
+	 * @return
+	 */
 	public String getTitleLabelText(){
 		return IHROnboardingViewTitleLabelUILabel.getText();
 	}
 	
+	/**
+	 * Gets the Description UILabel Text. This call will change as the page slides to each view. 
+	 * @return
+	 */
 	public String getDescriptionLabelText(){
 		return IHROnboardingViewDescriptionLabelUILabel.getText();
 	}
@@ -94,18 +102,31 @@ public class OnboardingPage extends Page {
 		return IHROnboardingViewScrollViewUIScrollView.isDisplayed();
 	}
 
+	/**
+	 * waits for IHROnboardingViewScrollViewUIScrollView to be displayed for a max of 20 seconds. 
+	 */
 	public void waitForOnboardingPage(){
 		waitForElementToBeVisible(IHROnboardingViewScrollViewUIScrollView, 20);
 	}
 	
+	/**
+	 * Checks that either the Portrait or the Landscape images are displayed.
+	 * @return 
+	 */
 	public boolean isOnboardingBackgroundImagePresent(){
 		return (IHROnboardingSlideViewPortraitImageViewUIImageView.isDisplayed() || IHROnboardingSlideViewLandscapeImageViewUIImageView.isDisplayed());
 	}
-	
+	/**
+	 * Checks if the Portrait image is Displayed. 
+	 * @return
+	 */
 	public boolean isOnboardingPortraitImagePresent(){
 		return IHROnboardingSlideViewPortraitImageViewUIImageView.isDisplayed();
 	}
-	
+	/**
+	 * Checks if the Landscape image is Displayed. 
+	 * @return
+	 */
 	public boolean isOnboardingLandscapeImagePresent(){
 		return IHROnboardingSlideViewLandscapeImageViewUIImageView.isDisplayed();
 	}
@@ -127,20 +148,20 @@ public class OnboardingPage extends Page {
 	}
 	
 	/**
-	 * Added so you know possible actions that can be done to this page.
+	 * SwipePageRight is an action that will cause a fresh Background Image, Title, and Description to appear, and change the UIPageIndicator.
 	 */
 	public void swipePageRight(){
 		pageSwipe(RIGHT);
 	}
 	/**
-	 * Added so you know possible actions that can be done to this page.
+	 * SwipePageLeft is an action that will cause a fresh Background Image, Title, and Description to appear, and change the UIPageIndicator.
 	 */
 	public void swipePageLeft(){
 		pageSwipe(LEFT);
 	}
 	
 	/**
-	 * There is a UIPageControlIndicator on the Onboarding page with 3 pages with it. By getText() the element, you can see which page we're on. 
+	 * There is a UIPageControlIndicator on the Onboarding page with 3 pages with it. 
 	 * @return
 	 */
 	public int getPageControlIndicator(){

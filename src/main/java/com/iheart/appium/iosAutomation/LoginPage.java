@@ -10,6 +10,7 @@ import io.appium.java_client.pagefactory.iOSFindBy;
  * LoginPage refactored by Travis Statham on 7/2016
  * AccessibilityIdentifiers added to ios-flagship master so we can click and access them easily. 
  * Methods added to mutate all private IOSElements
+ * loginPage is reached by using onboardingPage.clickOnboardingLoginButton()
  * @author travisstatham
  *
  */
@@ -193,7 +194,10 @@ public class LoginPage extends Page {
 	}
 
 
-	
+	/**
+	 * Checks all the Values of the IOSElements, prints them to the console, fills in email address and password and logs in and verifies Homepage access.
+	 * @return
+	 */
 	public boolean checkValuesOfElements(){
 		onboardingPage.clickOnboardingLoginButton();
 		System.out.println("On LoginPage, checking elements...");
@@ -229,6 +233,10 @@ public class LoginPage extends Page {
 		}
 		return false;
 	}
+	/**
+	 * Logs into a Facebook account. May fail if Facebook removes access from the account. 
+	 * @return
+	 */
 	public boolean loginViaFacebook() {
 		onboardingPage.clickOnboardingLoginButton();
 		waitForElementToBeVisible(IHRAuthorizationViewEmailAddressTextField, 5);
@@ -284,6 +292,9 @@ public class LoginPage extends Page {
 		// check status
 		return settings.isLoggedIn();
 	}
+	/**
+	 * Dismisses the possible popups that appear once you've logged in. 
+	 */
 	private void dismissLoginPopups(){
 		handlePossiblePopUp();
 		handleWantYourLocalRadioPopup();
@@ -374,6 +385,7 @@ public class LoginPage extends Page {
 	}
 	
 	public void tapBack(){
+		System.out.println("Hitting 'Back' from LoginPage to go back to OnboardingPage");
 		NavBarBackButton.click();
 	}
 

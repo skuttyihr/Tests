@@ -32,7 +32,7 @@ public class TestOnboarding extends TestRoot {
 		LocalTime before = consoleLogStart("Testing testAllElementsOnOnboardingPage()");
 		boolean allElementsDisplayedOnOnboardingPage = onboardingPage.showAllElements();
 		Assert.assertTrue("One of the elements on Onboarding Page is not displayed as expected.",allElementsDisplayedOnOnboardingPage);
-		consoleLogEnd(before, allElementsDisplayedOnOnboardingPage,  "Tested testAllElementsOnOnboardingPage() in TestGate.java");
+		consoleLogEnd(before, allElementsDisplayedOnOnboardingPage,  "Tested testAllElementsOnOnboardingPage() in TestOnboarding.java");
 	}
 	
 	/**
@@ -65,7 +65,7 @@ public class TestOnboarding extends TestRoot {
 		Assert.assertTrue("Descriptions have changed.",foundDescriptionsWithinApp.containsAll(descriptionsShouldBeInApp));
 		//End
 		boolean result = (foundDescriptionsWithinApp.containsAll(descriptionsShouldBeInApp) && foundWithinApp.containsAll(shouldBeInApp));
-		consoleLogEnd(before, result,  "Tested testUIScrollViewOnOnboardingPage() in TestGate.java");
+		consoleLogEnd(before, result,  "Tested testUIScrollViewOnOnboardingPage() in TestOnboarding.java");
 	}
 
 	/**
@@ -77,6 +77,6 @@ public class TestOnboarding extends TestRoot {
 		Assert.assertTrue("Could not click 'Log In' Button", onboardingPage.clickOnboardingLoginButton());
 		loginPage.tapBack();
 		Assert.assertTrue("Could not click 'Create Account' Button", onboardingPage.clickOnboardingCreateAccountButton());
-		consoleLogEnd(before, true,  "Tested CreateAccountAndLogInButtons in TestGate.java");
+		consoleLogEnd(before, true,  "Tested CreateAccountAndLogInButtons in TestOnboarding.java");
 	}
 }
