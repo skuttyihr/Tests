@@ -86,7 +86,7 @@ public class OnboardingPage extends Page {
 	}
 	
 	/**
-	 * Returns true if currently on the Onboarding / Splash Page
+	 * Returns true if currently on the onboardingPage
 	 * No wait used. Expect the page to be open already. 
 	 * @return
 	 */
