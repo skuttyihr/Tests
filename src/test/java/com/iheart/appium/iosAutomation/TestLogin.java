@@ -51,7 +51,23 @@ public class TestLogin extends TestRoot {
 		LocalTime before = consoleLogStart("Testing IOSElements on Log In Page");
 		loginPage.checkValuesOfElements();
 		consoleLogEnd(before, true, "Tested IOSElements");
-	};
+	}
+	
+	@Test
+	public void testResetPasswordPage(){
+		LocalTime before = consoleLogStart("Testing IOSElements on resetPasswordPage");
+		onboardingPage.clickOnboardingLoginButton();
+		loginPage.clickForgotYourPasswordButton();
+		if(resetPasswordPage.isCurrentlyOnResetPasswordPage() && resetPasswordPage.showAllElements()){
+			resetPasswordPage.clearEmailAddress();
+			resetPasswordPage.enterEmailAddressToResetPassword("abademail@gmail.com");
+			resetPasswordPage.clickResetPasswordButtonWithBadEmail();
+			resetPasswordPage.clickBackButton();
+		}
+		boolean onLoginPage = loginPage.currentlyOnLoginPage();
+		Assert.assertTrue("Not currently on loginPage, check for ResetPassword issues",onLoginPage );
+		consoleLogEnd(before, onLoginPage, "Tested IOSElements on resetPasswordPage");
+	}
 	
 	// Since Google opens Safari, we can't access those elements. 
 	@Ignore
