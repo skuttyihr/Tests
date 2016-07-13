@@ -10,6 +10,7 @@ import io.appium.java_client.pagefactory.iOSFindBy;
  * LoginPage refactored by Travis Statham on 7/2016
  * AccessibilityIdentifiers added to ios-flagship master so we can click and access them easily. 
  * Methods added to mutate all private IOSElements
+ * loginPage is reached by using onboardingPage.clickOnboardingLoginButton()
  * @author travisstatham
  *
  */
@@ -19,8 +20,8 @@ public class LoginPage extends Page {
 	@iOSFindBy(accessibility = "NavBarBackButton") private IOSElement NavBarBackButton;
 	@iOSFindBy(xpath="//UIAApplication[1]/UIAWindow[1]/UIANavigationBar[1]/UIAStaticText[2]") private IOSElement NavBarTitle;
 	//Main container contains Email, Password, Log In and Forgot your password?
-	
 	@iOSFindBy(accessibility = "IHRiPhoneLoginView-MainContainer-UIView") private IOSElement IHRiPhoneLoginViewMainContainerUIView;
+	    //TableView contains Email and Password Cells and their TextFields
 		@iOSFindBy(accessibility = "IHRAuthorizationView-TableView-UITableView") private IOSElement IHRAuthorizationViewTableViewUITableView;
 			@iOSFindBy(accessibility = "IHRAuthorizationView-EmailAddress-UITableViewCell") private IOSElement IHRAuthorizationViewEmailAddressCell;
 				@iOSFindBy(accessibility = "IHRAuthorizationView-EmailAddress-TextField") private IOSElement IHRAuthorizationViewEmailAddressTextField;
@@ -168,7 +169,7 @@ public class LoginPage extends Page {
 	 */
 	public void loginWithoutVerifying(){
 		System.out.println("about to loginWithoutVerifying()");
-		splashPage.clickLogIn();
+		onboardingPage.clickOnboardingLoginButton();
 		waitForElementToBeVisible(IHRAuthorizationViewEmailAddressTextField, 5);
 		enterLoginEmailAddress(IHEARTUSERNAME);
 		enterLoginPassword(IHEARTPASSWORD);
@@ -193,10 +194,12 @@ public class LoginPage extends Page {
 	}
 
 
-	
+	/**
+	 * Checks all the Values of the IOSElements, prints them to the console, fills in email address and password and logs in and verifies Homepage access.
+	 * @return
+	 */
 	public boolean checkValuesOfElements(){
-		splashPage.clickLogIn();
-		waitForElementToBeVisible(IHRAuthorizationViewEmailAddressTextField, 5);
+		onboardingPage.clickOnboardingLoginButton();
 		System.out.println("On LoginPage, checking elements...");
 		printElementInformation(IHRiPhoneLoginViewMainContainerUIView);
 		printElementInformation(IHRAuthorizationViewTableViewUITableView);
@@ -230,8 +233,12 @@ public class LoginPage extends Page {
 		}
 		return false;
 	}
+	/**
+	 * Logs into a Facebook account. May fail if Facebook removes access from the account. 
+	 * @return
+	 */
 	public boolean loginViaFacebook() {
-		splashPage.clickLogIn();
+		onboardingPage.clickOnboardingLoginButton();
 		waitForElementToBeVisible(IHRAuthorizationViewEmailAddressTextField, 5);
 		clickFacebookLoginButton();
 		
@@ -285,6 +292,9 @@ public class LoginPage extends Page {
 		// check status
 		return settings.isLoggedIn();
 	}
+	/**
+	 * Dismisses the possible popups that appear once you've logged in. 
+	 */
 	private void dismissLoginPopups(){
 		handlePossiblePopUp();
 		handleWantYourLocalRadioPopup();
@@ -302,8 +312,7 @@ public class LoginPage extends Page {
 	}
 
 	public boolean loginViaGoogle() {
-		splashPage.clickLogIn();
-		waitForElementToBeVisible(IHRAuthorizationViewEmailAddressTextField, 5);
+		onboardingPage.clickOnboardingLoginButton();
 		clickGoogleLoginButton();
 
 		if(switchToWebContext()){
@@ -376,6 +385,7 @@ public class LoginPage extends Page {
 	}
 	
 	public void tapBack(){
+		System.out.println("Hitting 'Back' from LoginPage to go back to OnboardingPage");
 		NavBarBackButton.click();
 	}
 

@@ -22,6 +22,7 @@ public class HomePage extends Page {
 	@iOSFindBy(accessibility="For You") public static IOSElement forYouTab;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[3]/UIAStatusBar[1]") public IOSElement statusBar;
 	@iOSFindBy(accessibility="Search") public IOSElement searchButton;
+
 	
 	// Use the getListItem(int x) method to get these items. 
 	private final String listItemXpath = "//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell[XXXXX]";
