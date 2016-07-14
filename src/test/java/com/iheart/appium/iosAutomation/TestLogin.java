@@ -58,7 +58,8 @@ public class TestLogin extends TestRoot {
 		LocalTime before = consoleLogStart("Testing IOSElements on resetPasswordPage");
 		onboardingPage.clickOnboardingLoginButton();
 		loginPage.clickForgotYourPasswordButton();
-		if(resetPasswordPage.isCurrentlyOnResetPasswordPage() && resetPasswordPage.showAllElements()){
+		Assert.assertTrue("Clicking 'Forgot your Password' didn't bring app to Reset Password Page", resetPasswordPage.isCurrentlyOnResetPasswordPage());
+		if(resetPasswordPage.showAllElements()){
 			resetPasswordPage.clearEmailAddress();
 			resetPasswordPage.enterEmailAddressToResetPassword("abademail@gmail.com");
 			resetPasswordPage.clickResetPasswordButtonWithBadEmail();
