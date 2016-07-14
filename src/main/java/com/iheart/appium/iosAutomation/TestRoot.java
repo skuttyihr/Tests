@@ -60,9 +60,12 @@ public class TestRoot {
 	protected static String MODEL;
 	
 	// Page elements
-	protected static HomePage homePage;
+	
 	protected static LoginPage loginPage;
 	protected static SignUpPage signupPage;
+	protected static ResetPasswordPage resetPasswordPage;
+	protected static HomePage homePage;
+	
 	protected static Player player;
 	protected static SideNavigationBar sideNavBar;
 	protected static ForYouPage forYouPage;
@@ -75,6 +78,7 @@ public class TestRoot {
 	protected static MiniPlayer miniPlayer;
 	protected static SettingsPage settings;
 	protected static PerfectFor perfectFor;
+	
 	
 	protected static boolean useSimulator = false;
 	
@@ -223,7 +227,7 @@ public class TestRoot {
 		
 		// Create pages and set driver status
 		Page.setDriver(driver);
-		
+		resetPasswordPage = new ResetPasswordPage(driver);
 		homePage = new HomePage(driver);
 		loginPage = new LoginPage(driver);
 		signupPage = new SignUpPage(driver);
