@@ -547,7 +547,7 @@ public class HomePage extends Page {
 			
 		
 		if(player.isPlaying()){
-			miniPlayer.pause();
+			miniPlayer.clickPlayPauseButton();
 		}
 		return err.getErrors();
 	}

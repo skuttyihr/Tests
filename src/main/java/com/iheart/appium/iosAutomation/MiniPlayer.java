@@ -1,5 +1,6 @@
 package com.iheart.appium.iosAutomation;
 
+import io.appium.java_client.SwipeElementDirection;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
 import io.appium.java_client.pagefactory.iOSFindBy;
@@ -11,307 +12,198 @@ public class MiniPlayer extends Page {
 	public MiniPlayer(IOSDriver<IOSElement> _driver){
 		super(_driver);
 	}
+	@iOSFindBy(accessibility = "MiniPlayerView-ImageView-UIImageView") private IOSElement MiniPlayerViewImageViewUIImageView;
+
+	@iOSFindBy(accessibility = "MiniPlayerView-ScrollView-UIScrollView") private IOSElement MiniPlayerViewScrollViewUIScrollView;
+		@iOSFindBy(accessibility = "MiniPlayerView-ContentView-UIView") private IOSElement MiniPlayerViewContentViewUIView;
+			@iOSFindBy(accessibility = "MiniPlayerView-PlayButton-UIButton") private IOSElement  MiniPlayerViewPlayButtonUIButton;
+			@iOSFindBy(accessibility = "MiniPlayerView-RightButtonContainerView-UIView") private IOSElement MiniPlayerViewRightButtonContainerViewUIView;
+				@iOSFindBy(accessibility = "MiniPlayerView-ThumbDownButton-UIButton") private IOSElement MiniPlayerViewThumbDownButtonUIButton;
+				@iOSFindBy(accessibility = "MiniPlayerView-ThumbUpButton-UIButton") private IOSElement MiniPlayerViewThumbUpButtonUIButton;
+			@iOSFindBy(accessibility = "MiniPlayerView-TitleLabel-UILabel") private IOSElement  MiniPlayerViewTitleLabelUILabel;
+			@iOSFindBy(accessibility = "MiniPlayerView-SubtitleLabel-UILabel") private IOSElement MiniPlayerViewSubtitleLabelUILabel;
+			
+	//Swipe MiniPlayer to Left - Skip button appears with number of tracks left.
+			
+	@iOSFindBy(accessibility = "MiniPlayerView-ClipView-UIView") private IOSElement MiniPlayerViewClipViewUIView;
+	@iOSFindBy(accessibility = "MiniPlayerView-SwipeButtonContainerView-UIView") private IOSElement MiniPlayerViewSwipeButtonContainerViewUIView;
+	@iOSFindBy(accessibility = "MiniPlayerView-RedSkipButton-UIButton") private IOSElement MiniPlayerViewRedSkipButtonUIButton;
+	@iOSFindBy(accessibility = "MiniPlayerView-ProgressBarView-UIView") private IOSElement MiniPlayerViewProgressBarViewUIView;
 	
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]") public IOSElement miniPlayerBar;
-	@iOSFindBy(accessibility = "Pause") public IOSElement miniPlayerPause;
-	@iOSFindBy(accessibility = "Play") public IOSElement miniPlayerPlay;
-	@iOSFindBy(accessibility = "Stop") public IOSElement miniPlayerStop;
-	@iOSFindBy(accessibility = "Thumb up") public IOSElement miniPlayerThumbUp;
-	@iOSFindBy(accessibility = "Thumb down") public IOSElement miniPlayerThumbDown;
-	@iOSFindBy(accessibility = "Skip") public IOSElement miniPlayerSkip;
-	@iOSFindBy(accessibility = "Player_Scan") public IOSElement miniPlayerScan;
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAStaticText[1]") public IOSElement miniPlayerSongTitle;
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAStaticText[2]") public IOSElement miniPlayerArtist;
+	//This does not exist. 
+	@iOSFindBy(accessibility = "MiniPlayerView-BackwardButton-UIButton") private IOSElement MiniPlayerViewBackwardButtonUIButton;
+	//This is only visible during Play of a Song in Artist radio - Not on a Station
+	@iOSFindBy(accessibility = "MiniPlayerProgressBarView-ElapsedView-UIView") private IOSElement MiniPlayerProgressBarViewElapsedViewUIView;
 	
-	public boolean loadUpMiniPlayer(){
-		return loadUpMiniPlayer("Alternative") != null; // Can play a station that won't require login
+	/**
+	 * This method prints to console all the elements that should be displayed in an active MiniPlayer. Make sure that miniplayer is active before calling this.
+	 * ElapsedView may not show up. 
+	 */
+	public void showAllElements(){
+		printElementInformation(MiniPlayerViewImageViewUIImageView);
+		printElementInformation(MiniPlayerViewScrollViewUIScrollView);
+		printElementInformation(MiniPlayerViewContentViewUIView);
+		printElementInformation(MiniPlayerViewPlayButtonUIButton);
+		printElementInformation(MiniPlayerViewRightButtonContainerViewUIView);
+		printElementInformation(MiniPlayerViewThumbDownButtonUIButton);
+		printElementInformation(MiniPlayerViewThumbUpButtonUIButton);
+		printElementInformation(MiniPlayerViewTitleLabelUILabel);
+		printElementInformation(MiniPlayerViewSubtitleLabelUILabel);
+		printElementInformation(MiniPlayerViewClipViewUIView);
+		printElementInformation(MiniPlayerViewSwipeButtonContainerViewUIView);
+		printElementInformation(MiniPlayerViewRedSkipButtonUIButton);
+		printElementInformation(MiniPlayerViewProgressBarViewUIView);
+		printElementInformation(MiniPlayerProgressBarViewElapsedViewUIView);
+	}
+	/**
+	 * Clicks the MiniPlayer to open Full Player. 
+	 */
+	public void openFullPlayer(){
+		System.out.println("Opening Full Player by clicking on MiniPlayerViewImageViewUIImageView element.");
+		MiniPlayerViewImageViewUIImageView.click();
 	}
 	
 	/**
-	 * Plays a song and returns to the home screen
-	 * 
-	 * A note: Full player will always load the first time you play a station on an install(a fresh emulator instance). After, it will load miniplayer. 
-	 * 
+	 * Clicks the Pause, Play, Stop Button. There is only one button the page but it can have different names / icons / animations. 
 	 */
-	public String loadUpMiniPlayer(String searchTerm){
-		System.out.println("Loading up Mini Player");
-		if(search.searchForStation(searchTerm) == null){
-			return "Could not search for: " + searchTerm + ". ";
-		}
-		System.out.println("About to wait for Track to load");
-		Player.waitForTrackToLoad();
-		System.out.println("Track is loaded");
-		if(!isVisible(miniPlayerBar)){
-			//This means full player is visible
-			player.minimizePlayer();
-			System.out.println("Miniplayer did not display after Search because when Simulator is rebuilt, Full Player always starts!");
-			//return "Mini player did not display! ";
-		}
-		sideNavBar.gotoHomePage();
-		return "";
+	public void clickPlayPauseButton(){
+		System.out.println("clickPlayPauseButton()");
+		MiniPlayerViewPlayButtonUIButton.click();
+	}
+	/**
+	 * Simply clicks the Thumb Down Button. Void - no check is done. 
+	 */
+	public void clickThumbDownButton(){
+		System.out.println("clickThumbDownButton()");
+		MiniPlayerViewThumbDownButtonUIButton.click();
+	}
+	
+	/**
+	 * Simply clicks the Thumb Up Button. Void - no check is done. 
+	 */
+	public void clickThumbUpButton(){
+		System.out.println("clickThumbUpButton()");
+		MiniPlayerViewThumbUpButtonUIButton.click();
+	}
+	
+	/**
+	 * Gets the Song Title, but it may also get the Radio Station.
+	 * @return
+	 */
+	public String getSongTitle(){
+		String title = MiniPlayerViewTitleLabelUILabel.getText();
+		System.out.println("getSongTitle() : " + title);
+		return title;
+	}
+	/**
+	 * Gets the Second Label in the MiniPlayer. Usually used for Artist Name - but it may also be the station Description. 
+	 * @return
+	 */
+	public String getArtistName(){
+		String subtitle = MiniPlayerViewSubtitleLabelUILabel.getText();
+		System.out.println("getArtistName() : " + subtitle);
+		return subtitle;
+	}
+	
+	public void swipeMiniPlayerToLeftToShowSkipButton(){
+		System.out.println("swipeMiniPlayerToLeftToShowSkipButton()");
+		MiniPlayerViewImageViewUIImageView.swipe(SwipeElementDirection.LEFT, 500);
+	}
+	
+	/**
+	 * Gets the Label attribute out of the RedSkip Button to see what kind of button it is.
+	 * @return
+	 */
+	public String getTypeOfSkipButton(){
+		String type = MiniPlayerViewRedSkipButtonUIButton.getAttribute("label");
+		System.out.println("getTypeOfSkipButton() : "+ type);
+		return type;
+	}
+	
+	/**
+	 * Swipes the miniPlayer to the right to hide the Skip(scan) button. 
+	 */
+	public void swipeMiniPlayerToRightToHideSkipButton(){
+		System.out.println("swipeMiniPlayerToRightToHideSkipButton()");
+		MiniPlayerViewImageViewUIImageView.swipe(SwipeElementDirection.RIGHT, 500);
+	}
+	/**
+	 * Swipes to left for half a second exposing Skip(scan) button and then clicks it. 
+	 */
+	public void swipeMiniPlayerToLeftAndClickSkipButton(){
+		System.out.println("swipeMiniPlayerToLeftAndClickSkipButton()");
+		MiniPlayerViewImageViewUIImageView.swipe(SwipeElementDirection.LEFT, 500);
+		MiniPlayerViewRedSkipButtonUIButton.click();
+	}
+	
+	/**
+	 * Simply clicks the Skip(Scan) button. No swiping done. Assume the miniplayer will go back to default state. 
+	 */
+	public void clickSkipButton(){
+		System.out.println("clickSkipButton()");
+		MiniPlayerViewRedSkipButtonUIButton.click();
+	}
+	/**
+	 * Returns true if Thumb Up is activated and Thumb Down is NOT activated. 
+	 * @return
+	 */
+	public boolean isThumbUpButtonActivated(){
+		//String val = MiniPlayerViewThumbDownButtonUIButton.getAttribute("value");  Old way - Checks to see if val.equals("1").
+		boolean thumbUpActivated = (MiniPlayerViewThumbUpButtonUIButton.isSelected() && !MiniPlayerViewThumbDownButtonUIButton.isSelected() );
+		System.out.println("isThumbUpButtonActivated() : " + thumbUpActivated);
+		return thumbUpActivated;
+	}
+	/**
+	 * Returns true if Thumb Down Is activated and Thumb Up is NOT activated. 
+	 * @return
+	 */
+	public boolean isThumbDownButtonActivated(){
+		boolean thumbDownActivated = (!MiniPlayerViewThumbUpButtonUIButton.isSelected() && MiniPlayerViewThumbDownButtonUIButton.isSelected() );
+		System.out.println("isThumbDownButtonActivated() : " + thumbDownActivated);
+		return thumbDownActivated;
+	}
+	
+	/**
+	 * Returns true if both Thumb Buttons are Not Selected. 
+	 * @return
+	 */
+	public boolean isThumbUpAndThumbDownButtonNotActivated(){
+		boolean thumbDownUpNotActivated = (!MiniPlayerViewThumbUpButtonUIButton.isSelected() && !MiniPlayerViewThumbDownButtonUIButton.isSelected() );
 		
-		/*
-		
-		if(isVisible(player.back)){
-			player.back.click();
-			System.out.println("Player.back.click() has been clicked");
-		}
-		else{
-			return "Could not load player. ";
-		}
-		waitForElementToBeVisible(search.cancel, 3);
-		search.cancel.click();
-		System.out.println("Clicked Search - Cancel");
-		sideNavBar.gotoHomePage(); // Ensure we're on home page
-		if(!isVisible(miniPlayerBar)){
-			return "Mini player did not display! ";
-		}
-		return "";
-		*/
+		return thumbDownUpNotActivated;
 	}
 	
-	public boolean maximizeMiniPlayer(){
-		System.out.println("Maximizing the mini player");
-		waitForElementToBeVisible(miniPlayerBar, 3);
-		if(!isVisible(miniPlayerBar)){
-			return false;
-		}
-		miniPlayerBar.click();
-		return player.isPlaying();
-	}
-	
-	public boolean minimizePlayer(){
-		System.out.println("Minimizing the player");
-		return player.minimizePlayer();
-	}
-	
-	public boolean isThumbedUp(){
-		waitForElementToBeVisible(miniPlayerThumbUp, 3);
-		String val = miniPlayerThumbUp.getAttribute("value");
-		if(strGood(val)){
-			if (Integer.parseInt(val) == 1){
-				return true;
-			}
-			return false;
-		}
-		else{
-			return false;
-		}
-	}
-	public boolean isThumbedDown(){
-		waitForElementToBeVisible(miniPlayerThumbDown, 3);
-		String val = miniPlayerThumbDown.getAttribute("value");
-		if(strGood(val)){
-			if (Integer.parseInt(val) == 1){
-				return true;
-			}
-			return false;
-		}
-		else{
-			return false;
-		}
-	}
-	
-	public boolean thumbUp(){
-		// If the track is already thumbed up, 
-		//		reset it so we can test the mini player's capability in thumbing up
-		if(isThumbedUp()){
-			miniPlayerThumbUp.click();
-		}
-		miniPlayerThumbUp.click();
-		return isThumbedUp();
-	}
-	public boolean thumbDown(){
-		// If the track is already thumbed up, 
-		//		reset it so we can test the mini player's capability in thumbing up
-		if(isThumbedDown()){
-			miniPlayerThumbDown.click();
-		}
-		miniPlayerThumbDown.click();
-		return isThumbedDown();
+	/**
+	 * Checks if MiniPlayer is open.
+	 * @return
+	 */
+	public boolean isCurrentlyOnMiniPlayer(){
+		boolean onMini = MiniPlayerViewImageViewUIImageView.isDisplayed();
+		System.out.println("isCurrentlyOnMiniPlayer() : " + onMini);
+		return onMini;
 	}
 
 	/**
-	 * Toggle play/pause
+	 * Gets TitleLabel, Clicks Skip Button, gets TitleLabel again and then compares to make sure they are not equal.
 	 * @return
 	 */
-	public boolean pausePlay(){
-		if(isVisible(miniPlayerPause)){
-			miniPlayerPause.click();
-			return true;
-		}
-		if(isVisible(miniPlayerPlay)){
-			miniPlayerPlay.click();
-			return true;
-		}
-		return false;
-	}
-	public boolean stop(){
-		if(isVisible(miniPlayerStop)){
-			miniPlayerStop.click();
-		}
-		return isVisible(miniPlayerPlay);
+	public boolean isTitleDifferentAfterSkip(){
+		String firstTitle = getSongTitle();
+		swipeMiniPlayerToLeftAndClickSkipButton();
+		String secondTitle = getSongTitle();
+		boolean diffTitle = (!firstTitle.equals(secondTitle));
+		System.out.println("isTitleDifferentAfterSkip() : " + diffTitle );
+		return diffTitle;
 	}
 	
-	public boolean isStreaming(){
-		return isVisible(miniPlayerPause);
+	public String getTypeOfPlayButton(){
+		String type = MiniPlayerViewPlayButtonUIButton.getAttribute("label");
+		System.out.println("Type of Play-Pause-Stop-Buffering Button: '" + type +"'");
+		return type;		
 	}
 	
-	/**
-	 * Pauses, returns true if the stream has been paused
-	 * @return
-	 */
-	public boolean pause(){
-		boolean paused = false;
-		boolean couldPause = false;
-		if(isStreaming()){
-			paused = pausePlay();
-		}
-		else{
-			// Unpause and pause so we can test pausing capabilities
-			pausePlay();
-			paused = pausePlay();
-		}
-		if(paused){
-			miniPlayerBar.click();
-			// Test player isPaused to ensure stream was paused
-			couldPause = !player.isStreaming();
-			player.minimizePlayer(); // Return to mini player
-		}
-		else{
-			return false;
-		}
-		return couldPause;
-	}
-	
-	/**
-	 * Un-pauses or plays music, returns true if playing music
-	 * @return
-	 */
-	public boolean play(){
-		boolean playing = false;
-		boolean couldPlay = false;
-		
-		if(!isStreaming()){
-			playing = pausePlay();
-		}
-		else{
-			pausePlay();
-			playing = pausePlay();
-		}
-		
-		if(playing){
-			miniPlayerBar.click();
-			couldPlay = player.isStreaming();
-			player.minimizePlayer();
-		}
-		else{
-			return false;
-		}
-		
-		return couldPlay;
-	}
-	
-	public String getSongName(){
-		String songTitle = "";
-		if(isVisible(miniPlayerSongTitle)){
-			songTitle = miniPlayerSongTitle.getText();
-		}
-		return songTitle;
-	}
-	public String getArtist(){
-		String artist = "";
-		if(isVisible(miniPlayerArtist)){
-			artist = miniPlayerArtist.getText();
-		}
-		return artist;
-	}
-	
-	public boolean skip(){
-		boolean songSkipped = false;
-		String firstSong = getSongName();
-		if(isVisible(miniPlayerBar)){
-			int startX = getAppWidth();
-			int endX = 0;
-			int y = miniPlayerBar.getLocation().getY() + (miniPlayerBar.getSize().getHeight() / 2);
-			try{
-				driver.swipe(startX, y, endX, y, 500);
-			}
-			catch(Exception e){
-				e.printStackTrace();
-			}
-		}
-		else{
-			return false;
-		}
-		
-		if(isVisible(miniPlayerSkip)){
-			miniPlayerSkip.click();
-		}
-		else if(isVisible(miniPlayerScan)){
-			miniPlayerScan.click();
-		}
-		songSkipped = !(getSongName().equals(firstSong));
-		
-		return songSkipped;
-	}
-	
-	public Errors verifyControls(){
-		Errors errors = new Errors();
-		
-		// Thumb up and down (if they're not disabled)
-		System.out.println("Verifying controls for the Miniplayer");
-		if(miniPlayerThumbDown.isEnabled()
-				&& miniPlayerThumbUp.isEnabled()){
-			System.out.println("Verifying MiniPlayer ThumbDown and ThumbUp");
-			if(!thumbDown()){
-				errors.add("Could not thumb down track on mini player.\n");
-			}
-			if(!thumbUp()){ // Do this so we're not downvoting all the tracks
-				errors.add("Could not thumb up track on mini player.\n"); 
-			}
-			if(isThumbedDown()){
-				errors.add("Mini player thumbs did nopt toggle when we thumbed up a track.\n");
-			}
-		}
-		
-		// Play and pause
-		System.out.println("Verifying Play and Pause for MiniPlayer");
-		if(isVisible(miniPlayerPlay)){
-			miniPlayer.play();
-		}
-		if(!isVisible(miniPlayerStop)){
-			if(!miniPlayer.pause()){
-				errors.add("Could not pause from mini player.\n");
-			}
-			if(!miniPlayer.play()){
-				errors.add("Could not play from mini player\n");
-			}
-		}
-		else{
-			try{
-				miniPlayerStop.click();
-				miniPlayerPlay.click();
-			}
-			catch(Exception e){
-				errors.add("Could not stop/play live radio station.\n");
-			}
-		}
-		
-		// Verify info
-		System.out.println("Verifying Artist, Song Name, and Skip feature.");
-		if(!strGood(getArtist())){
-			errors.add("Was not displaying artist.\n");
-		}
-		if(!strGood(getSongName())){
-			errors.add("Was not displaying song.\n");
-		}
-		
-		// Skip
-		if(!skip()){
-			errors.add("Could not skip.\n");
-		}
-		
-		return errors;
+	public boolean isElapsedViewDisplayed(){
+		System.out.println("isElapsedViewDisplayed() : " + MiniPlayerProgressBarViewElapsedViewUIView.isDisplayed());
+		return MiniPlayerProgressBarViewElapsedViewUIView.isDisplayed();
 	}
 }

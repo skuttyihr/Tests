@@ -525,8 +525,8 @@ public class Player extends Page {
 			System.out.println("Note:\nPlease use the 'stop()' method when stopping live radio playback, not 'pause()'");
 			stop();
 		}
-		else if(isVisible(miniPlayer.miniPlayerPause)){
-			miniPlayer.pause();
+		else {
+			miniPlayer.clickPlayPauseButton();
 		}
 	}
 	
@@ -543,8 +543,8 @@ public class Player extends Page {
 			System.out.println("Note:\nPlease use the 'pause()' method when pausing a podcast or artist station playback, not 'stop()'");
 			pause();
 		}
-		else if(isVisible(miniPlayer.miniPlayerStop)){
-			miniPlayer.stop();
+		else {
+			miniPlayer.clickPlayPauseButton();
 		}
 	}
 	
@@ -556,8 +556,8 @@ public class Player extends Page {
 		if(isVisible(play)){
 			play.click();
 		}
-		else if(isVisible(miniPlayer.miniPlayerPlay)){
-			miniPlayer.play();
+		else{
+			miniPlayer.clickPlayPauseButton();
 		}
 	}
 	
@@ -600,7 +600,7 @@ public class Player extends Page {
 	
 	public boolean isPlayingInPlayer(){
 		if(isPlaying()){
-			return !isVisible(miniPlayer.miniPlayerBar);
+			return !miniPlayer.isCurrentlyOnMiniPlayer();
 		}
 		return false;
 	}
@@ -614,8 +614,8 @@ public class Player extends Page {
 		handlePossiblePopUp();
 		
 		// If it's playing in the mini player, skip the other assessments
-		if(isVisible(miniPlayer.miniPlayerBar)){
-			if(isVisible(miniPlayer.miniPlayerStop) || isVisible(miniPlayer.miniPlayerPause)){
+		if(miniPlayer.isCurrentlyOnMiniPlayer()){
+			if(true){//isVisible(miniPlayer.   .miniPlayerStop) || isVisible(miniPlayer.miniPlayerPause)){
 				return true;
 			}
 			else{
@@ -914,7 +914,7 @@ public class Player extends Page {
 		waitForElementToBeVisible(minimizeButton, 4);
 		if(isVisible(minimizeButton)){
 			minimizeButton.click();
-			return isVisible(miniPlayer.miniPlayerBar);
+			return miniPlayer.isCurrentlyOnMiniPlayer();
 		}
 		else{
 			return false;
