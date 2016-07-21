@@ -27,6 +27,24 @@ public class Search extends Page {
 	// Search Elements, used to create custom stations
 //	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell[1]") public IOSElement firstElement;
 	private final String firstResultXpath = "//UIAApplication[1]/UIAWindow[1]/UIATableView[2]/UIATableCell[1]";
+	@iOSFindBy(xpath="//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell[1]") private IOSElement topResultEntry;
+	
+	public void startMiniPlayer(){
+		getToSearch();
+		searchField.sendKeys("Technically Superior");
+		topResultEntry.click();
+	}
+	
+	public void cancelSearch(){
+		cancel.click();
+	}
+	
+	public void startMiniPlayer(String station){
+		getToSearch();
+		searchField.sendKeys(station);
+		System.out.println("Clicking on TopResult Entry to start MiniPlayer:" + station);
+		topResultEntry.click();
+	}
 	private final String allResultsXpath = "//UIAApplication[1]/UIAWindow[1]/UIATableView[2]/UIATableCell";
 	@iOSFindBy(xpath = firstResultXpath) public IOSElement firstStation;
 	@iOSFindBy(xpath = firstResultXpath + "/UIAStaticText[1]") public IOSElement firstStationTitle;

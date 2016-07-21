@@ -56,7 +56,7 @@ public class ForYouPage extends Page {
 			}
 		} // for
 
-		miniPlayer.maximizeMiniPlayer();
+		miniPlayer.openFullPlayer();
 		
 		return myStation;
 
@@ -71,7 +71,7 @@ public class ForYouPage extends Page {
 			List<WebElement> stations = collectionView.findElements(By.className("UIACollectionCell"));
 			myStation = chooseLiveRadioToPlay(stations);
 		}
-		miniPlayer.maximizeMiniPlayer();
+		miniPlayer.openFullPlayer();
 		return myStation;
 	}
 	

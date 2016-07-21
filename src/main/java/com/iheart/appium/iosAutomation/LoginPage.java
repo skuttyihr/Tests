@@ -1,5 +1,7 @@
 package com.iheart.appium.iosAutomation;
 
+import java.util.Set;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -39,11 +41,16 @@ public class LoginPage extends Page {
 
 
 	//Web Elements for Facebook Login
-	@iOSFindBy(accessibility = "Facebook") private WebElement facebookButton;
+	//@iOSFindBy(accessibility = "Facebook") private WebElement facebookButton;
 
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[2]/UIAScrollView[1]/UIAScrollView[1]/UIAWebView[1]/UIATextField[1]") private WebElement fbEmail;
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[2]/UIAScrollView[1]/UIAScrollView[1]/UIAWebView[1]/UIASecureTextField[1]") private IOSElement fbPassword;
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[2]/UIAScrollView[1]/UIAScrollView[1]/UIAWebView[1]/UIAButton[1]") private IOSElement fbLogin;
+	//@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[2]/UIAScrollView[1]/UIAScrollView[1]/UIAWebView[1]/UIATextField[1]") private WebElement fbEmail;
+	//@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[2]/UIAScrollView[1]/UIAScrollView[1]/UIAWebView[1]/UIASecureTextField[1]") private IOSElement fbPassword;
+	//@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[2]/UIAScrollView[1]/UIAScrollView[1]/UIAWebView[1]/UIAButton[1]") private IOSElement fbLogin;
+	@iOSFindBy(accessibility= "Email or Phone") private WebElement fbEmailField;
+	@iOSFindBy(accessibility= "Facebook Password") private WebElement fbPasswordField;
+	@iOSFindBy(accessibility= "Log In") private WebElement fbLogInField;
+
+	
 
 	// WEB version
 	@FindBy(name = "email") private WebElement facebookEmail_web;
@@ -245,27 +252,41 @@ public class LoginPage extends Page {
 		//Sleep to allow web to display, can't wait because context needs to switch
 		TestRoot.sleep(10000);
 		System.out.println("Current context: " + driver.getContext());
+		Set<String> contexts = driver.getContextHandles();
+		for(String context : contexts){
+			System.out.println(context);
+		}
+		//This is extremely wonky! Rarely works and cannot find the fields. 
 		if(switchToWebContext()){
-			System.out.println("Current context: " + driver.getContext());
+			System.out.println("Current context should be WEBVIEW_1: " + driver.getContext());
 			// Facebook changed their page
+			if(fbEmailField != null && fbPasswordField != null && fbLogInField != null){
+				fbEmailField.sendKeys(FACEBOOKUSERNAME);
+				fbPasswordField.sendKeys(FACEBOOKPASSWORD);
+				fbLogInField.click();
+				System.out.println("Testing Facebook login. Entered FB Email, Password, and Clicked Login.");
+			}
 			IOSElement fbemailField = findElement(driver, By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIATextField[1]"));
 			IOSElement fbpasswordField = findElement(driver, By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIASecureTextField[1]"));
 			IOSElement fbloginButton = findElement(driver, By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIAButton[1]"));
 			if(fbemailField == null){
-				fbemailField = findElement(driver, By.name("email"));
+				fbemailField = findElement(driver, By.name("Email or Phone"));
 			}
 			if(fbpasswordField == null){
-				fbpasswordField = findElement(driver, By.name("pass"));
+				fbpasswordField = findElement(driver, By.name("Facebook Password"));
 			}
 			if(fbloginButton == null){
-				fbloginButton = findElement(driver, By.name("login"));
+				fbloginButton = findElement(driver, By.name("Log In"));
+				
 			}
-			
 			if(fbemailField != null && fbpasswordField != null && fbloginButton != null){
 				fbemailField.sendKeys(FACEBOOKUSERNAME);
 				fbpasswordField.sendKeys(FACEBOOKPASSWORD);
 				fbloginButton.click();
 				System.out.println("Testing Facebook login. Entered FB Email, Password, and Clicked Login.");
+			}
+			else{
+				System.out.println("Facebook Email Field, Password, Log In Button don't seem to be found.");
 			}
 		
 			sleep(2000);
@@ -274,7 +295,8 @@ public class LoginPage extends Page {
 				driver.findElement(By.name("__CONFIRM__")).click();
 			}
 			catch(Exception e){}
-		}
+		
+			}
 		else{
 			System.err.println("Could not switch to Facebook web view context.");
 			return false;

@@ -649,8 +649,8 @@ public class TestRoot {
 	}
 	public static boolean switchToWebContext(){
 		try{
-			driver.context("WEBVIEW_1");
-			sleep(1500);
+			driver.context("WEBVIEW_1"); //WEBVIEW_1
+			sleep(3500);
 		}
 		catch(Exception e){
 			e.printStackTrace();

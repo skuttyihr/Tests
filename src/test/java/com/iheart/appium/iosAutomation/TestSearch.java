@@ -5,6 +5,7 @@ import java.time.LocalTime;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class TestSearch extends TestRoot {
@@ -30,7 +31,9 @@ public class TestSearch extends TestRoot {
 	*/
 	 
 	@Test
+	@Ignore
 	public void testHomeSearch(){
+		LocalTime before = consoleLogStart("testHomeSearch - ");
 		Assert.assertTrue("Was not able to login", loginPage.login()); // Log in so we can choose artist stations later
 	
 		Assert.assertTrue("Could not search for a term", search.searchForStationWithoutSelecting("Alt"));
@@ -53,15 +56,18 @@ public class TestSearch extends TestRoot {
 		search.clearSearch();
 		String searchSong = "Basket Case";
 		search.searchForStationWithoutSelecting(searchSong);
-		Assert.assertTrue(searchSong + " was not found in results.", search.isResultListed(searchSong));
+		boolean isResultListed = search.isResultListed(searchSong);
+		Assert.assertTrue(searchSong + " was not found in results.", isResultListed );
+		consoleLogEnd(before, isResultListed, "Tested testSearchForLiveStation.");
 	}
 	
 	/**
 	 * Tests live stations can be searched for by name, keyword, and frequency.
 	 */
 	@Test
+	@Ignore
 	public void testSearchForLiveStation(){
-		LocalTime before = consoleLogStart("testSearchForLiveStation - tests name, keyword, and frequency");
+		LocalTime before = consoleLogStart("testSearchForLiveStation - tests name, keyword, and frequency.");
 		// log in
 		loginPage.loginWithoutVerifying();
 		// Get to the live radio page via sidebar and enter zip if requested
@@ -78,6 +84,8 @@ public class TestSearch extends TestRoot {
 		// Search for key phrase
 		search.clearSearch();
 		search.searchForStationWithoutSelecting(searchFor[2]);
-		Assert.assertTrue(searchFor[1] + " was not found", search.isResultListed(searchFor[1]));
+		boolean isResultListed = search.isResultListed(searchFor[1]);
+		Assert.assertTrue(searchFor[1] + " was not found", isResultListed);
+		consoleLogEnd(before, isResultListed, "Tested testSearchForLiveStation.");
 	}
 }
