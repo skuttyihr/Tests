@@ -115,10 +115,14 @@ public class TestLogin extends TestRoot {
 		search.startMiniPlayer("HOT 97");
 		Assert.assertEquals("HOT 97", miniPlayer.getSongTitle());
 		Assert.assertEquals("Where Hip Hop Lives in New York ", miniPlayer.getArtistName());
+		//If we don't have Track title, we can't thumb it up. Try to thumb it up, verify that it still isn't activated. Not sure if we can see how it's greyed out. 
+		miniPlayer.clickThumbUpButton();
+		Assert.assertFalse(miniPlayer.isThumbUpButtonActivated());
 		Assert.assertTrue("Expected 'Stop Buffering' or 'Stop' because MiniPlayer should be playing an Artist track.",miniPlayer.getTypeOfPlayButton().contains("Stop"));
 		miniPlayer.swipeMiniPlayerToLeftToShowSkipButton();
 		Assert.assertEquals("Player_Scan", miniPlayer.getTypeOfSkipButton());
 		Assert.assertFalse("Elapsed View should not be shown for Radio Stations in MiniPlayer",miniPlayer.isElapsedViewDisplayed());
+		
 		
 		//On a Radio Station - it will show artist and name but a Stop Button. 
 				//Swipe produces a Scan Button. 
