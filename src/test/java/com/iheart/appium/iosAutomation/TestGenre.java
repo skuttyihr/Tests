@@ -24,10 +24,10 @@ public class TestGenre extends TestRoot{
 	 * Then it swipes to the top of the page, selects some genres, handles popups, 
 	 * improvesRecommendations, and deselects and reselects Top 40.
 	 */
-	@Test
+	//@Test
 	public void testGenreGameForNewAccount(){
 		LocalTime before = consoleLogStart("Testing Genre Game for New Account.");
-		Assert.assertTrue("Could not create a new account and get the genre picker", signupPage.createNewAccount());
+		Assert.assertTrue("Could not create a new account and get the genre picker", signupPage.createAnAccount());
 		// Assert all genres are present
 		String missingGenres = genrePage.verifyGenres();
 		Assert.assertTrue("Not all expected genres were present!\nMissing:\n" + missingGenres, missingGenres.length() <= 0);

@@ -42,6 +42,7 @@ public class GenrePage extends Page {
 	 * @return
 	 */
 	private boolean clickGenreElement(IOSElement genre){
+		System.out.println("ingenre picker");
 		boolean couldBeFound = false;
 		if(isVisible(genre)){
 			genre.click();

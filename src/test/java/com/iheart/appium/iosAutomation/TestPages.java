@@ -29,6 +29,7 @@ public class TestPages extends TestRoot {
 	 * 
 	 */
 	public void testForLogoAndTitleOnPages(){
+	try{
 		LocalTime before = consoleLogStart("Testing testForLogoAndTitleOnPages()- checks Logos and Titles for MyStations, Local Radio, Live Radio, Live Artist Page, Podcasts Page, Perfect  For, Listening History, Alarm, & Sleep");
 		loginPage.loginWithoutVerifying();
 		// Verify each page
@@ -73,5 +74,10 @@ public class TestPages extends TestRoot {
 				isVisible(findElement(driver, By.name("Sleep Timer"))));
 		consoleLogEnd(before, true,  "Tested testForLogoAndTitleOnPages()"); 
 	}
+	catch(Exception e)
+	{
+		Page.handleError("Test for Logo and Title on Pages test failed", "testForLogoAndTitleOnPages");
+	}
 	
+	}
 }

@@ -42,7 +42,8 @@ public class TestRoot {
 	protected static final int RIGHT = 1;
 	protected static final int DOWN = 2;
 	protected static final int LEFT = 3;
-	
+	static String webContext = "";
+
 	protected static int implicitWaitTimeout = 375;
 	
 	protected static IOSDriver<IOSElement> driver;
@@ -60,12 +61,9 @@ public class TestRoot {
 	protected static String MODEL;
 	
 	// Page elements
-	
+	protected static HomePage homePage;
 	protected static LoginPage loginPage;
 	protected static SignUpPage signupPage;
-	protected static ResetPasswordPage resetPasswordPage;
-	protected static HomePage homePage;
-	
 	protected static Player player;
 	protected static SideNavigationBar sideNavBar;
 	protected static ForYouPage forYouPage;
@@ -73,12 +71,11 @@ public class TestRoot {
 	protected static Search search;
 	protected static DeepLink deepLink;
 	protected static PodcastsPage podcastsPage;
-	protected static OnboardingPage onboardingPage;
+	protected static SplashPage splashPage;
 	protected static GenrePage genrePage;
 	protected static MiniPlayer miniPlayer;
 	protected static SettingsPage settings;
 	protected static PerfectFor perfectFor;
-	
 	
 	protected static boolean useSimulator = false;
 	
@@ -92,9 +89,7 @@ public class TestRoot {
 	protected static String GOOGLEPASSWORD;
 	protected static String NEWACCOUNTPASSWORD;
 	
-	protected static void setup() {
-		System.out.println("TestRoot.setup()");
-		
+	protected static void setup() {		
 		
 		String appiumUrl = "";
 		String appiumPort = "";
@@ -102,7 +97,6 @@ public class TestRoot {
 		// Load up the properties file
 		Properties props = null;
 		try {
-			System.out.println("Loading properties at ios.properties.local");
 			props = loadProperties("ios.properties.local");
 		} catch (Exception e) {
 			System.out.println("Could not load properties, defaulting to system properties.");
@@ -187,10 +181,9 @@ public class TestRoot {
 		capabilities.setCapability("bundleId", BUNDLE_ID);
         capabilities.setCapability("app", IPA_NAME);
         
-        System.out.println(DEVICE_NAME + ":iOS:" + PLATFORM_VERSION +":"+ BUNDLE_ID +":"+ IPA_NAME);
         
         if(SIMULATOR){
-        	capabilities.setCapability("sendKeyStrategy", "oneByOne");
+        	capabilities.setCapability("sendKeyStrategy", "grouped");
         	capabilities.setCapability("calendarFormat", "gregorian");
         }
         else{
@@ -227,7 +220,7 @@ public class TestRoot {
 		
 		// Create pages and set driver status
 		Page.setDriver(driver);
-		resetPasswordPage = new ResetPasswordPage(driver);
+		
 		homePage = new HomePage(driver);
 		loginPage = new LoginPage(driver);
 		signupPage = new SignUpPage(driver);
@@ -239,41 +232,22 @@ public class TestRoot {
 		search = new Search(driver);
 		customRadio = new CustomRadio(driver);
 		deepLink = new DeepLink(driver);
-		onboardingPage = new OnboardingPage(driver);
+		splashPage = new SplashPage(driver);
 		genrePage = new GenrePage(driver);
 		miniPlayer = new MiniPlayer(driver);
 		settings = new SettingsPage(driver);
 		perfectFor = new PerfectFor(driver);
 		
-		driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
-		
-		System.out.println("Testing on: " + MODEL);
+		driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);		
 		
 		// Get rid of zip code request if it displays
-		Page.enterZip();
+		//Page.enterZip();
 
-		// Wait for OnboardingPage to display
-		onboardingPage.waitForOnboardingPage();
-	}
-	public String stringifyElementInformation(IOSElement iosElement){
-		return "TagName=["+iosElement.getTagName()+ "] Text=["+ iosElement.getText() + "] Object:"  + iosElement.toString() ;
-	}
-	
-	public boolean printElementInformation(IOSElement iosElement){
-		String[] aId = iosElement.toString().split(">");
-		String getText = iosElement.getText();
-		if(!getText.equals("")){
-			System.out.println( aId[1] + "  text: ["+ iosElement.getText() + "]  tagName: ["+iosElement.getTagName()+ "] isDisplayed: [" +iosElement.isDisplayed() + "]" ) ;
-		}
-		else{ //Element has no Text, not printing it. 
-			System.out.println( aId[1] + " tagName: ["+iosElement.getTagName()+ "] isDisplayed: [" +iosElement.isDisplayed() + "]") ;
-		}
-	
-		return iosElement.isDisplayed();
+		// Wait for login to display
+		waitForElementToBeVisible(splashPage.onboardingLogo, 3);
 	}
 
 	protected static void tearDown() {
-		System.out.println("Testcase finished. Testroot.after():: Quitting driver.");
 		if(driver != null){
 			try{
 				// If app isn't resetting through appium, try running a test with this un-commented
@@ -285,7 +259,7 @@ public class TestRoot {
 				e.printStackTrace();
 			}
 		}
-		System.out.println("######################################################################");
+		System.out.println("############################################################################");
 	}
 	
 	//// Utility Methods ////
@@ -304,18 +278,19 @@ public class TestRoot {
 	 * @param testMethod
 	 * @throws Exception
 	 */
-	public static void takeScreenshot(WebDriver driver, String testMethod) throws Exception {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
-		Date date = new Date();
-		// System.out.println(dateFormat.format(date)); //2014/08/06 15:59:48
-		String screenshotName = testMethod + dateFormat.format(date) + ".png";
-		System.out.println("See screenshotName:" + screenshotName);
-		File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-		// The below method will save the screen shot in d drive with name
-		// "screenshot.png"
-		FileUtils.copyFile(scrFile, new File(screenshotName));
-		System.out.println("Screenshot is taken.");
-	}
+	
+	public static void takeScreenshot(WebDriver driver, Object object2, String testClass) throws Exception{
+	      
+	  	 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");  
+		 Date date = new Date();   
+		 String currentPath = System.getProperty("user.dir");   
+		 String path = currentPath + "/target/surefire-reports/";    
+		 String screenshotName = path + testClass + "/" + object2 + "/"+ dateFormat.format(date) + ".png";
+		 System.out.println("See screenshotName:" + screenshotName);
+		 File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+		 FileUtils.copyFile(scrFile, new File(screenshotName));
+		 System.out.println("Screenshot Taken");            
+ }
 	
 	/**
 	 * Passed in a property file, it returns the loaded properties
@@ -647,22 +622,44 @@ public class TestRoot {
 
 		return contexts;
 	}
-	public static boolean switchToWebContext(){
-		try{
-			driver.context("WEBVIEW_1");
-			sleep(1500);
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}
-		return driver.getContext().equals("WEBVIEW_1");
-	}
-	public static boolean switchToNativeContext(){
-		driver.context("NATIVE_APP");
-		sleep(1000);
-		return driver.getContext().equals("NATIVE_APP");
-	}
 	
+	public boolean switchToWebContext()
+	{
+			Set<String> handles = getContextHandles();
+			if(handles.size() > 1)
+			{
+				driver.context("WEBVIEW_1");
+				return true;
+
+			}
+		System.out.println(driver.getContext().equals("true"));
+		//return driver.getContext().equals("WEBVIEW_1");
+		return false;
+
+	}
+		
+	public boolean switchToNativeContext(){
+		Set<String> handles = getContextHandles();
+		//String webContext = "";
+		if(handles != null && handles.size() > 0)
+		{
+			for(String c : handles)
+			{
+				System.out.println(c);
+			
+				if(c.contains("NATIVE"))
+				{
+					webContext = c;
+					driver.context(c);
+				}
+				sleep(1500);
+			}
+		}
+		System.out.println(driver.getContext());
+
+		return driver.getContext().equals("NATIVE_APP");
+
+	}
 	//// Waiting Methods ////
 	static boolean isVisible(IOSElement e){
 		boolean isVisible = false;
@@ -910,16 +907,17 @@ public class TestRoot {
 		return returnString;
 	}
 	
-	public static LocalTime consoleLogStart(String consoleMessage){
+	public static LocalTime consoleLogStart(String consoleMessage)
+	{
 		System.out.println(consoleMessage);
 		return LocalTime.now();
 	}
-	public static void consoleLogEnd(LocalTime begin, boolean testResult, String endMessage){
+	
+	public static void consoleLogEnd(LocalTime begin, boolean testResult, String endMessage)
+	{
 		Duration seconds = Duration.between(begin, LocalTime.now());
 		String result = testResult ? "Test Passed. " : "Test Failed. ";
-		System.out.println(result + endMessage + "    [ "+ seconds.getSeconds() + " seconds ]");
-	
-		
+		System.out.println(result + endMessage + "    [ "+ seconds.getSeconds() + " seconds ]");		
 	}
 	
 

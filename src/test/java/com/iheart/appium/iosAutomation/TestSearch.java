@@ -31,6 +31,7 @@ public class TestSearch extends TestRoot {
 	 
 	@Test
 	public void testHomeSearch(){
+		try{
 		Assert.assertTrue("Was not able to login", loginPage.login()); // Log in so we can choose artist stations later
 	
 		Assert.assertTrue("Could not search for a term", search.searchForStationWithoutSelecting("Alt"));
@@ -55,12 +56,18 @@ public class TestSearch extends TestRoot {
 		search.searchForStationWithoutSelecting(searchSong);
 		Assert.assertTrue(searchSong + " was not found in results.", search.isResultListed(searchSong));
 	}
+	catch(Exception e)
+	{
+		Page.handleError("Home Page Search failed", "testHomeSearch");
+	}
+}
 	
 	/**
 	 * Tests live stations can be searched for by name, keyword, and frequency.
 	 */
 	@Test
 	public void testSearchForLiveStation(){
+	try{
 		LocalTime before = consoleLogStart("testSearchForLiveStation - tests name, keyword, and frequency");
 		// log in
 		loginPage.loginWithoutVerifying();
@@ -80,4 +87,10 @@ public class TestSearch extends TestRoot {
 		search.searchForStationWithoutSelecting(searchFor[2]);
 		Assert.assertTrue(searchFor[1] + " was not found", search.isResultListed(searchFor[1]));
 	}
+	catch(Exception e)
+		{
+			Page.handleError("Search for Live Station Failed", "SearchForLiveStation()");
+		}
+	}
+	
 }

@@ -22,7 +22,6 @@ public class HomePage extends Page {
 	@iOSFindBy(accessibility="For You") public static IOSElement forYouTab;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[3]/UIAStatusBar[1]") public IOSElement statusBar;
 	@iOSFindBy(accessibility="Search") public IOSElement searchButton;
-
 	
 	// Use the getListItem(int x) method to get these items. 
 	private final String listItemXpath = "//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell[XXXXX]";
@@ -165,7 +164,7 @@ public class HomePage extends Page {
 	 * Removes all favorites, useful at the end of testing
 	 */
 	public void removeAllFavorites(){
-		try{ // We don't want a test to fail if this has an issue
+		try{ 
 			System.out.println("Removing all favorites.");
 			homePage.gotoMyStations();
 			IOSElement itemToRemove = getStationFromList(1);
@@ -188,9 +187,9 @@ public class HomePage extends Page {
 				}
 			}
 		}
-		catch(Exception e){
-			System.err.println("\nCould not remove favorites!\n");
-			e.printStackTrace();
+		catch(Exception e)
+		{
+			Page.handleError("Remove All Favorites test failed", "removeAllFavorites");
 		}
 	}
 	

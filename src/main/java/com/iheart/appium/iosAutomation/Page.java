@@ -1,5 +1,6 @@
 package com.iheart.appium.iosAutomation;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.PageFactory;
 
@@ -22,7 +23,7 @@ public class Page extends TestRoot{
 	@iOSFindBy(accessibility = "Don't Allow") public IOSElement dontAllowButton;
 	
 	// SUB NAVIGATION bar
-	@iOSFindBy(accessibility = "My Stations") public IOSElement myStations;
+	@iOSFindBy(id = "My Stations") public IOSElement myStations;
 	@iOSFindBy(accessibility = "For You") public IOSElement forYou;
 	@iOSFindBy(accessibility = "Perfect For") public IOSElement perfectFor;
 	@iOSFindBy(accessibility = "Local Radio") public IOSElement localRadio;
@@ -32,9 +33,11 @@ public class Page extends TestRoot{
 	static IOSDriver<IOSElement> driver;
 	static SideNavigationBar sideNavigationBar;
 	static Player player;
-	// Real device requires longer reponse time
+	// Real device requires longer response time
 	static boolean isRealDevice = false;
-//	Logger logger = Logger.getLogger(Page.class);
+    
+	public static StringBuffer errors = new StringBuffer(); 
+    public static Logger logger = Logger.getLogger(Page.class.getName());
 
 	public static final String baseListItemXpath = "//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell";
 	
@@ -230,6 +233,19 @@ public class Page extends TestRoot{
 		}
 		
 		return false;
+	}
+	
+	public static void handleError(String string1, String string2) 
+	{
+		try
+		{
+		   TestRoot.takeScreenshot( driver,  string2, "");
+		   logger.fatal(string1);
+		}
+		catch(Exception e)
+		{
+			System.out.println("Exception is thrown for handleError - taking screenshot.");
+		}
 	}
 }	
 

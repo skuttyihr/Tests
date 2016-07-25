@@ -32,6 +32,7 @@ public class TestPlayback extends TestRoot {
 	 * Changes and then checks Playback Volume
 	 */
 	private void assertPlaybackVolume(){
+	try{
 		System.out.println("Asserting Playback Volume");
 		int currentVolume = player.getVolume();
 		int expectedVolume = 50;
@@ -46,8 +47,13 @@ public class TestPlayback extends TestRoot {
 						"\nExpected Volume: " + expectedVolume,
 					isAbout(currentVolume, expectedVolume, 7));
 	}
+	catch(Exception e)
+	{
+		Page.handleError("Playback Volume Check Failed", "assertPlayBackVolume");
+	}
+	}
 	
-	////  Artist Station Tests  ////
+	
 	
 	/**
 		Searches for and plays a custom artist based station
@@ -63,6 +69,7 @@ public class TestPlayback extends TestRoot {
 	//Station was not added to favorites
 	@Test
 	public void testCustomArtistStationPlaybackAndLogout() throws Exception {
+	try{
 		LocalTime before = consoleLogStart("Testing Custom Artist Station Playback, and then logging out:"+ name.getMethodName());
 		String artist = "Florence + the Machine";
 		
@@ -94,12 +101,21 @@ public class TestPlayback extends TestRoot {
 		
 		consoleLogEnd(before, true,  "Tested Custom Artist Station Playback in TestPlayback.java");
 	}
+	catch(Exception e)
+	{
+		Page.handleError("Home Page Search failed", "testHomeSearch");
+	}
+	}
+
+	
+	
 	/**
 	 * Login to existing account, LoadUp Mini Player with an artist. Maximize mini Player to Full Size. Minimize Full Size. Verify the controls.
 	 * Check SidenavBar - LiveRadioPage, LiveArtistPage, PodcastsPage, PerfectFor, Listening history page. 
 	 */
-	@Test
+	//@Test
 	public void testCustomArtistStationMiniPlayer(){
+	try{
 		LocalTime before = consoleLogStart("Testing Custom Artist Station - Mini Player :"+ name.getMethodName());
 		String artist = "Halsey";  
 		// Log in
@@ -136,9 +152,14 @@ public class TestPlayback extends TestRoot {
 		System.out.print(", Listening History");
 		Assert.assertTrue("Mini player was not visible on listening history page", isVisible(miniPlayer.miniPlayerBar));
 		System.out.println(", Removing all favorites");
-		//homePage.removeAllFavorites(); //removed from after() and placed here. 
+		homePage.removeAllFavorites(); //removed from after() and placed here. 
 		boolean testResult = miniPlayerControls.noErrors();
 		consoleLogEnd(before, testResult,  "Tested Custom Artist Station - Mini Player in TestPlayback.java");
+	}
+	catch(Exception e)
+	{
+		Page.handleError("Custom Artist Mini Player test failed", "testCustomArtistStationMiniPlayer");
+	}
 	}
 	
 	
@@ -147,12 +168,14 @@ public class TestPlayback extends TestRoot {
 	 * We currently have a limit of 6 skips on our software. 
 	 */
 
-	@Test
+	//@Test
 	public void testArtistRadioSkipLimit(){
+		
+	try{
 		LocalTime before = consoleLogStart("Testing Artist Radio Skip Limit :"+ name.getMethodName());
 		// Create an account so we start with a fresh number of skips
 		System.out.println("Creating an account");
-		Assert.assertTrue("Could not create a new account", signupPage.createNewAccount());
+		Assert.assertTrue("Could not create a new account", signupPage.createAnAccount());
 		System.out.println("Selecting 1 genre, and handling possible popups.");
 		genrePage.selectGenre(1);
 		Page.handlePossiblePopUp();
@@ -172,16 +195,26 @@ public class TestPlayback extends TestRoot {
 		boolean result = !player.doSkip();
 		Assert.assertTrue("Should not have been able to skip", result);
 		consoleLogEnd(before, result,  "Tested Artist Radio Skip Limit in TestPlayback.java");
+	 }
+	catch(Exception e)
+	{
+		Page.handleError("Artist Radio skip limit test failed", "testArtistRadioSkipLimit");
+	}
 	}
 
+	
+	
+	
 	/**
 	 * Podcast Playback and controls. 
 	 * playPodcasts(), maximizeMiniPlayer(), 
 	 * check scrubber vs elapsed time, assertPlaybackVolume(), 
 	 * verifyControls
 	 */
-	@Test
+	//@Test
 	public void testPodcastPlaybackAndControls() {
+		
+	try{
 		LocalTime before = consoleLogStart("Testing Podcast Playback and Controls :"+ name.getMethodName());
 		
 		loginPage.loginWithoutVerifying();
@@ -231,6 +264,14 @@ public class TestPlayback extends TestRoot {
 
 		consoleLogEnd(before, miniPlayerVerification.noErrors(),  "Tested Podcast Playback and Controls in TestPlayback.java");
 	}
+	catch(Exception e)
+	{
+		Page.handleError("Podcast Playback and Controls test failed", "PodcastPlaybackAndControls");
+	}
+	}
+	
+	
+	
 	
 	/**
      * Live Radio Playback Tests
@@ -238,8 +279,9 @@ public class TestPlayback extends TestRoot {
      * mini and maxi player(), doScan() 7 times, verifyControls(), logout()
 	 */
 	
-	@Test
+	//@Test
 	public void testLiveRadioPlayback() {
+	try{
 		LocalTime before = consoleLogStart("Testing Live Radio Playback features :"+ name.getMethodName());
 		Assert.assertTrue("Was not able to login", loginPage.login());
 		// Play a live radio station and verify it.
@@ -273,6 +315,13 @@ public class TestPlayback extends TestRoot {
 		
 		consoleLogEnd(before, miniPlayerControls.noErrors(),  "Tested Live Radio Playback in TestPlayback.java");
 	}
+	catch(Exception e)
+	{
+		Page.handleError("Live Radio Playback test failed", "testLiveRadioPlayback");
+	}
+	}
+
+
 	
 	/**
 	 * Test Additional Info
@@ -280,9 +329,10 @@ public class TestPlayback extends TestRoot {
 	 * gotoHomePage, searchForPodCast, searchForStation, verifyAllMoreInfoItems again
 	 * 
 	 */
-	@Test
+	//@Test
 	 //Can't exit Lyrics view for some reason. Artist Bio button was not visible, Share option was not visible, Option to buy song was not present. 
 	public void testAdditionalInfo(){
+	try{
 		LocalTime before = consoleLogStart("Testing Additional Information :"+ name.getMethodName());
 		// Tests that the additional info ellipsis is present and functional for live stations, podcasts, and artist radio
 		loginPage.loginWithoutVerifying();
@@ -309,5 +359,10 @@ public class TestPlayback extends TestRoot {
 		boolean testResult = didPass(moreInfoErrors);
 		Assert.assertTrue("Errors with More Info page for live radio: " + moreInfoErrors, testResult);
 		consoleLogEnd(before, testResult,  "Tested Additional Information in TestPlayback.java");
+	}
+	catch(Exception e)
+	{
+		Page.handleError("Additional Info test failed", "testAdditionalInfo");
+	}
 	}
 }

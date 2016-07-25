@@ -21,6 +21,8 @@ public class TestPerfectFor extends TestRoot{
 	
 	@Test
 	public void testPlayingFromPerfectFor(){
+	try{
+	
 		LocalTime before = consoleLogStart("testPerfectFor() - Login, select Perfect For categories, doFavorite, getStationTitle, checkCategoryLabel, selectCategory, isStationAFavorite ");
 		// plays a few stations from different categories for perfect for tests
 		loginPage.loginWithoutVerifying();
@@ -60,5 +62,11 @@ public class TestPerfectFor extends TestRoot{
 		search.searchForStation("Perfect For");
 		Assert.assertTrue("Could not get to perfect for from search", isVisible(perfectFor.perfectForHeading));
 		consoleLogEnd(before, isVisible(perfectFor.perfectForHeading),  "Tested testPerfectFor() in TestPerfectFor.java.");
+	}
+	catch (Exception e)
+	{
+		Page.handleError("Play Perfect For test failed", "testPlayingFromPerfectFor");
+	}
+
 	}
 }

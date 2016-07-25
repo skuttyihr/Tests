@@ -14,23 +14,16 @@ public class TestNewAccount extends TestRoot {
 
 	@After
 	public void after() {
-		tearDown();
+		TestRoot.tearDown();
 	}
 	/**
-	 * Test: CreateNewAccount creates a new account in iOS. 
+	 * Test: CreateAnAccount creates a new account in iOS. 
 	 * It fills out email, password, zipcode, birth year(selection), gender, checks Terms and Conditions,
 	 * Creates account, and then uses enters a zip code and expects the Genre page to open. 
-	 * 
+	 * @throws Exception
 	 */
 	@Test
-	public void testCreateNewAccountWithDefaultParameters(){
-		Assert.assertTrue(signupPage.createNewAccount());
-		
-	}
-	@Test
-	public void testAllElementsOnSignUpPage(){
-		//We only care about console output here
-		signupPage.checkAllElements();
-		Assert.assertTrue(true);
+	public void test_createAnAccount() throws Exception {
+		Assert.assertTrue("Could not sign up for a new account.", signupPage.createAnAccount());
 	}
 }

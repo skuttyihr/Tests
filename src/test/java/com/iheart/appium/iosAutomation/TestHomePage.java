@@ -54,7 +54,7 @@ public class TestHomePage extends TestRoot {
 	/**
 	 * Log in, add to favorites from home, checks if sattion is in favorites. 
 	 */
-	@Test
+	//@Test
 	public void testAddToFavoritesFromHome(){
 		LocalTime before = consoleLogStart("testAddToFavoritesFromHome() - Login, Swipe Station and try to Add to Favorites ");
 		loginPage.loginWithoutVerifying();
@@ -106,7 +106,7 @@ public class TestHomePage extends TestRoot {
 	/**
 	 * Log in, load up a station, check that it's in recents, add it to favorites, check that it's a favorite as well as a recent. 
 	 */
-	@Test
+	//@Test
 	public void testAddToFavoritesFromRecents(){
 		LocalTime before = consoleLogStart("testAddToFavoritesFromRecents() - Log in, load up a station, check that it's in recents, add it to favorites, check that it's a favorite as well as a recent. ");
 		
@@ -152,7 +152,7 @@ public class TestHomePage extends TestRoot {
 	/**
 	 * testAddToFavoritesFromLocalRadio- Log in, go to Live/Local Radio tab, add a station, check my stations for it being there
 	 */
-	@Test
+	//@Test
 	public void testAddToFavoritesFromLocalRadio(){  
 		LocalTime before = consoleLogStart("testAddToFavoritesFromLocalRadio- Log in, go to Live/Local Radio tab, add a station, check my stations for it being there ");
 		loginPage.loginWithoutVerifying();
@@ -196,7 +196,7 @@ public class TestHomePage extends TestRoot {
 		// Scroll to bottom of each list, verify what's visible, then keep scrolling
 		// Use XPath to grab visible names, as any other method will hold them even if they're not visible
 	 */
-	@Test
+	//@Test
 	public void testShowMore(){  
 		LocalTime before = consoleLogStart("testShowMore() is testing the Show More on the For You and My Stations");
 		
@@ -217,7 +217,7 @@ public class TestHomePage extends TestRoot {
 	/**
 	 * // Test that we can scroll to the bottom, then jump back to the top
 	 */
-	@Test
+	//@Test
 	public void testScrollAndTapBar(){   
 		LocalTime before = consoleLogStart("testScrollAndTapBar()");
 		
