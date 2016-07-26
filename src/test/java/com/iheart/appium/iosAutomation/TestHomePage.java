@@ -152,7 +152,7 @@ public class TestHomePage extends TestRoot {
 	/**
 	 * testAddToFavoritesFromLocalRadio- Log in, go to Live/Local Radio tab, add a station, check my stations for it being there
 	 */
-	//@Test
+	@Test
 	public void testAddToFavoritesFromLocalRadio(){  
 		LocalTime before = consoleLogStart("testAddToFavoritesFromLocalRadio- Log in, go to Live/Local Radio tab, add a station, check my stations for it being there ");
 		loginPage.loginWithoutVerifying();

@@ -42,7 +42,7 @@ public class TestLogin extends TestRoot {
 	// Only fails when ran in a suite
         // Starting with a reset seems to help
 
-    //@Test(timeout=200000)
+    @Test(timeout=200000)
 	public void testLoginViaFacebook()  {
 
 		LocalTime before = consoleLogStart("Testing login via Facebook.");
@@ -59,7 +59,7 @@ public class TestLogin extends TestRoot {
 		consoleLogEnd(before, testResult, "Tested Log In via Email.");
 	}
 	
-	//@Test
+	@Test
 	public void testIOSElementsOnPage() {
 		LocalTime before = consoleLogStart("Testing IOSElements on Log In Page");
 		loginPage.checkValuesOfElements();

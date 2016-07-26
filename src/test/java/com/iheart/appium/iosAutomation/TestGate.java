@@ -32,7 +32,7 @@ public class TestGate extends TestRoot {
 	 * Swipe background
 	 * Make sure background transitions on its own as well
 	 */
-	//@Test
+	@Test
 	public void  testBackground() {
 		LocalTime before = consoleLogStart("Testing Gate and backgrounds in testBackground().");
 		Set<String> shouldBe = new HashSet<String>();
@@ -125,7 +125,7 @@ public class TestGate extends TestRoot {
 				notVisible != null && notVisible.length() <= 0);
 	}
 	
-	//@Test
+	@Test
 	public void testCreateAccountLogInAndMaybeLater(){
 		LocalTime before = consoleLogStart("Testing testCreateAccountLogInAndMaybeLater().");
 		validateGate(true);
