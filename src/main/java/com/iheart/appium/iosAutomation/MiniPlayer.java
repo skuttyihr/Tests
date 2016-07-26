@@ -72,11 +72,13 @@ public class MiniPlayer extends Page {
 	
 	public boolean maximizeMiniPlayer(){
 		System.out.println("Maximizing the mini player");
-		waitForElementToBeVisible(miniPlayerBar, 3);
+		waitForElementToBeVisible(miniPlayerBar, 5);
 		if(!isVisible(miniPlayerBar)){
 			return false;
 		}
 		miniPlayerBar.click();
+		System.out.println("in maximize player");
+
 		return player.isPlaying();
 	}
 	

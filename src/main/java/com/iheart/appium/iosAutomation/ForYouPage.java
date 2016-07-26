@@ -57,7 +57,7 @@ public class ForYouPage extends Page {
 		} // for
 
 		miniPlayer.maximizeMiniPlayer();
-		
+		System.out.println("in ForYou.chooseLiveRadioToPlay");
 		return myStation;
 
 	}
