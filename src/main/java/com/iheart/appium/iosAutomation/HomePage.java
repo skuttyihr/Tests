@@ -162,6 +162,7 @@ public class HomePage extends Page {
 	
 	/**
 	 * Removes all favorites, useful at the end of testing
+	 * @throws Exception 
 	 */
 	public void removeAllFavorites(){
 		try{ 
@@ -189,7 +190,7 @@ public class HomePage extends Page {
 		}
 		catch(Exception e)
 		{
-			Page.handleError("Remove All Favorites test failed", "removeAllFavorites");
+			handleError("Remove All Favorites test failed", "removeAllFavorites");
 		}
 	}
 	
@@ -444,7 +445,8 @@ public class HomePage extends Page {
 	}
 	
 	public boolean removeFavorite(int itemToRemove){
-		System.out.println("removeFavorite("+ itemToRemove + ")");
+		
+		//System.out.println("removeFavorite("+ itemToRemove + ")");
 		boolean removedFavorite = false;
 		// First assert that it is a favorite
 		IOSElement favorites = waitForVisible(driver, By.name("Favorite Stations"), 10);

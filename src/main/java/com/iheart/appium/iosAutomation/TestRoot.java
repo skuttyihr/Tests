@@ -259,7 +259,7 @@ public class TestRoot {
 				e.printStackTrace();
 			}
 		}
-		System.out.println("############################################################################");
+		System.out.println("\n############################################################################");
 	}
 	
 	//// Utility Methods ////
@@ -916,7 +916,7 @@ public class TestRoot {
 	public static void consoleLogEnd(LocalTime begin, boolean testResult, String endMessage)
 	{
 		Duration seconds = Duration.between(begin, LocalTime.now());
-		String result = testResult ? "Test Passed. " : "Test Failed. ";
+		String result = testResult ? "TEST PASSED. " : "TEST FAILED. ";
 		System.out.println(result + endMessage + "    [ "+ seconds.getSeconds() + " seconds ]");		
 	}
 	

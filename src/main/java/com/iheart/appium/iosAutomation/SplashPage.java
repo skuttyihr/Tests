@@ -113,10 +113,9 @@ public class SplashPage extends Page {
 	}
 	
 	public boolean clickCreateAccount(){
-		System.out.println("3");
-		waitForElementToBeVisible(createAccount, 6);
+		waitForElementToBeVisible(createAccount, 3);
 		createAccount.click();
-		waitForElementToBeVisible(signupPage.getCreateAccount(), 5);
+		waitForElementToBeVisible(signupPage.getCreateAccount(), 4);
 		return isVisible(signupPage.getCreateAccount());
 	}
 }

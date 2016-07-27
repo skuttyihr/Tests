@@ -5,13 +5,24 @@ import java.time.LocalTime;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestRule;
+import org.junit.rules.TestWatcher;
+import org.junit.runner.Description;
 import org.openqa.selenium.By;
 
 import io.appium.java_client.ios.IOSElement;
 
 public class TestPages extends TestRoot {
 
+	@Rule
+	public TestRule watcher = new TestWatcher() {
+	    protected void starting(Description description) {
+	       System.out.println("\nStarting test: " + description.getMethodName());
+	    }
+	 };
+	 
 	@Before
 	public void setUp() throws Exception {
 		setup();

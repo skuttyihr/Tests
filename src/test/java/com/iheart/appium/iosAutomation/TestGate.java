@@ -8,10 +8,22 @@ import java.util.Set;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestRule;
+import org.junit.rules.TestWatcher;
+import org.junit.runner.Description;
 
 public class TestGate extends TestRoot {
 
+	@Rule
+	public TestRule watcher = new TestWatcher() {
+	    protected void starting(Description description) {
+	       System.out.println("\nStarting test: " + description.getMethodName());
+	    }
+	 };
+	 
+	 
 	@Before
 	public void setUp() throws Exception {
 		setup();
@@ -129,7 +141,6 @@ public class TestGate extends TestRoot {
 	public void testCreateAccountLogInAndMaybeLater(){
 		LocalTime before = consoleLogStart("Testing testCreateAccountLogInAndMaybeLater().");
 		validateGate(true);
-		System.out.println("test done 1");
 		Assert.assertTrue("Could not click log in", splashPage.clickLogIn());
 		loginPage.tapBack();
 		Assert.assertTrue("Could not click get started", splashPage.clickCreateAccount());		

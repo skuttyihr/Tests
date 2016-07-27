@@ -53,7 +53,7 @@ public class SignUpPage extends Page {
 
 		// Generate a random email
 		String _email = getCurrentDateInMilli() + "@mailinator.com";
-		System.out.println("See randomEmail:" + _email);
+		System.out.println("Random email generated :" + _email);
 
 		//Fill out create account form with email, password, zip, birthyear, gender, and clicking I Agree.
 		email.sendKeys(_email);
@@ -61,28 +61,23 @@ public class SignUpPage extends Page {
 		zip.sendKeys("10001");
 		birthYear.sendKeys("1988");
 		gender_male.click();
-		//iAgree.click();  --Box is no longer showing nor needs to be clicked
-		//Wait  for Create button to be visible
-		System.out.println("See randomEmail:" + _email);
 
-		TestRoot.waitForElementToBeVisible(create, 5);
-		System.out.println("See randomEmail:" + _email);
+		//Wait  for Create button to be visible
+		TestRoot.waitForElementToBeVisible(create, 3);
 
 		//Click Create button, the enter Zip to prepare GenrePage 
 		create.click();
-		System.out.println("create clicked");
-		enterZip();
+		enterZip();		
+		TestRoot.waitForElementToBeVisible(genrePage.genrePicker, 4);
 		
-		System.out.println("zip entered");
-		TestRoot.waitForElementToBeVisible(genrePage.genrePicker, 5);
-
 		// verify that 'Tell us what you like' page shows up
+		System.out.println("Sign Up With Email Passed");
 		return TestRoot.isVisible(genrePage.genrePicker) || TestRoot.isVisible(homePage.forYou);
 	}
 	catch(Exception e)
 		{
-    		handleError("Email Sign Up Failed", "singup.createAnAccount");
-    		logger.fatal("Email Sign Up Failed");
+    		handleError("Email Sign Up Failed", "signup.createAnAccount");
+    		System.out.println("Sign Up With Email Failed");
     		return false;
 		}
 	}

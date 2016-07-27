@@ -5,10 +5,21 @@ import java.time.LocalTime;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestRule;
+import org.junit.rules.TestWatcher;
+import org.junit.runner.Description;
 
 public class TestGenre extends TestRoot{
 
+	@Rule
+	public TestRule watcher = new TestWatcher() {
+	    protected void starting(Description description) {
+	       System.out.println("\nStarting test: " + description.getMethodName());
+	    }
+	 };
+	
 	@Before
 	public void setUp() throws Exception {
 		setup();
@@ -28,6 +39,7 @@ public class TestGenre extends TestRoot{
 	public void testGenreGameForNewAccount(){
 		LocalTime before = consoleLogStart("Testing Genre Game for New Account.");
 		Assert.assertTrue("Could not create a new account and get the genre picker", signupPage.createAnAccount());
+		
 		// Assert all genres are present
 		String missingGenres = genrePage.verifyGenres();
 		Assert.assertTrue("Not all expected genres were present!\nMissing:\n" + missingGenres, missingGenres.length() <= 0);

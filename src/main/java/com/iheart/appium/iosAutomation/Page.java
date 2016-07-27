@@ -36,9 +36,6 @@ public class Page extends TestRoot{
 	// Real device requires longer response time
 	static boolean isRealDevice = false;
     
-	public static StringBuffer errors = new StringBuffer(); 
-    public static Logger logger = Logger.getLogger(Page.class.getName());
-
 	public static final String baseListItemXpath = "//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell";
 	
 	public static final String screenshot_folder = "iosScreenshots";
@@ -235,16 +232,16 @@ public class Page extends TestRoot{
 		return false;
 	}
 	
-	public static void handleError(String string1, String string2) 
+	public static void handleError(String string1, String string2)
 	{
 		try
 		{
 		   TestRoot.takeScreenshot( driver,  string2, "");
-		   logger.fatal(string1);
 		}
 		catch(Exception e)
 		{
-			System.out.println("Exception is thrown for handleError - taking screenshot.");
+			System.out.println("Exception is thrown for handleError.");
+
 		}
 	}
 }	

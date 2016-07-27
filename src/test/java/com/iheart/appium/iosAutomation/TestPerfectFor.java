@@ -13,6 +13,14 @@ import org.junit.runner.Description;
 
 public class TestPerfectFor extends TestRoot{
 
+
+	@Rule
+	public TestRule watcher = new TestWatcher() {
+	    protected void starting(Description description) {
+	       System.out.println("\nStarting test: " + description.getMethodName());
+	    }
+	 };
+	 
 	@Before
 	public void setUp() throws Exception {
 		TestRoot.setup();
@@ -23,12 +31,6 @@ public class TestPerfectFor extends TestRoot{
 		TestRoot.tearDown();
 	}
 	
-	@Rule
-	public TestRule watcher = new TestWatcher() {
-	    protected void starting(Description description) {
-	       System.out.println("\nStarting test: " + description.getMethodName());
-	    }
-	 };
 	
 	@Test
 	public void testPlayingFromPerfectFor(){

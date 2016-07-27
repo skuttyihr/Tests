@@ -59,22 +59,23 @@ public class TestLogin extends TestRoot {
 		consoleLogEnd(before, testResult, "Tested Log In via Email.");
 	}
 	
-	@Test
+	//@Test
 	public void testIOSElementsOnPage() {
 		LocalTime before = consoleLogStart("Testing IOSElements on Log In Page");
 		loginPage.checkValuesOfElements();
 		consoleLogEnd(before, true, "Tested IOSElements");
 	};
 	
+	
 	// Since Google opens Safari, we can't access those elements. 
 	//@Ignore
-	@Test
+	//@Test
 	public void testLoginViaGoogle(){
 		
-		//6.4.1
-		Assert.assertTrue("Google Login Done", loginPage.loginViaGoogle());
+	//6.4.1		
+	Assert.assertTrue("Google Login Done", loginPage.loginViaGoogle());
 				
-		/*
+		
 		int iOSVersion = 0;
 		try{
 			iOSVersion = Integer.parseInt(PLATFORM_VERSION.charAt(0) + "");
@@ -85,7 +86,7 @@ public class TestLogin extends TestRoot {
 		 }
 				else{
 					System.out.println("Skipping Google+ login for older OS: " + iOSVersion);
-				}*/
+			}
 		
 	}
 }

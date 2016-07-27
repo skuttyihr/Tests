@@ -6,7 +6,11 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestRule;
+import org.junit.rules.TestWatcher;
+import org.junit.runner.Description;
 
 import io.appium.java_client.ios.IOSElement;
 
@@ -14,7 +18,14 @@ public class TestHomePage extends TestRoot {
 
 	boolean createdFavorite = false; // Set to true by tests that add to favorites
 	
-	@Before
+	@Rule
+	public TestRule watcher = new TestWatcher() {
+	    protected void starting(Description description) {
+	       System.out.println("\nStarting test: " + description.getMethodName());
+	    }
+	 };
+	 
+	 @Before
 	public void setUp() throws Exception {
 		TestRoot.setup();
 		createdFavorite = false;
@@ -51,10 +62,12 @@ public class TestHomePage extends TestRoot {
 		Assert.assertTrue("Lists before and after swiping and clicking show more should not have been identical!", 
 				!visibleItems.equals(visibleItemsAfterSwipe));
 	}
+
+	
 	/**
 	 * Log in, add to favorites from home, checks if sattion is in favorites. 
 	 */
-	//@Test
+	//@Test  
 	public void testAddToFavoritesFromHome(){
 		LocalTime before = consoleLogStart("testAddToFavoritesFromHome() - Login, Swipe Station and try to Add to Favorites ");
 		loginPage.loginWithoutVerifying();
@@ -103,6 +116,7 @@ public class TestHomePage extends TestRoot {
 		consoleLogEnd(before, stationLocation <= 0 ,  "Tested testAddToFavoritesFromHome() in TestHomePage.java."); //Testing the inverse because it's assertFalse
 	}
 	
+
 	/**
 	 * Log in, load up a station, check that it's in recents, add it to favorites, check that it's a favorite as well as a recent. 
 	 */
@@ -115,6 +129,7 @@ public class TestHomePage extends TestRoot {
 		
 		String artist = "Tegan and Sara";
 		searchAndGoHome(artist);
+		
 		// Get to my stations (favorites and recents)
 		homePage.gotoMyStations();
 		int artistValue = homePage.isStationARecent(artist); 
@@ -123,11 +138,12 @@ public class TestHomePage extends TestRoot {
 		Assert.assertTrue("Encountered errors adding recent item to favorites by swiping and tapping button.",
 				didPass(toggleErrors));
 		Assert.assertTrue("Station was not added to favorites", homePage.isStationAFavorite(artist) > 0);
+		
 		// Should still be in recents
 		artistValue = homePage.isStationARecent(artist);
 		if(artistValue <= 0){
 			System.out.println("Could not find station in recent, trying again.");
-			// Try again. 
+		// Try again. 
 			sideNavBar.gotoMyStationsPage();
 			artistValue = homePage.isStationARecent(artist);
 		}
@@ -149,11 +165,16 @@ public class TestHomePage extends TestRoot {
 		Assert.assertTrue("Station was not removed from favorites", favoritePos < 0);
 		consoleLogEnd(before, favoritePos < 0,  "Tested testAddToFavoritesFromRecents() in TestHomePage.java.");
 	}
+	
+	
+	
 	/**
 	 * testAddToFavoritesFromLocalRadio- Log in, go to Live/Local Radio tab, add a station, check my stations for it being there
 	 */
+	
 	@Test
 	public void testAddToFavoritesFromLocalRadio(){  
+		
 		LocalTime before = consoleLogStart("testAddToFavoritesFromLocalRadio- Log in, go to Live/Local Radio tab, add a station, check my stations for it being there ");
 		loginPage.loginWithoutVerifying();
 		createdFavorite = true;
@@ -191,12 +212,14 @@ public class TestHomePage extends TestRoot {
 		consoleLogEnd(before, stationIsAFavorite && stationIsARecent,  "Tested testAddToFavoritesFromLocalRadio() in TestHomePage.java.");
 	}
 	
+	
+
 	/**
 	 * // Show More is on For You and My Stations
 		// Scroll to bottom of each list, verify what's visible, then keep scrolling
 		// Use XPath to grab visible names, as any other method will hold them even if they're not visible
 	 */
-	//@Test
+	@Test
 	public void testShowMore(){  
 		LocalTime before = consoleLogStart("testShowMore() is testing the Show More on the For You and My Stations");
 		
@@ -214,10 +237,11 @@ public class TestHomePage extends TestRoot {
 		consoleLogEnd(before, true,  "Tested testShowMore() in TestHomePage.java");
 	}
 	
+	
 	/**
 	 * // Test that we can scroll to the bottom, then jump back to the top
 	 */
-	//@Test
+	@Test
 	public void testScrollAndTapBar(){   
 		LocalTime before = consoleLogStart("testScrollAndTapBar()");
 		

@@ -19,10 +19,14 @@ public class GenrePage extends Page {
 	}
 
 	// Elements
-	@iOSFindBy(accessibility = "IHRiPhoneGenrePickerView") public IOSElement genrePicker;
-	@iOSFindBy(accessibility = "Done") public IOSElement genreDone;
-	@iOSFindBy(accessibility = "Cancel") public IOSElement genreCancel;
-	@iOSFindBy(accessibility = "Improve Recommendations") public IOSElement improveRecommendationsButton;
+	//@iOSFindBy(xpath = "IHRiPhoneGenrePickerView") public IOSElement genrePicker;
+	
+	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]") public IOSElement genrePicker;
+	@iOSFindBy(id="Hip Hop and R&B") public IOSElement genre;
+	//Dance
+	@iOSFindBy(id = "Done") public IOSElement genreDone;
+	@iOSFindBy(id = "Cancel") public IOSElement genreCancel;
+	@iOSFindBy(id = "Improve Recommendations") public IOSElement improveRecommendationsButton;
 	
 	// Behavior methods
 	// By position in list
@@ -42,7 +46,6 @@ public class GenrePage extends Page {
 	 * @return
 	 */
 	private boolean clickGenreElement(IOSElement genre){
-		System.out.println("ingenre picker");
 		boolean couldBeFound = false;
 		if(isVisible(genre)){
 			genre.click();
@@ -109,7 +112,7 @@ public class GenrePage extends Page {
 	public void selectGenre(String g, boolean clickDone) {
 		// Examples: Top 40 & Pop, Country, Hip Hop and R&B, Alternative, etc
 		try{
-			IOSElement genre = waitForVisible(driver, By.name(g), 10);
+			IOSElement genre = waitForVisible(driver, By.name(g), 6);
 			if(!isGenreSelected(genre)){
 				clickGenreElement(genre);
 			}

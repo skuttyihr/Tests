@@ -606,8 +606,6 @@ public class Player extends Page {
 	}
 	
 	public boolean isPlaying(){
-		System.out.println("IN PLAYER.ISPLAYING()");
-
 		return isPlaying(getType());
 	}
 	
@@ -651,7 +649,7 @@ public class Player extends Page {
 	 * @return
 	 */
 	public String getType(){
-		System.out.println("IN PLAYER.GETTYPE()");
+		
 		String[] types = {"artist", "podcast", "live"};
 		int type = 0; 
 		
@@ -917,8 +915,6 @@ public class Player extends Page {
 		waitForElementToBeVisible(minimizeButton, 5);
 		if(isVisible(minimizeButton)){
 			minimizeButton.click();
-			System.out.println("in Player.miniplayer");
-
 			return isVisible(miniPlayer.miniPlayerBar);
 		}
 		else{
@@ -1099,6 +1095,7 @@ public class Player extends Page {
 		return err.getErrors();
 	}
 	public String verifyAllMoreInfoItems(){
+		
 		System.out.println("verifyAllMoreInfoItems()");
 		Errors err = new Errors();
 		String type = getType();
