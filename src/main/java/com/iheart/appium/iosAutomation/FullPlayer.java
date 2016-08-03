@@ -114,10 +114,7 @@ public class FullPlayer extends Page {
     public void showAllElements(){
     	
     	System.out.println("Checking NavBar elements...");
-    	//printElementInformation(NavBarBackPlayerUIButton);
-    	//printElementInformation(NavBarSideMenuButtonUIButton);
-    	//printElementInformation(NavBarRightDisableableBarButtonUIButton);
-    	//printElementInformation(NavBarSearchBarButtonUIButton);
+
     	printElementInformation(PlayerViewMinimizePlayerDownarrowUIButton);
     	printElementInformation(NavBarFavoriteButtonUIButton);
     	printElementInformation(NavBarShareButtonUIButton);
@@ -211,6 +208,10 @@ public class FullPlayer extends Page {
     	//printElementInformation(PlayerBannerViewDismissButtonUIButton);
     	//printElementInformation(PlayerBannerBlackOverlayUIView);
     	//printElementInformation(IHRPlayerTitleViewHeartViewUIImageView);  This basically needs to be removed. 
+    	//printElementInformation(NavBarBackPlayerUIButton);
+    	//printElementInformation(NavBarSideMenuButtonUIButton);
+    	//printElementInformation(NavBarRightDisableableBarButtonUIButton);
+    	//printElementInformation(NavBarSearchBarButtonUIButton);
     	
     }
     
@@ -545,6 +546,7 @@ public class FullPlayer extends Page {
     	}
     }
     
+   
     /**
      * Returns a String of the type of Play Button it is. Could be Play, Pause, Stop etc. 
      * @return
@@ -571,6 +573,18 @@ public class FullPlayer extends Page {
     public void clickMoreInfoButton(){
     	System.out.println("clickMoreInfoButton()...");
     	IHRPlayerMoreButtonUIButton.click();
+    }
+    /**
+     * This checks if the OptionMenuView is displayed, indicating that the More Info button was clicked on FullPlayer
+     * This means that Go to Artist Profile, Lyrics, and Buy Song buttons should be visible, and a Cancel Button can be clicked as well.
+     * use fullPlayer.clickMoreCancelButton()
+     * @return
+     */
+    public boolean isOptionMenuOpen(){
+    	boolean isDisplayed  = IHROptionMenuViewMenuContainerUIView.isDisplayed();
+    	System.out.println("isOptionMenuOpen() : " + isDisplayed);
+    	return isDisplayed;
+    	
     }
     
     /**

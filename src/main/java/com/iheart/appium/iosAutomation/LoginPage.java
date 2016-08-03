@@ -19,7 +19,7 @@ import io.appium.java_client.pagefactory.iOSFindBy;
 public class LoginPage extends Page {
 
 	//Nav Bar Elements
-	@iOSFindBy(accessibility = "NavBarBackButton") private IOSElement NavBarBackButton;
+	@iOSFindBy(accessibility ="NavBar-BackButton-UIButton") private IOSElement NavBarBackButton;
 	@iOSFindBy(xpath="//UIAApplication[1]/UIAWindow[1]/UIANavigationBar[1]/UIAStaticText[2]") private IOSElement NavBarTitle;
 	//Main container contains Email, Password, Log In and Forgot your password?
 	@iOSFindBy(accessibility = "IHRiPhoneLoginView-MainContainer-UIView") private IOSElement IHRiPhoneLoginViewMainContainerUIView;
