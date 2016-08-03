@@ -199,6 +199,11 @@ public class SignUpPage extends Page {
 		printElementInformation(IHRAuthorizationViewGoogleButtonUIButton);
 	}
 	
+	/**
+	 * createNewAccount -  Clicks on Create Account Button on Onboarding Page and then enters default values into the fields. 
+	 * Should return the user to the homePage
+	 * @return
+	 */
 	public boolean createNewAccount(){
 		onboardingPage.clickOnboardingCreateAccountButton();
 		System.out.println("Creating a new account with default parameters.");

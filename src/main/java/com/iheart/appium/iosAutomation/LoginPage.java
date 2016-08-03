@@ -105,12 +105,14 @@ public class LoginPage extends Page {
 	 * @param emailAddress
 	 */
 	public void enterLoginEmailAddress(String emailAddress){
-		System.out.println("enterLoginEmailAddress()");
+		
 		IHRAuthorizationViewEmailAddressTextField.click();
 		if(emailAddress!= null){
+			System.out.println("enterLoginEmailAddress() : "+ emailAddress);
 			IHRAuthorizationViewEmailAddressTextField.sendKeys(emailAddress);
 		}
 		else {
+			System.out.println("enterLoginEmailAddress() : " + IHEARTUSERNAME);
 			IHRAuthorizationViewEmailAddressTextField.sendKeys(IHEARTUSERNAME);
 		}
 	}
@@ -125,12 +127,14 @@ public class LoginPage extends Page {
 	 * @param password
 	 */
 	public void enterLoginPassword(String password){
-		System.out.println("enterLoginPassword()");
+		
 		IHRAuthorizationViewPasswordTextField.click();
 		if(password!= null){
+			System.out.println("enterLoginPassword() : "+password);
 			IHRAuthorizationViewPasswordTextField.sendKeys(password);
 		}
 		else {
+			System.out.println("enterLoginPassword() : " + IHEARTPASSWORD);
 			IHRAuthorizationViewPasswordTextField.sendKeys(IHEARTPASSWORD);
 		}
 	}
@@ -175,7 +179,7 @@ public class LoginPage extends Page {
 	 * Selects Alternative genre. 
 	 */
 	public void loginWithoutVerifying(){
-		System.out.println("about to loginWithoutVerifying()");
+		System.out.println("about to loginWithoutVerifying()...");
 		onboardingPage.clickOnboardingLoginButton();
 		waitForElementToBeVisible(IHRAuthorizationViewEmailAddressTextField, 5);
 		enterLoginEmailAddress(IHEARTUSERNAME);
@@ -197,7 +201,39 @@ public class LoginPage extends Page {
 		}
 		// Dismiss stay connected popup that sometimes shows up AFTER genre picker
 		chooseStayConnected(false);
-		System.out.println("Logged in without verifying");
+		System.out.println("Logged in without verifying.");
+	}
+	
+	/**
+	 * Logs in without checking settings.isLoggedIn(). 
+	 * Enters userName and password and clicks Log in. 
+	 * Minimizes player, handles pop-ups.
+	 * Selects Alternative genre. 
+	 */
+	public void loginWithoutVerifying(String email, String password){
+		System.out.println("about to loginWithoutVerifying()...");
+		onboardingPage.clickOnboardingLoginButton();
+		waitForElementToBeVisible(IHRAuthorizationViewEmailAddressTextField, 5);
+		enterLoginEmailAddress(email);
+		enterLoginPassword(password);
+		System.out.println("Sent keys for Username and Password.");
+		clickLogInAuthButton();
+		System.out.println("Clicked Log In form button.");
+		chooseStayConnected(false);
+		player.minimizePlayer();
+		// Dismiss zip code
+		Page.enterZip();
+		// Dismiss stay connected popup
+		Page.handlePossiblePopUp();
+		System.out.println("Dismissed Zip code and handled possible popups.");
+		// Select Genre
+		if(waitForVisible(driver, By.name("IHRiPhoneGenrePickerView"), 5) != null){
+			genrePage.selectGenre("Alternative");
+			System.out.println("Selected 'Alternative' genre.");
+		}
+		// Dismiss stay connected popup that sometimes shows up AFTER genre picker
+		chooseStayConnected(false);
+		System.out.println("Logged in without verifying.");
 	}
 
 
