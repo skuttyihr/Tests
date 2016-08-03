@@ -31,7 +31,7 @@ public class Page extends TestRoot{
 	
 	static IOSDriver<IOSElement> driver;
 	static SideNavigationBar sideNavigationBar;
-	static Player player;
+	static FullPlayer fullPlayer;
 	// Real device requires longer reponse time
 	static boolean isRealDevice = false;
 //	Logger logger = Logger.getLogger(Page.class);
@@ -60,8 +60,8 @@ public class Page extends TestRoot{
 		driver = _driver;
 	}
 
-	public static void setPlayer(Player _player) {
-		player = _player;
+	public static void setPlayer(FullPlayer _fullPlayer) {
+		fullPlayer = _fullPlayer;
 	}
 
 	public static void setSideNavigationBar(SideNavigationBar _sideNavigationBar) {
@@ -147,7 +147,7 @@ public class Page extends TestRoot{
 	public void getBack(){
 		System.out.println("Page.getBack()");
 		try{
-			player.back.click();
+			//fullPlayer.clickBackButton();
 		}
 		catch(Exception e){
 			System.out.println("caught exception in getBack()");

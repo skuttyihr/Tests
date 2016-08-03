@@ -49,8 +49,8 @@ public class TestPages extends TestRoot {
 				isVisible(findElement(driver, By.name("Artist Radio"))));
 		sideNavBar.gotoPodcastsPage();
 		Assert.assertTrue("Podcast page should not have logo", !isVisible(Page.iheartradio_logo_full));
-		Assert.assertTrue("Podcast page did not have title of 'Podcast'", 
-				isVisible(findElement(driver, By.name("Podcast"))));
+		Assert.assertTrue("Podcast page did not have title of 'Podcasts'", 
+				isVisible(findElement(driver, By.name("Podcasts"))));
 		sideNavBar.gotoPerfectFor();
 		Assert.assertTrue("Perfect For page should not have logo", !isVisible(Page.iheartradio_logo_full));
 		Assert.assertTrue("Perfect For page did not have title of 'Perfect For'", 

@@ -124,7 +124,7 @@ public class Player extends Page {
 
 	public Player(IOSDriver<IOSElement> _driver) {
 		super(_driver);
-		setPlayer(this);
+		//setPlayer(this);
 	}
 
 	// ******* END OF PLAYER for live radio ********

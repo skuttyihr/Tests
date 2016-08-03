@@ -67,6 +67,7 @@ public class MiniPlayer extends Page {
 	 * Clicks the Pause, Play, Stop Button. There is only one button the page but it can have different names / icons / animations. 
 	 */
 	public void clickPlayPauseButton(){
+		waitForElementToBeVisible(MiniPlayerViewPlayButtonUIButton, 5);
 		System.out.println("clickPlayPauseButton()");
 		MiniPlayerViewPlayButtonUIButton.click();
 	}

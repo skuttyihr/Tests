@@ -67,6 +67,7 @@ public class TestRoot {
 	protected static HomePage homePage;
 	
 	protected static Player player;
+	protected static FullPlayer fullPlayer;
 	protected static SideNavigationBar sideNavBar;
 	protected static ForYouPage forYouPage;
 	protected static CustomRadio customRadio;
@@ -232,6 +233,7 @@ public class TestRoot {
 		loginPage = new LoginPage(driver);
 		signupPage = new SignUpPage(driver);
 		player = new Player(driver);
+		fullPlayer = new FullPlayer(driver);
 		sideNavBar = new SideNavigationBar(driver);
 
 		forYouPage = new ForYouPage(driver);
@@ -260,16 +262,22 @@ public class TestRoot {
 	}
 	
 	public boolean printElementInformation(IOSElement iosElement){
-		String[] aId = iosElement.toString().split(">");
-		String getText = iosElement.getText();
-		if(!getText.equals("")){
-			System.out.println( aId[1] + "  text: ["+ iosElement.getText() + "]  tagName: ["+iosElement.getTagName()+ "] isDisplayed: [" +iosElement.isDisplayed() + "]" ) ;
+		if(iosElement == null){
+			System.out.println("is NULL! Returning false. ");
+			return false;
+		}else{
+			String[] aId = iosElement.toString().split(">");
+			String getText = iosElement.getText();
+			if(!getText.equals("")){
+				System.out.println( "  ["+aId[1] + "  text: ["+ getText + "]  tagName: ["+iosElement.getTagName()+ "] isDisplayed: [" +iosElement.isDisplayed() + "] isEnabled: [" + iosElement.isEnabled() + "] isSelected: ["+ iosElement.isSelected() +"]." ) ;
+			}
+			else{ //Element has no Text, not printing it. 
+				System.out.println("  ["+ aId[1] + " tagName: ["+iosElement.getTagName()+ "] isDisplayed: [" +iosElement.isDisplayed() + "] isEnabled: [" + iosElement.isEnabled() + "] isSelected: ["+ iosElement.isSelected() +"].") ;
+			}
+		
+			return iosElement.isDisplayed();
 		}
-		else{ //Element has no Text, not printing it. 
-			System.out.println( aId[1] + " tagName: ["+iosElement.getTagName()+ "] isDisplayed: [" +iosElement.isDisplayed() + "]") ;
-		}
-	
-		return iosElement.isDisplayed();
+		
 	}
 
 	protected static void tearDown() {
@@ -747,7 +755,9 @@ public class TestRoot {
 		try{
 			returnElement = findElement(d, by);
 		}
-		catch(Exception e){}
+		catch(Exception e){
+			System.out.println("waitForVisible() failed because the element could not be found...  by = " + by.toString());
+		}
 		return returnElement;
 	}
 	

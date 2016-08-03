@@ -34,6 +34,10 @@ public class GenrePage extends Page {
 				By.xpath("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell[" + g + "]"), 10);
 	}
 	
+	public void clickDone(){
+		genreDone.click();
+	}
+	
 	/**
 	 * Can't call normal click because it doesn't know to scroll it into view
 	 * Can be used for both selection and deselection
@@ -305,5 +309,9 @@ public class GenrePage extends Page {
 		}
 		
 		return genreSelected;
+	}
+
+	public boolean isCurrentlyOnGenrePickerPage() {
+		return genrePicker.isDisplayed();
 	}
 }
