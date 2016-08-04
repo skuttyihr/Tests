@@ -29,9 +29,11 @@ public class Page extends TestRoot{
 
 	@iOSFindBy(accessibility = "iheartradio_logo_full") public static IOSElement iheartradio_logo_full;
 	
+	@iOSFindBy(accessibility ="NavBar-BackButton-UIButton") private IOSElement NavBarBackButton;
+	
 	static IOSDriver<IOSElement> driver;
 	static SideNavigationBar sideNavigationBar;
-	static Player player;
+	static FullPlayer fullPlayer;
 	// Real device requires longer reponse time
 	static boolean isRealDevice = false;
 //	Logger logger = Logger.getLogger(Page.class);
@@ -60,8 +62,8 @@ public class Page extends TestRoot{
 		driver = _driver;
 	}
 
-	public static void setPlayer(Player _player) {
-		player = _player;
+	public static void setPlayer(FullPlayer _fullPlayer) {
+		fullPlayer = _fullPlayer;
 	}
 
 	public static void setSideNavigationBar(SideNavigationBar _sideNavigationBar) {
@@ -144,31 +146,9 @@ public class Page extends TestRoot{
 		}
 	}
 	
-	public void getBack(){
+	public void clickNavBarBackButton(){
 		System.out.println("Page.getBack()");
-		try{
-			player.back.click();
-		}
-		catch(Exception e){
-			System.out.println("caught exception in getBack()");
-		}
-		/*try{
-			IOSElement backButton = findElement(driver, By.xpath("UIAApplication[1]/UIAWindow[1]/UIANavigationBar[1]/UIAButton[2]"));
-			backButton.click();
-		}
-		catch(Exception e){
-			System.out.println("Attempting to use Xpath second button to click back. " + e.getStackTrace());
-		}
-		try{
-			waitForVisible(driver, By.name("Back"), 1).click();
-		}catch(Exception e){
-			System.out.println("catch exception in getBack2  " + e.getStackTrace());
-		}
-		try{
-			search.cancel.click();
-		}catch(Exception e){
-			System.out.println("catch exception in getBack3  " + e.getStackTrace());
-		}*/
+		NavBarBackButton.click();
 	}
 	
 	/**

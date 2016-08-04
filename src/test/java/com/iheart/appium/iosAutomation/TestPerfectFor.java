@@ -44,7 +44,7 @@ public class TestPerfectFor extends TestRoot{
 		playErrors = perfectFor.selectPerfectForCategories(3, 3);  //was 3, 4
 		Assert.assertTrue("Could not play a station from perfect for." + playErrors, didPass(playErrors));
 		// Go back to check labels
-		perfectFor.getBack();
+		perfectFor.clickNavBarBackButton();
 		// First check that the above label says "Find a station Perfect For <Day of Week> <Time of Day>"
 		// Example: "Find a station Perfect For Wednesday Morning"
 		String labelErrors = perfectFor.checkCategoryLabel();

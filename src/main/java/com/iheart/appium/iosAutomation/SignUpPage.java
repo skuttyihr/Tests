@@ -15,7 +15,8 @@ public class SignUpPage extends Page {
 
 	//The following elements are located on the SignUpPage - Also known as the Create Account view. They are represented as nested, in linear order. 
 	//NavBar at top of page. 
-	@iOSFindBy(accessibility = "NavBarBackButton") private IOSElement NavBarBackButton;
+	@iOSFindBy(accessibility ="NavBar-BackButton-UIButton") private IOSElement NavBarBackButton;
+	
 	@iOSFindBy(xpath="//UIAApplication[1]/UIAWindow[1]/UIANavigationBar[1]/UIAStaticText[2]") private IOSElement NavBarTitleCreateAccount;
 	//Main Container with Table View and Agreement Container
 	@iOSFindBy(accessibility = "IHRiPhoneSignUpView-mainContainer-UIView") private IOSElement IHRSignUpViewMainContainerUIView;
@@ -199,6 +200,11 @@ public class SignUpPage extends Page {
 		printElementInformation(IHRAuthorizationViewGoogleButtonUIButton);
 	}
 	
+	/**
+	 * createNewAccount -  Clicks on Create Account Button on Onboarding Page and then enters default values into the fields. 
+	 * Should return the user to the homePage
+	 * @return
+	 */
 	public boolean createNewAccount(){
 		onboardingPage.clickOnboardingCreateAccountButton();
 		System.out.println("Creating a new account with default parameters.");

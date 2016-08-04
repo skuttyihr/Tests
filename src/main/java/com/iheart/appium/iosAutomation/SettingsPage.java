@@ -8,6 +8,7 @@ public class SettingsPage extends Page {
 
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIATableView[2]/UIATableCell[1]/UIAStaticText[2]") public IOSElement loggedInAs;
 	@iOSFindBy(accessibility = "Logged In") public IOSElement thirdPartyLoggedIn;
+	@iOSFindBy(accessibility = "NavBar-SideMenuButton-UIButton") private IOSElement NavBarSideMenuButtonUIButton;
 	
 	public SettingsPage(){
 		super();
@@ -15,15 +16,20 @@ public class SettingsPage extends Page {
 	public SettingsPage(IOSDriver<IOSElement> _driver){
 		super(_driver);
 	}
+	public boolean isHamburgerButtonDisplayed(){
+		boolean isDisp = NavBarSideMenuButtonUIButton.isDisplayed();
+		System.out.println("isHamburgerButtonDisplayed() : " + isDisp);
+		return isDisp;
+	}
+	public void clickHamburgerButtonToOpenSideMenu(){
+		System.out.println("clickHamburgerButtonToOpenSideMenu()...");
+		NavBarSideMenuButtonUIButton.click();
+	}
 	
 	public boolean isLoggedIn(){
-		if(!isVisible(sideNavBar.navIcon)){
-			// try to click back?
-			try{
-				player.back.click();
-			}catch(Exception e){}
+		if(!isHamburgerButtonDisplayed()){
+			fullPlayer.clickDownArrowOnNavBarToMinimizeFullPlayer();
 		}
-		
 		sideNavBar.gotoSettings();
 		
 		if(isVisible(thirdPartyLoggedIn)){

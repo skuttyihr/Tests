@@ -55,12 +55,13 @@ public class TestLogin extends TestRoot {
 	}
 	
 	@Test
-	public void testMiniPlayerArtistRadioAfterLogin(){
-		LocalTime before = consoleLogStart("Testing testMiniPlayerArtistRadioAfterLogin - login, start MiniPlayer, show all elements, test functionality.");
-		loginPage.loginWithoutVerifying();
-		homePage.searchButton.click();
+	public void testMiniPlayerArtistRadioElementsAndFunctionality(){
+		LocalTime before = consoleLogStart("Testing testMiniPlayerArtistRadioAfterLogin - login, start MiniPlayer for Artist Radio, show all elements, test functionality.");
+		loginPage.loginWithoutVerifying("test66@test.com","test");
+		//homePage.searchButton.click();
+		homePage.clickNavBarSearchButtonToOpenSearch();
 		//Start Artist Radio
-		search.startMiniPlayer("Technically Superior");
+		search.startMiniPlayer("Rage against the machine");
 		Assert.assertTrue("Expected 'Pause Buffering' or 'Pause' because MiniPlayer should be playing an Artist track.",miniPlayer.getTypeOfPlayButton().contains("Pause"));
 		miniPlayer.showAllElements();
 		miniPlayer.clickPlayPauseButton();
@@ -77,23 +78,8 @@ public class TestLogin extends TestRoot {
 		miniPlayer.clickThumbDownButton();
 		Assert.assertTrue("ThumbDownButton is not Selected", miniPlayer.isThumbDownButtonActivated());
 		Assert.assertTrue("Test that it is still currently on Mini Player", miniPlayer.isCurrentlyOnMiniPlayer());
-		search.cancelSearch();
-		System.out.println("Testing SideBar Nav items");
-		sideNavBar.gotoLiveRadioPage();
-		System.out.print("Live Radio  :");
-		Assert.assertTrue("Mini player was not visible on live radio page", miniPlayer.isCurrentlyOnMiniPlayer());
-		sideNavBar.gotoLiveArtistPage();
-		System.out.print("Live Artist  :");
-		Assert.assertTrue("Mini player was not visible on artist radio page", miniPlayer.isCurrentlyOnMiniPlayer());
-		sideNavBar.gotoPodcastsPage();
-		System.out.print("Podcasts  :");
-		Assert.assertTrue("Mini player was not visible on podcasts page", miniPlayer.isCurrentlyOnMiniPlayer());
-		sideNavBar.gotoPerfectFor();
-		System.out.print("Perfect For  :");
-		Assert.assertTrue("Mini player was not visible on perfect for page", miniPlayer.isCurrentlyOnMiniPlayer());
-		sideNavBar.gotoListeningHistoryPage();
-		System.out.print("Listening History  :");
-		Assert.assertTrue("Mini player was not visible on listening history page", miniPlayer.isCurrentlyOnMiniPlayer());
+	
+
 		consoleLogEnd(before, true, "Tested IOSElements, Controls in MiniPlayer for artist radio");
 		//Features to add:
 		//After one song has played - it may show a 9 second ad.
@@ -101,6 +87,46 @@ public class TestLogin extends TestRoot {
 		//Click Skip Button 6 times.
 		//Recommended for you Popup comes up
 		//You've reached this station's skip limit. Check out others below. 
+	}
+	
+	@Test
+	public void testMiniPlayerWorksOnAllPages(){
+		LocalTime before = consoleLogStart("Testing testMiniPlayerWorksOnAllPages - login, start MiniPlayer for Artist Radio, Open other pages, check that MiniPlayer is still running.");
+		loginPage.loginWithoutVerifying("test66@test.com","test");
+		//homePage.searchButton.click();
+		homePage.clickNavBarSearchButtonToOpenSearch();
+		//Start Artist Radio
+		search.startMiniPlayer("Inanimate Existence");
+		//Should currently be on Inanimate Existence Artist Bio Page.
+		miniPlayer.clickNavBarBackButton();
+		//Now it should be back to Search.
+		search.cancelSearch();
+		//Canceled out of Search. Now we should be on Homepage. 
+		homePage.clickHamburgerButtonToOpenSideMenu();
+		System.out.println("Testing that MiniPlayer continues to show up as you click on different pages.");
+		sideNavBar.gotoLiveRadioPage();
+		homePage.clickHamburgerButtonToOpenSideMenu();
+		//EVENTUALLY - Add clickHamburgerButton method to all these pages. System doesn't know that it is on non-Home pages so it can click the SideMenuButton. 
+		System.out.print("Live Radio  :");
+		Assert.assertTrue("Mini player was not visible on live radio page", miniPlayer.isCurrentlyOnMiniPlayer());
+		sideNavBar.gotoLiveArtistPage();
+		homePage.clickHamburgerButtonToOpenSideMenu();
+		System.out.print("Live Artist  :");
+		Assert.assertTrue("Mini player was not visible on artist radio page", miniPlayer.isCurrentlyOnMiniPlayer());
+		sideNavBar.gotoPodcastsPage();
+		homePage.clickHamburgerButtonToOpenSideMenu();
+		System.out.print("Podcasts  :");
+		Assert.assertTrue("Mini player was not visible on podcasts page", miniPlayer.isCurrentlyOnMiniPlayer());
+		sideNavBar.gotoPerfectFor();
+		homePage.clickHamburgerButtonToOpenSideMenu();
+		System.out.print("Perfect For  :");
+		Assert.assertTrue("Mini player was not visible on perfect for page", miniPlayer.isCurrentlyOnMiniPlayer());
+		sideNavBar.gotoListeningHistoryPage();
+		homePage.clickHamburgerButtonToOpenSideMenu();
+		System.out.print("Listening History  :");
+		Assert.assertTrue("Mini player was not visible on listening history page", miniPlayer.isCurrentlyOnMiniPlayer());
+		
+		consoleLogEnd(before, true, "Tested IOSElements, Controls in MiniPlayer for artist radio");
 	}
 	
 	@Test
@@ -135,6 +161,61 @@ public class TestLogin extends TestRoot {
 				//HOT 99.5
 		consoleLogEnd(before, true, "Tested MiniPlayer for a Radio Station");
 	}
+	
+	
+	@Test
+	public void testFullPlayerElements(){
+		LocalTime before = consoleLogStart("Testing testFullPlayerElements");
+		loginPage.loginWithoutVerifying("test66@test.com", "test");
+		homePage.searchButton.click();
+		//New accounts start a Full Player
+		search.startMiniPlayer("Opeth");
+		miniPlayer.openFullPlayer();
+		fullPlayer.showAllElements();
+		Assert.assertTrue(true);
+		consoleLogEnd(before, true, "Tested testFullPlayerElements");
+	}
+		@Test
+		public void testFullPlayerFunctionality(){
+			LocalTime before = consoleLogStart("Testing testFullPlayerFunctionality()");
+			loginPage.loginWithoutVerifying("test66@test.com", "test");
+			homePage.searchButton.click();
+			search.startMiniPlayer("Britney");
+			miniPlayer.openFullPlayer();
+			fullPlayer.minimizeFullPlayerToMiniPlayer();
+			Assert.assertTrue("MiniPlayer should be open now", miniPlayer.isCurrentlyOnMiniPlayer());
+			miniPlayer.openFullPlayer();
+			Assert.assertTrue("Check if Full Player is open.",fullPlayer.isCurrentlyOnFullPlayer());
+			Assert.assertEquals("Expecting playType to be 'player pause' since it should still be playing.", "player pause", fullPlayer.getTypeOfPlayButton());
+			Assert.assertTrue("See if both Thumbs are down",fullPlayer.isThumbUpAndThumbDownButtonNotActivated());
+			fullPlayer.clickThumbDownButton();
+			Assert.assertTrue("See if Thumb Down is selected",fullPlayer.isThumbDownButtonActivated());
+			fullPlayer.clickThumbUpButton();
+			Assert.assertTrue("See if Thumb Up is selected",fullPlayer.isThumbUpButtonActivated());
+			fullPlayer.clickShareButtonOnNavBar();
+			Assert.assertTrue("Should be on Share screen on Full Player", fullPlayer.isShareMenuOpen());
+			fullPlayer.clickCancelOnShareMenuToReturnToFullPlayer();
+			System.out.println("Checking Progress Slider now...");
+			Assert.assertTrue("Progress Slider may be broken",fullPlayer.checkProgressSliderAlignedToPosition());
+			Assert.assertEquals("We expect to be playing Britney Spears after searching 'Britney' ", "Britney Spears", fullPlayer.getStationName());
+			Assert.assertEquals("We expect to be on Artist Radio if we enter 'Britney' into Search.", "Artist Radio",fullPlayer.getStationType());
+			Assert.assertTrue("Skip may not have worked, or skip counter didn't decrease, or not enough skips were left",fullPlayer.doesSkipCountDecreaseAfterClickingSkipButton());
+			fullPlayer.clickCastingAirplayButtonOnNavBar();
+			Assert.assertTrue("Clicking on the Casting / Airplay button should have opened the Connect to a Device screen.", fullPlayer.isConnectToADeviceDisplayed());
+			fullPlayer.clickCloseOnConnectADevice();
+			if(!fullPlayer.isFavoriteButtonOnNavBarSelected()){ //Station is not favorited, fav it, check that it is fav'ed
+				fullPlayer.clickFavoriteButtonOnNavBar(true, true);
+				Assert.assertTrue("Favorite Button on NavBar should be selected after getting clicked.", fullPlayer.isFavoriteButtonOnNavBarSelected());
+			}
+			else{ //Station is fav'ed, De-fav it, check that it isn't faved. 
+				fullPlayer.clickFavoriteButtonOnNavBar(true, true); 
+				Assert.assertFalse("Favorite Button on NavBar should be selected after getting clicked.", fullPlayer.isFavoriteButtonOnNavBarSelected());
+			}
+			consoleLogEnd(before, true, "Tested testFullPlayerElements");
+		}
+		
+
+	
 	
 
 	

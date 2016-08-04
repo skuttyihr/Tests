@@ -11,6 +11,9 @@ import io.appium.java_client.ios.*;
 
 public class ForYouPage extends Page {
 
+	@iOSFindBy(accessibility = "NavBar-SideMenuButton-UIButton") private IOSElement NavBarSideMenuButtonUIButton;
+	@iOSFindBy(accessibility = "IHRCastingBarButtonItem-UIButton") private IOSElement IHRCastingBarButtonItemUIButton;
+	@iOSFindBy(accessibility = "NavBar-SearchBarButton-UIButton") private IOSElement NavBarSearchBarButtonUIButton;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell[1]") private IOSElement firstStation;
 	// @iOSFindBy(accessibility="Sign in") private WebElement signIn;
 
@@ -21,6 +24,25 @@ public class ForYouPage extends Page {
 
 	public ForYouPage(IOSDriver<IOSElement> _driver) {
 		super(_driver);
+	}
+	
+	public void clickHamburgerButtonToOpenSideMenu(){
+		System.out.println("clickHamburgerButtonToOpenSideMenu()...");
+		NavBarSideMenuButtonUIButton.click();
+	}
+	public void clickNavBarSearchButtonToOpenSearch(){
+		System.out.println("clickNavBarSearchButtonToOpenSearch()...");
+		NavBarSearchBarButtonUIButton.click();
+	}
+	public void clickCastingBarButtonToConnectADevice(){
+		System.out.println("clickCastingBarButtonToConnectADevice()...");
+		IHRCastingBarButtonItemUIButton.click();
+	}
+	
+	public boolean isHamburgerButtonDisplayed(){
+		boolean isDisp = NavBarSideMenuButtonUIButton.isDisplayed();
+		System.out.println("isHamburgerButtonDisplayed() : " + isDisp);
+		return isDisp;
 	}
 
 	private String chooseLiveRadioToPlay(List<WebElement> stations) {
@@ -105,7 +127,8 @@ public class ForYouPage extends Page {
 		}
 
 		// Verify that this station is added under My Station
-		player.back.click();
+		//player.back.click();
+		fullPlayer.clickDownArrowOnNavBarToMinimizeFullPlayer();
 		if(!verifyInForYou(myStation)){
 			errors.add("Could not find station: " + myStation + " in my stations page.\n");
 		}
@@ -114,8 +137,9 @@ public class ForYouPage extends Page {
 	}
 	
 	public boolean verifyInForYou(String station){
-		if(!isVisible(sideNavBar.navIcon)){
-			player.back.click();
+		if(!isHamburgerButtonDisplayed()){
+			//player.back.click();
+			fullPlayer.clickDownArrowOnNavBarToMinimizeFullPlayer();
 		}
 		sideNavBar.gotoMyStationsPage();
 		getStationFromList(1); // Includes a wait
