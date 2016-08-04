@@ -249,14 +249,14 @@ public class TestPlayback extends TestRoot {
 		Assert.assertTrue("Errors with More Info page for artist radio: " + moreInfoErrors, didPass(moreInfoErrors));
 		player.closeMoreInfo();
 		// Load up a podcast and test that we cannot see the more info button
-		player.getBack();
+		//player.getBack();
 		sideNavBar.gotoHomePage();
 		Assert.assertTrue("Did not select a podcast episode.", strGood(search.searchForPodCast("Elvis Duran on Demand")));
 		Assert.assertTrue("More Info button was not disabled, as we expected it to be",
 				isVisible(player.more) && !player.more.isEnabled());
 		
 		// Check live radio playback
-		player.getBack();
+		//player.getBack();
 		sideNavBar.gotoHomePage();
 		search.searchForStation("Z100");
 		moreInfoErrors = player.verifyAllMoreInfoItems();

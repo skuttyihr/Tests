@@ -1312,7 +1312,7 @@ public class Player extends Page {
 					moreBack.click();
 				}
 				else{
-					getBack(); // Tries a few ways
+					//getBack(); // Tries a few ways
 				}
 			}
 			else{

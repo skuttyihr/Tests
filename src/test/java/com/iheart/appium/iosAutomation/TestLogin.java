@@ -55,10 +55,11 @@ public class TestLogin extends TestRoot {
 	}
 	
 	@Test
-	public void testMiniPlayerArtistRadioAfterLogin(){
+	public void testMiniPlayerArtistRadioElementsAndFunctionality(){
 		LocalTime before = consoleLogStart("Testing testMiniPlayerArtistRadioAfterLogin - login, start MiniPlayer for Artist Radio, show all elements, test functionality.");
 		loginPage.loginWithoutVerifying("test66@test.com","test");
-		homePage.searchButton.click();
+		//homePage.searchButton.click();
+		homePage.clickNavBarSearchButtonToOpenSearch();
 		//Start Artist Radio
 		search.startMiniPlayer("Rage against the machine");
 		Assert.assertTrue("Expected 'Pause Buffering' or 'Pause' because MiniPlayer should be playing an Artist track.",miniPlayer.getTypeOfPlayButton().contains("Pause"));
@@ -77,24 +78,8 @@ public class TestLogin extends TestRoot {
 		miniPlayer.clickThumbDownButton();
 		Assert.assertTrue("ThumbDownButton is not Selected", miniPlayer.isThumbDownButtonActivated());
 		Assert.assertTrue("Test that it is still currently on Mini Player", miniPlayer.isCurrentlyOnMiniPlayer());
-		search.cancelSearch();
-		//page.clickBack();
-		System.out.println("Testing SideBar Nav items");
-		sideNavBar.gotoLiveRadioPage();
-		System.out.print("Live Radio  :");
-		Assert.assertTrue("Mini player was not visible on live radio page", miniPlayer.isCurrentlyOnMiniPlayer());
-		sideNavBar.gotoLiveArtistPage();
-		System.out.print("Live Artist  :");
-		Assert.assertTrue("Mini player was not visible on artist radio page", miniPlayer.isCurrentlyOnMiniPlayer());
-		sideNavBar.gotoPodcastsPage();
-		System.out.print("Podcasts  :");
-		Assert.assertTrue("Mini player was not visible on podcasts page", miniPlayer.isCurrentlyOnMiniPlayer());
-		sideNavBar.gotoPerfectFor();
-		System.out.print("Perfect For  :");
-		Assert.assertTrue("Mini player was not visible on perfect for page", miniPlayer.isCurrentlyOnMiniPlayer());
-		sideNavBar.gotoListeningHistoryPage();
-		System.out.print("Listening History  :");
-		Assert.assertTrue("Mini player was not visible on listening history page", miniPlayer.isCurrentlyOnMiniPlayer());
+	
+
 		consoleLogEnd(before, true, "Tested IOSElements, Controls in MiniPlayer for artist radio");
 		//Features to add:
 		//After one song has played - it may show a 9 second ad.
@@ -102,6 +87,46 @@ public class TestLogin extends TestRoot {
 		//Click Skip Button 6 times.
 		//Recommended for you Popup comes up
 		//You've reached this station's skip limit. Check out others below. 
+	}
+	
+	@Test
+	public void testMiniPlayerWorksOnAllPages(){
+		LocalTime before = consoleLogStart("Testing testMiniPlayerWorksOnAllPages - login, start MiniPlayer for Artist Radio, Open other pages, check that MiniPlayer is still running.");
+		loginPage.loginWithoutVerifying("test66@test.com","test");
+		//homePage.searchButton.click();
+		homePage.clickNavBarSearchButtonToOpenSearch();
+		//Start Artist Radio
+		search.startMiniPlayer("Inanimate Existence");
+		//Should currently be on Inanimate Existence Artist Bio Page.
+		miniPlayer.clickNavBarBackButton();
+		//Now it should be back to Search.
+		search.cancelSearch();
+		//Canceled out of Search. Now we should be on Homepage. 
+		homePage.clickHamburgerButtonToOpenSideMenu();
+		System.out.println("Testing that MiniPlayer continues to show up as you click on different pages.");
+		sideNavBar.gotoLiveRadioPage();
+		homePage.clickHamburgerButtonToOpenSideMenu();
+		//EVENTUALLY - Add clickHamburgerButton method to all these pages. System doesn't know that it is on non-Home pages so it can click the SideMenuButton. 
+		System.out.print("Live Radio  :");
+		Assert.assertTrue("Mini player was not visible on live radio page", miniPlayer.isCurrentlyOnMiniPlayer());
+		sideNavBar.gotoLiveArtistPage();
+		homePage.clickHamburgerButtonToOpenSideMenu();
+		System.out.print("Live Artist  :");
+		Assert.assertTrue("Mini player was not visible on artist radio page", miniPlayer.isCurrentlyOnMiniPlayer());
+		sideNavBar.gotoPodcastsPage();
+		homePage.clickHamburgerButtonToOpenSideMenu();
+		System.out.print("Podcasts  :");
+		Assert.assertTrue("Mini player was not visible on podcasts page", miniPlayer.isCurrentlyOnMiniPlayer());
+		sideNavBar.gotoPerfectFor();
+		homePage.clickHamburgerButtonToOpenSideMenu();
+		System.out.print("Perfect For  :");
+		Assert.assertTrue("Mini player was not visible on perfect for page", miniPlayer.isCurrentlyOnMiniPlayer());
+		sideNavBar.gotoListeningHistoryPage();
+		homePage.clickHamburgerButtonToOpenSideMenu();
+		System.out.print("Listening History  :");
+		Assert.assertTrue("Mini player was not visible on listening history page", miniPlayer.isCurrentlyOnMiniPlayer());
+		
+		consoleLogEnd(before, true, "Tested IOSElements, Controls in MiniPlayer for artist radio");
 	}
 	
 	@Test
