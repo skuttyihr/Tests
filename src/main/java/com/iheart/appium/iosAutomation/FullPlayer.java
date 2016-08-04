@@ -620,7 +620,9 @@ public class FullPlayer extends Page {
     			System.out.println("GoToArtistProfileButton wasn't enabled. - couldn't click. Returning False.");
     			return false;
     		}
-    	}else return false;
+    	}else{ 
+    		return false;
+    	}
     		
     }
     
