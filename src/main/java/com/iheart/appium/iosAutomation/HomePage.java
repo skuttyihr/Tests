@@ -17,7 +17,9 @@ public class HomePage extends Page {
 	public HomePage(IOSDriver<IOSElement> _driver){
 		super(_driver);
 	}
-
+	@iOSFindBy(accessibility = "NavBar-SideMenuButton-UIButton") private IOSElement NavBarSideMenuButtonUIButton;
+	@iOSFindBy(accessibility = "IHRCastingBarButtonItem-UIButton") private IOSElement IHRCastingBarButtonItemUIButton;
+	@iOSFindBy(accessibility = "NavBar-SearchBarButton-UIButton") private IOSElement NavBarSearchBarButtonUIButton;
 	@iOSFindBy(accessibility = "Add to Favorites") public IOSElement addToFavorites;
 	@iOSFindBy(accessibility="For You") public static IOSElement forYouTab;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[3]/UIAStatusBar[1]") public IOSElement statusBar;
@@ -27,6 +29,23 @@ public class HomePage extends Page {
 	// Use the getListItem(int x) method to get these items. 
 	private final String listItemXpath = "//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell[XXXXX]";
 	
+	public boolean isHamburgerButtonDisplayed(){
+		boolean isDisp = NavBarSideMenuButtonUIButton.isDisplayed();
+		System.out.println("isHamburgerButtonDisplayed() : " + isDisp);
+		return isDisp;
+	}
+	public void clickHamburgerButtonToOpenSideMenu(){
+		System.out.println("clickHamburgerButtonToOpenSideMenu()...");
+		NavBarSideMenuButtonUIButton.click();
+	}
+	public void clickNavBarSearchButtonToOpenSearch(){
+		System.out.println("clickNavBarSearchButtonToOpenSearch()...");
+		NavBarSearchBarButtonUIButton.click();
+	}
+	public void clickCastingBarButtonToConnectADevice(){
+		System.out.println("clickCastingBarButtonToConnectADevice()...");
+		IHRCastingBarButtonItemUIButton.click();
+	}
 	
 	private IOSElement getFavorite(){
 		IOSElement favorite = null;
@@ -96,11 +115,11 @@ public class HomePage extends Page {
 	
 	public void gotoHome(){
 		if(!isVisible(forYou)){
-			if(isVisible(sideNavBar.navIcon)){
+			if(isHamburgerButtonDisplayed()){
 				sideNavBar.gotoHomePage();
 			}
 			else{
-				getBack();
+				clickNavBarBackButton();
 				sideNavBar.gotoHomePage();
 			}
 		}

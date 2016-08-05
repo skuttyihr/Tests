@@ -12,8 +12,9 @@ public class SideNavigationBar extends Page {
 	// ******* Side Navigation Bar *******
 	// @iOSFindBy(accessibility="nav")
 //	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIANavigationBar[1]/UIAButton[1]") public IOSElement navIcon;
-	private final String navIconString = "Side Menu";
-	@iOSFindBy(accessibility = navIconString) public IOSElement navIcon;
+	//private final String navIconString = "Side Menu";
+	//@iOSFindBy(accessibility = navIconString) public IOSElement navIcon;
+	@iOSFindBy(accessibility = "NavBar-SideMenuButton-UIButton") private IOSElement NavBarSideMenuButtonUIButton;
 	@iOSFindBy(accessibility = "Now Playing") public IOSElement playingIcon;
 
 	@iOSFindBy(accessibility = "Home") public IOSElement home;
@@ -40,13 +41,21 @@ public class SideNavigationBar extends Page {
 		super(_driver);
 		setSideNavigationBar(this);
 	}
+	
+	public boolean isSideNavBarOpen(){
+		return home!=null;
+	}
+	public void clickNavBarSideMenuButton(){
+		System.out.println("Clicking on Hamburger Button to Open/Close SideBar");
+		NavBarSideMenuButtonUIButton.click();
+	}
 
 	public void getToAndEnterZip(String zip){
-		if(!isVisible(waitForVisible(driver, find(navIconString), 2))){
-			getBack();
+		if(!waitForElementToBeVisible(NavBarSideMenuButtonUIButton, 2)){
+			clickNavBarBackButton();
 		}
-		if(isVisible(navIcon)){
-			navIcon.click();
+		if(isVisible(NavBarSideMenuButtonUIButton)){
+			clickNavBarSideMenuButton();
 			liveRadio.click();
 		}
 		IOSElement enterZip = waitForVisible(driver, find("Enter ZIP"), 3);
@@ -65,38 +74,37 @@ public class SideNavigationBar extends Page {
 	
 	// Put header and player related methods here
 	public void gotoHomePage() {
-		if(!isVisible(waitForVisible(driver, find(navIconString), 2))){
-			getBack();
+		if(!waitForElementToBeVisible(NavBarSideMenuButtonUIButton, 2)){
+			clickNavBarBackButton();
 		}
-		if(click(driver, find(navIconString))){
-			waitForElementToBeVisible(home, 1);
-			home.click();
-		}
+		clickNavBarSideMenuButton();
+		waitForElementToBeVisible(home, 1);
+		home.click();
 	}
 
 	public void gotoLiveRadioPage() {
-		navIcon.click();
+		//clickNavBarSideMenuButton();
 		liveRadio.click();
 		Page.handlePossiblePopUp();
 	}
 
 	public void gotoLiveArtistPage() {
-		navIcon.click();
+		//clickNavBarSideMenuButton();
 		artistRadio.click();
 	}
 
 	public void gotoPodcastsPage() {
-		navIcon.click();
+		//clickNavBarSideMenuButton();
 		podcasts.click();
 	}
 	
 	public void gotoPerfectFor(){
-		navIcon.click();
+		//clickNavBarSideMenuButton();
 		perfectFor.click();
 	}
 
 	public void gotoListeningHistoryPage() {
-		navIcon.click();
+		//clickNavBarSideMenuButton();
 		listeningHistory.click();
 	}
 
@@ -108,22 +116,21 @@ public class SideNavigationBar extends Page {
 	}
 	
 	public void gotoAlarm(){
-		navIcon.click();
+		//clickNavBarSideMenuButton();
 		alarm.click();
 	}
 	
 	public void gotoSleep(){
-		navIcon.click();
+		//clickNavBarSideMenuButton();
 		sleep.click();
 	}
 	
 	public void gotoSettings() {
 		if(settings == null || !isVisible(settings)){
-			waitForElementToBeVisible(navIcon, 2);
-			if(!isVisible(navIcon)){
-				getBack();
+			if(!waitForElementToBeVisible(NavBarSideMenuButtonUIButton, 2)){
+				clickNavBarBackButton();
 			}
-			navIcon.click();
+			clickNavBarSideMenuButton();
 		}
 		waitForElementToBeVisible(settings, 5);
 		settings.click();

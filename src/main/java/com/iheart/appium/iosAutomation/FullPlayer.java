@@ -47,6 +47,7 @@ public class FullPlayer extends Page {
     @iOSFindBy(accessibility ="IHRPlayerView-ButtonContainer-UIView" ) private IOSElement IHRPlayerViewButtonContainerUIView;
     	@iOSFindBy(accessibility ="IHRPlayerView-PlayButton-UIButton" ) private IOSElement IHRPlayerViewPlayButtonUIButton;
     	@iOSFindBy(accessibility ="IHRPlayerView-ForwardButton-UIButton" ) private IOSElement IHRPlayerViewForwardButtonUIButton;
+    	@iOSFindBy(accessibility ="IHRPlayerViewNextButton-SkipCountLabel-UILabel" ) private IOSElement IHRPlayerViewNextButtonSkipCountLabelUILabel;
     	@iOSFindBy(accessibility ="IHRPlayerView-BackButton-UIButton") private IOSElement  IHRPlayerViewBackButtonUIButton;
     @iOSFindBy(accessibility ="IHRPlayer-SaveButton-UIButton" ) private IOSElement IHRPlayerSaveButtonUIButton;  //(OD only)
     @iOSFindBy(accessibility ="IHRPlayer-MoreButton-UIButton" ) private IOSElement IHRPlayerMoreButtonUIButton;
@@ -97,16 +98,13 @@ public class FullPlayer extends Page {
     @iOSFindBy(accessibility ="LyricsVC-ArtistNameLabel-UILabel" ) private IOSElement LyricsVCArtistNameLabelUILabel;
     @iOSFindBy(accessibility ="LyricsVC-TrackNameLabel-UILabel" ) private IOSElement LyricsVCTrackNameLabelUILabel;
     
-    
-    //@iOSFindBy(accessibility ="LyricsView-TrackNameLabel-UIlabel" ) private IOSElement LyricsViewTrackNameLabelUIlabel;
-    //@iOSFindBy(accessibility ="LyricsView-ArtistNameLabel-UILabel" ) private IOSElement LyricsViewArtistNameLabelUILabel;
     @iOSFindBy(accessibility ="PlayButton-AnimatingView-UIImageView" ) private IOSElement PlayButtonAnimatingViewUIImageView;
-    @iOSFindBy(accessibility ="IHRPlayerViewNextButton-SkipCountLabel-UILabel" ) private IOSElement IHRPlayerViewNextButtonSkipCountLabelUILabel;
+    
     @iOSFindBy(accessibility ="PlayerBannerView-BannerContainerView-UIView" ) private IOSElement PlayerBannerViewBannerContainerViewUIView;
     @iOSFindBy(accessibility ="PlayerBannerView-DfpBanner-UIView" ) private IOSElement PlayerBannerViewDfpBannerUIView;
     @iOSFindBy(accessibility ="PlayerBannerView-SyncBannerView-UIView" ) private IOSElement PlayerBannerViewSyncBannerViewUIView;
     @iOSFindBy(accessibility ="PlayerBannerView-DismissButton-UIButton" ) private IOSElement PlayerBannerViewDismissButtonUIButton;
-    //@iOSFindBy(accessibility ="" ) private IOSElement ;
+
     
     /**
      * Have Full Player Open and playing a SONG with Artist Radio before calling this method. 
@@ -119,17 +117,11 @@ public class FullPlayer extends Page {
     	printElementInformation(NavBarFavoriteButtonUIButton);
     	printElementInformation(NavBarShareButtonUIButton);
     	printElementInformation(IHRCastingBarButtonItemUIButton);
-    	//printElementInformation(NavBarStyledLabelWithTitleUILabel);
+    	System.out.println("Checking Slider elements...");
     	
-    	printElementInformation(IHRPlayerViewNextButtonSkipCountLabelUILabel);
     	printElementInformation(PlayerSliderViewPositionLabelUILabel);
     	printElementInformation(PlayerSliderViewDurationLabelUILabel);
     	printElementInformation(PlayerSliderViewProgressSliderUISlider);
-        //CustomPlayerBannerController
-    	if(checkProgressSliderAlignedToPosition()){
-    		System.out.println("Progress Slider is aligned to Position - checked the math.");
-    	}
-    	
     	printElementInformation(PlayerImageViewImageViewUIImageView);
         //IHROptionMenuView
     	fullPlayer.clickMoreInfoButton();
@@ -143,7 +135,6 @@ public class FullPlayer extends Page {
     	printElementInformation(LyricsButton);
     	printElementInformation(GoToArtistProfileButton);
     	printElementInformation(IHROptionMenuViewCancelButtonUIButton);
-        //
     	printElementInformation(IHROptionMenuMetadataViewImageViewUIImageView);
     	printElementInformation(IHROptionMenuMetadataViewLabelContainerUIView);
     	printElementInformation(IHROptionMenuMetadataViewTitleLabelUILabel);
@@ -156,7 +147,7 @@ public class FullPlayer extends Page {
     		printElementInformation(LyricsVCTrackNameLabelUILabel);
     		fullPlayer.clickNavBarBackButton(); //This goes back to FullPlayers
     	}else{
-    	//if(!fullPlayer.isCurrentlyOnFullPlayer()){
+
     		fullPlayer.clickMoreCancelButton();
     	}
     	/*
@@ -165,16 +156,16 @@ public class FullPlayer extends Page {
     		fullPlayer.clickNavBarBackButton();
     	}
     	*/
-    	//Should exit back to the main Full Player View
-    	//These work!
     	//IHRPlayerTitleView
+    	System.out.println("Checking Title View elements... Station Name and Station Type");
     	printElementInformation(IHRPlayerTitleViewTitleLabelUILabel);
     	printElementInformation(IHRPlayerTitleViewSubTitleLabelUILabel);
-    	
     	//IHRPlayerBackgroundView
+    	System.out.println("Checking Background View elements...");
     	printElementInformation(IHRPlayerBackgroundViewImageViewUIImageView);
     	printElementInformation(IHRPlayerBackgroundViewVisualEffectViewUIVisualEffectView);
     	//interface IHRPlayerView 
+    	System.out.println("Checking FullPlayer elements...like Play Button, Skip, More Info, Thumbs, and Song Title/Artist");
     	printElementInformation(IHRPlayerViewBackgroundImageViewUIImageView);
     	printElementInformation(IHRPlayerViewImageViewUIImageView);
     	printElementInformation(IHRPlayerViewCenterViewUIView);
@@ -182,7 +173,7 @@ public class FullPlayer extends Page {
     	printElementInformation(IHRPlayerViewButtonContainerUIView);
     	printElementInformation(IHRPlayerViewPlayButtonUIButton);
     	printElementInformation(IHRPlayerViewForwardButtonUIButton);
-    	
+    	printElementInformation(IHRPlayerViewNextButtonSkipCountLabelUILabel);
     	printElementInformation(IHRPlayerMoreButtonUIButton);
     	printElementInformation(IHRPlayerViewThumbDownButtonUIButton);
     	printElementInformation(IHRPlayerViewThumbUpButtonUIButton);
@@ -214,11 +205,21 @@ public class FullPlayer extends Page {
     	//printElementInformation(NavBarSearchBarButtonUIButton);
     	
     }
-    
+    /**
+     * Clicks the Down Arrow at the top of FullPlayer to minimize it into MiniPlayer. 
+     */
     public void minimizeFullPlayerToMiniPlayer(){
     	System.out.println("minimizeFullPlayerToMiniPlayer()");
     	PlayerViewMinimizePlayerDownarrowUIButton.click();
     	
+    }
+    /**
+     * Clicks the Down Arrow at the top of FullPlayer to minimize it into MiniPlayer. 
+     * This method has the same functionality as above but different wording to keep up the 'click' actions idea. 
+     */
+    public void clickDownArrowOnNavBarToMinimizeFullPlayer(){
+    	System.out.println("clickDownArrowOnNavBarToMinimizeFullPlayer()");
+    	PlayerViewMinimizePlayerDownarrowUIButton.click();
     }
     /**
      * Clicks the Play, Pause, Stop etc Button on the Full Player.
@@ -619,7 +620,9 @@ public class FullPlayer extends Page {
     			System.out.println("GoToArtistProfileButton wasn't enabled. - couldn't click. Returning False.");
     			return false;
     		}
-    	}else return false;
+    	}else{ 
+    		return false;
+    	}
     		
     }
     
