@@ -1,4 +1,4 @@
-gradle build -x testi
+gradle build -x test
 
 gradle eclipse
 
