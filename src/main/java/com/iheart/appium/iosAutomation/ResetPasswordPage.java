@@ -9,7 +9,7 @@ import io.appium.java_client.pagefactory.iOSFindBy;
 public class ResetPasswordPage extends Page {
 	
 	//Nav Bar
-	@iOSFindBy(accessibility = "NavBarBackButton") private IOSElement NavBarBackButton;
+	@iOSFindBy(accessibility = "NavBar-BackButton-UIButton") private IOSElement NavBarBackButton;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIANavigationBar[1]/UIAStaticText[2]") private IOSElement NavBarTitleText;
 	
 	@iOSFindBy(accessibility = "IHRiPhoneForgotPasswordView-TableView-UITableView") private IOSElement IHRiPhoneForgotPasswordViewTableViewUITableView;
