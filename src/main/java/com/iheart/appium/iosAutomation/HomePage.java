@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 
+import io.appium.java_client.SwipeElementDirection;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
 import io.appium.java_client.pagefactory.iOSFindBy;
@@ -17,36 +18,387 @@ public class HomePage extends Page {
 	public HomePage(IOSDriver<IOSElement> _driver){
 		super(_driver);
 	}
+	@iOSFindBy(accessibility = "IHRiPhoneHomePageView") private IOSElement  IHRiPhoneHomePageView;
 	@iOSFindBy(accessibility = "NavBar-SideMenuButton-UIButton") private IOSElement NavBarSideMenuButtonUIButton;
+	@iOSFindBy(accessibility = "iheartradio_logo_full") private IOSElement   iheartradio_logo_full;
 	@iOSFindBy(accessibility = "IHRCastingBarButtonItem-UIButton") private IOSElement IHRCastingBarButtonItemUIButton;
 	@iOSFindBy(accessibility = "NavBar-SearchBarButton-UIButton") private IOSElement NavBarSearchBarButtonUIButton;
-	@iOSFindBy(accessibility = "Add to Favorites") public IOSElement addToFavorites;
-	@iOSFindBy(accessibility="For You") public static IOSElement forYouTab;
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[3]/UIAStatusBar[1]") public IOSElement statusBar;
-	@iOSFindBy(accessibility="Search") public IOSElement searchButton;
-
+	@iOSFindBy(accessibility="HomeSegmentedControl-TitleLabel-UIButton-For You") private IOSElement HomeSegmentedControlTitleLabelUIButtonForYou;
+	@iOSFindBy(accessibility="HomeSegmentedControl-TitleLabel-UIButton-My Stations") private IOSElement HomeSegmentedControlTitleLabelUIButtonMyStations;
+	@iOSFindBy(accessibility="HomeSegmentedControl-TitleLabel-UIButton-Local Radio") private IOSElement HomeSegmentedControlTitleLabelUIButtonLocalRadio;
+	//FOR YOU Cells
+	@iOSFindBy(accessibility="ForYouTab-CollectionView") private IOSElement  ForYouTabCollectionView;
+	@iOSFindBy(accessibility="ForYou-CellNumber-0") private IOSElement  ForYouCellNumber0;
+	@iOSFindBy(accessibility="ForYou-CellNumber-1") private IOSElement  ForYouCellNumber1;
+	@iOSFindBy(accessibility="ForYou-CellNumber-2") private IOSElement  ForYouCellNumber2;
+	@iOSFindBy(accessibility="ForYou-CellNumber-3") private IOSElement  ForYouCellNumber3;
+	@iOSFindBy(accessibility="ForYou-CellNumber-4") private IOSElement  ForYouCellNumber4;
+	@iOSFindBy(accessibility="ForYou-CellNumber-5") private IOSElement  ForYouCellNumber5;
+	@iOSFindBy(accessibility="ForYou-CellNumber-6") private IOSElement  ForYouCellNumber6;
+	@iOSFindBy(accessibility="ForYou-CellNumber-7") private IOSElement  ForYouCellNumber7;
+	@iOSFindBy(accessibility="ForYou-CellNumber-8") private IOSElement  ForYouCellNumber8;
+	@iOSFindBy(accessibility="ForYou-CellNumber-9") private IOSElement  ForYouCellNumber9;
+	@iOSFindBy(accessibility="ForYou-CellNumber-10") private IOSElement  ForYouCellNumber10;
+	@iOSFindBy(accessibility="ForYou-CellNumber-11") private IOSElement  ForYouCellNumber11;
+	@iOSFindBy(accessibility="ForYouTC-ShowMoreButton-UIButton") private IOSElement  ForYouTCShowMoreButtonUIButton;
+	@iOSFindBy(accessibility="ForYouTC-RecommendationButton-UIButton") private IOSElement  ForYouTCRecommendationButtonUIButton;
+	//My Stations - Favorite Stations
+	@iOSFindBy(accessibility="MyStationsTab-CollectionView") private IOSElement  MyStationsTabCollectionView; //Collection is the same AID as For You. 
+	@iOSFindBy(accessibility="Favorite Stations") private IOSElement  FavoriteStations;  //Header at the top
+	@iOSFindBy(accessibility="Favorites-CellNumber-0") private IOSElement  FavoritesCellNumber0;
+	@iOSFindBy(accessibility="Favorites-CellNumber-1") private IOSElement  FavoritesCellNumber1;
+	@iOSFindBy(accessibility="Favorites-CellNumber-2") private IOSElement  FavoritesCellNumber2;
+	@iOSFindBy(accessibility="Favorites-CellNumber-3") private IOSElement  FavoritesCellNumber3;
+	@iOSFindBy(accessibility="Favorites-CellNumber-4") private IOSElement  FavoritesCellNumber4;
+	@iOSFindBy(accessibility="Favorites-CellNumber-5") private IOSElement  FavoritesCellNumber5;
+	@iOSFindBy(accessibility="Favorites-CellNumber-6") private IOSElement  FavoritesCellNumber6;
+	@iOSFindBy(accessibility="Favorites-CellNumber-7") private IOSElement  FavoritesCellNumber7;
+	//My Stations - Recent Stations
+	@iOSFindBy(accessibility="Recent Stations") private IOSElement  RecentStations; //Header at the top
+	@iOSFindBy(accessibility="Recents-CellNumber-0") private IOSElement  RecentsCellNumber0;
+	@iOSFindBy(accessibility="Recents-CellNumber-1") private IOSElement  RecentsCellNumber1;
+	@iOSFindBy(accessibility="Recents-CellNumber-2") private IOSElement  RecentsCellNumber2;
+	@iOSFindBy(accessibility="Recents-CellNumber-3") private IOSElement  RecentsCellNumber3;
+	@iOSFindBy(accessibility="Recents-CellNumber-4") private IOSElement  RecentsCellNumber4;
+	@iOSFindBy(accessibility="Recents-CellNumber-5") private IOSElement  RecentsCellNumber5;
+	@iOSFindBy(accessibility="Recents-CellNumber-6") private IOSElement  RecentsCellNumber6;
+	@iOSFindBy(accessibility="Recents-CellNumber-7") private IOSElement  RecentsCellNumber7;
+	@iOSFindBy(accessibility="Recents-CellNumber-8") private IOSElement  RecentsCellNumber8;
+	@iOSFindBy(accessibility="Favorites-ShowMoreButton-UIButton") private IOSElement  FavoritesShowMoreButtonUIButton;
+	//Local Radio
+	@iOSFindBy(accessibility="LocalRadioTab-CollectionView") private IOSElement  LocalRadioTabCollectionView;
+	@iOSFindBy(accessibility="LocalRadio-CellNumber-0") private IOSElement  LocalRadioCellNumber0;
+	@iOSFindBy(accessibility="LocalRadio-CellNumber-1") private IOSElement  LocalRadioCellNumber1;
+	@iOSFindBy(accessibility="LocalRadio-CellNumber-2") private IOSElement  LocalRadioCellNumber2;
+	@iOSFindBy(accessibility="LocalRadio-CellNumber-3") private IOSElement  LocalRadioCellNumber3;
+	@iOSFindBy(accessibility="LocalRadio-CellNumber-4") private IOSElement  LocalRadioCellNumber4;
+	@iOSFindBy(accessibility="LocalRadio-CellNumber-5") private IOSElement  LocalRadioCellNumber5;
+	@iOSFindBy(accessibility="LocalRadio-CellNumber-17") private IOSElement  LocalRadioCellNumber17;
 	
+	//Want your local radio?
+	//Tell us where you are & we'll get your favorite DJs
+	//Use Location - Allow / Don't Allow
+	//Use ZIP
+	//No Thanks
 	// Use the getListItem(int x) method to get these items. 
 	private final String listItemXpath = "//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell[XXXXX]";
 	
+	/**
+	 * This method has been specifically designed to go through all elements on the HomePage. 
+	 * Currently works with test66@test.com/test
+	 */
+	public void showAllElements(){ 
+		if(homePage.isCurrentlyOnHomePage()){
+		printElementInformation(IHRiPhoneHomePageView);
+		printElementInformation(NavBarSideMenuButtonUIButton);
+		printElementInformation(iheartradio_logo_full);
+		printElementInformation(IHRCastingBarButtonItemUIButton);
+		printElementInformation(NavBarSearchBarButtonUIButton);
+		printElementInformation(HomeSegmentedControlTitleLabelUIButtonForYou);
+		printElementInformation(HomeSegmentedControlTitleLabelUIButtonMyStations);
+		printElementInformation(HomeSegmentedControlTitleLabelUIButtonLocalRadio);
+		//FOR YOU Cells
+		printElementInformation(ForYouTabCollectionView);
+		printElementInformation(ForYouCellNumber0);
+		printElementInformation(ForYouCellNumber1);
+		printElementInformation(ForYouCellNumber2);
+		printElementInformation(ForYouCellNumber3);
+		printElementInformation(ForYouCellNumber4);
+		printElementInformation(ForYouCellNumber5);
+		printElementInformation(ForYouCellNumber6);
+		
+		homePage.scrollDown();
+		printElementInformation(ForYouCellNumber7);
+		printElementInformation(ForYouCellNumber8);
+		printElementInformation(ForYouCellNumber9);
+		printElementInformation(ForYouCellNumber10);
+		printElementInformation(ForYouCellNumber11);
+		homePage.scrollDown();
+		printElementInformation(ForYouTCShowMoreButtonUIButton);
+		//Clicking Show More opens 12 more cells. 
+		printElementInformation(ForYouTCRecommendationButtonUIButton);
+		//My Stations - Favorite Stations
+		homePage.scrollToTop();
+		
+		homePage.clickMyStationsTab();
+		printElementInformation(MyStationsTabCollectionView); //Collection is the same AID as For You. 
+		printElementInformation(FavoriteStations);  //Header at the top
+		printElementInformation(FavoritesCellNumber0);
+		printElementInformation(FavoritesCellNumber1);
+		printElementInformation(FavoritesCellNumber2);
+		printElementInformation(FavoritesCellNumber3);
+		printElementInformation(FavoritesCellNumber4);
+		printElementInformation(FavoritesCellNumber5);
+		printElementInformation(FavoritesCellNumber6);
+		
+		//printElementInformation(FavoritesCellNumber7);
+		homePage.scrollDown();
+		//My Stations - Recent Stations
+		
+		printElementInformation(RecentStations); //Header at the top
+		printElementInformation(RecentsCellNumber0);
+		printElementInformation(RecentsCellNumber1);
+		printElementInformation(RecentsCellNumber2);
+		homePage.scrollDown();
+		printElementInformation(RecentsCellNumber3);
+		printElementInformation(RecentsCellNumber4);
+		printElementInformation(RecentsCellNumber5);
+		printElementInformation(RecentsCellNumber6);
+		printElementInformation(RecentsCellNumber7);
+		homePage.scrollDown();
+		printElementInformation(RecentsCellNumber8);
+		printElementInformation(FavoritesShowMoreButtonUIButton);
+		homePage.scrollToTop();
+		homePage.clickLocalRadioTab();
+		//Local Radio
+		printElementInformation(LocalRadioTabCollectionView);
+		printElementInformation(LocalRadioCellNumber0);
+		printElementInformation(LocalRadioCellNumber1);
+		printElementInformation(LocalRadioCellNumber2);
+		printElementInformation(LocalRadioCellNumber3);
+		printElementInformation(LocalRadioCellNumber4);
+		printElementInformation(LocalRadioCellNumber5);
+		homePage.scrollDown();
+		homePage.scrollDown();
+		homePage.scrollDown();
+		homePage.scrollDown();
+		printElementInformation(LocalRadioCellNumber17);
+		}
+		
+	}
+	/**
+	 * Must be on HomePage - Clicks the For You Tab
+	 */
+	public void clickForYouTab(){
+		System.out.println("clickForYouTab().");
+		HomeSegmentedControlTitleLabelUIButtonForYou.click();
+	}
+	/**
+	 * Must be on HomePage - Clicks on the My Stations Tab
+	 */
+	public void clickMyStationsTab() {
+		System.out.println("clickMyStationsTab().");
+		HomeSegmentedControlTitleLabelUIButtonMyStations.click();
+	}
+	/**
+	 * Clicks on Local Radio Tab
+	 * Also enters Zip for local radio. 
+	 */
+	public void clickLocalRadioTab(){
+		System.out.println("clickLocalRadioTab(). Then Entering Zip.");
+		HomeSegmentedControlTitleLabelUIButtonLocalRadio.click();
+		Page.enterZip();
+	}
+	
+	/**
+	 * Checks to see if the Hamburger Button that can access the Sidebar is displayed. 
+	 * @return
+	 */
 	public boolean isHamburgerButtonDisplayed(){
 		boolean isDisp = NavBarSideMenuButtonUIButton.isDisplayed();
 		System.out.println("isHamburgerButtonDisplayed() : " + isDisp);
 		return isDisp;
 	}
+	/**
+	 * Checks to see if the For You Tab is displayed. Can be on For You, My Stations, Local Radio etc so be careful. 
+	 * @return
+	 */
+	public boolean isCurrentlyOnHomePage(){
+		boolean isDisp = HomeSegmentedControlTitleLabelUIButtonForYou.isDisplayed();
+		System.out.println("isCurrentlyOnHomePage() : " + isDisp);
+		return isDisp;
+	}
+	/**
+	 * Checks to see if the For You Tab Collection view is open. This is only visible when the For You Button has been clicked. It is also the first page opened after login / genre picker.
+	 * @return
+	 */
+	public boolean isCurrentlyOnForYouTab(){
+		boolean isDisp = ForYouTabCollectionView.isDisplayed();
+		System.out.println("isCurrentlyOnForYouTab() : " + isDisp);
+		return isDisp;
+	}
+	/**
+	 * Checks to see if the My Stations Collection View is Open. Reach it by clicking on My Stations. 
+	 * @return
+	 */
+	public boolean isCurrentlyOnMyStationsTab(){
+		boolean onMyStations = MyStationsTabCollectionView.isDisplayed() ;
+		System.out.println("isCurrentlyOnMyStationsTab() : "+ onMyStations);
+		return onMyStations;
+	}
+	/**
+	 * Checks to see if Local Radio Collection View is open (displayed). Reach it by clicking on Local Radio. This view will eventually be replaced by My Music. 
+	 * @return
+	 */
+	public boolean isCurrentlyOnLocalRadioTab(){
+		boolean onLocalRadio = LocalRadioTabCollectionView.isDisplayed();
+		System.out.println("isCurrentlyOnLocalRadioTab() : "+ onLocalRadio);
+		return onLocalRadio;
+	}
+
+	/**
+	 * Clicks the Hamburger / SideBar Icon to open or Close the Side Menu. Doesn't concern itself with original state. 
+	 */
 	public void clickHamburgerButtonToOpenSideMenu(){
 		System.out.println("clickHamburgerButtonToOpenSideMenu()...");
 		NavBarSideMenuButtonUIButton.click();
 	}
+	/**
+	 * Clicks the Search Icon to open Search. Use SearchPage object hereafter.
+	 */
 	public void clickNavBarSearchButtonToOpenSearch(){
 		System.out.println("clickNavBarSearchButtonToOpenSearch()...");
 		NavBarSearchBarButtonUIButton.click();
 	}
+	/**
+	 * Clicks the Casting Button to Connect streaming to a device. 
+	 */
 	public void clickCastingBarButtonToConnectADevice(){
 		System.out.println("clickCastingBarButtonToConnectADevice()...");
 		IHRCastingBarButtonItemUIButton.click();
 	}
 	
+	/**
+	 * Clicks the Show More Button on For You. Make sure the SIMULATOR has scrolled down all the way to make the Button visible first. 
+	 */
+	public void clickForYouShowMoreButton(){
+		System.out.println("clickForYouShowMoreButton()");
+		ForYouTCShowMoreButtonUIButton.click();
+	}
+	
+	/**
+	 * scrollDown really just Swipes up. A swipe up covers about 3.5 cells on the iPhone. So two of these scrollDown calls will swipe up 7 cells. Test it thoroughly.
+	 */
+	public void scrollDown(){
+		System.out.println("scrollDown() : Swiping Up Once.");
+		homePage.swipeUp();
+	}
+	
+	/**
+	 * ScrollToTop just calls SwipeDown 4 times. For particularly long collection views, use it more. Test as needed. 
+	 */
+	public void scrollToTop(){
+		System.out.println("scrollToTop() : Swiping Down Four times. May not necessarily reach top.");
+		homePage.swipeDown();
+		homePage.swipeDown();
+		homePage.swipeDown();
+		homePage.swipeDown();
+	}
+	
+
+	/**
+	 * Assume that page is on HomePage - My Stations - Scrolled to top
+	 */
+	public String getTextOfFirstFavorite(){
+		if(homePage.isCurrentlyOnMyStationsTab()){
+			return getElementText(FavoritesCellNumber0);
+		}
+		return "Not currently on HomePage - For you. ";
+	}
+	
+	/**
+	 * Assume that page is on HomePage - My Stations - Scrolled to top
+	 * @return
+	 */
+	public String getTextOfFirstRecent(){
+		if(homePage.isCurrentlyOnMyStationsTab()){
+			homePage.scrollDown();
+			return getElementText(RecentsCellNumber0);
+		}
+		return "Not currently on HomePage - For you. ";
+	}
+	/**
+	 * Assume SIMULATOR is on HomePage - My Stations
+	 * @return
+	 */
+	public boolean clickFirstFavoriteStationOnMyStationsToBeginPlaying(){
+		if(homePage.isCurrentlyOnMyStationsTab()){
+			System.out.println("clickFirstFavoriteStationOnMyStationsToBeginPlaying() : "+ FavoritesCellNumber0.getText());
+			FavoritesCellNumber0.click();
+			return  miniPlayer.isCurrentlyOnMiniPlayer() || fullPlayer.isCurrentlyOnFullPlayer(); 
+		}
+		return false;
+	}
+	/**
+	 * Assume SIMULATOR is on My Stations. It will scroll down and click on the first Recents Cell. Make sure to use an account that has Recents. 
+	 * @return
+	 */
+	public boolean clickFirstRecentStationOnMyStationsToBeginPlaying(){
+		if(homePage.isCurrentlyOnMyStationsTab()){
+			homePage.scrollDown();
+			System.out.println("clickFirstRecentStationOnMyStationsToBeginPlaying() : "+ RecentsCellNumber0.getText());
+			RecentsCellNumber0.click();
+			return  miniPlayer.isCurrentlyOnMiniPlayer() || fullPlayer.isCurrentlyOnFullPlayer();
+		}
+		return false;
+	}
+	/**
+	 * Assume Simulator is on HomePage - Local Radio
+	 * @return
+	 */
+	public boolean clickFirstLocalRadioStationOnLocalRadioToBeginPlaying(){
+		
+		if(homePage.isCurrentlyOnLocalRadioTab()){
+			
+			System.out.println("clickFirstRecentStationOnMyStationsToBeginPlaying() : "+ LocalRadioCellNumber0.getText());
+			LocalRadioCellNumber0.click();
+			return  miniPlayer.isCurrentlyOnMiniPlayer() || fullPlayer.isCurrentlyOnFullPlayer();
+		}
+		return false;
+	}
+	/**
+	 * Assume Simulator is on HomePage - For You
+	 * @return
+	 */
+	public boolean clickFirstStationOnForYouToBeginPlaying(){
+	  
+		if(homePage.isCurrentlyOnForYouTab()){
+			System.out.println("clickFirstRecentStationOnMyStationsToBeginPlaying() : "+ ForYouCellNumber0.getText());
+			ForYouCellNumber0.click();
+			return  miniPlayer.isCurrentlyOnMiniPlayer() || fullPlayer.isCurrentlyOnFullPlayer(); 
+		}
+		return false;
+	}
+	
+	/**
+	 * Pass in an IOSElement and get the element's text, print it out, and return as a String. 
+	 * @param element
+	 * @return
+	 */
+	private String getElementText(IOSElement element){
+		if(element!= null){
+			String text = element.getText();
+			System.out.println("getTextOf() : "+text);
+			return text;
+		}
+		return "Element was null";
+	}
+	/**
+	 * This is a Popup that appears over HomePage, thus moving/adding it here. Clicks 'Get Notifications' or 'Maybe Later'
+	 * @param stayConnected
+	 */
+	public void chooseStayConnected(boolean stayConnected) {
+		try {
+			if (stayConnected)
+				waitForVisible(driver, By.name("Get Notifications"), 2).click();
+			else
+				waitForVisible(driver, By.name("Maybe Later"), 2).click();
+		} catch (Exception e) {
+		}
+	}
+	
+	public void swipeFirstForYouStationToLeft(){
+		if(homePage.isCurrentlyOnForYouTab()){
+			System.out.println("swipeFirstForYouStationToLeft() ");
+			ForYouCellNumber0.swipe(SwipeElementDirection.LEFT, 700);
+			//None of the following are visible to Appium. 
+			//IOSElement addToFavorite = waitForVisible(driver, By.name("Add To Favorites"), 5);
+			//IOSElement NotforMe = waitForVisible(driver, By.name("Not for Me"), 5);
+			//IOSElement Unfavorite = waitForVisible(driver, By.name("Unfavorite"), 5);
+		}
+	}
+	
+	//############################################## OLD METHODS  #####################################
 	private IOSElement getFavorite(){
 		IOSElement favorite = null;
 		for(int i = 1; i < 4; i++){
@@ -64,19 +416,7 @@ public class HomePage extends Page {
 		return favorite;
 	}
 	
-	/**
-	 * This is a Popup that appears over HomePage, thus moving/adding it here. Clicks 'Get Notifications' or 'Maybe Later'
-	 * @param stayConnected
-	 */
-	public void chooseStayConnected(boolean stayConnected) {
-		try {
-			if (stayConnected)
-				waitForVisible(driver, By.name("Get Notifications"), 2).click();
-			else
-				waitForVisible(driver, By.name("Maybe Later"), 2).click();
-		} catch (Exception e) {
-		}
-	}
+
 	
 	private IOSElement getRecent(){
 		IOSElement recent = null;
@@ -238,15 +578,7 @@ public class HomePage extends Page {
 			if(item != null){
 			// Expose the hidden buttons with a swipe
 			swipeOnItem(item, LEFT);
-			if(!isVisible(addToFavorites)){
-				System.out.println("addToFavorites is not visible - trying to toggleFavorites()");
-				String message = toggleFavorites(item, x, removing);
-				err.add(message);
-			}
-			else{
-				System.out.println("addToFavorites.click()");
-				addToFavorites.click();
-			}
+			String message = toggleFavorites(item, x, removing);
 		}
 		else{
 			err.add("Selected item was not visible on the screen.");

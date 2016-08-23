@@ -59,7 +59,7 @@ public class TestPerfectFor extends TestRoot{
 		sideNavBar.gotoMyStationsPage();
 		Assert.assertTrue("Station: " + favoritedStation + " was not a favorite.", homePage.isStationAFavorite(favoritedStation) > 0);
 		// Assert that we can search for Perfect For and the link will bring us to the perfect for page
-		search.searchForStation("Perfect For");
+		//search.searchForStation("Perfect For");
 		Assert.assertTrue("Could not get to perfect for from search", isVisible(perfectFor.perfectForHeading));
 		consoleLogEnd(before, isVisible(perfectFor.perfectForHeading),  "Tested testPerfectFor() in TestPerfectFor.java.");
 	}

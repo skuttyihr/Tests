@@ -18,7 +18,7 @@ public class CustomRadio extends Page {
 		return playACustomStation("Chvrches");
 	}
 	public String playACustomStation(String artist) {
-		String chosenStation = search.searchForStation(artist);
+		String chosenStation = "";//searchPage.enterTextIntoSearchBar(artist);
 		loginPage.dismissStayConnectedPopup(); // Pretty good universal popup dismisser
 		// verify that it is playing: Get its attribute: class shall be 'pause'
 		if (!player.isPlaying("artist"))
@@ -41,8 +41,8 @@ public class CustomRadio extends Page {
 		
 		// Verify it is the first under My Station -> Recent Stations
 		player.back.click();
-		waitForElementToBeVisible(search.cancel, 2);
-		search.cancel.click();
+		//waitForElementToBeVisible(search.cancel, 2);
+		//search.cancel.click();
 		waitForElementToBeVisible(myStations, 2);
 		if(!isVisible(myStations)){
 			sideNavBar.gotoHomePage();

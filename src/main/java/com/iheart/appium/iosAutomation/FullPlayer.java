@@ -5,6 +5,7 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
@@ -559,12 +560,20 @@ public class FullPlayer extends Page {
     }
 	/**
      * Returns true if the Full Player is open. 
+     * Does a Null Check on the element so there won't be a NoSuchElementException
      * @return
      */
     public boolean isCurrentlyOnFullPlayer(){
-    	boolean isFull = IHRPlayerViewBackgroundImageViewUIImageView.isDisplayed();
-    	System.out.println("isCurrentlyOnFullPlayer() : " + isFull);
-    	return isFull;
+    	try{
+    		boolean isFull = IHRPlayerViewBackgroundImageViewUIImageView.isDisplayed();
+    		System.out.println("isCurrentlyOnFullPlayer() : " + isFull);
+    		return isFull;
+    	}
+    	catch(NoSuchElementException e){
+    		System.out.println("isCurrentlyOnFullPlayer() : false.    ~~~NoSuchElementException Caught.~~~");
+    		return false;
+    	}
+    	
     }
     
     /**

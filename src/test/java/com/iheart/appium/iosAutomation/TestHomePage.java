@@ -30,9 +30,9 @@ public class TestHomePage extends TestRoot {
 	}
 	
 	private void searchAndGoHome(String s){
-		search.searchForStation(s);
+		//search.searchForStation(s);
 		player.minimizePlayer();
-		search.cancel.click();
+		//search.cancelSearch();
 		
 		sideNavBar.gotoHomePage(); // Ensure we're on the home page
 	}
@@ -194,7 +194,18 @@ public class TestHomePage extends TestRoot {
 		Assert.assertTrue("Station was not in recents as well as favorites", stationIsARecent);
 		consoleLogEnd(before, stationIsAFavorite && stationIsARecent,  "Tested testAddToFavoritesFromLocalRadio() in TestHomePage.java.");
 	}
-	
+	@Test
+	public void testAddToFavs(){
+		LocalTime before = consoleLogStart("testAddToFavoritesFromLocalRadio- Log in, go to Live/Local Radio tab, add a station, check my stations for it being there ");
+		loginPage.loginWithoutVerifying();
+		createdFavorite = true;
+		sideNavBar.gotoHomePage();
+		homePage.gotoLocalRadio();
+		Page.enterZip();
+		//homePage.addToFavorites(1);
+		
+		
+	}
 	/**
 	 * // Show More is on For You and My Stations
 		// Scroll to bottom of each list, verify what's visible, then keep scrolling
@@ -235,7 +246,7 @@ public class TestHomePage extends TestRoot {
 		List<String> bottomItems = homePage.getVisibleListItems();
 		Assert.assertTrue("Could not scroll!", !topItems.equals(bottomItems));
 		// Tap the top status bar
-		homePage.statusBar.click();
+		//homePage.statusBar.click();
 		// We're back at the top
 		List<String> newTopItems = homePage.getVisibleListItems();
 		Assert.assertTrue("Could not scroll back to top!", topItems.equals(newTopItems));

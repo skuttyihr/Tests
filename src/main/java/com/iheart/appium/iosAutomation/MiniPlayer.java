@@ -1,5 +1,7 @@
 package com.iheart.appium.iosAutomation;
 
+import org.openqa.selenium.NoSuchElementException;
+
 import io.appium.java_client.SwipeElementDirection;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
@@ -34,6 +36,7 @@ public class MiniPlayer extends Page {
 	@iOSFindBy(accessibility = "MiniPlayerView-BackwardButton-UIButton") private IOSElement MiniPlayerViewBackwardButtonUIButton;
 	//This is only visible during Play of a Song in Artist radio - Not on a Station
 	@iOSFindBy(accessibility = "MiniPlayerProgressBarView-ElapsedView-UIView") private IOSElement MiniPlayerProgressBarViewElapsedViewUIView;
+	@iOSFindBy(accessibility ="IHRPlayerViewNextButton-SkipCountLabel-UILabel" ) private IOSElement IHRPlayerViewNextButtonSkipCountLabelUILabel;
 	
 	/**
 	 * This method prints to console all the elements that should be displayed in an active MiniPlayer. Make sure that miniplayer is active before calling this.
@@ -54,6 +57,7 @@ public class MiniPlayer extends Page {
 		printElementInformation(MiniPlayerViewRedSkipButtonUIButton);
 		printElementInformation(MiniPlayerViewProgressBarViewUIView);
 		printElementInformation(MiniPlayerProgressBarViewElapsedViewUIView);
+		printElementInformation(IHRPlayerViewNextButtonSkipCountLabelUILabel);
 	}
 	/**
 	 * Clicks the MiniPlayer to open Full Player. 
@@ -87,6 +91,15 @@ public class MiniPlayer extends Page {
 		MiniPlayerViewThumbUpButtonUIButton.click();
 	}
 	
+	public int getNumberOfSkipsRemaining(){
+		if(IHRPlayerViewNextButtonSkipCountLabelUILabel !=null){
+			int count = Integer.parseInt(IHRPlayerViewNextButtonSkipCountLabelUILabel.getText());
+			System.out.println("getNumberOfSkipsRemaining() : " + count);
+			return count;
+		}
+		return -1;
+		
+	}
 	/**
 	 * Gets the Song Title, but it may also get the Radio Station.
 	 * @return
@@ -179,9 +192,18 @@ public class MiniPlayer extends Page {
 	 * @return
 	 */
 	public boolean isCurrentlyOnMiniPlayer(){
-		boolean onMini = MiniPlayerViewImageViewUIImageView.isDisplayed();
-		System.out.println("isCurrentlyOnMiniPlayer() : " + onMini);
-		return onMini;
+		try{
+			if(MiniPlayerViewImageViewUIImageView!= null){
+				boolean onMini = MiniPlayerViewImageViewUIImageView.isDisplayed();
+				System.out.println("isCurrentlyOnMiniPlayer() : " + onMini);
+				return onMini;
+			}
+		}
+		catch(NoSuchElementException e){
+			System.out.println("isCurrentlyOnMiniPlayer() : false.   ~~~NoSuchElementException Caught.~~~");
+			return false;
+		}
+		return false; //Default
 	}
 
 	/**

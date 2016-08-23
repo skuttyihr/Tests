@@ -33,6 +33,7 @@ import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.appium.java_client.MobileBy;
+import io.appium.java_client.SwipeElementDirection;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
 
@@ -71,7 +72,7 @@ public class TestRoot {
 	protected static SideNavigationBar sideNavBar;
 	protected static ForYouPage forYouPage;
 	protected static CustomRadio customRadio;
-	protected static Search search;
+	protected static SearchPage searchPage;
 	protected static DeepLink deepLink;
 	protected static PodcastsPage podcastsPage;
 	protected static OnboardingPage onboardingPage;
@@ -238,7 +239,7 @@ public class TestRoot {
 
 		forYouPage = new ForYouPage(driver);
 		podcastsPage = new PodcastsPage(driver);
-		search = new Search(driver);
+		searchPage = new SearchPage(driver);
 		customRadio = new CustomRadio(driver);
 		deepLink = new DeepLink(driver);
 		onboardingPage = new OnboardingPage(driver);
