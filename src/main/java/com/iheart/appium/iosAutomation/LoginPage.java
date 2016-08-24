@@ -269,8 +269,7 @@ public class LoginPage extends Page {
 		Page.enterZip();
 		// Dismiss stay connected popup
 		Page.handlePossiblePopUp();
-		waitForElementToBeVisible(HomePage.forYouTab, 5);
-		if(HomePage.forYouTab.isDisplayed()){
+		if(homePage.isCurrentlyOnHomePage()){
 			System.out.println("For You Tab on Home is displayed- Log In worked!");
 			return true;
 		}

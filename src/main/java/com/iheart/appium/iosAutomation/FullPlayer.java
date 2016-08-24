@@ -397,9 +397,10 @@ public class FullPlayer extends Page {
 	 * @return
 	 */
 	public int getNumberOfSkipsRemaining(){
-			int skipsLeft = Integer.parseInt(IHRPlayerViewNextButtonSkipCountLabelUILabel.getText());
-			System.out.println("getNumberOfSkipsRemaining() : " + skipsLeft);
-			return skipsLeft;
+		String skips = IHRPlayerViewNextButtonSkipCountLabelUILabel.getText();
+		int skipsLeft = Integer.parseInt(skips.substring(0, 1));
+		System.out.println("getNumberOfSkipsRemaining() : " + skipsLeft);
+		return skipsLeft;
 	}
 	/**
 	 * Clicks the Skip Button
@@ -559,12 +560,11 @@ public class FullPlayer extends Page {
     }
 	/**
      * Returns true if the Full Player is open. 
+     * Does a Null Check on the element so there won't be a NoSuchElementException
      * @return
      */
     public boolean isCurrentlyOnFullPlayer(){
-    	boolean isFull = IHRPlayerViewBackgroundImageViewUIImageView.isDisplayed();
-    	System.out.println("isCurrentlyOnFullPlayer() : " + isFull);
-    	return isFull;
+    	return isCurrentlyOn("isCurrentlyOnFullPlayer", IHRPlayerViewBackgroundImageViewUIImageView);
     }
     
     /**
@@ -582,10 +582,7 @@ public class FullPlayer extends Page {
      * @return
      */
     public boolean isOptionMenuOpen(){
-    	boolean isDisplayed  = IHROptionMenuViewMenuContainerUIView.isDisplayed();
-    	System.out.println("isOptionMenuOpen() : " + isDisplayed);
-    	return isDisplayed;
-    	
+    	return isCurrentlyOn("isOptionMenuOpen", IHROptionMenuViewMenuContainerUIView);
     }
     
     /**

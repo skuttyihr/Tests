@@ -5,6 +5,7 @@ import java.time.LocalTime;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.By;
 
@@ -23,6 +24,7 @@ public class TestPages extends TestRoot {
 	}
 	
 	@Test
+	@Ignore
 	/**
 	 * Test for Logo and Title on Pages. Checks a variety of Logos and Titles and whether they are visible or not. 
 	 * Includes MyStations, Local Radio, Live Radio, Live Artist Page, Podcasts Page, Perfect  For, Listening History, Alarm, & Sleep
