@@ -1,7 +1,5 @@
 package com.iheart.appium.iosAutomation;
 
-import org.openqa.selenium.NoSuchElementException;
-
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
 import io.appium.java_client.pagefactory.iOSFindBy;
@@ -26,6 +24,8 @@ public class SearchPage extends Page{
 	@iOSFindBy(accessibility = "IHRGlobalSearchBar-SearchBarClearImage-UIImage") private IOSElement IHRGlobalSearchBarSearchBarClearImageUIImage;
 	@iOSFindBy(accessibility = "IHRGlobalSearchBar-Subview-UIView") private IOSElement  IHRGlobalSearchBarSubviewUIView;
 	@iOSFindBy(accessibility = "IHRGlobalSearchBar-SecondLevelSubview-UIView") private IOSElement IHRGlobalSearchBarSecondLevelSubviewUIView;
+	
+	//Add Search Results AIDs and related methods to click them, get information out of them, scroll down, etc. 
 	
 	/**
 	 * Click Cancel to get out of Search and back to other page.
@@ -63,14 +63,13 @@ public class SearchPage extends Page{
 	 * @return
 	 */
 	public boolean isCurrentlyOnSearchPage(){
-		try{
-			boolean isCurr = IHRGlobalSearchBarCancelButtonUIButton.isDisplayed();
-			System.out.println("isCurrentlyOnSearchPage() : "+ isCurr);
-			return isCurr;
-		}catch(NoSuchElementException e){
-			System.out.println("isCurrentlyOnSearchPage() : false - Caught NoSuchElementException");
-			return false;
-		}
+		return isCurrentlyOn("isCurrentlyOnSearchPage", IHRGlobalSearchBarCancelButtonUIButton);
+	}
+	
+	public void clickTopResultAfterSearching(){
+		//figure out new Xpath or AIDs to add once Search works on the client.
+		
+		
 	}
 	
 	/**

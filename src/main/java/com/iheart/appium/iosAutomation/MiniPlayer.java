@@ -91,7 +91,8 @@ public class MiniPlayer extends Page {
 	
 	public int getNumberOfSkipsRemaining(){
 		if(IHRPlayerViewNextButtonSkipCountLabelUILabel !=null){
-			int count = Integer.parseInt(IHRPlayerViewNextButtonSkipCountLabelUILabel.getText());
+			String text = IHRPlayerViewNextButtonSkipCountLabelUILabel.getText();
+			int count = Integer.parseInt(text.substring(0,1));
 			System.out.println("getNumberOfSkipsRemaining() : " + count);
 			return count;
 		}
