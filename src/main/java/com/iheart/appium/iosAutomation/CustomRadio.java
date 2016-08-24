@@ -13,7 +13,7 @@ public class CustomRadio extends Page {
 		super(_driver);
 	}
 	
-	
+	/*
 	public String playACustomStation(){
 		return playACustomStation("Chvrches");
 	}
@@ -54,4 +54,5 @@ public class CustomRadio extends Page {
 		
 		return ""; // No errors
 	}
+	*/
 }

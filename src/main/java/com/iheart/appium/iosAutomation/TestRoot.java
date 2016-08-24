@@ -24,6 +24,7 @@ import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -477,7 +478,27 @@ public class TestRoot {
 			return MobileBy.className(locator);
 		}
 	}
-	
+	/**
+	 * Pass in the Page or Element Message you want to test 'isCurrentlyOnHomePage' for instance, and the specific element to test. 
+	 * Method checks that the element is not null and then checks whether it isDisplayed. 
+	 * @param isCurrentlyOnPageMessage
+	 * @param element
+	 * @return
+	 */
+	public boolean isCurrentlyOn(String isCurrentlyOnPageMessage, IOSElement element){
+		try{
+			if(element!= null){
+				boolean onPage = element.isDisplayed();
+				System.out.println(isCurrentlyOnPageMessage+ "() : " + onPage);
+				return onPage;
+			}
+		}
+		catch(NoSuchElementException e){
+			System.out.println(isCurrentlyOnPageMessage+ "() : false.   ~~~NoSuchElementException Caught.~~~");
+			return false;
+		}
+		return false; //Default
+	}
 	// General navigation
 	/**
 	 * Swipe in a direction from a start point

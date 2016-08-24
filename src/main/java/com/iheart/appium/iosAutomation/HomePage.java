@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 
 import io.appium.java_client.SwipeElementDirection;
 import io.appium.java_client.ios.IOSDriver;
@@ -195,45 +196,37 @@ public class HomePage extends Page {
 	 * @return
 	 */
 	public boolean isHamburgerButtonDisplayed(){
-		boolean isDisp = NavBarSideMenuButtonUIButton.isDisplayed();
-		System.out.println("isHamburgerButtonDisplayed() : " + isDisp);
-		return isDisp;
+		return isCurrentlyOn("isHamburgerButtonDisplayed", NavBarSideMenuButtonUIButton);
 	}
 	/**
 	 * Checks to see if the For You Tab is displayed. Can be on For You, My Stations, Local Radio etc so be careful. 
 	 * @return
 	 */
 	public boolean isCurrentlyOnHomePage(){
-		boolean isDisp = HomeSegmentedControlTitleLabelUIButtonForYou.isDisplayed();
-		System.out.println("isCurrentlyOnHomePage() : " + isDisp);
-		return isDisp;
+		return isCurrentlyOn("isCurrentlyOnHomePage", HomeSegmentedControlTitleLabelUIButtonForYou);
 	}
 	/**
 	 * Checks to see if the For You Tab Collection view is open. This is only visible when the For You Button has been clicked. It is also the first page opened after login / genre picker.
 	 * @return
 	 */
 	public boolean isCurrentlyOnForYouTab(){
-		boolean isDisp = ForYouTabCollectionView.isDisplayed();
-		System.out.println("isCurrentlyOnForYouTab() : " + isDisp);
-		return isDisp;
+		return isCurrentlyOn("isCurrentlyOnForYouTab", ForYouTabCollectionView);
 	}
 	/**
 	 * Checks to see if the My Stations Collection View is Open. Reach it by clicking on My Stations. 
 	 * @return
 	 */
 	public boolean isCurrentlyOnMyStationsTab(){
-		boolean onMyStations = MyStationsTabCollectionView.isDisplayed() ;
-		System.out.println("isCurrentlyOnMyStationsTab() : "+ onMyStations);
-		return onMyStations;
+		return isCurrentlyOn("isCurrentlyOnMyStationsTab", MyStationsTabCollectionView);
 	}
+	
+
 	/**
 	 * Checks to see if Local Radio Collection View is open (displayed). Reach it by clicking on Local Radio. This view will eventually be replaced by My Music. 
 	 * @return
 	 */
 	public boolean isCurrentlyOnLocalRadioTab(){
-		boolean onLocalRadio = LocalRadioTabCollectionView.isDisplayed();
-		System.out.println("isCurrentlyOnLocalRadioTab() : "+ onLocalRadio);
-		return onLocalRadio;
+		return isCurrentlyOn("isCurrentlyOnLocalRadioTab", LocalRadioTabCollectionView);
 	}
 
 	/**
