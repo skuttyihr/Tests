@@ -1,7 +1,5 @@
 package com.iheart.appium.iosAutomation;
 
-import org.openqa.selenium.NoSuchElementException;
-
 import io.appium.java_client.SwipeElementDirection;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
@@ -192,18 +190,7 @@ public class MiniPlayer extends Page {
 	 * @return
 	 */
 	public boolean isCurrentlyOnMiniPlayer(){
-		try{
-			if(MiniPlayerViewImageViewUIImageView!= null){
-				boolean onMini = MiniPlayerViewImageViewUIImageView.isDisplayed();
-				System.out.println("isCurrentlyOnMiniPlayer() : " + onMini);
-				return onMini;
-			}
-		}
-		catch(NoSuchElementException e){
-			System.out.println("isCurrentlyOnMiniPlayer() : false.   ~~~NoSuchElementException Caught.~~~");
-			return false;
-		}
-		return false; //Default
+		return isCurrentlyOn("isCurrentlyOnMiniPlayer", MiniPlayerViewImageViewUIImageView);
 	}
 
 	/**
