@@ -6,6 +6,7 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 
+import io.appium.java_client.MobileBy;
 import io.appium.java_client.SwipeElementDirection;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
@@ -167,11 +168,35 @@ public class HomePage extends Page {
 		}
 
 	}
+	private enum CellStrings {
+		LOCALRADIO("LocalRadio"), RECENTS("Recents"), FAVORITES("Favorites"), FORYOU("ForYou");
+		private final String stringValue;
+		private CellStrings (final String s){
+			stringValue = s;
+		}
+		public String toString(){return stringValue;}
+		
+	}
+	/**
+	 * Pass in a type of CellStrings and the Cell you want to create an IOSElement associated to the AccessibilityIdentifier in the Collection.
+	 * Can take LocalRadio, Recents, Favorites, or ForYou.
+	 * cellInArray can be any int 0 or greater. Most pages have 5 to 20 Cells. Remember that 0 is the first cell in the collection. 
+	 * -createIOSElementOnHomePageForCell(CellStrings.FAVORITES.toString() , 3);
+	 * @param type
+	 * @param cellInArray
+	 * @return
+	 */
+	public IOSElement createIOSElementOnHomePageForCell(String type, int cellInArray ){
+		String create = type + "-CellNumber-" + cellInArray;
+		System.out.println("createIOSElementOnHomePageForCell() : "+ create );
+		return findElement(driver, MobileBy.AccessibilityId(create));
+	}
 	/**
 	 * Must be on HomePage - Clicks the For You Tab
 	 */
 	public void clickForYouTab(){
 		System.out.println("clickForYouTab().");
+		IOSElement blah = createIOSElementOnHomePageForCell(CellStrings.FAVORITES.toString() , 3);
 		HomeSegmentedControlTitleLabelUIButtonForYou.click();
 	}
 	/**
@@ -272,10 +297,9 @@ public class HomePage extends Page {
 	 */
 	public void scrollToTop(){
 		System.out.println("scrollToTop() : Swiping Down Four times. May not necessarily reach top.");
-		homePage.swipeDown();
-		homePage.swipeDown();
-		homePage.swipeDown();
-		homePage.swipeDown();
+		for(int i = 0; i < 4; i++){
+			homePage.swipeDown();
+		}
 	}
 	
 

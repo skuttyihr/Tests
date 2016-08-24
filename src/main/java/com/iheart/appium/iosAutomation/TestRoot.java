@@ -34,7 +34,6 @@ import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.appium.java_client.MobileBy;
-import io.appium.java_client.SwipeElementDirection;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
 
@@ -479,7 +478,7 @@ public class TestRoot {
 		}
 	}
 	/**
-	 * Pass in the Page or Element Message you want to test 'isCurrentlyOnHomePage' for instance, and the specific element to test. 
+	 * Pass in the Page or Element Message you want to test as a String "isCurrentlyOnHomePage" for instance, and the specific element to test. 
 	 * Method checks that the element is not null and then checks whether it isDisplayed. 
 	 * @param isCurrentlyOnPageMessage
 	 * @param element
