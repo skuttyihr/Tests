@@ -397,9 +397,10 @@ public class FullPlayer extends Page {
 	 * @return
 	 */
 	public int getNumberOfSkipsRemaining(){
-			int skipsLeft = Integer.parseInt(IHRPlayerViewNextButtonSkipCountLabelUILabel.getText());
-			System.out.println("getNumberOfSkipsRemaining() : " + skipsLeft);
-			return skipsLeft;
+		String skips = IHRPlayerViewNextButtonSkipCountLabelUILabel.getText();
+		int skipsLeft = Integer.parseInt(skips.substring(0, 1));
+		System.out.println("getNumberOfSkipsRemaining() : " + skipsLeft);
+		return skipsLeft;
 	}
 	/**
 	 * Clicks the Skip Button
@@ -581,10 +582,7 @@ public class FullPlayer extends Page {
      * @return
      */
     public boolean isOptionMenuOpen(){
-    	boolean isDisplayed  = IHROptionMenuViewMenuContainerUIView.isDisplayed();
-    	System.out.println("isOptionMenuOpen() : " + isDisplayed);
-    	return isDisplayed;
-    	
+    	return isCurrentlyOn("isOptionMenuOpen", IHROptionMenuViewMenuContainerUIView);
     }
     
     /**

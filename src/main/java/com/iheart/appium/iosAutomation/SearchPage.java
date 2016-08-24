@@ -73,14 +73,18 @@ public class SearchPage extends Page{
 		}
 	}
 	
-	
-	public void showAllElements(){
-		printElementInformation(IHRGlobalSearchBarCancelButtonUIButton);
-		printElementInformation(IHRGlobalSearchBarSearchBarUISearchBar);
-		printElementInformation(IHRGlobalSearchBarSearchBarTextFieldUITextField);
-		printElementInformation(IHRGlobalSearchInstructionsViewIconViewUIImageView);
-		printElementInformation(IHRGlobalSearchInstructionsViewSpacer1UIView);
-		printElementInformation(IHRGlobalSearchInstructionsViewSpacer2UIView);
+	/**
+	 * Simply print out all of the Search elements we've added and return whether they are all correctly displayed. 
+	 * @return
+	 */
+	public boolean showAllElements(){
+		return
+		printElementInformation(IHRGlobalSearchBarCancelButtonUIButton) &&
+		printElementInformation(IHRGlobalSearchBarSearchBarUISearchBar) && 
+		printElementInformation(IHRGlobalSearchBarSearchBarTextFieldUITextField) &&
+		printElementInformation(IHRGlobalSearchInstructionsViewIconViewUIImageView) &&
+		printElementInformation(IHRGlobalSearchInstructionsViewSpacer1UIView) &&
+		printElementInformation(IHRGlobalSearchInstructionsViewSpacer2UIView) &&
 		printElementInformation(IHRGlobalSearchInstructionsViewInstructionsLabelUILabel);
 	}
 

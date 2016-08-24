@@ -8,9 +8,6 @@ import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
-import org.openqa.selenium.By;
-
-import io.appium.java_client.ios.IOSElement;
 
 public class TestLogin extends TestRoot {
 	
@@ -81,13 +78,14 @@ public class TestLogin extends TestRoot {
 		LocalTime before = consoleLogStart("Testing testSearchPageElements");
 		loginPage.loginWithoutVerifying("test55@test.com","test");
 		homePage.clickNavBarSearchButtonToOpenSearch();
-		searchPage.showAllElements();
+		boolean elements = searchPage.showAllElements();
 		searchPage.enterTextIntoSearchBar("asdf");
 		searchPage.clearSearchBarTextField();
 		searchPage.enterTextIntoSearchBar("MORE");
 		searchPage.clickCancelButtonOnSearchBar();
 		homePage.clickNavBarSearchButtonToOpenSearch();
-		consoleLogEnd(before, true, "Tested SearchPage Elements");
+		Assert.assertTrue("One of the elements on the search page appears to be missing.", elements);
+		consoleLogEnd(before, elements, "Tested SearchPage Elements");
 	}
 	@Test
 	public void testMiniPlayerArtistRadioElementsAndFunctionality(){
