@@ -194,18 +194,6 @@ public class TestHomePage extends TestRoot {
 		Assert.assertTrue("Station was not in recents as well as favorites", stationIsARecent);
 		consoleLogEnd(before, stationIsAFavorite && stationIsARecent,  "Tested testAddToFavoritesFromLocalRadio() in TestHomePage.java.");
 	}
-	@Test
-	public void testAddToFavs(){
-		LocalTime before = consoleLogStart("testAddToFavoritesFromLocalRadio- Log in, go to Live/Local Radio tab, add a station, check my stations for it being there ");
-		loginPage.loginWithoutVerifying();
-		createdFavorite = true;
-		sideNavBar.gotoHomePage();
-		homePage.gotoLocalRadio();
-		Page.enterZip();
-		//homePage.addToFavorites(1);
-		
-		
-	}
 	/**
 	 * // Show More is on For You and My Stations
 		// Scroll to bottom of each list, verify what's visible, then keep scrolling
