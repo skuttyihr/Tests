@@ -98,7 +98,7 @@ public class TestLogin extends TestRoot {
 		//Start Artist Radio
 		searchPage.enterTextIntoSearchBar("Rage against the machine");
 		Assert.assertTrue("Expected 'Pause Buffering' or 'Pause' because MiniPlayer should be playing an Artist track.",miniPlayer.getTypeOfPlayButton().contains("Pause"));
-		//miniPlayer.showAllElements();
+		miniPlayer.showAllElements();
 		miniPlayer.clickPlayPauseButton();
 		Assert.assertTrue("Expected 'Play Buffering' or 'Play' because MiniPlayer should be playing an Artist track.",miniPlayer.getTypeOfPlayButton().contains("Play"));
 		miniPlayer.clickPlayPauseButton();
