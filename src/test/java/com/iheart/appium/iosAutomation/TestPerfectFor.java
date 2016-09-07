@@ -2,10 +2,10 @@ package com.iheart.appium.iosAutomation;
 
 import java.time.LocalTime;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
 
 public class TestPerfectFor extends TestRoot{
@@ -14,11 +14,14 @@ public class TestPerfectFor extends TestRoot{
 	public void setUp() throws Exception {
 		TestRoot.setup();
 	}
-	@After
-	public void after() {
-		// Remove favorites
-		TestRoot.tearDown();
-	}
+//	@After
+//	public void after() {
+//		// Remove favorites
+//		TestRoot.tearDown();
+//	}
+	
+	@Rule
+	public ScreenshotRule screenshot = new ScreenshotRule();
 	
 	@Test
 	@Ignore //Currently failing

@@ -4,9 +4,9 @@ import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 
 public class TestOnboarding extends TestRoot {
@@ -16,10 +16,13 @@ public class TestOnboarding extends TestRoot {
 		setup();
 	}
 
-	@After
-	public void after() {
-		tearDown();
-	}
+//	@After
+//	public void after() {
+//		tearDown();
+//	}
+	
+	@Rule
+	public ScreenshotRule screenshot = new ScreenshotRule();
 	
 	/**
 	 * testAllElementsOnOnboardingPage is a method that makes sure all elements with AccessibilityIdentifiers show up on the Onboarding page.

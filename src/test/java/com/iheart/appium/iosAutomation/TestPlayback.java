@@ -11,7 +11,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
 
-
 public class TestPlayback extends TestRoot {
 
 	@Rule
@@ -26,8 +25,11 @@ public class TestPlayback extends TestRoot {
 		// Remove favorites, logout, and tearDown
 		homePage.removeAllFavorites();
 		sideNavBar.logout();
-		TestRoot.tearDown();
+//		TestRoot.tearDown();
 	}
+	
+	@Rule
+	public ScreenshotRule screenshot = new ScreenshotRule();
 	
 	/**
 	 * Changes and then checks Playback Volume

@@ -7,6 +7,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
 
 import io.appium.java_client.ios.IOSElement;
@@ -26,8 +27,11 @@ public class TestHomePage extends TestRoot {
 		if(createdFavorite){
 			homePage.removeAllFavorites();
 		}
-		TestRoot.tearDown();
+//		TestRoot.tearDown();
 	}
+	
+	@Rule
+	public ScreenshotRule screenshot = new ScreenshotRule();
 	
 	private void searchAndGoHome(String s){
 		//search.searchForStation(s);

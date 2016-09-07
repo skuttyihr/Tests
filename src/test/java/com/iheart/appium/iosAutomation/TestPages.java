@@ -2,10 +2,10 @@ package com.iheart.appium.iosAutomation;
 
 import java.time.LocalTime;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
 import org.openqa.selenium.By;
 
@@ -18,10 +18,13 @@ public class TestPages extends TestRoot {
 		setup();
 	}
 
-	@After
-	public void after() {
-		TestRoot.tearDown();
-	}
+//	@After
+//	public void after() {
+//		TestRoot.tearDown();
+//	}
+	
+	@Rule
+	public ScreenshotRule screenshot = new ScreenshotRule();
 	
 	@Test
 	@Ignore
