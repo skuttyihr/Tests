@@ -1,8 +1,7 @@
 package com.iheart.appium.iosAutomation;
 
-
-import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 
 public class TestSearch extends TestRoot {
 
@@ -10,12 +9,15 @@ public class TestSearch extends TestRoot {
 	public void setUp() throws Exception {
 		TestRoot.setup();
 	}
-	@After
-	public void after() {
-		// Remove favorites
-//		homePage.removeAllFavorites();
-		TestRoot.tearDown();
-	}
+//	@After
+//	public void after() {
+//		// Remove favorites
+////		homePage.removeAllFavorites();
+//		TestRoot.tearDown();
+//	}
+	
+	@Rule
+	public ScreenshotRule screenshot = new ScreenshotRule();
 
 	/**
 	* Search for "Alt" because "Alt" could be:
