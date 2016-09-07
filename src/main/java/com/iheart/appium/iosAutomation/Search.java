@@ -144,7 +144,7 @@ public class Search extends Page {
 	 * Test method for applying all filters and checking they're activated
 	 * @return An error string, empty if no errors
 	 */
-	public String applyFilters(){
+	public String applyFilters(IOSDriver<IOSElement> d){
 		Errors errors = new Errors();
 		// Use a set to make sure we don't get all of the same results with the filter
 		Set<String> topResults = new HashSet<String>();
@@ -154,13 +154,13 @@ public class Search extends Page {
 			String foundStation = applyFilter(f);
 			topResults.add(foundStation);
 			if(!strGood(foundStation)){
-				errors.add("Could not find a station with the filter: " + f);
+				errors.add(d, "Could not find a station with the filter: " + f);
 			}
 		}
 		
 		// Ensure the filter changed the top result at least once
 		if(topResults.size() <= 1){
-			errors.add("Filters had no effect.");
+			errors.add(d, "Filters had no effect.");
 		}
 		
 		if(errors.howMany() == 0)

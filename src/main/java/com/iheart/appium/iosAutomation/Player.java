@@ -135,7 +135,7 @@ public class Player extends Page {
 	 * station Volume control
 	 * Returns a String of any errors encountered. A blank string means a successful verification
 	 */
-	private String verifyPlayer_live(String stationName) { 
+	private String verifyPlayer_live(IOSDriver<IOSElement> d, String stationName) { 
 		Errors errors = new Errors();
 		if(stationName != null && stationName.length() > 0 
 				&& !stationLabel.getText().contains(stationName)){
@@ -144,19 +144,19 @@ public class Player extends Page {
 
 		if (!isVisible(songTrack_live)) {
 			if (!isVisible(songTrack2_live))
-				errors.append("No sound track name is displayed.\n");
+				errors.add(d, "No sound track name is displayed.\n");
 		}
 		if (!isVisible(play) && !isVisible(stop))
-			errors.append("Play/Stop button is not displayed.\n");
+			errors.add(d, "Play/Stop button is not displayed.\n");
 
 		if (!isVisible(scan))
-			errors.append("Scan button is not displayed.\n");
+			errors.add(d, "Scan button is not displayed.\n");
 
 		if (!isVisible(more))
-			errors.append("More button (...) is not displayed.\n");
+			errors.add(d, "More button (...) is not displayed.\n");
 
 		if(!isVisible(radioImage)){
-			errors.append("Could not load live radio image\n");
+			errors.add(d, "Could not load live radio image\n");
 		}
 		
 		
@@ -167,27 +167,27 @@ public class Player extends Page {
 	 * Returns a String of any errors encountered. A blank string means a successful verification
 	 * @param stationName
 	 */
-	private String verifyPlayer_artist(String stationName) {
+	private String verifyPlayer_artist(IOSDriver<IOSElement> d, String stationName) {
 		Errors errors = new Errors();
 		
 		if(stationName != null && stationName.length() > 0
 				&& !stationLabel.getText().contains(stationName))
-			errors.append("Station name is not correct.\n");
+			errors.add(d, "Station name is not correct.\n");
 
 		if (!isVisible(songTrack_artist))
-			errors.append("No sound track name is displayed.\n");
+			errors.add(d, "No sound track name is displayed.\n");
 
 		if (!isVisible(artist_artist))
-			errors.append("No artist name is displayed.\n");
+			errors.add(d, "No artist name is displayed.\n");
 
 		if (!isVisible(play) && !isVisible(pause))
-			errors.append("Play/Pause button is not displayed.\n");
+			errors.add(d, "Play/Pause button is not displayed.\n");
 
 		if (!isVisible(skip))
-			errors.append("Skip button is not displayed.\n");
+			errors.add(d, "Skip button is not displayed.\n");
 
 		if(!isVisible(artistAlbumArt)){
-			errors.append("Could not load artist album artwork.\n");
+			errors.add(d, "Could not load artist album artwork.\n");
 		}
 		
 		return errors.toString();
@@ -198,29 +198,29 @@ public class Player extends Page {
 	 * @param stationName
 	 * Returns a String of any errors encountered. A blank string means a successful verification
 	 */
-	private String verifyPlayer_podcast(String stationName) {
+	private String verifyPlayer_podcast(IOSDriver<IOSElement> d, String stationName) {
 		Errors errors = new Errors();
 		if(stationName != null && stationName.length() > 0
 				&& !stationLabel.getText().contains(stationName.substring(0, 5)))
-			errors.append("Station name is not correct.\n");
+			errors.add(d, "Station name is not correct.\n");
 
 		if (!isVisible(episodeName_podcast))
-			errors.append("Episode name is not displayed.\n");
+			errors.add(d, "Episode name is not displayed.\n");
 
 		if (!isVisible(stationName_podcast))
-			errors.append("Station name is Not displayed.\n");
+			errors.add(d, "Station name is Not displayed.\n");
 
 		if (!isVisible(slideBar))
-			errors.append("No Scrubber is displayed.\n");
+			errors.add(d, "No Scrubber is displayed.\n");
 
 		if (!isVisible(play) && !isVisible(pause))
-			errors.append("Play/Play button is not displayed.\n");
+			errors.add(d, "Play/Play button is not displayed.\n");
 
 		if (!isVisible(skip))
-			errors.append("Skip button is not displayed.\n");
+			errors.add(d, "Skip button is not displayed.\n");
 
 		if(!isVisible(podcastImage)){
-			errors.append("Could not load podcast image\n");
+			errors.add(d, "Could not load podcast image\n");
 		}
 		
 		return errors.toString();
@@ -615,12 +615,13 @@ public class Player extends Page {
 		
 		// If it's playing in the mini player, skip the other assessments
 		if(miniPlayer.isCurrentlyOnMiniPlayer()){
-			if(true){//isVisible(miniPlayer.   .miniPlayerStop) || isVisible(miniPlayer.miniPlayerPause)){
-				return true;
-			}
-			else{
-				return false;
-			}
+			// TODO
+//			if(isVisible(miniPlayer.   .miniPlayerStop) || isVisible(miniPlayer.miniPlayerPause)){
+			return true;
+//			}
+//			else{
+//				return false;
+//			}
 		}
 		
 		switch(type){
@@ -735,54 +736,54 @@ public class Player extends Page {
 		return foundGrowl;
 	}
 	
-	public String verifyPlaybackControls(){
-		return verifyPlaybackControls("");
+	public String verifyPlaybackControls(IOSDriver<IOSElement> d){
+		return verifyPlaybackControls(d, "");
 	}
 	/**
 	 * Verifies the playback controls for any playback view
 	 * @param station
 	 * @return
 	 */
-	public String verifyPlaybackControls(String station){
+	public String verifyPlaybackControls(IOSDriver<IOSElement> d, String station){
 		System.out.println("Verifying Player Controls");
 		Errors errors = new Errors();
 		
 		// Verify that the controls are present
-	if (!isVisible(thumbUp))
-			errors.add("No Thumb Up icon is displayed.");
+		if (!isVisible(thumbUp))
+			errors.add(d, "No Thumb Up icon is displayed.");
 
 		if (!isVisible(thumbDown))
-			errors.add("No Thumb Down icon is displayed.");
+			errors.add(d, "No Thumb Down icon is displayed.");
 		
 		// Verify based on type (Artist, Podcast, Radio)
 		switch(getType()){
 		case "artist":
-			errors.add(verifyPlayer_artist(station));
+			errors.add(d, verifyPlayer_artist(d, station));
 			break;
 		case "podcast":
-			errors.add(verifyPlayer_podcast(station));
+			errors.add(d, verifyPlayer_podcast(d, station));
 			break;
 		case "live":
-			errors.add(verifyPlayer_live(station));
+			errors.add(d, verifyPlayer_live(d, station));
 			break;
 		}
 		
 		// Verify that we can use the controls
 		if(!doThumbDown()){
-			errors.add("Could not thumb down!");
+			errors.add(d, "Could not thumb down!");
 		}
 		if(!doThumbUp()){ // End on a good note :)
-			errors.add("Could not thumb up!");
+			errors.add(d, "Could not thumb up!");
 		}
 		if(!player.doFavorite()){
-			errors.add("Could not favorite artist station!");
+			errors.add(d, "Could not favorite artist station!");
 		}
 		if(!player.doSkip()){
-			errors.add("Could not skip!");
+			errors.add(d, "Could not skip!");
 		}
 		
 		if(!player.share()){
-			errors.add("Could not share!");
+			errors.add(d, "Could not share!");
 		}
 		
 		return errors.toString();
@@ -933,11 +934,11 @@ public class Player extends Page {
 		return vol;
 	}
 	
-	public String setVolume(int volumeLevel){
+	public String setVolume(IOSDriver<IOSElement> d, int volumeLevel){
 		Errors err = new Errors();
 		waitForElementToBeVisible(volume, 5);
 		if(!isVisible(volume)){
-			err.add("Volume slider was not present.");
+			err.add(d, "Volume slider was not present.", "setVolume");
 		}
 		else{
 			String floatingPercentage = String.valueOf((float) volumeLevel / 100);
@@ -957,12 +958,12 @@ public class Player extends Page {
 					volume.sendKeys(String.valueOf(floatingPercentage));
 				}
 				catch(Exception e){
-					err.add("Failure to set volume: " + e.getMessage());
+					err.add(d, "Failure to set volume: " + e.getMessage());
 				}
 				testVolume = getVolume();
 			}
 			if(!isAbout(volumeLevel, testVolume, 6)){
-				err.add("Could not set volume within volume levels.\nExpected: " + volumeLevel + "\nFound: " + testVolume);
+				err.add(d, "Could not set volume within volume levels.\nExpected: " + volumeLevel + "\nFound: " + testVolume, "setVolume");
 			}
 		}
 		
@@ -974,7 +975,7 @@ public class Player extends Page {
 	 * Likely won't work with the simulator, and a physical device must have an AirPlay device within range.
 	 * @return
 	 */
-	public String streamOverAirPlay(){
+	public String streamOverAirPlay(IOSDriver<IOSElement> d){
 		System.out.println("Testing streamOverAirPlay()-may not work with Simulator");
 		Errors err = new Errors();
 		
@@ -986,12 +987,12 @@ public class Player extends Page {
 				cancelAirPlay.click();
 			}
 			else{
-				err.add("Clicking AirPlay button did not bring up AirPlay dialog.");
+				err.add(d, "Clicking AirPlay button did not bring up AirPlay dialog.", "streamOverAirPlay");
 			}
 		}
 		else{
 			if(airPlay == null){ // If we have it but it's not visible, pass it anyway
-				err.add("AirPlay button was not visible. Is this disabled?");
+				err.add(d, "AirPlay button was not visible. Is this disabled?", "streamOverAirPlay");
 			}
 		}
 		
@@ -1007,16 +1008,16 @@ public class Player extends Page {
 		return title;
 	}
 	
-	public String openMoreInfo(){
-		return openMoreInfo(getType(), true);
+	public String openMoreInfo(IOSDriver<IOSElement> d){
+		return openMoreInfo(d, getType(), true);
 	}
-	public String openMoreInfo(boolean verify){
-		return openMoreInfo(getType(), verify);
+	public String openMoreInfo(IOSDriver<IOSElement> d, boolean verify){
+		return openMoreInfo(d, getType(), verify);
 	}
-	public String openMoreInfo(String type){
-		return openMoreInfo(type, true);
+	public String openMoreInfo(IOSDriver<IOSElement> d, String type){
+		return openMoreInfo(d, type, true);
 	}
-	public String openMoreInfo(String type, boolean verify){
+	public String openMoreInfo(IOSDriver<IOSElement> d, String type, boolean verify){
 		Errors err = new Errors();
 		if(!isVisible(more)){
 			handlePossiblePopUp();
@@ -1026,17 +1027,17 @@ public class Player extends Page {
 			// Check that all options are present
 			// They may not all be clickable though...
 			if(verify){ // May want to skip if executing verify all elements to save time
-				err.add(verifyMoreInfoElementsVisible(type));
+				err.add(d, verifyMoreInfoElementsVisible(d, type));
 			}
 		}
 		else{
-			err.add("More (...) button was not visible");
+			err.add(d, "More (...) button was not visible", "openMoreInfo");
 		}
 		
 		return err.getErrors();
 	}
 	
-	public String verifyMoreInfoElementsVisible(String type){
+	public String verifyMoreInfoElementsVisible(IOSDriver<IOSElement> d, String type){
 		Errors err = new Errors();
 		IOSElement song = moreInfoSong;
 		IOSElement artist = moreInfoArtist;
@@ -1048,58 +1049,58 @@ public class Player extends Page {
 		}
 		waitForElementToBeVisible(moreInfoAlbumArtwork, 3);
 		if(!isVisible(moreInfoAlbumArtwork)){
-			err.add("Album artwork was not displayed on more info screen.");
+			err.add(d, "Album artwork was not displayed on more info screen.", "verifyMoreInfoElementsVisible");
 		}
 		if(!isVisible(song)){
-			err.add("Song name was not displayed on more info screen.");
+			err.add(d, "Song name was not displayed on more info screen.", "verifyMoreInfoElementsVisible");
 		}
 		if(!isVisible(artist)){
-			err.add("Artist name was not displayed on more info screen.");
+			err.add(d, "Artist name was not displayed on more info screen.");
 		}
 		if(!isVisible(station)){
-			err.add("Tune Station/Station Info was not displayed on more info screen.");
+			err.add(d, "Tune Station/Station Info was not displayed on more info screen.");
 		}
 		if(!isVisible(moreInfoLyrics)){
-			err.add("Lyrics button was not displayed on more info screen.");
+			err.add(d, "Lyrics button was not displayed on more info screen.");
 		}
 		if(!isVisible(moreInfoArtistBio)){
-			err.add("Artist bio was not displayed on more info screen.");
+			err.add(d, "Artist bio was not displayed on more info screen.");
 		}
 		if(!isVisible(moreInfoShare)){
-			err.add("Share button was not displayed on more info screen.");
+			err.add(d, "Share button was not displayed on more info screen.");
 		}
 		if(!isVisible(moreInfoBuy)){
-			err.add("Buy Song button was not displayed on more info screen.");
+			err.add(d, "Buy Song button was not displayed on more info screen.");
 		}
 		if(!isVisible(moreInfoClose)){
-			err.add("Close button was not displayed on more info screen.");
+			err.add(d, "Close button was not displayed on more info screen.");
 		}
 		
 		return err.getErrors();
 	}
 	
-	public String closeMoreInfo(){
+	public String closeMoreInfo(IOSDriver<IOSElement> d){
 		Errors err = new Errors();
 		
 		if(isVisible(moreInfoClose)){
 			moreInfoClose.click();
 			if(isVisible(moreInfoClose)){
-				err.add("Clicking on close button did not close more info dialog.");
+				err.add(d, "Clicking on close button did not close more info dialog.");
 			}
 		}
 		else{
-			err.add("More info button was not visible.");
+			err.add(d, "More info button was not visible.");
 		}
 		
 		return err.getErrors();
 	}
-	public String verifyAllMoreInfoItems(){
+	public String verifyAllMoreInfoItems(IOSDriver<IOSElement> d){
 		System.out.println("verifyAllMoreInfoItems()");
 		Errors err = new Errors();
 		String type = getType();
 		// If the more info button is present, open the more info dialog and verify that everything is present
 		if(isVisible(more)){
-			err.add(openMoreInfo(type, false));
+			err.add(d, openMoreInfo(d, type, false));
 		}
 		
 		String station = "Tune Station";
@@ -1124,17 +1125,17 @@ public class Player extends Page {
 				continue;
 			}
 			System.out.println("Testing item:"+ t);
-			err.add(verifyMoreInfoItem(t));
+			err.add(d, verifyMoreInfoItem(d, t));
 			handlePossiblePopUp();
 			if(isVisible(more)){
-				err.add(openMoreInfo(type, false));
+				err.add(d, openMoreInfo(d, type, false));
 			}
 		}
 		
 		return err.getErrors();
 	}
 	
-	private void skipUntilEnabled(IOSElement ele){
+	private void skipUntilEnabled(IOSDriver<IOSElement> d, IOSElement ele){
 		if(!isVisible(ele)){
 			return;
 		}
@@ -1150,7 +1151,7 @@ public class Player extends Page {
 			else if(isVisible(scan)){
 				scan.click();
 			}
-			openMoreInfo(false); // This is called exclusively in a method that verifies this anyway
+			openMoreInfo(d, false); // This is called exclusively in a method that verifies this anyway
 			waitForElementToBeEnabled(ele, 2); // Some elements may not be immediately enabled
 		}
 		if(!ele.isEnabled()){
@@ -1165,7 +1166,7 @@ public class Player extends Page {
 		}
 	}
 	
-	public String verifyMoreInfoItem(String itemName){
+	public String verifyMoreInfoItem(IOSDriver<IOSElement> d, String itemName){
 		Errors err = new Errors();
 		
 		switch(itemName){
@@ -1177,94 +1178,94 @@ public class Player extends Page {
 				// Test the three options
 				// Test the artist list (and that it changes if options are clicked)
 				if(!isVisible(tuneStationClose)){
-					err.add("Tune Station close button was not present");
+					err.add(d, "Tune Station close button was not present");
 				}
 				if(!isVisible(tuneStationLabel)){
-					err.add("Tune Station label was not present");
+					err.add(d, "Tune Station label was not present");
 				}
 				if(!isVisible(tuneStationDescription)){
-					err.add("Tune Station description was not present");
+					err.add(d, "Tune Station description was not present");
 				}
 				if(!isVisible(tuneStationTopHits)){
-					err.add("Tune Station Top Hits button was not present");
+					err.add(d, "Tune Station Top Hits button was not present");
 				}
 				if(!isVisible(tuneStationMix)){
-					err.add("Tune Station Mix button was not present");
+					err.add(d, "Tune Station Mix button was not present");
 				}
 				if(!isVisible(tuneStationVariety)){
-					err.add("Tune Station Variety button was not present");
+					err.add(d, "Tune Station Variety button was not present");
 				}
 				if(!isVisible(tuneStationFeatured)){
-					err.add("Tune Station featured artists label was not present");
+					err.add(d, "Tune Station featured artists label was not present");
 				}
 				if(!isVisible(tuneStationListOfArtists)){
-					err.add("Tune Station list of featured artists was not present");
+					err.add(d, "Tune Station list of featured artists was not present");
 				}
 				if(err.howMany() == 0){
 					String artists = tuneStationListOfArtists.getText();
 					tuneStationMix.click();
 					if(artists.equals(tuneStationListOfArtists.getText())){
-						err.add("List of artists did not change when selecting different tuning method (Mix).");
+						err.add(d, "List of artists did not change when selecting different tuning method (Mix).");
 					}
 					tuneStationVariety.click();
 					if(artists.equals(tuneStationListOfArtists.getText())){
-						err.add("List of artists did not change when selecting different tuning method (Variety).");
+						err.add(d, "List of artists did not change when selecting different tuning method (Variety).");
 					}
 					tuneStationTopHits.click();
 					if(!artists.equals(tuneStationListOfArtists.getText())){
-						err.add("List of artists did not change when selecting different tuning method (Top Hits).");
+						err.add(d, "List of artists did not change when selecting different tuning method (Top Hits).");
 					}
 				}
 				
 				tuneStationClose.click();
 			}
 			else{
-				err.add("Tune Station is not visible");				
+				err.add(d, "Tune Station is not visible");				
 			}
 			break;
 		case "Station Info":
 			if(isVisible(moreInfoRadioStationInfo)){
 				if(!moreInfoRadioStationInfo.isEnabled()){
-					skipUntilEnabled(moreInfoRadioStationInfo);
+					skipUntilEnabled(d, moreInfoRadioStationInfo);
 				}
 				if(moreInfoRadioStationInfo.isEnabled()){
 					moreInfoRadioStationInfo.click();
 				}
 				else{
-					err.add("Could not find a station where Station Info was enabled.");
+					err.add(d, "Could not find a station where Station Info was enabled.");
 					break;
 				}
 				waitForElementToBeVisible(moreBack, 5);
 				if(!isVisible(moreBack)){
-					err.add("Back button for Station Info is not visible");
+					err.add(d, "Back button for Station Info is not visible");
 				}
 				if(isVisible(stationInfoName)){
 					if(!strGood(stationInfoName.getText())){
-						err.add("Station title at top of station info page was empty.");
+						err.add(d, "Station title at top of station info page was empty.");
 					}
 				}
 				else{
-					err.add("Station title is not at the top of station info page.");
+					err.add(d, "Station title is not at the top of station info page.");
 				}
 				if(!isVisible(stationInfoLogo)){
-					err.add("Station logo was not present in station info");
+					err.add(d, "Station logo was not present in station info");
 				}
 				if(!isVisible(stationInfoNowPlaying)){
 					if(isVisible(stationInfoSong)){
-						err.add("\"Now Playing\" label was not displayed on station info page, though a song or segment was displayed as currently playing.");
+						err.add(d, "\"Now Playing\" label was not displayed on station info page, though a song or segment was displayed as currently playing.");
 					}
 				}
 				else{
 					if(!isVisible(stationInfoSong)){
-						err.add("Song or segment is not displayed under now playing label in station info");
+						err.add(d, "Song or segment is not displayed under now playing label in station info");
 					}
 					if(!isVisible(stationInfoArtist)){
-						err.add("Artist or station description was not visible under now playing segment in station info.");
+						err.add(d, "Artist or station description was not visible under now playing segment in station info.");
 					}
 				}
 				if(!isVisible(stationInfoView)){
 					if(!isVisible(stationInfoNoContent)){
-						err.add("Station info viewer is not visible in Station Info section "
+						err.add(d, "Station info viewer is not visible in Station Info section "
 								+ "and information telling the user that station content "
 								+ "is not available is not present either.");
 					}
@@ -1273,10 +1274,10 @@ public class Player extends Page {
 						// Just the basics, as this is the entire website and testing it would be like testing... well, the entire website... To do?
 						// Check that The Feed and On Air tabs are available
 						if(!isVisible(stationInfoTheFeed)){
-							err.add("Station Info \"The Feed\" tab is not visible");
+							err.add(d, "Station Info \"The Feed\" tab is not visible");
 						}
 						if(!isVisible(stationInfoOnAir)){
-							err.add("Station Info \"The Feed\" tab is not visible");
+							err.add(d, "Station Info \"The Feed\" tab is not visible");
 						}
 					}
 				}
@@ -1284,7 +1285,7 @@ public class Player extends Page {
 				moreBack.click();
 			}
 			else{
-				err.add("Could not find Station Info button on more info page for live radio.");
+				err.add(d, "Could not find Station Info button on more info page for live radio.");
 			}
 			break; 
 		case "Lyrics":
@@ -1292,21 +1293,21 @@ public class Player extends Page {
 			if(isVisible(moreInfoLyrics)){
 				
 				// Skip songs until we find one with lyrics
-				skipUntilEnabled(moreInfoLyrics);
+				skipUntilEnabled(d, moreInfoLyrics);
 				
 				if(isVisible(moreInfoLyrics) && !moreInfoLyrics.isEnabled()){
-					err.add("More info lyrics were not enabled.");
+					err.add(d, "More info lyrics were not enabled.");
 				}
 				moreInfoLyrics.click();
 				waitForElementToBeVisible(lyricsSong, 1);
 				if(!isVisible(lyricsSong)){
-					err.add("Lyrics song title was not displayed");
+					err.add(d, "Lyrics song title was not displayed");
 				}
 				if(!isVisible(lyricsArtist)){
-					err.add("Lyrics artist name was not displayed");
+					err.add(d, "Lyrics artist name was not displayed");
 				}
 				if(!isVisible(lyricsView)){
-					err.add("Lyrics were not displayed.");
+					err.add(d, "Lyrics were not displayed.");
 				}
 				if(isVisible(moreBack)){
 					moreBack.click();
@@ -1316,56 +1317,56 @@ public class Player extends Page {
 				}
 			}
 			else{
-				 err.add("More info lyrics were not visible at all.");
+				 err.add(d, "More info lyrics were not visible at all.");
 			}
 			
 			break;
 		case "Artist Bio":
 			if(isVisible(moreInfoArtistBio)){
 				// Skip until we find a song with an artist bio
-				skipUntilEnabled(moreInfoArtistBio);
+				skipUntilEnabled(d, moreInfoArtistBio);
 				if(isVisible(moreInfoArtistBio) && !moreInfoArtistBio.isEnabled()){
-					err.add("More info artist bio button could not be enabled");
+					err.add(d, "More info artist bio button could not be enabled");
 				}
 				// Click
 				moreInfoArtistBio.click();
 				waitForElementToBeVisible(artistBioArtist, 3);
 				// Test for the artist bio elements
 				if(!isVisible(artistBioArtist)){
-					err.add("Artist bio label was not visible");
+					err.add(d, "Artist bio label was not visible");
 				}
 				if(!isVisible(artistBioBio)){
-					err.add("Text for artist bio was not visible");
+					err.add(d, "Text for artist bio was not visible");
 				}
 			}
 			else{
-				err.add("Artist Bio button was not visible.");
+				err.add(d, "Artist Bio button was not visible.");
 			}
 			break;
 		case "Share": 
 			if(isVisible(moreInfoShare)){
 				moreInfoShare.click();
 				// Share may not be available if a station is on a commercial break
-				skipUntilEnabled(moreInfoShare);
+				skipUntilEnabled(d, moreInfoShare);
 				waitForElementToBeVisible(shareOptions, 2);
 				if(!isVisible(shareOptions)){
-					err.add("Sharing options were not visible");
+					err.add(d, "Sharing options were not visible");
 				}
 				if(!isVisible(shareCancel)){
-					err.add("Share cancel button was not visible");
+					err.add(d, "Share cancel button was not visible");
 				}
 				else{
 					shareCancel.click();
 				}
 			}
 			else{
-				err.add("Share option was not visible");
+				err.add(d, "Share option was not visible");
 			}
 			handlePossiblePopUp();
 			break;
 		case "Buy Song":// Not much to test here since it exits the app, leaving Appium automation behind
 			if(!isVisible(moreInfoBuy)){
-				err.add("Option to buy song was not present");
+				err.add(d, "Option to buy song was not present");
 			}
 			break;
 		}

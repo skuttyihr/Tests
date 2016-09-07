@@ -66,7 +66,7 @@ public class TestHomePage extends TestRoot {
 		searchAndGoHome(artist); 
 		homePage.gotoForYou();
 		int listItem = 1;
-		String addErrors = homePage.toggleListItemFavorites(listItem, false); 
+		String addErrors = homePage.toggleListItemFavorites(driver, listItem, false); 
 		if(addErrors.equals("\n1\n")){ // Means we had to switch to different list item
 			addErrors = "";
 			listItem = 1;
@@ -86,7 +86,7 @@ public class TestHomePage extends TestRoot {
 		
 		// Remove the station through the toggle now
 		homePage.gotoForYou();
-		addErrors = homePage.toggleListItemFavorites(listItem, true);
+		addErrors = homePage.toggleListItemFavorites(driver, listItem, true);
 		if(addErrors.equals("\n1\n")){ // Means we had to switch to different list item
 			addErrors = "";
 			listItem = 1;
@@ -122,7 +122,7 @@ public class TestHomePage extends TestRoot {
 		homePage.gotoMyStations();
 		int artistValue = homePage.isStationARecent(artist); 
 		Assert.assertTrue(artist + " was not a recent station.", artistValue > 0);
-		String toggleErrors = homePage.toggleListItemFavorites(artistValue);
+		String toggleErrors = homePage.toggleListItemFavorites(driver, artistValue);
 		Assert.assertTrue("Encountered errors adding recent item to favorites by swiping and tapping button.",
 				didPass(toggleErrors));
 		Assert.assertTrue("Station was not added to favorites", homePage.isStationAFavorite(artist) > 0);
@@ -140,7 +140,7 @@ public class TestHomePage extends TestRoot {
 		// Might not be the first element
 		int removeItem = homePage.searchForStation(artist);
 		Assert.assertTrue(removeItem > 0);
-		toggleErrors = homePage.toggleListItemFavorites(removeItem, true);
+		toggleErrors = homePage.toggleListItemFavorites(driver, removeItem, true);
 		Assert.assertTrue("Was not able to remove favorite without errors: " + toggleErrors, didPass(toggleErrors));
 		int favoritePos = homePage.isStationAFavorite(artist);
 		if(favoritePos >= 0){
@@ -179,7 +179,7 @@ public class TestHomePage extends TestRoot {
 		}
 		Assert.assertTrue("Could not grab a station name", strGood(stationName));
 		// Add to favorites
-		String toggleErrors = homePage.toggleListItemFavorites(1);
+		String toggleErrors = homePage.toggleListItemFavorites(driver, 1);
 		if(toggleErrors.equals("\n1\n")){ // Means we had to switch to different list item
 			toggleErrors = "";
 		}
@@ -207,7 +207,7 @@ public class TestHomePage extends TestRoot {
 		loginPage.loginWithoutVerifying();
 		sideNavBar.gotoHomePage();
 		// Play some stations to be sure we have a history of at least a few stations.
-		Assert.assertTrue("Could not load up some stations in history.", didPass(homePage.loadUpStations(3)));
+		Assert.assertTrue("Could not load up some stations in history.", didPass(homePage.loadUpStations(driver, 3)));
 		
 		// Test scroll and show more for For You section
 		assertScrollAndShowMore();

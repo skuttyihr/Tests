@@ -1,12 +1,8 @@
 package com.iheart.appium.iosAutomation;
 
-import java.time.LocalTime;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
 
 public class TestSearch extends TestRoot {
 

@@ -147,31 +147,30 @@ public class PerfectFor extends Page {
 	}
 	
 	// Behavior
-	
-	public String selectPerfectForCategories(int firstCategory, int station){
+	public String selectPerfectForCategories(IOSDriver<IOSElement> d, int firstCategory, int station){
 		System.out.println("selectPerfectForCategories : firstCategory[" + firstCategory + "] Station: [" + station + "].");
 		Errors err = new Errors();
 		sideNavBar.gotoPerfectFor();
 		IOSElement first = getPFListItem(firstCategory);
 		if(first == null){
-			err.add("Could not select first item");
+			err.add(d, "Could not select first item", "selectPerfectForCategories");
 		}
 		else{
 			String categoryTitle = first.getText();
 			first.click();
 			waitForElementToBeVisible(pfSubStationHeading, 3);
 			if(!pfSubStationHeading.getText().contains(categoryTitle)){
-				err.add("Label for category did not match one we selected.");
+				err.add(d, "Label for category did not match one we selected.", "selectPerfectForCategories");
 			}
 			IOSElement selectedStation = getPFSubListItem(station);
 			if(selectedStation == null){
-				err.add("Could not select station");
+				err.add(d, "Could not select station", "selectPerfectForCategories");
 			}
 			else{
 				selectedStation.click();
 				
 				if(!player.isPlaying()){ // TODO this isn't detecting playback of live station
-					err.add("Could not load station.");
+					err.add(d, "Could not load station.", "selectPerfectForCategories");
 				}
 			}
 		}
@@ -179,7 +178,7 @@ public class PerfectFor extends Page {
 		return err.getErrors();
 	}
 	
-	public String checkCategoryLabel(){
+	public String checkCategoryLabel(IOSDriver<IOSElement> d){
 		System.out.println("checkCategoryLabel() - get current Time and determine dayOfWeek and timeOfDay for PerfectFor");
 		Errors err = new Errors();
 		
@@ -211,21 +210,21 @@ public class PerfectFor extends Page {
 					heading = pfCategoryHeading.getText();
 				}catch(Exception e){}
 				if(!strGood(heading)){
-					err.add("Could not grab heading for Perfect For page");
+					err.add(d, "Could not grab heading for Perfect For page", "checkCategoryLabel");
 				}
 				else if(!heading.equals(testString)){
-					err.add("Heading: " + heading + " was not what we expected: " + testString);
+					err.add(d, "Heading: " + heading + " was not what we expected: " + testString, "checkCategoryLabel");
 				}
 			}
 			else{
-				err.add("Could not get heading for Perfect For category list.");
+				err.add(d, "Could not get heading for Perfect For category list.", "checkCategoryLabel");
 			}
 		}
 		else{
 			if(!strGood(dayOfWeek))
-				err.add("Day of week could not be determined.");
+				err.add(d, "Day of week could not be determined.", "checkCategoryLabel");
 			if(!strGood(timeOfDay))
-				err.add("Time of day could not be determined.");
+				err.add(d, "Time of day could not be determined.", "checkCategoryLabel");
 		}
 		
 		return err.getErrors();

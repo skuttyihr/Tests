@@ -39,7 +39,7 @@ public class TestPlayback extends TestRoot {
 		if(currentVolume == 50){
 			expectedVolume = 25;
 		}
-		String testVolume = player.setVolume(expectedVolume);
+		String testVolume = player.setVolume(driver, expectedVolume);
 		Assert.assertTrue(testVolume, didPass(testVolume));
 		currentVolume = player.getVolume();
 		Assert.assertTrue("Volume was not within range:\n" +
@@ -76,14 +76,14 @@ public class TestPlayback extends TestRoot {
 		// Test that all playback elements are present on an artist station
 		// Verify method will "Favorite" the artist station
 		miniPlayer.openFullPlayer();
-		String verifyPlaybackErrors = player.verifyPlaybackControls();
+		String verifyPlaybackErrors = player.verifyPlaybackControls(driver);
 		Assert.assertTrue("Playback elements were not present: " + verifyPlaybackErrors, didPass(verifyPlaybackErrors));
 		
 		// Test we can modify the volume
 		assertPlaybackVolume();
 		
 		// Test that AirPlay is available
-		String airPlayTest = player.streamOverAirPlay();
+		String airPlayTest = player.streamOverAirPlay(driver);
 		Assert.assertTrue("AirPlay was not an available option. ", didPass(airPlayTest));
 		
 		// Get back to home page / My Stations to verify favorited station
@@ -203,7 +203,7 @@ public class TestPlayback extends TestRoot {
 		String playedStation = forYouPage.playLiveRadio();
 		Assert.assertTrue("Could not play a live radio station.", strGood(playedStation));
 
-		String verifyPlayer = player.verifyPlaybackControls();
+		String verifyPlayer = player.verifyPlaybackControls(driver);
 		Assert.assertTrue("Could not verify live radio controls:\n" + verifyPlayer, didPass(verifyPlayer));
 		
 		assertPlaybackVolume();
@@ -242,12 +242,12 @@ public class TestPlayback extends TestRoot {
 		// Tests that the additional info ellipsis is present and functional for live stations, podcasts, and artist radio
 		loginPage.loginWithoutVerifying();
 		// Artist radio
-		String artist = "The Killers";
+//		String artist = "The Killers";
 		//Assert.assertTrue("Could not play a custom artist station based on the artist: " + artist,
 				//customRadio.playACustomStation(artist).contains(artist);//);  This is failing due to a dev problem. Let it run. 
-		String moreInfoErrors = player.verifyAllMoreInfoItems();
+		String moreInfoErrors = player.verifyAllMoreInfoItems(driver);
 		Assert.assertTrue("Errors with More Info page for artist radio: " + moreInfoErrors, didPass(moreInfoErrors));
-		player.closeMoreInfo();
+		player.closeMoreInfo(driver);
 		// Load up a podcast and test that we cannot see the more info button
 		//player.getBack();
 		sideNavBar.gotoHomePage();
@@ -259,7 +259,7 @@ public class TestPlayback extends TestRoot {
 		//player.getBack();
 		sideNavBar.gotoHomePage();
 		//search.searchForStation("Z100");
-		moreInfoErrors = player.verifyAllMoreInfoItems();
+		moreInfoErrors = player.verifyAllMoreInfoItems(driver);
 		
 		boolean testResult = didPass(moreInfoErrors);
 		Assert.assertTrue("Errors with More Info page for live radio: " + moreInfoErrors, testResult);
