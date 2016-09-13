@@ -41,7 +41,7 @@ public class TestPlayback extends TestRoot {
 		if(currentVolume == 50){
 			expectedVolume = 25;
 		}
-		String testVolume = player.setVolume(driver, expectedVolume);
+		String testVolume = player.setVolume(expectedVolume);
 		Assert.assertTrue(testVolume, didPass(testVolume));
 		currentVolume = player.getVolume();
 		Assert.assertTrue("Volume was not within range:\n" +
@@ -78,14 +78,14 @@ public class TestPlayback extends TestRoot {
 		// Test that all playback elements are present on an artist station
 		// Verify method will "Favorite" the artist station
 		miniPlayer.openFullPlayer();
-		String verifyPlaybackErrors = player.verifyPlaybackControls(driver);
+		String verifyPlaybackErrors = player.verifyPlaybackControls();
 		Assert.assertTrue("Playback elements were not present: " + verifyPlaybackErrors, didPass(verifyPlaybackErrors));
 		
 		// Test we can modify the volume
 		assertPlaybackVolume();
 		
 		// Test that AirPlay is available
-		String airPlayTest = player.streamOverAirPlay(driver);
+		String airPlayTest = player.streamOverAirPlay();
 		Assert.assertTrue("AirPlay was not an available option. ", didPass(airPlayTest));
 		
 		// Get back to home page / My Stations to verify favorited station
@@ -205,7 +205,7 @@ public class TestPlayback extends TestRoot {
 		String playedStation = forYouPage.playLiveRadio();
 		Assert.assertTrue("Could not play a live radio station.", strGood(playedStation));
 
-		String verifyPlayer = player.verifyPlaybackControls(driver);
+		String verifyPlayer = player.verifyPlaybackControls();
 		Assert.assertTrue("Could not verify live radio controls:\n" + verifyPlayer, didPass(verifyPlayer));
 		
 		assertPlaybackVolume();
@@ -247,9 +247,9 @@ public class TestPlayback extends TestRoot {
 //		String artist = "The Killers";
 		//Assert.assertTrue("Could not play a custom artist station based on the artist: " + artist,
 				//customRadio.playACustomStation(artist).contains(artist);//);  This is failing due to a dev problem. Let it run. 
-		String moreInfoErrors = player.verifyAllMoreInfoItems(driver);
+		String moreInfoErrors = player.verifyAllMoreInfoItems();
 		Assert.assertTrue("Errors with More Info page for artist radio: " + moreInfoErrors, didPass(moreInfoErrors));
-		player.closeMoreInfo(driver);
+		player.closeMoreInfo();
 		// Load up a podcast and test that we cannot see the more info button
 		//player.getBack();
 		sideNavBar.gotoHomePage();
@@ -261,7 +261,7 @@ public class TestPlayback extends TestRoot {
 		//player.getBack();
 		sideNavBar.gotoHomePage();
 		//search.searchForStation("Z100");
-		moreInfoErrors = player.verifyAllMoreInfoItems(driver);
+		moreInfoErrors = player.verifyAllMoreInfoItems();
 		
 		boolean testResult = didPass(moreInfoErrors);
 		Assert.assertTrue("Errors with More Info page for live radio: " + moreInfoErrors, testResult);

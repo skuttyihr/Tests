@@ -97,24 +97,24 @@ public class ForYouPage extends Page {
 		return myStation;
 	}
 	
-	public String playAndVerifyLiveRadio(IOSDriver<IOSElement> d) {
+	public String playAndVerifyLiveRadio() {
 		Errors errors = new Errors();
 		String myStation = playLiveRadio();
 		System.out.println("Starting with:" + myStation);
 		
 		// Verify PLAYER
-		errors.add(d, player.verifyPlaybackControls(d, myStation), "playAndVerifyLiveRadio");
+		errors.add(player.verifyPlaybackControls(myStation), "playAndVerifyLiveRadio");
 		if(!player.doFavorite()){
-			errors.add(d, "Could not favorite!\n", "playAndVerifyLiveRadio");
+			errors.add("Could not favorite!\n", "playAndVerifyLiveRadio");
 		}
 		if(!player.doScan()){
-			errors.add(d, "Could not scan!\n", "playAndVerifyLiveRadio");
+			errors.add("Could not scan!\n", "playAndVerifyLiveRadio");
 		}
 		if(!player.doThumbUp()){
-			errors.add(d, "Could not do thumbs up!\n", "playAndVerifyLiveRadio");
+			errors.add("Could not do thumbs up!\n", "playAndVerifyLiveRadio");
 		}
 		if(!player.doThumbDown()){
-			errors.add(d, "Could not do thumbs down!\n", "playAndVerifyLiveRadio");
+			errors.add("Could not do thumbs down!\n", "playAndVerifyLiveRadio");
 		}
 
 		// Here, remember the playing station name:
@@ -130,7 +130,7 @@ public class ForYouPage extends Page {
 		//player.back.click();
 		fullPlayer.clickDownArrowOnNavBarToMinimizeFullPlayer();
 		if(!verifyInForYou(myStation)){
-			errors.add(d, "Could not find station: " + myStation + " in my stations page.\n", "playAndVerifyLiveRadio");
+			errors.add("Could not find station: " + myStation + " in my stations page.\n", "playAndVerifyLiveRadio");
 		}
 		
 		return errors.getErrors();

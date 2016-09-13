@@ -584,10 +584,10 @@ public class HomePage extends Page {
 	
 	
 	// Behavior Methods
-	public String toggleListItemFavorites(IOSDriver<IOSElement> d, int x){
-		return toggleListItemFavorites(d, x, false);
+	public String toggleListItemFavorites(int x){
+		return toggleListItemFavorites(x, false);
 	}
-	public String toggleListItemFavorites(IOSDriver<IOSElement> d, int x, boolean removing){
+	public String toggleListItemFavorites(int x, boolean removing){
 		System.out.println("toggleListItemFavorites() - Swipes item to left, Adds to Favorites if visible");
 		Errors err = new Errors();
 		IOSElement item = getListItem(x);
@@ -597,7 +597,7 @@ public class HomePage extends Page {
 			toggleFavorites(item, x, removing);
 		}
 		else{
-			err.add(d, "Selected item was not visible on the screen.", "toggleListItemFavorites");
+			err.add("Selected item was not visible on the screen.", "toggleListItemFavorites");
 		}
 		System.out.println("Done toggling favorites...");
 		return err.getErrors();
@@ -893,10 +893,10 @@ public class HomePage extends Page {
 		return foundStation;
 	}
 	
-	public String loadUpStations(IOSDriver<IOSElement> d){
-		return loadUpStations(d, 5);
+	public String loadUpStations(){
+		return loadUpStations(5);
 	}
-	public String loadUpStations(IOSDriver<IOSElement> d, int n){
+	public String loadUpStations(int n){
 		Errors err = new Errors();
 		
 		sideNavBar.gotoHomePage();
@@ -921,7 +921,7 @@ public class HomePage extends Page {
 			
 			if(player.isPlayingInPlayer() 
 					&& !player.minimizePlayer()){
-				err.add(d, "Could not minimize player.", "loadUpStations");
+				err.add("Could not minimize player.", "loadUpStations");
 			}
 		}
 			

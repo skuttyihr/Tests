@@ -28,13 +28,13 @@ public class Errors {
 	public Errors(){
 		err = new ArrayList<String>();
 	}
-	public Errors(IOSDriver<IOSElement> d, String errorMessage){
+	public Errors(String errorMessage){
 		err = new ArrayList<String>();
-		add(d, errorMessage);
+		add(errorMessage);
 	}
-	public Errors(IOSDriver<IOSElement> d, String errorMessage, String method){
+	public Errors(String errorMessage, String method){
 		err = new ArrayList<String>();
-		add(d, errorMessage, method);
+		add(errorMessage, method);
 	}
 	
 	/**
@@ -77,23 +77,13 @@ public class Errors {
 		return err != null && err.toString().contains(s);
 	}
 	
-//	/**
-//	 * Adds, defaults to the static driver from TestRoot, cannot be used with other drivers
-//	 * You shouldn't access this, it's only for backwards compatibility with some tests
-//	 * This is not multithread safe
-//	 * Do not use this method going forward
-//	 */
-//	public void addStatic(String errorMessage){
-//		add(TestRoot.driver, errorMessage, "");
-//	}
-	
 	/**
 	 * Adds an error without a method name to help identify the screenshot
 	 * @param d
 	 * @param error
 	 */
-	public void add(IOSDriver<IOSElement> d, String errorMessage){
-		add(d, errorMessage, "");
+	public void add(String errorMessage){
+		add(errorMessage, "");
 	}
 	/**
 	 * 
@@ -101,14 +91,14 @@ public class Errors {
 	 * @param error
 	 * @param methodName
 	 */
-	public void add(IOSDriver<IOSElement> d, String errorMessage, String methodName){
+	public void add(String errorMessage, String methodName){
 		if(errorMessage != null && errorMessage.length() > 0){
 			// Add a time stamp to the error
 			String ts = timeStamp();
 			errorMessage += " Timestamp: " + ts.substring(11).replace("-", ":");
-			if(d != null){
+			if(TestRoot.driver != null){
 				// Take a screenshot and add it's path to the error
-				String screenshotPath = captureScreenshot(d, methodName);
+				String screenshotPath = captureScreenshot(TestRoot.driver, methodName);
 				if(!"".equals(screenshotPath)){
 					errorMessage += " - Screenshot: " + screenshotPath;
 				}
@@ -127,15 +117,15 @@ public class Errors {
 	 * @param d
 	 * @param newErrors
 	 */
-	public void add(IOSDriver<IOSElement> d, Errors newErrors){
+	public void add(Errors newErrors){
 		if(!newErrors.noErrors()){
 			err.addAll(newErrors.getErrorList());
 		}
 	}
 	
 	// Added to make converting from StringBuilder easier, but the add is likely preferred (less typing)
-	public void append(IOSDriver<IOSElement> d, String s){
-		add(d, s);
+	public void append(String s){
+		add(s);
 	}
 	
 	/**
@@ -183,6 +173,9 @@ public class Errors {
 		System.out.println(s + "\n");
 	}
 	
+	public static String captureScreenshot(){
+		return captureScreenshot(TestRoot.driver, "");
+	}
 	
 	public static String captureScreenshot(IOSDriver<IOSElement> d){
 		return captureScreenshot(d, "");
