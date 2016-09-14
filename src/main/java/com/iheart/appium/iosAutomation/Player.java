@@ -744,7 +744,7 @@ public class Player extends Page {
 	 * @param station
 	 * @return
 	 */
-	public String verifyPlaybackControls( String station){
+	public String verifyPlaybackControls(String station){
 		System.out.println("Verifying Player Controls");
 		Errors errors = new Errors();
 		
