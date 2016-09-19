@@ -18,10 +18,9 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
-import org.junit.Rule;
-import org.junit.rules.TestRule;
-import org.junit.rules.TestWatcher;
-import org.junit.runner.Description;
+import org.junit.rules.MethodRule;
+import org.junit.runners.model.FrameworkMethod;
+import org.junit.runners.model.Statement;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
@@ -94,6 +93,10 @@ public class TestRoot {
 	protected static String GOOGLEPASSWORD;
 	protected static String NEWACCOUNTPASSWORD;
 	
+	// Screenshot directory and URL
+	protected static String SCREENSHOT_DIRECTORY;
+	protected static String SCREENSHOT_URL;
+	
 	protected static void setup() {
 		System.out.println("TestRoot.setup()");
 		
@@ -123,6 +126,21 @@ public class TestRoot {
 			try{
 				MODEL = props.getProperty("APPIUM.DEVICE.MODEL");
 			}catch(Exception e){}
+			
+			// Set the screenshot directory
+			try{
+				SCREENSHOT_DIRECTORY = props.getProperty("OPTIONS.SCREENSHOT.DIRECTORY");
+				if(!strGood(SCREENSHOT_DIRECTORY)){
+					SCREENSHOT_DIRECTORY = "screenshots/";
+				}
+				SCREENSHOT_URL = props.getProperty("OPTIONS.SCREENSHOT.URL");
+				if(!strGood(SCREENSHOT_URL)){
+					SCREENSHOT_URL = "";
+				}
+			}
+			catch(Exception e){
+				// These aren't mandatory, so do nothing
+			}
 		}
 		else{
 			// Use system properties
@@ -137,6 +155,21 @@ public class TestRoot {
 			try{
 				MODEL = System.getProperty("APPIUM.DEVICE.MODEL");
 			}catch(Exception e){}
+			
+			// Set the screenshot directory
+			try{
+				SCREENSHOT_DIRECTORY = System.getProperty("OPTIONS.SCREENSHOT.DIRECTORY");
+				if(!strGood(SCREENSHOT_DIRECTORY)){
+					SCREENSHOT_DIRECTORY = "screenshots/";
+				}
+				SCREENSHOT_URL = System.getProperty("OPTIONS.SCREENSHOT.URL");
+				if(!strGood(SCREENSHOT_URL)){
+					SCREENSHOT_URL = "";
+				}
+			}
+			catch(Exception e){
+				// These aren't mandatory, so do nothing
+			}
 		}
 		
 		// Load the passwords
@@ -952,27 +985,52 @@ public class TestRoot {
 	
 		
 	}
-	
 
-	// Test Watcher control
-	@Rule
-	public TestRule watcher = new TestWatcher() {
-
+	/**
+	 * Screenshot Rule
+	 * Runs after every test. 
+	 * If the test passed, this runs the usual shutdown method
+	 * If it failed, it takes a screenshot, then runs the usual shutdown method
+	 * This replaces @after with the following:
+	 * @Rule
+	 * public ScreenshotRule screenshot = new ScreenshotRule();
+	 * 
+	 */
+	public class ScreenshotRule implements MethodRule{
+		
 		@Override
-		public void failed(Throwable e, Description description) {
-			try {
-				File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-				String currentPath = System.getProperty("user.dir");
-				String path = currentPath + File.separator + "target" + File.separator + "surefire-reports" + File.separator;
-
-				String fullFilePath = path + description.getClassName() + File.separator + description.getMethodName() + ".jpg";
-
-				FileUtils.copyFile(screenshot, new File(fullFilePath));
-
-			} catch (Exception ex) {
-				System.err.println(ex.toString());
-				System.err.println(ex.getMessage());
-			}
+		/**
+		 * Tests run within this. Once it ends, it takes a screenshot for failures, but ends regardless
+		 */
+		public Statement apply(Statement statement, FrameworkMethod method, Object target) {
+			return new Statement() {
+				@Override
+				/**
+				 * Run the test, if it fails, catch the failure (an exception/throwable)
+				 * 		and take a screenshot, before allowing the failure to continue.
+				 * Then, fail the test. 		
+				 */
+				public void evaluate() throws Throwable {
+					try{
+						statement.evaluate();
+					}
+					catch(Throwable t){
+						// Catch the failure, take the screenshot, then pass the failure on
+						if(driver != null){
+							Errors.captureScreenshot(driver, method.getName());
+						}
+						// Make sure we quit
+						tearDown();
+						// Throw the original error
+						throw t;
+					}
+					finally{
+						// Quit even if it did not fail
+						tearDown();
+					}
+				}
+			};
 		}
-	};
+	}
+
 }

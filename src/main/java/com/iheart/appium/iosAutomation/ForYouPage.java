@@ -103,18 +103,18 @@ public class ForYouPage extends Page {
 		System.out.println("Starting with:" + myStation);
 		
 		// Verify PLAYER
-		errors.add(player.verifyPlaybackControls(myStation));
+		errors.add(player.verifyPlaybackControls(myStation), "playAndVerifyLiveRadio");
 		if(!player.doFavorite()){
-			errors.add("Could not favorite!\n");
+			errors.add("Could not favorite!\n", "playAndVerifyLiveRadio");
 		}
 		if(!player.doScan()){
-			errors.add("Could not scan!\n");
+			errors.add("Could not scan!\n", "playAndVerifyLiveRadio");
 		}
 		if(!player.doThumbUp()){
-			errors.add("Could not do thumbs up!\n");
+			errors.add("Could not do thumbs up!\n", "playAndVerifyLiveRadio");
 		}
 		if(!player.doThumbDown()){
-			errors.add("Could not do thumbs down!\n");
+			errors.add("Could not do thumbs down!\n", "playAndVerifyLiveRadio");
 		}
 
 		// Here, remember the playing station name:
@@ -130,7 +130,7 @@ public class ForYouPage extends Page {
 		//player.back.click();
 		fullPlayer.clickDownArrowOnNavBarToMinimizeFullPlayer();
 		if(!verifyInForYou(myStation)){
-			errors.add("Could not find station: " + myStation + " in my stations page.\n");
+			errors.add("Could not find station: " + myStation + " in my stations page.\n", "playAndVerifyLiveRadio");
 		}
 		
 		return errors.getErrors();

@@ -1,7 +1,6 @@
 package com.iheart.appium.iosAutomation;
 
 import java.time.LocalTime;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -20,14 +19,17 @@ public class TestLogin extends TestRoot {
 		setup();
 	}
 
-	@After
-	public void after(){
-		tearDown();
-	}
+//	@After
+//	public void after(){
+//		tearDown();
+//	}
 	
-        // Can't always switch context, Appium bug
+	@Rule
+	public ScreenshotRule screenshot = new ScreenshotRule();
+	
+    // Can't always switch context, Appium bug
 	// Only fails when ran in a suite
-        // Starting with a reset seems to help
+    // Starting with a reset seems to help
 
     @Test(timeout=200000)
     @Ignore

@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.SwipeElementDirection;
 import io.appium.java_client.ios.IOSDriver;
@@ -20,62 +18,62 @@ public class HomePage extends Page {
 	public HomePage(IOSDriver<IOSElement> _driver){
 		super(_driver);
 	}
-	@iOSFindBy(accessibility = "IHRiPhoneHomePageView") private IOSElement  IHRiPhoneHomePageView;
+	@iOSFindBy(accessibility = "IHRiPhoneHomePageView") private IOSElement IHRiPhoneHomePageView;
 	@iOSFindBy(accessibility = "NavBar-SideMenuButton-UIButton") private IOSElement NavBarSideMenuButtonUIButton;
-	@iOSFindBy(accessibility = "iheartradio_logo_full") private IOSElement   iheartradio_logo_full;
+	@iOSFindBy(accessibility = "iheartradio_logo_full") private IOSElement  iheartradio_logo_full;
 	@iOSFindBy(accessibility = "IHRCastingBarButtonItem-UIButton") private IOSElement IHRCastingBarButtonItemUIButton;
 	@iOSFindBy(accessibility = "NavBar-SearchBarButton-UIButton") private IOSElement NavBarSearchBarButtonUIButton;
 	@iOSFindBy(accessibility="HomeSegmentedControl-TitleLabel-UIButton-For You") private IOSElement HomeSegmentedControlTitleLabelUIButtonForYou;
 	@iOSFindBy(accessibility="HomeSegmentedControl-TitleLabel-UIButton-My Stations") private IOSElement HomeSegmentedControlTitleLabelUIButtonMyStations;
 	@iOSFindBy(accessibility="HomeSegmentedControl-TitleLabel-UIButton-Local Radio") private IOSElement HomeSegmentedControlTitleLabelUIButtonLocalRadio;
 	//FOR YOU Cells
-	@iOSFindBy(accessibility="ForYouTab-CollectionView") private IOSElement  ForYouTabCollectionView;
-	@iOSFindBy(accessibility="ForYou-CellNumber-0") private IOSElement  ForYouCellNumber0;
-	@iOSFindBy(accessibility="ForYou-CellNumber-1") private IOSElement  ForYouCellNumber1;
-	@iOSFindBy(accessibility="ForYou-CellNumber-2") private IOSElement  ForYouCellNumber2;
-	@iOSFindBy(accessibility="ForYou-CellNumber-3") private IOSElement  ForYouCellNumber3;
-	@iOSFindBy(accessibility="ForYou-CellNumber-4") private IOSElement  ForYouCellNumber4;
-	@iOSFindBy(accessibility="ForYou-CellNumber-5") private IOSElement  ForYouCellNumber5;
-	@iOSFindBy(accessibility="ForYou-CellNumber-6") private IOSElement  ForYouCellNumber6;
-	@iOSFindBy(accessibility="ForYou-CellNumber-7") private IOSElement  ForYouCellNumber7;
-	@iOSFindBy(accessibility="ForYou-CellNumber-8") private IOSElement  ForYouCellNumber8;
-	@iOSFindBy(accessibility="ForYou-CellNumber-9") private IOSElement  ForYouCellNumber9;
-	@iOSFindBy(accessibility="ForYou-CellNumber-10") private IOSElement  ForYouCellNumber10;
-	@iOSFindBy(accessibility="ForYou-CellNumber-11") private IOSElement  ForYouCellNumber11;
-	@iOSFindBy(accessibility="ForYouTC-ShowMoreButton-UIButton") private IOSElement  ForYouTCShowMoreButtonUIButton;
-	@iOSFindBy(accessibility="ForYouTC-RecommendationButton-UIButton") private IOSElement  ForYouTCRecommendationButtonUIButton;
+	@iOSFindBy(accessibility="ForYouTab-CollectionView") private IOSElement ForYouTabCollectionView;
+	@iOSFindBy(accessibility="ForYou-CellNumber-0") private IOSElement ForYouCellNumber0;
+	@iOSFindBy(accessibility="ForYou-CellNumber-1") private IOSElement ForYouCellNumber1;
+	@iOSFindBy(accessibility="ForYou-CellNumber-2") private IOSElement ForYouCellNumber2;
+	@iOSFindBy(accessibility="ForYou-CellNumber-3") private IOSElement ForYouCellNumber3;
+	@iOSFindBy(accessibility="ForYou-CellNumber-4") private IOSElement ForYouCellNumber4;
+	@iOSFindBy(accessibility="ForYou-CellNumber-5") private IOSElement ForYouCellNumber5;
+	@iOSFindBy(accessibility="ForYou-CellNumber-6") private IOSElement ForYouCellNumber6;
+	@iOSFindBy(accessibility="ForYou-CellNumber-7") private IOSElement ForYouCellNumber7;
+	@iOSFindBy(accessibility="ForYou-CellNumber-8") private IOSElement ForYouCellNumber8;
+	@iOSFindBy(accessibility="ForYou-CellNumber-9") private IOSElement ForYouCellNumber9;
+	@iOSFindBy(accessibility="ForYou-CellNumber-10") private IOSElement ForYouCellNumber10;
+	@iOSFindBy(accessibility="ForYou-CellNumber-11") private IOSElement ForYouCellNumber11;
+	@iOSFindBy(accessibility="ForYouTC-ShowMoreButton-UIButton") private IOSElement ForYouTCShowMoreButtonUIButton;
+	@iOSFindBy(accessibility="ForYouTC-RecommendationButton-UIButton") private IOSElement ForYouTCRecommendationButtonUIButton;
 	//My Stations - Favorite Stations
-	@iOSFindBy(accessibility="MyStationsTab-CollectionView") private IOSElement  MyStationsTabCollectionView; //Collection is the same AID as For You. 
-	@iOSFindBy(accessibility="Favorite Stations") private IOSElement  FavoriteStations;  //Header at the top
-	@iOSFindBy(accessibility="Favorites-CellNumber-0") private IOSElement  FavoritesCellNumber0;
-	@iOSFindBy(accessibility="Favorites-CellNumber-1") private IOSElement  FavoritesCellNumber1;
-	@iOSFindBy(accessibility="Favorites-CellNumber-2") private IOSElement  FavoritesCellNumber2;
-	@iOSFindBy(accessibility="Favorites-CellNumber-3") private IOSElement  FavoritesCellNumber3;
-	@iOSFindBy(accessibility="Favorites-CellNumber-4") private IOSElement  FavoritesCellNumber4;
-	@iOSFindBy(accessibility="Favorites-CellNumber-5") private IOSElement  FavoritesCellNumber5;
-	@iOSFindBy(accessibility="Favorites-CellNumber-6") private IOSElement  FavoritesCellNumber6;
-	@iOSFindBy(accessibility="Favorites-CellNumber-7") private IOSElement  FavoritesCellNumber7;
+	@iOSFindBy(accessibility="MyStationsTab-CollectionView") private IOSElement MyStationsTabCollectionView; //Collection is the same AID as For You. 
+	@iOSFindBy(accessibility="Favorite Stations") private IOSElement FavoriteStations; //Header at the top
+	@iOSFindBy(accessibility="Favorites-CellNumber-0") private IOSElement FavoritesCellNumber0;
+	@iOSFindBy(accessibility="Favorites-CellNumber-1") private IOSElement FavoritesCellNumber1;
+	@iOSFindBy(accessibility="Favorites-CellNumber-2") private IOSElement FavoritesCellNumber2;
+	@iOSFindBy(accessibility="Favorites-CellNumber-3") private IOSElement FavoritesCellNumber3;
+	@iOSFindBy(accessibility="Favorites-CellNumber-4") private IOSElement FavoritesCellNumber4;
+	@iOSFindBy(accessibility="Favorites-CellNumber-5") private IOSElement FavoritesCellNumber5;
+	@iOSFindBy(accessibility="Favorites-CellNumber-6") private IOSElement FavoritesCellNumber6;
+	@iOSFindBy(accessibility="Favorites-CellNumber-7") private IOSElement FavoritesCellNumber7;
 	//My Stations - Recent Stations
-	@iOSFindBy(accessibility="Recent Stations") private IOSElement  RecentStations; //Header at the top
-	@iOSFindBy(accessibility="Recents-CellNumber-0") private IOSElement  RecentsCellNumber0;
-	@iOSFindBy(accessibility="Recents-CellNumber-1") private IOSElement  RecentsCellNumber1;
-	@iOSFindBy(accessibility="Recents-CellNumber-2") private IOSElement  RecentsCellNumber2;
-	@iOSFindBy(accessibility="Recents-CellNumber-3") private IOSElement  RecentsCellNumber3;
-	@iOSFindBy(accessibility="Recents-CellNumber-4") private IOSElement  RecentsCellNumber4;
-	@iOSFindBy(accessibility="Recents-CellNumber-5") private IOSElement  RecentsCellNumber5;
-	@iOSFindBy(accessibility="Recents-CellNumber-6") private IOSElement  RecentsCellNumber6;
-	@iOSFindBy(accessibility="Recents-CellNumber-7") private IOSElement  RecentsCellNumber7;
-	@iOSFindBy(accessibility="Recents-CellNumber-8") private IOSElement  RecentsCellNumber8;
-	@iOSFindBy(accessibility="Favorites-ShowMoreButton-UIButton") private IOSElement  FavoritesShowMoreButtonUIButton;
+	@iOSFindBy(accessibility="Recent Stations") private IOSElement RecentStations; //Header at the top
+	@iOSFindBy(accessibility="Recents-CellNumber-0") private IOSElement RecentsCellNumber0;
+	@iOSFindBy(accessibility="Recents-CellNumber-1") private IOSElement RecentsCellNumber1;
+	@iOSFindBy(accessibility="Recents-CellNumber-2") private IOSElement RecentsCellNumber2;
+	@iOSFindBy(accessibility="Recents-CellNumber-3") private IOSElement RecentsCellNumber3;
+	@iOSFindBy(accessibility="Recents-CellNumber-4") private IOSElement RecentsCellNumber4;
+	@iOSFindBy(accessibility="Recents-CellNumber-5") private IOSElement RecentsCellNumber5;
+	@iOSFindBy(accessibility="Recents-CellNumber-6") private IOSElement RecentsCellNumber6;
+	@iOSFindBy(accessibility="Recents-CellNumber-7") private IOSElement RecentsCellNumber7;
+	@iOSFindBy(accessibility="Recents-CellNumber-8") private IOSElement RecentsCellNumber8;
+	@iOSFindBy(accessibility="Favorites-ShowMoreButton-UIButton") private IOSElement FavoritesShowMoreButtonUIButton;
 	//Local Radio
-	@iOSFindBy(accessibility="LocalRadioTab-CollectionView") private IOSElement  LocalRadioTabCollectionView;
-	@iOSFindBy(accessibility="LocalRadio-CellNumber-0") private IOSElement  LocalRadioCellNumber0;
-	@iOSFindBy(accessibility="LocalRadio-CellNumber-1") private IOSElement  LocalRadioCellNumber1;
-	@iOSFindBy(accessibility="LocalRadio-CellNumber-2") private IOSElement  LocalRadioCellNumber2;
-	@iOSFindBy(accessibility="LocalRadio-CellNumber-3") private IOSElement  LocalRadioCellNumber3;
-	@iOSFindBy(accessibility="LocalRadio-CellNumber-4") private IOSElement  LocalRadioCellNumber4;
-	@iOSFindBy(accessibility="LocalRadio-CellNumber-5") private IOSElement  LocalRadioCellNumber5;
-	@iOSFindBy(accessibility="LocalRadio-CellNumber-17") private IOSElement  LocalRadioCellNumber17;
+	@iOSFindBy(accessibility="LocalRadioTab-CollectionView") private IOSElement LocalRadioTabCollectionView;
+	@iOSFindBy(accessibility="LocalRadio-CellNumber-0") private IOSElement LocalRadioCellNumber0;
+	@iOSFindBy(accessibility="LocalRadio-CellNumber-1") private IOSElement LocalRadioCellNumber1;
+	@iOSFindBy(accessibility="LocalRadio-CellNumber-2") private IOSElement LocalRadioCellNumber2;
+	@iOSFindBy(accessibility="LocalRadio-CellNumber-3") private IOSElement LocalRadioCellNumber3;
+	@iOSFindBy(accessibility="LocalRadio-CellNumber-4") private IOSElement LocalRadioCellNumber4;
+	@iOSFindBy(accessibility="LocalRadio-CellNumber-5") private IOSElement LocalRadioCellNumber5;
+	@iOSFindBy(accessibility="LocalRadio-CellNumber-17") private IOSElement LocalRadioCellNumber17;
 	
 	//Want your local radio?
 	//Tell us where you are & we'll get your favorite DJs
@@ -109,22 +107,22 @@ public class HomePage extends Page {
 			printElementInformation(ForYouCellNumber5);
 			printElementInformation(ForYouCellNumber6);
 
-			homePage.scrollDown();
+			scrollDown();
 			printElementInformation(ForYouCellNumber7);
 			printElementInformation(ForYouCellNumber8);
 			printElementInformation(ForYouCellNumber9);
 			printElementInformation(ForYouCellNumber10);
 			printElementInformation(ForYouCellNumber11);
-			homePage.scrollDown();
+			scrollDown();
 			printElementInformation(ForYouTCShowMoreButtonUIButton);
 			//Clicking Show More opens 12 more cells. 
 			printElementInformation(ForYouTCRecommendationButtonUIButton);
 			//My Stations - Favorite Stations
-			homePage.scrollToTop();
+			scrollToTop();
 
 			homePage.clickMyStationsTab();
 			printElementInformation(MyStationsTabCollectionView); //Collection is the same AID as For You. 
-			printElementInformation(FavoriteStations);  //Header at the top
+			printElementInformation(FavoriteStations); //Header at the top
 			printElementInformation(FavoritesCellNumber0);
 			printElementInformation(FavoritesCellNumber1);
 			printElementInformation(FavoritesCellNumber2);
@@ -134,23 +132,23 @@ public class HomePage extends Page {
 			printElementInformation(FavoritesCellNumber6);
 
 			//printElementInformation(FavoritesCellNumber7);
-			homePage.scrollDown();
+			scrollDown();
 			//My Stations - Recent Stations
 
 			printElementInformation(RecentStations); //Header at the top
 			printElementInformation(RecentsCellNumber0);
 			printElementInformation(RecentsCellNumber1);
 			printElementInformation(RecentsCellNumber2);
-			homePage.scrollDown();
+			scrollDown();
 			printElementInformation(RecentsCellNumber3);
 			printElementInformation(RecentsCellNumber4);
 			printElementInformation(RecentsCellNumber5);
 			printElementInformation(RecentsCellNumber6);
 			printElementInformation(RecentsCellNumber7);
-			homePage.scrollDown();
+			scrollDown();
 			printElementInformation(RecentsCellNumber8);
 			printElementInformation(FavoritesShowMoreButtonUIButton);
-			homePage.scrollToTop();
+			scrollToTop();
 			homePage.clickLocalRadioTab();
 			//Local Radio
 			printElementInformation(LocalRadioTabCollectionView);
@@ -160,10 +158,10 @@ public class HomePage extends Page {
 			printElementInformation(LocalRadioCellNumber3);
 			printElementInformation(LocalRadioCellNumber4);
 			printElementInformation(LocalRadioCellNumber5);
-			homePage.scrollDown();
-			homePage.scrollDown();
-			homePage.scrollDown();
-			homePage.scrollDown();
+			scrollDown();
+			scrollDown();
+			scrollDown();
+			scrollDown();
 			printElementInformation(LocalRadioCellNumber17);
 		}
 
@@ -196,7 +194,8 @@ public class HomePage extends Page {
 	 */
 	public void clickForYouTab(){
 		System.out.println("clickForYouTab().");
-		IOSElement blah = createIOSElementOnHomePageForCell(CellStrings.FAVORITES.toString() , 3);
+//		IOSElement blah = 
+		createIOSElementOnHomePageForCell(CellStrings.FAVORITES.toString() , 3);
 		HomeSegmentedControlTitleLabelUIButtonForYou.click();
 	}
 	/**
@@ -287,18 +286,18 @@ public class HomePage extends Page {
 	/**
 	 * scrollDown really just Swipes up. A swipe up covers about 3.5 cells on the iPhone. So two of these scrollDown calls will swipe up 7 cells. Test it thoroughly.
 	 */
-	public void scrollDown(){
+	public static void scrollDown(){
 		System.out.println("scrollDown() : Swiping Up Once.");
-		homePage.swipeUp();
+		swipeUp();
 	}
 	
 	/**
 	 * ScrollToTop just calls SwipeDown 4 times. For particularly long collection views, use it more. Test as needed. 
 	 */
-	public void scrollToTop(){
+	public static void scrollToTop(){
 		System.out.println("scrollToTop() : Swiping Down Four times. May not necessarily reach top.");
 		for(int i = 0; i < 4; i++){
-			homePage.swipeDown();
+			swipeDown();
 		}
 	}
 	
@@ -319,7 +318,7 @@ public class HomePage extends Page {
 	 */
 	public String getTextOfFirstRecent(){
 		if(homePage.isCurrentlyOnMyStationsTab()){
-			homePage.scrollDown();
+			scrollDown();
 			return getElementText(RecentsCellNumber0);
 		}
 		return "Not currently on HomePage - For you. ";
@@ -332,7 +331,7 @@ public class HomePage extends Page {
 		if(homePage.isCurrentlyOnMyStationsTab()){
 			System.out.println("clickFirstFavoriteStationOnMyStationsToBeginPlaying() : "+ FavoritesCellNumber0.getText());
 			FavoritesCellNumber0.click();
-			return  miniPlayer.isCurrentlyOnMiniPlayer() || fullPlayer.isCurrentlyOnFullPlayer(); 
+			return miniPlayer.isCurrentlyOnMiniPlayer() || fullPlayer.isCurrentlyOnFullPlayer(); 
 		}
 		return false;
 	}
@@ -342,10 +341,10 @@ public class HomePage extends Page {
 	 */
 	public boolean clickFirstRecentStationOnMyStationsToBeginPlaying(){
 		if(homePage.isCurrentlyOnMyStationsTab()){
-			homePage.scrollDown();
+			scrollDown();
 			System.out.println("clickFirstRecentStationOnMyStationsToBeginPlaying() : "+ RecentsCellNumber0.getText());
 			RecentsCellNumber0.click();
-			return  miniPlayer.isCurrentlyOnMiniPlayer() || fullPlayer.isCurrentlyOnFullPlayer();
+			return miniPlayer.isCurrentlyOnMiniPlayer() || fullPlayer.isCurrentlyOnFullPlayer();
 		}
 		return false;
 	}
@@ -359,7 +358,7 @@ public class HomePage extends Page {
 			
 			System.out.println("clickFirstRecentStationOnMyStationsToBeginPlaying() : "+ LocalRadioCellNumber0.getText());
 			LocalRadioCellNumber0.click();
-			return  miniPlayer.isCurrentlyOnMiniPlayer() || fullPlayer.isCurrentlyOnFullPlayer();
+			return miniPlayer.isCurrentlyOnMiniPlayer() || fullPlayer.isCurrentlyOnFullPlayer();
 		}
 		return false;
 	}
@@ -368,11 +367,11 @@ public class HomePage extends Page {
 	 * @return
 	 */
 	public boolean clickFirstStationOnForYouToBeginPlaying(){
-	  
+	 
 		if(homePage.isCurrentlyOnForYouTab()){
 			System.out.println("clickFirstRecentStationOnMyStationsToBeginPlaying() : "+ ForYouCellNumber0.getText());
 			ForYouCellNumber0.click();
-			return  miniPlayer.isCurrentlyOnMiniPlayer() || fullPlayer.isCurrentlyOnFullPlayer(); 
+			return miniPlayer.isCurrentlyOnMiniPlayer() || fullPlayer.isCurrentlyOnFullPlayer(); 
 		}
 		return false;
 	}
@@ -415,7 +414,7 @@ public class HomePage extends Page {
 		}
 	}
 	
-	//############################################## OLD METHODS  #####################################
+	//############################################## OLD METHODS #####################################
 	private IOSElement getFavorite(){
 		IOSElement favorite = null;
 		for(int i = 1; i < 4; i++){
@@ -592,13 +591,13 @@ public class HomePage extends Page {
 		System.out.println("toggleListItemFavorites() - Swipes item to left, Adds to Favorites if visible");
 		Errors err = new Errors();
 		IOSElement item = getListItem(x);
-			if(item != null){
+		if(item != null){
 			// Expose the hidden buttons with a swipe
 			swipeOnItem(item, LEFT);
-			String message = toggleFavorites(item, x, removing);
+			toggleFavorites(item, x, removing);
 		}
 		else{
-			err.add("Selected item was not visible on the screen.");
+			err.add("Selected item was not visible on the screen.", "toggleListItemFavorites");
 		}
 		System.out.println("Done toggling favorites...");
 		return err.getErrors();
@@ -685,7 +684,7 @@ public class HomePage extends Page {
 					returnMessage += "\nCould not load item while trying to toggle favorite status."; 
 				}
 				else if(!remove && strGood(text) && !text.equals(item.getText())){ 
-					//  The item was removed, retry with the first button
+					// The item was removed, retry with the first button
 					execute = true;
 				}
 			}while(tries < 2 && execute);
@@ -810,7 +809,7 @@ public class HomePage extends Page {
 				if(!isVisible(item)){
 					break;
 				}
-				if(item.getLocation().getY() >= recentY){  
+				if(item.getLocation().getY() >= recentY){ 
 					break;
 				}
 				if(item.getText().contains(artist)){ 
@@ -922,7 +921,7 @@ public class HomePage extends Page {
 			
 			if(player.isPlayingInPlayer() 
 					&& !player.minimizePlayer()){
-				err.add("Could not minimize player.");
+				err.add("Could not minimize player.", "loadUpStations");
 			}
 		}
 			
