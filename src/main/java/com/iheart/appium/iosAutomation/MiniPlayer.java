@@ -55,7 +55,7 @@ public class MiniPlayer extends Page {
 		printElementInformation(MiniPlayerViewRedSkipButtonUIButton);
 		printElementInformation(MiniPlayerViewProgressBarViewUIView);
 		printElementInformation(MiniPlayerProgressBarViewElapsedViewUIView);
-		printElementInformation(IHRPlayerViewNextButtonSkipCountLabelUILabel);
+		//printElementInformation(IHRPlayerViewNextButtonSkipCountLabelUILabel);
 	}
 	/**
 	 * Clicks the MiniPlayer to open Full Player. 

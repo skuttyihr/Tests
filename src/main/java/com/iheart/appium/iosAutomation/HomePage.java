@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.SwipeElementDirection;
@@ -332,6 +331,20 @@ public class HomePage extends Page {
 		if(homePage.isCurrentlyOnMyStationsTab()){
 			System.out.println("clickFirstFavoriteStationOnMyStationsToBeginPlaying() : "+ FavoritesCellNumber0.getText());
 			FavoritesCellNumber0.click();
+			return  miniPlayer.isCurrentlyOnMiniPlayer() || fullPlayer.isCurrentlyOnFullPlayer(); 
+		}
+		return false;
+	}
+	/**
+	 * Assume SIMULATOR is on HomePage - My Stations
+	 * @return
+	 */
+	public boolean clickCertainCellOnMyStationsToBeginPlaying(int cellNumber){
+		if(homePage.isCurrentlyOnMyStationsTab()){
+			IOSElement station = createIOSElementOnHomePageForCell("Favorites", cellNumber);
+			
+			System.out.println("clickCertainCellOnMyStationsToBeginPlaying() : "+ station.getText());
+			station.click();
 			return  miniPlayer.isCurrentlyOnMiniPlayer() || fullPlayer.isCurrentlyOnFullPlayer(); 
 		}
 		return false;

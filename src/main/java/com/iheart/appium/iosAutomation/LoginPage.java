@@ -188,7 +188,6 @@ public class LoginPage extends Page {
 		clickLogInAuthButton();
 		System.out.println("Clicked Log In form button.");
 		chooseStayConnected(false);
-		player.minimizePlayer();
 		// Dismiss zip code
 		Page.enterZip();
 		// Dismiss stay connected popup
@@ -220,9 +219,9 @@ public class LoginPage extends Page {
 		clickLogInAuthButton();
 		System.out.println("Clicked Log In form button.");
 		chooseStayConnected(false);
-		player.minimizePlayer();
+		
 		// Dismiss zip code
-		Page.enterZip();
+		Page.enterZip("");
 		// Dismiss stay connected popup
 		Page.handlePossiblePopUp();
 		System.out.println("Dismissed Zip code and handled possible popups.");
