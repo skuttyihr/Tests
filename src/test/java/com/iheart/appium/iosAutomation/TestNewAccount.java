@@ -2,10 +2,11 @@ package com.iheart.appium.iosAutomation;
 
 import java.time.LocalTime;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+
 
 public class TestNewAccount extends TestRoot {
 
@@ -14,10 +15,14 @@ public class TestNewAccount extends TestRoot {
 		setup();
 	}
 
-	@After
-	public void after() {
-		tearDown();
-	}
+//	@After
+//	public void after() {
+//		tearDown();
+//	}
+	
+	@Rule
+	public ScreenshotRule screenshot = new ScreenshotRule();
+	
 	/**
 	 * Test: CreateNewAccount creates a new account in iOS. 
 	 * It fills out email, password, zipcode, birth year(selection), gender, checks Terms and Conditions,

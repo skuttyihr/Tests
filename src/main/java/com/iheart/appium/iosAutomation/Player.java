@@ -144,19 +144,19 @@ public class Player extends Page {
 
 		if (!isVisible(songTrack_live)) {
 			if (!isVisible(songTrack2_live))
-				errors.append("No sound track name is displayed.\n");
+				errors.add("No sound track name is displayed.\n");
 		}
 		if (!isVisible(play) && !isVisible(stop))
-			errors.append("Play/Stop button is not displayed.\n");
+			errors.add("Play/Stop button is not displayed.\n");
 
 		if (!isVisible(scan))
-			errors.append("Scan button is not displayed.\n");
+			errors.add("Scan button is not displayed.\n");
 
 		if (!isVisible(more))
-			errors.append("More button (...) is not displayed.\n");
+			errors.add("More button (...) is not displayed.\n");
 
 		if(!isVisible(radioImage)){
-			errors.append("Could not load live radio image\n");
+			errors.add("Could not load live radio image\n");
 		}
 		
 		
@@ -172,22 +172,22 @@ public class Player extends Page {
 		
 		if(stationName != null && stationName.length() > 0
 				&& !stationLabel.getText().contains(stationName))
-			errors.append("Station name is not correct.\n");
+			errors.add("Station name is not correct.\n");
 
 		if (!isVisible(songTrack_artist))
-			errors.append("No sound track name is displayed.\n");
+			errors.add("No sound track name is displayed.\n");
 
 		if (!isVisible(artist_artist))
-			errors.append("No artist name is displayed.\n");
+			errors.add("No artist name is displayed.\n");
 
 		if (!isVisible(play) && !isVisible(pause))
-			errors.append("Play/Pause button is not displayed.\n");
+			errors.add("Play/Pause button is not displayed.\n");
 
 		if (!isVisible(skip))
-			errors.append("Skip button is not displayed.\n");
+			errors.add("Skip button is not displayed.\n");
 
 		if(!isVisible(artistAlbumArt)){
-			errors.append("Could not load artist album artwork.\n");
+			errors.add("Could not load artist album artwork.\n");
 		}
 		
 		return errors.toString();
@@ -202,25 +202,25 @@ public class Player extends Page {
 		Errors errors = new Errors();
 		if(stationName != null && stationName.length() > 0
 				&& !stationLabel.getText().contains(stationName.substring(0, 5)))
-			errors.append("Station name is not correct.\n");
+			errors.add("Station name is not correct.\n");
 
 		if (!isVisible(episodeName_podcast))
-			errors.append("Episode name is not displayed.\n");
+			errors.add("Episode name is not displayed.\n");
 
 		if (!isVisible(stationName_podcast))
-			errors.append("Station name is Not displayed.\n");
+			errors.add("Station name is Not displayed.\n");
 
 		if (!isVisible(slideBar))
-			errors.append("No Scrubber is displayed.\n");
+			errors.add("No Scrubber is displayed.\n");
 
 		if (!isVisible(play) && !isVisible(pause))
-			errors.append("Play/Play button is not displayed.\n");
+			errors.add("Play/Play button is not displayed.\n");
 
 		if (!isVisible(skip))
-			errors.append("Skip button is not displayed.\n");
+			errors.add("Skip button is not displayed.\n");
 
 		if(!isVisible(podcastImage)){
-			errors.append("Could not load podcast image\n");
+			errors.add("Could not load podcast image\n");
 		}
 		
 		return errors.toString();
@@ -615,12 +615,13 @@ public class Player extends Page {
 		
 		// If it's playing in the mini player, skip the other assessments
 		if(miniPlayer.isCurrentlyOnMiniPlayer()){
-			if(true){//isVisible(miniPlayer.   .miniPlayerStop) || isVisible(miniPlayer.miniPlayerPause)){
-				return true;
-			}
-			else{
-				return false;
-			}
+			// TODO
+//			if(isVisible(miniPlayer.   .miniPlayerStop) || isVisible(miniPlayer.miniPlayerPause)){
+			return true;
+//			}
+//			else{
+//				return false;
+//			}
 		}
 		
 		switch(type){
@@ -748,7 +749,7 @@ public class Player extends Page {
 		Errors errors = new Errors();
 		
 		// Verify that the controls are present
-	if (!isVisible(thumbUp))
+		if (!isVisible(thumbUp))
 			errors.add("No Thumb Up icon is displayed.");
 
 		if (!isVisible(thumbDown))
@@ -937,7 +938,7 @@ public class Player extends Page {
 		Errors err = new Errors();
 		waitForElementToBeVisible(volume, 5);
 		if(!isVisible(volume)){
-			err.add("Volume slider was not present.");
+			err.add("Volume slider was not present.", "setVolume");
 		}
 		else{
 			String floatingPercentage = String.valueOf((float) volumeLevel / 100);
@@ -962,7 +963,7 @@ public class Player extends Page {
 				testVolume = getVolume();
 			}
 			if(!isAbout(volumeLevel, testVolume, 6)){
-				err.add("Could not set volume within volume levels.\nExpected: " + volumeLevel + "\nFound: " + testVolume);
+				err.add("Could not set volume within volume levels.\nExpected: " + volumeLevel + "\nFound: " + testVolume, "setVolume");
 			}
 		}
 		
@@ -986,12 +987,12 @@ public class Player extends Page {
 				cancelAirPlay.click();
 			}
 			else{
-				err.add("Clicking AirPlay button did not bring up AirPlay dialog.");
+				err.add("Clicking AirPlay button did not bring up AirPlay dialog.", "streamOverAirPlay");
 			}
 		}
 		else{
 			if(airPlay == null){ // If we have it but it's not visible, pass it anyway
-				err.add("AirPlay button was not visible. Is this disabled?");
+				err.add("AirPlay button was not visible. Is this disabled?", "streamOverAirPlay");
 			}
 		}
 		
@@ -1030,7 +1031,7 @@ public class Player extends Page {
 			}
 		}
 		else{
-			err.add("More (...) button was not visible");
+			err.add("More (...) button was not visible", "openMoreInfo");
 		}
 		
 		return err.getErrors();
@@ -1048,10 +1049,10 @@ public class Player extends Page {
 		}
 		waitForElementToBeVisible(moreInfoAlbumArtwork, 3);
 		if(!isVisible(moreInfoAlbumArtwork)){
-			err.add("Album artwork was not displayed on more info screen.");
+			err.add("Album artwork was not displayed on more info screen.", "verifyMoreInfoElementsVisible");
 		}
 		if(!isVisible(song)){
-			err.add("Song name was not displayed on more info screen.");
+			err.add("Song name was not displayed on more info screen.", "verifyMoreInfoElementsVisible");
 		}
 		if(!isVisible(artist)){
 			err.add("Artist name was not displayed on more info screen.");

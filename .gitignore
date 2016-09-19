@@ -4,6 +4,7 @@ build/
 .gradle/
 .metadata
 target/
+screenshots/
 
 *.project
 .DS_STORE

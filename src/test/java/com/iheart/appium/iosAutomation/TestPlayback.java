@@ -11,7 +11,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
 
-
 public class TestPlayback extends TestRoot {
 
 	@Rule
@@ -26,8 +25,11 @@ public class TestPlayback extends TestRoot {
 		// Remove favorites, logout, and tearDown
 		homePage.removeAllFavorites();
 		sideNavBar.logout();
-		TestRoot.tearDown();
+//		TestRoot.tearDown();
 	}
+	
+	@Rule
+	public ScreenshotRule screenshot = new ScreenshotRule();
 	
 	/**
 	 * Changes and then checks Playback Volume
@@ -242,7 +244,7 @@ public class TestPlayback extends TestRoot {
 		// Tests that the additional info ellipsis is present and functional for live stations, podcasts, and artist radio
 		loginPage.loginWithoutVerifying();
 		// Artist radio
-		String artist = "The Killers";
+//		String artist = "The Killers";
 		//Assert.assertTrue("Could not play a custom artist station based on the artist: " + artist,
 				//customRadio.playACustomStation(artist).contains(artist);//);  This is failing due to a dev problem. Let it run. 
 		String moreInfoErrors = player.verifyAllMoreInfoItems();
