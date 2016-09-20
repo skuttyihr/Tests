@@ -15,83 +15,65 @@ public class ArtistProfilePage extends Page{
 	public ArtistProfilePage(IOSDriver<IOSElement> _driver){
 		super(_driver);
 	}
-	//
-	// Artist Profile
-	
 	//Artist Profile Nav Bar
-	@iOSFindBy(accessibility="NavBar-BackButton-UIButton") private IOSElement  NavBarBackButtonUIButton; //On Artist Profile, Albums, and Artist Bio. 
-	//@iOSFindBy(accessibility="//UIAApplication[1]/UIAWindow[1]/UIANavigationBar[1]/UIAStaticText[1]") private IOSElement ArtistProfileNavBarTitleLabel; //Seems to be null on this page
+	@iOSFindBy(accessibility="NavBar-BackButton-UIButton") private IOSElement NavBarBackButtonUIButton; //On Artist Profile, Albums, and Artist Bio. 
 	@iOSFindBy(accessibility="NavBar-FavoriteButton-UIButton") private IOSElement NavBarFavoriteButtonUIButton;
-	@iOSFindBy(accessibility="artist profile share button") private IOSElement   artistprofilesharebutton;
-
+	@iOSFindBy(accessibility="artist profile share button") private IOSElement artistprofilesharebutton;
 	//Artist Profile - Bio Header View Elements
-	@iOSFindBy(accessibility="ArtistProfileBioHeaderView-ShadowView-UIView") private IOSElement  ArtistProfileBioHeaderViewShadowViewUIView; //visible -  false, enabled = true
-	@iOSFindBy(accessibility="ArtistProfileBioHeaderView-BackgroundImageView-UIImageView") private IOSElement  ArtistProfileBioHeaderViewBackgroundImageViewUIImageView;  //visible -  false, enabled = true
-	@iOSFindBy(accessibility="ArtistProfileBioHeaderView-ArtistImageView-UIImage") private IOSElement   ArtistProfileBioHeaderViewArtistImageViewUIImage;   //visible -  false, enabled = true
-	@iOSFindBy(accessibility="ArtistProfileBioHeaderTitleView-TitleLabel-UILabel") private IOSElement   ArtistProfileBioHeaderTitleViewTitleLabelUILabel; //visible -  true, enabled = true
-	@iOSFindBy(accessibility="ArtistProfileBioHeaderTitleView-BioButton-UIButton") private IOSElement   ArtistProfileBioHeaderTitleViewBioButtonUIButton; //visible -  true, enabled = false
-	
-	@iOSFindBy(accessibility="ArtistProfileBioHeaderView-PlayButton-UIButton") private IOSElement   ArtistProfileBioHeaderViewPlayButtonUIButton;    //enabled: true  visible: true  (when viewing an artist profile you're not currently playing)
-	
+	@iOSFindBy(accessibility="ArtistProfileBioHeaderView-ShadowView-UIView") private IOSElement ArtistProfileBioHeaderViewShadowViewUIView; 
+	@iOSFindBy(accessibility="ArtistProfileBioHeaderView-BackgroundImageView-UIImageView") private IOSElement ArtistProfileBioHeaderViewBackgroundImageViewUIImageView;  
+	@iOSFindBy(accessibility="ArtistProfileBioHeaderView-ArtistImageView-UIImage") private IOSElement ArtistProfileBioHeaderViewArtistImageViewUIImage;   
+	@iOSFindBy(accessibility="ArtistProfileBioHeaderTitleView-TitleLabel-UILabel") private IOSElement ArtistProfileBioHeaderTitleViewTitleLabelUILabel; 
+	@iOSFindBy(accessibility="ArtistProfileBioHeaderTitleView-BioButton-UIButton") private IOSElement ArtistProfileBioHeaderTitleViewBioButtonUIButton; 
+	@iOSFindBy(accessibility="ArtistProfileBioHeaderView-PlayButton-UIButton") private IOSElement ArtistProfileBioHeaderViewPlayButtonUIButton;    
 	//Latest Release Header
 	@iOSFindBy(accessibility="ArtistProfileSectionLatestRelease-AlbumCell-LatestRelease") private IOSElement ArtistProfileSectionLatestReleaseAlbumCellLatestRelease;
-	//Need the Cell 
-		@iOSFindBy(accessibility="ArtistProfileAlbumCellTitleView-TitleLabel-UILabel-LatestRelease") private IOSElement ArtistProfileAlbumCellTitleViewTitleLabelUILabelLatestRelease; //The Fall of Hearts
-		@iOSFindBy(accessibility="ArtistProfileAlbumCellTitleView-SubtitleLabel-UILabel-LatestRelease") private IOSElement ArtistProfileAlbumCellTitleViewSubtitleLabelUILabelLatestRelease; //May 2016 • 12 songs
+	@iOSFindBy(accessibility="ArtistProfileAlbumCellTitleView-TitleLabel-UILabel-LatestRelease") private IOSElement ArtistProfileAlbumCellTitleViewTitleLabelUILabelLatestRelease; //The Fall of Hearts
+	@iOSFindBy(accessibility="ArtistProfileAlbumCellTitleView-SubtitleLabel-UILabel-LatestRelease") private IOSElement ArtistProfileAlbumCellTitleViewSubtitleLabelUILabelLatestRelease; //May 2016 • 12 songs
 	//Top Songs STATIC TEXT - Limit of 5 Top Songs - Cell, Index(number 1-5), and Song Title Label
-	@iOSFindBy(accessibility="ArtistProfileSectionTopSongs-TopSongsCell-0") private IOSElement  ArtistProfileSectionTopSongsTopSongsCell0;
-	@iOSFindBy(accessibility="ArtistProfileTrackCell-IndexLabel-UILabel-0") private IOSElement  ArtistProfileTrackCellIndexLabelUILabel0;
-	@iOSFindBy(accessibility="ArtistProfileTrackCell-TitleLabel-UILabel-0") private IOSElement  ArtistProfileTrackCellTitleLabelUILabel0;
-	@iOSFindBy(accessibility="ArtistProfileSectionTopSongs-TopSongsCell-1") private IOSElement  ArtistProfileSectionTopSongsTopSongsCell1;
-	@iOSFindBy(accessibility="ArtistProfileTrackCell-IndexLabel-UILabel-1") private IOSElement  ArtistProfileTrackCellIndexLabelUILabel1;
-	@iOSFindBy(accessibility="ArtistProfileTrackCell-TitleLabel-UILabel-1") private IOSElement  ArtistProfileTrackCellTitleLabelUILabel1;
-	@iOSFindBy(accessibility="ArtistProfileSectionTopSongs-TopSongsCell-2") private IOSElement  ArtistProfileSectionTopSongsTopSongsCell2;
-	@iOSFindBy(accessibility="ArtistProfileTrackCell-IndexLabel-UILabel-2") private IOSElement  ArtistProfileTrackCellIndexLabelUILabel2;
-	@iOSFindBy(accessibility="ArtistProfileTrackCell-TitleLabel-UILabel-2") private IOSElement  ArtistProfileTrackCellTitleLabelUILabel2;
-	@iOSFindBy(accessibility="ArtistProfileSectionTopSongs-TopSongsCell-3") private IOSElement  ArtistProfileSectionTopSongsTopSongsCell3;
-	@iOSFindBy(accessibility="ArtistProfileTrackCell-IndexLabel-UILabel-3") private IOSElement  ArtistProfileTrackCellIndexLabelUILabel3;
-	@iOSFindBy(accessibility="ArtistProfileTrackCell-TitleLabel-UILabel-3") private IOSElement  ArtistProfileTrackCellTitleLabelUILabel3;
-	@iOSFindBy(accessibility="ArtistProfileSectionTopSongs-TopSongsCell-4") private IOSElement  ArtistProfileSectionTopSongsTopSongsCell4;
-	@iOSFindBy(accessibility="ArtistProfileTrackCell-IndexLabel-UILabel-4") private IOSElement  ArtistProfileTrackCellIndexLabelUILabel4;
-	@iOSFindBy(accessibility="ArtistProfileTrackCell-TitleLabel-UILabel-4") private IOSElement  ArtistProfileTrackCellTitleLabelUILabel4;
+	@iOSFindBy(accessibility="ArtistProfileSectionTopSongs-TopSongsCell-0") private IOSElement ArtistProfileSectionTopSongsTopSongsCell0;
+	@iOSFindBy(accessibility="ArtistProfileTrackCell-IndexLabel-UILabel-0") private IOSElement ArtistProfileTrackCellIndexLabelUILabel0;
+	@iOSFindBy(accessibility="ArtistProfileTrackCell-TitleLabel-UILabel-0") private IOSElement ArtistProfileTrackCellTitleLabelUILabel0;
+	@iOSFindBy(accessibility="ArtistProfileSectionTopSongs-TopSongsCell-1") private IOSElement ArtistProfileSectionTopSongsTopSongsCell1;
+	@iOSFindBy(accessibility="ArtistProfileTrackCell-IndexLabel-UILabel-1") private IOSElement ArtistProfileTrackCellIndexLabelUILabel1;
+	@iOSFindBy(accessibility="ArtistProfileTrackCell-TitleLabel-UILabel-1") private IOSElement ArtistProfileTrackCellTitleLabelUILabel1;
+	@iOSFindBy(accessibility="ArtistProfileSectionTopSongs-TopSongsCell-2") private IOSElement ArtistProfileSectionTopSongsTopSongsCell2;
+	@iOSFindBy(accessibility="ArtistProfileTrackCell-IndexLabel-UILabel-2") private IOSElement ArtistProfileTrackCellIndexLabelUILabel2;
+	@iOSFindBy(accessibility="ArtistProfileTrackCell-TitleLabel-UILabel-2") private IOSElement ArtistProfileTrackCellTitleLabelUILabel2;
+	@iOSFindBy(accessibility="ArtistProfileSectionTopSongs-TopSongsCell-3") private IOSElement ArtistProfileSectionTopSongsTopSongsCell3;
+	@iOSFindBy(accessibility="ArtistProfileTrackCell-IndexLabel-UILabel-3") private IOSElement ArtistProfileTrackCellIndexLabelUILabel3;
+	@iOSFindBy(accessibility="ArtistProfileTrackCell-TitleLabel-UILabel-3") private IOSElement ArtistProfileTrackCellTitleLabelUILabel3;
+	@iOSFindBy(accessibility="ArtistProfileSectionTopSongs-TopSongsCell-4") private IOSElement ArtistProfileSectionTopSongsTopSongsCell4;
+	@iOSFindBy(accessibility="ArtistProfileTrackCell-IndexLabel-UILabel-4") private IOSElement ArtistProfileTrackCellIndexLabelUILabel4;
+	@iOSFindBy(accessibility="ArtistProfileTrackCell-TitleLabel-UILabel-4") private IOSElement ArtistProfileTrackCellTitleLabelUILabel4;
 
-	
+	//Search Result - ALBUMS
 	@iOSFindBy(accessibility="ArtistProfileSectionAlbums-AlbumCell-0") private IOSElement ArtistProfileSectionAlbumsAlbumCell0;
 		@iOSFindBy(accessibility="ArtistProfileAlbumCellTitleView-TitleLabel-UILabel-0") private IOSElement ArtistProfileAlbumCellTitleViewTitleLabelUILabel0;
 		@iOSFindBy(accessibility="ArtistProfileAlbumCellTitleView-SubtitleLabel-UILabel-0") private IOSElement ArtistProfileAlbumCellTitleViewSubtitleLabelUILabel0;
-		//@iOSFindBy(accessibility="ArtistProfileSectionAlbums-DividerView-UIView-0") private IOSElement ArtistProfileSectionAlbumsDividerViewUIView0;
-		//@iOSFindBy(accessibility="ArtistProfileAlbumCell-AlbumImageView-UIImageView-0") private IOSElement ArtistProfileAlbumCellAlbumImageViewUIImageView0;
-		//@iOSFindBy(accessibility="ArtistProfileAlbumCell-AccessoryView-UIView-0") private IOSElement ArtistProfileAlbumCellAccessoryViewUIView0;
 	@iOSFindBy(accessibility="ArtistProfileSectionAlbums-AlbumCell-1") private IOSElement ArtistProfileSectionAlbumsAlbumCell1;
 		@iOSFindBy(accessibility="ArtistProfileAlbumCellTitleView-TitleLabel-UILabel-1") private IOSElement ArtistProfileAlbumCellTitleViewTitleLabelUILabel1;
 		@iOSFindBy(accessibility="ArtistProfileAlbumCellTitleView-SubtitleLabel-UILabel-1") private IOSElement ArtistProfileAlbumCellTitleViewSubtitleLabelUILabel1;
-		//@iOSFindBy(accessibility="ArtistProfileSectionAlbums-DividerView-UIView-1") private IOSElement ArtistProfileSectionAlbumsDividerViewUIView1;
-		//@iOSFindBy(accessibility="ArtistProfileAlbumCell-AlbumImageView-UIImageView-1") private IOSElement ArtistProfileAlbumCellAlbumImageViewUIImageView1;
-		//@iOSFindBy(accessibility="ArtistProfileAlbumCell-AccessoryView-UIView-1") private IOSElement ArtistProfileAlbumCellAccessoryViewUIView1;
 	@iOSFindBy(accessibility="ArtistProfileSectionAlbums-AlbumCell-2") private IOSElement ArtistProfileSectionAlbumsAlbumCell2;
 		@iOSFindBy(accessibility="ArtistProfileAlbumCellTitleView-TitleLabel-UILabel-2") private IOSElement ArtistProfileAlbumCellTitleViewTitleLabelUILabel2;
 		@iOSFindBy(accessibility="ArtistProfileAlbumCellTitleView-SubtitleLabel-UILabel-2") private IOSElement ArtistProfileAlbumCellTitleViewSubtitleLabelUILabel2;
-		//@iOSFindBy(accessibility="ArtistProfileSectionAlbums-DividerView-UIView-2") private IOSElement ArtistProfileSectionAlbumsDividerViewUIView2;
-		//@iOSFindBy(accessibility="ArtistProfileAlbumCell-AlbumImageView-UIImageView-2") private IOSElement ArtistProfileAlbumCellAlbumImageViewUIImageView2;
-		//@iOSFindBy(accessibility="ArtistProfileAlbumCell-AccessoryView-UIView-2") private IOSElement ArtistProfileAlbumCellAccessoryViewUIView2;
 	@iOSFindBy(accessibility="ArtistProfileSectionAllAlbums-ShowAllAlbums-UICollectionViewCell") private IOSElement  ArtistProfileSectionAllAlbumsShowAllAlbumsUICollectionViewCell;
-	//RELATED ARTISTS =  GRID OF ARTISTS
-	//CELL 0 (Top Left)
-	@iOSFindBy(accessibility="ArtistProfileSectionRelatedArtists-ArtistCell-0") private IOSElement  ArtistProfileSectionRelatedArtistsArtistCell0;
-		@iOSFindBy(accessibility="ArtistProfileArtistCell-TitleLabel-UILabel-0") private IOSElement  ArtistProfileArtistCellTitleLabelUILabel0;
-		@iOSFindBy(accessibility="ArtistProfileArtistCell-ArtistImageView-UIView-0") private IOSElement  ArtistProfileArtistCellArtistImageViewUIView0;
+	//RELATED ARTISTS =  GRID OF ARTISTS    CELL 0 (Top Left)
+	@iOSFindBy(accessibility="ArtistProfileSectionRelatedArtists-ArtistCell-0") private IOSElement ArtistProfileSectionRelatedArtistsArtistCell0;
+		@iOSFindBy(accessibility="ArtistProfileArtistCell-TitleLabel-UILabel-0") private IOSElement ArtistProfileArtistCellTitleLabelUILabel0;
+		@iOSFindBy(accessibility="ArtistProfileArtistCell-ArtistImageView-UIView-0") private IOSElement ArtistProfileArtistCellArtistImageViewUIView0;
 	//CELL 1 (Top Right)
-	@iOSFindBy(accessibility="ArtistProfileSectionRelatedArtists-ArtistCell-1") private IOSElement  ArtistProfileSectionRelatedArtistsArtistCell1;
-		@iOSFindBy(accessibility="ArtistProfileArtistCell-TitleLabel-UILabel-1") private IOSElement  ArtistProfileArtistCellTitleLabelUILabel1;
-		@iOSFindBy(accessibility="ArtistProfileArtistCell-ArtistImageView-UIView-1") private IOSElement  ArtistProfileArtistCellArtistImageViewUIView1;
+	@iOSFindBy(accessibility="ArtistProfileSectionRelatedArtists-ArtistCell-1") private IOSElement ArtistProfileSectionRelatedArtistsArtistCell1;
+		@iOSFindBy(accessibility="ArtistProfileArtistCell-TitleLabel-UILabel-1") private IOSElement ArtistProfileArtistCellTitleLabelUILabel1;
+		@iOSFindBy(accessibility="ArtistProfileArtistCell-ArtistImageView-UIView-1") private IOSElement ArtistProfileArtistCellArtistImageViewUIView1;
 	//CELL 2 (Bottom Left)
-	@iOSFindBy(accessibility="ArtistProfileSectionRelatedArtists-ArtistCell-2") private IOSElement  ArtistProfileSectionRelatedArtistsArtistCell2;
-		@iOSFindBy(accessibility="ArtistProfileArtistCell-TitleLabel-UILabel-2") private IOSElement  ArtistProfileArtistCellTitleLabelUILabel2;
-		@iOSFindBy(accessibility="ArtistProfileArtistCell-ArtistImageView-UIView-2") private IOSElement  ArtistProfileArtistCellArtistImageViewUIView2;
+	@iOSFindBy(accessibility="ArtistProfileSectionRelatedArtists-ArtistCell-2") private IOSElement ArtistProfileSectionRelatedArtistsArtistCell2;
+		@iOSFindBy(accessibility="ArtistProfileArtistCell-TitleLabel-UILabel-2") private IOSElement ArtistProfileArtistCellTitleLabelUILabel2;
+		@iOSFindBy(accessibility="ArtistProfileArtistCell-ArtistImageView-UIView-2") private IOSElement ArtistProfileArtistCellArtistImageViewUIView2;
 	//CELL 3 (Bottom Right)
-	@iOSFindBy(accessibility="ArtistProfileSectionRelatedArtists-ArtistCell-3") private IOSElement  ArtistProfileSectionRelatedArtistsArtistCell3;
-		@iOSFindBy(accessibility="ArtistProfileArtistCell-TitleLabel-UILabel-3") private IOSElement  ArtistProfileArtistCellTitleLabelUILabel3;
-		@iOSFindBy(accessibility="ArtistProfileArtistCell-ArtistImageView-UIView-3") private IOSElement  ArtistProfileArtistCellArtistImageViewUIView3;
+	@iOSFindBy(accessibility="ArtistProfileSectionRelatedArtists-ArtistCell-3") private IOSElement ArtistProfileSectionRelatedArtistsArtistCell3;
+		@iOSFindBy(accessibility="ArtistProfileArtistCell-TitleLabel-UILabel-3") private IOSElement ArtistProfileArtistCellTitleLabelUILabel3;
+		@iOSFindBy(accessibility="ArtistProfileArtistCell-ArtistImageView-UIView-3") private IOSElement ArtistProfileArtistCellArtistImageViewUIView3;
 	//POPULAR ON
 	//Radio Station 0
 	@iOSFindBy(accessibility="ArtistProfileSectionPopularOn-LiveRadioCell-0") private IOSElement ArtistProfileSectionPopularOnLiveRadioCell0;
@@ -105,49 +87,41 @@ public class ArtistProfilePage extends Page{
 	@iOSFindBy(accessibility="ArtistProfileSectionPopularOn-LiveRadioCell-2") private IOSElement ArtistProfileSectionPopularOnLiveRadioCell2;
 		@iOSFindBy(accessibility="ArtistProfileLiveRadioCellTitleView-TitleLabel-UIView-2") private IOSElement ArtistProfileLiveRadioCellTitleViewTitleLabelUIView2;
 		@iOSFindBy(accessibility="ArtistProfileLiveRadioCellTitleView-SubtitleLabel-UILabel-2") private IOSElement ArtistProfileLiveRadioCellTitleViewSubtitleLabelUILabel2;
-
-	//	DividerView-UIViewDividerView-UIView
-	//	ArtistProfileLiveRadioCell-StationImageView-UIImageViewArtistProfileLiveRadioCell-StationImageView-UIImageView
 	//Show All Albums  UICollectionCell (but also a button).
-		@iOSFindBy(xpath="//UIAApplication[1]/UIAWindow[1]/UIANavigationBar[1]/UIAStaticText[2]") private IOSElement AlbumsNavBarHeader;
-		
+	@iOSFindBy(xpath="//UIAApplication[1]/UIAWindow[1]/UIANavigationBar[1]/UIAStaticText[2]") private IOSElement AlbumsNavBarHeader;
 	@iOSFindBy(accessibility="ArtistProfileAlbumsViewController-CollectionView-UIView") private IOSElement ArtistProfileAlbumsViewControllerCollectionViewUIView;
-		@iOSFindBy(accessibility="ArtistProfileAlbumsView-AlbumCell-0") private IOSElement ArtistProfileAlbumsViewAlbumCell0; //Britney has 42 of these in the collectionView. 
-		//@iOSFindBy(accessibility="ArtistProfileAlbumCellTitleView-TitleLabel-UILabel-0") private IOSElement ArtistProfileAlbumCellTitleViewTitleLabelUILabel0;
-		//@iOSFindBy(accessibility="ArtistProfileAlbumCellTitleView-SubtitleLabel-UILabel-0") private IOSElement  ArtistProfileAlbumCellTitleViewSubtitleLabelUILabel0;
+		@iOSFindBy(accessibility="ArtistProfileAlbumsView-AlbumCell-0") private IOSElement ArtistProfileAlbumsViewAlbumCell0;
+		//TitleLabel and Subtitle label are already defined above for AlbumCell0,1 and 2. 
 		@iOSFindBy(accessibility="ArtistProfileAlbumsView-AlbumCell-1") private IOSElement ArtistProfileAlbumsViewAlbumCell1;  
-		//@iOSFindBy(accessibility="ArtistProfileAlbumCellTitleView-TitleLabel-UILabel-0") private IOSElement ArtistProfileAlbumCellTitleViewTitleLabelUILabel0;
-		//@iOSFindBy(accessibility="ArtistProfileAlbumCellTitleView-SubtitleLabel-UILabel-0") private IOSElement  ArtistProfileAlbumCellTitleViewSubtitleLabelUILabel0;
 		@iOSFindBy(accessibility="ArtistProfileAlbumsView-AlbumCell-2") private IOSElement ArtistProfileAlbumsViewAlbumCell2; 
-		//@iOSFindBy(accessibility="ArtistProfileAlbumCellTitleView-TitleLabel-UILabel-0") private IOSElement ArtistProfileAlbumCellTitleViewTitleLabelUILabel0;
-		//@iOSFindBy(accessibility="ArtistProfileAlbumCellTitleView-SubtitleLabel-UILabel-0") private IOSElement  ArtistProfileAlbumCellTitleViewSubtitleLabelUILabel0;
 		@iOSFindBy(accessibility="ArtistProfileAlbumsView-AlbumCell-3") private IOSElement ArtistProfileAlbumsViewAlbumCell3; 
 		@iOSFindBy(accessibility="ArtistProfileAlbumCellTitleView-TitleLabel-UILabel-3") private IOSElement ArtistProfileAlbumCellTitleViewTitleLabelUILabel3;
-		@iOSFindBy(accessibility="ArtistProfileAlbumCellTitleView-SubtitleLabel-UILabel-3") private IOSElement  ArtistProfileAlbumCellTitleViewSubtitleLabelUILabel3;
+		@iOSFindBy(accessibility="ArtistProfileAlbumCellTitleView-SubtitleLabel-UILabel-3") private IOSElement ArtistProfileAlbumCellTitleViewSubtitleLabelUILabel3;
 		@iOSFindBy(accessibility="ArtistProfileAlbumsView-AlbumCell-4") private IOSElement ArtistProfileAlbumsViewAlbumCell4; 
 		@iOSFindBy(accessibility="ArtistProfileAlbumCellTitleView-TitleLabel-UILabel-4") private IOSElement ArtistProfileAlbumCellTitleViewTitleLabelUILabel4;
-		@iOSFindBy(accessibility="ArtistProfileAlbumCellTitleView-SubtitleLabel-UILabel-4") private IOSElement  ArtistProfileAlbumCellTitleViewSubtitleLabelUILabel4;
+		@iOSFindBy(accessibility="ArtistProfileAlbumCellTitleView-SubtitleLabel-UILabel-4") private IOSElement ArtistProfileAlbumCellTitleViewSubtitleLabelUILabel4;
 		@iOSFindBy(accessibility="ArtistProfileAlbumsView-AlbumCell-5") private IOSElement ArtistProfileAlbumsViewAlbumCell5; 
 		@iOSFindBy(accessibility="ArtistProfileAlbumCellTitleView-TitleLabel-UILabel-5") private IOSElement ArtistProfileAlbumCellTitleViewTitleLabelUILabel5;
-		@iOSFindBy(accessibility="ArtistProfileAlbumCellTitleView-SubtitleLabel-UILabel-5") private IOSElement  ArtistProfileAlbumCellTitleViewSubtitleLabelUILabel5;
-		@iOSFindBy(accessibility="ArtistProfileAlbumsView-AlbumCell-5") private IOSElement ArtistProfileAlbumsViewAlbumCell6; 
-		@iOSFindBy(accessibility="ArtistProfileAlbumCellTitleView-TitleLabel-UILabel-5") private IOSElement ArtistProfileAlbumCellTitleViewTitleLabelUILabel6;
-		@iOSFindBy(accessibility="ArtistProfileAlbumCellTitleView-SubtitleLabel-UILabel-5") private IOSElement  ArtistProfileAlbumCellTitleViewSubtitleLabelUILabel6;
+		@iOSFindBy(accessibility="ArtistProfileAlbumCellTitleView-SubtitleLabel-UILabel-5") private IOSElement ArtistProfileAlbumCellTitleViewSubtitleLabelUILabel5;
+		@iOSFindBy(accessibility="ArtistProfileAlbumsView-AlbumCell-6") private IOSElement ArtistProfileAlbumsViewAlbumCell6; 
+		@iOSFindBy(accessibility="ArtistProfileAlbumCellTitleView-TitleLabel-UILabel-6") private IOSElement ArtistProfileAlbumCellTitleViewTitleLabelUILabel6;
+		@iOSFindBy(accessibility="ArtistProfileAlbumCellTitleView-SubtitleLabel-UILabel-6") private IOSElement ArtistProfileAlbumCellTitleViewSubtitleLabelUILabel6;
+		//More can be added if you want to see Album cells lower in the list. 
 		
-		//Artist Bio - Artist, Horizontal Sliding Images view, and ScrollView with BioLabel text. Click images to enlarge. Click Done to minimize. 
-		@iOSFindBy(accessibility="ArtistProfileArtistBioHeaderView-SlidingImagesView-UICollectionView") private IOSElement  ArtistProfileArtistBioHeaderViewSlidingImagesViewUICollectionView;
-		@iOSFindBy(accessibility="SlidingImagesView-CollectionView-UICollectionView") private IOSElement SlidingImagesViewCollectionViewUICollectionView; //visible= false if page gets scrollDown
+	//Artist Bio - Artist, Horizontal Sliding Images view, and ScrollView with BioLabel text. Click images to enlarge. Click Done to minimize. 
+	@iOSFindBy(accessibility="ArtistProfileArtistBioHeaderView-SlidingImagesView-UICollectionView") private IOSElement ArtistProfileArtistBioHeaderViewSlidingImagesViewUICollectionView;
+	@iOSFindBy(accessibility="SlidingImagesView-CollectionView-UICollectionView") private IOSElement SlidingImagesViewCollectionViewUICollectionView; //visible= false if page gets scrollDown
 		@iOSFindBy(accessibility="SlidingImagesView-CollectionViewCell-0") private IOSElement SlidingImagesViewCollectionViewCell0;
 		@iOSFindBy(accessibility="SlidingImagesView-CollectionViewCell-1") private IOSElement SlidingImagesViewCollectionViewCell1;
 		@iOSFindBy(accessibility="SlidingImagesView-CollectionViewCell-2") private IOSElement SlidingImagesViewCollectionViewCell2; //up to 3 will be visible by default, the rest are not visible, but can be if scrolled to the side.
 		@iOSFindBy(accessibility="SlidingImagesView-CollectionViewCell-3") private IOSElement SlidingImagesViewCollectionViewCell3;
 		@iOSFindBy(accessibility="SlidingImagesView-CollectionViewCell-4") private IOSElement SlidingImagesViewCollectionViewCell4;
 		@iOSFindBy(accessibility="SlidingImagesView-CollectionViewCell-5") private IOSElement SlidingImagesViewCollectionViewCell5;
-		@iOSFindBy(accessibility="ArtistProfileArtistBioViewController-ScrollView-UIScrollView") private IOSElement  ArtistProfileArtistBioViewControllerScrollViewUIScrollView;
-		@iOSFindBy(accessibility="ArtistProfileArtistBioViewController-BioLabel-UILabel") private IOSElement  ArtistProfileArtistBioViewControllerBioLabelUILabel; //Melodic hard rockers Shinedown hail from Jacksonville, Florida and
+		@iOSFindBy(accessibility="ArtistProfileArtistBioViewController-ScrollView-UIScrollView") private IOSElement ArtistProfileArtistBioViewControllerScrollViewUIScrollView;
+		@iOSFindBy(accessibility="ArtistProfileArtistBioViewController-BioLabel-UILabel") private IOSElement ArtistProfileArtistBioViewControllerBioLabelUILabel; //Melodic hard rockers Shinedown hail from Jacksonville, Florida and
 		
-		//Album Profile
-		@iOSFindBy(accessibility="AlbumProfileHeaderTitleView-TitleLabel-UILabel") private IOSElement AlbumProfileHeaderTitleViewTitleLabelUILabel;
+	//Album Profile
+	@iOSFindBy(accessibility="AlbumProfileHeaderTitleView-TitleLabel-UILabel") private IOSElement AlbumProfileHeaderTitleViewTitleLabelUILabel;
 		@iOSFindBy(accessibility="AlbumProfileHeaderTitleView-subtitle1Label-UILabel") private IOSElement AlbumProfileHeaderTitleViewsubtitle1LabelUILabel;
 		@iOSFindBy(accessibility="AlbumProfileHeaderTitleView-subtitle2Label-UILabel") private IOSElement AlbumProfileHeaderTitleViewsubtitle2LabelUILabel;
 		@iOSFindBy(accessibility="AlbumProfileHeaderView-BackgroundImageView-UIImageView") private IOSElement AlbumProfileHeaderViewBackgroundImageViewUIImageView;
@@ -196,7 +170,7 @@ public class ArtistProfilePage extends Page{
 		printElementInformation(ArtistProfileTrackCellIndexLabelUILabel4);
 		printElementInformation(ArtistProfileTrackCellTitleLabelUILabel4);
 
-		artistProfilePage.scrollDown();
+		artistProfilePage.scrollArtistProfilePageDown();
 		System.out.println("::::Printing elements for Artist Profile - Three Albums ::::");
 		//Should be 3 albums and then Show All Albums button collection cell. 
 		printElementInformation(ArtistProfileSectionAlbumsAlbumCell0);
@@ -209,7 +183,7 @@ public class ArtistProfilePage extends Page{
 		printElementInformation(ArtistProfileAlbumCellTitleViewTitleLabelUILabel2);
 		printElementInformation(ArtistProfileAlbumCellTitleViewSubtitleLabelUILabel2);
 		printElementInformation(ArtistProfileSectionAllAlbumsShowAllAlbumsUICollectionViewCell);
-		artistProfilePage.scrollDown();
+		artistProfilePage.scrollArtistProfilePageDown();
 		//RELATED ARTISTS =  GRID OF ARTISTS
 		System.out.println("::::Printing elements for Artist Profile - Grid of 4 Related Artists ::::");
 		//CELL 0 (Top Left)
@@ -225,8 +199,8 @@ public class ArtistProfilePage extends Page{
 		printElementInformation(ArtistProfileSectionRelatedArtistsArtistCell3);
 		printElementInformation(ArtistProfileArtistCellTitleLabelUILabel3);
 		//Scroll Down to show the up to 3 Live Radio Cells (We know there are 3 associated with Red Hot Chili Peppers)
-		artistProfilePage.scrollDown();
-		artistProfilePage.scrollDown(); //Popular On Cell 3 is hidden by MiniPlayer - Cannot be found unless FullPlayer is opened and then minimized again. 
+		artistProfilePage.scrollArtistProfilePageDown();
+		artistProfilePage.scrollArtistProfilePageDown(); //Popular On Cell 3 is hidden by MiniPlayer - Cannot be found unless FullPlayer is opened and then minimized again. 
 		//POPULAR ON
 		System.out.println("::::Printing elements for Artist Profile - Popular On - 3 Live Radio Cells ::::");
 		//Radio Station 0
@@ -242,7 +216,7 @@ public class ArtistProfilePage extends Page{
 		printElementInformation(ArtistProfileLiveRadioCellTitleViewTitleLabelUIView2);
 		printElementInformation(ArtistProfileLiveRadioCellTitleViewSubtitleLabelUILabel2);
 		System.out.println("::::Printing elements for Artist Profile - All Albums ::::");
-		artistProfilePage.scrollUp();
+		artistProfilePage.scrollArtistProfilePageUp();
 		artistProfilePage.clickShowAllAlbumsCellButton();
 		artistProfilePage.printAllAlbumsInformation();
 		artistProfilePage.clickNavBarBackButton();
@@ -306,11 +280,11 @@ public class ArtistProfilePage extends Page{
 			artistProfilePage.slideImages(SlidingImagesViewCollectionViewCell5, SwipeElementDirection.RIGHT, 1000);
 			artistProfilePage.slideImages(SlidingImagesViewCollectionViewCell4, SwipeElementDirection.RIGHT, 750);
 			printElementInformation(SlidingImagesViewCollectionViewCell0);
-			artistProfilePage.scrollDown();
+			artistProfilePage.scrollArtistProfilePageDown();
 			printElementInformation(ArtistProfileArtistBioViewControllerScrollViewUIScrollView);
 			printElementInformation(ArtistProfileArtistBioViewControllerBioLabelUILabel);
-			artistProfilePage.scrollUp();
-			artistProfilePage.scrollUp();
+			artistProfilePage.scrollArtistProfilePageUp();
+			artistProfilePage.scrollArtistProfilePageUp();
 			artistProfilePage.clickNavBarBackButton(); //Should return to Artist Profile Page. 
 		}
 	}
@@ -335,13 +309,7 @@ public class ArtistProfilePage extends Page{
 				printElementInformation(AlbumProfileViewControllerTrackCellUICollectionViewCell4);
 			}
 		}
-		/**
-		 * scrollDown really just Swipes up. A swipe up covers about 3.5 cells on the iPhone. So two of these scrollDown calls will swipe up 7 cells. Test it thoroughly.
-		 */
-		public void scrollDown(){
-			System.out.println("scrollDown() : Swiping Up Once.");
-			artistProfilePage.swipeUp();
-		}
+	
 		/**
 		 * Clicks Nav Bar Back Button to Go backwards a Page.
 		 */
@@ -349,13 +317,19 @@ public class ArtistProfilePage extends Page{
 			System.out.println("clickNavBarBackButton(). ");
 			NavBarBackButtonUIButton.click();
 		}
-		
+		/**
+		 * scrollDown really just Swipes up. A swipe up covers about 3.5 cells on the iPhone. So two of these scrollDown calls will swipe up 7 cells. Test it thoroughly.
+		 */
+		public void scrollArtistProfilePageDown(){
+			System.out.println("scrollArtistProfilePageDown() : Swiping Up Once.");
+			ArtistProfilePage.swipeUp();
+		}
 		/**
 		 * Uses default swipeDown behavior to scroll the Simulator up Once. Usually moves about half the height of the collection cell. 
 		 */
-		public void scrollUp(){
-			System.out.println("scrollUp() : Swiping Down Once.");
-			artistProfilePage.swipeDown();
+		public void scrollArtistProfilePageUp(){
+			System.out.println("scrollArtistProfilePageUp() : Swiping Down Once.");
+			ArtistProfilePage.swipeDown();
 		}
 		/**
 		 * Gets the Bio Header Title View Title Label Label. This will be the Artist name.
@@ -431,9 +405,9 @@ public class ArtistProfilePage extends Page{
 		 * Gets the Done element and clicks it to close the maximized image. 
 		 */
 		public void clickDoneOnImageInArtistBio(){
-			System.out.println("clickDoneOnImageInArtistBio() : ");
+			System.out.println("clickDoneOnImageInArtistBio().");
 			IOSElement done = find(driver, "Done");
-			if(done!= null){
+			if( done != null){
 				done.click();
 			}
 		}
@@ -479,6 +453,7 @@ public class ArtistProfilePage extends Page{
 		}
 		/**
 		 * Checks if the AlbumsList Page is displayed. Handles errors without failing. 
+		 * Checks for following element:  ArtistProfileAlbumsViewControllerCollectionViewUIView
 		 * @return true or false
 		 */
 		public boolean isCurrentlyOnAlbumsList(){
@@ -486,6 +461,7 @@ public class ArtistProfilePage extends Page{
 		}
 		/**
 		 * Checks if the AlbumProfilePage is displayed. Handles errors without failing. 
+		 * Checks for following element:  AlbumProfileHeaderTitleViewTitleLabelUILabel
 		 * @return true or false
 		 */
 		public boolean isCurrentlyOnAlbumProfile(){
@@ -526,7 +502,6 @@ public class ArtistProfilePage extends Page{
 			String currentPlayingArtist = miniPlayer.getArtistName();
 			ArtistProfileSectionRelatedArtistsArtistCell0.click();
 			artistProfilePage.clickPlayButtonOnArtistProfile();
-			sleep(5000);
 			String newSongPlayingArtist = miniPlayer.getArtistName();
 			System.out.println("clickFirstRelatedArtistCellToOpenTheirArtistRadioClickPlayCheckForNewSong(): originalArtist : " + currentPlayingArtist + ". newArtist : " + newSongPlayingArtist);
 			return currentPlayingArtist.equals(newSongPlayingArtist);
@@ -566,21 +541,25 @@ public class ArtistProfilePage extends Page{
 			NavBarFavoriteButtonUIButton.click();
 			IOSElement yesButton =	waitForVisible(driver, By.name("Yes"), 5);
 			IOSElement noButton =	waitForVisible(driver, By.name("No"), 5);
-				if(yesButton != null && noButton != null){
-					if(clickYes)
-						yesButton.click();
-					else noButton.click();
+			if(yesButton != null && noButton != null){
+				if(clickYes){
+					yesButton.click();
 					System.out.println("Clicked on Yes Button to unFavorite the station");
+					}
+				else {
+					noButton.click();
+					System.out.println("Clicked on No Button to keep the station");
 				}
+			}
 			IOSElement maybeLater = waitForVisible(driver, By.name("Maybe Later"), 5);
-			IOSElement NotifyMe = waitForVisible(driver, By.name("Notify Me"), 5);
-			if(maybeLater != null && NotifyMe!=null){
+			IOSElement notifyMe = waitForVisible(driver, By.name("Notify Me"), 5);
+			if(maybeLater != null && notifyMe!=null){
 				if(clickMaybeLater){
 					maybeLater.click();
 					System.out.println("Clicked on 'Maybe Later'Button to Favorite the Artist station, but not get notifications about favorite artist.");
 				}
 				else {
-					NotifyMe.click();
+					notifyMe.click();
 					System.out.println("Clicked on 'Notify Me' Button to Favorite the Artist station, AND get notifications about favorite artist.");
 				}
 			}

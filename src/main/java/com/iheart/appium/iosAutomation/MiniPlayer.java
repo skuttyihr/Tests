@@ -104,6 +104,7 @@ public class MiniPlayer extends Page {
 	 * @return
 	 */
 	public String getSongTitle(){
+		Page.waitForElementToBeVisible(MiniPlayerViewTitleLabelUILabel, 5);
 		String title = MiniPlayerViewTitleLabelUILabel.getText();
 		System.out.println("getSongTitle() : " + title);
 		return title;
@@ -113,6 +114,7 @@ public class MiniPlayer extends Page {
 	 * @return
 	 */
 	public String getArtistName(){
+		Page.waitForElementToBeVisible(MiniPlayerViewSubtitleLabelUILabel, 5);
 		String subtitle = MiniPlayerViewSubtitleLabelUILabel.getText();
 		System.out.println("getArtistName() : " + subtitle);
 		return subtitle;

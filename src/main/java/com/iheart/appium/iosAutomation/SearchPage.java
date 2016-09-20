@@ -319,8 +319,8 @@ public class SearchPage extends Page{
 		printElementInformation(IHRGlobalSearchBarSearchBarTextFieldUITextField) &&
 		printElementInformation(IHRGlobalSearchInstructionsViewIconViewUIImageView) &&
 		printElementInformation(IHRGlobalSearchInstructionsViewSpacer1UIView) &&
-		printElementInformation(IHRGlobalSearchInstructionsViewSpacer2UIView) &&
-		printElementInformation(IHRGlobalSearchInstructionsViewInstructionsLabelUILabel);
+		printElementInformation(IHRGlobalSearchInstructionsViewSpacer2UIView) && //this isn't working
+		printElementInformation(IHRGlobalSearchInstructionsViewInstructionsLabelUILabel); //this isn't visible. 
 	}
 	public void showAllElementsVoid(){
 	//Search Results
