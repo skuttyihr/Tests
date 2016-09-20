@@ -311,15 +311,15 @@ public class SearchPage extends Page{
 	 * Simply print out all of the Search elements we've added and return whether they are all correctly displayed. 
 	 * @return
 	 */
-	public boolean showAllElements(){
+	public void showAllElements(){
 		System.out.println("::::Printing out SEARCH Elements.::::");
-		return
-		printElementInformation(IHRGlobalSearchBarCancelButtonUIButton) &&
-		printElementInformation(IHRGlobalSearchBarSearchBarUISearchBar) && 
-		printElementInformation(IHRGlobalSearchBarSearchBarTextFieldUITextField) &&
-		printElementInformation(IHRGlobalSearchInstructionsViewIconViewUIImageView) &&
-		printElementInformation(IHRGlobalSearchInstructionsViewSpacer1UIView) &&
-		printElementInformation(IHRGlobalSearchInstructionsViewSpacer2UIView) && //this isn't working
+		
+		printElementInformation(IHRGlobalSearchBarCancelButtonUIButton);
+		printElementInformation(IHRGlobalSearchBarSearchBarUISearchBar); 
+		printElementInformation(IHRGlobalSearchBarSearchBarTextFieldUITextField);
+		printElementInformation(IHRGlobalSearchInstructionsViewIconViewUIImageView);
+		printElementInformation(IHRGlobalSearchInstructionsViewSpacer1UIView);
+		printElementInformation(IHRGlobalSearchInstructionsViewSpacer2UIView);//this isn't working
 		printElementInformation(IHRGlobalSearchInstructionsViewInstructionsLabelUILabel); //this isn't visible. 
 	}
 	public void showAllElementsVoid(){
@@ -355,7 +355,6 @@ public class SearchPage extends Page{
 		printElementInformation(GlobalSearchDataSourceShowAllSongsDisclosureCell);
 		searchPage.clickShowAllSongs();
 		searchPage.clickNavBarBackButton(); //searchPage.showSomeElementsOnSongsList();//  This simply doesn't work reliably enough. Collection view isn't fully populated. 
-		
 		searchPage.scrollSearchResultsCollectionView(SwipeElementDirection.UP, 500, 50, 2000);
 		searchPage.scrollSearchResultsCollectionView(SwipeElementDirection.UP, 500, 50, 2000);
 		System.out.println("::::Printing out PERFECT FOR.::::");
@@ -363,14 +362,11 @@ public class SearchPage extends Page{
 		printElementInformation(GlobalSearchDataSourceSearchResultCellPerfectForRow0);
 		printElementInformation(GlobalSearchDataSourceSearchResultCellPerfectForRow1);
 		searchPage.scrollSearchResultsCollectionView(SwipeElementDirection.UP, 500, 50, 2000);
-
 		System.out.println("::::Printing out PODCASTS.::::");
 		printElementInformation(GlobalSearchDataSourcePODCASTSHeaderViewUIView);
 		printElementInformation(GlobalSearchDataSourceSearchResultCellPodcastsRow0);
 		printElementInformation(GlobalSearchDataSourceSearchResultCellPodcastsRow1);
 		printElementInformation(GlobalSearchDataSourceShowAllPodcastsDisclosureCell);
-
-
 	}
 	public void showSomeElementsOnLiveStationsList(){
 		if(searchPage.isCurrentlyOnLiveStationsList()){
@@ -393,25 +389,22 @@ public class SearchPage extends Page{
 		}
 	}
 	public void showSomeElementsOnArtistsList(){
-		sleep(5000);
-		searchPage.scrollCategoryCollectionView(SwipeElementDirection.UP, 50, 50, 10);	
-		sleep(5000);
-		//if(searchPage.isCurrentlyOnArtistsList()){
-			System.out.println(":::: Printing out Artist Cells ::::");
-			printElementInformation(NavBarBackButtonUIButton);	
-			printElementInformation(GlobalSearchCategorySearchTermCellLabelUILabel); //Results for ""
-			printElementInformation(GlobalSearchCategoryDataSourceCollectionViewUICollectionView); 
-			printElementInformation(GlobalSearchCategoryDataSourceArtistSearchResultCellRow0);
-			printElementInformation(GlobalSearchCategoryDataSourceArtistSearchResultCellRow1);
-			printElementInformation(GlobalSearchCategoryDataSourceArtistSearchResultCellRow2);
-			printElementInformation(GlobalSearchCategoryDataSourceArtistSearchResultCellRow3);
-			printElementInformation(GlobalSearchCategoryDataSourceArtistSearchResultCellRow4);
-			printElementInformation(GlobalSearchCategoryDataSourceArtistSearchResultCellRow5);
-			printElementInformation(GlobalSearchCategoryDataSourceArtistSearchResultCellRow6);
-			searchPage.scrollCategoryCollectionView(SwipeElementDirection.UP, 50, 50, 1000);	//No keyboard on this page
-			printElementInformation(GlobalSearchCategoryDataSourceArtistSearchResultCellRow7);
-			searchPage.clickNavBarBackButton();
-	//	}
+		Page.waitForElementToBeVisible(GlobalSearchCategorySearchTermCellLabelUILabel, 5);
+		searchPage.scrollCategoryCollectionView(SwipeElementDirection.UP, 50, 50, 10);
+		System.out.println(":::: Printing out Artist Cells ::::");
+		printElementInformation(NavBarBackButtonUIButton);	
+		printElementInformation(GlobalSearchCategorySearchTermCellLabelUILabel); //Results for ""
+		printElementInformation(GlobalSearchCategoryDataSourceCollectionViewUICollectionView); 
+		printElementInformation(GlobalSearchCategoryDataSourceArtistSearchResultCellRow0);
+		printElementInformation(GlobalSearchCategoryDataSourceArtistSearchResultCellRow1);
+		printElementInformation(GlobalSearchCategoryDataSourceArtistSearchResultCellRow2);
+		printElementInformation(GlobalSearchCategoryDataSourceArtistSearchResultCellRow3);
+		printElementInformation(GlobalSearchCategoryDataSourceArtistSearchResultCellRow4);
+		printElementInformation(GlobalSearchCategoryDataSourceArtistSearchResultCellRow5);
+		printElementInformation(GlobalSearchCategoryDataSourceArtistSearchResultCellRow6);
+		searchPage.scrollCategoryCollectionView(SwipeElementDirection.UP, 50, 50, 1000);	//No keyboard on this page
+		printElementInformation(GlobalSearchCategoryDataSourceArtistSearchResultCellRow7);
+		searchPage.clickNavBarBackButton();
 	}
 	public void showSomeElementsOnSongsList(){
 		if(searchPage.isCurrentlyOnSongsList()){

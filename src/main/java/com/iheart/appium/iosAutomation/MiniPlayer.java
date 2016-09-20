@@ -34,7 +34,6 @@ public class MiniPlayer extends Page {
 	@iOSFindBy(accessibility = "MiniPlayerView-BackwardButton-UIButton") private IOSElement MiniPlayerViewBackwardButtonUIButton;
 	//This is only visible during Play of a Song in Artist radio - Not on a Station
 	@iOSFindBy(accessibility = "MiniPlayerProgressBarView-ElapsedView-UIView") private IOSElement MiniPlayerProgressBarViewElapsedViewUIView;
-	@iOSFindBy(accessibility ="IHRPlayerViewNextButton-SkipCountLabel-UILabel" ) private IOSElement IHRPlayerViewNextButtonSkipCountLabelUILabel;
 	
 	/**
 	 * This method prints to console all the elements that should be displayed in an active MiniPlayer. Make sure that miniplayer is active before calling this.
@@ -55,7 +54,6 @@ public class MiniPlayer extends Page {
 		printElementInformation(MiniPlayerViewRedSkipButtonUIButton);
 		printElementInformation(MiniPlayerViewProgressBarViewUIView);
 		printElementInformation(MiniPlayerProgressBarViewElapsedViewUIView);
-		//printElementInformation(IHRPlayerViewNextButtonSkipCountLabelUILabel);
 	}
 	/**
 	 * Clicks the MiniPlayer to open Full Player. 
@@ -89,10 +87,15 @@ public class MiniPlayer extends Page {
 		MiniPlayerViewThumbUpButtonUIButton.click();
 	}
 	
+	/**
+	 * There used to be a specific element, but now we just get the Red Skip button and get the number out of the getText and turn it into an int.
+	 * @return int of number of skips remaining. -1 means the button was null.
+	 */
 	public int getNumberOfSkipsRemaining(){
-		if(IHRPlayerViewNextButtonSkipCountLabelUILabel !=null){
-			String text = IHRPlayerViewNextButtonSkipCountLabelUILabel.getText();
-			int count = Integer.parseInt(text.substring(0,1));
+		
+		if(MiniPlayerViewRedSkipButtonUIButton !=null){
+			String text = MiniPlayerViewRedSkipButtonUIButton.getText();//Skip. 6 skips remaining
+			int count = Integer.parseInt(text.substring(6,7));
 			System.out.println("getNumberOfSkipsRemaining() : " + count);
 			return count;
 		}
@@ -184,7 +187,7 @@ public class MiniPlayer extends Page {
 	 */
 	public boolean isThumbUpAndThumbDownButtonNotActivated(){
 		boolean thumbDownUpNotActivated = (!MiniPlayerViewThumbUpButtonUIButton.isSelected() && !MiniPlayerViewThumbDownButtonUIButton.isSelected() );
-		
+		System.out.println("isThumbUpAndThumbDownButtonNotActivated() : " + thumbDownUpNotActivated);
 		return thumbDownUpNotActivated;
 	}
 	
