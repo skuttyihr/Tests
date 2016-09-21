@@ -288,303 +288,299 @@ public class ArtistProfilePage extends Page{
 			artistProfilePage.clickNavBarBackButton(); //Should return to Artist Profile Page. 
 		}
 	}
-		/**
-		 * Prints out AcccessibilityIdentifier elements on Album Profile. 
-		 * Click on Album Cell in Artist Profile, All Albums, or Latest Release to get here.
-		 */
-		public void printAlbumProfileInformation(){
-			if(isCurrentlyOnAlbumProfile()){
-				printElementInformation(AlbumProfileHeaderTitleViewTitleLabelUILabel);
-				printElementInformation(AlbumProfileHeaderTitleViewsubtitle1LabelUILabel);
-				printElementInformation(AlbumProfileHeaderTitleViewsubtitle2LabelUILabel);
-				printElementInformation(AlbumProfileHeaderViewBackgroundImageViewUIImageView);
-				printElementInformation(AlbumProfileHeaderViewShadowViewUIView);
-				printElementInformation(AlbumProfileHeaderViewPlayButtonUIButton);
-				printElementInformation(AlbumProfileHeaderViewAlbumImageViewUIImage);
-				printElementInformation(AlbumProfileViewControllerCollectionViewUICollectionView);
-				printElementInformation(AlbumProfileViewControllerTrackCellUICollectionViewCell0);
-				printElementInformation(AlbumProfileViewControllerTrackCellUICollectionViewCell1);
-				printElementInformation(AlbumProfileViewControllerTrackCellUICollectionViewCell2);
-				printElementInformation(AlbumProfileViewControllerTrackCellUICollectionViewCell3);
-				printElementInformation(AlbumProfileViewControllerTrackCellUICollectionViewCell4);
-			}
+	/**
+	 * Prints out AcccessibilityIdentifier elements on Album Profile. 
+	 * Click on Album Cell in Artist Profile, All Albums, or Latest Release to get here.
+	 */
+	public void printAlbumProfileInformation(){
+		if(isCurrentlyOnAlbumProfile()){
+			printElementInformation(AlbumProfileHeaderTitleViewTitleLabelUILabel);
+			printElementInformation(AlbumProfileHeaderTitleViewsubtitle1LabelUILabel);
+			printElementInformation(AlbumProfileHeaderTitleViewsubtitle2LabelUILabel);
+			printElementInformation(AlbumProfileHeaderViewBackgroundImageViewUIImageView);
+			printElementInformation(AlbumProfileHeaderViewShadowViewUIView);
+			printElementInformation(AlbumProfileHeaderViewPlayButtonUIButton);
+			printElementInformation(AlbumProfileHeaderViewAlbumImageViewUIImage);
+			printElementInformation(AlbumProfileViewControllerCollectionViewUICollectionView);
+			printElementInformation(AlbumProfileViewControllerTrackCellUICollectionViewCell0);
+			printElementInformation(AlbumProfileViewControllerTrackCellUICollectionViewCell1);
+			printElementInformation(AlbumProfileViewControllerTrackCellUICollectionViewCell2);
+			printElementInformation(AlbumProfileViewControllerTrackCellUICollectionViewCell3);
+			printElementInformation(AlbumProfileViewControllerTrackCellUICollectionViewCell4);
 		}
+	}
 	
-		/**
-		 * Clicks Nav Bar Back Button to Go backwards a Page.
-		 */
-		public void clickNavBarBackButton(){
-			System.out.println("clickNavBarBackButton(). ");
-			NavBarBackButtonUIButton.click();
+	/**
+	 * Clicks Nav Bar Back Button to Go backwards a Page.
+	 */
+	public void clickNavBarBackButton(){
+		System.out.println("clickNavBarBackButton(). ");
+		NavBarBackButtonUIButton.click();
+	}
+	/**
+	 * scrollDown really just Swipes up. A swipe up covers about 3.5 cells on the iPhone. So two of these scrollDown calls will swipe up 7 cells. Test it thoroughly.
+	 */
+	public void scrollArtistProfilePageDown(){
+		System.out.println("scrollArtistProfilePageDown() : Swiping Up Once.");
+		ArtistProfilePage.swipeUp();
+	}
+	/**
+	 * Uses default swipeDown behavior to scroll the Simulator up Once. Usually moves about half the height of the collection cell. 
+	 */
+	public void scrollArtistProfilePageUp(){
+		System.out.println("scrollArtistProfilePageUp() : Swiping Down Once.");
+		ArtistProfilePage.swipeDown();
+	}
+	/**
+	 * Gets the Bio Header Title View Title Label Label. This will be the Artist name.
+	 * @return String for Artist Name. 
+	 */
+	public String getArtistProfileArtistName(){
+		String titleLabel = ArtistProfileBioHeaderTitleViewTitleLabelUILabel.getText();
+		System.out.println("getArtistProfileArtistName() : " + titleLabel);
+		return titleLabel;
+	}
+	/**
+	 * Gets the entire Text for the Bio Label. Usually a long paragraph.
+	 * @return full String of Artist Bio.
+	 */
+	public String getArtistBioBioLabelText(){
+		System.out.println("getArtistBioBioLabelText().");
+		return ArtistProfileArtistBioViewControllerBioLabelUILabel.getText();
+	}
+	/**
+	 * This gets just the first 60 characters of text in the Bio Label. 
+	 * @return String of first 60 characters of Bio Label text (about Artist). 
+	 */
+	public String getArtistBioBioLabelShortenedText(){
+		String text = ArtistProfileArtistBioViewControllerBioLabelUILabel.getText();
+		if(text.length() > 61){
+			System.out.println("getArtistBioBioLabelShortenedText() : " + text.substring(0, 60));
+			return text.substring(0, 60);
 		}
-		/**
-		 * scrollDown really just Swipes up. A swipe up covers about 3.5 cells on the iPhone. So two of these scrollDown calls will swipe up 7 cells. Test it thoroughly.
-		 */
-		public void scrollArtistProfilePageDown(){
-			System.out.println("scrollArtistProfilePageDown() : Swiping Up Once.");
-			ArtistProfilePage.swipeUp();
+		else {
+			System.out.println("getArtistBioBioLabelShortenedText() : " + text);
+			return text;
 		}
-		/**
-		 * Uses default swipeDown behavior to scroll the Simulator up Once. Usually moves about half the height of the collection cell. 
-		 */
-		public void scrollArtistProfilePageUp(){
-			System.out.println("scrollArtistProfilePageUp() : Swiping Down Once.");
-			ArtistProfilePage.swipeDown();
+	}
+	public String getLatestReleaseAlbumTitle(){
+		String album = ArtistProfileAlbumCellTitleViewTitleLabelUILabelLatestRelease.getText();
+		System.out.println("getLatestReleaseAlbumTitle() : " + album);
+		return album;
+	}
+	/**
+	 * This method swipes the images at the top of Artist Bio. 
+	 * Plug in SlidingImagesViewCollectionViewCell0-5. There is a max of 6 images. Swipe each image side by side, 
+	 * swiping the collection view itself didn't work. Put in the direction Right or Left and the time. 750 works to swipe most of the image. 
+	 * @param imageToSwipeOn
+	 * @param directionToSwipe
+	 * @param millisecondsToSwipe
+	 */
+	public void slideImages(IOSElement imageToSwipeOn, SwipeElementDirection directionToSwipe, int millisecondsToSwipe){
+		System.out.println("slideImages() : " + imageToSwipeOn.toString() + " is being swiped to the " + directionToSwipe.toString() + " for "+ millisecondsToSwipe + " milliseconds.");
+		imageToSwipeOn.swipe(directionToSwipe, millisecondsToSwipe);
+	}
+	/**
+	 * Clicks the first image (cell0) to maximize it. Must clickDoneOnImageInArtistBio() next to leave. 
+	 */
+	public void clickFirstImageInArtistBio(){
+		System.out.println("clickFirstImageInArtistBio() : SlidingImagesViewCollectionViewCell0.");
+		SlidingImagesViewCollectionViewCell0.click();
+	}
+	/**
+	 * Clicks the second image (cell1) to maximize it. 
+	 */
+	public void clickSecondImageInArtistBio(){
+		System.out.println("clickSecondImageInArtistBio() : SlidingImagesViewCollectionViewCell1.");
+		SlidingImagesViewCollectionViewCell1.click();
+	}
+	/**
+	 * Clicks the fifth image (cell4) to maximize it. 
+	 */
+	public void clickFifthImageInArtistBio(){
+		System.out.println("clickFifthImageInArtistBio() : SlidingImagesViewCollectionViewCell4.");
+		SlidingImagesViewCollectionViewCell4.click();
+	}
+	/**
+	 * Gets the Done element and clicks it to close the maximized image. 
+	 */
+	public void clickDoneOnImageInArtistBio(){
+		System.out.println("clickDoneOnImageInArtistBio().");
+		IOSElement done = find(driver, "Done");
+		if( done != null){
+			done.click();
 		}
-		/**
-		 * Gets the Bio Header Title View Title Label Label. This will be the Artist name.
-		 * @return String for Artist Name. 
-		 */
-		public String getArtistProfileArtistName(){
-			String titleLabel = ArtistProfileBioHeaderTitleViewTitleLabelUILabel.getText();
-			System.out.println("getArtistProfileArtistName() : " + titleLabel);
-			return titleLabel;
-		}
-		/**
-		 * Gets the entire Text for the Bio Label. Usually a long paragraph.
-		 * @return full String of Artist Bio.
-		 */
-		public String getArtistBioBioLabelText(){
-			System.out.println("getArtistBioBioLabelText().");
-			return ArtistProfileArtistBioViewControllerBioLabelUILabel.getText();
-		}
-		/**
-		 * This gets just the first 60 characters of text in the Bio Label. 
-		 * @return String of first 60 characters of Bio Label text (about Artist). 
-		 */
-		public String getArtistBioBioLabelShortenedText(){
-			String text = ArtistProfileArtistBioViewControllerBioLabelUILabel.getText();
-			if(text.length() > 61){
-				System.out.println("getArtistBioBioLabelShortenedText() : " + text.substring(0, 60));
-				return text.substring(0, 60);
+	}
+	/**
+	 * Shows All Albums as a list. 
+	 */
+	public void clickShowAllAlbumsCellButton(){
+		System.out.println("clickShowAllAlbumsCellButton() : Clicking Show All Albums to open List of Albums");
+		ArtistProfileSectionAllAlbumsShowAllAlbumsUICollectionViewCell.click();
+	}
+
+	/**
+	 * Clicks the Bio button to open Artist Bio. 
+	 * Not all artists have this button.
+	 * @return true or false if it is currently on Artist Bio.
+	 */
+	public boolean clickBioButtonToOpenArtistBio(){
+		System.out.println("clickBioButtonToOpenArtistBio() : Clicking Bio Button.");
+		ArtistProfileBioHeaderTitleViewBioButtonUIButton.click();
+		return isCurrentlyOnArtistBio();
+	}
+	/**
+	 * Checks if the ArtistProfilePage is displayed. Handles errors without failing. 
+	 * @return true or false
+	 */
+	public boolean isCurrentlyOnArtistProfilePage(){
+		return isCurrentlyOn("isCurrentlyOnArtistProfilePage", ArtistProfileBioHeaderTitleViewTitleLabelUILabel);
+	}
+	/**
+	 * Checks if the ArtistProfilePage is displayed. Handles errors without failing. 
+	 * @return true or false
+	 */
+	public boolean isCurrentlyOnArtistBio(){
+		return isCurrentlyOn("isCurrentlyOnArtistBio", ArtistProfileArtistBioViewControllerBioLabelUILabel);
+	}
+	/**
+	 * Checks if the Sliding Images Collection View is displayed. This will return false if Artist Bio page is scrolled down. 
+	 * Handles errors without failing. 
+	 * @return true or false
+	 */
+	public boolean isCurrentlyViewingSlidingImagesViewOnArtistBio(){
+		return isCurrentlyOn("isCurrentlyViewingSlidingImagesViewOnArtistBio", SlidingImagesViewCollectionViewUICollectionView);
+	}
+	/**
+	 * Checks if the AlbumsList Page is displayed. Handles errors without failing. 
+	 * Checks for following element:  ArtistProfileAlbumsViewControllerCollectionViewUIView
+	 * @return true or false
+	 */
+	public boolean isCurrentlyOnAlbumsList(){
+		return isCurrentlyOn("isCurrentlyOnAlbumsList", ArtistProfileAlbumsViewControllerCollectionViewUIView);
+	}
+	/**
+	 * Checks if the AlbumProfilePage is displayed. Handles errors without failing. 
+	 * Checks for following element:  AlbumProfileHeaderTitleViewTitleLabelUILabel
+	 * @return true or false
+	 */
+	public boolean isCurrentlyOnAlbumProfile(){
+		return isCurrentlyOn("isCurrentlyOnAlbumProfile", AlbumProfileHeaderTitleViewTitleLabelUILabel);
+	}
+
+	/**
+	 * Clicks the Play Button on Artist Profile. 
+	 * This button is only enabled when the open Artist Profile is different than the currently playing station.
+	 */
+	public void clickPlayButtonOnArtistProfile(){
+		System.out.println("clickPlayButtonOnArtistProfile() : ArtistProfileBioHeaderViewPlayButtonUIButton.click();");
+		ArtistProfileBioHeaderViewPlayButtonUIButton.click();
+	}
+	/**
+	 *  Top Songs is the second collection under Latest Release. SIMULATOR should be scrolled to the top of Artist Profile in order to click this.
+	 *  
+	 */
+	public void clickFirstTopSongsCell(){ //Add parameter where entitlement is passed in which expects different things to happen (start playing song)
+		//make boolean - return false if station/song changes?
+		System.out.println("clickFirstTopSongCell() : ArtistProfileSectionTopSongsTopSongsCell0.click().");
+		ArtistProfileSectionTopSongsTopSongsCell0.click();
+	}
+	/**
+	 * Albums collection View is under Top Songs - SIMULATOR should be scrolled down once to access this cell. 
+	 */
+	public void clickFirstAlbumCell(){
+		//This opens Album Profile - Album Cover - Album Name - Artist - Release Date - # of Songs and then a list of songs. //UI = click on songs or Click back. 
+		System.out.println("clickFirstAlbumCell() : ArtistProfileAlbumsViewAlbumCell0.click(). TitleLabel:" + ArtistProfileAlbumCellTitleViewTitleLabelUILabel0.getText());
+		ArtistProfileSectionAlbumsAlbumCell0.click();
+	}
+
+	/**
+	 * Related Artists is located under the Show All Albums collection View. It takes 2 scrollDown()s to get to. 
+	 */
+	public boolean clickFirstRelatedArtistCellToOpenTheirArtistRadioClickPlayCheckForNewSong(){
+		//then we can click Play button and start this artist radio. 
+		String currentPlayingArtist = miniPlayer.getArtistName();
+		ArtistProfileSectionRelatedArtistsArtistCell0.click();
+		artistProfilePage.clickPlayButtonOnArtistProfile();
+		String newSongPlayingArtist = miniPlayer.getArtistName();
+		System.out.println("clickFirstRelatedArtistCellToOpenTheirArtistRadioClickPlayCheckForNewSong(): originalArtist : " + currentPlayingArtist + ". newArtist : " + newSongPlayingArtist);
+		return currentPlayingArtist.equals(newSongPlayingArtist);
+	}
+	/**
+	 * This returns true if Clicking on Live Radio Cell Opens a Live Radio Station. It checks that FullPlayer's Station Type is equal to "Live Radio"
+	 * @return
+	 */
+	public boolean clickFirstPopularOnLiveRadioCell(){
+		//Starts Live Radio on MiniPlayer
+		//Open Full Player - check that subtitle says Live Radio or that Play button = Stop. 
+		System.out.println("clickFirstPopularOnLiveRadioCell() : ArtistProfileSectionPopularOnLiveRadioCell0.click().");
+		ArtistProfileSectionPopularOnLiveRadioCell0.click();
+		miniPlayer.openFullPlayer();
+		return ("Live Radio".equals(fullPlayer.getStationType()));
+
+	}
+	/**
+	 * Clicks on the Latest Release Cell on Artist Profile. SIM should be scrolled to the top. 
+	 * Returns true if SIM goes to Album Profile.
+	 * @return boolean
+	 */
+	public boolean clickOnLatestReleaseCell(){
+		//Opens Album View - Album Cover - Album Name - Artist - Release Date - # of Songs and then a list of songs. 
+		//UI = click on songs or Click back. 
+		System.out.println("clickOnLatestReleaseCell() : ArtistProfileSectionLatestReleaseAlbumCellLatestRelease.click()");
+		ArtistProfileSectionLatestReleaseAlbumCellLatestRelease.click();
+		return artistProfilePage.isCurrentlyOnAlbumProfile();
+	}
+	/**
+	 * Clicks the Favorite Button (the heart) Parameters are for what to click afterwards in Popup. 
+	 * @param clickYes
+	 * @param clickMaybeLater
+	 */
+	public void clickFavoriteButtonOnNavBar(Boolean clickYes, Boolean clickMaybeLater){
+		System.out.println("clickFavoriteButtonOnNavBar() ");
+		NavBarFavoriteButtonUIButton.click();
+		IOSElement yesButton =	waitForVisible(driver, By.name("Yes"), 5);
+		IOSElement noButton =	waitForVisible(driver, By.name("No"), 5);
+		if(yesButton != null && noButton != null){
+			if(clickYes){
+				yesButton.click();
+				System.out.println("Clicked on Yes Button to unFavorite the station");
 			}
 			else {
-				System.out.println("getArtistBioBioLabelShortenedText() : " + text);
-				return text;
+				noButton.click();
+				System.out.println("Clicked on No Button to keep the station");
 			}
 		}
-		public String getLatestReleaseAlbumTitle(){
-			String album = ArtistProfileAlbumCellTitleViewTitleLabelUILabelLatestRelease.getText();
-			System.out.println("getLatestReleaseAlbumTitle() : " + album);
-			return album;
-		}
-		/**
-		 * This method swipes the images at the top of Artist Bio. 
-		 * Plug in SlidingImagesViewCollectionViewCell0-5. There is a max of 6 images. Swipe each image side by side, 
-		 * swiping the collection view itself didn't work. Put in the direction Right or Left and the time. 750 works to swipe most of the image. 
-		 * @param imageToSwipeOn
-		 * @param directionToSwipe
-		 * @param millisecondsToSwipe
-		 */
-		public void slideImages(IOSElement imageToSwipeOn, SwipeElementDirection directionToSwipe, int millisecondsToSwipe){
-			System.out.println("slideImages() : " + imageToSwipeOn.toString() + " is being swiped to the " + directionToSwipe.toString() + " for "+ millisecondsToSwipe + " milliseconds.");
-			imageToSwipeOn.swipe(directionToSwipe, millisecondsToSwipe);
-		}
-		/**
-		 * Clicks the first image (cell0) to maximize it. Must clickDoneOnImageInArtistBio() next to leave. 
-		 */
-		public void clickFirstImageInArtistBio(){
-			System.out.println("clickFirstImageInArtistBio() : SlidingImagesViewCollectionViewCell0.");
-			SlidingImagesViewCollectionViewCell0.click();
-		}
-		/**
-		 * Clicks the second image (cell1) to maximize it. 
-		 */
-		public void clickSecondImageInArtistBio(){
-			System.out.println("clickSecondImageInArtistBio() : SlidingImagesViewCollectionViewCell1.");
-			SlidingImagesViewCollectionViewCell1.click();
-		}
-		/**
-		 * Clicks the fifth image (cell4) to maximize it. 
-		 */
-		public void clickFifthImageInArtistBio(){
-			System.out.println("clickFifthImageInArtistBio() : SlidingImagesViewCollectionViewCell4.");
-			SlidingImagesViewCollectionViewCell4.click();
-		}
-		/**
-		 * Gets the Done element and clicks it to close the maximized image. 
-		 */
-		public void clickDoneOnImageInArtistBio(){
-			System.out.println("clickDoneOnImageInArtistBio().");
-			IOSElement done = find(driver, "Done");
-			if( done != null){
-				done.click();
+		IOSElement maybeLater = waitForVisible(driver, By.name("Maybe Later"), 5);
+		IOSElement notifyMe = waitForVisible(driver, By.name("Notify Me"), 5);
+		if(maybeLater != null && notifyMe!=null){
+			if(clickMaybeLater){
+				maybeLater.click();
+				System.out.println("Clicked on 'Maybe Later'Button to Favorite the Artist station, but not get notifications about favorite artist.");
+			}
+			else {
+				notifyMe.click();
+				System.out.println("Clicked on 'Notify Me' Button to Favorite the Artist station, AND get notifications about favorite artist.");
 			}
 		}
-		/**
-		 * Shows All Albums as a list. 
-		 */
-		public void clickShowAllAlbumsCellButton(){
-			System.out.println("clickShowAllAlbumsCellButton() : Clicking Show All Albums to open List of Albums");
-			ArtistProfileSectionAllAlbumsShowAllAlbumsUICollectionViewCell.click();
-		}
-		
-		/**
-		 * Clicks the Bio button to open Artist Bio. 
-		 * Not all artists have this button.
-		 * @return true or false if it is currently on Artist Bio.
-		 */
-		public boolean clickBioButtonToOpenArtistBio(){
-			System.out.println("clickBioButtonToOpenArtistBio() : Clicking Bio Button.");
-			ArtistProfileBioHeaderTitleViewBioButtonUIButton.click();
-			return isCurrentlyOnArtistBio();
-		}
-		/**
-		 * Checks if the ArtistProfilePage is displayed. Handles errors without failing. 
-		 * @return true or false
-		 */
-		public boolean isCurrentlyOnArtistProfilePage(){
-			return isCurrentlyOn("isCurrentlyOnArtistProfilePage", ArtistProfileBioHeaderTitleViewTitleLabelUILabel);
-		}
-		/**
-		 * Checks if the ArtistProfilePage is displayed. Handles errors without failing. 
-		 * @return true or false
-		 */
-		public boolean isCurrentlyOnArtistBio(){
-			return isCurrentlyOn("isCurrentlyOnArtistBio", ArtistProfileArtistBioViewControllerBioLabelUILabel);
-		}
-		/**
-		 * Checks if the Sliding Images Collection View is displayed. This will return false if Artist Bio page is scrolled down. 
-		 * Handles errors without failing. 
-		 * @return true or false
-		 */
-		public boolean isCurrentlyViewingSlidingImagesViewOnArtistBio(){
-			return isCurrentlyOn("isCurrentlyViewingSlidingImagesViewOnArtistBio", SlidingImagesViewCollectionViewUICollectionView);
-		}
-		/**
-		 * Checks if the AlbumsList Page is displayed. Handles errors without failing. 
-		 * Checks for following element:  ArtistProfileAlbumsViewControllerCollectionViewUIView
-		 * @return true or false
-		 */
-		public boolean isCurrentlyOnAlbumsList(){
-			return isCurrentlyOn("isCurrentlyOnAlbumsList", ArtistProfileAlbumsViewControllerCollectionViewUIView);
-		}
-		/**
-		 * Checks if the AlbumProfilePage is displayed. Handles errors without failing. 
-		 * Checks for following element:  AlbumProfileHeaderTitleViewTitleLabelUILabel
-		 * @return true or false
-		 */
-		public boolean isCurrentlyOnAlbumProfile(){
-			return isCurrentlyOn("isCurrentlyOnAlbumProfile", AlbumProfileHeaderTitleViewTitleLabelUILabel);
-		}
-		
-		/**
-		 * Clicks the Play Button on Artist Profile. 
-		 * This button is only enabled when the open Artist Profile is different than the currently playing station.
-		 */
-		public void clickPlayButtonOnArtistProfile(){
-			System.out.println("clickPlayButtonOnArtistProfile() : ArtistProfileBioHeaderViewPlayButtonUIButton.click();");
-			ArtistProfileBioHeaderViewPlayButtonUIButton.click();
-		}
-		/**
-		 *  Top Songs is the second collection under Latest Release. SIMULATOR should be scrolled to the top of Artist Profile in order to click this.
-		 *  
-		 */
-		public void clickFirstTopSongsCell(){ //Add parameter where entitlement is passed in which expects different things to happen (start playing song)
-			//make boolean - return false if station/song changes?
-			System.out.println("clickFirstTopSongCell() : ArtistProfileSectionTopSongsTopSongsCell0.click().");
-			ArtistProfileSectionTopSongsTopSongsCell0.click();
-		}
-		/**
-		 * Albums collection View is under Top Songs - SIMULATOR should be scrolled down once to access this cell. 
-		 */
-		public void clickFirstAlbumCell(){
-			//This opens Album Profile - Album Cover - Album Name - Artist - Release Date - # of Songs and then a list of songs. //UI = click on songs or Click back. 
-			System.out.println("clickFirstAlbumCell() : ArtistProfileAlbumsViewAlbumCell0.click(). TitleLabel:" + ArtistProfileAlbumCellTitleViewTitleLabelUILabel0.getText());
-			ArtistProfileSectionAlbumsAlbumCell0.click();
-		}
+	}
+	/**
+	 * Clicks the Share Button on the NavBar at top of Artist Profile. 
+	 * @return true if Share Menu is open. 
+	 */
+	public boolean clickShareButtonOnNavBar(){
+		System.out.println("clickShareButtonOnNavBar() : artistprofilesharebutton.click().");
+		artistprofilesharebutton.click();
+		return artistProfilePage.isShareMenuOpen();
+	}
 
-		/**
-		 * Related Artists is located under the Show All Albums collection View. It takes 2 scrollDown()s to get to. 
-		 */
-		public boolean clickFirstRelatedArtistCellToOpenTheirArtistRadioClickPlayCheckForNewSong(){
-			//then we can click Play button and start this artist radio. 
-			String currentPlayingArtist = miniPlayer.getArtistName();
-			ArtistProfileSectionRelatedArtistsArtistCell0.click();
-			artistProfilePage.clickPlayButtonOnArtistProfile();
-			String newSongPlayingArtist = miniPlayer.getArtistName();
-			System.out.println("clickFirstRelatedArtistCellToOpenTheirArtistRadioClickPlayCheckForNewSong(): originalArtist : " + currentPlayingArtist + ". newArtist : " + newSongPlayingArtist);
-			return currentPlayingArtist.equals(newSongPlayingArtist);
-		}
-		/**
-		 * This returns true if Clicking on Live Radio Cell Opens a Live Radio Station. It checks that FullPlayer's Station Type is equal to "Live Radio"
-		 * @return
-		 */
-		public boolean clickFirstPopularOnLiveRadioCell(){
-			//Starts Live Radio on MiniPlayer
-			//Open Full Player - check that subtitle says Live Radio or that Play button = Stop. 
-			System.out.println("clickFirstPopularOnLiveRadioCell() : ArtistProfileSectionPopularOnLiveRadioCell0.click().");
-			ArtistProfileSectionPopularOnLiveRadioCell0.click();
-			miniPlayer.openFullPlayer();
-			return ("Live Radio".equals(fullPlayer.getStationType()));
-			
-		}
-		/**
-		 * Clicks on the Latest Release Cell on Artist Profile. SIM should be scrolled to the top. 
-		 * Returns true if SIM goes to Album Profile.
-		 * @return boolean
-		 */
-		public boolean clickOnLatestReleaseCell(){
-			//Opens Album View - Album Cover - Album Name - Artist - Release Date - # of Songs and then a list of songs. 
-			//UI = click on songs or Click back. 
-			System.out.println("clickOnLatestReleaseCell() : ArtistProfileSectionLatestReleaseAlbumCellLatestRelease.click()");
-			ArtistProfileSectionLatestReleaseAlbumCellLatestRelease.click();
-			return artistProfilePage.isCurrentlyOnAlbumProfile();
-		}
-		/**
-		 * Clicks the Favorite Button (the heart) Parameters are for what to click afterwards in Popup. 
-		 * @param clickYes
-		 * @param clickMaybeLater
-		 */
-		public void clickFavoriteButtonOnNavBar(Boolean clickYes, Boolean clickMaybeLater){
-			System.out.println("clickFavoriteButtonOnNavBar() ");
-			NavBarFavoriteButtonUIButton.click();
-			IOSElement yesButton =	waitForVisible(driver, By.name("Yes"), 5);
-			IOSElement noButton =	waitForVisible(driver, By.name("No"), 5);
-			if(yesButton != null && noButton != null){
-				if(clickYes){
-					yesButton.click();
-					System.out.println("Clicked on Yes Button to unFavorite the station");
-					}
-				else {
-					noButton.click();
-					System.out.println("Clicked on No Button to keep the station");
-				}
-			}
-			IOSElement maybeLater = waitForVisible(driver, By.name("Maybe Later"), 5);
-			IOSElement notifyMe = waitForVisible(driver, By.name("Notify Me"), 5);
-			if(maybeLater != null && notifyMe!=null){
-				if(clickMaybeLater){
-					maybeLater.click();
-					System.out.println("Clicked on 'Maybe Later'Button to Favorite the Artist station, but not get notifications about favorite artist.");
-				}
-				else {
-					notifyMe.click();
-					System.out.println("Clicked on 'Notify Me' Button to Favorite the Artist station, AND get notifications about favorite artist.");
-				}
-			}
-		}
-		/**
-		 * Clicks the Share Button on the NavBar at top of Artist Profile. 
-		 * @return true if Share Menu is open. 
-		 */
-		public boolean clickShareButtonOnNavBar(){
-			System.out.println("clickShareButtonOnNavBar() : artistprofilesharebutton.click().");
-			artistprofilesharebutton.click();
-			return artistProfilePage.isShareMenuOpen();
-		}
-		
-		/**
-		 * Checks to see if the 'Mail' icon is there. 
-		 * @return
-		 */
-		public boolean isShareMenuOpen(){
-			IOSElement mailButton = waitForVisible(driver, By.name("Mail"), 10);
-			boolean isThere = false;
-			if(mailButton != null){
-				isThere = true;
-			}
-			System.out.println("isShareMenuOpen() : "+ isThere);
-			return isThere;
-		}
+	/**
+	 * Checks to see if the 'Mail' icon is there. 
+	 * @return
+	 */
+	public boolean isShareMenuOpen(){
+		boolean isThere = waitForVisible(driver, By.name("Mail"), 10) != null;
+		System.out.println("isShareMenuOpen() : "+ isThere);
+		return isThere;
+	}
 }
