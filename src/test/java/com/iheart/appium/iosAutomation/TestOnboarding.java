@@ -29,9 +29,10 @@ public class TestOnboarding extends TestRoot {
 	 * It prints out all object information to the console.
 	 * It also verifies that all elements are displayed, and checks that at least the portrait OR the landscape image is displayed.  
 	 *
+	 * This works at 169 seconds. 
 	 */
 	@Test
-	public void testAllElementsOnOnboardingPage(){
+	public void testAllElementsOnOnboardingPage(){ 
 		LocalTime before = consoleLogStart("Testing testAllElementsOnOnboardingPage()");
 		boolean allElementsDisplayedOnOnboardingPage = onboardingPage.showAllElements();
 		Assert.assertTrue("One of the elements on Onboarding Page is not displayed as expected.",allElementsDisplayedOnOnboardingPage);

@@ -80,6 +80,9 @@ public class TestRoot {
 	protected static SettingsPage settings;
 	protected static PerfectFor perfectFor;
 	
+	//New On Demand Elements
+	protected static ArtistProfilePage artistProfilePage;
+	
 	
 	protected static boolean useSimulator = false;
 	
@@ -280,6 +283,7 @@ public class TestRoot {
 		miniPlayer = new MiniPlayer(driver);
 		settings = new SettingsPage(driver);
 		perfectFor = new PerfectFor(driver);
+		artistProfilePage = new ArtistProfilePage(driver);
 		
 		driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 		
@@ -518,11 +522,14 @@ public class TestRoot {
 	 * @return
 	 */
 	public boolean isCurrentlyOn(String isCurrentlyOnPageMessage, IOSElement element){
+		
 		try{
-			if(element!= null){
-				boolean onPage = element.isDisplayed();
-				System.out.println(isCurrentlyOnPageMessage+ "() : " + onPage);
-				return onPage;
+			if(Page.waitForElementToBeVisible(element, 10)){
+				if(element!= null){
+					boolean onPage = element.isDisplayed();
+					System.out.println(isCurrentlyOnPageMessage+ "() : " + onPage);
+					return onPage;
+				}
 			}
 		}
 		catch(NoSuchElementException e){

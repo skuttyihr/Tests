@@ -80,23 +80,58 @@ public class TestLogin extends TestRoot {
 		LocalTime before = consoleLogStart("Testing testSearchPageElements");
 		loginPage.loginWithoutVerifying("test55@test.com","test");
 		homePage.clickNavBarSearchButtonToOpenSearch();
-		boolean elements = searchPage.showAllElements();
+		searchPage.showAllElements();
 		searchPage.enterTextIntoSearchBar("asdf");
 		searchPage.clearSearchBarTextField();
 		searchPage.enterTextIntoSearchBar("MORE");
 		searchPage.clickCancelButtonOnSearchBar();
 		homePage.clickNavBarSearchButtonToOpenSearch();
-		Assert.assertTrue("One of the elements on the search page appears to be missing.", elements);
-		consoleLogEnd(before, elements, "Tested SearchPage Elements");
+		consoleLogEnd(before, true, "Tested SearchPage Elements");
+	}
+	@Test
+	public void testSearchPageElementsAndLists(){
+		LocalTime before = consoleLogStart("Testing testSearchPageElementsAndLists");
+		loginPage.loginWithoutVerifying("search11@test.com", "test");
+		homePage.clickNavBarSearchButtonToOpenSearch();
+		searchPage.showAllElements();
+		searchPage.enterTextIntoSearchBar("rap");
+		searchPage.showAllElementsVoid();
+		consoleLogEnd(before, true, "Tested testSearchPageElementsAndLists");
+	}
+	@Test
+	public void testArtistProfileElements(){
+		LocalTime before = consoleLogStart("Testing elements on Artist Profile Page - testArtistProfileElements()");
+		loginPage.loginWithoutVerifying("artistProfilePage@test.com", "test");
+		homePage.clickMyStationsTab();
+		//This should play Red Hot Chili Peppers Radio - the only favorite for this account.
+		homePage.clickCertainCellOnMyStationsToBeginPlaying(1);
+		Assert.assertTrue("Artist Profile should be open for Red Hot Chili Peppers", artistProfilePage.isCurrentlyOnArtistProfilePage());
+		Assert.assertTrue("MiniPlayer should be open for Red Hot Chili Peppers", miniPlayer.isCurrentlyOnMiniPlayer());
+		artistProfilePage.showAllElements();
+		consoleLogEnd(before, true, "Tested testArtistProfileElements().");
+		
+	}
+	@Test
+	public void testArtistProfileFunctions(){
+		LocalTime before = consoleLogStart("Testing methods on Artist Profile Page");
+		loginPage.loginWithoutVerifying("artistProfileFunctions@test.com", "test");
+		homePage.clickNavBarSearchButtonToOpenSearch();
+		searchPage.enterTextIntoSearchBar("Rihanna");
+		searchPage.clickTopResult();
+		Assert.assertTrue("Artist Profile should be open for Rihanna", artistProfilePage.isCurrentlyOnArtistProfilePage());
+		Assert.assertTrue("MiniPlayer should be open for Rihanna", miniPlayer.isCurrentlyOnMiniPlayer());
+		Assert.assertEquals("Rihanna should be the Artist Profile  Bio Header Label", "Rihanna", artistProfilePage.getArtistProfileArtistName());
+		Assert.assertEquals("Rihanna's Latest Release should be Sledgehammer", "Sledgehammer", artistProfilePage.getLatestReleaseAlbumTitle());
+		consoleLogEnd(before, true, "Tested testArtistProfileFunctions()");
 	}
 	@Test
 	public void testMiniPlayerArtistRadioElementsAndFunctionality(){
 		LocalTime before = consoleLogStart("Testing testMiniPlayerArtistRadioElementsAndFunctionality - login, start MiniPlayer for Artist Radio, show all elements, test functionality.");
 		loginPage.loginWithoutVerifying("test55@test.com","test");
-		//homePage.searchButton.click();
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		//Start Artist Radio
 		searchPage.enterTextIntoSearchBar("Rage against the machine");
+		searchPage.clickTopResult();
 		Assert.assertTrue("Expected 'Pause Buffering' or 'Pause' because MiniPlayer should be playing an Artist track.",miniPlayer.getTypeOfPlayButton().contains("Pause"));
 		miniPlayer.showAllElements();
 		miniPlayer.clickPlayPauseButton();
@@ -119,25 +154,21 @@ public class TestLogin extends TestRoot {
 	
 
 		consoleLogEnd(before, true, "Tested IOSElements, Controls in MiniPlayer for artist radio");
-		//Features to add:
-		//After one song has played - it may show a 9 second ad.
-		//Ad-free listening brought to you by Stubhub
-		//Click Skip Button 6 times.
-		//Recommended for you Popup comes up
-		//You've reached this station's skip limit. Check out others below. 
 	}
 	
 	@Test
 	public void testMiniPlayerWorksOnAllPages(){
 		LocalTime before = consoleLogStart("Testing testMiniPlayerWorksOnAllPages - login, start MiniPlayer for Artist Radio, Open other pages, check that MiniPlayer is still running.");
 		loginPage.loginWithoutVerifying("test66@test.com","test");
-		//homePage.searchButton.click();
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		//Start Artist Radio
 		searchPage.enterTextIntoSearchBar("Inanimate Existence");
-		//Should currently be on Inanimate Existence Artist Bio Page.
-		miniPlayer.clickNavBarBackButton();
-		//Now it should be back to Search.
+		searchPage.clickTopResult();
+		//Should currently be on Inanimate Existence Artist Bio Page and playing Artist Radio in miniPlayer. 
+		Assert.assertTrue("Artist Profile Page should currently be open but it is not.", artistProfilePage.isCurrentlyOnArtistProfilePage());
+		Assert.assertTrue("Miniplayer should be open playing Inanimate Existence, but it is not.",miniPlayer.isCurrentlyOnMiniPlayer());
+		artistProfilePage.clickNavBarBackButton();
+		//Now it should be back to SearchPage
 		searchPage.clickCancelButtonOnSearchBar();
 		//Canceled out of Search. Now we should be on Homepage. 
 		homePage.clickHamburgerButtonToOpenSideMenu();
@@ -208,6 +239,7 @@ public class TestLogin extends TestRoot {
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		//New accounts start a Full Player
 		searchPage.enterTextIntoSearchBar("Opeth");
+		searchPage.clickTopResult();
 		miniPlayer.openFullPlayer();
 		fullPlayer.showAllElements();
 		Assert.assertTrue(true);
@@ -219,6 +251,7 @@ public class TestLogin extends TestRoot {
 		loginPage.loginWithoutVerifying("test66@test.com", "test");
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		searchPage.enterTextIntoSearchBar("Britney");
+		searchPage.clickTopResult();
 		miniPlayer.openFullPlayer();
 		fullPlayer.minimizeFullPlayerToMiniPlayer();
 		Assert.assertTrue("MiniPlayer should be open now", miniPlayer.isCurrentlyOnMiniPlayer());
