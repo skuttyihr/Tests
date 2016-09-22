@@ -31,14 +31,17 @@ public class TestNewAccount extends TestRoot {
 	 */
 	@Test
 	public void testCreateNewAccountWithDefaultParameters(){
+		LocalTime before = consoleLogStart(">>>>>testCreateNewAccountWithDefaultParameters() : Creating a new account with the default parameters. ");
 		Assert.assertTrue(signupPage.createNewAccount());
+		consoleLogEnd(before, true,  "<<<<<testCreateNewAccountWithDefaultParameters"); 
 		
 	}
 	@Test
 	public void testAllElementsOnSignUpPage(){
+		LocalTime before = consoleLogStart(">>>>>testAllElementsOnSignUpPage() : Checking all the iOS Elements on the Onboarding / Sign Up Page.");
 		//We only care about console output here
 		signupPage.checkAllElements();
-		Assert.assertTrue(true);
+		consoleLogEnd(before, true,  "<<<<<testAllElementsOnSignUpPage() : Test completed and all elements must be on the Onboarding Screen as expected."); 
 	}
 	
 	/**
@@ -48,7 +51,7 @@ public class TestNewAccount extends TestRoot {
 	 */
 	@Test
 	public void testGenreGameForNewAccount(){
-		LocalTime before = consoleLogStart("Testing Genre Game for New Account.");
+		LocalTime before = consoleLogStart(">>>>>testGenreGameForNewAccount(): Testing Genre Game for New Account.");
 		Assert.assertTrue("Could not create a new account and get the genre picker", signupPage.createNewAccount());
 		// Assert all genres are present
 		String missingGenres = genrePage.verifyGenres();
@@ -77,6 +80,6 @@ public class TestNewAccount extends TestRoot {
 		genrePage.selectGenre("Top 40 & Pop", false);
 		Assert.assertTrue("Could not verify genre after deselecting and selecting again!", genrePage.isGenreSelected("Top 40 & Pop"));
 		
-		consoleLogEnd(before, true,  "Tested Genre Game for New Account"); 
+		consoleLogEnd(before, true,  "<<<<<testGenreGameForNewAccount() : Tested Genre Game for New Account"); 
 	}
 }
