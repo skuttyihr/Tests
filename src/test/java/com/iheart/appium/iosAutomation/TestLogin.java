@@ -56,48 +56,9 @@ public class TestLogin extends TestRoot {
 		consoleLogEnd(before, true, "Tested IOSElements");
 	}
 	
-	@Test
-	public void testHomePageElements(){
-		LocalTime before = consoleLogStart("Testing all elements on HomePage - For You, My Stations, Local Radio");
-		loginPage.loginWithoutVerifying("test66@test.com","test");
-		if(homePage.isCurrentlyOnHomePage()){
-			homePage.showAllElements();
-		}
-		consoleLogEnd(before, true, "Tested HomePage Elements.");
-	}
+
 	
-	@Test
-	public void testHomePagePlaySomething(){
-		LocalTime before = consoleLogStart("Testing play on HomePage");
-		loginPage.loginWithoutVerifying("test66@test.com","test");
-		homePage.swipeFirstForYouStationToLeft();
-		Assert.assertTrue("Clicking on the first station in For You should have started a player.", homePage.clickFirstStationOnForYouToBeginPlaying());
-		consoleLogEnd(before, true, "Tested HomePage Play");
-	}
-	
-	@Test
-	public void testSearchPageElements(){
-		LocalTime before = consoleLogStart("Testing testSearchPageElements");
-		loginPage.loginWithoutVerifying("test55@test.com","test");
-		homePage.clickNavBarSearchButtonToOpenSearch();
-		searchPage.showAllElements();
-		searchPage.enterTextIntoSearchBar("asdf");
-		searchPage.clearSearchBarTextField();
-		searchPage.enterTextIntoSearchBar("MORE");
-		searchPage.clickCancelButtonOnSearchBar();
-		homePage.clickNavBarSearchButtonToOpenSearch();
-		consoleLogEnd(before, true, "Tested SearchPage Elements");
-	}
-	@Test
-	public void testSearchPageElementsAndLists(){
-		LocalTime before = consoleLogStart("Testing testSearchPageElementsAndLists");
-		loginPage.loginWithoutVerifying("search11@test.com", "test");
-		homePage.clickNavBarSearchButtonToOpenSearch();
-		searchPage.showAllElements();
-		searchPage.enterTextIntoSearchBar("rap");
-		searchPage.showAllElementsVoid();
-		consoleLogEnd(before, true, "Tested testSearchPageElementsAndLists");
-	}
+
 	@Test
 	public void testArtistProfileElements(){
 		LocalTime before = consoleLogStart("Testing elements on Artist Profile Page - testArtistProfileElements()");

@@ -1,7 +1,15 @@
 package com.iheart.appium.iosAutomation;
 
+import java.time.LocalTime;
+
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
+import org.junit.Test;
+import org.openqa.selenium.By;
+
+import io.appium.java_client.ios.IOSElement;
+
 
 public class TestSearch extends TestRoot {
 
@@ -9,82 +17,137 @@ public class TestSearch extends TestRoot {
 	public void setUp() throws Exception {
 		TestRoot.setup();
 	}
-//	@After
-//	public void after() {
-//		// Remove favorites
-////		homePage.removeAllFavorites();
-//		TestRoot.tearDown();
-//	}
 	
 	@Rule
 	public ScreenshotRule screenshot = new ScreenshotRule();
+	
+	@Test
+	public void testSearchPageElements(){
+		LocalTime before = consoleLogStart("Testing testSearchPageElements");
+		loginPage.loginWithoutVerifying("test55@test.com","test");
+		homePage.clickNavBarSearchButtonToOpenSearch();
+		searchPage.showAllElements();
+		searchPage.enterTextIntoSearchBar("asdf");
+		searchPage.clearSearchBarTextField();
+		searchPage.enterTextIntoSearchBar("MORE");
+		searchPage.clickCancelButtonOnSearchBar();
+		homePage.clickNavBarSearchButtonToOpenSearch();
+		consoleLogEnd(before, true, "Tested SearchPage Elements");
+	}
+	@Test
+	public void testSearchPageElementsAndLists(){
+		LocalTime before = consoleLogStart("Testing testSearchPageElementsAndLists");
+		loginPage.loginWithoutVerifying("search11@test.com", "test");
+		homePage.clickNavBarSearchButtonToOpenSearch();
+		searchPage.showAllElements();
+		searchPage.enterTextIntoSearchBar("rap");
+		searchPage.showAllElementsVoid();
+		consoleLogEnd(before, true, "Tested testSearchPageElementsAndLists");
+	}
+	@Test
+	public void testNoResults(){
+		LocalTime before = consoleLogStart(">>>>>testNoResults() : Testing testNoResults");
+		loginPage.loginWithoutVerifying("test55@test.com","test");
+		homePage.clickNavBarSearchButtonToOpenSearch();
+		String searchTerm = "xqWtlzap";
+		searchPage.enterTextIntoSearchBar(searchTerm);
+		Assert.assertTrue("Garbage search should have returned no results cell.", searchPage.isNoResultsCellDisplayedCorrectly());
+		searchPage.enterBackSpaceKeyIntoSearchBar(4);
+		Assert.assertTrue("Deleting one space shouldn't have shown results yet.", searchPage.isNoResultsCellDisplayedCorrectly());
+		searchPage.clearSearchBarTextField();
+		searchPage.enterTextIntoSearchBar("cvg");
+		Assert.assertTrue("Deleting one space shouldn't have shown results yet.", searchPage.isNoResultsCellDisplayedCorrectly());
+		searchPage.enterBackSpaceKeyIntoSearchBar(1);
+		String cv = searchPage.getSearchBarText();
+		Assert.assertEquals( "Entering a backspace should have worked. ", cv , "cv");
+		searchPage.clickTopResult();
+		boolean isCurentlyOnArtistProfile = artistProfilePage.isCurrentlyOnArtistProfilePage();
+		Assert.assertTrue("Should be on ArtistProfile with search term of 'cv'",isCurentlyOnArtistProfile);
+		consoleLogEnd(before, isCurentlyOnArtistProfile, "<<<<<Tested testNoResults");
+		
+	}
+	@Test
+	public void testSearchTrackRadio(){
+		LocalTime before = consoleLogStart(">>>>>testSearchTrackRadio() : Searching a song, clicking Top Result, hoping for Artist Radio.");
+		loginPage.loginWithoutVerifying("test55@test.com","test");
+		homePage.clickNavBarSearchButtonToOpenSearch();
+		String songName = "Belie The Machine";
+		String expectedRadioType = "Track Radio";
+		searchPage.enterTextAndPressEnterIntoSearchBar(songName);
+		searchPage.clickTopResult();
+		miniPlayer.openFullPlayer();
+		String actualStationType = fullPlayer.getStationType();
+		String actualStationName = fullPlayer.getStationName();
+		Assert.assertEquals("Expected Full Player to be on '"+ expectedRadioType + "' but it's not matching up with actual : " + actualStationType, expectedRadioType, actualStationType);
+		Assert.assertEquals("Expected Full Player to be on '"+ songName +"' Track Radio but it's not matching up with the Actual : " + actualStationName ,songName, actualStationName );
+		consoleLogEnd(before, expectedRadioType.equals(actualStationType), "<<<<<testSearchTrackRadio() : ");
+		
+	}
+	@Test
+	public void testSearchArtistRadio(){
+		LocalTime before = consoleLogStart(">>>>>testSearchArtistRadio() : Searching a song, clicking Top Result, hoping for Artist Radio.");
+		loginPage.loginWithoutVerifying("test55@test.com","test");
+		homePage.clickNavBarSearchButtonToOpenSearch();
+		String artistName = "Black Crown Initiate";
+		String expectedRadioType = "Artist Radio";
+		searchPage.enterTextAndPressEnterIntoSearchBar(artistName);
+		searchPage.clickTopResult();
+		miniPlayer.openFullPlayer();
+		String actualStationType = fullPlayer.getStationType();
+		String actualStationName = fullPlayer.getStationName();
+		Assert.assertEquals("Expected Full Player to be on '"+ expectedRadioType + "' but it's not matching up with actual :" + actualStationType, expectedRadioType, actualStationType);
+		Assert.assertEquals("Expected Full Player to be on '" + artistName + "' Artist Radio but it's not matching up with actual : " + actualStationName ,artistName, actualStationName );
+		consoleLogEnd(before, expectedRadioType.equals(actualStationType), "<<<<<testSearchArtistRadio(). ");
+		
+	}
+	@Test
+	public void testSearchThemeRadio(){
+		LocalTime before = consoleLogStart(">>>>>testSearchArtistRadio() : Searching a song, clicking Top Result, hoping for Artist Radio.");
+		loginPage.loginWithoutVerifying("test55@test.com","test");
+		homePage.clickNavBarSearchButtonToOpenSearch();
+		String themeName = "Heavy Metal Barbell";
+		String expectedRadioType = "Theme Radio";
+		searchPage.enterTextAndPressEnterIntoSearchBar(themeName);
+		searchPage.clickTopResult();
+		miniPlayer.openFullPlayer();
+		String actualStationType = fullPlayer.getStationType();
+		String actualStationName = fullPlayer.getStationName();
+		Assert.assertEquals("Expected Full Player to be on '"+ expectedRadioType + "' but it's not matching up with actual :" + actualStationType, expectedRadioType, actualStationType);
+		Assert.assertEquals("Expected Full Player to be on '" + themeName + "' but it's not matching up with actual : " + actualStationName ,themeName, actualStationName );
+		consoleLogEnd(before, expectedRadioType.equals(actualStationType), "<<<<<testSearchArtistRadio().");
+		
+	}
+	
+	@Test
+	public void testSearchPodcasts(){
+		LocalTime before = consoleLogStart(">>>>>testSearchPodcasts() : Searching for 'starta', clicking First Podcast Cell, hoping for Podcast List of episodes");
+		loginPage.loginWithoutVerifying("test55@test.com","test");
+		homePage.clickNavBarSearchButtonToOpenSearch();
+		String podcastName = "starta";
+		searchPage.enterTextAndPressEnterIntoSearchBar(podcastName);
+		searchPage.clickFirstPodcastsCell();
+		IOSElement episodes = Page.waitForVisible(driver, By.name("Episodes"), 10);
+		printElementInformation(episodes);
+		Assert.assertTrue("Clicking the first Podcasts Cell for 'starta' should show Episodes of Star Talk",episodes.getText().equals("Episodes"));
+		consoleLogEnd(before, true, "<<<<<testSearchPodcasts() : ");
+		
+	}
+	@Test
+	public void testSearchLiveRadio(){
+		LocalTime before = consoleLogStart(">>>>>testSearchLiveRadio() : Searching for 'rock', clicking First Live Station, hoping for Live Radio.");
+		loginPage.loginWithoutVerifying("test55@test.com","test");
+		homePage.clickNavBarSearchButtonToOpenSearch();
+		String liveSearchName = "rock";
+		String expectedRadioType = "Live Radio";
+		searchPage.enterTextIntoSearchBar(liveSearchName);
+		searchPage.clickFirstLiveStation();
+		miniPlayer.openFullPlayer();
+		String actualStationType = fullPlayer.getStationType();
+		String actualStationName = fullPlayer.getStationName();
+		Assert.assertEquals("Expected Full Player to be on '"+ expectedRadioType + "' but it's not matching up with actual :" + actualStationType, expectedRadioType, actualStationType);
+		consoleLogEnd(before, true, "<<<<<testSearchLiveRadio() : " + actualStationType +" : "+ actualStationName);
 
-	/**
-	* Search for "Alt" because "Alt" could be:
-	* The band Alt-J (Trivia: Named for the delta/triangle that comes from typing Alt + J on a Mac)
-	* WFUV On-Air, a radio station, or The Alternative Project, a live station without radio
-	* Alternative Girlfriend by the Barenaked Ladies
-	* The 102.DLG Radio FM Show podcast
-	* And many more, making it good for testing every possible filter for results
-	*/
-	 /*
-	@Test
-	@Ignore
-	public void testHomeSearch(){
-		LocalTime before = consoleLogStart("testHomeSearch - ");
-		Assert.assertTrue("Was not able to login", loginPage.login()); // Log in so we can choose artist stations later
-	
-		//Assert.assertTrue("Could not search for a term", search.searchForStationWithoutSelecting("Alt"));
-		// Assert that we can filter the search results
-		//String errors = search.applyFilters();
-		Assert.assertTrue("Errors in switching filters:\n" + errors, didPass(errors));
-		// Assert emptiness of blank search
-		//Assert.assertTrue("Blank search still had results.", !search.searchForStationWithoutSelecting(""));
-		//errors = search.applyFilters();
-		//Assert.assertTrue("Filters should have returned no results for blank search",
-		//		errors.contains("Filters had no effect."));
 		
-		// Search that garbage input gives us nothing
-		//search.applyFilter("all");
-		String badSearch = "dfgkjhqz";
-		//Assert.assertFalse("Garbage search should have returned no results.", search.searchForStationWithoutSelecting(badSearch));
-		//Assert.assertTrue("Results were returned for bad input", search.areResultsEmpty(badSearch));
-		
-		// Search for an artist based on song title 
-		//search.clearSearch();
-		String searchSong = "Basket Case";
-		//search.searchForStationWithoutSelecting(searchSong);
-		//boolean isResultListed = search.isResultListed(searchSong);
-		Assert.assertTrue(searchSong + " was not found in results.", isResultListed );
-		consoleLogEnd(before, isResultListed, "Tested testSearchForLiveStation.");
 	}
-	
-	/**
-	 * Tests live stations can be searched for by name, keyword, and frequency.
-	
-	@Test
-	@Ignore
-	public void testSearchForLiveStation(){
-		LocalTime before = consoleLogStart("testSearchForLiveStation - tests name, keyword, and frequency.");
-		// log in
-		loginPage.loginWithoutVerifying();
-		// Get to the live radio page via sidebar and enter zip if requested
-		sideNavBar.getToAndEnterZip("10013");
-		// Go back to home page to search
-		sideNavBar.gotoHomePage();
-		String[] searchFor = {"100.3", "Z100", "Hit Music"};
-		//search.searchForStationWithoutSelecting(searchFor[0]); 
-		// Check that Z100 is the first result under "All" and "Stations" filters.
-		//Assert.assertTrue(searchFor[1] + " was not found for frequency search of " + searchFor[0], search.isResultListed(searchFor[1]));
-		//search.clearSearch();
-		//search.searchForStationWithoutSelecting(searchFor[1]);
-		//Assert.assertTrue(searchFor[1] + " was not found", search.isResultListed(searchFor[1]));
-		// Search for key phrase
-		//search.clearSearch();
-		//search.searchForStationWithoutSelecting(searchFor[2]);
-		//boolean isResultListed = search.isResultListed(searchFor[1]);
-		//A/ssert.assertTrue(searchFor[1] + " was not found", isResultListed);
-		//consoleLogEnd(before, isResultListed, "Tested testSearchForLiveStation.");
-	}
-	*/
+
 }

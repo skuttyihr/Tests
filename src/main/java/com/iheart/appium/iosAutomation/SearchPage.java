@@ -1,5 +1,8 @@
 package com.iheart.appium.iosAutomation;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+
 import io.appium.java_client.SwipeElementDirection;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
@@ -48,6 +51,9 @@ public class SearchPage extends Page{
 	@iOSFindBy(accessibility = "IHRGlobalSearchBar-Subview-UIView") private IOSElement  IHRGlobalSearchBarSubviewUIView;
 	@iOSFindBy(accessibility = "IHRGlobalSearchBar-SecondLevelSubview-UIView") private IOSElement IHRGlobalSearchBarSecondLevelSubviewUIView;
 	
+	@iOSFindBy(accessibility = "GlobalSearchNoResultsCell-ClosingQuoteLabel-UILabel") private IOSElement GlobalSearchNoResultsCellClosingQuoteLabelUILabel;
+	@iOSFindBy(accessibility = "GlobalSearchNoResultsCell-NoResultsLabel-UILabel") private IOSElement GlobalSearchNoResultsCellNoResultsLabelUILabel;
+	@iOSFindBy(accessibility = "GlobalSearchNoResultsCell-NoResultsSubtitleLabel-UILabel") private IOSElement GlobalSearchNoResultsCellNoResultsSubtitleLabelUILabel;
 	//Search Results
 	@iOSFindBy(accessibility = "GlobalSearchView-FadingView-UIView") private IOSElement GlobalSearchViewFadingViewUIView;
 	@iOSFindBy(accessibility = "GlobalSearchView-CollectionView-UICollectionView") private IOSElement GlobalSearchViewCollectionViewUICollectionView;
@@ -211,7 +217,27 @@ public class SearchPage extends Page{
 	public boolean isCurrentlyOnSearchResultsList(){
 		return isCurrentlyOn("isCurrentlyOnSearchResultsList", GlobalSearchViewFadingViewUIView);
 	}
-	
+	public boolean isCurrentlyOnPodcastList(){
+		IOSElement episodes = Page.waitForVisible(driver, By.name("Episodes"), 10);
+		return isCurrentlyOn("isCurrentlyOnPodcastList", episodes);
+	}
+	/**
+	 * No results for "cvg"
+	 * Check your spelling or try another search
+	 * click on searchBar, delete a character, then click on item and ensure we're on artistprofile or player. 
+	 * @param searchTerm
+	 * @return
+	 */
+	public boolean isNoResultsCellDisplayedCorrectly(){
+		
+		printElementInformation(GlobalSearchNoResultsCellNoResultsLabelUILabel);
+		printElementInformation(GlobalSearchNoResultsCellNoResultsSubtitleLabelUILabel);
+		String noResultsLabel = GlobalSearchNoResultsCellNoResultsSubtitleLabelUILabel.getText();
+		boolean subtitleCorrect = noResultsLabel.equals("Check your spelling or try another search");
+		System.out.println("isNoResultsCellDisplayedCorrectly() : "+ subtitleCorrect);
+		return  subtitleCorrect;
+		
+	}
 	/**
 	 * This scrolls the Search Results collection view up and down. 
 	 * If you've just entered text into the search bar, use a startPosition of 500 when swiping up to be above the keyboard.
@@ -242,10 +268,47 @@ public class SearchPage extends Page{
 	 * Enters text into the Search Bar TextField. ClearsTextField first. No real need to hit enter as Search populates results as you type. 
 	 * @param searchQuery
 	 */
+	public void enterTextAndPressEnterIntoSearchBar(String searchQuery){
+		System.out.println("enterTextAndPressEnterIntoSearchBar() : "+ searchQuery);
+		IHRGlobalSearchBarSearchBarTextFieldUITextField.sendKeys(searchQuery);
+		IHRGlobalSearchBarSearchBarTextFieldUITextField.sendKeys(Keys.ENTER);
+	}
+	/**
+	 * Enters searchQuery into the search bar textfield. 
+	 * @param searchQuery
+	 */
 	public void enterTextIntoSearchBar(String searchQuery){
-		clearSearchBarTextField();
 		System.out.println("enterTextIntoSearchBar() : "+ searchQuery);
 		IHRGlobalSearchBarSearchBarTextFieldUITextField.sendKeys(searchQuery);
+
+	}
+	/**
+	 * Enter the ENTER key into the Search Bar Text Field. 
+	 */
+	public void enterEnterKeyIntoSearchBar(){
+		System.out.println("enterEnterIntoSearchBar(). ");
+		IHRGlobalSearchBarSearchBarTextFieldUITextField.sendKeys(Keys.ENTER);
+	}
+	/**
+	 * Uses the Keys.BACK_SPACE and enters it for a set number of times into the textfield. 
+	 * @param numberOfBackSpaces
+	 */
+	public void enterBackSpaceKeyIntoSearchBar(int numberOfBackSpaces){
+		System.out.println("enterBackSpaceKeyIntoSearchBar() : "+ numberOfBackSpaces);
+		int count = 0;
+		while(count < numberOfBackSpaces){
+			IHRGlobalSearchBarSearchBarTextFieldUITextField.sendKeys(Keys.BACK_SPACE);
+			count++;
+		}
+	}
+	/**
+	 * Retrieve the Search Bar Textfield text - this has been entered by you / some other method. 
+	 * @return
+	 */
+	public String getSearchBarText(){
+		String text = IHRGlobalSearchBarSearchBarTextFieldUITextField.getText();
+		System.out.println("getSearchBarText() : "+ text);
+		return text;
 	}
 	/**
 	 * Clears the SearchBar TextField

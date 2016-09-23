@@ -32,7 +32,24 @@ public class TestHomePage extends TestRoot {
 	
 	@Rule
 	public ScreenshotRule screenshot = new ScreenshotRule();
+	@Test
+	public void testHomePageElements(){
+		LocalTime before = consoleLogStart(">>>>>testHomePageElements() : Testing all elements on HomePage - For You, My Stations, Local Radio");
+		loginPage.loginWithoutVerifying("homepageelements@test.com","test");
+		if(homePage.isCurrentlyOnHomePage()){
+			homePage.showAllElements();
+		}
+		consoleLogEnd(before, true, "<<<<<testHomePageElements() : Tested HomePage Elements.");
+	}
 	
+	@Test
+	public void testHomePagePlaySomething(){
+		LocalTime before = consoleLogStart(">>>>>testHomePagePlaySomething() : Testing play on HomePage");
+		loginPage.loginWithoutVerifying("test66@test.com","test");
+		boolean startPlaying = homePage.clickFirstStationOnForYouToBeginPlaying();
+		Assert.assertTrue("Clicking on the first station in For You should have started a player.", startPlaying);
+		consoleLogEnd(before, startPlaying, "<<<<<testHomePagePlaySomething(): Tested HomePage Play");
+	}
 	private void searchAndGoHome(String s){
 		//search.searchForStation(s);
 		player.minimizePlayer();
