@@ -106,33 +106,6 @@ public class TestPlayback extends TestRoot {
 	 * We currently have a limit of 6 skips on our software. 
 	 */
 
-	@Test
-	@Ignore
-	public void testArtistRadioSkipLimit(){
-		LocalTime before = consoleLogStart("Testing Artist Radio Skip Limit :"+ name.getMethodName());
-		// Create an account so we start with a fresh number of skips
-		System.out.println("Creating an account");
-		Assert.assertTrue("Could not create a new account", signupPage.createNewAccount());
-		System.out.println("Selecting 1 genre, and handling possible popups.");
-		genrePage.selectGenre(1);
-		Page.handlePossiblePopUp();
-		
-		String artist = "Matt and Kim";
-		System.out.println("About to play a custom station for "+ artist);
-		//Assert.assertTrue("Could not play a custom artist station based on the artist: " + artist,
-				//customRadio.playACustomStation(artist).contains(artist));
-		System.out.println("Maximizing the mini player");
-		miniPlayer.openFullPlayer();
-		System.out.println("Attempting to skip songs 6 times");
-		for(int i = 1; i < 7; i++){
-			Assert.assertTrue("Could not skip for the " + getTextOfInt(i) + " time.", player.doSkip());
-		}
-		player.pause();
-		System.out.println("Attempting to skip a 7th time - should fail");
-		boolean result = !player.doSkip();
-		Assert.assertTrue("Should not have been able to skip", result);
-		consoleLogEnd(before, result,  "Tested Artist Radio Skip Limit in TestPlayback.java");
-	}
 
 	/**
 	 * Podcast Playback and controls. 

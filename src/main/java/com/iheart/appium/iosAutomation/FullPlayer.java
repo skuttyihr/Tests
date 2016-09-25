@@ -47,7 +47,7 @@ public class FullPlayer extends Page {
     @iOSFindBy(accessibility ="IHRPlayerView-ButtonContainer-UIView" ) private IOSElement IHRPlayerViewButtonContainerUIView;
     	@iOSFindBy(accessibility ="IHRPlayerView-PlayButton-UIButton" ) private IOSElement IHRPlayerViewPlayButtonUIButton;
     	@iOSFindBy(accessibility ="IHRPlayerView-ForwardButton-UIButton" ) private IOSElement IHRPlayerViewForwardButtonUIButton;
-    	@iOSFindBy(accessibility ="IHRPlayerViewNextButton-SkipCountLabel-UILabel" ) private IOSElement IHRPlayerViewNextButtonSkipCountLabelUILabel;
+    	//@iOSFindBy(accessibility ="IHRPlayerViewNextButton-SkipCountLabel-UILabel" ) private IOSElement IHRPlayerViewNextButtonSkipCountLabelUILabel;
     	@iOSFindBy(accessibility ="IHRPlayerView-BackButton-UIButton") private IOSElement  IHRPlayerViewBackButtonUIButton;
     @iOSFindBy(accessibility ="IHRPlayer-SaveButton-UIButton" ) private IOSElement IHRPlayerSaveButtonUIButton;  //(OD only)
     @iOSFindBy(accessibility ="IHRPlayer-MoreButton-UIButton" ) private IOSElement IHRPlayerMoreButtonUIButton;
@@ -173,7 +173,6 @@ public class FullPlayer extends Page {
     	printElementInformation(IHRPlayerViewButtonContainerUIView);
     	printElementInformation(IHRPlayerViewPlayButtonUIButton);
     	printElementInformation(IHRPlayerViewForwardButtonUIButton);
-    	printElementInformation(IHRPlayerViewNextButtonSkipCountLabelUILabel);
     	printElementInformation(IHRPlayerMoreButtonUIButton);
     	printElementInformation(IHRPlayerViewThumbDownButtonUIButton);
     	printElementInformation(IHRPlayerViewThumbUpButtonUIButton);
@@ -397,8 +396,8 @@ public class FullPlayer extends Page {
 	 * @return
 	 */
 	public int getNumberOfSkipsRemaining(){
-		String skips = IHRPlayerViewNextButtonSkipCountLabelUILabel.getText();
-		int skipsLeft = Integer.parseInt(skips.substring(0, 1));
+		String skips = IHRPlayerViewForwardButtonUIButton.getText();
+		int skipsLeft = Integer.parseInt(skips.substring(6, 7));
 		System.out.println("getNumberOfSkipsRemaining() : " + skipsLeft);
 		return skipsLeft;
 	}

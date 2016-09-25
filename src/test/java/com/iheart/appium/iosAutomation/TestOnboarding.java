@@ -15,11 +15,6 @@ public class TestOnboarding extends TestRoot {
 	public void setUp() throws Exception {
 		setup();
 	}
-
-//	@After
-//	public void after() {
-//		tearDown();
-//	}
 	
 	@Rule
 	public ScreenshotRule screenshot = new ScreenshotRule();

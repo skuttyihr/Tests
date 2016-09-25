@@ -99,10 +99,13 @@ public class TestFullPlayerAndMiniPlayer extends TestRoot {
 		loginPage.loginWithoutVerifying();
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		searchPage.enterTextIntoSearchBar("HOT 99.5");
+		searchPage.clickTopResult();
+		Assert.assertTrue("Clicking 99.5 in Search Results should have started playback in Miniplayer.", miniPlayer.isCurrentlyOnMiniPlayer());
 		System.out.println(miniPlayer.getSongTitle());
 		System.out.println(miniPlayer.getArtistName());
 		searchPage.clearSearchBarTextField();
 		searchPage.enterTextIntoSearchBar("HOT 97");
+		searchPage.clickTopResult();
 		Assert.assertEquals("HOT 97", miniPlayer.getSongTitle());
 		Assert.assertEquals("Where Hip Hop Lives in New York ", miniPlayer.getArtistName());
 		//If we don't have Track title, we can't thumb it up. Try to thumb it up, verify that it still isn't activated. Not sure if we can see how it's greyed out. 
@@ -140,11 +143,20 @@ public class TestFullPlayerAndMiniPlayer extends TestRoot {
 		miniPlayer.openFullPlayer();
 		Assert.assertTrue("Check if Full Player is open.",fullPlayer.isCurrentlyOnFullPlayer());
 		Assert.assertEquals("Expecting playType to be 'player pause' since it should still be playing.", "player pause", fullPlayer.getTypeOfPlayButton());
-		Assert.assertTrue("See if both Thumbs are down",fullPlayer.isThumbUpAndThumbDownButtonNotActivated());
-		fullPlayer.clickThumbDownButton();
-		Assert.assertTrue("See if Thumb Down is selected",fullPlayer.isThumbDownButtonActivated());
-		fullPlayer.clickThumbUpButton();
-		Assert.assertTrue("See if Thumb Up is selected",fullPlayer.isThumbUpButtonActivated());
+		if(fullPlayer.isThumbUpAndThumbDownButtonNotActivated()){
+			//Both thumbs are down. 
+			fullPlayer.clickThumbDownButton();
+			Assert.assertTrue("See if Thumb Down is selected",fullPlayer.isThumbDownButtonActivated());
+			fullPlayer.clickThumbUpButton();
+			Assert.assertTrue("See if Thumb Up is selected",fullPlayer.isThumbUpButtonActivated());
+		}else if(fullPlayer.isThumbDownButtonActivated()){
+			//Just the Thumbs down button is activated - unclick it, and then click it again.
+			fullPlayer.clickThumbDownButton();
+			Assert.assertFalse("Thumb down button was originally activated, clicking it again should make it unactivated.", fullPlayer.isThumbDownButtonActivated());
+		}else if(fullPlayer.isThumbUpButtonActivated()){
+			fullPlayer.clickThumbUpButton();
+			Assert.assertFalse("Thumb up button was originally activated, clicking it again should make it unactivated", fullPlayer.isThumbUpButtonActivated());
+		}
 		fullPlayer.clickShareButtonOnNavBar();
 		Assert.assertTrue("Should be on Share screen on Full Player", fullPlayer.isShareMenuOpen());
 		fullPlayer.clickCancelOnShareMenuToReturnToFullPlayer();
