@@ -47,7 +47,6 @@ public class FullPlayer extends Page {
     @iOSFindBy(accessibility ="IHRPlayerView-ButtonContainer-UIView" ) private IOSElement IHRPlayerViewButtonContainerUIView;
     	@iOSFindBy(accessibility ="IHRPlayerView-PlayButton-UIButton" ) private IOSElement IHRPlayerViewPlayButtonUIButton;
     	@iOSFindBy(accessibility ="IHRPlayerView-ForwardButton-UIButton" ) private IOSElement IHRPlayerViewForwardButtonUIButton;
-    	//@iOSFindBy(accessibility ="IHRPlayerViewNextButton-SkipCountLabel-UILabel" ) private IOSElement IHRPlayerViewNextButtonSkipCountLabelUILabel;
     	@iOSFindBy(accessibility ="IHRPlayerView-BackButton-UIButton") private IOSElement  IHRPlayerViewBackButtonUIButton;
     @iOSFindBy(accessibility ="IHRPlayer-SaveButton-UIButton" ) private IOSElement IHRPlayerSaveButtonUIButton;  //(OD only)
     @iOSFindBy(accessibility ="IHRPlayer-MoreButton-UIButton" ) private IOSElement IHRPlayerMoreButtonUIButton;
@@ -150,12 +149,6 @@ public class FullPlayer extends Page {
 
     		fullPlayer.clickMoreCancelButton();
     	}
-    	/*
-    	if(fullPlayer.clickGoToArtistProfileButtonIfEnabled()){
-    		//test Artist Profile stuff. 
-    		fullPlayer.clickNavBarBackButton();
-    	}
-    	*/
     	//IHRPlayerTitleView
     	System.out.println("Checking Title View elements... Station Name and Station Type");
     	printElementInformation(IHRPlayerTitleViewTitleLabelUILabel);
@@ -305,10 +298,6 @@ public class FullPlayer extends Page {
 				System.out.println("Clicked on 'Notify Me' Button to Favorite the station, AND get notifications about favorite artist.");
 			}
 		}
-			//Music to Your Ears
-			//Find out when your favorite artists, like Opeth, have new music and events. Notify Me / Maybe Later
-			//System.out.println("Unfavorite message was shown. Clicked Yes. Should be false...favorite.isSelected? : " + NavBarFavoriteButtonUIButton.isSelected());
-		//}
 	}
 	
 	/**
@@ -391,7 +380,7 @@ public class FullPlayer extends Page {
 	}
 	
 	/**
-	 * Checks if the NextButtonSkipCountLabel is present and then returns an integer equal to the number of Skips left. Returns -1 if the label couldn't be found.
+	 * Checks if the IHRPlayerViewForwardButtonUIButton is present and then returns an integer equal to the number of Skips left. Returns -1 if the label couldn't be found.
 	 * 
 	 * @return
 	 */
@@ -402,7 +391,7 @@ public class FullPlayer extends Page {
 		return skipsLeft;
 	}
 	/**
-	 * Clicks the Skip Button
+	 * Clicks the Skip/ Scan Button
 	 */
 	public void clickSkipButton(){
 			System.out.println("clickSkipButton()... ");
@@ -575,7 +564,7 @@ public class FullPlayer extends Page {
     	IHRPlayerMoreButtonUIButton.click();
     }
     /**
-     * This checks if the OptionMenuView is displayed, indicating that the More Info button was clicked on FullPlayer
+     * This checks if the OptionMenuView is displayed, indicating that the More Info button was clicked on FullPlayer.
      * This means that Go to Artist Profile, Lyrics, and Buy Song buttons should be visible, and a Cancel Button can be clicked as well.
      * use fullPlayer.clickMoreCancelButton()
      * @return
