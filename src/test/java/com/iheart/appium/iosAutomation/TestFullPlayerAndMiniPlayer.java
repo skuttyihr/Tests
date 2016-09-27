@@ -35,7 +35,7 @@ public class TestFullPlayerAndMiniPlayer extends TestRoot {
 		Assert.assertTrue("Expected 'Play Buffering' or 'Play' because MiniPlayer should be playing an Artist track.",miniPlayer.getTypeOfPlayButton().contains("Play"));
 		miniPlayer.clickPlayPauseButton();
 		int numberOfSkipsRemaining = miniPlayer.getNumberOfSkipsRemaining();
-		if(numberOfSkipsRemaining != -1 && numberOfSkipsRemaining > 2){
+		if(numberOfSkipsRemaining > 2){
 			miniPlayer.swipeMiniPlayerToLeftAndClickSkipButton();
 			Assert.assertTrue("Skip may not have worked - song title is the same.", miniPlayer.isTitleDifferentAfterSkip());
 		}

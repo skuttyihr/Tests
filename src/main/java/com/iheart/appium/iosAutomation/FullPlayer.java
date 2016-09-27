@@ -104,7 +104,14 @@ public class FullPlayer extends Page {
     @iOSFindBy(accessibility ="PlayerBannerView-SyncBannerView-UIView" ) private IOSElement PlayerBannerViewSyncBannerViewUIView;
     @iOSFindBy(accessibility ="PlayerBannerView-DismissButton-UIButton" ) private IOSElement PlayerBannerViewDismissButtonUIButton;
 
-    
+    /* - To be used
+	@iOSFindBy(accessibility = "Great, we’ll play you more  songs like this.") public IOSElement artistThumbUpGrowl; // //UIAApplication[1]/UIAWindow[1]/UIAStaticText[10]
+	@iOSFindBy(accessibility = "OK, we'll adjust your music mix.") public IOSElement artistThumbDownGrowl;
+	@iOSFindBy(accessibility = "Glad you like it!  We'll let our DJs know.") public IOSElement liveThumbUpGrowl; // //UIAApplication[1]/UIAWindow[1]/UIAStaticText[8]
+	@iOSFindBy(accessibility = "Thanks for the feedback. We'll let our DJs know you've  heard enough of this song.") public IOSElement liveThumbDownGrowl;
+	@iOSFindBy(accessibility = "Great, we’ll play you more  episodes like this.") public IOSElement podcastThumbUpGrowl; // //UIAApplication[1]/UIAWindow[1]/UIAStaticText[10]
+	@iOSFindBy(accessibility = "OK, we’ll adjust your station.") public IOSElement podcastThumbDownGrowl;
+	*/
     /**
      * Have Full Player Open and playing a SONG with Artist Radio before calling this method. 
      */
@@ -394,8 +401,8 @@ public class FullPlayer extends Page {
 	 * Clicks the Skip/ Scan Button
 	 */
 	public void clickSkipButton(){
-			System.out.println("clickSkipButton()... ");
-			IHRPlayerViewForwardButtonUIButton.click();
+		System.out.println("clickSkipButton()... ");
+		IHRPlayerViewForwardButtonUIButton.click();
 	}
 	
 	/**
