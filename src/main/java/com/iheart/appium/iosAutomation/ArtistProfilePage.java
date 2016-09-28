@@ -491,7 +491,8 @@ public class ArtistProfilePage extends Page{
 	public void clickFirstAlbumCell(){
 		//This opens Album Profile - Album Cover - Album Name - Artist - Release Date - # of Songs and then a list of songs. //UI = click on songs or Click back. 
 		System.out.println("clickFirstAlbumCell() : ArtistProfileAlbumsViewAlbumCell0.click(). TitleLabel:" + ArtistProfileAlbumCellTitleViewTitleLabelUILabel0.getText());
-		ArtistProfileSectionAlbumsAlbumCell0.click();
+		ArtistProfileAlbumsViewAlbumCell0.click();
+		
 	}
 
 	/**
