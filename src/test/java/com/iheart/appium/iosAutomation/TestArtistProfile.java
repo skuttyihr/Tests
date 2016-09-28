@@ -34,6 +34,7 @@ public class TestArtistProfile extends TestRoot {
 		consoleLogEnd(before, true, "Tested testArtistProfileElements().");
 		
 	}
+
 	@Test
 	public void testArtistProfileFunctions(){
 		LocalTime before = consoleLogStart("Testing methods on Artist Profile Page");
