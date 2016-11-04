@@ -101,9 +101,7 @@ public class TestRoot {
 	protected static String SCREENSHOT_URL;
 	
 	protected static void setup() {
-		System.out.println("TestRoot.setup()");
-		
-		
+		System.out.println("TestRoot.setup()");	
 		String appiumUrl = "";
 		String appiumPort = "";
 		
@@ -223,7 +221,13 @@ public class TestRoot {
 		capabilities.setCapability("platformVersion", PLATFORM_VERSION);
 		//capabilities.setCapability("interKeyDelay", 0); //Should input text faster
 		capabilities.setCapability("bundleId", BUNDLE_ID);
-        capabilities.setCapability("app", IPA_NAME);
+		//added in new capabilities for automation to work with appium 1.6.0 and xcode 8
+		capabilities.setCapability("automationName", "XCUITest");
+    	capabilities.setCapability("wdaLocalPort", "8100");
+		//capabilities.setCapability("realDeviceLogger","/Users/sreekalakutty/node_modules/deviceconsole/deviceconsole");
+		capabilities.setCapability("fullReset","true");
+		capabilities.setCapability("noReset","false");
+		capabilities.setCapability("app", IPA_NAME);
         
         System.out.println(DEVICE_NAME + ":iOS:" + PLATFORM_VERSION +":"+ BUNDLE_ID +":"+ IPA_NAME);
         
@@ -272,7 +276,6 @@ public class TestRoot {
 		player = new Player(driver);
 		fullPlayer = new FullPlayer(driver);
 		sideNavBar = new SideNavigationBar(driver);
-
 		forYouPage = new ForYouPage(driver);
 		podcastsPage = new PodcastsPage(driver);
 		searchPage = new SearchPage(driver);
@@ -283,10 +286,8 @@ public class TestRoot {
 		miniPlayer = new MiniPlayer(driver);
 		settings = new SettingsPage(driver);
 		perfectFor = new PerfectFor(driver);
-		artistProfilePage = new ArtistProfilePage(driver);
-		
-		driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
-		
+		artistProfilePage = new ArtistProfilePage(driver);		
+		driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);		
 		System.out.println("Testing on: " + MODEL);
 		
 		// Get rid of zip code request if it displays
@@ -305,15 +306,18 @@ public class TestRoot {
 			return false;
 		}else{
 			String[] aId = iosElement.toString().split(">");
-			String getText = iosElement.getText();
+			String getText = iosElement.getAttribute("name");
 			if(!getText.equals("")){
-				System.out.println( "  ["+aId[1] + "  text: ["+ getText + "]  tagName: ["+iosElement.getTagName()+ "] isDisplayed: [" +iosElement.isDisplayed() + "] isEnabled: [" + iosElement.isEnabled() + "] isSelected: ["+ iosElement.isSelected() +"]." ) ;
+				//System.out.println( "  ["+aId[1] + "  text: ["+ getText + "]  tagName: ["+iosElement.getTagName()+ "] isDisplayed: [" +iosElement.isDisplayed() + "] isEnabled: [" + iosElement.isEnabled() + "] isSelected: ["+ iosElement.isSelected() +"]." ) ;
+				//.isSelected() doesnt work anymore with Appium 1.6.0beta3 - so commenting out
+				System.out.println( "  ["+aId[1] + "  text: ["+ getText + "]  tagName: ["+iosElement.getTagName()+ "] isDisplayed: [" +iosElement.isDisplayed() + "] isEnabled: [" + iosElement.isEnabled());
 			}
 			else{ //Element has no Text, not printing it. 
 				System.out.println("  ["+ aId[1] + " tagName: ["+iosElement.getTagName()+ "] isDisplayed: [" +iosElement.isDisplayed() + "] isEnabled: [" + iosElement.isEnabled() + "] isSelected: ["+ iosElement.isSelected() +"].") ;
 			}
-		
-			return iosElement.isDisplayed();
+			System.out.println(iosElement.isDisplayed());
+			//return iosElement.isDisplayed();
+			return true;
 		}
 		
 	}

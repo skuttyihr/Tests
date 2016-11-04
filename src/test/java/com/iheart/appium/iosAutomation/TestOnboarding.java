@@ -50,17 +50,16 @@ public class TestOnboarding extends TestRoot {
 		Set<String> foundWithinApp = onboardingPage.getThreeTextFields();
 		Set<String> shouldBeInApp = new HashSet<String>();
 		shouldBeInApp.add("Join the party.");
-		shouldBeInApp.add("Don't miss a beat.");
 		shouldBeInApp.add("Music to your ears.");
+		shouldBeInApp.add("Don’t miss a beat.");
 		Assert.assertTrue("Titles on Onboarding Screen have changed.",foundWithinApp.containsAll(shouldBeInApp));
 		//Part Two
 		System.out.println("Testing that Descriptions are as expected.");
 		Set<String> foundDescriptionsWithinApp = onboardingPage.getThreeDescriptionTextFields();
 		Set<String> descriptionsShouldBeInApp = new HashSet<String>();
 		descriptionsShouldBeInApp.add("Thousands of live radio and artist stations. Connect with your favorites. Always free.");
-		descriptionsShouldBeInApp.add("Discover world premieres from artists you love. See them live at our exclusive events.");
-		descriptionsShouldBeInApp.add("Running or relaxing. Pre-party or post-breakup. We have a station Perfect For you.");
-		
+		descriptionsShouldBeInApp.add("Discover millions of songs and new releases. All your music, wherever you go.");
+		descriptionsShouldBeInApp.add("Running or relaxing. Pre-party or post-breakup. We have a station perfect for you.");
 		Assert.assertTrue("Descriptions have changed.",foundDescriptionsWithinApp.containsAll(descriptionsShouldBeInApp));
 		//End
 		boolean result = (foundDescriptionsWithinApp.containsAll(descriptionsShouldBeInApp) && foundWithinApp.containsAll(shouldBeInApp));
