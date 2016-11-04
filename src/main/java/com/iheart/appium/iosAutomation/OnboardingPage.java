@@ -2,6 +2,7 @@ package com.iheart.appium.iosAutomation;
 
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
@@ -33,7 +34,7 @@ public class OnboardingPage extends Page {
 	 * @return
 	 */
 	public String getTitleLabelText(){
-		return IHROnboardingViewTitleLabelUILabel.getText();
+		return IHROnboardingViewTitleLabelUILabel.getAttribute("value");
 	}
 	
 	/**
@@ -41,7 +42,7 @@ public class OnboardingPage extends Page {
 	 * @return
 	 */
 	public String getDescriptionLabelText(){
-		return IHROnboardingViewDescriptionLabelUILabel.getText();
+		return IHROnboardingViewDescriptionLabelUILabel.getAttribute("value");
 	}
 	
 	/**
@@ -62,13 +63,14 @@ public class OnboardingPage extends Page {
 		int i = 0;
 		int failCounter = 0;
 		Set<String> returnSet = new HashSet<String>(3);
-		while(i < 3 && failCounter < 10){
+		while(i <= 3 && failCounter < 10){
 			String entry = getTitleLabelText();
 			if(!returnSet.contains(entry)){
 				returnSet.add(entry);
 				i++;
 			}
 			failCounter++;
+			TestRoot.sleep(500);
 		}
 		return returnSet;
 	}
@@ -81,14 +83,15 @@ public class OnboardingPage extends Page {
 	public Set<String> getThreeDescriptionTextFields(){
 		int i = 0;
 		int failCounter = 0;
-		Set<String> returnSet = new HashSet<String>(3);
-		while(i < 3 && failCounter < 10){
+		Set<String> returnSet = new HashSet<String>();
+		while(i <= 3 && failCounter < 10){
 			String entry = getDescriptionLabelText();
 			if(!returnSet.contains(entry)){
 				returnSet.add(entry);
 				i++;
 			}
 			failCounter++;
+			TestRoot.sleep(1000);
 		}
 		return returnSet;
 	}
