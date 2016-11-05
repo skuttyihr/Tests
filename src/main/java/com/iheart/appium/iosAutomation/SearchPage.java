@@ -177,6 +177,7 @@ public class SearchPage extends Page{
 	public void clickAllPlaylists(){
 		
 	}
+	
 	public String getSearchLabel(){
 		String resultsForText = GlobalSearchCategorySearchTermCellLabelUILabel.getText();
 		System.out.println("getSearchLabel() : " +resultsForText);
@@ -403,13 +404,15 @@ public class SearchPage extends Page{
 		searchPage.clickShowAllLiveStations();
 		searchPage.showSomeElementsOnLiveStationsList();
 		searchPage.scrollSearchResultsCollectionView(SwipeElementDirection.UP, 500, 100, 1000); //keyboard is still visible
+		//clickNavBarBackButton();
 		System.out.println("::::Printing out ARTISTS.::::");
 		printElementInformation(GlobalSearchDataSourceARTISTSHeaderViewUIView);
 		printElementInformation(GlobalSearchDataSourceSearchResultCellArtistsRow0);
 		printElementInformation(GlobalSearchDataSourceSearchResultCellArtistsRow1);
 		printElementInformation(GlobalSearchDataSourceShowAllArtistsDisclosureCell);
 		searchPage.clickShowAllArtists(); //move back
-		searchPage.clickNavBarBackButton(); //searchPage.showSomeElementsOnArtistsList(); //  This simply doesn't work reliably enough. Collection view isn't fully populated. 
+		clickNavBarBackButton();
+		//searchPage.clickNavBarBackButton(); //searchPage.showSomeElementsOnArtistsList(); //  This simply doesn't work reliably enough. Collection view isn't fully populated. 
 		searchPage.scrollSearchResultsCollectionView(SwipeElementDirection.UP, 100, 50, 2000); //Move the page down some more to see Songs. 
 		System.out.println("::::Printing out SONGS.::::");
 		printElementInformation(GlobalSearchDataSourceSONGSHeaderViewUIView);
@@ -417,14 +420,15 @@ public class SearchPage extends Page{
 		printElementInformation(GlobalSearchDataSourceSearchResultCellSongsRow1);
 		printElementInformation(GlobalSearchDataSourceShowAllSongsDisclosureCell);
 		searchPage.clickShowAllSongs();
-		searchPage.clickNavBarBackButton(); //searchPage.showSomeElementsOnSongsList();//  This simply doesn't work reliably enough. Collection view isn't fully populated. 
+		clickNavBarBackButton(); //searchPage.showSomeElementsOnSongsList();//  This simply doesn't work reliably enough. Collection view isn't fully populated. 
 		searchPage.scrollSearchResultsCollectionView(SwipeElementDirection.UP, 500, 50, 2000);
 		searchPage.scrollSearchResultsCollectionView(SwipeElementDirection.UP, 500, 50, 2000);
-		System.out.println("::::Printing out PERFECT FOR.::::");
+		//sk - 11/5 - commenting out as PERFECT FOR has been removed from the app
+		/*System.out.println("::::Printing out PERFECT FOR.::::");
 		printElementInformation(GlobalSearchDataSourcePERFECTFORHeaderViewUIView);
 		printElementInformation(GlobalSearchDataSourceSearchResultCellPerfectForRow0);
 		printElementInformation(GlobalSearchDataSourceSearchResultCellPerfectForRow1);
-		searchPage.scrollSearchResultsCollectionView(SwipeElementDirection.UP, 500, 50, 2000);
+		searchPage.scrollSearchResultsCollectionView(SwipeElementDirection.UP, 500, 50, 2000);*/
 		System.out.println("::::Printing out PODCASTS.::::");
 		printElementInformation(GlobalSearchDataSourcePODCASTSHeaderViewUIView);
 		printElementInformation(GlobalSearchDataSourceSearchResultCellPodcastsRow0);

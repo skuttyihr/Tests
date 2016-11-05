@@ -225,9 +225,9 @@ public class TestRoot {
 		capabilities.setCapability("automationName", "XCUITest");
     	capabilities.setCapability("wdaLocalPort", "8100");
 		//capabilities.setCapability("realDeviceLogger","/Users/sreekalakutty/node_modules/deviceconsole/deviceconsole");
-		capabilities.setCapability("fullReset","true");
-		capabilities.setCapability("noReset","false");
-		capabilities.setCapability("app", IPA_NAME);
+		capabilities.setCapability("noReset", false);
+		capabilities.setCapability("fullReset", true);
+    	capabilities.setCapability("app", IPA_NAME);
         
         System.out.println(DEVICE_NAME + ":iOS:" + PLATFORM_VERSION +":"+ BUNDLE_ID +":"+ IPA_NAME);
         
@@ -308,16 +308,14 @@ public class TestRoot {
 			String[] aId = iosElement.toString().split(">");
 			String getText = iosElement.getAttribute("name");
 			if(!getText.equals("")){
-				//System.out.println( "  ["+aId[1] + "  text: ["+ getText + "]  tagName: ["+iosElement.getTagName()+ "] isDisplayed: [" +iosElement.isDisplayed() + "] isEnabled: [" + iosElement.isEnabled() + "] isSelected: ["+ iosElement.isSelected() +"]." ) ;
-				//.isSelected() doesnt work anymore with Appium 1.6.0beta3 - so commenting out
+				//.isSelected() doesnt work anymore with Appium 1.6.0beta3 - so removed that at the end of the below line
 				System.out.println( "  ["+aId[1] + "  text: ["+ getText + "]  tagName: ["+iosElement.getTagName()+ "] isDisplayed: [" +iosElement.isDisplayed() + "] isEnabled: [" + iosElement.isEnabled());
 			}
 			else{ //Element has no Text, not printing it. 
 				System.out.println("  ["+ aId[1] + " tagName: ["+iosElement.getTagName()+ "] isDisplayed: [" +iosElement.isDisplayed() + "] isEnabled: [" + iosElement.isEnabled() + "] isSelected: ["+ iosElement.isSelected() +"].") ;
 			}
 			System.out.println(iosElement.isDisplayed());
-			//return iosElement.isDisplayed();
-			return true;
+			return iosElement.isDisplayed();
 		}
 		
 	}

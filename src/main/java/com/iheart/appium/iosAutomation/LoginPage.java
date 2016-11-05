@@ -2,6 +2,7 @@ package com.iheart.appium.iosAutomation;
 
 import java.util.Set;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -20,7 +21,9 @@ public class LoginPage extends Page {
 
 	//Nav Bar Elements
 	@iOSFindBy(accessibility ="NavBar-BackButton-UIButton") private IOSElement NavBarBackButton;
-	@iOSFindBy(xpath="//UIAApplication[1]/UIAWindow[1]/UIANavigationBar[1]/UIAStaticText[2]") private IOSElement NavBarTitle;
+	//updated xpath for LoginPage Navbar xpath
+	@iOSFindBy(xpath="//XCUIElementTypeApplication/XCUIElementTypeWindow/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeNavigationBar/"
+			+ "XCUIElementTypeOther/XCUIElementTypeStaticText[2]") private IOSElement NavBarTitle;
 	//Main container contains Email, Password, Log In and Forgot your password?
 	@iOSFindBy(accessibility = "IHRiPhoneLoginView-MainContainer-UIView") private IOSElement IHRiPhoneLoginViewMainContainerUIView;
 	    //TableView contains Email and Password Cells and their TextFields
@@ -38,7 +41,7 @@ public class LoginPage extends Page {
 	@iOSFindBy(accessibility = "IHRAuthorizationView-SocialContainer-UIView") private IOSElement IHRAuthorizationViewSocialContainerUIView;
 		@iOSFindBy(accessibility = "IHRAuthorizationView-FacebookButton-UIButton") private IOSElement IHRAuthorizationViewFacebookButtonUIButton;
 		@iOSFindBy(accessibility = "IHRAuthorizationView-GoogleButton-UIButton")   private IOSElement IHRAuthorizationViewGoogleButtonUIButton;
-
+	@iOSFindBy(accessibility = "Open") private IOSElement openButton;
 
 	//Web Elements for Facebook Login
 	//@iOSFindBy(accessibility = "Facebook") private WebElement facebookButton;
@@ -278,80 +281,55 @@ public class LoginPage extends Page {
 	 * Logs into a Facebook account. May fail if Facebook removes access from the account. 
 	 * @return
 	 */
-	public boolean loginViaFacebook() {
+	public boolean loginViaFacebook()
+	{  
 		onboardingPage.clickOnboardingLoginButton();
-		waitForElementToBeVisible(IHRAuthorizationViewEmailAddressTextField, 5);
+		waitForElementToBeVisible(IHRAuthorizationViewEmailAddressTextField, 3);
 		clickFacebookLoginButton();
-		
-		//Sleep to allow web to display, can't wait because context needs to switch
-		TestRoot.sleep(10000);
-		System.out.println("Current context: " + driver.getContext());
-		Set<String> contexts = driver.getContextHandles();
-		for(String context : contexts){
-			System.out.println(context);
+		IOSElement fbemailField = null, fbpasswordField = null,fbloginButton = null;
+	    sleep(3000);
+		if(fbemailField == null){
+			fbemailField = findElement(driver, By.id("Email or "));
+			fbemailField = findElement(driver, By.className("XCUIElementTypeTextField"));
 		}
-		//This is extremely wonky! Rarely works and cannot find the fields. 
-		if(switchToWebContext()){
-			System.out.println("Current context should be WEBVIEW_1: " + driver.getContext());
-			// Facebook changed their page
-			if(fbEmailField != null && fbPasswordField != null && fbLogInField != null){
-				fbEmailField.sendKeys(FACEBOOKUSERNAME);
-				fbPasswordField.sendKeys(FACEBOOKPASSWORD);
-				fbLogInField.click();
-				System.out.println("Testing Facebook login. Entered FB Email, Password, and Clicked Login.");
-			}
-			IOSElement fbemailField = findElement(driver, By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIATextField[1]"));
-			IOSElement fbpasswordField = findElement(driver, By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIASecureTextField[1]"));
-			IOSElement fbloginButton = findElement(driver, By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIAButton[1]"));
-			if(fbemailField == null){
-				fbemailField = findElement(driver, By.name("Email or Phone"));
-			}
-			if(fbpasswordField == null){
-				fbpasswordField = findElement(driver, By.name("Facebook Password"));
-			}
-			if(fbloginButton == null){
-				fbloginButton = findElement(driver, By.name("Log In"));
-				
-			}
-			if(fbemailField != null && fbpasswordField != null && fbloginButton != null){
-				fbemailField.sendKeys(FACEBOOKUSERNAME);
-				fbpasswordField.sendKeys(FACEBOOKPASSWORD);
-				fbloginButton.click();
-				System.out.println("Testing Facebook login. Entered FB Email, Password, and Clicked Login.");
-			}
-			else{
-				System.out.println("Facebook Email Field, Password, Log In Button don't seem to be found.");
-			}
-		
-			sleep(2000);
-			// Handle Authorization confirm
-			try{
-				driver.findElement(By.name("__CONFIRM__")).click();
-			}
-			catch(Exception e){}
-		
-			}
-		else{
-			System.err.println("Could not switch to Facebook web view context.");
-			return false;
+		if(fbpasswordField == null){
+			fbpasswordField = findElement(driver, By.className("XCUIElementTypeSecureTextField"));
 		}
-		// Now switch to native view
-		if(!switchToNativeContext()){
-			System.err.println("Could not switch back to native context!");
+		if(fbloginButton == null){
+			fbloginButton = findElement(driver, By.id("Log In"));
 		}
-		dismissLoginPopups();
-		try{
-			genrePage.selectGenre(1);
-		}catch(Exception e){} // This doesn't always display
-		dismissLoginPopups();
-		System.out.println("Current context: " + driver.getContext());
-		// check status
-		return settings.isLoggedIn();
+
+		if(fbemailField != null && fbpasswordField != null && fbloginButton != null){
+			fbemailField.sendKeys(FACEBOOKUSERNAME);
+			fbpasswordField.sendKeys(FACEBOOKPASSWORD);
+			fbloginButton.click();
+			System.out.println("Testing Facebook login. Entered FB Email, Password, and Clicked Login.");
+		}
+	    sleep(3000);
+	    driver.rotate(org.openqa.selenium.ScreenOrientation.PORTRAIT);
+	    TestRoot.sleep(4000);
+	    IOSElement btnAuthorize=driver.findElement(By.id("OK")); 
+	    btnAuthorize.click();
+	    //Now switch to native view
+	    driver.context("NATIVE_APP");	 
+	    TestRoot.sleep(2000);
+	 	if(!switchToNativeContext()){
+	 			System.err.println("Could not switch back to native context!");
+	 		}
+	 	dismissLoginPopups();
+	 	try{
+	 		  genrePage.selectGenre(1);
+	 	  }
+	 	catch(Exception e){} // This doesn't always display
+	 	dismissLoginPopups();
+
+	 	// check status
+	 	return settings.isLoggedIn();
 	}
 	/**
 	 * Dismisses the possible popups that appear once you've logged in. 
 	 */
-	private void dismissLoginPopups(){
+	void dismissLoginPopups(){
 		handlePossiblePopUp();
 		handleWantYourLocalRadioPopup();
 		tellUsWhatYouLike();
@@ -370,38 +348,27 @@ public class LoginPage extends Page {
 	public boolean loginViaGoogle() {
 		onboardingPage.clickOnboardingLoginButton();
 		clickGoogleLoginButton();
-
-		if(switchToWebContext()){
-			googleEmail.sendKeys(GOOGLEUSERNAME);
-			nextButton.click();
-			googlePassword.sendKeys(GOOGLEPASSWORD);
-			signIn.click();
-			try {
-				continueButton.click();
-			} catch (Exception e) {
-	
-			}
-	
-			try {
-				allowButton.click();
-			} catch (Exception e) {
-			}
-			
-			// Try to go back to iHeart (iOS 9 only button click)
-			findElement(driver, By.name("Back to iHeartRadio")).click();
-			if(switchToNativeContext()){
-				dismissLoginPopups();
-			}
-			else{
-				System.err.println("Could not switch back to native context after Google login!");
-			}
-		}
-		else{
-			System.err.println("Could not switch context for Google Login");
-			return false;
-		}
+		sleep(3000);
+		IOSElement txtEmail = driver.findElement(By.className("UIATextField"));
+		txtEmail.sendKeys(GOOGLEUSERNAME);
+		IOSElement btnNext = driver.findElement(By.id("Next"));
+		btnNext.click();
+		TestRoot.sleep(2000);
+		IOSElement txtPasswd = driver.findElement(By.id("Password"));
+		txtPasswd.sendKeys(GOOGLEPASSWORD); 
+		TestRoot.sleep(2000);
+		IOSElement btnSubmit = driver.findElement(By.id("Sign in"));
+		btnSubmit.click();
+		TestRoot.sleep(4000);
+		IOSElement btnAllow = driver.findElement(By.id("Allow"));
+		btnAllow.click();
+		TestRoot.sleep(2000);
+		
+		openButton.click();
+		dismissLoginPopups();
 		return settings.isLoggedIn();
 	}
+
 
 	public void dismissStayConnectedPopup() {
 		try {
