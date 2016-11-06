@@ -413,7 +413,7 @@ public class SearchPage extends Page{
 		searchPage.clickShowAllArtists(); //move back
 		clickNavBarBackButton();
 		//searchPage.clickNavBarBackButton(); //searchPage.showSomeElementsOnArtistsList(); //  This simply doesn't work reliably enough. Collection view isn't fully populated. 
-		searchPage.scrollSearchResultsCollectionView(SwipeElementDirection.UP, 100, 50, 2000); //Move the page down some more to see Songs. 
+		//searchPage.scrollSearchResultsCollectionView(SwipeElementDirection.UP, 500, 50, 2000); //Move the page down some more to see Songs. 
 		System.out.println("::::Printing out SONGS.::::");
 		printElementInformation(GlobalSearchDataSourceSONGSHeaderViewUIView);
 		printElementInformation(GlobalSearchDataSourceSearchResultCellSongsRow0);
@@ -421,8 +421,9 @@ public class SearchPage extends Page{
 		printElementInformation(GlobalSearchDataSourceShowAllSongsDisclosureCell);
 		searchPage.clickShowAllSongs();
 		clickNavBarBackButton(); //searchPage.showSomeElementsOnSongsList();//  This simply doesn't work reliably enough. Collection view isn't fully populated. 
-		searchPage.scrollSearchResultsCollectionView(SwipeElementDirection.UP, 500, 50, 2000);
-		searchPage.scrollSearchResultsCollectionView(SwipeElementDirection.UP, 500, 50, 2000);
+		//sk - 11/5 - the old swipe is swiping from left to right with appium 1.6.0  to reveal the side nav bar so updating to new swipe
+		//searchPage.scrollSearchResultsCollectionView(SwipeElementDirection.UP, 500, 50, 2000);
+		swipeUp();
 		//sk - 11/5 - commenting out as PERFECT FOR has been removed from the app
 		/*System.out.println("::::Printing out PERFECT FOR.::::");
 		printElementInformation(GlobalSearchDataSourcePERFECTFORHeaderViewUIView);

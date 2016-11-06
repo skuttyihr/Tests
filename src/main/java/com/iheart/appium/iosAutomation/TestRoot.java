@@ -22,6 +22,7 @@ import org.junit.rules.MethodRule;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.Statement;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.OutputType;
@@ -33,6 +34,7 @@ import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.appium.java_client.MobileBy;
+import io.appium.java_client.TouchAction;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
 
@@ -582,9 +584,16 @@ public class TestRoot {
 		driver.swipe(startx, starty, endx, endy, duration);
 	}
 	public static void swipeUp(){
-		int startx = getAppWidth() / 2;
+		//sk - 11/5/0216 - this swipe is not working anymore with Appium 1.6.0
+		/*int startx = getAppWidth() / 2;
 		int starty = (getAppHeight() / 6) * 5;
-		swipe(startx, starty, 0, 500);
+		swipe(startx, starty, 0, 500);*/
+		
+		//sk - 11/5/ - new swipe up
+		Dimension size = driver.manage().window().getSize();
+		int centerX = size.height/2;
+		int centerY = size.width/2;
+		new TouchAction(driver).press(centerX, centerY).waitAction(1000).moveTo(0,-250).release().perform();
 	}
 	/**
 	 * Swipe left to right

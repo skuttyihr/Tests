@@ -362,9 +362,9 @@ public class LoginPage extends Page {
 		TestRoot.sleep(4000);
 		IOSElement btnAllow = driver.findElement(By.id("Allow"));
 		btnAllow.click();
-		TestRoot.sleep(2000);
-		
-		openButton.click();
+		if (waitForElementToBeVisible(openButton, 5))
+			openButton.click();
+		dismissStayConnectedPopup();
 		dismissLoginPopups();
 		return settings.isLoggedIn();
 	}

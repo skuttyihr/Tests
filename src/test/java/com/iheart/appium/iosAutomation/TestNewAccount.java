@@ -65,10 +65,8 @@ public class TestNewAccount extends TestRoot {
 		genrePage.selectGenre("Top 40 & Pop"); // This one will click done
 		Page.handlePossiblePopUp(); // Yet another popup
 		Assert.assertTrue("Could not select genre", isVisible(Page.iheartradio_logo_full));
-	
 		// Perish pesky popups!
-		Page.handlePossiblePopUp();
-		
+		Page.handlePossiblePopUp();		
 		// Test genre game improve recommendations
 		Assert.assertTrue("Could not click improve recommendations to get to genre selection page", genrePage.improveRecommendations());
 		// Make sure everything we selected earlier is still selected and saved

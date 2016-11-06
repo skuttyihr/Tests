@@ -456,7 +456,7 @@ public class FullPlayer extends Page {
 	 */
 	public String getStationType(){
 		String stationType = IHRPlayerTitleViewSubTitleLabelUILabel.getText();
-		System.out.println("getStationName() : " + stationType);
+		System.out.println("getStationType() : " + stationType);
 		return stationType;
 	}
     
