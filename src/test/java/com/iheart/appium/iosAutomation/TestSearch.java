@@ -52,7 +52,6 @@ public class TestSearch extends TestRoot {
 		String searchTerm = "xqWtlzap";
 		searchPage.enterTextIntoSearchBar(searchTerm);
 		//sk - 11/5/16 - only leaving the actual verification text for novalidresults - commenting out the rest
-		TestRoot.sleep(3000);
 		boolean invalidSearch = searchPage.isNoResultsCellDisplayedCorrectly();
 		Assert.assertTrue("Garbage search should have returned no results cell.", searchPage.isNoResultsCellDisplayedCorrectly());
 		/*searchPage.enterBackSpaceKeyIntoSearchBar(4);

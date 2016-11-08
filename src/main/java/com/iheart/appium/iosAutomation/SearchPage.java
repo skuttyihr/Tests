@@ -230,7 +230,7 @@ public class SearchPage extends Page{
 	 * @return
 	 */
 	public boolean isNoResultsCellDisplayedCorrectly(){
-		
+		waitForElementToBeVisible(GlobalSearchNoResultsCellNoResultsLabelUILabel, 3);
 		printElementInformation(GlobalSearchNoResultsCellNoResultsLabelUILabel);
 		printElementInformation(GlobalSearchNoResultsCellNoResultsSubtitleLabelUILabel);
 		String noResultsLabel = GlobalSearchNoResultsCellNoResultsSubtitleLabelUILabel.getText();

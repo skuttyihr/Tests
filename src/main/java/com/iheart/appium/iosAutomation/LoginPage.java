@@ -53,24 +53,23 @@ public class LoginPage extends Page {
 	@iOSFindBy(accessibility= "Facebook Password") private WebElement fbPasswordField;
 	@iOSFindBy(accessibility= "Log In") private WebElement fbLogInField;
 
-	
-
 	// WEB version
 	@FindBy(name = "email") private WebElement facebookEmail_web;
 	@FindBy(name = "pass") private WebElement facebookPass_web;
 	@FindBy(name = "login") private WebElement facebookLogin;
 
 	// Native version
+	@iOSFindBy(className = "XCUIElementTypeTextField") private IOSElement fbemailField;
+	@iOSFindBy(className = "XCUIElementTypeSecureTextField") private IOSElement fbpasswordField;
+	@iOSFindBy(id = "Log In") private IOSElement fbloginButton;
+	@iOSFindBy(id = "OK") private IOSElement btnAuthorize;
 
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIATextField[1]") private WebElement facebookEmail_native;
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIASecureTextField[1]") private WebElement facebookPassword_native;
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIAButton[1]") private WebElement FBlogin_native;
+	@iOSFindBy(className = "UIATextField") private IOSElement txtEmail;
+	@iOSFindBy(id = "Next")	private IOSElement btnNext;
+	@iOSFindBy(id = "Password") private IOSElement txtPasswd;
+	@iOSFindBy(id = "Sign in") private IOSElement btnSubmit;
+	@iOSFindBy(id = "Allow") private IOSElement btnAllow;
 
-	@iOSFindBy(accessibility = "Google") private WebElement googleButton;
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[2]/UIAScrollView[1]/UIAScrollView[1]/UIAWebView[1]/UIATextField[1]") private WebElement googleEmail;
-	@iOSFindBy(accessibility = "Next") private WebElement nextButton;
-	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[2]/UIAScrollView[1]/UIAScrollView[1]/UIAWebView[1]/UIASecureTextField[1]") private WebElement googlePassword;
-	@iOSFindBy(accessibility = "Sign in") private WebElement signIn;
 	// for first-timer
 	@iOSFindBy(accessibility = "Continue") private WebElement continueButton; // for first-time login user
 	@iOSFindBy(accessibility = "Allow") private WebElement allowButton;
@@ -286,36 +285,17 @@ public class LoginPage extends Page {
 		onboardingPage.clickOnboardingLoginButton();
 		waitForElementToBeVisible(IHRAuthorizationViewEmailAddressTextField, 3);
 		clickFacebookLoginButton();
-		IOSElement fbemailField = null, fbpasswordField = null,fbloginButton = null;
-	    sleep(3000);
-		if(fbemailField == null){
-			fbemailField = findElement(driver, By.id("Email or "));
-			fbemailField = findElement(driver, By.className("XCUIElementTypeTextField"));
-		}
-		if(fbpasswordField == null){
-			fbpasswordField = findElement(driver, By.className("XCUIElementTypeSecureTextField"));
-		}
-		if(fbloginButton == null){
-			fbloginButton = findElement(driver, By.id("Log In"));
-		}
-
-		if(fbemailField != null && fbpasswordField != null && fbloginButton != null){
+		
+		//adding in wait
+		if (waitForElementToBeVisible(fbemailField, 3) && waitForElementToBeVisible(fbpasswordField, 2) && waitForElementToBeVisible(fbloginButton, 2)){
 			fbemailField.sendKeys(FACEBOOKUSERNAME);
 			fbpasswordField.sendKeys(FACEBOOKPASSWORD);
 			fbloginButton.click();
 			System.out.println("Testing Facebook login. Entered FB Email, Password, and Clicked Login.");
 		}
-	    sleep(3000);
-	    driver.rotate(org.openqa.selenium.ScreenOrientation.PORTRAIT);
-	    TestRoot.sleep(4000);
-	    IOSElement btnAuthorize=driver.findElement(By.id("OK")); 
+	    waitForElementToBeVisible(btnAuthorize, 4);
 	    btnAuthorize.click();
 	    //Now switch to native view
-	    driver.context("NATIVE_APP");	 
-	    TestRoot.sleep(2000);
-	 	if(!switchToNativeContext()){
-	 			System.err.println("Could not switch back to native context!");
-	 		}
 	 	dismissLoginPopups();
 	 	try{
 	 		  genrePage.selectGenre(1);
@@ -348,27 +328,24 @@ public class LoginPage extends Page {
 	public boolean loginViaGoogle() {
 		onboardingPage.clickOnboardingLoginButton();
 		clickGoogleLoginButton();
-		sleep(3000);
-		IOSElement txtEmail = driver.findElement(By.className("UIATextField"));
-		txtEmail.sendKeys(GOOGLEUSERNAME);
-		IOSElement btnNext = driver.findElement(By.id("Next"));
-		btnNext.click();
-		TestRoot.sleep(2000);
-		IOSElement txtPasswd = driver.findElement(By.id("Password"));
-		txtPasswd.sendKeys(GOOGLEPASSWORD); 
-		TestRoot.sleep(2000);
-		IOSElement btnSubmit = driver.findElement(By.id("Sign in"));
-		btnSubmit.click();
-		TestRoot.sleep(4000);
-		IOSElement btnAllow = driver.findElement(By.id("Allow"));
-		btnAllow.click();
+		if (waitForElementToBeVisible(txtEmail,2)){
+			txtEmail.click();
+			txtEmail.sendKeys(GOOGLEUSERNAME);
+		}
+		if (waitForElementToBeVisible(btnNext,2))
+			btnNext.click();
+		if (waitForElementToBeVisible(txtPasswd,2))
+			txtPasswd.sendKeys(GOOGLEPASSWORD); 
+		if (waitForElementToBeVisible(btnSubmit,2))
+			btnSubmit.click();
+		if (waitForElementToBeVisible(btnAllow,2))
+			btnAllow.click();
 		if (waitForElementToBeVisible(openButton, 5))
 			openButton.click();
 		dismissStayConnectedPopup();
 		dismissLoginPopups();
 		return settings.isLoggedIn();
 	}
-
 
 	public void dismissStayConnectedPopup() {
 		try {
