@@ -9,7 +9,7 @@ import org.junit.Test;
 import org.junit.rules.TestName;
 
 public class TestLogin extends TestRoot {
-	
+
 	@Rule
 	public TestName name = new TestName();
 
@@ -17,77 +17,72 @@ public class TestLogin extends TestRoot {
 	public void setUp() {
 		setup();
 	}
-	
+
 	@Rule
 	public ScreenshotRule screenshot = new ScreenshotRule();
-	
-    // Can't always switch context, Appium bug
-	// Only fails when ran in a suite
-    // Starting with a reset seems to help
 
-    @Test(timeout=200000)
-    @Ignore
-	public void testLoginViaFacebook()  {
+	// Can't always switch context, Appium bug
+	// Only fails when ran in a suite
+	// Starting with a reset seems to help
+
+	@Test(timeout = 200000)
+	// sk - 11/5/16 - fixed Facebook login for fails
+	public void testLoginViaFacebook() {
 
 		LocalTime before = consoleLogStart("Testing login via Facebook.");
 		boolean testResult = loginPage.loginViaFacebook();
 		Assert.assertTrue("Could not log in via Facebook", testResult);
-		consoleLogEnd(before, testResult,  "Tested login via Facebook.");
+		consoleLogEnd(before, testResult, "Tested login via Facebook.");
 	}
 
-	@Test 
-	public void testLoginViaEmail(){
+	@Test
+	public void testLoginViaEmail() {
 		LocalTime before = consoleLogStart("Testing login via Email." + name.getMethodName());
 		boolean testResult = loginPage.login();
 		Assert.assertTrue("Could not log in with email and password", testResult);
 		consoleLogEnd(before, testResult, "Tested Log In via Email.");
 	}
-	
+
 	@Test
 	public void testIOSElementsOnPage() {
 		LocalTime before = consoleLogStart("Testing IOSElements on Log In Page");
 		loginPage.checkValuesOfElements();
 		consoleLogEnd(before, true, "Tested IOSElements");
 	}
+
 	/**
-	 * Click Login Button, Click Forgot Your Password, Show all the elements on Reset Password Page. 
-	 * Enter a bad email - click Reset and expect an error message. Click Back button and go back to Login page. 
+	 * Click Login Button, Click Forgot Your Password, Show all the elements on
+	 * Reset Password Page. Enter a bad email - click Reset and expect an error
+	 * message. Click Back button and go back to Login page.
 	 * 
-	 * Refactor ideas: Create a New account - use email to reset the password. See how to get password out of email or use one of our own email. 
+	 * Refactor ideas: Create a New account - use email to reset the password.
+	 * See how to get password out of email or use one of our own email.
 	 */
 	@Test
-	public void testResetPasswordPage(){
+	public void testResetPasswordPage() {
 		LocalTime before = consoleLogStart("Testing IOSElements on resetPasswordPage");
 		onboardingPage.clickOnboardingLoginButton();
 		loginPage.clickForgotYourPasswordButton();
-		Assert.assertTrue("Clicking 'Forgot your Password' didn't bring app to Reset Password Page", resetPasswordPage.isCurrentlyOnResetPasswordPage());
-		if(resetPasswordPage.showAllElements()){
+		Assert.assertTrue("Clicking 'Forgot your Password' didn't bring app to Reset Password Page",
+				resetPasswordPage.isCurrentlyOnResetPasswordPage());
+		if (resetPasswordPage.showAllElements()) {
 			resetPasswordPage.clearEmailAddress();
 			resetPasswordPage.enterEmailAddressToResetPassword("abademail@gmail.com");
 			resetPasswordPage.clickResetPasswordButtonWithBadEmail();
 			resetPasswordPage.clickBackButton();
 		}
 		boolean onLoginPage = loginPage.currentlyOnLoginPage();
-		Assert.assertTrue("Not currently on loginPage, check for ResetPassword issues",onLoginPage );
+		Assert.assertTrue("Not currently on loginPage, check for ResetPassword issues", onLoginPage);
 		consoleLogEnd(before, onLoginPage, "Tested IOSElements on resetPasswordPage");
 	}
-	
-	// Since Google opens Safari, we can't access those elements. 
-	@Ignore
+
+	// sr 11/5 - Got Google Login to work
 	@Test
-	public void testLoginViaGoogle(){
-		
-		int iOSVersion = 0;
-		try{
-			iOSVersion = Integer.parseInt(PLATFORM_VERSION.charAt(0) + "");
-		}catch(Exception e){}
-		if(iOSVersion >= 9){
-			System.out.println("Testing login Via Google for iOS Platform Version: "+iOSVersion);		
-			Assert.assertTrue("Could not log in via Google+", loginPage.loginViaGoogle());
-		}
-		else{
-			System.out.println("Skipping Google+ login for older OS: " + iOSVersion);
-		}
-		
+	public void testLoginViaGoogle() {
+		LocalTime before = consoleLogStart("Testing Login with Google+");
+		boolean testResult = loginPage.loginViaGoogle();
+		Assert.assertTrue("Could not log in via Google+", testResult);
+		consoleLogEnd(before, testResult, "Tested Google Login");
+
 	}
 }

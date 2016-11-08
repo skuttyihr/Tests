@@ -29,7 +29,8 @@ public class Page extends TestRoot{
 
 	@iOSFindBy(accessibility = "iheartradio_logo_full") public static IOSElement iheartradio_logo_full;
 	
-	@iOSFindBy(accessibility ="NavBar-BackButton-UIButton") private IOSElement NavBarBackButton;
+	@iOSFindBy(accessibility ="NavBar-BackButton-UIButton")
+	protected IOSElement NavBarBackButton;
 	
 	static IOSDriver<IOSElement> driver;
 	static SideNavigationBar sideNavigationBar;

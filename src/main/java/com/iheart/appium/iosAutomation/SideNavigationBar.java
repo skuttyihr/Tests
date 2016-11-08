@@ -46,7 +46,8 @@ public class SideNavigationBar extends Page {
 		return home!=null;
 	}
 	public void clickNavBarSideMenuButton(){
-		System.out.println("Clicking on Hamburger Button to Open/Close SideBar");
+		//sr - commented out for 6.7.0 - as it repeats multiple times
+		//System.out.println("Clicking on Hamburger Button to Open/Close SideBar");
 		NavBarSideMenuButtonUIButton.click();
 	}
 
@@ -127,11 +128,14 @@ public class SideNavigationBar extends Page {
 	
 	public void gotoSettings() {
 		if(settings == null || !isVisible(settings)){
-			if(!waitForElementToBeVisible(NavBarSideMenuButtonUIButton, 2)){
+			//sk-11/5-added in additional condition checking, else test fails looking for a back button when hamburger is just late in loading
+			if(!waitForElementToBeVisible(NavBarSideMenuButtonUIButton, 4) && waitForElementToBeVisible(NavBarBackButton,2)){
 				clickNavBarBackButton();
 			}
 			clickNavBarSideMenuButton();
 		}
+		//Added in method to dismiss pop-ups
+		Page.quickDismissPopUp();
 		waitForElementToBeVisible(settings, 5);
 		settings.click();
 	}

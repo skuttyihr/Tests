@@ -22,6 +22,7 @@ import org.junit.rules.MethodRule;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.Statement;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.OutputType;
@@ -33,23 +34,24 @@ import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.appium.java_client.MobileBy;
+import io.appium.java_client.TouchAction;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
 
 public class TestRoot {
-	
+
 	protected static final int UP = 0;
 	protected static final int RIGHT = 1;
 	protected static final int DOWN = 2;
 	protected static final int LEFT = 3;
-	
+
 	protected static int implicitWaitTimeout = 375;
-	
+
 	protected static IOSDriver<IOSElement> driver;
 
 	private static int appWidth = 0;
 	private static int appHeight = 0;
-	
+
 	// Desired Capabilities for Appium to be imported from properties
 	protected static String DEVICE_NAME;
 	protected static String UDID;
@@ -58,14 +60,14 @@ public class TestRoot {
 	protected static String IPA_NAME;
 	protected static boolean SIMULATOR = true;
 	protected static String MODEL;
-	
+
 	// Page elements
-	
+
 	protected static LoginPage loginPage;
 	protected static SignUpPage signupPage;
 	protected static ResetPasswordPage resetPasswordPage;
 	protected static HomePage homePage;
-	
+
 	protected static Player player;
 	protected static FullPlayer fullPlayer;
 	protected static SideNavigationBar sideNavBar;
@@ -79,13 +81,12 @@ public class TestRoot {
 	protected static MiniPlayer miniPlayer;
 	protected static SettingsPage settings;
 	protected static PerfectFor perfectFor;
-	
-	//New On Demand Elements
+
+	// New On Demand Elements
 	protected static ArtistProfilePage artistProfilePage;
-	
-	
+
 	protected static boolean useSimulator = false;
-	
+
 	// Login Info
 	protected static String IHEARTUSERNAME;
 	protected static String IHEARTPASSWORD;
@@ -95,16 +96,16 @@ public class TestRoot {
 	protected static String GOOGLEUSERNAME;
 	protected static String GOOGLEPASSWORD;
 	protected static String NEWACCOUNTPASSWORD;
-	
+
 	// Screenshot directory and URL
 	protected static String SCREENSHOT_DIRECTORY;
 	protected static String SCREENSHOT_URL;
-	
+
 	protected static void setup() {
-		System.out.println("TestRoot.setup()");	
+		System.out.println("TestRoot.setup()");
 		String appiumUrl = "";
 		String appiumPort = "";
-		
+
 		// Load up the properties file
 		Properties props = null;
 		try {
@@ -115,7 +116,7 @@ public class TestRoot {
 			props = null;
 		}
 		// Create the desired capabilities
-		if(props != null){
+		if (props != null) {
 			DEVICE_NAME = props.getProperty("APPIUM.DEVICE.NAME");
 			UDID = props.getProperty("APPIUM.DEVICE.UDID");
 			PLATFORM_VERSION = props.getProperty("APPIUM.DEVICE.PLATFORMVERSION");
@@ -124,26 +125,25 @@ public class TestRoot {
 			SIMULATOR = Boolean.parseBoolean(props.getProperty("APPIUM.USESIMULATOR"));
 			appiumUrl = props.getProperty("APPIUM.WEBDRIVER.URL");
 			appiumPort = props.getProperty("APPIUM.WEBDRIVER.PORT");
-			try{
+			try {
 				MODEL = props.getProperty("APPIUM.DEVICE.MODEL");
-			}catch(Exception e){}
-			
+			} catch (Exception e) {
+			}
+
 			// Set the screenshot directory
-			try{
+			try {
 				SCREENSHOT_DIRECTORY = props.getProperty("OPTIONS.SCREENSHOT.DIRECTORY");
-				if(!strGood(SCREENSHOT_DIRECTORY)){
+				if (!strGood(SCREENSHOT_DIRECTORY)) {
 					SCREENSHOT_DIRECTORY = "screenshots/";
 				}
 				SCREENSHOT_URL = props.getProperty("OPTIONS.SCREENSHOT.URL");
-				if(!strGood(SCREENSHOT_URL)){
+				if (!strGood(SCREENSHOT_URL)) {
 					SCREENSHOT_URL = "";
 				}
-			}
-			catch(Exception e){
+			} catch (Exception e) {
 				// These aren't mandatory, so do nothing
 			}
-		}
-		else{
+		} else {
 			// Use system properties
 			DEVICE_NAME = System.getProperty("APPIUM.DEVICE.NAME");
 			UDID = System.getProperty("APPIUM.DEVICE.UDID");
@@ -153,36 +153,35 @@ public class TestRoot {
 			SIMULATOR = Boolean.parseBoolean(System.getProperty("APPIUM.USESIMULATOR"));
 			appiumUrl = System.getProperty("APPIUM.URL");
 			appiumPort = System.getProperty("APPIUM.PORT");
-			try{
+			try {
 				MODEL = System.getProperty("APPIUM.DEVICE.MODEL");
-			}catch(Exception e){}
-			
+			} catch (Exception e) {
+			}
+
 			// Set the screenshot directory
-			try{
+			try {
 				SCREENSHOT_DIRECTORY = System.getProperty("OPTIONS.SCREENSHOT.DIRECTORY");
-				if(!strGood(SCREENSHOT_DIRECTORY)){
+				if (!strGood(SCREENSHOT_DIRECTORY)) {
 					SCREENSHOT_DIRECTORY = "screenshots/";
 				}
 				SCREENSHOT_URL = System.getProperty("OPTIONS.SCREENSHOT.URL");
-				if(!strGood(SCREENSHOT_URL)){
+				if (!strGood(SCREENSHOT_URL)) {
 					SCREENSHOT_URL = "";
 				}
-			}
-			catch(Exception e){
+			} catch (Exception e) {
 				// These aren't mandatory, so do nothing
 			}
 		}
-		
+
 		// Load the passwords
 		Properties passwords = null;
-		try{
+		try {
 			passwords = loadProperties("passwords.local");
-		}
-		catch(Exception e){
+		} catch (Exception e) {
 			System.out.println("Could not load passwords, defaulting to system properties to load passwords.");
 			passwords = null;
 		}
-		if(passwords != null){
+		if (passwords != null) {
 			// Use decrypted local properties
 			IHEARTUSERNAME = passwords.getProperty("IHEART.USERNAME");
 			IHEARTPASSWORD = passwords.getProperty("IHEART.PASSWORD");
@@ -192,8 +191,7 @@ public class TestRoot {
 			GOOGLEUSERNAME = passwords.getProperty("GOOGLE.USERNAME");
 			GOOGLEPASSWORD = passwords.getProperty("GOOGLE.PASSWORD");
 			NEWACCOUNTPASSWORD = passwords.getProperty("NEWACCOUNT.PASSWORD");
-		}
-		else{
+		} else {
 			// Use system properties
 			IHEARTUSERNAME = System.getProperty("IHEART.USERNAME");
 			IHEARTPASSWORD = System.getProperty("IHEART.PASSWORD");
@@ -204,7 +202,7 @@ public class TestRoot {
 			GOOGLEPASSWORD = System.getProperty("GOOGLE.PASSWORD");
 			NEWACCOUNTPASSWORD = System.getProperty("NEWACCOUNT.PASSWORD");
 		}
-		
+
 		// Create a new driver object
 		URL url = null;
 		try {
@@ -212,61 +210,56 @@ public class TestRoot {
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
-			
+
 		DesiredCapabilities capabilities = new DesiredCapabilities();
-        
+
 		// Set capabilities
 		capabilities.setCapability("deviceName", DEVICE_NAME);
 		capabilities.setCapability("platformName", "iOS");
 		capabilities.setCapability("platformVersion", PLATFORM_VERSION);
-		//capabilities.setCapability("interKeyDelay", 0); //Should input text faster
+		// capabilities.setCapability("interKeyDelay", 0); //Should input text
+		// faster
 		capabilities.setCapability("bundleId", BUNDLE_ID);
-		//added in new capabilities for automation to work with appium 1.6.0 and xcode 8
+		// added in new capabilities for automation to work with appium 1.6.0
+		// and xcode 8
 		capabilities.setCapability("automationName", "XCUITest");
-    	capabilities.setCapability("wdaLocalPort", "8100");
-		//capabilities.setCapability("realDeviceLogger","/Users/sreekalakutty/node_modules/deviceconsole/deviceconsole");
-		capabilities.setCapability("fullReset","true");
-		capabilities.setCapability("noReset","false");
+		capabilities.setCapability("wdaLocalPort", "8100");
+		// capabilities.setCapability("realDeviceLogger","/Users/sreekalakutty/node_modules/deviceconsole/deviceconsole");
+		capabilities.setCapability("noReset", false);
+		capabilities.setCapability("fullReset", true);
 		capabilities.setCapability("app", IPA_NAME);
-        
-        System.out.println(DEVICE_NAME + ":iOS:" + PLATFORM_VERSION +":"+ BUNDLE_ID +":"+ IPA_NAME);
-        
-        if(SIMULATOR){
-        	capabilities.setCapability("sendKeyStrategy", "oneByOne");
-        	capabilities.setCapability("calendarFormat", "gregorian");
-        }
-        else{
-        	capabilities.setCapability("sendKeyStrategy", "grouped");
-        	capabilities.setCapability("udid", UDID);
-        }
-        	
+
+		System.out.println(DEVICE_NAME + ":iOS:" + PLATFORM_VERSION + ":" + BUNDLE_ID + ":" + IPA_NAME);
+
+		if (SIMULATOR) {
+			capabilities.setCapability("sendKeyStrategy", "oneByOne");
+			capabilities.setCapability("calendarFormat", "gregorian");
+		} else {
+			capabilities.setCapability("sendKeyStrategy", "grouped");
+			capabilities.setCapability("udid", UDID);
+		}
+
 		// Start the driver
-        try{
-        	driver = new IOSDriver<IOSElement>(url, capabilities);
-        }
-        catch(Exception e){
-        	
-        	System.err.println("Could not start driver. Emulator or device may be unavailable. Appium may have disconnected or stopped. Sleeping 30 seconds to retry.\n"
-        			+ "Properties:\n"
-        			+ "Device name: " + DEVICE_NAME + "\n"
-        			+ "UDID: " + UDID + "\n"
-        			+ "Platform version: " + PLATFORM_VERSION+ "\n"
-        			+ "Bundle ID: " + BUNDLE_ID + "\n"
-        			+ "IPA/App file name: " + IPA_NAME + "\n"
-        			+ "Using simulator: " + SIMULATOR + "\n"
-        			+ "Appium URL: " + appiumUrl + "\n"
-        			+ "Appium port: " + appiumPort + "\n"
-        			+ "Model name: " + MODEL + "\n"
-        			);
-        	for(int i = 30; i > 0; i -= 5){
-        		System.err.println("Retrying in: " + i + "...");
-        		sleep(5000);
-        	}
-        	System.err.println("LAST CHANCE... TRYING TO START APPIUM BEFORE RETRYING DRIVER INITIALIZATION...\n");
-        	driver = new IOSDriver<IOSElement>(url, capabilities);
-        	sleep(100);
-        }
-		
+		try {
+			driver = new IOSDriver<IOSElement>(url, capabilities);
+		} catch (Exception e) {
+
+			System.err.println(
+					"Could not start driver. Emulator or device may be unavailable. Appium may have disconnected or stopped. Sleeping 30 seconds to retry.\n"
+							+ "Properties:\n" + "Device name: " + DEVICE_NAME + "\n" + "UDID: " + UDID + "\n"
+							+ "Platform version: " + PLATFORM_VERSION + "\n" + "Bundle ID: " + BUNDLE_ID + "\n"
+							+ "IPA/App file name: " + IPA_NAME + "\n" + "Using simulator: " + SIMULATOR + "\n"
+							+ "Appium URL: " + appiumUrl + "\n" + "Appium port: " + appiumPort + "\n" + "Model name: "
+							+ MODEL + "\n");
+			for (int i = 30; i > 0; i -= 5) {
+				System.err.println("Retrying in: " + i + "...");
+				sleep(5000);
+			}
+			System.err.println("LAST CHANCE... TRYING TO START APPIUM BEFORE RETRYING DRIVER INITIALIZATION...\n");
+			driver = new IOSDriver<IOSElement>(url, capabilities);
+			sleep(100);
+		}
+
 		// Create pages and set driver status
 		Page.setDriver(driver);
 		resetPasswordPage = new ResetPasswordPage(driver);
@@ -286,70 +279,75 @@ public class TestRoot {
 		miniPlayer = new MiniPlayer(driver);
 		settings = new SettingsPage(driver);
 		perfectFor = new PerfectFor(driver);
-		artistProfilePage = new ArtistProfilePage(driver);		
-		driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);		
+		artistProfilePage = new ArtistProfilePage(driver);
+		driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 		System.out.println("Testing on: " + MODEL);
-		
+
 		// Get rid of zip code request if it displays
 		Page.enterZip();
 
 		// Wait for OnboardingPage to display
 		onboardingPage.waitForOnboardingPage();
 	}
-	public String stringifyElementInformation(IOSElement iosElement){
-		return "TagName=["+iosElement.getTagName()+ "] Text=["+ iosElement.getText() + "] Object:"  + iosElement.toString() ;
+
+	public String stringifyElementInformation(IOSElement iosElement) {
+		return "TagName=[" + iosElement.getTagName() + "] Text=[" + iosElement.getText() + "] Object:"
+				+ iosElement.toString();
 	}
-	
-	public boolean printElementInformation(IOSElement iosElement){
-		if(iosElement == null){
+
+	public boolean printElementInformation(IOSElement iosElement) {
+		if (iosElement == null) {
 			System.out.println("is NULL! Returning false. ");
 			return false;
-		}else{
+		} else {
 			String[] aId = iosElement.toString().split(">");
 			String getText = iosElement.getAttribute("name");
-			if(!getText.equals("")){
-				//System.out.println( "  ["+aId[1] + "  text: ["+ getText + "]  tagName: ["+iosElement.getTagName()+ "] isDisplayed: [" +iosElement.isDisplayed() + "] isEnabled: [" + iosElement.isEnabled() + "] isSelected: ["+ iosElement.isSelected() +"]." ) ;
-				//.isSelected() doesnt work anymore with Appium 1.6.0beta3 - so commenting out
-				System.out.println( "  ["+aId[1] + "  text: ["+ getText + "]  tagName: ["+iosElement.getTagName()+ "] isDisplayed: [" +iosElement.isDisplayed() + "] isEnabled: [" + iosElement.isEnabled());
-			}
-			else{ //Element has no Text, not printing it. 
-				System.out.println("  ["+ aId[1] + " tagName: ["+iosElement.getTagName()+ "] isDisplayed: [" +iosElement.isDisplayed() + "] isEnabled: [" + iosElement.isEnabled() + "] isSelected: ["+ iosElement.isSelected() +"].") ;
+			if (!getText.equals("")) {
+				// .isSelected() doesnt work anymore with Appium 1.6.0beta3 - so
+				// removed that at the end of the below line
+				System.out.println("  [" + aId[1] + "  text: [" + getText + "]  tagName: [" + iosElement.getTagName()
+				+ "] isDisplayed: [" + iosElement.isDisplayed() + "] isEnabled: [" + iosElement.isEnabled());
+			} else { // Element has no Text, not printing it.
+				System.out.println("  [" + aId[1] + " tagName: [" + iosElement.getTagName() + "] isDisplayed: ["
+						+ iosElement.isDisplayed() + "] isEnabled: [" + iosElement.isEnabled() + "] isSelected: ["
+						+ iosElement.isSelected() + "].");
 			}
 			System.out.println(iosElement.isDisplayed());
-			//return iosElement.isDisplayed();
-			return true;
+			return iosElement.isDisplayed();
 		}
-		
+
 	}
 
 	protected static void tearDown() {
 		System.out.println("Testcase finished. Testroot.after():: Quitting driver.");
-		if(driver != null){
-			try{
-				// If app isn't resetting through appium, try running a test with this un-commented
-//				driver.resetApp();
+		if (driver != null) {
+			try {
+				// If app isn't resetting through appium, try running a test
+				// with this un-commented
+				// driver.resetApp();
 				driver.quit();
-			}
-			catch(Exception e){
+			} catch (Exception e) {
 				System.err.println("ERROR SHUTTING DOWN DRIVER");
 				e.printStackTrace();
 			}
 		}
 		System.out.println("######################################################################");
 	}
-	
+
 	//// Utility Methods ////
-	
+
 	public static int getRandomInt() {
 		return getRandomInt(999999);
 	}
-	public static int getRandomInt(int max){
+
+	public static int getRandomInt(int max) {
 		Random randomGenerator = new Random();
 		return randomGenerator.nextInt(max);
 	}
-	
+
 	/**
-	 * Takes a screenshot, saves it to the location of the test method 
+	 * Takes a screenshot, saves it to the location of the test method
+	 * 
 	 * @param driver
 	 * @param testMethod
 	 * @throws Exception
@@ -366,9 +364,10 @@ public class TestRoot {
 		FileUtils.copyFile(scrFile, new File(screenshotName));
 		System.out.println("Screenshot is taken.");
 	}
-	
+
 	/**
 	 * Passed in a property file, it returns the loaded properties
+	 * 
 	 * @param propFile
 	 * @return
 	 * @throws Exception
@@ -380,7 +379,8 @@ public class TestRoot {
 			in = TestRoot.class.getClassLoader().getResourceAsStream(propFile);
 			loadedProps.load(in);
 		} catch (Exception e) {
-			System.out.println("Properties couldn't be loaded - most likely the propFile: " + propFile + " couldn't be found.");
+			System.out.println(
+					"Properties couldn't be loaded - most likely the propFile: " + propFile + " couldn't be found.");
 		} finally {
 			in.close();
 		}
@@ -389,6 +389,7 @@ public class TestRoot {
 
 	/**
 	 * Returns a Map of String, String for the location from an IP address
+	 * 
 	 * @param driver
 	 * @return
 	 */
@@ -414,7 +415,7 @@ public class TestRoot {
 
 		return geoInfo;
 	}
-	
+
 	/** dynamically load jQuery */
 	public static void injectJQuery(WebDriver driver) {
 		String LoadJQuery = "(function(jqueryUrl, callback) {\n" + "if (typeof jqueryUrl != 'string') {"
@@ -434,127 +435,126 @@ public class TestRoot {
 		js.executeAsyncScript(LoadJQuery);
 		System.out.println("Jquery is loaded.");
 	}
-	
-	public static IOSElement find(IOSDriver<IOSElement> d, String locator){
+
+	public static IOSElement find(IOSDriver<IOSElement> d, String locator) {
 		// Guess the locator, returns the element
-		if(locator.startsWith("//")){
+		if (locator.startsWith("//")) {
 			return findElement(d, MobileBy.xpath(locator));
-		}
-		else{
+		} else {
 			// name or ID?
 			IOSElement testEle = findElement(d, MobileBy.AccessibilityId(locator));
-			if(testEle == null){
+			if (testEle == null) {
 				// try Name
 				testEle = findElement(d, MobileBy.name(locator));
 			}
 			return testEle; // null if we found nothing
 		}
 	}
-	
-	public static IOSElement findElement(IOSDriver<IOSElement> d, By by){
+
+	public static IOSElement findElement(IOSDriver<IOSElement> d, By by) {
 		IOSElement e = null;
-		try{
+		try {
 			d.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
 			e = d.findElement(by);
-		}
-		catch(Exception exc){}
-		finally{
+		} catch (Exception exc) {
+		} finally {
 			d.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 		}
 		return e;
 	}
 
-	public static List<IOSElement> findElements(IOSDriver<IOSElement> d, By by){
+	public static List<IOSElement> findElements(IOSDriver<IOSElement> d, By by) {
 		List<IOSElement> foundElements = null;
-		try{
+		try {
 			d.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
 			foundElements = d.findElements(by);
-		}
-		catch(Exception e){
+		} catch (Exception e) {
 			System.out.println("Could not find elements");
-		}
-		finally{
+		} finally {
 			d.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 		}
-		
+
 		return foundElements;
 	}
-	
+
 	/**
 	 * Guesses, useful for only Xpaths or names.
+	 * 
 	 * @param locator
 	 * @return
 	 */
-	public static By find(String locator){
-		// Try to guess locator 
-		if(locator.startsWith("//")){
+	public static By find(String locator) {
+		// Try to guess locator
+		if (locator.startsWith("//")) {
 			return find(locator, "xpath");
-		}
-		else{
+		} else {
 			return find(locator, "name");
 		}
 	}
+
 	/**
 	 * Driver, locator, method to locate BY
+	 * 
 	 * @param d
 	 * @param locator
 	 * @param method
 	 * @return
 	 */
-	public static By find(String locator, String method){
-		if(method.equalsIgnoreCase("name")){
+	public static By find(String locator, String method) {
+		if (method.equalsIgnoreCase("name")) {
 			return MobileBy.name(locator);
-		}
-		else if(method.equalsIgnoreCase("name")){
+		} else if (method.equalsIgnoreCase("name")) {
 			return MobileBy.id(locator);
-		}
-		else if(method.equalsIgnoreCase("xpath")){
+		} else if (method.equalsIgnoreCase("xpath")) {
 			return MobileBy.xpath(locator);
-		}
-		else if(method.toLowerCase().contains("css")){
+		} else if (method.toLowerCase().contains("css")) {
 			return MobileBy.cssSelector(locator);
-		}
-		else{
+		} else {
 			return MobileBy.className(locator);
 		}
 	}
+
 	/**
-	 * Pass in the Page or Element Message you want to test as a String "isCurrentlyOnHomePage" for instance, and the specific element to test. 
-	 * Method checks that the element is not null and then checks whether it isDisplayed. 
+	 * Pass in the Page or Element Message you want to test as a String
+	 * "isCurrentlyOnHomePage" for instance, and the specific element to test.
+	 * Method checks that the element is not null and then checks whether it
+	 * isDisplayed.
+	 * 
 	 * @param isCurrentlyOnPageMessage
 	 * @param element
 	 * @return
 	 */
-	public boolean isCurrentlyOn(String isCurrentlyOnPageMessage, IOSElement element){
-		
-		try{
-			if(Page.waitForElementToBeVisible(element, 10)){
-				if(element!= null){
+	public boolean isCurrentlyOn(String isCurrentlyOnPageMessage, IOSElement element) {
+
+		try {
+			if (Page.waitForElementToBeVisible(element, 10)) {
+				if (element != null) {
 					boolean onPage = element.isDisplayed();
-					System.out.println(isCurrentlyOnPageMessage+ "() : " + onPage);
+					System.out.println(isCurrentlyOnPageMessage + "() : " + onPage);
 					return onPage;
 				}
 			}
-		}
-		catch(NoSuchElementException e){
-			System.out.println(isCurrentlyOnPageMessage+ "() : false.   ~~~NoSuchElementException Caught.~~~");
+		} catch (NoSuchElementException e) {
+			System.out.println(isCurrentlyOnPageMessage + "() : false.   ~~~NoSuchElementException Caught.~~~");
 			return false;
 		}
-		return false; //Default
+		return false; // Default
 	}
+
 	// General navigation
 	/**
-	 * Swipe in a direction from a start point
-	 * Directions: 0: up, 1: right, 2: down, 3: left
+	 * Swipe in a direction from a start point Directions: 0: up, 1: right, 2:
+	 * down, 3: left
+	 * 
 	 * @param startx
 	 * @param starty
 	 * @param direction
 	 * @param duration
 	 */
-	public static void swipe(int startx, int starty, int direction, int duration){
+	public static void swipe(int startx, int starty, int direction, int duration) {
 		int endx = 0;
 		int endy = 0;
-		switch (direction){
+		switch (direction) {
 		case 0:
 			endx = startx;
 			endy = starty - 300;
@@ -563,7 +563,7 @@ public class TestRoot {
 			endx = startx + 150;
 			endy = starty;
 			break;
-		case 2: 
+		case 2:
 			endx = startx;
 			endy = starty + 300;
 			break;
@@ -572,76 +572,91 @@ public class TestRoot {
 			endy = starty;
 			break;
 		}
-		if(endx < 0)
+		if (endx < 0)
 			endx = 0;
-		if(endx > getAppWidth())
+		if (endx > getAppWidth())
 			endx = getAppWidth();
-		if(endy < 0)
+		if (endy < 0)
 			endy = 0;
-		if(endy > getAppHeight())
+		if (endy > getAppHeight())
 			endy = getAppHeight();
-		
+
 		driver.swipe(startx, starty, endx, endy, duration);
 	}
-	public static void swipeUp(){
-		int startx = getAppWidth() / 2;
-		int starty = (getAppHeight() / 6) * 5;
-		swipe(startx, starty, 0, 500);
+
+	public static void swipeUp() {
+		// sk - 11/5/0216 - this swipe is not working anymore with Appium 1.6.0
+		/*
+		 * int startx = getAppWidth() / 2; int starty = (getAppHeight() / 6) *
+		 * 5; swipe(startx, starty, 0, 500);
+		 */
+
+		// sk - 11/5/ - new swipe up
+		Dimension size = driver.manage().window().getSize();
+		int centerX = size.height / 2;
+		int centerY = size.width / 2;
+		new TouchAction(driver).press(centerX, centerY).waitAction(1000).moveTo(0, -250).release().perform();
 	}
+
 	/**
 	 * Swipe left to right
 	 */
-	public static void swipeRight(){
+	public static void swipeRight() {
 		int startx = getAppWidth() / 6;
 		int starty = getAppHeight() / 2;
 		swipe(startx, starty, 1, 500);
 	}
-	public static void swipeDown(){
+
+	public static void swipeDown() {
 		int startx = getAppWidth() / 2;
 		int starty = getAppHeight() / 6;
 		swipe(startx, starty, 2, 500);
 	}
+
 	/**
 	 * Swipe right to left
 	 */
-	public static void swipeLeft(){
+	public static void swipeLeft() {
 		int startx = (getAppWidth() / 6) * 5;
 		int starty = getAppHeight() / 2;
 		swipe(startx, starty, 3, 500);
 	}
-	
+
 	/**
-	 * Does a large swipe in the desired direction, used for paging left or right
+	 * Does a large swipe in the desired direction, used for paging left or
+	 * right
+	 * 
 	 * @param direction
 	 */
-	public static void pageSwipe(int direction){
+	public static void pageSwipe(int direction) {
 		int y = getAppHeight() / 2;
 		int startX = 0;
 		int endX = 0;
-		if(direction == 1){
+		if (direction == 1) {
 			// left to right
 			startX = getAppWidth() / 10;
 			endX = (getAppWidth() / 10) * 9;
-		}
-		else{
+		} else {
 			// right to left
 			startX = (getAppWidth() / 10) * 9;
 			endX = getAppWidth() / 10;
 		}
-		try{
+		try {
 			driver.swipe(startX, y, endX, y, 500);
-		}catch(Exception e){}
+		} catch (Exception e) {
+		}
 	}
-	
+
 	/**
-	 * Swipes on an element, keeping within the bounds of the element, if possible
-	 * Will try to swipe to/from 10%-90% of the element +/- 4/5 from center
-	 * 0=Up 1=Right 2=Down 3=Left
+	 * Swipes on an element, keeping within the bounds of the element, if
+	 * possible Will try to swipe to/from 10%-90% of the element +/- 4/5 from
+	 * center 0=Up 1=Right 2=Down 3=Left
+	 * 
 	 * @param item
 	 * @param direction
 	 */
-	public static void swipeOnItem(IOSElement item, int direction){
-		if(!isVisible(item)){
+	public static void swipeOnItem(IOSElement item, int direction) {
+		if (!isVisible(item)) {
 			return;
 		}
 		int x = item.getLocation().getX();
@@ -657,7 +672,7 @@ public class TestRoot {
 		int startY = centerY;
 		int endX = centerX;
 		int endY = centerY;
-		switch(direction){
+		switch (direction) {
 		case 0: // Up ^
 			startX = centerX;
 			startY = (tenthY * 9) + y;
@@ -686,97 +701,98 @@ public class TestRoot {
 			System.err.println("Direction must be 0, 1, 2, or 3 for Up, Right, Down, or Left, respectively.");
 			break;
 		}
-		
-		if(startX != endX || startY != endY){
-			try{
+
+		if (startX != endX || startY != endY) {
+			try {
 				driver.swipe(startX, startY, endX, endY, 500);
-			}
-			catch(Exception e){
+			} catch (Exception e) {
 				System.err.println("Error trying to swipe on element!\n");
 				e.printStackTrace();
 			}
 		}
 	}
-	
-	public static int getAppWidth(){
-		if(appWidth == 0)
+
+	public static int getAppWidth() {
+		if (appWidth == 0)
 			appWidth = driver.manage().window().getSize().getWidth();
 		return appWidth;
 	}
-	public static int getAppHeight(){
-		if(appHeight == 0)
+
+	public static int getAppHeight() {
+		if (appHeight == 0)
 			appHeight = driver.manage().window().getSize().getHeight();
 		return appHeight;
 	}
-	
+
 	public static Set<String> getContextHandles() {
 		Set<String> contexts = new HashSet<String>();
-		try{
+		try {
 			contexts = driver.getContextHandles(); // Errors here
-		}
-		catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		return contexts;
 	}
-	public static boolean switchToWebContext(){
-		try{
-			driver.context("WEBVIEW_1"); //WEBVIEW_1
+
+	public static boolean switchToWebContext() {
+		try {
+			driver.context("WEBVIEW_1"); // WEBVIEW_1
 			sleep(3500);
-		}
-		catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return driver.getContext().equals("WEBVIEW_1");
 	}
-	public static boolean switchToNativeContext(){
+
+	public static boolean switchToNativeContext() {
 		driver.context("NATIVE_APP");
 		sleep(1000);
 		return driver.getContext().equals("NATIVE_APP");
 	}
-	
+
 	//// Waiting Methods ////
-	static boolean isVisible(IOSElement e){
+	static boolean isVisible(IOSElement e) {
 		boolean isVisible = false;
-		if(e == null){
+		if (e == null) {
 			return false;
 		}
-		try{
+		try {
 			driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
 			isVisible = e.isDisplayed();
-		}catch(Exception x){}
-		finally{
+		} catch (Exception x) {
+		} finally {
 			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 		}
 		return isVisible;
 	}
-	
-	static boolean isEnabled(IOSElement e){
+
+	static boolean isEnabled(IOSElement e) {
 		boolean isEnabled = false;
-		if( e == null)
+		if (e == null)
 			return false;
-		try{
+		try {
 			driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
 			isEnabled = e.isEnabled();
-		}catch(Exception x){}
-		finally{
+		} catch (Exception x) {
+		} finally {
 			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 		}
-		
+
 		return isEnabled;
 	}
-	
-	public static void sleep(int timeInMs){
-		try{
+
+	public static void sleep(int timeInMs) {
+		try {
 			Thread.sleep(timeInMs);
-		} catch(Exception e){}
+		} catch (Exception e) {
+		}
 	}
-	
-	/** 
-	 * Waits until the document readtState equals complete
-	 * AKA: a page has loaded
-	 * Uses Javascript Executor
+
+	/**
+	 * Waits until the document readtState equals complete AKA: a page has
+	 * loaded Uses Javascript Executor
+	 * 
 	 * @param driver
 	 */
 	public static void waitForPageToLoad(WebDriver driver) {
@@ -793,124 +809,122 @@ public class TestRoot {
 		}
 	}
 
-	
-	public static IOSElement waitForPresent(IOSDriver<IOSElement> d, By by, long timeoutInSec){
+	public static IOSElement waitForPresent(IOSDriver<IOSElement> d, By by, long timeoutInSec) {
 		long timeLeftMil = timeoutInSec * 1000;
-		while(timeLeftMil > 0){
-			if(findElement(d, by) != null){
+		while (timeLeftMil > 0) {
+			if (findElement(d, by) != null) {
 				break;
 			}
-//			sleep(200);
+			// sleep(200);
 			timeLeftMil -= 1000;
 		}
 		return (IOSElement) d.findElement(by);
 	}
-	
-	public static IOSElement waitForVisible(IOSDriver<IOSElement> d, By by, long timeoutInSec){
+
+	public static IOSElement waitForVisible(IOSDriver<IOSElement> d, By by, long timeoutInSec) {
 		// Wait for it to be present (not just clickable/visible, but loaded)
 		long timeLeftMil = timeoutInSec * 1000;
-		while(timeLeftMil > 0){
-			if(findElement(d, by) != null){
+		while (timeLeftMil > 0) {
+			if (findElement(d, by) != null) {
 				break;
 			}
 			timeLeftMil -= 1000; // Takes about a second each time
 		}
-	
+
 		IOSElement returnElement = null;
-		try{
+		try {
 			returnElement = findElement(d, by);
-		}
-		catch(Exception e){
-			System.out.println("waitForVisible() failed because the element could not be found...  by = " + by.toString());
+		} catch (Exception e) {
+			System.out.println(
+					"waitForVisible() failed because the element could not be found...  by = " + by.toString());
 		}
 		return returnElement;
 	}
-	
-	public static boolean waitForElementToBeVisible(IOSElement ele, int timeInSeconds){
-		if(isVisible(ele)){
+
+	public static boolean waitForElementToBeVisible(IOSElement ele, int timeInSeconds) {
+		if (isVisible(ele)) {
 			return true; // Already visible
 		}
 		long timeLeftMil = timeInSeconds * 1000;
-		while(timeLeftMil > 0){
-			if(isVisible(ele)){
+		while (timeLeftMil > 0) {
+			if (isVisible(ele)) {
 				break;
 			}
-//			sleep(100); // Intentionally mismatched to make up for time searching for element
+			// sleep(100); // Intentionally mismatched to make up for time
+			// searching for element
 			timeLeftMil -= 1000;
 		}
-		
+
 		return isVisible(ele);
 	}
-	
-	public static boolean waitForElementToBeEnabled(IOSElement ele, int maxWaitTimeSeconds){
-		if(!isVisible(ele)){
+
+	public static boolean waitForElementToBeEnabled(IOSElement ele, int maxWaitTimeSeconds) {
+		if (!isVisible(ele)) {
 			waitForElementToBeVisible(ele, maxWaitTimeSeconds);
 			maxWaitTimeSeconds = 1;
 		}
-		if(ele.isEnabled()){
+		if (ele.isEnabled()) {
 			return true;
 		}
-		
-		while(maxWaitTimeSeconds > 0){
-			try{
+
+		while (maxWaitTimeSeconds > 0) {
+			try {
 				driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
-				if(ele.isEnabled()){
+				if (ele.isEnabled()) {
 					break;
 				}
-			}
-			catch(Exception e){}
-			finally{
+			} catch (Exception e) {
+			} finally {
 				maxWaitTimeSeconds -= 1;
 				driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 			}
 		}
-		if(!isVisible(ele)){
+		if (!isVisible(ele)) {
 			return false;
 		}
 		return ele.isEnabled();
 	}
-	
-	public static boolean waitForNotVisible(IOSDriver<IOSElement> d, By by, int maxWaitTimeSeconds){
+
+	public static boolean waitForNotVisible(IOSDriver<IOSElement> d, By by, int maxWaitTimeSeconds) {
 		boolean elementGone = false;
-		for(int i = 0; i < maxWaitTimeSeconds; i++){
-			try{
+		for (int i = 0; i < maxWaitTimeSeconds; i++) {
+			try {
 				IOSElement element = waitForVisible(d, by, 1);
-				if(element == null){
+				if (element == null) {
 					elementGone = true;
 					break;
 				}
-			}catch(Exception e){}
+			} catch (Exception e) {
+			}
 		}
 		return elementGone;
 	}
-	
-	public static boolean click(IOSDriver<IOSElement> d, By by){
+
+	public static boolean click(IOSDriver<IOSElement> d, By by) {
 		IOSElement clickMe = findElement(d, by);
-		if(isVisible(clickMe)){
+		if (isVisible(clickMe)) {
 			clickMe.click();
 			return true;
 		}
 		return false;
 	}
-	
-	public static boolean click(IOSDriver<IOSElement> d, IOSElement ele){
+
+	public static boolean click(IOSDriver<IOSElement> d, IOSElement ele) {
 		boolean couldClick = false;
-		
-		if(isVisible(ele)){
-			try{
+
+		if (isVisible(ele)) {
+			try {
 				ele.click();
 				couldClick = true;
-			}
-			catch(Exception e){
-				try{
+			} catch (Exception e) {
+				try {
 					System.out.println("Error clicking element (see below), retyring.");
 					System.out.println(e.getMessage());
 					int x = ele.getLocation().getX();
 					int y = ele.getLocation().getY();
 					d.tap(1, x, y, 300);
 					couldClick = true;
-				}
-				catch(Exception e1){
+				} catch (Exception e1) {
 					System.err.println("Could not click element!");
 					System.out.println("Error 1:");
 					e.printStackTrace();
@@ -919,55 +933,60 @@ public class TestRoot {
 				}
 			}
 		}
-		
+
 		return couldClick;
 	}
-	
+
 	/**
 	 * If a string is not empty and not null ("good"), return true
+	 * 
 	 * @param s
 	 * @return
 	 */
-	public static boolean strGood(String s){
+	public static boolean strGood(String s) {
 		return s != null && s.length() > 0;
 	}
-	
+
 	/**
-	 * For test cases that return an error string, 
-	 * 		this gets a simple boolean by inverting the logic 
-	 * 		of the standard string test, 
-	 * 		returning TRUE if there are NO ERRORS.
+	 * For test cases that return an error string, this gets a simple boolean by
+	 * inverting the logic of the standard string test, returning TRUE if there
+	 * are NO ERRORS.
+	 * 
 	 * @param s
 	 * @return
 	 */
-	public static boolean didPass(String s){
+	public static boolean didPass(String s) {
 		return !strGood(s);
 	}
-	public static boolean passed(String s){ // A rose by any other name...
+
+	public static boolean passed(String s) { // A rose by any other name...
 		return didPass(s);
 	}
-	public static boolean didPass(Errors err){
+
+	public static boolean didPass(Errors err) {
 		return err.howMany() == 0;
 	}
-	public static boolean passed(Errors err){
+
+	public static boolean passed(Errors err) {
 		return didPass(err);
 	}
-	
-	public static boolean isAbout(int testing, int expected){
+
+	public static boolean isAbout(int testing, int expected) {
 		return isAbout(testing, expected, 2);
 	}
-	public static boolean isAbout(int testing, int expected, int variance){
-		if(testing == expected || testing + variance >= expected && testing - variance <= expected){
+
+	public static boolean isAbout(int testing, int expected, int variance) {
+		if (testing == expected || testing + variance >= expected && testing - variance <= expected) {
 			return true;
 		}
 		return false;
 	}
-	
-	public static String getTextOfInt(int x){
+
+	public static String getTextOfInt(int x) {
 		String returnString = "";
-		
+
 		returnString = String.valueOf(x);
-		switch(returnString.charAt(returnString.length() -1)){
+		switch (returnString.charAt(returnString.length() - 1)) {
 		case '1':
 			returnString += "st";
 			break;
@@ -981,61 +1000,59 @@ public class TestRoot {
 			returnString += "th";
 			break;
 		}
-		
+
 		return returnString;
 	}
-	
-	public static LocalTime consoleLogStart(String consoleMessage){
+
+	public static LocalTime consoleLogStart(String consoleMessage) {
 		System.out.println(consoleMessage);
 		return LocalTime.now();
 	}
-	public static void consoleLogEnd(LocalTime begin, boolean testResult, String endMessage){
+
+	public static void consoleLogEnd(LocalTime begin, boolean testResult, String endMessage) {
 		Duration seconds = Duration.between(begin, LocalTime.now());
 		String result = testResult ? "Test Passed. " : "Test Failed. ";
-		System.out.println(result + endMessage + "    [ "+ seconds.getSeconds() + " seconds ]");
-	
-		
+		System.out.println(result + endMessage + "    [ " + seconds.getSeconds() + " seconds ]");
+
 	}
 
 	/**
-	 * Screenshot Rule
-	 * Runs after every test. 
-	 * If the test passed, this runs the usual shutdown method
-	 * If it failed, it takes a screenshot, then runs the usual shutdown method
-	 * This replaces @after with the following:
-	 * @Rule
-	 * public ScreenshotRule screenshot = new ScreenshotRule();
+	 * Screenshot Rule Runs after every test. If the test passed, this runs the
+	 * usual shutdown method If it failed, it takes a screenshot, then runs the
+	 * usual shutdown method This replaces @after with the following:
+	 * 
+	 * @Rule public ScreenshotRule screenshot = new ScreenshotRule();
 	 * 
 	 */
-	public class ScreenshotRule implements MethodRule{
-		
+	public class ScreenshotRule implements MethodRule {
+
 		@Override
 		/**
-		 * Tests run within this. Once it ends, it takes a screenshot for failures, but ends regardless
+		 * Tests run within this. Once it ends, it takes a screenshot for
+		 * failures, but ends regardless
 		 */
 		public Statement apply(Statement statement, FrameworkMethod method, Object target) {
 			return new Statement() {
 				@Override
 				/**
-				 * Run the test, if it fails, catch the failure (an exception/throwable)
-				 * 		and take a screenshot, before allowing the failure to continue.
-				 * Then, fail the test. 		
+				 * Run the test, if it fails, catch the failure (an
+				 * exception/throwable) and take a screenshot, before allowing
+				 * the failure to continue. Then, fail the test.
 				 */
 				public void evaluate() throws Throwable {
-					try{
+					try {
 						statement.evaluate();
-					}
-					catch(Throwable t){
-						// Catch the failure, take the screenshot, then pass the failure on
-						if(driver != null){
+					} catch (Throwable t) {
+						// Catch the failure, take the screenshot, then pass the
+						// failure on
+						if (driver != null) {
 							Errors.captureScreenshot(driver, method.getName());
 						}
 						// Make sure we quit
 						tearDown();
 						// Throw the original error
 						throw t;
-					}
-					finally{
+					} finally {
 						// Quit even if it did not fail
 						tearDown();
 					}
