@@ -84,28 +84,29 @@ public class SideNavigationBar extends Page {
 	}
 
 	public void gotoLiveRadioPage() {
-		//clickNavBarSideMenuButton();
+		clickNavBarSideMenuButton();
 		liveRadio.click();
 		Page.handlePossiblePopUp();
 	}
-
-	public void gotoLiveArtistPage() {
-		//clickNavBarSideMenuButton();
+	
+	//sk - 11/7 - renamed method to reflect Artist page
+	public void gotoArtistPage() {
+		clickNavBarSideMenuButton();
 		artistRadio.click();
 	}
 
 	public void gotoPodcastsPage() {
-		//clickNavBarSideMenuButton();
+		clickNavBarSideMenuButton();
 		podcasts.click();
 	}
 	
 	public void gotoPerfectFor(){
-		//clickNavBarSideMenuButton();
+		clickNavBarSideMenuButton();
 		perfectFor.click();
 	}
 
 	public void gotoListeningHistoryPage() {
-		//clickNavBarSideMenuButton();
+		clickNavBarSideMenuButton();
 		listeningHistory.click();
 	}
 
@@ -117,12 +118,12 @@ public class SideNavigationBar extends Page {
 	}
 	
 	public void gotoAlarm(){
-		//clickNavBarSideMenuButton();
+		clickNavBarSideMenuButton();
 		alarm.click();
 	}
 	
 	public void gotoSleep(){
-		//clickNavBarSideMenuButton();
+		clickNavBarSideMenuButton();
 		sleep.click();
 	}
 	

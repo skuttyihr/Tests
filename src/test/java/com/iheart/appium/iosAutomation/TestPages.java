@@ -18,23 +18,26 @@ public class TestPages extends TestRoot {
 		setup();
 	}
 
-//	@After
-//	public void after() {
-//		TestRoot.tearDown();
-//	}
-	
+	// @After
+	// public void after() {
+	// TestRoot.tearDown();
+	// }
+
 	@Rule
 	public ScreenshotRule screenshot = new ScreenshotRule();
-	
+
 	@Test
-	@Ignore
+	// @Ignore
 	/**
-	 * Test for Logo and Title on Pages. Checks a variety of Logos and Titles and whether they are visible or not. 
-	 * Includes MyStations, Local Radio, Live Radio, Live Artist Page, Podcasts Page, Perfect  For, Listening History, Alarm, & Sleep
+	 * Test for Logo and Title on Pages. Checks a variety of Logos and Titles
+	 * and whether they are visible or not. Includes MyStations, Local Radio,
+	 * Live Radio, Live Artist Page, Podcasts Page, Perfect For, Listening
+	 * History, Alarm, & Sleep
 	 * 
 	 */
-	public void testForLogoAndTitleOnPages(){
-		LocalTime before = consoleLogStart("Testing testForLogoAndTitleOnPages()- checks Logos and Titles for MyStations, Local Radio, Live Radio, Live Artist Page, Podcasts Page, Perfect  For, Listening History, Alarm, & Sleep");
+	public void testForLogoAndTitleOnPages() {
+		LocalTime before = consoleLogStart(
+				"Testing testForLogoAndTitleOnPages()- checks Logos and Titles for MyStations, Local Radio, Live Radio, Live Artist Page, Podcasts Page, Perfect  For, Listening History, Alarm, & Sleep");
 		loginPage.loginWithoutVerifying();
 		// Verify each page
 		Assert.assertTrue("Logo was not visible", isVisible(Page.iheartradio_logo_full));
@@ -44,39 +47,42 @@ public class TestPages extends TestRoot {
 		Assert.assertTrue("Logo was not visible on Local Radio", isVisible(Page.iheartradio_logo_full));
 		sideNavBar.gotoLiveRadioPage();
 		Assert.assertTrue("Live radio page should not have logo", !isVisible(Page.iheartradio_logo_full));
-		IOSElement liveRadio = findElement(driver, By.xpath("//UIAApplication[1]/UIAWindow[1]/UIANavigationBar[1]/UIAStaticText[1]"));
-		Assert.assertTrue("Live Radio page was not visible", isVisible(liveRadio));
-		Assert.assertTrue("Live Radio page did not have title of 'Live Radio'", 
-				liveRadio.getText().equals("Live Radio"));
-		sideNavBar.gotoLiveArtistPage();
+		Assert.assertTrue("Live Radio page was not visible", Page.liveRadio.isDisplayed());
+		Assert.assertTrue("Live Radio page did not have title of 'Live Radio'",
+				Page.liveRadio.getText().equals("Live Radio"));
+		sideNavBar.gotoArtistPage();
 		Assert.assertTrue("Artist Radio page should not have logo", !isVisible(Page.iheartradio_logo_full));
-		Assert.assertTrue("Artist Radio page did not have title of 'Artist Radio'", 
-				isVisible(findElement(driver, By.name("Artist Radio"))));
+		sleep(4000);
+		Assert.assertTrue("Artist Radio page did not have title of 'Artist Radio'",
+				Page.artistRadio.getAttribute("value").equals("Artist Radio"));
 		sideNavBar.gotoPodcastsPage();
 		Assert.assertTrue("Podcast page should not have logo", !isVisible(Page.iheartradio_logo_full));
-		Assert.assertTrue("Podcast page did not have title of 'Podcasts'", 
-				isVisible(findElement(driver, By.name("Podcasts"))));
-		sideNavBar.gotoPerfectFor();
-		Assert.assertTrue("Perfect For page should not have logo", !isVisible(Page.iheartradio_logo_full));
-		Assert.assertTrue("Perfect For page did not have title of 'Perfect For'", 
-				isVisible(findElement(driver, By.name("Perfect For"))));
+		Assert.assertTrue("Podcast page did not have title of 'Podcasts'",
+				Page.podcasts.getAttribute("value").equals("Podcasts"));
+		// sk - 11/5 - n/a anymore so commenting out
+		// sideNavBar.gotoPerfectFor();
+		// Assert.assertTrue("Perfect For page should not have logo",
+		// !isVisible(Page.iheartradio_logo_full));
+		// Assert.assertTrue("Perfect For page did not have title of 'Perfect
+		// For'",
+		// isVisible(findElement(driver, By.name("Perfect For"))));
 		sideNavBar.gotoListeningHistoryPage();
 		Assert.assertTrue("Listening History page should not have logo", !isVisible(Page.iheartradio_logo_full));
-		IOSElement listeningHistory = findElement(driver, By.xpath("//UIAApplication[1]/UIAWindow[1]/UIANavigationBar[1]/UIAStaticText[2]"));
-		Assert.assertTrue("Listening History page title was not visible", isVisible(listeningHistory));
-		Assert.assertTrue("Listening History page did not have title of 'Listening History'", 
-								listeningHistory.getText().equals("Listening History"));
+		Assert.assertTrue("Listening History page title was not visible",
+				Page.listeningHistory.getText().equals("Listening History"));
+		Assert.assertTrue("Listening History page did not have title of 'Listening History'",
+				Page.listeningHistory.getText().equals("Listening History"));
 		// Items that require login
 		sideNavBar.gotoAlarm();
 		// We went into alarm, as expected
 		Assert.assertTrue("Alarm page should not have logo", !isVisible(Page.iheartradio_logo_full));
-		Assert.assertTrue("Alarm Clock page did not have title of 'Alarm Clock'", 
-				isVisible(findElement(driver, By.name("Alarm Clock"))));
+		Assert.assertTrue("Alarm Clock page did not have title of 'Alarm Clock'",
+				Page.alarmClock.getText().equals("Alarm Clock"));
 		sideNavBar.gotoSleep();
 		Assert.assertTrue("Sleep page should not have logo", !isVisible(Page.iheartradio_logo_full));
-		Assert.assertTrue("Sleep Timer page did not have title of 'Sleep Timer'", 
-				isVisible(findElement(driver, By.name("Sleep Timer"))));
-		consoleLogEnd(before, true,  "Tested testForLogoAndTitleOnPages()"); 
+		Assert.assertTrue("Sleep Timer page did not have title of 'Sleep Timer'",
+				Page.sleepTimer.getText().equals("Sleep Timer"));
+		consoleLogEnd(before, true, "Tested testForLogoAndTitleOnPages()");
 	}
-	
+
 }

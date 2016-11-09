@@ -10,37 +10,72 @@ import io.appium.java_client.ios.IOSElement;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import io.appium.java_client.pagefactory.iOSFindBy;
 
-public class Page extends TestRoot{
+public class Page extends TestRoot {
 
 	// LOGIN PROMPT
-	@iOSFindBy(accessibility = "Sign up for Free") protected IOSElement signUpPrompt;
-	@iOSFindBy(accessibility = "Create Account") protected IOSElement createAccount;
-	
-	// Zip Code info
-	@iOSFindBy(accessibility = "Use Location") public IOSElement useLocation;
-	@iOSFindBy(accessibility = "Allow") public IOSElement allowButton;
-	@iOSFindBy(accessibility = "Don't Allow") public IOSElement dontAllowButton;
-	
-	// SUB NAVIGATION bar
-	@iOSFindBy(accessibility = "My Stations") public IOSElement myStations;
-	@iOSFindBy(accessibility = "For You") public IOSElement forYou;
-	@iOSFindBy(accessibility = "Perfect For") public IOSElement perfectFor;
-	@iOSFindBy(accessibility = "Local Radio") public IOSElement localRadio;
+	@iOSFindBy(accessibility = "Sign up for Free")
+	protected IOSElement signUpPrompt;
+	@iOSFindBy(accessibility = "Create Account")
+	protected IOSElement createAccount;
 
-	@iOSFindBy(accessibility = "iheartradio_logo_full") public static IOSElement iheartradio_logo_full;
-	
-	@iOSFindBy(accessibility ="NavBar-BackButton-UIButton")
-	protected IOSElement NavBarBackButton;
-	
+	// Zip Code info
+	@iOSFindBy(accessibility = "Use Location")
+	public IOSElement useLocation;
+	@iOSFindBy(accessibility = "Allow")
+	public IOSElement allowButton;
+	@iOSFindBy(accessibility = "Don't Allow")
+	public IOSElement dontAllowButton;
+
+	// SUB NAVIGATION bar
+	@iOSFindBy(accessibility = "My Stations")
+	public IOSElement myStations;
+	@iOSFindBy(accessibility = "For You")
+	public IOSElement forYou;
+	@iOSFindBy(accessibility = "Perfect For")
+	public IOSElement perfectFor;
+	@iOSFindBy(accessibility = "Local Radio")
+	public IOSElement localRadio;
+
+	@iOSFindBy(accessibility = "iheartradio_logo_full")
+	public static IOSElement iheartradio_logo_full;
+
+	// sk - 11/8 - Header elements for each side nav page
+	@iOSFindBy(accessibility = "NavBar-BackButton-UIButton")
+	protected static IOSElement NavBarBackButton;
+	@iOSFindBy(xpath = "//XCUIElementTypeApplication/XCUIElementTypeWindow/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/"
+			+ "XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeNavigationBar/XCUIElementTypeOther/"
+			+ "XCUIElementTypeStaticText")
+	protected static IOSElement liveRadio;
+	@iOSFindBy(xpath = "//XCUIElementTypeApplication/XCUIElementTypeWindow/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/"
+			+ "XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeNavigationBar/XCUIElementTypeOther/"
+			+ "XCUIElementTypeStaticText[2]")
+	protected static IOSElement artistRadio;
+	@iOSFindBy(xpath = "//XCUIElementTypeApplication/XCUIElementTypeWindow/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/"
+			+ "XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeNavigationBar/XCUIElementTypeOther/"
+			+ "XCUIElementTypeStaticText[2]")
+	protected static IOSElement podcasts;
+	@iOSFindBy(xpath = "//XCUIElementTypeApplication/XCUIElementTypeWindow/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther/"
+			+ "XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeNavigationBar/"
+			+ "XCUIElementTypeOther/XCUIElementTypeStaticText[2]")
+	protected static IOSElement listeningHistory;
+	@iOSFindBy(xpath = "//XCUIElementTypeApplication/XCUIElementTypeWindow/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/"
+			+ "XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeNavigationBar/XCUIElementTypeOther/"
+			+ "XCUIElementTypeStaticText[2]")
+	protected static IOSElement alarmClock;
+	@iOSFindBy(xpath = "//XCUIElementTypeApplication/XCUIElementTypeWindow/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/"
+			+ "XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeNavigationBar/XCUIElementTypeOther/"
+			+ "XCUIElementTypeStaticText[2]")
+	protected static IOSElement sleepTimer;
+
 	static IOSDriver<IOSElement> driver;
 	static SideNavigationBar sideNavigationBar;
 	static FullPlayer fullPlayer;
 	// Real device requires longer reponse time
 	static boolean isRealDevice = false;
-//	Logger logger = Logger.getLogger(Page.class);
+	// Logger logger = Logger.getLogger(Page.class);
 
 	public static final String baseListItemXpath = "//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell";
-	
+
 	public static final String screenshot_folder = "iosScreenshots";
 
 	public Page() {
@@ -84,133 +119,140 @@ public class Page extends TestRoot{
 		return winHandleBefore;
 	}
 
-	public static IOSElement getStationFromList(int selector){
-		String xpathForItem = "//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell[" + selector + "]";
+	public static IOSElement getStationFromList(int selector) {
+		String xpathForItem = "//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell[" + selector
+				+ "]";
 		return waitForVisible(driver, find(xpathForItem, "xpath"), 5);
 	}
-	
+
 	// Want your local radio?
 	public static void handlePossiblePopUp() {
-		try{
+		try {
 			IOSElement dismiss = waitForVisible(driver, By.name("No Thanks"), 3);
-			if(!isVisible(dismiss)){
-				dismiss = findElement(driver, By.name("Maybe Later")); // Has already waited 3 seconds
+			if (!isVisible(dismiss)) {
+				dismiss = findElement(driver, By.name("Maybe Later")); // Has
+																		// already
+																		// waited
+																		// 3
+																		// seconds
 			}
-			if(isVisible(dismiss)){
+			if (isVisible(dismiss)) {
 				dismiss.click();
 			}
-		}catch(Exception e){} // No chance of this failing a test
+		} catch (Exception e) {
+		} // No chance of this failing a test
 	}
-	public static void quickDismissPopUp(){
+
+	public static void quickDismissPopUp() {
 		IOSElement noThanks = findElement(driver, By.name("No Thanks"));
 		IOSElement maybeLater = findElement(driver, By.name("Maybe Later"));
-		if(isVisible(noThanks)){
+		if (isVisible(noThanks)) {
 			noThanks.click();
-		}
-		else if(isVisible(maybeLater)){
+		} else if (isVisible(maybeLater)) {
 			maybeLater.click();
 		}
 	}
-	
-	public void useLocation(){
-		if(!isVisible(useLocation)){
+
+	public void useLocation() {
+		if (!isVisible(useLocation)) {
 			waitForElementToBeVisible(useLocation, 5);
 		}
-		if(isVisible(useLocation)){
+		if (isVisible(useLocation)) {
 			useLocation.click();
 			allowButton.click();
 		}
 	}
+
 	/**
 	 * Enters "No Thanks" for zip code popup
 	 */
-	public static void enterZip(){
+	public static void enterZip() {
 		enterZip("");
 	}
-	public static void enterZip(String zip){
-		if(!strGood(zip)){
-			try{
+
+	public static void enterZip(String zip) {
+		if (!strGood(zip)) {
+			try {
 				waitForVisible(driver, By.name("No Thanks"), 4).click();
+			} catch (Exception e) {
 			}
-			catch(Exception e){}
 		}
 		IOSElement enterZip = waitForVisible(driver, find("Enter ZIP"), 7);
-		if(enterZip != null && isVisible(enterZip)){
+		if (enterZip != null && isVisible(enterZip)) {
 			enterZip.click();
-			IOSElement zipCodeEntry = waitForVisible(driver, 
+			IOSElement zipCodeEntry = waitForVisible(driver,
 					find("//UIAApplication[1]/UIAWindow[1]/UIAAlert[1]/UIAScrollView[1]/UIACollectionView[1]/UIACollectionCell[1]/UIATextField[1]/UIATextField[1]"),
 					5);
-			if(zipCodeEntry != null){
+			if (zipCodeEntry != null) {
 				zipCodeEntry.sendKeys(zip);
 				driver.findElement(By.name("OK"));
 			}
 		}
 	}
-	
-	public void clickNavBarBackButton(){
+
+	public void clickNavBarBackButton() {
 		System.out.println("Page.getBack()");
 		NavBarBackButton.click();
 	}
-	
+
 	/**
 	 * Scroll to the bottom of a list until a show more button displays
+	 * 
 	 * @return
 	 */
-	public static IOSElement swipeToShowMore(){ //TODO
+	public static IOSElement swipeToShowMore() { // TODO
 		IOSElement showMore = null;
 		boolean foundShowMore = false;
-		for(int i = 0; i < 7; i++){
-			if(foundShowMore){
+		for (int i = 0; i < 7; i++) {
+			if (foundShowMore) {
 				break;
 			}
 			swipeUp();
 			showMore = findElement(driver, By.name("Show More"));
-			if(isVisible(showMore)){
+			if (isVisible(showMore)) {
 				foundShowMore = true;
 				break;
-			}
-			else{
-				// There's a chance that we're on My Stations, and it found the For You show more button by name
+			} else {
+				// There's a chance that we're on My Stations, and it found the
+				// For You show more button by name
 				int offset = 2;
-				do{
-					showMore = findElement(driver, 
-								By.xpath("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIAButton[" + offset + "]"));
-					if(isVisible(showMore)){
+				do {
+					showMore = findElement(driver, By
+							.xpath("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIAButton[" + offset + "]"));
+					if (isVisible(showMore)) {
 						foundShowMore = true;
 						break;
 					}
 					offset++;
-				}while (!isVisible(showMore) && offset < 5);
+				} while (!isVisible(showMore) && offset < 5);
 			}
 		}
-		
-		if(showMore == null){
+
+		if (showMore == null) {
 			return null;
 		}
 		swipeUp(); // In case mini player is hiding it
 		return showMore;
 	}
-	
-	public static boolean clickShowMore(){
+
+	public static boolean clickShowMore() {
 		IOSElement showMore = findElement(driver, By.name("Show More"));
-		IOSElement showMoreMyStations = findElement(driver, By.xpath("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIAButton[4]"));
-		if(isVisible(showMore)){
+		IOSElement showMoreMyStations = findElement(driver,
+				By.xpath("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIAButton[4]"));
+		if (isVisible(showMore)) {
 			showMore.click();
 			return true;
-		}
-		else if(isVisible(showMoreMyStations)){
+		} else if (isVisible(showMoreMyStations)) {
 			showMoreMyStations.click();
 			return true;
-		}
-		else{
+		} else {
 			showMore = swipeToShowMore();
-			if(isVisible(showMore)){
+			if (isVisible(showMore)) {
 				showMore.click();
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
-}	
-
+}

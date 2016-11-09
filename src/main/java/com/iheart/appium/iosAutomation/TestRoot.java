@@ -527,7 +527,7 @@ public class TestRoot {
 	public boolean isCurrentlyOn(String isCurrentlyOnPageMessage, IOSElement element) {
 
 		try {
-			if (Page.waitForElementToBeVisible(element, 10)) {
+			if (Page.waitForElementToBeVisible(element, 5)) {
 				if (element != null) {
 					boolean onPage = element.isDisplayed();
 					System.out.println(isCurrentlyOnPageMessage + "() : " + onPage);

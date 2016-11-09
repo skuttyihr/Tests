@@ -23,11 +23,15 @@ public class ArtistProfilePage extends Page{
 	@iOSFindBy(accessibility="ArtistProfileBioHeaderView-ShadowView-UIView") private IOSElement ArtistProfileBioHeaderViewShadowViewUIView; 
 	@iOSFindBy(accessibility="ArtistProfileBioHeaderView-BackgroundImageView-UIImageView") private IOSElement ArtistProfileBioHeaderViewBackgroundImageViewUIImageView;  
 	@iOSFindBy(accessibility="ArtistProfileBioHeaderView-ArtistImageView-UIImage") private IOSElement ArtistProfileBioHeaderViewArtistImageViewUIImage;   
-	@iOSFindBy(accessibility="ArtistProfileBioHeaderTitleView-TitleLabel-UILabel") private IOSElement ArtistProfileBioHeaderTitleViewTitleLabelUILabel; 
+	//@iOSFindBy(accessibility="ArtistProfileBioHeaderTitleView-TitleLabel-UILabel") private IOSElement ArtistProfileBioHeaderTitleViewTitleLabelUILabel; 
 	@iOSFindBy(accessibility="ArtistProfileBioHeaderTitleView-BioButton-UIButton") private IOSElement ArtistProfileBioHeaderTitleViewBioButtonUIButton; 
 	@iOSFindBy(accessibility="ArtistProfileBioHeaderView-PlayButton-UIButton") private IOSElement ArtistProfileBioHeaderViewPlayButtonUIButton;    
 	//Latest Release Header
 	@iOSFindBy(accessibility="ArtistProfileSectionLatestRelease-AlbumCell-LatestRelease") private IOSElement ArtistProfileSectionLatestReleaseAlbumCellLatestRelease;
+	@iOSFindBy(xpath = "//XCUIElementTypeApplication/XCUIElementTypeWindow/XCUIElementTypeOther[2]/XCUIElementTypeOther/"
+			+ "XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther/"
+			+ "XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/"
+			+ "XCUIElementTypeOther[2]") private IOSElement ArtistProfileBioHeaderTitleViewTitleLabelUILabel;
 	@iOSFindBy(accessibility="ArtistProfileAlbumCellTitleView-TitleLabel-UILabel-LatestRelease") private IOSElement ArtistProfileAlbumCellTitleViewTitleLabelUILabelLatestRelease; //The Fall of Hearts
 	@iOSFindBy(accessibility="ArtistProfileAlbumCellTitleView-SubtitleLabel-UILabel-LatestRelease") private IOSElement ArtistProfileAlbumCellTitleViewSubtitleLabelUILabelLatestRelease; //May 2016 • 12 songs
 	//Top Songs STATIC TEXT - Limit of 5 Top Songs - Cell, Index(number 1-5), and Song Title Label
