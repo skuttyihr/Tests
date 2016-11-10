@@ -46,7 +46,7 @@ public class HomePage extends Page {
 	@iOSFindBy(accessibility="ForYouTC-RecommendationButton-UIButton") private IOSElement ForYouTCRecommendationButtonUIButton;
 	//My Stations - Favorite Stations
 	@iOSFindBy(accessibility="MyStationsTab-CollectionView") private IOSElement MyStationsTabCollectionView; //Collection is the same AID as For You. 
-	@iOSFindBy(accessibility="Favorite Stations") private IOSElement FavoriteStations; //Header at the top
+	@iOSFindBy(accessibility="Saved Stations") private IOSElement SavedStations; //Header at the top
 	@iOSFindBy(accessibility="Favorites-CellNumber-0") private IOSElement FavoritesCellNumber0;
 	@iOSFindBy(accessibility="Favorites-CellNumber-1") private IOSElement FavoritesCellNumber1;
 	@iOSFindBy(accessibility="Favorites-CellNumber-2") private IOSElement FavoritesCellNumber2;
@@ -56,7 +56,7 @@ public class HomePage extends Page {
 	@iOSFindBy(accessibility="Favorites-CellNumber-6") private IOSElement FavoritesCellNumber6;
 	@iOSFindBy(accessibility="Favorites-CellNumber-7") private IOSElement FavoritesCellNumber7;
 	//My Stations - Recent Stations
-	@iOSFindBy(accessibility="Recent Stations") private IOSElement RecentStations; //Header at the top
+	@iOSFindBy(accessibility="Recently Played") private IOSElement RecentlyPlayed; //Header at the top
 	@iOSFindBy(accessibility="Recents-CellNumber-0") private IOSElement RecentsCellNumber0;
 	@iOSFindBy(accessibility="Recents-CellNumber-1") private IOSElement RecentsCellNumber1;
 	@iOSFindBy(accessibility="Recents-CellNumber-2") private IOSElement RecentsCellNumber2;
@@ -90,86 +90,81 @@ public class HomePage extends Page {
 	 * Currently works with test66@test.com/test
 	 */
 	public void showAllElements(){ 
-		System.out.println("::::showAllElements() on HomePage.");
-		if(homePage.isCurrentlyOnHomePage()){
-			System.out.println("::::showAllElements() on HomePage -> NavBar");
-			printElementInformation(IHRiPhoneHomePageView);
-			printElementInformation(NavBarSideMenuButtonUIButton);
-			printElementInformation(iheartradio_logo_full);
-			printElementInformation(IHRCastingBarButtonItemUIButton);
-			printElementInformation(NavBarSearchBarButtonUIButton);
-			printElementInformation(HomeSegmentedControlTitleLabelUIButtonForYou);
-			printElementInformation(HomeSegmentedControlTitleLabelUIButtonMyStations);
-			printElementInformation(HomeSegmentedControlTitleLabelUIButtonLocalRadio);
-			//FOR YOU Cells
-			System.out.println("::::showAllElements() on HomePage -> For You Cells");
-			printElementInformation(ForYouTabCollectionView);
-			printElementInformation(ForYouCellNumber0);
-			printElementInformation(ForYouCellNumber1);
-			printElementInformation(ForYouCellNumber2);
-			printElementInformation(ForYouCellNumber3);
-			printElementInformation(ForYouCellNumber4);
-			printElementInformation(ForYouCellNumber5);
-			printElementInformation(ForYouCellNumber6);
-			System.out.println("::::showAllElements() on HomePage -> For You Second Page Cells");
-			scrollDown();
-			printElementInformation(ForYouCellNumber7);
-			printElementInformation(ForYouCellNumber8);
-			printElementInformation(ForYouCellNumber9);
-			printElementInformation(ForYouCellNumber10);
-			printElementInformation(ForYouCellNumber11);
-			scrollDown();
-			printElementInformation(ForYouTCShowMoreButtonUIButton);
-			//Clicking Show More opens 12 more cells. 
-			printElementInformation(ForYouTCRecommendationButtonUIButton);
-			//My Stations - Favorite Stations
-			scrollToTop();
-			
-			homePage.clickMyStationsTab();
-			System.out.println("::::showAllElements() on HomePage -> My Stations -> Favorites");// Should be 4 artist radios, one Favorites Radio, and 2 Radio Stations (based on what I favorited).
-			printElementInformation(MyStationsTabCollectionView); //Collection is the same AID as For You. 
-			printElementInformation(FavoriteStations); //Header at the top
-			printElementInformation(FavoritesCellNumber0);
-			printElementInformation(FavoritesCellNumber1);
-			printElementInformation(FavoritesCellNumber2);
-			printElementInformation(FavoritesCellNumber3);
-			printElementInformation(FavoritesCellNumber4);
-			printElementInformation(FavoritesCellNumber5);
-			printElementInformation(FavoritesCellNumber6);
-			scrollDown();
-			//My Stations - Recent Stations
-			System.out.println("::::showAllElements() on HomePage -> My Stations -> Recents");
-			printElementInformation(RecentStations); //Header at the top
-			printElementInformation(RecentsCellNumber0);
-			printElementInformation(RecentsCellNumber1);
-			printElementInformation(RecentsCellNumber2);
-			scrollDown();
-			printElementInformation(RecentsCellNumber3);
-			printElementInformation(RecentsCellNumber4);
-			printElementInformation(RecentsCellNumber5);
-			printElementInformation(RecentsCellNumber6);
-			printElementInformation(RecentsCellNumber7);
-			scrollDown();
-			printElementInformation(RecentsCellNumber8);
-			printElementInformation(FavoritesShowMoreButtonUIButton);
-			scrollToTop();
-			homePage.clickLocalRadioTab();
-			System.out.println("::::showAllElements() on HomePage -> Local Radio -> Radio Station Cells");
-			//Local Radio
-			printElementInformation(LocalRadioTabCollectionView);
-			printElementInformation(LocalRadioCellNumber0);
-			printElementInformation(LocalRadioCellNumber1);
-			printElementInformation(LocalRadioCellNumber2);
-			printElementInformation(LocalRadioCellNumber3);
-			printElementInformation(LocalRadioCellNumber4);
-			printElementInformation(LocalRadioCellNumber5);
-			scrollDown();
-			scrollDown();
-			scrollDown();
-			scrollDown();
-			printElementInformation(LocalRadioCellNumber17);
-		}
-
+		System.out.println("::::showAllElements() on HomePage -> NavBar");
+		printElementInformation(IHRiPhoneHomePageView);
+		printElementInformation(NavBarSideMenuButtonUIButton);
+		printElementInformation(iheartradio_logo_full);
+		//printElementInformation(IHRCastingBarButtonItemUIButton);
+		printElementInformation(NavBarSearchBarButtonUIButton);
+		printElementInformation(HomeSegmentedControlTitleLabelUIButtonForYou);
+		printElementInformation(HomeSegmentedControlTitleLabelUIButtonMyStations);
+		printElementInformation(HomeSegmentedControlTitleLabelUIButtonLocalRadio);
+		//FOR YOU Cells
+		System.out.println("::::showAllElements() on HomePage -> For You Cells");
+		printElementInformation(ForYouTabCollectionView);
+		printElementInformation(ForYouCellNumber0);
+		printElementInformation(ForYouCellNumber1);
+		printElementInformation(ForYouCellNumber2);
+		printElementInformation(ForYouCellNumber3);
+		printElementInformation(ForYouCellNumber4);
+		printElementInformation(ForYouCellNumber5);
+		printElementInformation(ForYouCellNumber6);
+		System.out.println("::::showAllElements() on HomePage -> For You Second Page Cells");
+		scrollDown();
+		printElementInformation(ForYouCellNumber7);
+		printElementInformation(ForYouCellNumber8);
+		printElementInformation(ForYouCellNumber9);
+		printElementInformation(ForYouCellNumber10);
+		printElementInformation(ForYouCellNumber11);
+		scrollDown();
+		printElementInformation(ForYouTCShowMoreButtonUIButton);
+		//Clicking Show More opens 12 more cells. 
+		printElementInformation(ForYouTCRecommendationButtonUIButton);
+		//My Stations - Saved Stations
+		scrollToTop();
+		homePage.clickMyStationsTab();
+		System.out.println("::::showAllElements() on HomePage -> My Stations -> Favorites");// Should be 4 artist radios, one Favorites Radio, and 2 Radio Stations (based on what I favorited).
+		printElementInformation(MyStationsTabCollectionView); //Collection is the same AID as For You. 
+		printElementInformation(SavedStations); //Header at the top - Now says Saved Stations instead of Favorite Stations
+		printElementInformation(FavoritesCellNumber0);
+		printElementInformation(FavoritesCellNumber1);
+		printElementInformation(FavoritesCellNumber2);
+		printElementInformation(FavoritesCellNumber3);
+		printElementInformation(FavoritesCellNumber4);
+		printElementInformation(FavoritesCellNumber5);
+		printElementInformation(FavoritesCellNumber6);
+		scrollDown();
+		//My Stations - Recent Stations
+		System.out.println("::::showAllElements() on HomePage -> My Stations -> Recents");
+		printElementInformation(RecentlyPlayed); //Header at the top
+		printElementInformation(RecentsCellNumber0);
+		printElementInformation(RecentsCellNumber1);
+		printElementInformation(RecentsCellNumber2);
+		scrollDown();
+		printElementInformation(RecentsCellNumber3);
+		printElementInformation(RecentsCellNumber4);
+		printElementInformation(RecentsCellNumber5);
+		printElementInformation(RecentsCellNumber6);
+		printElementInformation(RecentsCellNumber7);
+		scrollDown();
+		printElementInformation(RecentsCellNumber8);
+		printElementInformation(FavoritesShowMoreButtonUIButton);
+		scrollToTop();
+		homePage.clickLocalRadioTab();
+		System.out.println("::::showAllElements() on HomePage -> Local Radio -> Radio Station Cells");
+		//Local Radio
+		printElementInformation(LocalRadioTabCollectionView);
+		printElementInformation(LocalRadioCellNumber0);
+		printElementInformation(LocalRadioCellNumber1);
+		printElementInformation(LocalRadioCellNumber2);
+		printElementInformation(LocalRadioCellNumber3);
+		printElementInformation(LocalRadioCellNumber4);
+		printElementInformation(LocalRadioCellNumber5);
+		scrollDown();
+		scrollDown();
+		scrollDown();
+		scrollDown();
+		printElementInformation(LocalRadioCellNumber17);
 	}
 	private enum CellStrings {
 		LOCALRADIO("LocalRadio"), RECENTS("Recents"), FAVORITES("Favorites"), FORYOU("ForYou");
