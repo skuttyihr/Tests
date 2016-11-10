@@ -90,87 +90,81 @@ public class HomePage extends Page {
 	 * Currently works with test66@test.com/test
 	 */
 	public void showAllElements(){ 
-		System.out.println("::::showAllElements() on HomePage.");
-		//if(homePage.isCurrentlyOnHomePage()){
-			System.out.println("::::showAllElements() on HomePage -> NavBar");
-			printElementInformation(IHRiPhoneHomePageView);
-			printElementInformation(NavBarSideMenuButtonUIButton);
-			printElementInformation(iheartradio_logo_full);
-			//printElementInformation(IHRCastingBarButtonItemUIButton);
-			printElementInformation(NavBarSearchBarButtonUIButton);
-			printElementInformation(HomeSegmentedControlTitleLabelUIButtonForYou);
-			printElementInformation(HomeSegmentedControlTitleLabelUIButtonMyStations);
-			printElementInformation(HomeSegmentedControlTitleLabelUIButtonLocalRadio);
-			//FOR YOU Cells
-			System.out.println("::::showAllElements() on HomePage -> For You Cells");
-			printElementInformation(ForYouTabCollectionView);
-			printElementInformation(ForYouCellNumber0);
-			printElementInformation(ForYouCellNumber1);
-			printElementInformation(ForYouCellNumber2);
-			printElementInformation(ForYouCellNumber3);
-			printElementInformation(ForYouCellNumber4);
-			printElementInformation(ForYouCellNumber5);
-			printElementInformation(ForYouCellNumber6);
-			System.out.println("::::showAllElements() on HomePage -> For You Second Page Cells");
-			scrollDown();
-			printElementInformation(ForYouCellNumber7);
-			printElementInformation(ForYouCellNumber8);
-			printElementInformation(ForYouCellNumber9);
-			printElementInformation(ForYouCellNumber10);
-			printElementInformation(ForYouCellNumber11);
-			scrollDown();
-			printElementInformation(ForYouTCShowMoreButtonUIButton);
-			//Clicking Show More opens 12 more cells. 
-			printElementInformation(ForYouTCRecommendationButtonUIButton);
-			//My Stations - Favorite Stations
-			scrollToTop();
-			
-			homePage.clickMyStationsTab();
-			System.out.println("::::showAllElements() on HomePage -> My Stations -> Favorites");// Should be 4 artist radios, one Favorites Radio, and 2 Radio Stations (based on what I favorited).
-			printElementInformation(MyStationsTabCollectionView); //Collection is the same AID as For You. 
-			printElementInformation(SavedStations); //Header at the top
-			//This is now Saved Stations
-			printElementInformation(FavoritesCellNumber0);
-			printElementInformation(FavoritesCellNumber1);
-			printElementInformation(FavoritesCellNumber2);
-			printElementInformation(FavoritesCellNumber3);
-			printElementInformation(FavoritesCellNumber4);
-			printElementInformation(FavoritesCellNumber5);
-			printElementInformation(FavoritesCellNumber6);
-			scrollDown();
-			//My Stations - Recent Stations
-			System.out.println("::::showAllElements() on HomePage -> My Stations -> Recents");
-			printElementInformation(RecentlyPlayed); //Header at the top
-			printElementInformation(RecentsCellNumber0);
-			printElementInformation(RecentsCellNumber1);
-			printElementInformation(RecentsCellNumber2);
-			scrollDown();
-			printElementInformation(RecentsCellNumber3);
-			printElementInformation(RecentsCellNumber4);
-			printElementInformation(RecentsCellNumber5);
-			printElementInformation(RecentsCellNumber6);
-			printElementInformation(RecentsCellNumber7);
-			scrollDown();
-			printElementInformation(RecentsCellNumber8);
-			printElementInformation(FavoritesShowMoreButtonUIButton);
-			scrollToTop();
-			homePage.clickLocalRadioTab();
-			System.out.println("::::showAllElements() on HomePage -> Local Radio -> Radio Station Cells");
-			//Local Radio
-			printElementInformation(LocalRadioTabCollectionView);
-			printElementInformation(LocalRadioCellNumber0);
-			printElementInformation(LocalRadioCellNumber1);
-			printElementInformation(LocalRadioCellNumber2);
-			printElementInformation(LocalRadioCellNumber3);
-			printElementInformation(LocalRadioCellNumber4);
-			printElementInformation(LocalRadioCellNumber5);
-			scrollDown();
-			scrollDown();
-			scrollDown();
-			scrollDown();
-			printElementInformation(LocalRadioCellNumber17);
-		//}
-
+		System.out.println("::::showAllElements() on HomePage -> NavBar");
+		printElementInformation(IHRiPhoneHomePageView);
+		printElementInformation(NavBarSideMenuButtonUIButton);
+		printElementInformation(iheartradio_logo_full);
+		//printElementInformation(IHRCastingBarButtonItemUIButton);
+		printElementInformation(NavBarSearchBarButtonUIButton);
+		printElementInformation(HomeSegmentedControlTitleLabelUIButtonForYou);
+		printElementInformation(HomeSegmentedControlTitleLabelUIButtonMyStations);
+		printElementInformation(HomeSegmentedControlTitleLabelUIButtonLocalRadio);
+		//FOR YOU Cells
+		System.out.println("::::showAllElements() on HomePage -> For You Cells");
+		printElementInformation(ForYouTabCollectionView);
+		printElementInformation(ForYouCellNumber0);
+		printElementInformation(ForYouCellNumber1);
+		printElementInformation(ForYouCellNumber2);
+		printElementInformation(ForYouCellNumber3);
+		printElementInformation(ForYouCellNumber4);
+		printElementInformation(ForYouCellNumber5);
+		printElementInformation(ForYouCellNumber6);
+		System.out.println("::::showAllElements() on HomePage -> For You Second Page Cells");
+		scrollDown();
+		printElementInformation(ForYouCellNumber7);
+		printElementInformation(ForYouCellNumber8);
+		printElementInformation(ForYouCellNumber9);
+		printElementInformation(ForYouCellNumber10);
+		printElementInformation(ForYouCellNumber11);
+		scrollDown();
+		printElementInformation(ForYouTCShowMoreButtonUIButton);
+		//Clicking Show More opens 12 more cells. 
+		printElementInformation(ForYouTCRecommendationButtonUIButton);
+		//My Stations - Saved Stations
+		scrollToTop();
+		homePage.clickMyStationsTab();
+		System.out.println("::::showAllElements() on HomePage -> My Stations -> Favorites");// Should be 4 artist radios, one Favorites Radio, and 2 Radio Stations (based on what I favorited).
+		printElementInformation(MyStationsTabCollectionView); //Collection is the same AID as For You. 
+		printElementInformation(SavedStations); //Header at the top - Now says Saved Stations instead of Favorite Stations
+		printElementInformation(FavoritesCellNumber0);
+		printElementInformation(FavoritesCellNumber1);
+		printElementInformation(FavoritesCellNumber2);
+		printElementInformation(FavoritesCellNumber3);
+		printElementInformation(FavoritesCellNumber4);
+		printElementInformation(FavoritesCellNumber5);
+		printElementInformation(FavoritesCellNumber6);
+		scrollDown();
+		//My Stations - Recent Stations
+		System.out.println("::::showAllElements() on HomePage -> My Stations -> Recents");
+		printElementInformation(RecentlyPlayed); //Header at the top
+		printElementInformation(RecentsCellNumber0);
+		printElementInformation(RecentsCellNumber1);
+		printElementInformation(RecentsCellNumber2);
+		scrollDown();
+		printElementInformation(RecentsCellNumber3);
+		printElementInformation(RecentsCellNumber4);
+		printElementInformation(RecentsCellNumber5);
+		printElementInformation(RecentsCellNumber6);
+		printElementInformation(RecentsCellNumber7);
+		scrollDown();
+		printElementInformation(RecentsCellNumber8);
+		printElementInformation(FavoritesShowMoreButtonUIButton);
+		scrollToTop();
+		homePage.clickLocalRadioTab();
+		System.out.println("::::showAllElements() on HomePage -> Local Radio -> Radio Station Cells");
+		//Local Radio
+		printElementInformation(LocalRadioTabCollectionView);
+		printElementInformation(LocalRadioCellNumber0);
+		printElementInformation(LocalRadioCellNumber1);
+		printElementInformation(LocalRadioCellNumber2);
+		printElementInformation(LocalRadioCellNumber3);
+		printElementInformation(LocalRadioCellNumber4);
+		printElementInformation(LocalRadioCellNumber5);
+		scrollDown();
+		scrollDown();
+		scrollDown();
+		scrollDown();
+		printElementInformation(LocalRadioCellNumber17);
 	}
 	private enum CellStrings {
 		LOCALRADIO("LocalRadio"), RECENTS("Recents"), FAVORITES("Favorites"), FORYOU("ForYou");
