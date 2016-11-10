@@ -306,13 +306,11 @@ public class TestRoot {
 				// .isSelected() doesnt work anymore with Appium 1.6.0beta3 - so
 				// removed that at the end of the below line
 				System.out.println("  [" + aId[1] + "  text: [" + getText + "]  tagName: [" + iosElement.getTagName()
-				+ "] isDisplayed: [" + iosElement.isDisplayed() + "] isEnabled: [" + iosElement.isEnabled());
+				+ "] isDisplayed: [" + iosElement.isDisplayed() + "] isEnabled: [" + iosElement.isEnabled() + "].");
 			} else { // Element has no Text, not printing it.
 				System.out.println("  [" + aId[1] + " tagName: [" + iosElement.getTagName() + "] isDisplayed: ["
-						+ iosElement.isDisplayed() + "] isEnabled: [" + iosElement.isEnabled() + "] isSelected: ["
-						+ iosElement.isSelected() + "].");
+						+ iosElement.isDisplayed() + "] isEnabled: [" + iosElement.isEnabled() + "].");
 			}
-			System.out.println(iosElement.isDisplayed());
 			return iosElement.isDisplayed();
 		}
 
