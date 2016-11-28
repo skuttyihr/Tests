@@ -67,12 +67,8 @@ public class TestRoot {
 	protected static SignUpPage signupPage;
 	protected static ResetPasswordPage resetPasswordPage;
 	protected static HomePage homePage;
-
-	protected static Player player;
 	protected static FullPlayer fullPlayer;
 	protected static SideNavigationBar sideNavBar;
-	protected static ForYouPage forYouPage;
-	protected static CustomRadio customRadio;
 	protected static SearchPage searchPage;
 	protected static DeepLink deepLink;
 	protected static PodcastsPage podcastsPage;
@@ -80,7 +76,6 @@ public class TestRoot {
 	protected static GenrePage genrePage;
 	protected static MiniPlayer miniPlayer;
 	protected static SettingsPage settings;
-	protected static PerfectFor perfectFor;
 
 	// New On Demand Elements
 	protected static ArtistProfilePage artistProfilePage;
@@ -266,19 +261,15 @@ public class TestRoot {
 		homePage = new HomePage(driver);
 		loginPage = new LoginPage(driver);
 		signupPage = new SignUpPage(driver);
-		player = new Player(driver);
 		fullPlayer = new FullPlayer(driver);
 		sideNavBar = new SideNavigationBar(driver);
-		forYouPage = new ForYouPage(driver);
 		podcastsPage = new PodcastsPage(driver);
 		searchPage = new SearchPage(driver);
-		customRadio = new CustomRadio(driver);
 		deepLink = new DeepLink(driver);
 		onboardingPage = new OnboardingPage(driver);
 		genrePage = new GenrePage(driver);
 		miniPlayer = new MiniPlayer(driver);
 		settings = new SettingsPage(driver);
-		perfectFor = new PerfectFor(driver);
 		artistProfilePage = new ArtistProfilePage(driver);
 		driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 		System.out.println("Testing on: " + MODEL);
