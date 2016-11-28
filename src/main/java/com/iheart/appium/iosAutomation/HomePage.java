@@ -1,8 +1,4 @@
 package com.iheart.appium.iosAutomation;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import org.openqa.selenium.By;
 
 
@@ -28,6 +24,7 @@ public class HomePage extends Page {
 	@iOSFindBy(accessibility="HomeSegmentedControl-TitleLabel-UIButton-For You") private IOSElement HomeSegmentedControlTitleLabelUIButtonForYou;
 	@iOSFindBy(accessibility="HomeSegmentedControl-TitleLabel-UIButton-My Stations") private IOSElement HomeSegmentedControlTitleLabelUIButtonMyStations;
 	@iOSFindBy(accessibility="HomeSegmentedControl-TitleLabel-UIButton-Local Radio") private IOSElement HomeSegmentedControlTitleLabelUIButtonLocalRadio;
+	@iOSFindBy(accessibility="HomeSegmentedControl-TitleLabel-UIButton-My Music") private IOSElement HomeSegmentedControlTitleLabelUIButtonMyMusic;
 	//FOR YOU Cells
 	@iOSFindBy(accessibility="ForYouTab-CollectionView") private IOSElement ForYouTabCollectionView;
 	@iOSFindBy(accessibility="ForYou-CellNumber-0") private IOSElement ForYouCellNumber0;
@@ -77,13 +74,47 @@ public class HomePage extends Page {
 	@iOSFindBy(accessibility="LocalRadio-CellNumber-5") private IOSElement LocalRadioCellNumber5;
 	@iOSFindBy(accessibility="LocalRadio-CellNumber-17") private IOSElement LocalRadioCellNumber17;
 	
+	
+	// MyMusic Stuff
+	//Songs Button ->List of all songs
+	//Albums Button -> List of all albums
+	//Artists Button -> List of all artists in alphabetical order
+	//Playlists Header
+	// Create New (playlist) button
+	//Create New Playlist Modal (Playlist Name) - Cancel, Create
+	//Empty playlist = default playlist icon - name, # songs
+	//List of Playlists 
+	//Show All Playlists Button on bottom. 
+	
+	//Playlist Profile ->
+	//Playlist Image
+	//Playlist name
+	//Playlist last modified date
+	//Playlist ## songs * length
+	//Offline Toggle (AA)  -> Clicking it puts ICcons next to each song near Artist- turn blue as they download - probably impossible in automated testing. 
+	//List of songs
+	//Song 1 = Album image, title, artist * Album name
+	//Overflow button -> 
+		//Add to Playlist -> Opens Add to Playlist with Create New Playlist and List of Playlists, and Cancel Button
+		//Go to Artist ->Opens Artist Profile
+		//Go to Album -> Opens Album Profile
+	    //Remove from Playlist -> disappears from playlist
+	//top of playlist = Back Button + Playlist name, Overflow Button
+		//Playlist image, playlist name, downloaded icon, ## songs
+		//Edit ->  Remove Buttons next to Songs, Move buttons, Cancel Button, Done Button
+		//Rename -> Rename Playlist Modal, Give your playlist a new name. Textfield, Cancel, Rename
+		//Add to Another Playlist
+		//Delete Playlist
+		// Cancel
+	
+	
 	//Want your local radio?
 	//Tell us where you are & we'll get your favorite DJs
 	//Use Location - Allow / Don't Allow
 	//Use ZIP
 	//No Thanks
 	// Use the getListItem(int x) method to get these items. 
-	private final String listItemXpath = "//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell[XXXXX]";
+	//private final String listItemXpath = "//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell[XXXXX]";
 	
 	/**
 	 * This method has been specifically designed to go through all elements on the HomePage. 
@@ -427,177 +458,18 @@ public class HomePage extends Page {
 			//IOSElement Unfavorite = waitForVisible(driver, By.name("Unfavorite"), 5);
 		}
 	}
+	public void gotoMyStations() {
+		// TODO Auto-generated method stub
+		
+	}
+	public void gotoLocalRadio() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	//############################################## OLD METHODS #####################################
-	private IOSElement getFavorite(){
-		IOSElement favorite = null;
-		for(int i = 1; i < 4; i++){
-			IOSElement testElement = waitForVisible(driver, 
-					By.xpath("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIAStaticText[" + i + "]"),
-					2);
-			if(testElement != null){
-				if(isVisible(testElement) && testElement.getText().equals("Favorite Stations")){
-					favorite = testElement;
-					break;
-				}
-			}
-		}
-		
-		return favorite;
-	}
-	
-
-	
-	private IOSElement getRecent(){
-		IOSElement recent = null;
-		for(int i = 1; i < 4; i++){
-			IOSElement testElement = waitForVisible(driver, 
-					By.xpath("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIAStaticText[" + i + "]"),
-					2);
-			if(testElement != null){
-				if(isVisible(testElement) && testElement.getText().equals("Recent Stations")){
-					recent = testElement;
-					break;
-				}
-			}
-		}
-		
-		return recent;
-	}
-	
-	private int getRecentY(){
-		int recentY = getAppHeight() + 1; 
-		//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIAStaticText[1]
-		IOSElement recent = getRecent();
-		if(recent != null){
-			recentY = recent.getLocation().getY();
-		}
-		else{
-			IOSElement favorites = getFavorite();
-			if(favorites == null){
-				recentY = 0; // A low value, because there are no favorites, all are recents 
-			}
-		}
-		
-		return recentY;
-	}
-	
-	
-	public void gotoHome(){
-		if(!isVisible(forYou)){
-			if(isHamburgerButtonDisplayed()){
-				sideNavBar.gotoHomePage();
-			}
-			else{
-				clickNavBarBackButton();
-				sideNavBar.gotoHomePage();
-			}
-		}
-	}
-	public void gotoMyStations() {
-		gotoHome();
-		myStations.click();
-	}
-
-	public void gotoForYou() {
-		gotoHome();
-		forYou.click();
-	}
-	
-	public void gotoLocalRadio(){
-		gotoHome();
-		localRadio.click();
-		quickDismissPopUp();
-	}
-
-	public void gotoPerfectFor() {
-		gotoHome();
-		perfectFor.click();
-	}
-
-	/**
-	 * Xpath to work with: //UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell[XXXXX]
-	 * 
-	 * @param x
-	 * @return
-	 */
-	public IOSElement getListItem(int x){
-		IOSElement returnElement = findElement(driver, By.xpath(listItemXpath.replace("[XXXXX]", "[" + x + "]")));
-		if(!isVisible(returnElement)){
-			returnElement = waitForVisible(driver, 
-								By.xpath(listItemXpath.replace("[XXXXX]", "[" + x + "]")),
-								5
-							);
-		}
-		return returnElement;
-	}
-	public String getListItemText(int x){
-		String text = "";
-		IOSElement listItem = getListItem(x);
-		if(isVisible(listItem)){
-			text = listItem.getText();
-		}
-		return text;
-	}
-	
-	public boolean selectListItem(int x){
-		IOSElement li = getListItem(x);
-		if(isVisible(li)){
-			li.click();
-			return true;
-		}
-		return false;
-	}
-	
-	public String getStationNameFromListItem(int x){
-		IOSElement li = getListItem(x);
-		if(isVisible(li)){
-			String station = li.getText();
-			if(strGood(station)){
-				if(station.contains(",")){
-					station = station.substring(0, station.indexOf(","));
-				}
-				return station;
-			}
-		}
-		return "";
-	}
-	
-	/**
-	 * Removes all favorites, useful at the end of testing
-	 */
-	public void removeAllFavorites(){
-		try{ // We don't want a test to fail if this has an issue
-			System.out.println("Removing all favorites.");
-			homePage.gotoMyStations();
-			IOSElement itemToRemove = getStationFromList(1);
-			if(itemToRemove == null){
-				return; // No items to remove
-			}
-			int recent = getRecentY();
-			if(recent <= itemToRemove.getLocation().getY()){
-				return;
-			}
-			
-			int count = 20; // let's be safe here
-			while(itemToRemove != null && count > 0){
-				count--;
-				if(recent <= itemToRemove.getLocation().getY()){
-					return;
-				}
-				if(!removeFavorite(1)){
-					break;
-				}
-			}
-		}
-		catch(Exception e){
-			System.err.println("\nCould not remove favorites!\n");
-			e.printStackTrace();
-		}
-	}
-	
-	
 	// Behavior Methods
+	/*
 	public String toggleListItemFavorites(int x){
 		return toggleListItemFavorites(x, false);
 	}
@@ -616,7 +488,8 @@ public class HomePage extends Page {
 		System.out.println("Done toggling favorites...");
 		return err.getErrors();
 	}
-	
+	*/
+	/*
 	private String toggleFavorites(IOSElement item, int x, boolean remove){
 		/* 
 		 * Button width ratio to item ratio is 0.24154589372
@@ -631,7 +504,7 @@ public class HomePage extends Page {
 		 * 8) Swipe
 		 * 9) Click button 2 to toggle
 		 * *All of this could be done in one line if we had a name/xpath for these elements *
-		*/
+		
 		if(!isVisible(item) || !isEnabled(item)){
 			item = null;
 			item = getListItem(x);
@@ -709,135 +582,8 @@ public class HomePage extends Page {
 		return returnMessage;
 	}
 	
-	
-	/**
-	 * Returns an integer 1+ for the list item ONLY if it is a recent station
-	 * @param artist
-	 * @return
-	 */
-	public int isStationARecent(String artist){
-		int station = -1;
-		IOSElement recent = getRecent();
-		if(isVisible(recent)){
-			int recentY = recent.getLocation().getY();
-			List<IOSElement> allMyStations = findElements(driver, By.xpath("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell"));
-			int i = 0;
-			for(IOSElement test : allMyStations){
-				i++;
-				if(test != null && test.getText().length() <= 0){
-					continue;
-				}
-				if(!isVisible(test)){
-					break;
-				}
-				if(test.getText().toLowerCase().contains(artist.toLowerCase())){
-					if(test.getLocation().getY() > recentY){
-						station = i;
-						break;
-					}
-				}
-			}
-		}
-		return station;
-	}
-	
-	public boolean isStationARecent(int n){
-		IOSElement listItem = getListItem(n);
-		if(isVisible(listItem)){
-			if(listItem.getLocation().getY() > getRecentY()){
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	
-	/**
-	 * gets the nth recent station, if possible
-	 * If list item n is a recent station, return it, otherwise, return nothing
-	 * @param n
-	 * @return IOSElement, the list item
-	 */
-	public IOSElement getRecentStation(int n){
-		int startOfRecents = -1;
-		// Find first recent
-		// Increment from there
-		for(int i = 1; i < 20; i++){
-			if(!isVisible(getListItem(i))){
-				break;
-			}
-			if(isStationARecent(i)){
-				startOfRecents = i;
-				break;
-			}
-		}
-		
-		if(startOfRecents > 0){
-			if(n == 1){
-				return getListItem(startOfRecents);
-			}
-			else{
-				IOSElement test = getListItem(startOfRecents + n);
-				if(isVisible(test)){
-					return test;
-				}
-			}
-		}
-		
-		return null;
-	}
-	
-	/**
-	 * Always returns the first recent station (if it exists and is visible)
-	 * @return
-	 */
-	public IOSElement getFirstRecentStation(){
-		return getRecentStation(1);
-	}
-	
-	/**
-	 * Click my Station if on home
-	 * Ensure there are favorite stations
-	 * Get Y of "recent stations"
-	 * Find the item matching the artist
-	 * Get the Y of that artist
-	 * If it's above recent stations: YES
-	 * Return the item number, so we can use it later, if need be
-	 */
-	public int isStationAFavorite(String artist){
-		System.out.println("Seeing if artist: '"+ artist + "' is a favorite.");
-		int foundStation = -1;
-		homePage.gotoMyStations();
-		if(!driver.getPageSource().contains(artist)){
-			System.out.println("foundStation is: "+ foundStation);
-			return foundStation;
-		}
-		
-		IOSElement favorites = waitForVisible(driver, find("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIAStaticText[1]", "xpath"), 3);
-		if(favorites != null && favorites.getText().equalsIgnoreCase("Favorite Stations")){
-			int recentY = getRecentY();
-			List<IOSElement> allMyStations = findElements(driver, By.xpath("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell"));
-			
-			int i = 1;
-			for(IOSElement item : allMyStations){
-				if(!isVisible(item)){
-					break;
-				}
-				if(item.getLocation().getY() >= recentY){ 
-					break;
-				}
-				if(item.getText().contains(artist)){ 
-					foundStation = i;
-					break;
-				}
-				
-				i++;
-			}
-		}
-		System.out.println("foundStation is: "+ foundStation);
-		return foundStation;
-	}
-	
+	*/
+	/*
 	public boolean removeFavorite(int itemToRemove){
 		System.out.println("removeFavorite("+ itemToRemove + ")");
 		boolean removedFavorite = false;
@@ -871,78 +617,10 @@ public class HomePage extends Page {
 		return removedFavorite;
 	}
 	
-	public List<String> getVisibleListItems(){
-		List<String> visibleItems = new ArrayList<String>();
-		List<IOSElement> allItemsInContainer = findElements(driver, By.xpath(listItemXpath.replace("[XXXXX]", "")));
-		boolean foundVisible = false;
-		for(IOSElement item : allItemsInContainer){
-			if(isVisible(item)){
-				String itemName = item.getText();
-				if(itemName.contains(",")){
-					itemName = itemName.substring(0, itemName.indexOf(","));
-				}
-				visibleItems.add(itemName);
-				foundVisible = true;
-			}
-			else if(foundVisible){
-				break;
-			}
-		}
-		
-		return visibleItems;
-	}
+	 */
 	
-	public int searchForStation(String station){
-		int foundStation = -1;
-		
-		if(driver.getPageSource().contains(station)){
-			for(int i = 1; i < 17; i++){
-				IOSElement item = getListItem(i);
-				if(item.getText().contains(station)){
-					foundStation = i;
-					break;
-				}
-			}
-		}
-		return foundStation;
-	}
+
 	
-	public String loadUpStations(){
-		return loadUpStations(5);
-	}
-	public String loadUpStations(int n){
-		Errors err = new Errors();
-		
-		sideNavBar.gotoHomePage();
-		gotoForYou();
-	
-		for(int stations = 1; stations < n; stations++){
-			IOSElement listItem = getListItem(stations);
-			if(!isVisible(listItem)){
-				break;
-			}
-			if(listItem.getText().contains("iHeartRadio Music Awards")){
-				continue;
-			}
-			
-			listItem.click();
-			
-			// If it was a favorites station, we're going to get a popup. Dismiss it
-			if(isVisible(waitForVisible(driver, By.name("favorites_radio"), 1))){
-				findElement(driver, By.name("Save")).click();
-				waitForVisible(driver, By.name("Got It"), 2).click();
-			}
-			
-			if(player.isPlayingInPlayer() 
-					&& !player.minimizePlayer()){
-				err.add("Could not minimize player.", "loadUpStations");
-			}
-		}
-			
-		
-		if(player.isPlaying()){
-			miniPlayer.clickPlayPauseButton();
-		}
-		return err.getErrors();
-	}
+
+
 }

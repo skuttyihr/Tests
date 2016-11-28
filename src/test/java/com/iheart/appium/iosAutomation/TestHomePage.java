@@ -1,37 +1,27 @@
 package com.iheart.appium.iosAutomation;
 
 import java.time.LocalTime;
-import java.util.List;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
-import io.appium.java_client.ios.IOSElement;
-
 public class TestHomePage extends TestRoot {
-
-	boolean createdFavorite = false; // Set to true by tests that add to favorites
 	
 	@Before
 	public void setUp() throws Exception {
 		TestRoot.setup();
-		createdFavorite = false;
 	}
 	@After
 	public void after() {
-		// Remove favorites
-		if(createdFavorite){
-			homePage.removeAllFavorites();
-		}
-//		TestRoot.tearDown();
+
 	}
 	
 	@Rule
 	public ScreenshotRule screenshot = new ScreenshotRule();
+	
 	@Test
 	public void testHomePageElements(){
 		LocalTime before = consoleLogStart(">>>>>testHomePageElements() : Testing all elements on HomePage - For You, My Stations, Local Radio");
@@ -50,14 +40,8 @@ public class TestHomePage extends TestRoot {
 		Assert.assertTrue("Clicking on the first station in For You should have started a player.", startPlaying);
 		consoleLogEnd(before, startPlaying, "<<<<<testHomePagePlaySomething(): Tested HomePage Play");
 	}
-	private void searchAndGoHome(String s){
-		//search.searchForStation(s);
-		player.minimizePlayer();
-		//search.cancelSearch();
-		
-		sideNavBar.gotoHomePage(); // Ensure we're on the home page
-	}
-	
+
+	/*
 	private void assertScrollAndShowMore(){ 
 		List<String> visibleItems = homePage.getVisibleListItems();
 		Assert.assertTrue(visibleItems.size() > 0);
@@ -73,9 +57,10 @@ public class TestHomePage extends TestRoot {
 		Assert.assertTrue("Lists before and after swiping and clicking show more should not have been identical!", 
 				!visibleItems.equals(visibleItemsAfterSwipe));
 	}
+	*/
 	/**
 	 * Log in, add to favorites from home, checks if sattion is in favorites. 
-	 */
+	 
 	@Test
 	@Ignore
 	public void testAddToFavoritesFromHome(){
@@ -84,7 +69,7 @@ public class TestHomePage extends TestRoot {
 		createdFavorite = true; // This test will create a favorite
 		// Search for an item so we know what we're working with
 		String artist = "Tegan and Sara";
-		searchAndGoHome(artist); 
+		//searchAndGoHome(artist); 
 		homePage.gotoForYou();
 		int listItem = 1;
 		String addErrors = homePage.toggleListItemFavorites(listItem, false); 
@@ -125,10 +110,10 @@ public class TestHomePage extends TestRoot {
 		Assert.assertFalse("Station was not added to 'Favorites'", stationLocation > 0);
 		consoleLogEnd(before, stationLocation <= 0 ,  "Tested testAddToFavoritesFromHome() in TestHomePage.java."); //Testing the inverse because it's assertFalse
 	}
-	
+	*/
 	/**
 	 * Log in, load up a station, check that it's in recents, add it to favorites, check that it's a favorite as well as a recent. 
-	 */
+	 
 	@Test
 	@Ignore
 	public void testAddToFavoritesFromRecents(){
@@ -138,7 +123,7 @@ public class TestHomePage extends TestRoot {
 		createdFavorite = true;
 		
 		String artist = "Tegan and Sara";
-		searchAndGoHome(artist);
+		//searchAndGoHome(artist);
 		// Get to my stations (favorites and recents)
 		homePage.gotoMyStations();
 		int artistValue = homePage.isStationARecent(artist); 
@@ -173,9 +158,10 @@ public class TestHomePage extends TestRoot {
 		Assert.assertTrue("Station was not removed from favorites", favoritePos < 0);
 		consoleLogEnd(before, favoritePos < 0,  "Tested testAddToFavoritesFromRecents() in TestHomePage.java.");
 	}
+	*/
 	/**
 	 * testAddToFavoritesFromLocalRadio- Log in, go to Live/Local Radio tab, add a station, check my stations for it being there
-	 */
+	 
 	@Test
 	@Ignore
 	public void testAddToFavoritesFromLocalRadio(){  
@@ -190,11 +176,11 @@ public class TestHomePage extends TestRoot {
 		Assert.assertTrue("Station name was empty", strGood(stationName));
 		// Play the first station
 		Assert.assertTrue("Could not play the first local radio station.", homePage.selectListItem(1));
-		Assert.assertTrue("Did not start playing", player.isPlaying());
+	//	Assert.assertTrue("Did not start playing", player.isPlaying());
 		// Only minimize if we have to
-		if(player.isPlayingInPlayer()){
-			player.minimizePlayer();
-		}
+		//if(player.isPlayingInPlayer()){
+		//	player.minimizePlayer();
+	//	}
 		if(stationName.contains(",")){
 			stationName = stationName.substring(0,  stationName.indexOf(","));
 		}
@@ -215,11 +201,12 @@ public class TestHomePage extends TestRoot {
 		Assert.assertTrue("Station was not in recents as well as favorites", stationIsARecent);
 		consoleLogEnd(before, stationIsAFavorite && stationIsARecent,  "Tested testAddToFavoritesFromLocalRadio() in TestHomePage.java.");
 	}
+	*/
 	/**
 	 * // Show More is on For You and My Stations
 		// Scroll to bottom of each list, verify what's visible, then keep scrolling
 		// Use XPath to grab visible names, as any other method will hold them even if they're not visible
-	 */
+	
 	@Test
 	@Ignore
 	public void testShowMore(){  
@@ -238,10 +225,10 @@ public class TestHomePage extends TestRoot {
 		assertScrollAndShowMore();
 		consoleLogEnd(before, true,  "Tested testShowMore() in TestHomePage.java");
 	}
-	
+	 */
 	/**
 	 * // Test that we can scroll to the bottom, then jump back to the top
-	 */
+	
 	@Test
 	@Ignore
 	public void testScrollAndTapBar(){   
@@ -261,4 +248,5 @@ public class TestHomePage extends TestRoot {
 		Assert.assertTrue("Could not scroll back to top!", topItems.equals(newTopItems));
 		consoleLogEnd(before, topItems.equals(newTopItems),  "Tested testScrollAndTapBar() in TestHomePage.java");
 	}
+	 */
 }

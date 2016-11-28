@@ -19,6 +19,7 @@ public class PodcastsPage extends Page {
 		super(_driver);
 	}
 
+	/*
 	public String playPodcasts() {
 		sideNavigationBar.gotoPodcastsPage();
 		waitForElementToBeVisible(firstPod, 5);
@@ -84,4 +85,5 @@ public class PodcastsPage extends Page {
 		}
 		return episode;
 	}
+	*/
 }
