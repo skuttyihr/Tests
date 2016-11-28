@@ -301,11 +301,12 @@ public class TestRoot {
 			return false;
 		} else {
 			String[] aId = iosElement.toString().split(">");
-			String getText = iosElement.getAttribute("name");
-			if (!getText.equals("")) {
-				// .isSelected() doesnt work anymore with Appium 1.6.0beta3 - so
-				// removed that at the end of the below line
-				System.out.println("  [" + aId[1] + "  text: [" + getText + "]  tagName: [" + iosElement.getTagName()
+			//String getText = iosElement.getAttribute("name");
+			String value = iosElement.getAttribute("value");
+//!value.equals("") ||
+			if ( value != null) {
+				// .isSelected() doesnt work anymore with Appium 1.6.0beta3
+				System.out.println("  [" + aId[1] + "  text: [" + value + "]  tagName: [" + iosElement.getTagName()
 				+ "] isDisplayed: [" + iosElement.isDisplayed() + "] isEnabled: [" + iosElement.isEnabled() + "].");
 			} else { // Element has no Text, not printing it.
 				System.out.println("  [" + aId[1] + " tagName: [" + iosElement.getTagName() + "] isDisplayed: ["

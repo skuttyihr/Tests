@@ -189,8 +189,8 @@ public class FullPlayer extends Page {
     	//printElementInformation(PlayerCenterViewBannerViewUIView);
         //PlayerSliderView
     	//printElementInformation(PlayButtonAnimatingViewUIImageView);
-    	//printElementInformation(IHRPlayerViewBackButtonUIButton); //Enable when we get to On Demand
-    	//printElementInformation(IHRPlayerSaveButtonUIButton);     //Enable when we get to On Demand
+    	printElementInformation(IHRPlayerViewBackButtonUIButton); //Enable when we get to On Demand
+    	printElementInformation(IHRPlayerSaveButtonUIButton);     //Enable when we get to On Demand
     	//Probably ads.
      	//printElementInformation(PlayerBannerViewBannerContainerViewUIView);
     	//printElementInformation(PlayerBannerViewDfpBannerUIView);

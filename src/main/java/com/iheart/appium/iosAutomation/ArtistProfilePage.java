@@ -92,7 +92,7 @@ public class ArtistProfilePage extends Page{
 		@iOSFindBy(accessibility="ArtistProfileLiveRadioCellTitleView-TitleLabel-UIView-2") private IOSElement ArtistProfileLiveRadioCellTitleViewTitleLabelUIView2;
 		@iOSFindBy(accessibility="ArtistProfileLiveRadioCellTitleView-SubtitleLabel-UILabel-2") private IOSElement ArtistProfileLiveRadioCellTitleViewSubtitleLabelUILabel2;
 	//Show All Albums  UICollectionCell (but also a button).
-	@iOSFindBy(xpath="//UIAApplication[1]/UIAWindow[1]/UIANavigationBar[1]/UIAStaticText[2]") private IOSElement AlbumsNavBarHeader;
+	//@iOSFindBy(xpath="//UIAApplication[1]/UIAWindow[1]/UIANavigationBar[1]/UIAStaticText[2]") private IOSElement AlbumsNavBarHeader;
 	@iOSFindBy(accessibility="ArtistProfileAlbumsViewController-CollectionView-UIView") private IOSElement ArtistProfileAlbumsViewControllerCollectionViewUIView;
 		@iOSFindBy(accessibility="ArtistProfileAlbumsView-AlbumCell-0") private IOSElement ArtistProfileAlbumsViewAlbumCell0;
 		//TitleLabel and Subtitle label are already defined above for AlbumCell0,1 and 2. 
@@ -146,7 +146,7 @@ public class ArtistProfilePage extends Page{
 		printElementInformation(ArtistProfileBioHeaderViewBackgroundImageViewUIImageView);  //visible -  false, enabled = true
 		printElementInformation(ArtistProfileBioHeaderViewArtistImageViewUIImage);   //visible -  false, enabled = true
 		printElementInformation(ArtistProfileBioHeaderTitleViewTitleLabelUILabel); //visible -  true, enabled = true
-		printElementInformation(ArtistProfileBioHeaderTitleViewBioButtonUIButton); //visible -  true, enabled = false
+		//printElementInformation(ArtistProfileBioHeaderTitleViewBioButtonUIButton); //visible -  true, enabled = false
 		printElementInformation(ArtistProfileBioHeaderViewPlayButtonUIButton);    //enabled: true  visible: true  (when viewing an artist profile you're not currently playing)
 		System.out.println("::::Printing elements for Artist Profile - Artist Bio ::::");
 		artistProfilePage.clickBioButtonToOpenArtistBio();
@@ -160,20 +160,21 @@ public class ArtistProfilePage extends Page{
 		System.out.println("::::Printing elements for Artist Profile - Top Songs  ::::");
 		printElementInformation(ArtistProfileSectionTopSongsTopSongsCell0);
 		printElementInformation(ArtistProfileTrackCellIndexLabelUILabel0);
-		printElementInformation(ArtistProfileTrackCellTitleLabelUILabel0);
+		//printElementInformation(ArtistProfileTrackCellTitleLabelUILabel0);
 		printElementInformation(ArtistProfileSectionTopSongsTopSongsCell1);
 		printElementInformation(ArtistProfileTrackCellIndexLabelUILabel1);
-		printElementInformation(ArtistProfileTrackCellTitleLabelUILabel1);
+		//printElementInformation(ArtistProfileTrackCellTitleLabelUILabel1);
 		printElementInformation(ArtistProfileSectionTopSongsTopSongsCell2);
 		printElementInformation(ArtistProfileTrackCellIndexLabelUILabel2);
-		printElementInformation(ArtistProfileTrackCellTitleLabelUILabel2);
+		//printElementInformation(ArtistProfileTrackCellTitleLabelUILabel2);
 		printElementInformation(ArtistProfileSectionTopSongsTopSongsCell3);
 		printElementInformation(ArtistProfileTrackCellIndexLabelUILabel3);
-		printElementInformation(ArtistProfileTrackCellTitleLabelUILabel3);
+		//printElementInformation(ArtistProfileTrackCellTitleLabelUILabel3);
 		printElementInformation(ArtistProfileSectionTopSongsTopSongsCell4);
 		printElementInformation(ArtistProfileTrackCellIndexLabelUILabel4);
-		printElementInformation(ArtistProfileTrackCellTitleLabelUILabel4);
-
+		//printElementInformation(ArtistProfileTrackCellTitleLabelUILabel4);
+        //two scrolls
+		artistProfilePage.scrollArtistProfilePageDown();
 		artistProfilePage.scrollArtistProfilePageDown();
 		System.out.println("::::Printing elements for Artist Profile - Three Albums ::::");
 		//Should be 3 albums and then Show All Albums button collection cell. 
@@ -229,7 +230,7 @@ public class ArtistProfilePage extends Page{
 	 * Prints all albums list information. Assumes that clickShowALlAlbumsCellButton() was clicked first. 
 	 */
 	public void printAllAlbumsInformation(){
-		printElementInformation(AlbumsNavBarHeader);	
+		//printElementInformation(AlbumsNavBarHeader);	
 		printElementInformation(ArtistProfileAlbumsViewControllerCollectionViewUIView);
 		printElementInformation(ArtistProfileAlbumsViewAlbumCell0); //Britney has 42 of these in the collectionView. 
 		printElementInformation(ArtistProfileAlbumCellTitleViewTitleLabelUILabel0);
@@ -340,7 +341,7 @@ public class ArtistProfilePage extends Page{
 	 * @return String for Artist Name. 
 	 */
 	public String getArtistProfileArtistName(){
-		String titleLabel = ArtistProfileBioHeaderTitleViewTitleLabelUILabel.getText();
+		String titleLabel = ArtistProfileBioHeaderTitleViewTitleLabelUILabel.getAttribute("value");
 		System.out.println("getArtistProfileArtistName() : " + titleLabel);
 		return titleLabel;
 	}
@@ -426,11 +427,14 @@ public class ArtistProfilePage extends Page{
 	/**
 	 * Clicks the Bio button to open Artist Bio. 
 	 * Not all artists have this button.
+	 * 
+	 * Seems like this button is now part of the title label. 
 	 * @return true or false if it is currently on Artist Bio.
 	 */
 	public boolean clickBioButtonToOpenArtistBio(){
 		System.out.println("clickBioButtonToOpenArtistBio() : Clicking Bio Button.");
-		ArtistProfileBioHeaderTitleViewBioButtonUIButton.click();
+		//ArtistProfileBioHeaderTitleViewBioButtonUIButton.click();
+		ArtistProfileBioHeaderTitleViewTitleLabelUILabel.click();
 		return isCurrentlyOnArtistBio();
 	}
 	/**

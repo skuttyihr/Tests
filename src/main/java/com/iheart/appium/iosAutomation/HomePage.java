@@ -343,7 +343,7 @@ public class HomePage extends Page {
 		if(homePage.isCurrentlyOnMyStationsTab()){
 			IOSElement station = createIOSElementOnHomePageForCell("Favorites", cellNumber);
 			
-			System.out.println("clickCertainCellOnMyStationsToBeginPlaying() : "+ station.getText());
+			System.out.println("clickCertainCellOnMyStationsToBeginPlaying(). ");//+ station.getAttribute("value"));
 			station.click();
 			return  miniPlayer.isCurrentlyOnMiniPlayer() || fullPlayer.isCurrentlyOnFullPlayer(); 
 		}
