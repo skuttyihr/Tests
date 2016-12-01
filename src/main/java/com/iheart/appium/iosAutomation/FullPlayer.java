@@ -257,7 +257,7 @@ public class FullPlayer extends Page {
 		}
 		else {
 			isUpChecked = false;
-			}
+		}
 		System.out.println("isThumbUpButtonActivated() : " + isUpChecked);
 		return isUpChecked;
 	}
