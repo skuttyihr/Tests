@@ -81,11 +81,12 @@ public class FullPlayer extends Page {
     @iOSFindBy(accessibility ="Buy on iTunes") private IOSElement BuySongButton;
     @iOSFindBy(accessibility ="Lyrics") private IOSElement LyricsButton;
     @iOSFindBy(accessibility ="Go to Artist") private IOSElement GoToArtistProfileButton;
-    //Coming with OD
-    @iOSFindBy(accessibility ="Remove Station") private IOSElement RemoveStationButton;
-    @iOSFindBy(accessibility ="Save Station") private IOSElement SaveStationButton;
-    @iOSFindBy(accessibility ="Save Song") private IOSElement SaveSongButton;
-    @iOSFindBy(accessibility ="Save to Playlist") private IOSElement SaveToPlaylistButton;
+    //OD - Click SaveButton and these should appear. Remove/Save Station are interchangeable. 
+    @iOSFindBy(accessibility ="Remove Station") private IOSElement RemoveStationButton;  //Growl: Station removed from My Stations
+    @iOSFindBy(accessibility ="Save Station") private IOSElement SaveStationButton;  //Saved 'name' to My Stations
+    @iOSFindBy(accessibility ="Save Song") private IOSElement SaveSongButton; //Song saved to My Music
+    @iOSFindBy(accessibility ="Add to Playlist") private IOSElement AddToPlaylistButton;
+    @iOSFindBy(accessibility ="Cancel") private IOSElement CancelOutOfSaveButton;
     
     @iOSFindBy(accessibility ="IHROptionMenuView-CancelButton-UIButton" ) private IOSElement IHROptionMenuViewCancelButtonUIButton;
     //Album and song title at the top of the More Info Option Menu screen
@@ -646,4 +647,87 @@ public class FullPlayer extends Page {
     	System.out.println("clickMoreCancelButton()");
     	IHROptionMenuViewCancelButtonUIButton.click();
     }
+    
+    public boolean isCurrentStationSaved(){
+    	boolean isSaved = IHRPlayerTitleViewHeartViewUIImageView.isDisplayed();
+    	System.out.println("isCurrentStationSaved() : "+ isSaved);
+    	return isSaved;
+    }
+    public boolean clickSaveButtonToOpenSaveModal(){
+    	System.out.print("clickSaveButton() : Opening Save Overflow : is SaveSongButton.isDisplayed() : ");
+    	IHRPlayerSaveButtonUIButton.click();
+    	//Save Modal should be up now
+    	boolean isSaveSongVisible = SaveSongButton.isDisplayed();
+    	System.out.println(isSaveSongVisible);
+    	return isSaveSongVisible;
+    	
+    }
+
+    /**
+     * Clicks the Add to Playlist Button, uses String entitlement to determine expected action. 
+     */
+    public boolean clickAddToPlaylistButtonInSaveModal(String entitlement){
+    	if(entitlement!= null && AddToPlaylistButton != null && !entitlement.equals("")){
+    		if(entitlement.equals("FREE")){
+    			AddToPlaylistButton.click();
+    			System.out.println("AddToPlaylistButton was clicked for FREE User - Expect Upsell Modal to appear");
+    			return fullPlayer.isUpsellModalOpen();
+    		}else if(entitlement.equals("PLUS")){
+    			AddToPlaylistButton.click();
+    			System.out.println("AddToPlaylistButton was clicked for PLUS User - Expect Upsell Modal to appear");
+    			return fullPlayer.isUpsellModalOpen();
+    		}else if(entitlement.equals("ALLACCESS")){
+    			AddToPlaylistButton.click();
+    			System.out.println("AddToPlaylistButton was clicked for ALLACCESS User - Expect Add to Playlist Modal to appear");
+    			//addToPlaylistModal.clickFirstPlaylist();
+    			return true;
+    		}else return false;
+    	}else return false;
+    }
+    /**
+     * Clicks the Save Song button in the Save Modal to Save currently playing song to My Playlist. 
+     * @return fullPlayer.isCurrentlyOnFullPlayer();
+     */
+    public boolean clickSaveSongInSaveModal(){
+    	if(SaveSongButton != null){
+    		SaveSongButton.click();
+    		System.out.println("clickSaveSongInSaveModal().");
+    	}
+    	return fullPlayer.isCurrentlyOnFullPlayer();
+    }
+    /**
+     * Clicks the Remove Station button in the Save Station Modal, and returns whether it reached the FullPlayer.
+     * @return fullPlayer.isCurrentlyOnFullPlayer();
+     */
+    public boolean clickRemoveStationInSaveModal(){
+    	if(RemoveStationButton!=null){
+    		RemoveStationButton.click();
+    		System.out.println("clickRemoveStationInSaveModal().");
+    	}
+    	
+    	return fullPlayer.isCurrentlyOnFullPlayer();
+    }
+    /**
+     * Clicks the Cancel Button on the bottom of the Save Modal to return to the FullPlayer.
+     * @return fullPlayer.isCurrentlyOnFullPlayer();
+     */
+    public boolean clickCancelInSaveModal(){
+    	if(CancelOutOfSaveButton!= null){
+    		CancelOutOfSaveButton.click();
+    	}
+    	System.out.println("clickCancelInSaveModal().");
+    	return fullPlayer.isCurrentlyOnFullPlayer();
+    }
+    /**
+     * Clicks the Save Station to 'Heart' or 'Favorite' the Station. 
+     * @return fullPlayer.isCurrentlyOnFullPlayer();
+     */
+    public boolean clickSaveStationInSaveModal(){
+    	if(SaveStationButton != null){
+    		SaveStationButton.click();
+    	}
+    	System.out.println("clickSaveStationInSaveModal().");
+    	return fullPlayer.isCurrentlyOnFullPlayer();
+    }
+    
 }

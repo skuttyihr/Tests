@@ -59,17 +59,6 @@ public class LoginPage extends Page {
 	private IOSElement openButton;
 
 	// Web Elements for Facebook Login
-	// @iOSFindBy(accessibility = "Facebook") private WebElement facebookButton;
-
-	// @iOSFindBy(xpath =
-	// "//UIAApplication[1]/UIAWindow[2]/UIAScrollView[1]/UIAScrollView[1]/UIAWebView[1]/UIATextField[1]")
-	// private WebElement fbEmail;
-	// @iOSFindBy(xpath =
-	// "//UIAApplication[1]/UIAWindow[2]/UIAScrollView[1]/UIAScrollView[1]/UIAWebView[1]/UIASecureTextField[1]")
-	// private IOSElement fbPassword;
-	// @iOSFindBy(xpath =
-	// "//UIAApplication[1]/UIAWindow[2]/UIAScrollView[1]/UIAScrollView[1]/UIAWebView[1]/UIAButton[1]")
-	// private IOSElement fbLogin;
 	@iOSFindBy(accessibility = "Email or Phone")
 	private WebElement fbEmailField;
 	@iOSFindBy(accessibility = "Facebook Password")
@@ -125,7 +114,7 @@ public class LoginPage extends Page {
 	 * 
 	 * @return
 	 */
-	public boolean login() { // logger.info("About to login...");
+	public boolean login() { 
 		System.out.println("About to login()");
 		boolean loggedIn = false;
 		// Log in

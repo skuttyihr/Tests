@@ -113,10 +113,9 @@ public class GenrePage extends Page {
 		// Examples: Top 40 & Pop, Country, Hip Hop and R&B, Alternative, etc
 		try{
 			IOSElement genre = waitForVisible(driver, By.name(g), 5);
-			//sk - 11/5/16 - .isSelected method is not working anymore on appium 1.6.0 so working around it till a solution comesup
-			if(!isGenreSelected(genre) ){//|| ){
+			if(!isGenreSelected(genre) ){
 				clickGenreElement(genre);
-				}
+			}
 			else{
 				System.out.println("Genre: " + g + " was already selected. If you'd like to deselect, call the deselect method.");
 			}
