@@ -610,16 +610,9 @@ public class SearchPage extends Page {
 		// searchPage.scrollSearchResultsCollectionView(SwipeElementDirection.UP,
 		// 500, 50, 2000);
 		swipeUp();
-		// sk - 11/5 - commenting out as PERFECT FOR has been removed from the
-		// app
 		/*
-		 * System.out.println("::::Printing out PERFECT FOR.::::");
-		 * printElementInformation(
-		 * GlobalSearchDataSourcePERFECTFORHeaderViewUIView);
-		 * printElementInformation(
-		 * GlobalSearchDataSourceSearchResultCellPerfectForRow0);
-		 * printElementInformation(
-		 * GlobalSearchDataSourceSearchResultCellPerfectForRow1);
+		 * System.out.println("::::Printing out PLAYLISTS.::::");
+		 * ADD PLAYLISTS TO SEARCH RESULTS
 		 * searchPage.scrollSearchResultsCollectionView(SwipeElementDirection.
 		 * UP, 500, 50, 2000);
 		 */
