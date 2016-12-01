@@ -274,12 +274,15 @@ public class LoginPage extends Page {
 		System.out.println("Dismissed Zip code and handled possible popups.");
 		// Select Genre
 		if (waitForVisible(driver, By.name("IHRiPhoneGenrePickerView"), 5) != null) {
-			genrePage.selectGenre("Alternative");
-			System.out.println("Selected 'Alternative' genre.");
+			if(!genrePage.isGenreSelected("Alternative")){
+				genrePage.selectGenre("Alternative");
+				System.out.println("Selected 'Alternative' genre.");
+			}
 		}
 		// Dismiss stay connected popup that sometimes shows up AFTER genre
 		// picker
 		chooseStayConnected(false);
+		Page.handlePossiblePopUp();  //added after genre screen sometimes pops up again. 
 		System.out.println("Logged in without verifying.");
 	}
 
@@ -327,7 +330,7 @@ public class LoginPage extends Page {
 
 	/**
 	 * Logs into a Facebook account. May fail if Facebook removes access from
-	 * the account.
+	 * the account, which tends to happen after two or more successive tests. 
 	 * 
 	 * @return
 	 */
@@ -335,16 +338,21 @@ public class LoginPage extends Page {
 		onboardingPage.clickOnboardingLoginButton();
 		waitForElementToBeVisible(IHRAuthorizationViewEmailAddressTextField, 3);
 		clickFacebookLoginButton();
-
+		System.out.println("Testing Facebook login.");
 		// adding in wait
-		if (waitForElementToBeVisible(fbemailField, 3) && waitForElementToBeVisible(fbpasswordField, 2)
-				&& waitForElementToBeVisible(fbloginButton, 2)) {
+		if (waitForElementToBeVisible(fbemailField, 5)){
 			fbemailField.sendKeys(FACEBOOKUSERNAME);
-			fbpasswordField.sendKeys(FACEBOOKPASSWORD);
-			fbloginButton.click();
-			System.out.println("Testing Facebook login. Entered FB Email, Password, and Clicked Login.");
+			System.out.println("Entered Facebook Email");
 		}
-		waitForElementToBeVisible(btnAuthorize, 4);
+		if(waitForElementToBeVisible(fbpasswordField, 5)){
+			fbpasswordField.sendKeys(FACEBOOKPASSWORD);
+			System.out.println("Entered Facebook Password");
+		}
+		if(waitForElementToBeVisible(fbloginButton, 5)){
+			fbloginButton.click();
+			System.out.println("Clicked Facebook Login");
+		}
+		waitForElementToBeVisible(btnAuthorize, 8);
 		btnAuthorize.click();
 		// Now switch to native view
 		dismissLoginPopups();

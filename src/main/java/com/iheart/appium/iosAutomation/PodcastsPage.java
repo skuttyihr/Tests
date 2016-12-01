@@ -1,14 +1,7 @@
 package com.iheart.appium.iosAutomation;
-
-import java.util.HashMap;
-
 import io.appium.java_client.pagefactory.*;
-
 import io.appium.java_client.ios.*;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.remote.RemoteWebElement;
 
 public class PodcastsPage extends Page {
 

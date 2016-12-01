@@ -296,6 +296,7 @@ public class HomePage extends Page {
 	 */
 	public void clickNavBarSearchButtonToOpenSearch(){
 		System.out.println("clickNavBarSearchButtonToOpenSearch()...");
+		Page.waitForElementToBeVisible(NavBarSearchBarButtonUIButton, 5);
 		NavBarSearchBarButtonUIButton.click();
 	}
 	/**

@@ -48,7 +48,8 @@ public class FullPlayer extends Page {
     	@iOSFindBy(accessibility ="IHRPlayerView-PlayButton-UIButton" ) private IOSElement IHRPlayerViewPlayButtonUIButton;
     	@iOSFindBy(accessibility ="IHRPlayerView-ForwardButton-UIButton" ) private IOSElement IHRPlayerViewForwardButtonUIButton;
     	@iOSFindBy(accessibility ="IHRPlayerView-BackButton-UIButton") private IOSElement  IHRPlayerViewBackButtonUIButton;
-    @iOSFindBy(accessibility ="IHRPlayer-SaveButton-UIButton" ) private IOSElement IHRPlayerSaveButtonUIButton;  //(OD only)
+    @iOSFindBy(accessibility ="IHRPlayer-SaveButton-UIButton" ) private IOSElement IHRPlayerSaveButtonUIButton;  
+    @iOSFindBy(accessibility ="IHRPlayer-ReplayButton-UIButton" ) private IOSElement IHRPlayerReplayButtonUIButton;
     @iOSFindBy(accessibility ="IHRPlayer-MoreButton-UIButton" ) private IOSElement IHRPlayerMoreButtonUIButton;
     @iOSFindBy(accessibility ="IHRPlayerView-ThumbDownButton-UIButton" ) private IOSElement IHRPlayerViewThumbDownButtonUIButton;
     @iOSFindBy(accessibility ="IHRPlayerView-ThumbUpButton-UIButton" ) private IOSElement IHRPlayerViewThumbUpButtonUIButton;
@@ -77,9 +78,9 @@ public class FullPlayer extends Page {
     @iOSFindBy(accessibility ="IHROptionMenuView-DividerView-UIView" ) private IOSElement IHROptionMenuViewDividerViewUIView;
     @iOSFindBy(accessibility ="IHROptionMenuView-ButtonsContainer-UIView" ) private IOSElement IHROptionMenuViewButtonsContainerUIView;
     //These aren't true Objects - can't figure how to add AccessibilityIdentifiers to them. 
-    @iOSFindBy(accessibility ="Buy Song") private IOSElement BuySongButton;
+    @iOSFindBy(accessibility ="Buy on iTunes") private IOSElement BuySongButton;
     @iOSFindBy(accessibility ="Lyrics") private IOSElement LyricsButton;
-    @iOSFindBy(accessibility ="Go to Artist Profile") private IOSElement GoToArtistProfileButton;
+    @iOSFindBy(accessibility ="Go to Artist") private IOSElement GoToArtistProfileButton;
     //Coming with OD
     @iOSFindBy(accessibility ="Remove Station") private IOSElement RemoveStationButton;
     @iOSFindBy(accessibility ="Save Station") private IOSElement SaveStationButton;
@@ -120,9 +121,9 @@ public class FullPlayer extends Page {
     	System.out.println("Checking NavBar elements...");
 
     	printElementInformation(PlayerViewMinimizePlayerDownarrowUIButton);
-    	printElementInformation(NavBarFavoriteButtonUIButton);
+    	//printElementInformation(NavBarFavoriteButtonUIButton); This button has been removed and replaced in the Save Modal
     	printElementInformation(NavBarShareButtonUIButton);
-    	printElementInformation(IHRCastingBarButtonItemUIButton);
+    	//printElementInformation(IHRCastingBarButtonItemUIButton);
     	System.out.println("Checking Slider elements...");
     	
     	printElementInformation(PlayerSliderViewPositionLabelUILabel);
@@ -189,7 +190,8 @@ public class FullPlayer extends Page {
     	//printElementInformation(PlayerCenterViewBannerViewUIView);
         //PlayerSliderView
     	//printElementInformation(PlayButtonAnimatingViewUIImageView);
-    	printElementInformation(IHRPlayerViewBackButtonUIButton); //Enable when we get to On Demand
+    	printElementInformation(IHRPlayerReplayButtonUIButton);
+    	//printElementInformation(IHRPlayerViewBackButtonUIButton); //Enable when we get to On Demand
     	printElementInformation(IHRPlayerSaveButtonUIButton);     //Enable when we get to On Demand
     	//Probably ads.
      	//printElementInformation(PlayerBannerViewBannerContainerViewUIView);
@@ -244,23 +246,41 @@ public class FullPlayer extends Page {
     	IHRPlayerViewThumbDownButtonUIButton.click();
     }
     
-    /**
-	 * Returns true if Thumb Up is activated and Thumb Down is NOT activated. 
-	 * @return
-	 */
-	public boolean isThumbUpButtonActivated(){
-		boolean thumbUpActivated = (IHRPlayerViewThumbUpButtonUIButton.isSelected() && !IHRPlayerViewThumbDownButtonUIButton.isSelected() );
-		System.out.println("isThumbUpButtonActivated() : " + thumbUpActivated);
-		return thumbUpActivated;
-	}
+    
 	/**
 	 * Returns true if Thumb Down Is activated and Thumb Up is NOT activated. 
 	 * @return
 	 */
 	public boolean isThumbDownButtonActivated(){
-		boolean thumbDownActivated = (!IHRPlayerViewThumbUpButtonUIButton.isSelected() && IHRPlayerViewThumbDownButtonUIButton.isSelected() );
-		System.out.println("isThumbDownButtonActivated() : " + thumbDownActivated);
-		return thumbDownActivated;
+		String thumbDownButtonChecked = IHRPlayerViewThumbDownButtonUIButton.getAttribute("value");
+		boolean isDownChecked;
+		if(thumbDownButtonChecked==null){
+			isDownChecked = false;
+		}
+		else{
+			isDownChecked = thumbDownButtonChecked.equals("true");
+		}
+		System.out.println("isThumbDownButtonActivated() : " + isDownChecked);
+		return isDownChecked;
+	}
+	/**
+	 * Returns true if Thumb Up is activated. Checks value on the button, if it returns a "true" string, it returns true, null returns false.
+	 * @return
+	 */
+	public boolean isThumbUpButtonActivated(){
+		String thumbUpButtonChecked = IHRPlayerViewThumbUpButtonUIButton.getAttribute("value");
+		boolean isUpChecked;
+		if(thumbUpButtonChecked==null){
+			isUpChecked = false;
+		}
+		else if(thumbUpButtonChecked.equals("true")){
+			isUpChecked = true;
+		}
+		else {
+			isUpChecked = false;
+			}
+		System.out.println("isThumbUpButtonActivated() : " + isUpChecked);
+		return isUpChecked;
 	}
 	
 	/**
@@ -268,7 +288,7 @@ public class FullPlayer extends Page {
 	 * @return
 	 */
 	public boolean isThumbUpAndThumbDownButtonNotActivated(){
-		boolean thumbDownUpNotActivated = (!IHRPlayerViewThumbUpButtonUIButton.isSelected() && !IHRPlayerViewThumbDownButtonUIButton.isSelected() );
+		boolean thumbDownUpNotActivated = (!isThumbUpButtonActivated() && !isThumbDownButtonActivated() );
 		System.out.println("isThumbUpAndThumbDownButtonNotActivated() : " + thumbDownUpNotActivated);
 		return thumbDownUpNotActivated;
 	}
