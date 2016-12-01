@@ -116,14 +116,7 @@ public class TestFullPlayerAndMiniPlayer extends TestRoot {
 		sideNavBar.gotoPodcastsPage();
 		System.out.print("Podcasts  :");
 		Assert.assertTrue("Mini player was not visible on podcasts page", miniPlayer.isCurrentlyOnMiniPlayer());
-		//sk - 11/8 - commenting out perfect for as its no longer in the app
-		// sideNavBar.gotoPerfectFor();
-		// homePage.clickHamburgerButtonToOpenSideMenu();
-		// System.out.print("Perfect For :");
-		// Assert.assertTrue("Mini player was not visible on perfect for page",
-		// miniPlayer.isCurrentlyOnMiniPlayer());
 		sideNavBar.gotoListeningHistoryPage();
-		// homePage.clickHamburgerButtonToOpenSideMenu();
 		System.out.print("Listening History  :");
 		Assert.assertTrue("Mini player was not visible on listening history page",
 				miniPlayer.isCurrentlyOnMiniPlayer());
@@ -216,8 +209,9 @@ public class TestFullPlayerAndMiniPlayer extends TestRoot {
 				fullPlayer.getStationName());
 		Assert.assertEquals("We expect to be on Artist Radio if we enter 'Britney' into Search.", "Artist Radio",
 				fullPlayer.getStationType());
+		boolean lastAssert = fullPlayer.doesSkipCountDecreaseAfterClickingSkipButton();
 		Assert.assertTrue("Skip may not have worked, or skip counter didn't decrease, or not enough skips were left",
-				fullPlayer.doesSkipCountDecreaseAfterClickingSkipButton());
+				lastAssert);
 		//fullPlayer.clickCastingAirplayButtonOnNavBar();
 		//Assert.assertTrue("Clicking on the Casting / Airplay button should have opened the Connect to a Device screen.",
 		//		fullPlayer.isConnectToADeviceDisplayed());
@@ -236,7 +230,7 @@ public class TestFullPlayerAndMiniPlayer extends TestRoot {
 		//	Assert.assertFalse("Favorite Button on NavBar should be selected after getting clicked.",
 		//			fullPlayer.isFavoriteButtonOnNavBarSelected());
 		//}
-		consoleLogEnd(before, true, "Tested testFullPlayerElements");
+		consoleLogEnd(before, lastAssert, "Tested testFullPlayerElements");
 	}
 
 }

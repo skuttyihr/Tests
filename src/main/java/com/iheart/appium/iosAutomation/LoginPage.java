@@ -1,8 +1,5 @@
 package com.iheart.appium.iosAutomation;
 
-import java.util.Set;
-
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -352,6 +349,7 @@ public class LoginPage extends Page {
 			fbloginButton.click();
 			System.out.println("Clicked Facebook Login");
 		}
+		System.out.println("If Test Ends right here, it means that Facebook has blocked access to this account, the test will probably run again tomorrow");
 		waitForElementToBeVisible(btnAuthorize, 8);
 		btnAuthorize.click();
 		// Now switch to native view
