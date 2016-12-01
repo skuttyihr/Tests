@@ -181,31 +181,9 @@ public class FullPlayer extends Page {
     	printElementInformation(IHRPlayerViewLabelContainerUIView);
     	printElementInformation(IHRPlayerViewTitleLabelUILabel);
     	printElementInformation(IHRPlayerViewSubTitleLabelUILabel);
-        //IHRPlayerReplayTimerViewController    //Enable when we get to On Demand
-    	//printElementInformation(IHRPlayerReplayTimerViewBackgroundViewUIView);
-    	//printElementInformation(IHRPlayerReplayTimerViewLabelUILabel);
-    	//printElementInformation(IHRPlayerReplayTimerViewProgressViewUIView);
-    	//printElementInformation(IHRPlayerReplayTimerViewCountLabelUILabel);
-    	//printElementInformation(IHRPlayerReplayTimerViewCancelButtonUIButton);
-        //PlayerCenterView
-    	//printElementInformation(PlayerCenterViewBannerViewUIView);
-        //PlayerSliderView
-    	//printElementInformation(PlayButtonAnimatingViewUIImageView);
+    	System.out.println("Checking if Replay and Save Buttons exist on FullPlayer");
     	printElementInformation(IHRPlayerReplayButtonUIButton);
-    	//printElementInformation(IHRPlayerViewBackButtonUIButton); //Enable when we get to On Demand
-    	printElementInformation(IHRPlayerSaveButtonUIButton);     //Enable when we get to On Demand
-    	//Probably ads.
-     	//printElementInformation(PlayerBannerViewBannerContainerViewUIView);
-    	//printElementInformation(PlayerBannerViewDfpBannerUIView);
-    	//printElementInformation(PlayerBannerViewSyncBannerViewUIView);
-    	//printElementInformation(PlayerBannerViewDismissButtonUIButton);
-    	//printElementInformation(PlayerBannerBlackOverlayUIView);
-    	//printElementInformation(IHRPlayerTitleViewHeartViewUIImageView);  This basically needs to be removed. 
-    	//printElementInformation(NavBarBackPlayerUIButton);
-    	//printElementInformation(NavBarSideMenuButtonUIButton);
-    	//printElementInformation(NavBarRightDisableableBarButtonUIButton);
-    	//printElementInformation(NavBarSearchBarButtonUIButton);
-    	
+    	printElementInformation(IHRPlayerSaveButtonUIButton);     
     }
     /**
      * Clicks the Down Arrow at the top of FullPlayer to minimize it into MiniPlayer. 
@@ -647,12 +625,19 @@ public class FullPlayer extends Page {
     	System.out.println("clickMoreCancelButton()");
     	IHROptionMenuViewCancelButtonUIButton.click();
     }
-    
+    /**
+     * This must be tested. 
+     * @return
+     */
     public boolean isCurrentStationSaved(){
     	boolean isSaved = IHRPlayerTitleViewHeartViewUIImageView.isDisplayed();
     	System.out.println("isCurrentStationSaved() : "+ isSaved);
     	return isSaved;
     }
+    /**
+     * Only clicks the Save Button once - Other actions afterwards need to be taken.
+     * @return
+     */
     public boolean clickSaveButtonToOpenSaveModal(){
     	System.out.print("clickSaveButton() : Opening Save Overflow : is SaveSongButton.isDisplayed() : ");
     	IHRPlayerSaveButtonUIButton.click();
@@ -664,7 +649,20 @@ public class FullPlayer extends Page {
     }
 
     /**
+     * Refactor this!!!
+     * @return
+     */
+    public boolean clickReplayButtonToOpenReplayModal(){
+    	if( IHRPlayerReplayButtonUIButton!= null){
+    		IHRPlayerReplayButtonUIButton.click();
+    		System.out.println("clickReplayButtonToOpenReplayModal() .");
+    		//ADD LOGIC TO CLICK A SONG OR MAKE A NEW METHOD...
+    		return true;
+    	} return false;
+    }
+    /**
      * Clicks the Add to Playlist Button, uses String entitlement to determine expected action. 
+     * REFACTOR SOME MORE
      */
     public boolean clickAddToPlaylistButtonInSaveModal(String entitlement){
     	if(entitlement!= null && AddToPlaylistButton != null && !entitlement.equals("")){
