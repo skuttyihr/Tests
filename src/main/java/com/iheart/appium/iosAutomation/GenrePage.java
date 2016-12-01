@@ -105,7 +105,7 @@ public class GenrePage extends Page {
 
 	// By name
 	/**
-	 * Select a genre by the nane if the genre category
+	 * Select a genre by the name if the genre category
 	 * @param g
 	 * @param clickDone
 	 */
@@ -113,13 +113,12 @@ public class GenrePage extends Page {
 		// Examples: Top 40 & Pop, Country, Hip Hop and R&B, Alternative, etc
 		try{
 			IOSElement genre = waitForVisible(driver, By.name(g), 5);
-			//sk - 11/5/16 - .isSelected method is not working anymore on appium 1.6.0 so working around it till a solution comesup
-			//if(!isGenreSelected(genre) || ){
+			if(!isGenreSelected(genre) ){
 				clickGenreElement(genre);
-				//}
-			//else{
-				//System.out.println("Genre: " + g + " was already selected. If you'd like to deselect, call the deselect method.");
-			//}
+			}
+			else{
+				System.out.println("Genre: " + g + " was already selected. If you'd like to deselect, call the deselect method.");
+			}
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -304,11 +303,21 @@ public class GenrePage extends Page {
 	}
 	public boolean isGenreSelected(IOSElement genre){
 		boolean genreSelected = false;
-		System.out.println(genre.isSelected());
-		System.out.println(genre.getAttribute("value"));
-		if(Integer.parseInt(genre.getAttribute("value")) == 1){
+		String trueOrNull = genre.getAttribute("value");
+		if(trueOrNull == null){
+			genreSelected = false;
+		}
+		else if( trueOrNull.equals("true")){
 			genreSelected = true;
-		}		
+		}else {
+			genreSelected = false; //default
+		}
+		
+		//System.out.println(genre.isSelected());
+		System.out.println("genrePage.isGenreSelected() ? : " + genreSelected);
+		//if(Integer.parseInt(genre.getAttribute("value")) == 1){
+		//	genreSelected = true;
+		//}		
 		return genreSelected;
 	}
 

@@ -125,7 +125,7 @@ public class MiniPlayer extends Page {
 	
 	public void swipeMiniPlayerToLeftToShowSkipButton(){
 		System.out.println("swipeMiniPlayerToLeftToShowSkipButton()");
-		MiniPlayerViewImageViewUIImageView.swipe(SwipeElementDirection.LEFT, 500);
+		MiniPlayerViewImageViewUIImageView.swipe(SwipeElementDirection.LEFT, 5);
 	}
 	
 	/**
@@ -143,14 +143,15 @@ public class MiniPlayer extends Page {
 	 */
 	public void swipeMiniPlayerToRightToHideSkipButton(){
 		System.out.println("swipeMiniPlayerToRightToHideSkipButton()");
-		MiniPlayerViewImageViewUIImageView.swipe(SwipeElementDirection.RIGHT, 500);
+		MiniPlayerViewImageViewUIImageView.swipe(SwipeElementDirection.RIGHT, 5);
 	}
 	/**
 	 * Swipes to left for half a second exposing Skip(scan) button and then clicks it. 
 	 */
 	public void swipeMiniPlayerToLeftAndClickSkipButton(){
 		System.out.println("swipeMiniPlayerToLeftAndClickSkipButton()");
-		MiniPlayerViewImageViewUIImageView.swipe(SwipeElementDirection.LEFT, 500);
+		//System.out.println("AppWidth = " + Page.getAppWidth()  + " SkipButton : " + MiniPlayerViewRedSkipButtonUIButton.getSize().getWidth());
+		MiniPlayerViewImageViewUIImageView.swipe(SwipeElementDirection.LEFT, 5);
 		MiniPlayerViewRedSkipButtonUIButton.click();
 	}
 	
@@ -166,8 +167,7 @@ public class MiniPlayer extends Page {
 	 * @return
 	 */
 	public boolean isThumbUpButtonActivated(){
-		//String val = MiniPlayerViewThumbDownButtonUIButton.getAttribute("value");  Old way - Checks to see if val.equals("1").
-		boolean thumbUpActivated = (MiniPlayerViewThumbUpButtonUIButton.isSelected() && !MiniPlayerViewThumbDownButtonUIButton.isSelected() );
+		boolean thumbUpActivated = getThumbUpStatus() && !getThumbDownStatus();
 		System.out.println("isThumbUpButtonActivated() : " + thumbUpActivated);
 		return thumbUpActivated;
 	}
@@ -176,19 +176,40 @@ public class MiniPlayer extends Page {
 	 * @return
 	 */
 	public boolean isThumbDownButtonActivated(){
-		boolean thumbDownActivated = (!MiniPlayerViewThumbUpButtonUIButton.isSelected() && MiniPlayerViewThumbDownButtonUIButton.isSelected() );
+		boolean thumbDownActivated = !getThumbUpStatus() && getThumbDownStatus();
 		System.out.println("isThumbDownButtonActivated() : " + thumbDownActivated);
 		return thumbDownActivated;
 	}
-	
+	public boolean getThumbUpStatus(){
+		String thumbUpButtonChecked = MiniPlayerViewThumbUpButtonUIButton.getAttribute("value");
+		boolean isUpChecked;
+		if(thumbUpButtonChecked==null){
+			isUpChecked = false;
+		}
+		else{
+			isUpChecked = thumbUpButtonChecked.equals("true");
+		}
+		return isUpChecked;
+	}
+	public boolean getThumbDownStatus(){
+		String thumbDownButtonChecked = MiniPlayerViewThumbDownButtonUIButton.getAttribute("value");
+		boolean isDownChecked;
+		if(thumbDownButtonChecked==null){
+			isDownChecked = false;
+		}
+		else{
+			isDownChecked = thumbDownButtonChecked.equals("true");
+		}
+		return isDownChecked;
+	}
 	/**
 	 * Returns true if both Thumb Buttons are Not Selected. 
 	 * @return
 	 */
 	public boolean isThumbUpAndThumbDownButtonNotActivated(){
-		boolean thumbDownUpNotActivated = (!MiniPlayerViewThumbUpButtonUIButton.isSelected() && !MiniPlayerViewThumbDownButtonUIButton.isSelected() );
-		System.out.println("isThumbUpAndThumbDownButtonNotActivated() : " + thumbDownUpNotActivated);
-		return thumbDownUpNotActivated;
+		boolean bothDown = !getThumbUpStatus() && !getThumbDownStatus();
+		System.out.println("isThumbUpAndThumbDownButtonNotActivated: " + bothDown);
+		return bothDown; 
 	}
 	
 	/**

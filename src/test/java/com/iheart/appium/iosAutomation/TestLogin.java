@@ -27,13 +27,13 @@ public class TestLogin extends TestRoot {
 	
 
 	/**
-	 * LOG-1 - Login with NONE Account
+	 * LOG-1 - Login with Free Account
 	 */
 	@Test
 	public void testLoginViaEmail() {
 		LocalTime before = consoleLogStart("Testing login via Email." + name.getMethodName());
 		boolean testResult = loginPage.login();
-		Assert.assertTrue("Could not log in with email and password", testResult);
+		Assert.assertTrue("Could not log in with email and password : ((LOG-1))", testResult);
 		consoleLogEnd(before, testResult, "Tested Log In via Email. ((LOG-1))");
 	}
 	/**
@@ -44,7 +44,7 @@ public class TestLogin extends TestRoot {
 	public void testLoginViaFacebook() {
 		LocalTime before = consoleLogStart("Testing login via Facebook.");
 		boolean testResult = loginPage.loginViaFacebook();
-		Assert.assertTrue("Could not log in via Facebook", testResult);
+		Assert.assertTrue("Could not log in via Facebook : ((LOG-2))", testResult);
 		consoleLogEnd(before, testResult, "Tested login via Facebook. ((LOG-2))");
 	}
 	/**
@@ -63,7 +63,7 @@ public class TestLogin extends TestRoot {
 	public void testLoginViaGoogle() {
 		LocalTime before = consoleLogStart("Testing Login with Google+");
 		boolean testResult = loginPage.loginViaGoogle();
-		Assert.assertTrue("Could not log in via Google+", testResult);
+		Assert.assertTrue("Could not log in via Google+ : ((LOG-3))", testResult);
 		consoleLogEnd(before, testResult, "Tested Google Login. ((LOG-3))");
 
 	}
@@ -85,7 +85,7 @@ public class TestLogin extends TestRoot {
 			resetPasswordPage.clickBackButton();
 		}
 		boolean onLoginPage = loginPage.currentlyOnLoginPage();
-		Assert.assertTrue("Not currently on loginPage, check for ResetPassword issues", onLoginPage);
+		Assert.assertTrue("Not currently on loginPage, check for ResetPassword issues. ((LOG-4))", onLoginPage);
 		consoleLogEnd(before, onLoginPage, "Tested IOSElements on resetPasswordPage. ((LOG-4))");
 	}
 	/**
@@ -96,7 +96,7 @@ public class TestLogin extends TestRoot {
 		LocalTime before = consoleLogStart("Testing login via Email with a FREE Account : " + name.getMethodName());
 		loginPage.loginWithoutVerifying("trav@free.com", "travfree");
 		boolean testResult = homePage.isCurrentlyOnForYouTab();
-		Assert.assertTrue("Could not log in with email and password", testResult);
+		Assert.assertTrue("Could not log in with email and password. : ((LOG-7))", testResult);
 		consoleLogEnd(before, testResult, "Tested Log In via Email with a FREE Account. ((LOG-7))");
 	}
 	/**
@@ -107,7 +107,7 @@ public class TestLogin extends TestRoot {
 		LocalTime before = consoleLogStart("Testing login via Email with a PLUS Account : " + name.getMethodName());
 		loginPage.loginWithoutVerifying("trav@plus.com", "travplus");
 		boolean testResult = homePage.isCurrentlyOnForYouTab();
-		Assert.assertTrue("Could not log in with email and password", testResult);
+		Assert.assertTrue("Could not log in with email and password. ((LOG-8))", testResult);
 		consoleLogEnd(before, testResult, "Tested Log In via Email with a PLUS Account. ((LOG-8))");
 	}
 	/**
@@ -118,7 +118,7 @@ public class TestLogin extends TestRoot {
 		LocalTime before = consoleLogStart("Testing login via Email with a ALL Account : " + name.getMethodName());
 		loginPage.loginWithoutVerifying("trav@all.com", "travall");
 		boolean testResult = homePage.isCurrentlyOnForYouTab();
-		Assert.assertTrue("Could not log in with email and password", testResult);
+		Assert.assertTrue("Could not log in with email and password. ((LOG-9))", testResult);
 		consoleLogEnd(before, testResult, "Tested Log In via Email with a ALL Account. ((LOG-9))");
 	}
 

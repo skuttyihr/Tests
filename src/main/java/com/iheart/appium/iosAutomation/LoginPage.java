@@ -1,8 +1,5 @@
 package com.iheart.appium.iosAutomation;
 
-import java.util.Set;
-
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -62,17 +59,6 @@ public class LoginPage extends Page {
 	private IOSElement openButton;
 
 	// Web Elements for Facebook Login
-	// @iOSFindBy(accessibility = "Facebook") private WebElement facebookButton;
-
-	// @iOSFindBy(xpath =
-	// "//UIAApplication[1]/UIAWindow[2]/UIAScrollView[1]/UIAScrollView[1]/UIAWebView[1]/UIATextField[1]")
-	// private WebElement fbEmail;
-	// @iOSFindBy(xpath =
-	// "//UIAApplication[1]/UIAWindow[2]/UIAScrollView[1]/UIAScrollView[1]/UIAWebView[1]/UIASecureTextField[1]")
-	// private IOSElement fbPassword;
-	// @iOSFindBy(xpath =
-	// "//UIAApplication[1]/UIAWindow[2]/UIAScrollView[1]/UIAScrollView[1]/UIAWebView[1]/UIAButton[1]")
-	// private IOSElement fbLogin;
 	@iOSFindBy(accessibility = "Email or Phone")
 	private WebElement fbEmailField;
 	@iOSFindBy(accessibility = "Facebook Password")
@@ -128,7 +114,7 @@ public class LoginPage extends Page {
 	 * 
 	 * @return
 	 */
-	public boolean login() { // logger.info("About to login...");
+	public boolean login() { 
 		System.out.println("About to login()");
 		boolean loggedIn = false;
 		// Log in
@@ -274,12 +260,15 @@ public class LoginPage extends Page {
 		System.out.println("Dismissed Zip code and handled possible popups.");
 		// Select Genre
 		if (waitForVisible(driver, By.name("IHRiPhoneGenrePickerView"), 5) != null) {
-			genrePage.selectGenre("Alternative");
-			System.out.println("Selected 'Alternative' genre.");
+			if(!genrePage.isGenreSelected("Alternative")){
+				genrePage.selectGenre("Alternative");
+				System.out.println("Selected 'Alternative' genre.");
+			}
 		}
 		// Dismiss stay connected popup that sometimes shows up AFTER genre
 		// picker
 		chooseStayConnected(false);
+		Page.handlePossiblePopUp();  //added after genre screen sometimes pops up again. 
 		System.out.println("Logged in without verifying.");
 	}
 
@@ -327,7 +316,7 @@ public class LoginPage extends Page {
 
 	/**
 	 * Logs into a Facebook account. May fail if Facebook removes access from
-	 * the account.
+	 * the account, which tends to happen after two or more successive tests. 
 	 * 
 	 * @return
 	 */
@@ -335,16 +324,22 @@ public class LoginPage extends Page {
 		onboardingPage.clickOnboardingLoginButton();
 		waitForElementToBeVisible(IHRAuthorizationViewEmailAddressTextField, 3);
 		clickFacebookLoginButton();
-
+		System.out.println("Testing Facebook login.");
 		// adding in wait
-		if (waitForElementToBeVisible(fbemailField, 3) && waitForElementToBeVisible(fbpasswordField, 2)
-				&& waitForElementToBeVisible(fbloginButton, 2)) {
+		if (waitForElementToBeVisible(fbemailField, 5)){
 			fbemailField.sendKeys(FACEBOOKUSERNAME);
-			fbpasswordField.sendKeys(FACEBOOKPASSWORD);
-			fbloginButton.click();
-			System.out.println("Testing Facebook login. Entered FB Email, Password, and Clicked Login.");
+			System.out.println("Entered Facebook Email");
 		}
-		waitForElementToBeVisible(btnAuthorize, 4);
+		if(waitForElementToBeVisible(fbpasswordField, 5)){
+			fbpasswordField.sendKeys(FACEBOOKPASSWORD);
+			System.out.println("Entered Facebook Password");
+		}
+		if(waitForElementToBeVisible(fbloginButton, 5)){
+			fbloginButton.click();
+			System.out.println("Clicked Facebook Login");
+		}
+		System.out.println("If Test Ends right here, it means that Facebook has blocked access to this account, the test will probably run again tomorrow");
+		waitForElementToBeVisible(btnAuthorize, 8);
 		btnAuthorize.click();
 		// Now switch to native view
 		dismissLoginPopups();

@@ -36,6 +36,10 @@ public class Page extends TestRoot {
 	@iOSFindBy(accessibility = "Local Radio")
 	public IOSElement localRadio;
 
+	//Upsell Modal
+	@iOSFindBy(accessibility = "Start Free 30 Day Trial")
+	public IOSElement startFree30DayTrialButton;
+	
 	@iOSFindBy(accessibility = "iheartradio_logo_full")
 	public static IOSElement iheartradio_logo_full;
 
@@ -92,6 +96,13 @@ public class Page extends TestRoot {
 	// The popup: Like iHeartRadio? Let us know!
 	public void likeIheart() {
 
+	}
+	public boolean isUpsellModalOpen(){
+		if(startFree30DayTrialButton!= null){
+			boolean upsellOpen = startFree30DayTrialButton.isDisplayed();
+			System.out.println("isUpsellModalOpen() : " + upsellOpen);
+			return upsellOpen;
+		}else return false;
 	}
 
 	public static void setDriver(IOSDriver<IOSElement> _driver) {

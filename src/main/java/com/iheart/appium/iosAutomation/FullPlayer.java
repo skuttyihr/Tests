@@ -48,7 +48,8 @@ public class FullPlayer extends Page {
     	@iOSFindBy(accessibility ="IHRPlayerView-PlayButton-UIButton" ) private IOSElement IHRPlayerViewPlayButtonUIButton;
     	@iOSFindBy(accessibility ="IHRPlayerView-ForwardButton-UIButton" ) private IOSElement IHRPlayerViewForwardButtonUIButton;
     	@iOSFindBy(accessibility ="IHRPlayerView-BackButton-UIButton") private IOSElement  IHRPlayerViewBackButtonUIButton;
-    @iOSFindBy(accessibility ="IHRPlayer-SaveButton-UIButton" ) private IOSElement IHRPlayerSaveButtonUIButton;  //(OD only)
+    @iOSFindBy(accessibility ="IHRPlayer-SaveButton-UIButton" ) private IOSElement IHRPlayerSaveButtonUIButton;  
+    @iOSFindBy(accessibility ="IHRPlayer-ReplayButton-UIButton" ) private IOSElement IHRPlayerReplayButtonUIButton;
     @iOSFindBy(accessibility ="IHRPlayer-MoreButton-UIButton" ) private IOSElement IHRPlayerMoreButtonUIButton;
     @iOSFindBy(accessibility ="IHRPlayerView-ThumbDownButton-UIButton" ) private IOSElement IHRPlayerViewThumbDownButtonUIButton;
     @iOSFindBy(accessibility ="IHRPlayerView-ThumbUpButton-UIButton" ) private IOSElement IHRPlayerViewThumbUpButtonUIButton;
@@ -77,14 +78,15 @@ public class FullPlayer extends Page {
     @iOSFindBy(accessibility ="IHROptionMenuView-DividerView-UIView" ) private IOSElement IHROptionMenuViewDividerViewUIView;
     @iOSFindBy(accessibility ="IHROptionMenuView-ButtonsContainer-UIView" ) private IOSElement IHROptionMenuViewButtonsContainerUIView;
     //These aren't true Objects - can't figure how to add AccessibilityIdentifiers to them. 
-    @iOSFindBy(accessibility ="Buy Song") private IOSElement BuySongButton;
+    @iOSFindBy(accessibility ="Buy on iTunes") private IOSElement BuySongButton;
     @iOSFindBy(accessibility ="Lyrics") private IOSElement LyricsButton;
-    @iOSFindBy(accessibility ="Go to Artist Profile") private IOSElement GoToArtistProfileButton;
-    //Coming with OD
-    @iOSFindBy(accessibility ="Remove Station") private IOSElement RemoveStationButton;
-    @iOSFindBy(accessibility ="Save Station") private IOSElement SaveStationButton;
-    @iOSFindBy(accessibility ="Save Song") private IOSElement SaveSongButton;
-    @iOSFindBy(accessibility ="Save to Playlist") private IOSElement SaveToPlaylistButton;
+    @iOSFindBy(accessibility ="Go to Artist") private IOSElement GoToArtistProfileButton;
+    //OD - Click SaveButton and these should appear. Remove/Save Station are interchangeable. 
+    @iOSFindBy(accessibility ="Remove Station") private IOSElement RemoveStationButton;  //Growl: Station removed from My Stations
+    @iOSFindBy(accessibility ="Save Station") private IOSElement SaveStationButton;  //Saved 'name' to My Stations
+    @iOSFindBy(accessibility ="Save Song") private IOSElement SaveSongButton; //Song saved to My Music
+    @iOSFindBy(accessibility ="Add to Playlist") private IOSElement AddToPlaylistButton;
+    @iOSFindBy(accessibility ="Cancel") private IOSElement CancelOutOfSaveButton;
     
     @iOSFindBy(accessibility ="IHROptionMenuView-CancelButton-UIButton" ) private IOSElement IHROptionMenuViewCancelButtonUIButton;
     //Album and song title at the top of the More Info Option Menu screen
@@ -120,9 +122,9 @@ public class FullPlayer extends Page {
     	System.out.println("Checking NavBar elements...");
 
     	printElementInformation(PlayerViewMinimizePlayerDownarrowUIButton);
-    	printElementInformation(NavBarFavoriteButtonUIButton);
+    	//printElementInformation(NavBarFavoriteButtonUIButton); This button has been removed and replaced in the Save Modal
     	printElementInformation(NavBarShareButtonUIButton);
-    	printElementInformation(IHRCastingBarButtonItemUIButton);
+    	//printElementInformation(IHRCastingBarButtonItemUIButton);
     	System.out.println("Checking Slider elements...");
     	
     	printElementInformation(PlayerSliderViewPositionLabelUILabel);
@@ -179,30 +181,9 @@ public class FullPlayer extends Page {
     	printElementInformation(IHRPlayerViewLabelContainerUIView);
     	printElementInformation(IHRPlayerViewTitleLabelUILabel);
     	printElementInformation(IHRPlayerViewSubTitleLabelUILabel);
-        //IHRPlayerReplayTimerViewController    //Enable when we get to On Demand
-    	//printElementInformation(IHRPlayerReplayTimerViewBackgroundViewUIView);
-    	//printElementInformation(IHRPlayerReplayTimerViewLabelUILabel);
-    	//printElementInformation(IHRPlayerReplayTimerViewProgressViewUIView);
-    	//printElementInformation(IHRPlayerReplayTimerViewCountLabelUILabel);
-    	//printElementInformation(IHRPlayerReplayTimerViewCancelButtonUIButton);
-        //PlayerCenterView
-    	//printElementInformation(PlayerCenterViewBannerViewUIView);
-        //PlayerSliderView
-    	//printElementInformation(PlayButtonAnimatingViewUIImageView);
-    	printElementInformation(IHRPlayerViewBackButtonUIButton); //Enable when we get to On Demand
-    	printElementInformation(IHRPlayerSaveButtonUIButton);     //Enable when we get to On Demand
-    	//Probably ads.
-     	//printElementInformation(PlayerBannerViewBannerContainerViewUIView);
-    	//printElementInformation(PlayerBannerViewDfpBannerUIView);
-    	//printElementInformation(PlayerBannerViewSyncBannerViewUIView);
-    	//printElementInformation(PlayerBannerViewDismissButtonUIButton);
-    	//printElementInformation(PlayerBannerBlackOverlayUIView);
-    	//printElementInformation(IHRPlayerTitleViewHeartViewUIImageView);  This basically needs to be removed. 
-    	//printElementInformation(NavBarBackPlayerUIButton);
-    	//printElementInformation(NavBarSideMenuButtonUIButton);
-    	//printElementInformation(NavBarRightDisableableBarButtonUIButton);
-    	//printElementInformation(NavBarSearchBarButtonUIButton);
-    	
+    	System.out.println("Checking if Replay and Save Buttons exist on FullPlayer");
+    	printElementInformation(IHRPlayerReplayButtonUIButton);
+    	printElementInformation(IHRPlayerSaveButtonUIButton);     
     }
     /**
      * Clicks the Down Arrow at the top of FullPlayer to minimize it into MiniPlayer. 
@@ -244,23 +225,41 @@ public class FullPlayer extends Page {
     	IHRPlayerViewThumbDownButtonUIButton.click();
     }
     
-    /**
-	 * Returns true if Thumb Up is activated and Thumb Down is NOT activated. 
-	 * @return
-	 */
-	public boolean isThumbUpButtonActivated(){
-		boolean thumbUpActivated = (IHRPlayerViewThumbUpButtonUIButton.isSelected() && !IHRPlayerViewThumbDownButtonUIButton.isSelected() );
-		System.out.println("isThumbUpButtonActivated() : " + thumbUpActivated);
-		return thumbUpActivated;
-	}
+    
 	/**
 	 * Returns true if Thumb Down Is activated and Thumb Up is NOT activated. 
 	 * @return
 	 */
 	public boolean isThumbDownButtonActivated(){
-		boolean thumbDownActivated = (!IHRPlayerViewThumbUpButtonUIButton.isSelected() && IHRPlayerViewThumbDownButtonUIButton.isSelected() );
-		System.out.println("isThumbDownButtonActivated() : " + thumbDownActivated);
-		return thumbDownActivated;
+		String thumbDownButtonChecked = IHRPlayerViewThumbDownButtonUIButton.getAttribute("value");
+		boolean isDownChecked;
+		if(thumbDownButtonChecked==null){
+			isDownChecked = false;
+		}
+		else{
+			isDownChecked = thumbDownButtonChecked.equals("true");
+		}
+		System.out.println("isThumbDownButtonActivated() : " + isDownChecked);
+		return isDownChecked;
+	}
+	/**
+	 * Returns true if Thumb Up is activated. Checks value on the button, if it returns a "true" string, it returns true, null returns false.
+	 * @return
+	 */
+	public boolean isThumbUpButtonActivated(){
+		String thumbUpButtonChecked = IHRPlayerViewThumbUpButtonUIButton.getAttribute("value");
+		boolean isUpChecked;
+		if(thumbUpButtonChecked==null){
+			isUpChecked = false;
+		}
+		else if(thumbUpButtonChecked.equals("true")){
+			isUpChecked = true;
+		}
+		else {
+			isUpChecked = false;
+		}
+		System.out.println("isThumbUpButtonActivated() : " + isUpChecked);
+		return isUpChecked;
 	}
 	
 	/**
@@ -268,7 +267,7 @@ public class FullPlayer extends Page {
 	 * @return
 	 */
 	public boolean isThumbUpAndThumbDownButtonNotActivated(){
-		boolean thumbDownUpNotActivated = (!IHRPlayerViewThumbUpButtonUIButton.isSelected() && !IHRPlayerViewThumbDownButtonUIButton.isSelected() );
+		boolean thumbDownUpNotActivated = (!isThumbUpButtonActivated() && !isThumbDownButtonActivated() );
 		System.out.println("isThumbUpAndThumbDownButtonNotActivated() : " + thumbDownUpNotActivated);
 		return thumbDownUpNotActivated;
 	}
@@ -626,4 +625,107 @@ public class FullPlayer extends Page {
     	System.out.println("clickMoreCancelButton()");
     	IHROptionMenuViewCancelButtonUIButton.click();
     }
+    /**
+     * This must be tested. 
+     * @return
+     */
+    public boolean isCurrentStationSaved(){
+    	boolean isSaved = IHRPlayerTitleViewHeartViewUIImageView.isDisplayed();
+    	System.out.println("isCurrentStationSaved() : "+ isSaved);
+    	return isSaved;
+    }
+    /**
+     * Only clicks the Save Button once - Other actions afterwards need to be taken.
+     * @return
+     */
+    public boolean clickSaveButtonToOpenSaveModal(){
+    	System.out.print("clickSaveButton() : Opening Save Overflow : is SaveSongButton.isDisplayed() : ");
+    	IHRPlayerSaveButtonUIButton.click();
+    	//Save Modal should be up now
+    	boolean isSaveSongVisible = SaveSongButton.isDisplayed();
+    	System.out.println(isSaveSongVisible);
+    	return isSaveSongVisible;
+    	
+    }
+
+    /**
+     * Refactor this!!!
+     * @return
+     */
+    public boolean clickReplayButtonToOpenReplayModal(){
+    	if( IHRPlayerReplayButtonUIButton!= null){
+    		IHRPlayerReplayButtonUIButton.click();
+    		System.out.println("clickReplayButtonToOpenReplayModal() .");
+    		//ADD LOGIC TO CLICK A SONG OR MAKE A NEW METHOD...
+    		return true;
+    	} return false;
+    }
+    /**
+     * Clicks the Add to Playlist Button, uses String entitlement to determine expected action. 
+     * REFACTOR SOME MORE
+     */
+    public boolean clickAddToPlaylistButtonInSaveModal(String entitlement){
+    	if(entitlement!= null && AddToPlaylistButton != null && !entitlement.equals("")){
+    		if(entitlement.equals("FREE")){
+    			AddToPlaylistButton.click();
+    			System.out.println("AddToPlaylistButton was clicked for FREE User - Expect Upsell Modal to appear");
+    			return fullPlayer.isUpsellModalOpen();
+    		}else if(entitlement.equals("PLUS")){
+    			AddToPlaylistButton.click();
+    			System.out.println("AddToPlaylistButton was clicked for PLUS User - Expect Upsell Modal to appear");
+    			return fullPlayer.isUpsellModalOpen();
+    		}else if(entitlement.equals("ALLACCESS")){
+    			AddToPlaylistButton.click();
+    			System.out.println("AddToPlaylistButton was clicked for ALLACCESS User - Expect Add to Playlist Modal to appear");
+    			//addToPlaylistModal.clickFirstPlaylist();
+    			return true;
+    		}else return false;
+    	}else return false;
+    }
+    /**
+     * Clicks the Save Song button in the Save Modal to Save currently playing song to My Playlist. 
+     * @return fullPlayer.isCurrentlyOnFullPlayer();
+     */
+    public boolean clickSaveSongInSaveModal(){
+    	if(SaveSongButton != null){
+    		SaveSongButton.click();
+    		System.out.println("clickSaveSongInSaveModal().");
+    	}
+    	return fullPlayer.isCurrentlyOnFullPlayer();
+    }
+    /**
+     * Clicks the Remove Station button in the Save Station Modal, and returns whether it reached the FullPlayer.
+     * @return fullPlayer.isCurrentlyOnFullPlayer();
+     */
+    public boolean clickRemoveStationInSaveModal(){
+    	if(RemoveStationButton!=null){
+    		RemoveStationButton.click();
+    		System.out.println("clickRemoveStationInSaveModal().");
+    	}
+    	
+    	return fullPlayer.isCurrentlyOnFullPlayer();
+    }
+    /**
+     * Clicks the Cancel Button on the bottom of the Save Modal to return to the FullPlayer.
+     * @return fullPlayer.isCurrentlyOnFullPlayer();
+     */
+    public boolean clickCancelInSaveModal(){
+    	if(CancelOutOfSaveButton!= null){
+    		CancelOutOfSaveButton.click();
+    	}
+    	System.out.println("clickCancelInSaveModal().");
+    	return fullPlayer.isCurrentlyOnFullPlayer();
+    }
+    /**
+     * Clicks the Save Station to 'Heart' or 'Favorite' the Station. 
+     * @return fullPlayer.isCurrentlyOnFullPlayer();
+     */
+    public boolean clickSaveStationInSaveModal(){
+    	if(SaveStationButton != null){
+    		SaveStationButton.click();
+    	}
+    	System.out.println("clickSaveStationInSaveModal().");
+    	return fullPlayer.isCurrentlyOnFullPlayer();
+    }
+    
 }
