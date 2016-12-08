@@ -88,7 +88,7 @@ public class TestFullPlayerAndMiniPlayer extends TestRoot {
 	public void testMiniPlayerWorksOnAllPages_MPLAY2_FREE() {
 		LocalTime before = consoleLogStart(
 				"Testing testMiniPlayerWorksOnAllPages - login, start MiniPlayer for Artist Radio, Open other pages, check that MiniPlayer is still running.");
-		loginPage.loginWithoutVerifying("test66@test.com", "test");
+		loginPage.loginWithoutVerifying("steph@free.com", "stephfree");
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		// Start Artist Radio
 		searchPage.enterTextIntoSearchBar("Inanimate Existence");
@@ -298,34 +298,42 @@ public class TestFullPlayerAndMiniPlayer extends TestRoot {
 	}
 	@Test
 	public void testFullPlayerSaveReplaySkip_FPLAY4_PLUS(){
-		LocalTime before = consoleLogStart("Testing testFullPlayerSaveButton_PLUS()");
+		LocalTime before = consoleLogStart("Testing testFullPlayerSaveReplaySkip_FPLAY4_PLUS()");
 		loginPage.loginWithoutVerifying("trav@plus.com", "travplus");
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		searchPage.enterTextIntoSearchBar("Chimaira");
 		searchPage.clickTopResult();
 		miniPlayer.openFullPlayer();
+		System.out.println("Testing to see if Save Button works for PLUS user...");
 		fullPlayer.clickSaveButtonToOpenSaveModal();
-		Assert.assertTrue("",fullPlayer.clickAddToPlaylistButtonInSaveModal("PLUS"));
+		Assert.assertTrue("Clicking 'Add to Playlist' should show Upsell Modal.", fullPlayer.clickAddToPlaylistButtonInSaveModal("PLUS"));
 		upsellPage.clickSubscribeAllAccessButton();
-		Assert.assertTrue("Apple ID sign in should be displayed to buy All Access",upsellPage.isAppleIDSignInModalDisplayed());
-		upsellPage.clickCancelButton();
+		Assert.assertTrue("Should show account was made on Web and only has 'Got It' button to escape from AA Upsell.",upsellPage.clickGotItWebUpsellDisplayed());
+		//Assert.assertTrue("Apple ID sign in should be displayed to buy All Access",upsellPage.isAppleIDSignInModalDisplayed());
+		upsellPage.clickXtoCloseUpsellModal();
 		fullPlayer.clickSaveButtonToOpenSaveModal();
 		fullPlayer.clickSaveSongInSaveModal();
 		//Get name of currently playing song.
 		//Go to My Music
 		//Get title of last added Song in My Playlist 
 		//Verify that song names are equal.
-		System.out.println("Testing to see if Skip button works more than 6 times, a PLUS and ALL ACCESS feature.");
+		String fifthTrackName = "";
+		System.out.println("Testing to see if Skip button works more than 6 times, a PLUS and ALL ACCESS feature...");
 		for(int i=0; i< 7; i++){
 			fullPlayer.clickSkipButton();
+			if(i==5){
+				fifthTrackName = fullPlayer.getTitleOfSongPlaying();
+				System.out.println("fifthTrackName: '" + fifthTrackName +"'");
+			}
 		}
 		fullPlayer.clickReplayButtonToOpenReplayModal();
 		sleep(2000);
 		fullPlayer.isReplayFirstTrackCellDisplayed();
 		Assert.assertTrue("Clicking 'Replay' button should open Replay Modal and not Upsell page.", fullPlayer.isCurrentlyOnReplayModal());
-		//System.out.println("Replay Modal : First Song -> Song Name : " + fullPlayer.getReplayFirstSongName());
-		//System.out.println("Replay Modal : First Song -> Song Name : " + fullPlayer.getReplayFirstSongArtist());
-		 consoleLogEnd(before, fullPlayer.isCurrentlyOnFullPlayer(), "Tested testFullPlayerSaveButton_PLUS().");
+
+		fullPlayer.clickReplaySecondCell();
+		Assert.assertEquals("After skipping 5 times, the Fifth Track's song name should match the Second to last song in Replay.", fifthTrackName, fullPlayer.getTitleOfSongPlaying());
+		consoleLogEnd(before, true , "Tested testFullPlayerSaveButton_PLUS().");
 	}
 	/**
 	 * FPLAY5 - ALLACCESS ACCOUNT
@@ -379,7 +387,7 @@ public class TestFullPlayerAndMiniPlayer extends TestRoot {
 		//System.out.println("Replay Modal : First Song -> Song Artist : " + fullPlayer.getReplayFirstSongArtist());
 		///ullPlayer.clickSaveButtonToOpenSaveModal();
 		//fullPlayer.clickAddToPlaylistButtonInSaveModal("ALLACCESS");
-		 consoleLogEnd(before, fullPlayer.isCurrentlyOnFullPlayer(), "Tested testFullPlayerSaveButton_PLUS().");
+		 consoleLogEnd(before, fullPlayer.isCurrentlyOnFullPlayer(), "Tested testFullPlayerSaveReplaySkip_FPLAY5_ALLACCESS().");
 	}
 	@Test
 	public void testFullPlayerAddToPlaylist_FPLAY6_ALLACCESS(){

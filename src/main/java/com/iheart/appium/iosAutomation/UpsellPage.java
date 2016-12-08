@@ -46,6 +46,7 @@ public class UpsellPage extends Page{
 	private IOSElement startFree30DayTrialButton;
 	
 	@iOSFindBy(accessibility="Cancel") private IOSElement cancelButton;
+	@iOSFindBy(accessibility="Got it") private IOSElement gotItButton;
 	@iOSFindBy(accessibility="Use Existing Apple ID") private IOSElement useExistingAppleIDButton;
 	
 	
@@ -91,6 +92,20 @@ public class UpsellPage extends Page{
 	public boolean isAppleIDSignInModalDisplayed() {
 		if(useExistingAppleIDButton!=null){
 			System.out.println("isAppleIDSignInModalDisplayed() : true.  ");
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Clicks the 'Got it' button on the bottom of the Upsell to AA Modal, which fails because original account was made on Web and was upgraded to PLUS on Web. 
+	 * Therefore,it must be upgraded to AA on Web. 
+	 * @return boolean, and stays on upsellModal
+	 */
+	public boolean clickGotItWebUpsellDisplayed() {
+		if(waitForElementToBeVisible(gotItButton, 5)){
+			gotItButton.click();
+			System.out.println("clickGotItWebUpsellDisplayed() - Expected account was made on Web and upsell would prevent further access to upgrade to AA");
 			return true;
 		}
 		return false;
