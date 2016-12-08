@@ -76,6 +76,7 @@ public class TestRoot {
 	protected static GenrePage genrePage;
 	protected static MiniPlayer miniPlayer;
 	protected static SettingsPage settings;
+	protected static UpsellPage upsellPage;
 
 	// New On Demand Elements
 	protected static ArtistProfilePage artistProfilePage;
@@ -266,6 +267,7 @@ public class TestRoot {
 		podcastsPage = new PodcastsPage(driver);
 		searchPage = new SearchPage(driver);
 		deepLink = new DeepLink(driver);
+		upsellPage = new UpsellPage(driver);
 		onboardingPage = new OnboardingPage(driver);
 		genrePage = new GenrePage(driver);
 		miniPlayer = new MiniPlayer(driver);

@@ -268,6 +268,7 @@ public class LoginPage extends Page {
 		// Dismiss stay connected popup that sometimes shows up AFTER genre
 		// picker
 		chooseStayConnected(false);
+		sleep(2000);
 		Page.handlePossiblePopUp();  //added after genre screen sometimes pops up again. 
 		System.out.println("Logged in without verifying.");
 	}

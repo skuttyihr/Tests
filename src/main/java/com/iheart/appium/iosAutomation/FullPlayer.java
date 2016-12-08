@@ -106,6 +106,19 @@ public class FullPlayer extends Page {
     @iOSFindBy(accessibility ="PlayerBannerView-SyncBannerView-UIView" ) private IOSElement PlayerBannerViewSyncBannerViewUIView;
     @iOSFindBy(accessibility ="PlayerBannerView-DismissButton-UIButton" ) private IOSElement PlayerBannerViewDismissButtonUIButton;
 
+    //Replay Modal
+    @iOSFindBy(accessibility ="IHRPlayerReplayOptionsViewController-TableView-UITableView" ) private IOSElement IHRPlayerReplayOptionsViewControllerTableViewUITableView;
+    //@iOSFindBy(accessibility ="IHRPlayerReplayOptionCell-TitleLabel-UILabel-0" ) private IOSElement IHRPlayerReplayOptionCellTitleLabelUILabel0;
+    //@iOSFindBy(accessibility ="IHRPlayerReplayOptionCell-SubtitleLabel-UILabel-0" ) private IOSElement IHRPlayerReplayOptionCellSubtitleLabelUILabel0;
+    //@iOSFindBy(accessibility ="IHRPlayerReplayOptionCell-TitleLabel-UILabel-1" ) private IOSElement IHRPlayerReplayOptionCellTitleLabelUILabel1;
+    //@iOSFindBy(accessibility ="IHRPlayerReplayOptionCell-SubtitleLabel-UILabel-1" ) private IOSElement IHRPlayerReplayOptionCellSubtitleLabelUILabel1;
+    //@iOSFindBy(accessibility ="IHRPlayerReplayOptionCell-TitleLabel-UILabel-2" ) private IOSElement IHRPlayerReplayOptionCellTitleLabelUILabel2;
+    // @iOSFindBy(accessibility ="IHRPlayerReplayOptionCell-SubtitleLabel-UILabel-2" ) private IOSElement IHRPlayerReplayOptionCellSubtitleLabelUILabel2;
+    //@iOSFindBy(accessibility ="IHRPlayerReplayOptionCell-Cell-UILabel-1" ) private IOSElement IHRPlayerReplayOptionCellCellUILabel1;
+    @iOSFindBy(accessibility ="IHRPlayerReplayOptionsViewController-CELL-0" ) private IOSElement IHRPlayerReplayOptionsViewControllerCELL0;
+    @iOSFindBy(accessibility ="IHRPlayerReplayOptionsViewController-CELL-1" ) private IOSElement IHRPlayerReplayOptionsViewControllerCELL1;
+    @iOSFindBy(accessibility ="IHRPlayerReplayOptionsViewController-CELL-2" ) private IOSElement IHRPlayerReplayOptionsViewControllerCELL2;
+    //@iOSFindBy(accessibility ="replayTitleLabel" ) private IOSElement replayTitleLabel;
     /* - To be used
 	@iOSFindBy(accessibility = "Great, we’ll play you more  songs like this.") public IOSElement artistThumbUpGrowl; // //UIAApplication[1]/UIAWindow[1]/UIAStaticText[10]
 	@iOSFindBy(accessibility = "OK, we'll adjust your music mix.") public IOSElement artistThumbDownGrowl;
@@ -639,7 +652,7 @@ public class FullPlayer extends Page {
      * @return
      */
     public boolean clickSaveButtonToOpenSaveModal(){
-    	System.out.print("clickSaveButton() : Opening Save Overflow : is SaveSongButton.isDisplayed() : ");
+    	System.out.print("clickSaveButton() : Opening Save Overflow. SaveSongButton.isDisplayed() : ");
     	IHRPlayerSaveButtonUIButton.click();
     	//Save Modal should be up now
     	boolean isSaveSongVisible = SaveSongButton.isDisplayed();
@@ -669,11 +682,11 @@ public class FullPlayer extends Page {
     		if(entitlement.equals("FREE")){
     			AddToPlaylistButton.click();
     			System.out.println("AddToPlaylistButton was clicked for FREE User - Expect Upsell Modal to appear");
-    			return fullPlayer.isUpsellModalOpen();
+    			return upsellPage.isUpsellModalOpen();
     		}else if(entitlement.equals("PLUS")){
     			AddToPlaylistButton.click();
     			System.out.println("AddToPlaylistButton was clicked for PLUS User - Expect Upsell Modal to appear");
-    			return fullPlayer.isUpsellModalOpen();
+    			return upsellPage.isUpsellModalOpen();
     		}else if(entitlement.equals("ALLACCESS")){
     			AddToPlaylistButton.click();
     			System.out.println("AddToPlaylistButton was clicked for ALLACCESS User - Expect Add to Playlist Modal to appear");
@@ -727,5 +740,79 @@ public class FullPlayer extends Page {
     	System.out.println("clickSaveStationInSaveModal().");
     	return fullPlayer.isCurrentlyOnFullPlayer();
     }
+    public boolean isRemoveStationInSaveModalDisplayed(){
+    	return (fullPlayer.isCurrentlyOn("isCurrentlyOnSaveModal with 'Remove Station' Button", RemoveStationButton));
+    }
+    public boolean isSaveStationInSaveModalDisplayed(){
+    	return (fullPlayer.isCurrentlyOn("isCurrentlyOnSaveModal with 'Save Station' Button", SaveStationButton));
+    }
+    
+    public boolean isCurrentlyOnReplayModal(){
+    	return (fullPlayer.isCurrentlyOn("isCurrentlyOnReplayModal()", IHRPlayerReplayOptionsViewControllerTableViewUITableView));
+
+    }
+    public boolean isReplayFirstTrackCellDisplayed(){
+    	if(IHRPlayerReplayOptionsViewControllerCELL0!=null){
+    		boolean irstTrackCell = IHRPlayerReplayOptionsViewControllerCELL0.isDisplayed();
+    		System.out.println("isReplayFirstTrackCellDisplayed() : " + irstTrackCell);
+    		return irstTrackCell;
+    	} return false;
+    }
+    /*
+    public boolean clickFirstSongInReplayModal(){
+    	if(IHRPlayerReplayOptionCellTitleLabelUILabel0!=null){
+    		IHRPlayerReplayOptionCellTitleLabelUILabel0.click();
+    		System.out.println("clickFirstSongInReplayModal() : true");
+    		return true;
+    	} return false;
+    }
+    */
+    public boolean clickReplayFirstCell(){
+    	if(IHRPlayerReplayOptionsViewControllerCELL0!=null){
+    		 IHRPlayerReplayOptionsViewControllerCELL0.click();
+    		System.out.println("clickReplayFirstCell().");
+    		return true;
+    	} return false;
+    }
+    public boolean clickReplaySecondCell(){
+    	if(IHRPlayerReplayOptionsViewControllerCELL1!=null){
+    		 IHRPlayerReplayOptionsViewControllerCELL1.click();
+    		System.out.println("clickReplaySecondCell().");
+    		return true;
+    	} return false;
+    }
+    public boolean clickReplayThirdCell(){
+    	if(IHRPlayerReplayOptionsViewControllerCELL2!=null){
+    		 IHRPlayerReplayOptionsViewControllerCELL2.click();
+    		System.out.println("clickReplayThirdCell().");
+    		return true;
+    	} return false;
+    }
+    /* These are refusing to work.
+    public String getReplayFirstSongName(){
+    	if(IHRPlayerReplayOptionCellTitleLabelUILabel0!=null){
+    		String titleLabel = IHRPlayerReplayOptionCellTitleLabelUILabel0.getAttribute("value");
+    		System.out.println("getReplayFirstSongName() : " + titleLabel);
+    		return titleLabel;
+    	} return "Title Label was Null. Could Not fetch Song name.";
+    }
+    public String getReplayFirstSongArtist(){
+    	if(IHRPlayerReplayOptionCellSubtitleLabelUILabel0!=null){
+    		String subtitleLabel = IHRPlayerReplayOptionCellSubtitleLabelUILabel0.getAttribute("value");
+    		System.out.println("getReplayFirstSongArtist() : " + subtitleLabel);
+    		return subtitleLabel;
+    	} return "Title Label was Null. Could Not fetch Song name.";
+    }
+    
+    public String getReplayreplayTitleLabel(){
+    	if( replayTitleLabel!=null){
+    		String titleLabel =  replayTitleLabel.getAttribute("value");
+    		System.out.println(" replayTitleLabel() : " + titleLabel);
+    		return titleLabel;
+    	} return "Title Label was Null. Could Not fetch Song name.";
+    }
+    */
+   
+   
     
 }

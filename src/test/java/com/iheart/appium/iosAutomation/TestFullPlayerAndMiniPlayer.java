@@ -22,9 +22,9 @@ public class TestFullPlayerAndMiniPlayer extends TestRoot {
 	public ScreenshotRule screenshot = new ScreenshotRule();
 
 	@Test
-	public void testMiniPlayerArtistRadioElementsAndFunctionality_FREE() {
+	public void testMiniPlayerArtistRadio_MPLAY1_FREE() {
 		LocalTime before = consoleLogStart(
-				"Testing testMiniPlayerArtistRadioElementsAndFunctionality - login, start MiniPlayer for Artist Radio, show all elements, test functionality.");
+				"Testing testMiniPlayerArtistRadio_MPLAY1_FREE() - login, start MiniPlayer for Artist Radio, show all elements, test functionality.");
 		//loginPage.loginWithoutVerifying("test55@test.com", "test");
 		loginPage.loginWithoutVerifying("trav@free.com", "travfree");
 		homePage.clickNavBarSearchButtonToOpenSearch();
@@ -85,7 +85,7 @@ public class TestFullPlayerAndMiniPlayer extends TestRoot {
 	 */
 	
 	@Test
-	public void testMiniPlayerWorksOnAllPages() {
+	public void testMiniPlayerWorksOnAllPages_MPLAY2_FREE() {
 		LocalTime before = consoleLogStart(
 				"Testing testMiniPlayerWorksOnAllPages - login, start MiniPlayer for Artist Radio, Open other pages, check that MiniPlayer is still running.");
 		loginPage.loginWithoutVerifying("test66@test.com", "test");
@@ -125,7 +125,7 @@ public class TestFullPlayerAndMiniPlayer extends TestRoot {
 	}
 
 	@Test
-	public void testMiniPlayerRadioStationAfterLogin() {
+	public void testMiniPlayerRadioStation_MPLAY3_FREE() {
 		LocalTime before = consoleLogStart("Testing testMiniPlayerRadioStationAfterLogin");
 		loginPage.loginWithoutVerifying();
 		homePage.clickNavBarSearchButtonToOpenSearch();
@@ -153,9 +153,19 @@ public class TestFullPlayerAndMiniPlayer extends TestRoot {
 				miniPlayer.isElapsedViewDisplayed());
 		consoleLogEnd(before, true, "Tested MiniPlayer for a Radio Station");
 	}
+	
 
 	@Test
-	public void testFullPlayerElements() {
+	public void testMiniPlayerPlaylist_MPLAY4_FREE() {
+	
+	}
+	@Test
+	public void testMiniPlayerPodcast_MPLAY5_FREE() {
+	
+	}
+
+	@Test
+	public void testFullPlayer_FPLAY1_FREE() {
 		LocalTime before = consoleLogStart("Testing testFullPlayerElements");
 		loginPage.loginWithoutVerifying("test66@test.com", "test");
 		homePage.clickNavBarSearchButtonToOpenSearch();
@@ -164,12 +174,11 @@ public class TestFullPlayerAndMiniPlayer extends TestRoot {
 		searchPage.clickTopResult();
 		miniPlayer.openFullPlayer();
 		fullPlayer.showAllElements();
-		Assert.assertTrue(true);
 		consoleLogEnd(before, true, "Tested testFullPlayerElements");
 	}
 
 	@Test
-	public void testFullPlayerFunctionality() {
+	public void testFullPlayerFunctionality_FPLAY2_FREE() {
 		LocalTime before = consoleLogStart("Testing testFullPlayerFunctionality()");
 		loginPage.loginWithoutVerifying("test66@test.com", "test");
 		homePage.clickNavBarSearchButtonToOpenSearch();
@@ -232,5 +241,158 @@ public class TestFullPlayerAndMiniPlayer extends TestRoot {
 		//}
 		consoleLogEnd(before, lastAssert, "Tested testFullPlayerElements");
 	}
-
+	/**
+	 * This Logs in with a FREE user, opens Artist Radio through Search and then tests the Replay and Save Buttons on the FullPlayer.
+	 * Free User:
+	 * Replay -> Upsell
+	 * Save -> Save Song -> Saves to My Music
+	 * Save -> Add to Playlist -> Upsell
+	 * Save -> Save Station -> Adds Station to Favorites
+	 * Save -> Remove Station -> Removes Station from Favorites
+	 *
+	 */
+	@Test
+	public void testFullPlayerSaveAndReplayButton_FPLAY3_FREE(){
+		LocalTime before = consoleLogStart("Testing testFullPlayerSaveAndReplayButton_FPLAY3_FREE()");
+		loginPage.loginWithoutVerifying("trav@free.com", "travfree");
+		homePage.clickNavBarSearchButtonToOpenSearch();
+		searchPage.enterTextIntoSearchBar("Job for a cowboy");
+		searchPage.clickTopResult();
+		miniPlayer.openFullPlayer();
+		fullPlayer.clickReplayButtonToOpenReplayModal();
+		Assert.assertTrue("Clicking Replay Button for a Free User should have triggered Upsell.", upsellPage.isUpsellModalOpen());
+		upsellPage.clickXtoCloseUpsellModal();
+		fullPlayer.clickSaveButtonToOpenSaveModal();
+		Assert.assertFalse("Clicking 'Save' should have opened Save Modal and hidden the FullPlayer under it", fullPlayer.isCurrentlyOnFullPlayer());
+		fullPlayer.clickSaveSongInSaveModal();
+		//No real way to check if Growl displays. But we can verify that Save Modal disappears and fullPlayer opens back up. //'SongName' saved to My Music
+		Assert.assertTrue("Clicking 'Save Song' should have popped up a growl and continued on the fullPlayer.", fullPlayer.isCurrentlyOnFullPlayer());
+		fullPlayer.clickSaveButtonToOpenSaveModal();
+		fullPlayer.clickAddToPlaylistButtonInSaveModal("FREE");
+		Assert.assertTrue("Upsell Modal should be open after clicking 'Add to Playlist' " ,upsellPage.isUpsellModalOpen());
+		upsellPage.clickXtoCloseUpsellModal();
+		Assert.assertTrue("Upsell Modal should be closed and  FullPlayer should be open.", fullPlayer.isCurrentlyOnFullPlayer());
+		fullPlayer.clickSaveButtonToOpenSaveModal();
+		fullPlayer.clickAddToPlaylistButtonInSaveModal("FREE");
+		upsellPage.clickSubscribeAllAccessButton();
+		Assert.assertTrue("Apple ID sign in should be displayed to buy All Access",upsellPage.isAppleIDSignInModalDisplayed());
+		upsellPage.clickCancelButton();
+		fullPlayer.clickSaveButtonToOpenSaveModal();
+		fullPlayer.clickAddToPlaylistButtonInSaveModal("FREE");
+		upsellPage.clickSubscribePlusButton();
+		Assert.assertTrue("Apple ID sign in should be displayed to buy Plus",upsellPage.isAppleIDSignInModalDisplayed());;
+		upsellPage.clickCancelButton();
+	    fullPlayer.clickSaveButtonToOpenSaveModal();
+	    if(fullPlayer.isSaveStationInSaveModalDisplayed()){
+	    	fullPlayer.clickSaveStationInSaveModal();
+	    }else if(fullPlayer.isRemoveStationInSaveModalDisplayed()){
+	    	fullPlayer.clickRemoveStationInSaveModal();
+	    }
+	    fullPlayer.clickSaveButtonToOpenSaveModal();
+	    if(fullPlayer.isSaveStationInSaveModalDisplayed()){
+	    	fullPlayer.clickSaveStationInSaveModal();
+	    }else if(fullPlayer.isRemoveStationInSaveModalDisplayed()){
+	    	fullPlayer.clickRemoveStationInSaveModal();
+	    }
+	    consoleLogEnd(before, true, "Tested Replay Button, Save Button[Save Song, Add to Playlist, Save/Remove Station] in testFullPlayerSaveAndReplayButton_FPLAY3_FREE().");
+	}
+	@Test
+	public void testFullPlayerSaveReplaySkip_FPLAY4_PLUS(){
+		LocalTime before = consoleLogStart("Testing testFullPlayerSaveButton_PLUS()");
+		loginPage.loginWithoutVerifying("trav@plus.com", "travplus");
+		homePage.clickNavBarSearchButtonToOpenSearch();
+		searchPage.enterTextIntoSearchBar("Chimaira");
+		searchPage.clickTopResult();
+		miniPlayer.openFullPlayer();
+		fullPlayer.clickSaveButtonToOpenSaveModal();
+		Assert.assertTrue("",fullPlayer.clickAddToPlaylistButtonInSaveModal("PLUS"));
+		upsellPage.clickSubscribeAllAccessButton();
+		Assert.assertTrue("Apple ID sign in should be displayed to buy All Access",upsellPage.isAppleIDSignInModalDisplayed());
+		upsellPage.clickCancelButton();
+		fullPlayer.clickSaveButtonToOpenSaveModal();
+		fullPlayer.clickSaveSongInSaveModal();
+		//Get name of currently playing song.
+		//Go to My Music
+		//Get title of last added Song in My Playlist 
+		//Verify that song names are equal.
+		System.out.println("Testing to see if Skip button works more than 6 times, a PLUS and ALL ACCESS feature.");
+		for(int i=0; i< 7; i++){
+			fullPlayer.clickSkipButton();
+		}
+		fullPlayer.clickReplayButtonToOpenReplayModal();
+		sleep(2000);
+		fullPlayer.isReplayFirstTrackCellDisplayed();
+		Assert.assertTrue("Clicking 'Replay' button should open Replay Modal and not Upsell page.", fullPlayer.isCurrentlyOnReplayModal());
+		//System.out.println("Replay Modal : First Song -> Song Name : " + fullPlayer.getReplayFirstSongName());
+		//System.out.println("Replay Modal : First Song -> Song Name : " + fullPlayer.getReplayFirstSongArtist());
+		 consoleLogEnd(before, fullPlayer.isCurrentlyOnFullPlayer(), "Tested testFullPlayerSaveButton_PLUS().");
+	}
+	/**
+	 * FPLAY5 - ALLACCESS ACCOUNT
+	 * Opens FullPlayer for Artist Radio
+	 * Does Replay and tests that the same song gets played and checks that time resets.
+	 * It then skips 8 times and then Replays the Last three tracks, Track 3, Track 2, Track 1.
+	 */
+	@Test
+	public void testFullPlayerSaveReplaySkip_FPLAY5_ALLACCESS(){
+		LocalTime before = consoleLogStart("Testing testFullPlayerSaveReplaySkip_FPLAY5_ALLACCESS()");
+		loginPage.loginWithoutVerifying("trav@all.com", "travall");
+		homePage.clickNavBarSearchButtonToOpenSearch();
+		searchPage.enterTextIntoSearchBar("Chimaira");
+		searchPage.clickTopResult();
+		miniPlayer.openFullPlayer();
+		sleep(30000);
+		String firstSongPlaying = fullPlayer.getTitleOfSongPlaying();
+		String timeIntoSong = fullPlayer.getPositionLabelText();
+		fullPlayer.clickReplayButtonToOpenReplayModal();
+		sleep(2000);
+		fullPlayer.isReplayFirstTrackCellDisplayed();
+		Assert.assertTrue("Clicking First Cell in Replay Modal should simply work.",fullPlayer.clickReplayFirstCell());
+		String firstSongRePlaying = fullPlayer.getTitleOfSongPlaying();
+		String timeIntoSongRePlaying = fullPlayer.getPositionLabelText();
+		boolean isMoreThan = false;
+		Assert.assertEquals("Clicking Replay should have the same song title playing.", firstSongPlaying, firstSongRePlaying);
+		int first = Integer.parseInt(timeIntoSong.substring(2,4));
+		int second = Integer.parseInt(timeIntoSongRePlaying.substring(2,4));
+		System.out.println("First Song after 30 seconds Int: "+ first + "  Second Song after Replay pressed Int: " + second);
+		if(first > second){
+			isMoreThan = true;
+		}
+		Assert.assertTrue("Clicking Replay on the same song should have less time elapsed.", isMoreThan);
+		System.out.println("Testing to see if Skip button works more than 6 times.");
+		for(int i=0; i< 7; i++){
+			fullPlayer.clickSkipButton();
+		}
+		
+		fullPlayer.clickReplayButtonToOpenReplayModal();
+		sleep(2000);
+		Assert.assertTrue("Clicking 'Replay' button should open Replay Modal and not Upsell page.", fullPlayer.isCurrentlyOnReplayModal());
+		
+		fullPlayer.clickReplayThirdCell();
+		fullPlayer.clickReplayButtonToOpenReplayModal();
+		fullPlayer.clickReplaySecondCell();
+		fullPlayer.clickReplayButtonToOpenReplayModal();
+		fullPlayer.clickReplayFirstCell();
+		
+		//fullPlayer.getReplayreplayTitleLabel();
+		//System.out.println("Replay Modal : First Song -> Song Name : " + fullPlayer.getReplayFirstSongName());
+		//System.out.println("Replay Modal : First Song -> Song Artist : " + fullPlayer.getReplayFirstSongArtist());
+		///ullPlayer.clickSaveButtonToOpenSaveModal();
+		//fullPlayer.clickAddToPlaylistButtonInSaveModal("ALLACCESS");
+		 consoleLogEnd(before, fullPlayer.isCurrentlyOnFullPlayer(), "Tested testFullPlayerSaveButton_PLUS().");
+	}
+	@Test
+	public void testFullPlayerAddToPlaylist_FPLAY6_ALLACCESS(){
+		//Logs in, plays artist radio
+		//Clicks Save
+		//Add to Playlist
+		//Add AIDS to Playlist page in IOS
+		//Click 'Create New'
+		//Use Today's Date - add's song to playlist.
+		//Skip Song
+		//Add to playlist, use existing
+		//Skip Song
+		//Add to Playlist, use MyPlaylist
+		//Check songs, get titles in player.
+	}
 }
