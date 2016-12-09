@@ -100,7 +100,6 @@ public class FullPlayer extends Page {
     @iOSFindBy(accessibility ="LyricsVC-TrackNameLabel-UILabel" ) private IOSElement LyricsVCTrackNameLabelUILabel;
     
     @iOSFindBy(accessibility ="PlayButton-AnimatingView-UIImageView" ) private IOSElement PlayButtonAnimatingViewUIImageView;
-    
     @iOSFindBy(accessibility ="PlayerBannerView-BannerContainerView-UIView" ) private IOSElement PlayerBannerViewBannerContainerViewUIView;
     @iOSFindBy(accessibility ="PlayerBannerView-DfpBanner-UIView" ) private IOSElement PlayerBannerViewDfpBannerUIView;
     @iOSFindBy(accessibility ="PlayerBannerView-SyncBannerView-UIView" ) private IOSElement PlayerBannerViewSyncBannerViewUIView;
@@ -108,17 +107,10 @@ public class FullPlayer extends Page {
 
     //Replay Modal
     @iOSFindBy(accessibility ="IHRPlayerReplayOptionsViewController-TableView-UITableView" ) private IOSElement IHRPlayerReplayOptionsViewControllerTableViewUITableView;
-    //@iOSFindBy(accessibility ="IHRPlayerReplayOptionCell-TitleLabel-UILabel-0" ) private IOSElement IHRPlayerReplayOptionCellTitleLabelUILabel0;
-    //@iOSFindBy(accessibility ="IHRPlayerReplayOptionCell-SubtitleLabel-UILabel-0" ) private IOSElement IHRPlayerReplayOptionCellSubtitleLabelUILabel0;
-    //@iOSFindBy(accessibility ="IHRPlayerReplayOptionCell-TitleLabel-UILabel-1" ) private IOSElement IHRPlayerReplayOptionCellTitleLabelUILabel1;
-    //@iOSFindBy(accessibility ="IHRPlayerReplayOptionCell-SubtitleLabel-UILabel-1" ) private IOSElement IHRPlayerReplayOptionCellSubtitleLabelUILabel1;
-    //@iOSFindBy(accessibility ="IHRPlayerReplayOptionCell-TitleLabel-UILabel-2" ) private IOSElement IHRPlayerReplayOptionCellTitleLabelUILabel2;
-    // @iOSFindBy(accessibility ="IHRPlayerReplayOptionCell-SubtitleLabel-UILabel-2" ) private IOSElement IHRPlayerReplayOptionCellSubtitleLabelUILabel2;
-    //@iOSFindBy(accessibility ="IHRPlayerReplayOptionCell-Cell-UILabel-1" ) private IOSElement IHRPlayerReplayOptionCellCellUILabel1;
     @iOSFindBy(accessibility ="IHRPlayerReplayOptionsViewController-CELL-0" ) private IOSElement IHRPlayerReplayOptionsViewControllerCELL0;
     @iOSFindBy(accessibility ="IHRPlayerReplayOptionsViewController-CELL-1" ) private IOSElement IHRPlayerReplayOptionsViewControllerCELL1;
     @iOSFindBy(accessibility ="IHRPlayerReplayOptionsViewController-CELL-2" ) private IOSElement IHRPlayerReplayOptionsViewControllerCELL2;
-    //@iOSFindBy(accessibility ="replayTitleLabel" ) private IOSElement replayTitleLabel;
+
     /* - To be used
 	@iOSFindBy(accessibility = "Great, we’ll play you more  songs like this.") public IOSElement artistThumbUpGrowl; // //UIAApplication[1]/UIAWindow[1]/UIAStaticText[10]
 	@iOSFindBy(accessibility = "OK, we'll adjust your music mix.") public IOSElement artistThumbDownGrowl;
@@ -662,20 +654,20 @@ public class FullPlayer extends Page {
     }
 
     /**
-     * Refactor this!!!
+     * Clicks the 'Replay' button to open the Replay Modal. If user is FREE -> expect Upsell Modal.
+     * If User is Plus/AA, expect to be able to click a song or cancel. 
      * @return
      */
     public boolean clickReplayButtonToOpenReplayModal(){
     	if( IHRPlayerReplayButtonUIButton!= null){
     		IHRPlayerReplayButtonUIButton.click();
     		System.out.println("clickReplayButtonToOpenReplayModal() .");
-    		//ADD LOGIC TO CLICK A SONG OR MAKE A NEW METHOD...
     		return true;
     	} return false;
     }
     /**
      * Clicks the Add to Playlist Button, uses String entitlement to determine expected action. 
-     * REFACTOR SOME MORE
+     * entitlement must be "FREE", "PLUS", or "ALLACCESS"
      */
     public boolean clickAddToPlaylistButtonInSaveModal(String entitlement){
     	if(entitlement!= null && AddToPlaylistButton != null && !entitlement.equals("")){
@@ -690,7 +682,7 @@ public class FullPlayer extends Page {
     		}else if(entitlement.equals("ALLACCESS")){
     			AddToPlaylistButton.click();
     			System.out.println("AddToPlaylistButton was clicked for ALLACCESS User - Expect Add to Playlist Modal to appear");
-    			//addToPlaylistModal.clickFirstPlaylist();
+    			//addToPlaylistModal.clickFirstPlaylist(); This can be filled in once AddToPlaylist page Object is done!!!!
     			return true;
     		}else return false;
     	}else return false;
@@ -740,17 +732,35 @@ public class FullPlayer extends Page {
     	System.out.println("clickSaveStationInSaveModal().");
     	return fullPlayer.isCurrentlyOnFullPlayer();
     }
+    /**
+     * Checks if the 'Remove Station' is available/displayed. 
+     * Precondition : Clicked Save button on FullPlayer and already Saved Station. 
+     * @return boolean
+     */
     public boolean isRemoveStationInSaveModalDisplayed(){
     	return (fullPlayer.isCurrentlyOn("isCurrentlyOnSaveModal with 'Remove Station' Button", RemoveStationButton));
     }
+    /**
+     * Checks if the 'Save Station' is available/displayed.
+     * Precondition : Clicked Save button on FullPlayer and already Saved Station. 
+     * @return
+     */
     public boolean isSaveStationInSaveModalDisplayed(){
     	return (fullPlayer.isCurrentlyOn("isCurrentlyOnSaveModal with 'Save Station' Button", SaveStationButton));
     }
     
+    /**
+     * Checks if the Replay Modal is currently open by passing in the TableView element.
+     * @return
+     */
     public boolean isCurrentlyOnReplayModal(){
     	return (fullPlayer.isCurrentlyOn("isCurrentlyOnReplayModal()", IHRPlayerReplayOptionsViewControllerTableViewUITableView));
 
     }
+    /**
+     * Checks if the First Cell in Replay Modal is displayed. It can be clicked hereafter.
+     * @return
+     */
     public boolean isReplayFirstTrackCellDisplayed(){
     	if(IHRPlayerReplayOptionsViewControllerCELL0!=null){
     		boolean irstTrackCell = IHRPlayerReplayOptionsViewControllerCELL0.isDisplayed();
@@ -758,15 +768,10 @@ public class FullPlayer extends Page {
     		return irstTrackCell;
     	} return false;
     }
-    /*
-    public boolean clickFirstSongInReplayModal(){
-    	if(IHRPlayerReplayOptionCellTitleLabelUILabel0!=null){
-    		IHRPlayerReplayOptionCellTitleLabelUILabel0.click();
-    		System.out.println("clickFirstSongInReplayModal() : true");
-    		return true;
-    	} return false;
-    }
-    */
+    /**
+     * Clicks the First Replay Cell. This should be the current song playing.
+     * @return
+     */
     public boolean clickReplayFirstCell(){
     	if(IHRPlayerReplayOptionsViewControllerCELL0!=null){
     		 IHRPlayerReplayOptionsViewControllerCELL0.click();
@@ -774,6 +779,10 @@ public class FullPlayer extends Page {
     		return true;
     	} return false;
     }
+    /**
+     * Clicks the Second Replay Cell. This should be the last song played(even if skipped).
+     * @return
+     */
     public boolean clickReplaySecondCell(){
     	if(IHRPlayerReplayOptionsViewControllerCELL1!=null){
     		 IHRPlayerReplayOptionsViewControllerCELL1.click();
@@ -781,6 +790,10 @@ public class FullPlayer extends Page {
     		return true;
     	} return false;
     }
+    /**
+     * Clicks the Third Replay Cell. This should be the second to last song played.
+     * @return
+     */
     public boolean clickReplayThirdCell(){
     	if(IHRPlayerReplayOptionsViewControllerCELL2!=null){
     		 IHRPlayerReplayOptionsViewControllerCELL2.click();
@@ -788,31 +801,4 @@ public class FullPlayer extends Page {
     		return true;
     	} return false;
     }
-    /* These are refusing to work.
-    public String getReplayFirstSongName(){
-    	if(IHRPlayerReplayOptionCellTitleLabelUILabel0!=null){
-    		String titleLabel = IHRPlayerReplayOptionCellTitleLabelUILabel0.getAttribute("value");
-    		System.out.println("getReplayFirstSongName() : " + titleLabel);
-    		return titleLabel;
-    	} return "Title Label was Null. Could Not fetch Song name.";
-    }
-    public String getReplayFirstSongArtist(){
-    	if(IHRPlayerReplayOptionCellSubtitleLabelUILabel0!=null){
-    		String subtitleLabel = IHRPlayerReplayOptionCellSubtitleLabelUILabel0.getAttribute("value");
-    		System.out.println("getReplayFirstSongArtist() : " + subtitleLabel);
-    		return subtitleLabel;
-    	} return "Title Label was Null. Could Not fetch Song name.";
-    }
-    
-    public String getReplayreplayTitleLabel(){
-    	if( replayTitleLabel!=null){
-    		String titleLabel =  replayTitleLabel.getAttribute("value");
-    		System.out.println(" replayTitleLabel() : " + titleLabel);
-    		return titleLabel;
-    	} return "Title Label was Null. Could Not fetch Song name.";
-    }
-    */
-   
-   
-    
 }
