@@ -42,20 +42,28 @@ public class UpsellPage extends Page{
 	@iOSFindBy(accessibility="IHRUpsellView-CancelButton-UIButton")					private IOSElement IHRUpsellViewCancelButtonUIButton;
 	@iOSFindBy(accessibility="IHRUpsellView-ContentView-UIView")					private IOSElement IHRUpsellViewContentViewUIView;
 	//Upsell Modal
-	@iOSFindBy(accessibility = "Start Free 30 Day Trial")
-	private IOSElement startFree30DayTrialButton;
+	//@iOSFindBy(accessibility = "Start Free 30 Day Trial")
+	//private IOSElement startFree30DayTrialButton;
 	
 	@iOSFindBy(accessibility="Cancel") private IOSElement cancelButton;
 	@iOSFindBy(accessibility="Got it") private IOSElement gotItButton;
 	@iOSFindBy(accessibility="Use Existing Apple ID") private IOSElement useExistingAppleIDButton;
 	
-	
+	/**
+	 * Clicks the simple 'Cancel' Button which is usually a modal for trying to access Upsell flow
+	 * @return
+	 */
 	public boolean clickCancelButton(){
 		waitForElementToBeVisible(cancelButton, 5);
 		cancelButton.click();
 		System.out.println("ClickCancelButton()");
 		return true;
 	}
+	/**
+	 * Clicks the Subscribe to All Access Button - the 30 Day Free Trial (the right one) 
+	 * on the Upsell Modal
+	 * @return boolean if it was able to be clicked.
+	 */
 	public boolean clickSubscribeAllAccessButton(){
 		if(IHRPremiumUpsellViewSubscribePremiumButtonUIButton!=null){
 			IHRPremiumUpsellViewSubscribePremiumButtonUIButton.click();
@@ -64,7 +72,11 @@ public class UpsellPage extends Page{
 		}return false;
 	}
 	
-	
+	/**
+	 * Clicks the Subscribe to Plus Button - the 30 Day Free Trial (the left one) 
+	 * on the Upsell Modal
+	 * @return boolean if it was able to be clicked.
+	 */
 	public boolean clickSubscribePlusButton(){
 		if(IHRPremiumUpsellViewSubscribePlusButtonUIButton!=null){
 			IHRPremiumUpsellViewSubscribePlusButtonUIButton.click();
@@ -72,6 +84,10 @@ public class UpsellPage extends Page{
 			return true;
 		}return false;
 	}
+	/**
+	 * Checks whether the Table View, a central part of the Upsell Modal, is not null and isDisplayed. 
+	 * @return boolean
+	 */
 	public boolean isUpsellModalOpen(){
 		if(IHRPremiumUpsellViewFeatureTableViewUIView!= null){
 			boolean upsellOpen = IHRPremiumUpsellViewFeatureTableViewUIView.isDisplayed();
@@ -79,6 +95,11 @@ public class UpsellPage extends Page{
 			return upsellOpen;
 		}else return false;
 	}
+	/**
+	 * The top right of the Upsell Modal has an X to close it. You may need to close other Apple modals first before clicking this.
+	 * 
+	 * @return boolean
+	 */
 	public boolean clickXtoCloseUpsellModal(){
 		if(IHRUpsellViewCancelButtonUIButton != null){
 			IHRUpsellViewCancelButtonUIButton.click();
@@ -89,6 +110,13 @@ public class UpsellPage extends Page{
 		return false;
 	}
 
+	/**
+	 * When Subscribing to AA or Plus for a Free User, it will ask you to sign into an Apple ID in order to complete the transaction.
+	 * We will check whether this modal is displayed before canceling and leaving the Upsell Modal. 
+	 * 
+	 * Can't test full subscription process in automation (assumption?)
+	 * @return
+	 */
 	public boolean isAppleIDSignInModalDisplayed() {
 		if(useExistingAppleIDButton!=null){
 			System.out.println("isAppleIDSignInModalDisplayed() : true.  ");
