@@ -440,7 +440,7 @@ public class TestFullPlayerAndMiniPlayer extends TestRoot {
 		searchPage.enterTextIntoSearchBar("Chimaira");
 		searchPage.clickTopResult();
 		miniPlayer.openFullPlayer();
-		sleep(30000);
+		sleep(5000);
 		String firstSongPlaying = fullPlayer.getTitleOfSongPlaying();
 		String timeIntoSong = fullPlayer.getPositionLabelText();
 		fullPlayer.clickReplayButtonToOpenReplayModal();
