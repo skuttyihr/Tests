@@ -13,6 +13,9 @@ public class SettingsPage extends Page {
 	@iOSFindBy(accessibility = "Logged In As") public IOSElement thirdPartyLoggedIn;
 	@iOSFindBy(accessibility = "NavBar-SideMenuButton-UIButton") private IOSElement NavBarSideMenuButtonUIButton;
 	
+
+	@iOSFindBy(accessibility = "Subscription") private IOSElement subscription;
+	
 	public SettingsPage(){
 		super();
 	}
@@ -48,5 +51,14 @@ public class SettingsPage extends Page {
 			if(isVisible(loggedInAs)){
 				return strGood(loggedInAs.getText());*/
 		return true;
+	}
+	public boolean doesEntitlementMatch(String entitlementType) {
+		sideNavBar.gotoSettings();
+		loginPage.dismissLoginPopups();
+		if(isVisible(subscription)){
+			String subType = subscription.getText();
+			return subType.equals(entitlementType);
+		}
+		return false;
 	}
 }

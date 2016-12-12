@@ -33,7 +33,45 @@ public class TestHomePage extends TestRoot {
 	}
 	
 	@Test
-	public void testHomePagePlaySomething(){
+	public void testForYou_HOME1_FREE(){
+		LocalTime before = consoleLogStart(">>>>>testHomePageElements() : Testing all elements on HomePage - For You, My Stations, Local Radio");
+		loginPage.loginWithoutVerifying("homepageelements@test.com","test");
+		if(homePage.isCurrentlyOnHomePage()){
+			homePage.showAllElements();
+		}
+		consoleLogEnd(before, true, "<<<<<testHomePageElements() : Tested HomePage Elements.");
+	}
+	
+	@Test
+	public void testMyStations_HOME2_FREE(){
+		LocalTime before = consoleLogStart(">>>>>testMyStations_HOME2_FREE() : Testing all elements on HomePage - For You, My Stations, Local Radio");
+		loginPage.loginWithoutVerifying("homepageelements@test.com","test");
+		if(homePage.isCurrentlyOnHomePage()){
+			homePage.showAllElements();
+		}
+		consoleLogEnd(before, true, "<<<<<testMyStations_HOME2_FREE() : Tested HomePage Elements.");
+	}
+	@Test
+	public void testMyMusic_HOME3_FREE(){
+		LocalTime before = consoleLogStart(">>>>>testMyStations_HOME2_FREE() : Testing all elements on HomePage - For You, My Stations, Local Radio");
+		loginPage.loginWithoutVerifying("homepageelements@test.com","test");
+		if(homePage.isCurrentlyOnHomePage()){
+			homePage.showAllElements();
+		}
+		consoleLogEnd(before, true, "<<<<<testMyStations_HOME2_FREE() : Tested HomePage Elements.");
+	}
+	
+	@Test
+	public void testAddToFavorites_HOME4_FREE(){
+		LocalTime before = consoleLogStart(">>>>>testMyStations_HOME2_FREE() : Testing all elements on HomePage - For You, My Stations, Local Radio");
+		loginPage.loginWithoutVerifying("homepageelements@test.com","test");
+		if(homePage.isCurrentlyOnHomePage()){
+			homePage.showAllElements();
+		}
+		consoleLogEnd(before, true, "<<<<<testMyStations_HOME2_FREE() : Tested HomePage Elements.");
+	}
+	@Test
+	public void testHomePagePlay_HOME5_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testHomePagePlaySomething() : Testing play on HomePage");
 		loginPage.loginWithoutVerifying("test66@test.com","test");
 		boolean startPlaying = homePage.clickFirstStationOnForYouToBeginPlaying();
@@ -59,7 +97,7 @@ public class TestHomePage extends TestRoot {
 	}
 	*/
 	/**
-	 * Log in, add to favorites from home, checks if sattion is in favorites. 
+	 * Log in, add to favorites from home, checks if station is in favorites. 
 	 
 	@Test
 	@Ignore

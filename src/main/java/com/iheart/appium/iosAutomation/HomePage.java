@@ -180,22 +180,22 @@ public class HomePage extends Page {
 		scrollDown();
 		printElementInformation(RecentsCellNumber8);
 		printElementInformation(FavoritesShowMoreButtonUIButton);
-		scrollToTop();
-		homePage.clickLocalRadioTab();
-		System.out.println("::::showAllElements() on HomePage -> Local Radio -> Radio Station Cells");
+		//scrollToTop();
+		//homePage.clickLocalRadioTab();
+		//System.out.println("::::showAllElements() on HomePage -> Local Radio -> Radio Station Cells");
 		//Local Radio
-		printElementInformation(LocalRadioTabCollectionView);
-		printElementInformation(LocalRadioCellNumber0);
-		printElementInformation(LocalRadioCellNumber1);
-		printElementInformation(LocalRadioCellNumber2);
-		printElementInformation(LocalRadioCellNumber3);
-		printElementInformation(LocalRadioCellNumber4);
-		printElementInformation(LocalRadioCellNumber5);
-		scrollDown();
-		scrollDown();
-		scrollDown();
-		scrollDown();
-		printElementInformation(LocalRadioCellNumber17);
+		//printElementInformation(LocalRadioTabCollectionView);
+		//printElementInformation(LocalRadioCellNumber0);
+		//printElementInformation(LocalRadioCellNumber1);
+		//printElementInformation(LocalRadioCellNumber2);
+		//printElementInformation(LocalRadioCellNumber3);
+		//printElementInformation(LocalRadioCellNumber4);
+		//printElementInformation(LocalRadioCellNumber5);
+		//scrollDown();
+		//scrollDown();
+		//scrollDown();
+		//scrollDown();
+		//printElementInformation(LocalRadioCellNumber17);
 	}
 	private enum CellStrings {
 		LOCALRADIO("LocalRadio"), RECENTS("Recents"), FAVORITES("Favorites"), FORYOU("ForYou");

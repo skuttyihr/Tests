@@ -88,12 +88,7 @@ public class SearchPage extends Page {
 	@iOSFindBy(accessibility = "GlobalSearchDataSource-SearchResultCell-Live Stations-Row1")
 	private IOSElement GlobalSearchDataSourceSearchResultCellLiveStationsRow1;
 	@iOSFindBy(accessibility = "GlobalSearchDataSource-ShowAllLive Stations-DisclosureCell")
-	private IOSElement GlobalSearchDataSourceShowAllLiveStationsDisclosureCell; // Space
-																				// in
-																				// String
-																				// must
-																				// be
-																				// there.
+	private IOSElement GlobalSearchDataSourceShowAllLiveStationsDisclosureCell; 
 	@iOSFindBy(accessibility = "GlobalSearchDataSource-ARTISTS-HeaderView-UIView")
 	private IOSElement GlobalSearchDataSourceARTISTSHeaderViewUIView;
 	@iOSFindBy(accessibility = "GlobalSearchDataSource-SearchResultCell-Artists-Row0")
@@ -110,12 +105,11 @@ public class SearchPage extends Page {
 	private IOSElement GlobalSearchDataSourceSearchResultCellSongsRow1;
 	@iOSFindBy(accessibility = "GlobalSearchDataSource-ShowAllSongs-DisclosureCell")
 	private IOSElement GlobalSearchDataSourceShowAllSongsDisclosureCell;
-	@iOSFindBy(accessibility = "GlobalSearchDataSource-PERFECT FOR-HeaderView-UIView")
-	private IOSElement GlobalSearchDataSourcePERFECTFORHeaderViewUIView;
-	@iOSFindBy(accessibility = "GlobalSearchDataSource-SearchResultCell-Perfect For-Row0")
-	private IOSElement GlobalSearchDataSourceSearchResultCellPerfectForRow0;
-	@iOSFindBy(accessibility = "GlobalSearchDataSource-SearchResultCell-Perfect For-Row1")
-	private IOSElement GlobalSearchDataSourceSearchResultCellPerfectForRow1;
+
+	@iOSFindBy(accessibility = "GlobalSearchDataSource-SearchResultCell-Playlists-Row0")
+	private IOSElement GlobalSearchDataSourceSearchResultCellPlaylistsRow0;
+	@iOSFindBy(accessibility = "GlobalSearchDataSource-SearchResultCell-Playlists-Row1")
+	private IOSElement GlobalSearchDataSourceSearchResultCellPlaylistsRow1;
 	@iOSFindBy(accessibility = "GlobalSearchDataSource-PODCASTS-HeaderView-UIView")
 	private IOSElement GlobalSearchDataSourcePODCASTSHeaderViewUIView;
 	@iOSFindBy(accessibility = "GlobalSearchDataSource-SearchResultCell-Podcasts-Row0")
@@ -267,7 +261,14 @@ public class SearchPage extends Page {
 	private IOSElement GlobalSearchCategoryDataSourceIHRPlaylistDataModelSearchResultCellRow5;
 	@iOSFindBy(accessibility = "GlobalSearchCategoryDataSource-IHRPlaylistDataModel-SearchResultCell-Row6")
 	private IOSElement GlobalSearchCategoryDataSourceIHRPlaylistDataModelSearchResultCellRow6;
+	@iOSFindBy(accessibility = "Learn More")
+	private IOSElement learnMoreButton;
+	@iOSFindBy(accessibility = "Upgrade")
+	private IOSElement upgradeTitle;
 
+	@iOSFindBy(accessibility = "Cosmic Queries: Galactic Grab Bag")
+	private IOSElement CosmicQueriesGalacticGrabBagEpisode;
+	
 	public void clickNavBarBackButton() {
 		System.out.println("clickNavBarBackButton().");
 		NavBarBackButtonUIButton.click();
@@ -520,16 +521,6 @@ public class SearchPage extends Page {
 		GlobalSearchDataSourceSearchResultCellSongsRow1.click();
 	}
 
-	public void clickFirstPerfectForCell() {
-		System.out.println("clickFirstPerfectForCell().");
-		GlobalSearchDataSourceSearchResultCellPerfectForRow0.click();
-	}
-
-	public void clickSecondPerfectForCell() {
-		System.out.println("clickSecondPerfectForCell().");
-		GlobalSearchDataSourceSearchResultCellPerfectForRow1.click();
-	}
-
 	public void clickFirstPodcastsCell() {
 		System.out.println("clickFirstPodcastsCell().");
 		GlobalSearchDataSourceSearchResultCellPodcastsRow0.click();
@@ -540,6 +531,31 @@ public class SearchPage extends Page {
 		GlobalSearchDataSourceSearchResultCellPodcastsRow1.click();
 	}
 
+	public void clickFirstPlaylistCell(){
+		System.out.println("clickFirstPlaylistCell()");
+		GlobalSearchDataSourceSearchResultCellPlaylistsRow0.click();
+	}
+	
+	public void clickSecondPlaylistCell(){
+		System.out.println("clickSecondPlaylistCell()");
+		GlobalSearchDataSourceSearchResultCellPlaylistsRow1.click();
+	}
+	public boolean isCurrentlyOnLearnMore(){
+		return isCurrentlyOn("isCurrentlyOnLearnMore",learnMoreButton);
+	}
+	public void clickLearnMoreButton(){
+		System.out.println("clickLearnMoreButton()");
+		learnMoreButton.click();
+	}
+	
+	public boolean isCurrentlyOnUpgradePage(){
+		return isCurrentlyOn("isCurrentlyOnUpgradePage", upgradeTitle);
+	}
+	
+	public void clickStartalkPodcastEpisode(){
+		System.out.println("clickStartalkPodcastEpisode().");
+		CosmicQueriesGalacticGrabBagEpisode.click();
+	}
 	/**
 	 * Simply print out all of the Search elements we've added and return
 	 * whether they are all correctly displayed.

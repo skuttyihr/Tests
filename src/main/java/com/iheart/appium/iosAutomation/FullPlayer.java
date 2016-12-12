@@ -100,11 +100,16 @@ public class FullPlayer extends Page {
     @iOSFindBy(accessibility ="LyricsVC-TrackNameLabel-UILabel" ) private IOSElement LyricsVCTrackNameLabelUILabel;
     
     @iOSFindBy(accessibility ="PlayButton-AnimatingView-UIImageView" ) private IOSElement PlayButtonAnimatingViewUIImageView;
-    
     @iOSFindBy(accessibility ="PlayerBannerView-BannerContainerView-UIView" ) private IOSElement PlayerBannerViewBannerContainerViewUIView;
     @iOSFindBy(accessibility ="PlayerBannerView-DfpBanner-UIView" ) private IOSElement PlayerBannerViewDfpBannerUIView;
     @iOSFindBy(accessibility ="PlayerBannerView-SyncBannerView-UIView" ) private IOSElement PlayerBannerViewSyncBannerViewUIView;
     @iOSFindBy(accessibility ="PlayerBannerView-DismissButton-UIButton" ) private IOSElement PlayerBannerViewDismissButtonUIButton;
+
+    //Replay Modal
+    @iOSFindBy(accessibility ="IHRPlayerReplayOptionsViewController-TableView-UITableView" ) private IOSElement IHRPlayerReplayOptionsViewControllerTableViewUITableView;
+    @iOSFindBy(accessibility ="IHRPlayerReplayOptionsViewController-CELL-0" ) private IOSElement IHRPlayerReplayOptionsViewControllerCELL0;
+    @iOSFindBy(accessibility ="IHRPlayerReplayOptionsViewController-CELL-1" ) private IOSElement IHRPlayerReplayOptionsViewControllerCELL1;
+    @iOSFindBy(accessibility ="IHRPlayerReplayOptionsViewController-CELL-2" ) private IOSElement IHRPlayerReplayOptionsViewControllerCELL2;
 
     /* - To be used
 	@iOSFindBy(accessibility = "Great, we’ll play you more  songs like this.") public IOSElement artistThumbUpGrowl; // //UIAApplication[1]/UIAWindow[1]/UIAStaticText[10]
@@ -639,7 +644,7 @@ public class FullPlayer extends Page {
      * @return
      */
     public boolean clickSaveButtonToOpenSaveModal(){
-    	System.out.print("clickSaveButton() : Opening Save Overflow : is SaveSongButton.isDisplayed() : ");
+    	System.out.print("clickSaveButton() : Opening Save Overflow. SaveSongButton.isDisplayed() : ");
     	IHRPlayerSaveButtonUIButton.click();
     	//Save Modal should be up now
     	boolean isSaveSongVisible = SaveSongButton.isDisplayed();
@@ -649,35 +654,35 @@ public class FullPlayer extends Page {
     }
 
     /**
-     * Refactor this!!!
+     * Clicks the 'Replay' button to open the Replay Modal. If user is FREE -> expect Upsell Modal.
+     * If User is Plus/AA, expect to be able to click a song or cancel. 
      * @return
      */
     public boolean clickReplayButtonToOpenReplayModal(){
     	if( IHRPlayerReplayButtonUIButton!= null){
     		IHRPlayerReplayButtonUIButton.click();
     		System.out.println("clickReplayButtonToOpenReplayModal() .");
-    		//ADD LOGIC TO CLICK A SONG OR MAKE A NEW METHOD...
     		return true;
     	} return false;
     }
     /**
      * Clicks the Add to Playlist Button, uses String entitlement to determine expected action. 
-     * REFACTOR SOME MORE
+     * entitlement must be "FREE", "PLUS", or "ALLACCESS"
      */
     public boolean clickAddToPlaylistButtonInSaveModal(String entitlement){
     	if(entitlement!= null && AddToPlaylistButton != null && !entitlement.equals("")){
     		if(entitlement.equals("FREE")){
     			AddToPlaylistButton.click();
     			System.out.println("AddToPlaylistButton was clicked for FREE User - Expect Upsell Modal to appear");
-    			return fullPlayer.isUpsellModalOpen();
+    			return upsellPage.isUpsellModalOpen();
     		}else if(entitlement.equals("PLUS")){
     			AddToPlaylistButton.click();
     			System.out.println("AddToPlaylistButton was clicked for PLUS User - Expect Upsell Modal to appear");
-    			return fullPlayer.isUpsellModalOpen();
+    			return upsellPage.isUpsellModalOpen();
     		}else if(entitlement.equals("ALLACCESS")){
     			AddToPlaylistButton.click();
     			System.out.println("AddToPlaylistButton was clicked for ALLACCESS User - Expect Add to Playlist Modal to appear");
-    			//addToPlaylistModal.clickFirstPlaylist();
+    			//addToPlaylistModal.clickFirstPlaylist(); This can be filled in once AddToPlaylist page Object is done!!!!
     			return true;
     		}else return false;
     	}else return false;
@@ -727,5 +732,69 @@ public class FullPlayer extends Page {
     	System.out.println("clickSaveStationInSaveModal().");
     	return fullPlayer.isCurrentlyOnFullPlayer();
     }
+    /**
+     * Checks if the 'Remove Station' is available/displayed. 
+     * Precondition : Clicked Save button on FullPlayer and already Saved Station. 
+     * @return boolean
+     */
+    public boolean isRemoveStationInSaveModalDisplayed(){
+    	return (fullPlayer.isCurrentlyOn("isCurrentlyOnSaveModal with 'Remove Station' Button", RemoveStationButton));
+    }
+    /**
+     * Checks if the 'Save Station' is available/displayed.
+     * Precondition : Clicked Save button on FullPlayer and already Saved Station. 
+     * @return
+     */
+    public boolean isSaveStationInSaveModalDisplayed(){
+    	return (fullPlayer.isCurrentlyOn("isCurrentlyOnSaveModal with 'Save Station' Button", SaveStationButton));
+    }
     
+    /**
+     * Checks if the Replay Modal is currently open by passing in the TableView element.
+     * @return
+     */
+    public boolean isCurrentlyOnReplayModal(){
+    	return (fullPlayer.isCurrentlyOn("isCurrentlyOnReplayModal()", IHRPlayerReplayOptionsViewControllerTableViewUITableView));
+
+    }
+    /**
+     * Checks if the First Cell in Replay Modal is displayed. It can be clicked hereafter.
+     * @return
+     */
+    public boolean isCurrentlyOnReplayFirstTrackCell(){
+    	return (fullPlayer.isCurrentlyOn("isCurrentlyOnReplayModal()", IHRPlayerReplayOptionsViewControllerCELL0));
+    }
+    /**
+     * Clicks the First Replay Cell. This should be the current song playing.
+     * @return
+     */
+    public boolean clickReplayFirstCell(){
+    	if(IHRPlayerReplayOptionsViewControllerCELL0!=null){
+    		 IHRPlayerReplayOptionsViewControllerCELL0.click();
+    		System.out.println("clickReplayFirstCell().");
+    		return true;
+    	} return false;
+    }
+    /**
+     * Clicks the Second Replay Cell. This should be the last song played(even if skipped).
+     * @return
+     */
+    public boolean clickReplaySecondCell(){
+    	if(IHRPlayerReplayOptionsViewControllerCELL1!=null){
+    		 IHRPlayerReplayOptionsViewControllerCELL1.click();
+    		System.out.println("clickReplaySecondCell().");
+    		return true;
+    	} return false;
+    }
+    /**
+     * Clicks the Third Replay Cell. This should be the second to last song played.
+     * @return
+     */
+    public boolean clickReplayThirdCell(){
+    	if(IHRPlayerReplayOptionsViewControllerCELL2!=null){
+    		 IHRPlayerReplayOptionsViewControllerCELL2.click();
+    		System.out.println("clickReplayThirdCell().");
+    		return true;
+    	} return false;
+    }
 }
