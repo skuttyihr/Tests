@@ -761,12 +761,8 @@ public class FullPlayer extends Page {
      * Checks if the First Cell in Replay Modal is displayed. It can be clicked hereafter.
      * @return
      */
-    public boolean isReplayFirstTrackCellDisplayed(){
-    	if(IHRPlayerReplayOptionsViewControllerCELL0!=null){
-    		boolean irstTrackCell = IHRPlayerReplayOptionsViewControllerCELL0.isDisplayed();
-    		System.out.println("isReplayFirstTrackCellDisplayed() : " + irstTrackCell);
-    		return irstTrackCell;
-    	} return false;
+    public boolean isCurrentlyOnReplayFirstTrackCell(){
+    	return (fullPlayer.isCurrentlyOn("isCurrentlyOnReplayModal()", IHRPlayerReplayOptionsViewControllerCELL0));
     }
     /**
      * Clicks the First Replay Cell. This should be the current song playing.

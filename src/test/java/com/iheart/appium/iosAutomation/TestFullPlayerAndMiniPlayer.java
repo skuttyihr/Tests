@@ -4,6 +4,7 @@ import java.time.LocalTime;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
@@ -195,6 +196,7 @@ public class TestFullPlayerAndMiniPlayer extends TestRoot {
 		Verify that Elapsed view is shown
 	 */
 	@Test
+	@Ignore
 	public void testMiniPlayerPlaylist_MPLAY4_FREE() {
 	
 	}
@@ -208,6 +210,7 @@ public class TestFullPlayerAndMiniPlayer extends TestRoot {
 		Verify that Elapsed view is shown
 	 */
 	@Test
+	@Ignore
 	public void testMiniPlayerPodcast_MPLAY5_FREE() {
 	
 	}
@@ -360,7 +363,7 @@ public class TestFullPlayerAndMiniPlayer extends TestRoot {
 		fullPlayer.clickSaveButtonToOpenSaveModal();
 		fullPlayer.clickAddToPlaylistButtonInSaveModal("FREE");
 		upsellPage.clickSubscribePlusButton();
-		Assert.assertTrue("Apple ID sign in should be displayed to buy Plus",upsellPage.isAppleIDSignInModalDisplayed());;
+		Assert.assertTrue("Apple ID sign in should be displayed to buy Plus",upsellPage.isAppleIDSignInModalDisplayed());
 		upsellPage.clickCancelButton();
 	    fullPlayer.clickSaveButtonToOpenSaveModal();
 	    if(fullPlayer.isSaveStationInSaveModalDisplayed()){
@@ -415,8 +418,7 @@ public class TestFullPlayerAndMiniPlayer extends TestRoot {
 			}
 		}
 		fullPlayer.clickReplayButtonToOpenReplayModal();
-		sleep(2000);
-		fullPlayer.isReplayFirstTrackCellDisplayed();
+		Assert.assertTrue("Clicking 'Replay' button should open Replay Modal and show first Track Cell", fullPlayer.isCurrentlyOnReplayFirstTrackCell());
 		Assert.assertTrue("Clicking 'Replay' button should open Replay Modal and not Upsell page.", fullPlayer.isCurrentlyOnReplayModal());
 
 		fullPlayer.clickReplaySecondCell();
@@ -442,8 +444,7 @@ public class TestFullPlayerAndMiniPlayer extends TestRoot {
 		String firstSongPlaying = fullPlayer.getTitleOfSongPlaying();
 		String timeIntoSong = fullPlayer.getPositionLabelText();
 		fullPlayer.clickReplayButtonToOpenReplayModal();
-		sleep(2000);
-		fullPlayer.isReplayFirstTrackCellDisplayed();
+		Assert.assertTrue("Clicking 'Replay' button should open Replay Modal and show first Track Cell",fullPlayer.isCurrentlyOnReplayFirstTrackCell());
 		Assert.assertTrue("Clicking First Cell in Replay Modal should simply work.",fullPlayer.clickReplayFirstCell());
 		String firstSongRePlaying = fullPlayer.getTitleOfSongPlaying();
 		String timeIntoSongRePlaying = fullPlayer.getPositionLabelText();
@@ -484,6 +485,7 @@ public class TestFullPlayerAndMiniPlayer extends TestRoot {
 		//Check songs, get titles in player.
 	 */
 	@Test
+	@Ignore
 	public void testFullPlayerAddToPlaylist_FPLAY6_ALLACCESS(){
 		//empty
 	}
