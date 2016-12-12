@@ -35,6 +35,7 @@ public class GenrePage extends Page {
 	}
 	
 	public void clickDone(){
+		System.out.println("generPage.clickDone()");
 		genreDone.click();
 	}
 	
@@ -323,5 +324,19 @@ public class GenrePage extends Page {
 
 	public boolean isCurrentlyOnGenrePickerPage() {
 		return genrePicker.isDisplayed();
+	}
+	
+	public boolean isDoneEnabled(){
+		boolean doneEnabled = false;
+		String trueOrNull = genreDone.getAttribute("value");
+		if(trueOrNull == null){
+			doneEnabled = false;
+		}
+		else if( trueOrNull.equals("true")){
+			doneEnabled = true;
+		}else {
+			doneEnabled = false; //default
+		}
+		return doneEnabled;
 	}
 }

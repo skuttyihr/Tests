@@ -260,7 +260,7 @@ public class LoginPage extends Page {
 		System.out.println("Dismissed Zip code and handled possible popups.");
 		// Select Genre
 		if (waitForVisible(driver, By.name("IHRiPhoneGenrePickerView"), 5) != null) {
-			if(!genrePage.isGenreSelected("Alternative")){
+			if(!genrePage.isDoneEnabled()){
 				genrePage.selectGenre("Alternative");
 				System.out.println("Selected 'Alternative' genre.");
 			}
