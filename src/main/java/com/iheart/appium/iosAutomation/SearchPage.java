@@ -266,6 +266,9 @@ public class SearchPage extends Page {
 	@iOSFindBy(accessibility = "Upgrade")
 	private IOSElement upgradeTitle;
 
+	@iOSFindBy(accessibility = "Cosmic Queries: Galactic Grab Bag")
+	private IOSElement CosmicQueriesGalacticGrabBagEpisode;
+	
 	public void clickNavBarBackButton() {
 		System.out.println("clickNavBarBackButton().");
 		NavBarBackButtonUIButton.click();
@@ -547,6 +550,11 @@ public class SearchPage extends Page {
 	
 	public boolean isCurrentlyOnUpgradePage(){
 		return isCurrentlyOn("isCurrentlyOnUpgradePage", upgradeTitle);
+	}
+	
+	public void clickStartalkPodcastEpisode(){
+		System.out.println("clickStartalkPodcastEpisode().");
+		CosmicQueriesGalacticGrabBagEpisode.click();
 	}
 	/**
 	 * Simply print out all of the Search elements we've added and return

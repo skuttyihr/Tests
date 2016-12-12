@@ -102,6 +102,7 @@ public class TestSearch extends TestRoot {
 		String expectedRadioType = "Artist Radio";
 		searchPage.enterTextAndPressEnterIntoSearchBar(artistName);
 		searchPage.clickTopResult();
+		Assert.assertTrue("Opening Top Result for Searching Artist Name should have opened Mini Player with Artist Radio.", miniPlayer.isCurrentlyOnMiniPlayer());
 		miniPlayer.openFullPlayer();
 		String actualStationType = fullPlayer.getStationType();
 		String actualStationName = fullPlayer.getStationName();
@@ -117,34 +118,22 @@ public class TestSearch extends TestRoot {
 		LocalTime before = consoleLogStart(">>>>>testSearchPlaylist_SEA6_FREE() : Searching a song, clicking Top Result, hoping for Artist Radio.");
 		loginPage.loginWithoutVerifying("test55@test.com","test");
 		homePage.clickNavBarSearchButtonToOpenSearch();
-		String themeName = "workout hits";
+		String playlistName = "workout hits";
 		//String expectedRadioType = "Theme Radio";
-		searchPage.enterTextAndPressEnterIntoSearchBar(themeName);
+		searchPage.enterTextAndPressEnterIntoSearchBar(playlistName);
 		searchPage.scrollSearchResultsCollectionView(SwipeElementDirection.DOWN, 100, 200, 100);
-		//MUST ADD PLAYLIST CELL TO SEARCH RESULTS
 		searchPage.clickFirstPlaylistCell();
-	
 		//Playlist Results open
 		//Learn More Button
-		
 		Assert.assertTrue("Clicking on a Playlist should have opened Upsell Modal", searchPage.isCurrentlyOnLearnMore());
 		searchPage.clickLearnMoreButton();
 		Assert.assertTrue("Clicking on 'Learn More' Button should have shown Upsell Title Page.", searchPage.isCurrentlyOnUpgradePage());
 		consoleLogEnd(before, true, "<<<<<testSearchPlaylist_SEA6_FREE().");
-		//upsellPage.clickXtoCloseUpsellModal();
-		
-		//miniPlayer.openFullPlayer();
-		//String actualStationType = fullPlayer.getStationType();
-		//String actualStationName = fullPlayer.getStationName();
-		//Assert.assertEquals("Expected Full Player to be on '"+ expectedRadioType + "' but it's not matching up with actual :" + actualStationType, expectedRadioType, actualStationType);
-		//Assert.assertEquals("Expected Full Player to be on '" + themeName + "' but it's not matching up with actual : " + actualStationName ,themeName, actualStationName );
-		//consoleLogEnd(before, expectedRadioType.equals(actualStationType), "<<<<<testSearchArtistRadio().");
-		
 	}
 	
 	@Test
 	public void testSearchPodcasts_SEA7_FREE(){
-		LocalTime before = consoleLogStart(">>>>>testSearchPodcasts() : Searching for 'starta', clicking First Podcast Cell, hoping for Podcast List of episodes");
+		LocalTime before = consoleLogStart(">>>>>testSearchPodcasts_SEA7_FREE() : Searching for 'starta', clicking First Podcast Cell, hoping for Podcast List of episodes");
 		loginPage.loginWithoutVerifying("test55@test.com","test");
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		String podcastName = "starta";
@@ -153,7 +142,9 @@ public class TestSearch extends TestRoot {
 		IOSElement episodes = Page.waitForVisible(driver, By.name("Episodes"), 10);
 		printElementInformation(episodes);
 		Assert.assertTrue("Clicking the first Podcasts Cell for 'starta' should show Episodes of Star Talk",episodes.getText().equals("Episodes"));
-		consoleLogEnd(before, true, "<<<<<testSearchPodcasts() : ");
+		searchPage.clickStartalkPodcastEpisode();
+		Assert.assertTrue("Clicking one of the Podcast episdoes should have opened MiniPlayer", miniPlayer.isCurrentlyOnMiniPlayer() );
+		consoleLogEnd(before, true, "<<<<<testSearchPodcasts_SEA7_FREE() : ");
 		
 	}
 	@Test
@@ -165,6 +156,8 @@ public class TestSearch extends TestRoot {
 		String expectedRadioType = "Live Radio";
 		searchPage.enterTextIntoSearchBar(liveSearchName);
 		searchPage.clickFirstLiveStation();
+		Assert.assertTrue("Opening Top Result for Searching Live Radio should have opened Mini Player with Live Radio.", miniPlayer.isCurrentlyOnMiniPlayer());
+		
 		miniPlayer.openFullPlayer();
 		String actualStationType = fullPlayer.getStationType();
 		String actualStationName = fullPlayer.getStationName();
