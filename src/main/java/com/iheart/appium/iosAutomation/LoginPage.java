@@ -122,7 +122,7 @@ public class LoginPage extends Page {
 		// verify we are in
 		IOSElement forYouTest = waitForVisible(driver, By.name("For You"), 20);
 		if (forYouTest != null && isVisible(forYouTest)) {
-			loggedIn = settings.isLoggedIn();
+			loggedIn = settingsPage.isLoggedIn();
 		}
 		sideNavBar.gotoHomePage();
 		return loggedIn;
@@ -351,7 +351,7 @@ public class LoginPage extends Page {
 		dismissLoginPopups();
 
 		// check status
-		return settings.isLoggedIn();
+		return settingsPage.isLoggedIn();
 	}
 
 	/**
@@ -393,7 +393,7 @@ public class LoginPage extends Page {
 			openButton.click();
 		dismissStayConnectedPopup();
 		dismissLoginPopups();
-		return settings.isLoggedIn();
+		return settingsPage.isLoggedIn();
 	}
 
 	public void dismissStayConnectedPopup() {
@@ -436,6 +436,24 @@ public class LoginPage extends Page {
 	public void tapBack() {
 		System.out.println("Hitting 'Back' from LoginPage to go back to OnboardingPage");
 		NavBarBackButton.click();
+	}
+
+	public boolean loginVerifyEntitlement(String email, String password, String entitlementType) {
+		System.out.println("About to loginVerifyEntitlement()");
+		boolean loggedIn = false;
+		boolean doesEntitlementMatch = false;
+		// Log in
+		loginWithoutVerifying(email, password);
+		// verify we are in
+		if(homePage.isCurrentlyOnForYouTab()){
+			loggedIn = true;
+		}
+		sideNavBar.clickNavBarSideMenuButton(); //Open Settings
+		doesEntitlementMatch = settingsPage.doesEntitlementMatch(entitlementType);
+		
+		sideNavBar.gotoHomePage();
+		return loggedIn && doesEntitlementMatch;
+		
 	}
 
 }

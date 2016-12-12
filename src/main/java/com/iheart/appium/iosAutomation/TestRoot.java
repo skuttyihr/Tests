@@ -75,7 +75,7 @@ public class TestRoot {
 	protected static OnboardingPage onboardingPage;
 	protected static GenrePage genrePage;
 	protected static MiniPlayer miniPlayer;
-	protected static SettingsPage settings;
+	protected static SettingsPage settingsPage;
 	protected static UpsellPage upsellPage;
 
 	// New On Demand Elements
@@ -271,7 +271,7 @@ public class TestRoot {
 		onboardingPage = new OnboardingPage(driver);
 		genrePage = new GenrePage(driver);
 		miniPlayer = new MiniPlayer(driver);
-		settings = new SettingsPage(driver);
+		settingsPage = new SettingsPage(driver);
 		artistProfilePage = new ArtistProfilePage(driver);
 		driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 		System.out.println("Testing on: " + MODEL);
@@ -351,7 +351,7 @@ public class TestRoot {
 		String screenshotName = testMethod + dateFormat.format(date) + ".png";
 		System.out.println("See screenshotName:" + screenshotName);
 		File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-		// The below method will save the screen shot in d drive with name
+		// The below method will save the screen shot in d drive with name-----
 		// "screenshot.png"
 		FileUtils.copyFile(scrFile, new File(screenshotName));
 		System.out.println("Screenshot is taken.");

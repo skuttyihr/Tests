@@ -96,6 +96,13 @@ public class UpsellPage extends Page{
 		}else return false;
 	}
 	/**
+	 * Checks whether the Table View, a central part of the Upsell Modal, is not null and isDisplayed. 
+	 * @return boolean
+	 */
+	public boolean isCurrentlyOnUpsellModal(){
+		return (isCurrentlyOn("isCurrentlyOnUpsellModal", IHRPremiumUpsellViewFeatureTableViewUIView));
+	}
+	/**
 	 * The top right of the Upsell Modal has an X to close it. You may need to close other Apple modals first before clicking this.
 	 * 
 	 * @return boolean

@@ -468,7 +468,7 @@ public class TestFullPlayerAndMiniPlayer extends TestRoot {
 		fullPlayer.clickReplaySecondCell();
 		fullPlayer.clickReplayButtonToOpenReplayModal();
 		fullPlayer.clickReplayFirstCell();
-		 consoleLogEnd(before, fullPlayer.isCurrentlyOnFullPlayer(), "Tested testFullPlayerSaveReplaySkip_FPLAY5_ALLACCESS().");
+		consoleLogEnd(before, fullPlayer.isCurrentlyOnFullPlayer(), "Tested testFullPlayerSaveReplaySkip_FPLAY5_ALLACCESS().");
 	}
 	/**
 	 * //Logs in, plays artist radio

@@ -4,10 +4,12 @@ import java.time.LocalTime;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.openqa.selenium.By;
 
+import io.appium.java_client.SwipeElementDirection;
 import io.appium.java_client.ios.IOSElement;
 
 
@@ -21,9 +23,20 @@ public class TestSearch extends TestRoot {
 	@Rule
 	public ScreenshotRule screenshot = new ScreenshotRule();
 	
+	
 	@Test
-	public void testSearchPageElements(){
-		LocalTime before = consoleLogStart("Testing testSearchPageElements");
+	public void testSearchPageResults_SEA1_FREE(){
+		LocalTime before = consoleLogStart("Testing testSearchPageResults_SEA1_FREE");
+		loginPage.loginWithoutVerifying("search11@test.com", "test");
+		homePage.clickNavBarSearchButtonToOpenSearch();
+		searchPage.showAllElements();
+		searchPage.enterTextIntoSearchBar("rap");
+		searchPage.showAllElementsVoid();
+		consoleLogEnd(before, true, "Tested testSearchPageResults_SEA1_FREE");
+	}
+	@Test
+	public void testSearchPageTextfield_SEA2_FREE(){
+		LocalTime before = consoleLogStart("Testing testSearchPageTextfield_SEA2_FREE");
 		loginPage.loginWithoutVerifying("test55@test.com","test");
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		searchPage.showAllElements();
@@ -32,21 +45,11 @@ public class TestSearch extends TestRoot {
 		searchPage.enterTextIntoSearchBar("MORE");
 		searchPage.clickCancelButtonOnSearchBar();
 		homePage.clickNavBarSearchButtonToOpenSearch();
-		consoleLogEnd(before, true, "Tested SearchPage Elements");
+		consoleLogEnd(before, true, "Tested testSearchPageTextfield_SEA2_FREE");
 	}
 	@Test
-	public void testSearchPageElementsAndLists(){
-		LocalTime before = consoleLogStart("Testing testSearchPageElementsAndLists");
-		loginPage.loginWithoutVerifying("search11@test.com", "test");
-		homePage.clickNavBarSearchButtonToOpenSearch();
-		searchPage.showAllElements();
-		searchPage.enterTextIntoSearchBar("rap");
-		searchPage.showAllElementsVoid();
-		consoleLogEnd(before, true, "Tested testSearchPageElementsAndLists");
-	}
-	@Test
-	public void testNoResults(){
-		LocalTime before = consoleLogStart(">>>>>testNoResults() : Testing testNoResults");
+	public void testNoResults_SEA3_FREE(){
+		LocalTime before = consoleLogStart(">>>>>testNoResults_SEA3_FREE() : Testing testNoResults");
 		loginPage.loginWithoutVerifying("test55@test.com","test");
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		String searchTerm = "xqWtlzap";
@@ -66,13 +69,13 @@ public class TestSearch extends TestRoot {
 		boolean isCurentlyOnArtistProfile = artistProfilePage.isCurrentlyOnArtistProfilePage();
 		Assert.assertTrue("Should be on ArtistProfile with search term of 'cv'",isCurentlyOnArtistProfile);
 		consoleLogEnd(before, isCurentlyOnArtistProfile, "<<<<<Tested testNoResults");*/
-		consoleLogEnd(before, invalidSearch, "<<<<<Tested testNoResults");
+		consoleLogEnd(before, invalidSearch, "<<<<<Tested testNoResults_SEA3_FREE");
 
 		
 	}
 	@Test
-	public void testSearchTrackRadio(){
-		LocalTime before = consoleLogStart(">>>>>testSearchTrackRadio() : Searching a song, clicking Top Result, hoping for Artist Radio.");
+	public void testSearchTrack_SEA4_FREE(){
+		LocalTime before = consoleLogStart(">>>>>testSearchTrack_SEA4_FREE() : Searching a song, clicking Top Result, hoping for Artist Radio.");
 		loginPage.loginWithoutVerifying("test55@test.com","test");
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		//sk - 11/5/16- updated to reflect the changed behavior - playing track from search creates <ArtistName> Radio
@@ -81,17 +84,18 @@ public class TestSearch extends TestRoot {
 		String songName = "Belie The Machine";
 		searchPage.enterTextAndPressEnterIntoSearchBar(songName);
 		searchPage.clickTopResult();
+		Assert.assertTrue("Opening Top Result for Searching Track Name should have opened Mini Player with Artist Radio.", miniPlayer.isCurrentlyOnMiniPlayer());
 		miniPlayer.openFullPlayer();
 		String actualStationType = fullPlayer.getStationType();
 		String actualStationName = fullPlayer.getStationName();
 		Assert.assertEquals("Expected Full Player to be on '"+ expectedRadioType + "' but it's not matching up with actual : " + actualStationType, expectedRadioType, actualStationType);
 		Assert.assertEquals("Expected Full Player to be on '"+ songName +"' Track Radio but it's not matching up with the Actual : " + actualStationName ,artistName, actualStationName );
-		consoleLogEnd(before, expectedRadioType.equals(actualStationType), "<<<<<testSearchTrackRadio() : ");
+		consoleLogEnd(before, expectedRadioType.equals(actualStationType), "<<<<<testSearchTrack_SEA4_FREE() : ");
 		
 	}
 	@Test
-	public void testSearchArtistRadio(){
-		LocalTime before = consoleLogStart(">>>>>testSearchArtistRadio() : Searching a song, clicking Top Result, hoping for Artist Radio.");
+	public void testSearchArtist_SEA5_FREE(){
+		LocalTime before = consoleLogStart(">>>>>testSearchArtist_SEA5_FREE() : Searching a song, clicking Top Result, hoping for Artist Radio.");
 		loginPage.loginWithoutVerifying("test55@test.com","test");
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		String artistName = "Black Crown Initiate";
@@ -103,30 +107,43 @@ public class TestSearch extends TestRoot {
 		String actualStationName = fullPlayer.getStationName();
 		Assert.assertEquals("Expected Full Player to be on '"+ expectedRadioType + "' but it's not matching up with actual :" + actualStationType, expectedRadioType, actualStationType);
 		Assert.assertEquals("Expected Full Player to be on '" + artistName + "' Artist Radio but it's not matching up with actual : " + actualStationName ,artistName, actualStationName );
-		consoleLogEnd(before, expectedRadioType.equals(actualStationType), "<<<<<testSearchArtistRadio(). ");
+		consoleLogEnd(before, expectedRadioType.equals(actualStationType), "<<<<<testSearchArtist_SEA5_FREE(). ");
 		
 	}
-	//sk -11/5/16 - Theme Radio has been removed from the app - so commenting out
-	/*@Test
-	public void testSearchThemeRadio(){
-		LocalTime before = consoleLogStart(">>>>>testSearchArtistRadio() : Searching a song, clicking Top Result, hoping for Artist Radio.");
+	
+	@Test
+	//@Ignore
+	public void testSearchPlaylist_SEA6_FREE(){
+		LocalTime before = consoleLogStart(">>>>>testSearchPlaylist_SEA6_FREE() : Searching a song, clicking Top Result, hoping for Artist Radio.");
 		loginPage.loginWithoutVerifying("test55@test.com","test");
 		homePage.clickNavBarSearchButtonToOpenSearch();
-		String themeName = "Heavy Metal Barbell";
-		String expectedRadioType = "Theme Radio";
+		String themeName = "workout hits";
+		//String expectedRadioType = "Theme Radio";
 		searchPage.enterTextAndPressEnterIntoSearchBar(themeName);
-		searchPage.clickTopResult();
-		miniPlayer.openFullPlayer();
-		String actualStationType = fullPlayer.getStationType();
-		String actualStationName = fullPlayer.getStationName();
-		Assert.assertEquals("Expected Full Player to be on '"+ expectedRadioType + "' but it's not matching up with actual :" + actualStationType, expectedRadioType, actualStationType);
-		Assert.assertEquals("Expected Full Player to be on '" + themeName + "' but it's not matching up with actual : " + actualStationName ,themeName, actualStationName );
-		consoleLogEnd(before, expectedRadioType.equals(actualStationType), "<<<<<testSearchArtistRadio().");
+		searchPage.scrollSearchResultsCollectionView(SwipeElementDirection.DOWN, 100, 200, 100);
+		//MUST ADD PLAYLIST CELL TO SEARCH RESULTS
+		searchPage.clickFirstPlaylistCell();
+	
+		//Playlist Results open
+		//Learn More Button
+		
+		Assert.assertTrue("Clicking on a Playlist should have opened Upsell Modal", searchPage.isCurrentlyOnLearnMore());
+		searchPage.clickLearnMoreButton();
+		Assert.assertTrue("Clicking on 'Learn More' Button should have shown Upsell Title Page.", searchPage.isCurrentlyOnUpgradePage());
+		consoleLogEnd(before, true, "<<<<<testSearchPlaylist_SEA6_FREE().");
+		//upsellPage.clickXtoCloseUpsellModal();
+		
+		//miniPlayer.openFullPlayer();
+		//String actualStationType = fullPlayer.getStationType();
+		//String actualStationName = fullPlayer.getStationName();
+		//Assert.assertEquals("Expected Full Player to be on '"+ expectedRadioType + "' but it's not matching up with actual :" + actualStationType, expectedRadioType, actualStationType);
+		//Assert.assertEquals("Expected Full Player to be on '" + themeName + "' but it's not matching up with actual : " + actualStationName ,themeName, actualStationName );
+		//consoleLogEnd(before, expectedRadioType.equals(actualStationType), "<<<<<testSearchArtistRadio().");
 		
 	}
-	*/
+	
 	@Test
-	public void testSearchPodcasts(){
+	public void testSearchPodcasts_SEA7_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testSearchPodcasts() : Searching for 'starta', clicking First Podcast Cell, hoping for Podcast List of episodes");
 		loginPage.loginWithoutVerifying("test55@test.com","test");
 		homePage.clickNavBarSearchButtonToOpenSearch();
@@ -140,7 +157,7 @@ public class TestSearch extends TestRoot {
 		
 	}
 	@Test
-	public void testSearchLiveRadio(){
+	public void testSearchLive_SEA8_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testSearchLiveRadio() : Searching for 'rock', clicking First Live Station, hoping for Live Radio.");
 		loginPage.loginWithoutVerifying("test55@test.com","test");
 		homePage.clickNavBarSearchButtonToOpenSearch();

@@ -6,6 +6,7 @@ import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -27,7 +28,7 @@ public class TestOnboarding extends TestRoot {
 	 * This works at 169 seconds. 
 	 */
 	@Test
-	public void testAllElementsOnOnboardingPage(){ 
+	public void testAllElementsOnOnboardingPage_ONB1_FREE(){ 
 		LocalTime before = consoleLogStart("Testing testAllElementsOnOnboardingPage()");
 		boolean allElementsDisplayedOnOnboardingPage = onboardingPage.showAllElements();
 		Assert.assertTrue("One of the elements on Onboarding Page is not displayed as expected.",allElementsDisplayedOnOnboardingPage);
@@ -43,7 +44,7 @@ public class TestOnboarding extends TestRoot {
 	 * We could also add Sleeps. 
 	 */
 	@Test
-	public void testUIScrollViewOnOnboardingPage(){
+	public void testUIScrollViewOnOnboardingPage_ONB2_FREE(){
 		LocalTime before = consoleLogStart("Testing testUIScrollViewOnOnboardingPage()");
 		//Part One
 		System.out.println("Testing that Titles are as expected.");
@@ -70,11 +71,30 @@ public class TestOnboarding extends TestRoot {
 	 * Simply click the 'Log In' Button and the 'Create Account' Button and ensure the next pages are as expected. 
 	 */
 	@Test
-	public void testCreateAccountAndLogInButtons(){
+	public void testCreateAccountAndLogInButtons_ONB3_FREE(){
 		LocalTime before = consoleLogStart("Testing testCreateAccountLogInAndMaybeLater().");
 		Assert.assertTrue("Could not click 'Log In' Button", onboardingPage.clickOnboardingLoginButton());
 		loginPage.tapBack();
 		Assert.assertTrue("Could not click 'Create Account' Button", onboardingPage.clickOnboardingCreateAccountButton());
 		consoleLogEnd(before, true,  "Tested CreateAccountAndLogInButtons in TestOnboarding.java");
+	}
+	
+	@Test
+	//@Ignore
+	public void testOnboardingDisappearal_ONB4_FREE(){
+		LocalTime before = consoleLogStart("Testing testOnboardingDisappearal_ONB4_FREE().");
+		loginPage.login();//VerifyEntitlement("trav@free.com", "travfree", "FREE");
+		System.out.println("Closing app.");
+		driver.resetApp();
+		//closeApp();
+		System.out.println("Launching app.");
+		driver.launchApp();
+		Assert.assertTrue("Closing app and relaunching app after logging in should save log in information.", homePage.isCurrentlyOnForYouTab());
+		consoleLogEnd(before, true,  "Tested CreateAccountAndLogInButtons in TestOnboarding.java");
+		driver.closeApp();
+		//Login with email. 
+		//Play live station. 
+		//Kill app. 
+		//Relaunch app.
 	}
 }
