@@ -4,6 +4,7 @@ import java.time.LocalTime;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -30,16 +31,27 @@ public class TestNewAccount extends TestRoot {
 	 * 
 	 */
 	@Test
-	public void testCreateNewAccountWithDefaultParameters() {
+	public void testCreateNewEmailAccount_SIGN1_FREE() {
 		LocalTime before = consoleLogStart(
 				">>>>>testCreateNewAccountWithDefaultParameters() : Creating a new account with the default parameters. ");
 		Assert.assertTrue(signupPage.createNewAccount());
 		consoleLogEnd(before, true, "<<<<<testCreateNewAccountWithDefaultParameters");
 
 	}
-
 	@Test
-	public void testAllElementsOnSignUpPage() {
+	@Ignore
+	public void testCreateNewGmailAccount_SIGN2_FREE(){
+		//Can't keep using Gmail accounts
+		//Most likely cannot be automated.
+	}
+	@Test
+	@Ignore
+	public void testCreateNewFacebookAccount_SIGN3_FREE(){
+		//Can't keep using Facebook accounts
+		//Most likely cannot be automated.
+	}
+	@Test
+	public void testAllElements_SIGN4_FREE() {
 		LocalTime before = consoleLogStart(
 				">>>>>testAllElementsOnSignUpPage() : Checking all the iOS Elements on the Onboarding / Sign Up Page.");
 		// We only care about console output here
@@ -55,9 +67,10 @@ public class TestNewAccount extends TestRoot {
 	 * 40.
 	 */
 	@Test
-	public void testGenreGameForNewAccount() {
+	public void testGenreGameForNewAccount_GEN1_FREE() {
 		LocalTime before = consoleLogStart(">>>>>testGenreGameForNewAccount(): Testing Genre Game for New Account.");
 		Assert.assertTrue("Could not create a new account and get the genre picker", signupPage.createNewAccount());
+		Assert.assertFalse("Done Button shouldn't be enabled for a new account.", genrePage.isDoneEnabled());
 		// Assert all genres are present
 		String missingGenres = genrePage.verifyGenres();
 		Assert.assertTrue("Not all expected genres were present!\nMissing:\n" + missingGenres,
