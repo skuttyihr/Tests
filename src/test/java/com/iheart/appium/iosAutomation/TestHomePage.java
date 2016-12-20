@@ -5,6 +5,7 @@ import java.time.LocalTime;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -22,24 +23,17 @@ public class TestHomePage extends TestRoot {
 	@Rule
 	public ScreenshotRule screenshot = new ScreenshotRule();
 	
-	@Test
-	public void testHomePageElements(){
-		LocalTime before = consoleLogStart(">>>>>testHomePageElements() : Testing all elements on HomePage - For You, My Stations, Local Radio");
-		loginPage.loginWithoutVerifying("homepageelements@test.com","test");
-		if(homePage.isCurrentlyOnHomePage()){
-			homePage.showAllElements();
-		}
-		consoleLogEnd(before, true, "<<<<<testHomePageElements() : Tested HomePage Elements.");
-	}
 	
 	@Test
 	public void testForYou_HOME1_FREE(){
-		LocalTime before = consoleLogStart(">>>>>testHomePageElements() : Testing all elements on HomePage - For You, My Stations, Local Radio");
+		LocalTime before = consoleLogStart(">>>>>testForYou_HOME1_FREE() : Testing all elements on HomePage - For You, My Stations, Local Radio");
 		loginPage.loginWithoutVerifying("homepageelements@test.com","test");
 		if(homePage.isCurrentlyOnHomePage()){
-			homePage.showAllElements();
+			homePage.clickFreeTrialUpsellButton();
+			upsellPage.clickCancelButton();
+			homePage.printForYouElements();
 		}
-		consoleLogEnd(before, true, "<<<<<testHomePageElements() : Tested HomePage Elements.");
+		consoleLogEnd(before, true, "<<<<<testForYou_HOME1_FREE() : Tested HomePage Elements.");
 	}
 	
 	@Test
@@ -47,38 +41,61 @@ public class TestHomePage extends TestRoot {
 		LocalTime before = consoleLogStart(">>>>>testMyStations_HOME2_FREE() : Testing all elements on HomePage - For You, My Stations, Local Radio");
 		loginPage.loginWithoutVerifying("homepageelements@test.com","test");
 		if(homePage.isCurrentlyOnHomePage()){
-			homePage.showAllElements();
+			homePage.clickMyStationsTab();
+			homePage.printMyStationsElements();
 		}
 		consoleLogEnd(before, true, "<<<<<testMyStations_HOME2_FREE() : Tested HomePage Elements.");
 	}
 	@Test
+	@Ignore
 	public void testMyMusic_HOME3_FREE(){
-		LocalTime before = consoleLogStart(">>>>>testMyStations_HOME2_FREE() : Testing all elements on HomePage - For You, My Stations, Local Radio");
+		LocalTime before = consoleLogStart(">>>>>testMyStations_HOME3_FREE() : Testing all elements on HomePage - For You, My Stations, Local Radio");
 		loginPage.loginWithoutVerifying("homepageelements@test.com","test");
 		if(homePage.isCurrentlyOnHomePage()){
-			homePage.showAllElements();
+			homePage.clickMyMusicTab();
+			homePage.printMyMusicElements();
+			//homePage.showAllElements();
 		}
-		consoleLogEnd(before, true, "<<<<<testMyStations_HOME2_FREE() : Tested HomePage Elements.");
+		consoleLogEnd(before, true, "<<<<<testMyStations_HOME3_FREE() : Tested HomePage Elements.");
 	}
 	
 	@Test
+	@Ignore
 	public void testAddToFavorites_HOME4_FREE(){
-		LocalTime before = consoleLogStart(">>>>>testMyStations_HOME2_FREE() : Testing all elements on HomePage - For You, My Stations, Local Radio");
+		LocalTime before = consoleLogStart(">>>>>testAddToFavorites_HOME4_FREE() : Testing all elements on HomePage - For You, My Stations, Local Radio");
 		loginPage.loginWithoutVerifying("homepageelements@test.com","test");
 		if(homePage.isCurrentlyOnHomePage()){
-			homePage.showAllElements();
+			
 		}
-		consoleLogEnd(before, true, "<<<<<testMyStations_HOME2_FREE() : Tested HomePage Elements.");
+		consoleLogEnd(before, true, "<<<<<testAddToFavorites_HOME4_FREE() : Tested HomePage Elements.");
 	}
 	@Test
 	public void testHomePagePlay_HOME5_FREE(){
-		LocalTime before = consoleLogStart(">>>>>testHomePagePlaySomething() : Testing play on HomePage");
+		LocalTime before = consoleLogStart(">>>>>testHomePagePlay_HOME5_FREE() : Testing play on HomePage");
 		loginPage.loginWithoutVerifying("test66@test.com","test");
 		boolean startPlaying = homePage.clickFirstStationOnForYouToBeginPlaying();
 		Assert.assertTrue("Clicking on the first station in For You should have started a player.", startPlaying);
-		consoleLogEnd(before, startPlaying, "<<<<<testHomePagePlaySomething(): Tested HomePage Play");
+		consoleLogEnd(before, startPlaying, "<<<<<testHomePagePlay_HOME5_FREE(): Tested HomePage Play");
 	}
-
+	
+	/**
+	 * Unfavorite option is display
+		Notice the equalizer on the station that is currently playing
+		The option Add to Favorites or remove are displaying
+		Station get deleted and station is not playing
+		Station is deleted but it keeps playing
+		the station is also display under 'Favorite Stations' and the equalizer is only showing near the Favorite Station
+		Notice the equalizer on the station that is currently playing
+		The option Add to Favorites or remove are displaying
+		Station get deleted and station is not playing
+		Station is deleted but it keeps playing
+		the station is also display under 'Favorite Stations' and the equalizer is only showing near the Favorite Station
+	 */
+	@Test
+	@Ignore
+	public void testMiscHomePage_HOME6_FREE(){
+	
+	}
 	/*
 	private void assertScrollAndShowMore(){ 
 		List<String> visibleItems = homePage.getVisibleListItems();

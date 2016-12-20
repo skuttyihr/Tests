@@ -41,9 +41,9 @@ public class TestPages extends TestRoot {
 		loginPage.loginWithoutVerifying();
 		// Verify each page
 		Assert.assertTrue("Logo was not visible", isVisible(Page.iheartradio_logo_full));
-		homePage.gotoMyStations();
+		//homePage.gotoMyStations();
 		Assert.assertTrue("Logo was not visible on My Stations", isVisible(Page.iheartradio_logo_full));
-		homePage.gotoLocalRadio();
+		//homePage.gotoLocalRadio();
 		Assert.assertTrue("Logo was not visible on Local Radio", isVisible(Page.iheartradio_logo_full));
 		sideNavBar.gotoLiveRadioPage();
 		Assert.assertTrue("Live radio page should not have logo", !isVisible(Page.iheartradio_logo_full));

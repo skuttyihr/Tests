@@ -63,14 +63,14 @@ public class OnboardingPage extends Page {
 		int i = 0;
 		int failCounter = 0;
 		Set<String> returnSet = new HashSet<String>(3);
-		while(i <= 3 && failCounter < 10){
+		while(i <= 3 && failCounter < 15){
 			String entry = getTitleLabelText();
 			if(!returnSet.contains(entry)){
 				returnSet.add(entry);
 				i++;
 			}
 			failCounter++;
-			TestRoot.sleep(500);
+			TestRoot.sleep(2000);
 		}
 		return returnSet;
 	}
@@ -198,8 +198,11 @@ public class OnboardingPage extends Page {
 		}else if(isOnboardingLandscapeImagePresent()){
 			System.out.println("Landscape Image isDisplayed()");
 		}
-		System.out.println("Trying to get all 3 unique PageControlIndicators and their text....Cycling 5 times");
-		for(int i = 0; i < 5 ; i++){
+		System.out.println("Trying to get all 3 unique PageControlIndicators and their text....Cycling 10 times");
+		//music to your ears thousands of live radio
+		//radio and unlimited - unlimited skips. 
+		//join the party - 
+		for(int i = 0; i < 10 ; i++){
 			System.out.println("PageControl: " + getPageControlIndicator() + " Text:"+ getTitleAndDescriptionLabelText());
 		}
 		//Check that all elements are displayed

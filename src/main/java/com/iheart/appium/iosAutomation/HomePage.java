@@ -3,7 +3,9 @@ import org.openqa.selenium.By;
 
 
 import io.appium.java_client.MobileBy;
+import io.appium.java_client.MultiTouchAction;
 import io.appium.java_client.SwipeElementDirection;
+import io.appium.java_client.TouchAction;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
 import io.appium.java_client.pagefactory.iOSFindBy;
@@ -23,7 +25,7 @@ public class HomePage extends Page {
 	@iOSFindBy(accessibility = "NavBar-SearchBarButton-UIButton") private IOSElement NavBarSearchBarButtonUIButton;
 	@iOSFindBy(accessibility="HomeSegmentedControl-TitleLabel-UIButton-For You") private IOSElement HomeSegmentedControlTitleLabelUIButtonForYou;
 	@iOSFindBy(accessibility="HomeSegmentedControl-TitleLabel-UIButton-My Stations") private IOSElement HomeSegmentedControlTitleLabelUIButtonMyStations;
-	@iOSFindBy(accessibility="HomeSegmentedControl-TitleLabel-UIButton-Local Radio") private IOSElement HomeSegmentedControlTitleLabelUIButtonLocalRadio;
+	//@iOSFindBy(accessibility="HomeSegmentedControl-TitleLabel-UIButton-Local Radio") private IOSElement HomeSegmentedControlTitleLabelUIButtonLocalRadio;
 	@iOSFindBy(accessibility="HomeSegmentedControl-TitleLabel-UIButton-My Music") private IOSElement HomeSegmentedControlTitleLabelUIButtonMyMusic;
 	//FOR YOU Cells
 	@iOSFindBy(accessibility="ForYouTab-CollectionView") private IOSElement ForYouTabCollectionView;
@@ -43,7 +45,7 @@ public class HomePage extends Page {
 	@iOSFindBy(accessibility="ForYouTC-RecommendationButton-UIButton") private IOSElement ForYouTCRecommendationButtonUIButton;
 	//My Stations - Favorite Stations
 	@iOSFindBy(accessibility="MyStationsTab-CollectionView") private IOSElement MyStationsTabCollectionView; //Collection is the same AID as For You. 
-	@iOSFindBy(accessibility="Saved Stations") private IOSElement SavedStations; //Header at the top
+	@iOSFindBy(accessibility="SAVED STATIONS") private IOSElement SavedStations; //Header at the top
 	@iOSFindBy(accessibility="Favorites-CellNumber-0") private IOSElement FavoritesCellNumber0;
 	@iOSFindBy(accessibility="Favorites-CellNumber-1") private IOSElement FavoritesCellNumber1;
 	@iOSFindBy(accessibility="Favorites-CellNumber-2") private IOSElement FavoritesCellNumber2;
@@ -53,7 +55,7 @@ public class HomePage extends Page {
 	@iOSFindBy(accessibility="Favorites-CellNumber-6") private IOSElement FavoritesCellNumber6;
 	@iOSFindBy(accessibility="Favorites-CellNumber-7") private IOSElement FavoritesCellNumber7;
 	//My Stations - Recent Stations
-	@iOSFindBy(accessibility="Recently Played") private IOSElement RecentlyPlayed; //Header at the top
+	@iOSFindBy(accessibility="RECENTLY PLAYED") private IOSElement RecentlyPlayed; //Header at the top
 	@iOSFindBy(accessibility="Recents-CellNumber-0") private IOSElement RecentsCellNumber0;
 	@iOSFindBy(accessibility="Recents-CellNumber-1") private IOSElement RecentsCellNumber1;
 	@iOSFindBy(accessibility="Recents-CellNumber-2") private IOSElement RecentsCellNumber2;
@@ -117,21 +119,41 @@ public class HomePage extends Page {
 	//private final String listItemXpath = "//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell[XXXXX]";
 	
 	/**
-	 * This method has been specifically designed to go through all elements on the HomePage. 
-	 * Currently works with test66@test.com/test
+	 * Title: Take Control of the Radio, 'X' button, 
+	 * 'Free Trial' Button, 
+	 * 
 	 */
-	public void showAllElements(){ 
-		System.out.println("::::showAllElements() on HomePage -> NavBar");
+	@iOSFindBy(accessibility="Take Control of the Radio") private IOSElement takeControlOfTheRadioTitle;
+	@iOSFindBy(accessibility="X") private IOSElement forYouUpsellCloseX;
+	@iOSFindBy(accessibility="Free Trial") private IOSElement freeTrialUpsellButton;
+	@iOSFindBy(accessibility="Play any song, unlimited skips, replay and save songs directly from the radio") private IOSElement upsellMessage;
+	
+	public void clickFreeTrialUpsellButton(){
+		System.out.println("clickFreeTrialUpsellButton().");
+		freeTrialUpsellButton.click();
+	}
+	
+	
+	/**
+	 * 
+	 */
+	public void printForYouElements(){ 
+		System.out.println("::::printForYouElements() on HomePage -> NavBar");
 		printElementInformation(IHRiPhoneHomePageView);
 		printElementInformation(NavBarSideMenuButtonUIButton);
-		printElementInformation(iheartradio_logo_full);
+		//printElementInformation(iheartradio_logo_full);
 		//printElementInformation(IHRCastingBarButtonItemUIButton);
 		printElementInformation(NavBarSearchBarButtonUIButton);
 		printElementInformation(HomeSegmentedControlTitleLabelUIButtonForYou);
 		printElementInformation(HomeSegmentedControlTitleLabelUIButtonMyStations);
-		printElementInformation(HomeSegmentedControlTitleLabelUIButtonLocalRadio);
+		printElementInformation(HomeSegmentedControlTitleLabelUIButtonMyMusic);
 		//FOR YOU Cells
-		System.out.println("::::showAllElements() on HomePage -> For You Cells");
+		System.out.println("::::Free Trial Upsell Message");
+		printElementInformation(takeControlOfTheRadioTitle);
+		//printElementInformation(forYouUpsellCloseX);
+		printElementInformation(freeTrialUpsellButton);
+		printElementInformation(upsellMessage);
+		System.out.println("::::printForYouElements() on HomePage -> For You Cells");
 		printElementInformation(ForYouTabCollectionView);
 		printElementInformation(ForYouCellNumber0);
 		printElementInformation(ForYouCellNumber1);
@@ -145,15 +167,19 @@ public class HomePage extends Page {
 		printElementInformation(ForYouCellNumber7);
 		printElementInformation(ForYouCellNumber8);
 		printElementInformation(ForYouCellNumber9);
+		scrollDown();
+		scrollDown();
 		printElementInformation(ForYouCellNumber10);
 		printElementInformation(ForYouCellNumber11);
-		scrollDown();
 		printElementInformation(ForYouTCShowMoreButtonUIButton);
 		//Clicking Show More opens 12 more cells. 
 		printElementInformation(ForYouTCRecommendationButtonUIButton);
-		//My Stations - Saved Stations
-		scrollToTop();
-		homePage.clickMyStationsTab();
+	}
+	/**
+	 * Prints out the elements on the My Stations Tab. 
+	 * Currently works with test66@test.com/test
+	 */
+	public void printMyStationsElements(){ 
 		System.out.println("::::showAllElements() on HomePage -> My Stations -> Favorites");// Should be 4 artist radios, one Favorites Radio, and 2 Radio Stations (based on what I favorited).
 		printElementInformation(MyStationsTabCollectionView); //Collection is the same AID as For You. 
 		printElementInformation(SavedStations); //Header at the top - Now says Saved Stations instead of Favorite Stations
@@ -176,26 +202,13 @@ public class HomePage extends Page {
 		printElementInformation(RecentsCellNumber4);
 		printElementInformation(RecentsCellNumber5);
 		printElementInformation(RecentsCellNumber6);
-		printElementInformation(RecentsCellNumber7);
 		scrollDown();
+		printElementInformation(RecentsCellNumber7);
 		printElementInformation(RecentsCellNumber8);
+		scrollDown();
+		scrollDown();
 		printElementInformation(FavoritesShowMoreButtonUIButton);
-		//scrollToTop();
-		//homePage.clickLocalRadioTab();
-		//System.out.println("::::showAllElements() on HomePage -> Local Radio -> Radio Station Cells");
-		//Local Radio
-		//printElementInformation(LocalRadioTabCollectionView);
-		//printElementInformation(LocalRadioCellNumber0);
-		//printElementInformation(LocalRadioCellNumber1);
-		//printElementInformation(LocalRadioCellNumber2);
-		//printElementInformation(LocalRadioCellNumber3);
-		//printElementInformation(LocalRadioCellNumber4);
-		//printElementInformation(LocalRadioCellNumber5);
-		//scrollDown();
-		//scrollDown();
-		//scrollDown();
-		//scrollDown();
-		//printElementInformation(LocalRadioCellNumber17);
+
 	}
 	private enum CellStrings {
 		LOCALRADIO("LocalRadio"), RECENTS("Recents"), FAVORITES("Favorites"), FORYOU("ForYou");
@@ -237,12 +250,12 @@ public class HomePage extends Page {
 		HomeSegmentedControlTitleLabelUIButtonMyStations.click();
 	}
 	/**
-	 * Clicks on Local Radio Tab
+	 * Clicks on My Music Tab
 	 * Also enters Zip for local radio. 
 	 */
-	public void clickLocalRadioTab(){
+	public void clickMyMusicTab(){
 		System.out.println("clickLocalRadioTab(). Then Entering Zip.");
-		HomeSegmentedControlTitleLabelUIButtonLocalRadio.click();
+		HomeSegmentedControlTitleLabelUIButtonMyMusic.click();
 		Page.enterZip();
 	}
 	
@@ -320,7 +333,21 @@ public class HomePage extends Page {
 	 */
 	public static void scrollDown(){
 		System.out.println("scrollDown() : Swiping Up Once.");
-		swipeUp();
+		TouchAction ta1 = new TouchAction(driver);
+		MultiTouchAction ma = new MultiTouchAction(driver);
+		ta1.press(100, 250).waitAction(1000).moveTo(0, -200).release();
+		ma.add(ta1).perform();
+	}
+	
+	/**
+	 * scrollUp really just Swipes up. A swipe up covers about 3.5 cells on the iPhone. So two of these scrollDown calls will swipe up 7 cells. Test it thoroughly.
+	 */
+	public static void scrollUp(){
+		System.out.println("scrollDown() : Swiping Up Once.");
+		TouchAction ta1 = new TouchAction(driver);
+		MultiTouchAction ma = new MultiTouchAction(driver);
+		ta1.press(100, 550).waitAction(1000).moveTo(0, 200).release();
+		ma.add(ta1).perform();
 	}
 	
 	/**
@@ -459,11 +486,8 @@ public class HomePage extends Page {
 			//IOSElement Unfavorite = waitForVisible(driver, By.name("Unfavorite"), 5);
 		}
 	}
-	public void gotoMyStations() {
-		// TODO Auto-generated method stub
-		
-	}
-	public void gotoLocalRadio() {
+
+	public void printMyMusicElements() {
 		// TODO Auto-generated method stub
 		
 	}
