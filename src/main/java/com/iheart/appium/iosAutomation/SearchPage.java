@@ -595,7 +595,9 @@ public class SearchPage extends Page {
 		printElementInformation(GlobalSearchDataSourceShowAllLiveStationsDisclosureCell);
 		searchPage.clickShowAllLiveStations();
 		searchPage.showSomeElementsOnLiveStationsList();
-		searchPage.scrollSearchResultsCollectionView(SwipeElementDirection.UP, 500, 100, 1000); // keyboard
+		searchPage.rootScrollDown();
+		searchPage.rootScrollDown();
+		//searchPage.scrollSearchResultsCollectionView(SwipeElementDirection.UP, 500, 100, 1000); // keyboard
 																								// is
 																								// still
 																								// visible
