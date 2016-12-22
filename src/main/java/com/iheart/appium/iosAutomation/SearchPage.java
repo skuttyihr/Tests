@@ -564,27 +564,20 @@ public class SearchPage extends Page {
 	 */
 	public void showAllElements() {
 		System.out.println("::::Printing out SEARCH Elements.::::");
-
 		printElementInformation(IHRGlobalSearchBarCancelButtonUIButton);
 		printElementInformation(IHRGlobalSearchBarSearchBarUISearchBar);
 		printElementInformation(IHRGlobalSearchBarSearchBarTextFieldUITextField);
 		printElementInformation(IHRGlobalSearchInstructionsViewIconViewUIImageView);
 		printElementInformation(IHRGlobalSearchInstructionsViewSpacer1UIView);
-		printElementInformation(IHRGlobalSearchInstructionsViewSpacer2UIView);// this
-																				// isn't
-																				// working
-		printElementInformation(IHRGlobalSearchInstructionsViewInstructionsLabelUILabel); // this
-																							// isn't
-																							// visible.
+		printElementInformation(IHRGlobalSearchInstructionsViewSpacer2UIView);
+		printElementInformation(IHRGlobalSearchInstructionsViewInstructionsLabelUILabel);
 	}
 
 	public void showAllElementsVoid() {
 		// Search Results
-
 		System.out.println("::::Printing out element information for 'rap' search Results.::::");
 		printElementInformation(GlobalSearchViewFadingViewUIView);
 		printElementInformation(GlobalSearchViewCollectionViewUICollectionView);
-
 		System.out.println("::::Printing out TOP RESULT.::::");
 		printElementInformation(GlobalSearchDataSourceTOPRESULTHeaderViewUIView);
 		printElementInformation(GlobalSearchDataSourceSearchResultCellTopResultRow0);
@@ -597,11 +590,6 @@ public class SearchPage extends Page {
 		searchPage.showSomeElementsOnLiveStationsList();
 		searchPage.rootScrollDown();
 		searchPage.rootScrollDown();
-		//searchPage.scrollSearchResultsCollectionView(SwipeElementDirection.UP, 500, 100, 1000); // keyboard
-																								// is
-																								// still
-																								// visible
-		// clickNavBarBackButton();
 		System.out.println("::::Printing out ARTISTS.::::");
 		printElementInformation(GlobalSearchDataSourceARTISTSHeaderViewUIView);
 		printElementInformation(GlobalSearchDataSourceSearchResultCellArtistsRow0);
@@ -609,31 +597,14 @@ public class SearchPage extends Page {
 		printElementInformation(GlobalSearchDataSourceShowAllArtistsDisclosureCell);
 		searchPage.clickShowAllArtists(); // move back
 		clickNavBarBackButton();
-		// searchPage.clickNavBarBackButton();
-		// //searchPage.showSomeElementsOnArtistsList(); // This simply doesn't
-		// work reliably enough. Collection view isn't fully populated.
-		// searchPage.scrollSearchResultsCollectionView(SwipeElementDirection.UP,
-		// 500, 50, 2000); //Move the page down some more to see Songs.
 		System.out.println("::::Printing out SONGS.::::");
 		printElementInformation(GlobalSearchDataSourceSONGSHeaderViewUIView);
 		printElementInformation(GlobalSearchDataSourceSearchResultCellSongsRow0);
 		printElementInformation(GlobalSearchDataSourceSearchResultCellSongsRow1);
 		printElementInformation(GlobalSearchDataSourceShowAllSongsDisclosureCell);
 		searchPage.clickShowAllSongs();
-		clickNavBarBackButton(); // searchPage.showSomeElementsOnSongsList();//
-									// This simply doesn't work reliably enough.
-									// Collection view isn't fully populated.
-		// sk - 11/5 - the old swipe is swiping from left to right with appium
-		// 1.6.0 to reveal the side nav bar so updating to new swipe
-		// searchPage.scrollSearchResultsCollectionView(SwipeElementDirection.UP,
-		// 500, 50, 2000);
+		clickNavBarBackButton();
 		swipeUp();
-		/*
-		 * System.out.println("::::Printing out PLAYLISTS.::::");
-		 * ADD PLAYLISTS TO SEARCH RESULTS
-		 * searchPage.scrollSearchResultsCollectionView(SwipeElementDirection.
-		 * UP, 500, 50, 2000);
-		 */
 		System.out.println("::::Printing out PODCASTS.::::");
 		printElementInformation(GlobalSearchDataSourcePODCASTSHeaderViewUIView);
 		printElementInformation(GlobalSearchDataSourceSearchResultCellPodcastsRow0);
@@ -645,9 +616,7 @@ public class SearchPage extends Page {
 		if (searchPage.isCurrentlyOnLiveStationsList()) {
 			System.out.println(":::: Printing out Live Radio Cells ::::");
 			printElementInformation(NavBarBackButtonUIButton);
-			printElementInformation(GlobalSearchCategorySearchTermCellLabelUILabel); // Results
-																						// for
-																						// ""
+			printElementInformation(GlobalSearchCategorySearchTermCellLabelUILabel); 
 			printElementInformation(GlobalSearchCategoryDataSourceCollectionViewUICollectionView);
 			printElementInformation(GlobalSearchCategoryDataSourceLiveRadioSearchResultCellRow0);
 			printElementInformation(GlobalSearchCategoryDataSourceLiveRadioSearchResultCellRow1);
@@ -660,7 +629,7 @@ public class SearchPage extends Page {
 			printElementInformation(GlobalSearchCategoryDataSourceLiveRadioSearchResultCellRow7);
 			printElementInformation(GlobalSearchCategoryDataSourceLiveRadioSearchResultCellRow8);
 			printElementInformation(GlobalSearchCategoryDataSourceLiveRadioSearchResultCellRow9);
-			searchPage.clickNavBarBackButton(); // Always shown at top.
+			searchPage.clickNavBarBackButton(); 
 		}
 	}
 
@@ -669,9 +638,7 @@ public class SearchPage extends Page {
 		searchPage.scrollCategoryCollectionView(SwipeElementDirection.UP, 50, 50, 10);
 		System.out.println(":::: Printing out Artist Cells ::::");
 		printElementInformation(NavBarBackButtonUIButton);
-		printElementInformation(GlobalSearchCategorySearchTermCellLabelUILabel); // Results
-																					// for
-																					// ""
+		printElementInformation(GlobalSearchCategorySearchTermCellLabelUILabel); 
 		printElementInformation(GlobalSearchCategoryDataSourceCollectionViewUICollectionView);
 		printElementInformation(GlobalSearchCategoryDataSourceArtistSearchResultCellRow0);
 		printElementInformation(GlobalSearchCategoryDataSourceArtistSearchResultCellRow1);
@@ -680,11 +647,7 @@ public class SearchPage extends Page {
 		printElementInformation(GlobalSearchCategoryDataSourceArtistSearchResultCellRow4);
 		printElementInformation(GlobalSearchCategoryDataSourceArtistSearchResultCellRow5);
 		printElementInformation(GlobalSearchCategoryDataSourceArtistSearchResultCellRow6);
-		searchPage.scrollCategoryCollectionView(SwipeElementDirection.UP, 50, 50, 1000); // No
-																							// keyboard
-																							// on
-																							// this
-																							// page
+		searchPage.scrollCategoryCollectionView(SwipeElementDirection.UP, 50, 50, 1000); 
 		printElementInformation(GlobalSearchCategoryDataSourceArtistSearchResultCellRow7);
 		searchPage.clickNavBarBackButton();
 	}
@@ -693,9 +656,7 @@ public class SearchPage extends Page {
 		if (searchPage.isCurrentlyOnSongsList()) {
 			System.out.println(":::: Printing out Track Cells ::::");
 			printElementInformation(NavBarBackButtonUIButton);
-			printElementInformation(GlobalSearchCategorySearchTermCellLabelUILabel); // Results
-																						// for
-																						// ""
+			printElementInformation(GlobalSearchCategorySearchTermCellLabelUILabel); 
 			printElementInformation(GlobalSearchCategoryDataSourceCollectionViewUICollectionView);
 			printElementInformation(GlobalSearchCategoryDataSourceTrackSearchResultCellRow0);
 			printElementInformation(GlobalSearchCategoryDataSourceTrackSearchResultCellRow1);
@@ -704,11 +665,7 @@ public class SearchPage extends Page {
 			printElementInformation(GlobalSearchCategoryDataSourceTrackSearchResultCellRow4);
 			printElementInformation(GlobalSearchCategoryDataSourceTrackSearchResultCellRow5);
 			printElementInformation(GlobalSearchCategoryDataSourceTrackSearchResultCellRow6);
-			searchPage.scrollCategoryCollectionView(SwipeElementDirection.UP, 50, 50, 1000); // No
-																								// keyboard
-																								// on
-																								// this
-																								// page
+			searchPage.scrollCategoryCollectionView(SwipeElementDirection.UP, 50, 50, 1000); 
 			printElementInformation(GlobalSearchCategoryDataSourceTrackSearchResultCellRow12);
 			searchPage.clickNavBarBackButton();
 		}
