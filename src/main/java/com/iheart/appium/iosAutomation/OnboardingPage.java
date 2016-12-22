@@ -63,7 +63,7 @@ public class OnboardingPage extends Page {
 		int i = 0;
 		int failCounter = 0;
 		Set<String> returnSet = new HashSet<String>(3);
-		while(i <= 3 && failCounter < 15){
+		while(i <= 3 && failCounter < 10){
 			String entry = getTitleLabelText();
 			if(!returnSet.contains(entry)){
 				returnSet.add(entry);
