@@ -29,10 +29,10 @@ public class TestOnboarding extends TestRoot {
 	 */
 	@Test
 	public void testAllElementsOnOnboardingPage_ONB1_FREE(){ 
-		LocalTime before = consoleLogStart("Testing testAllElementsOnOnboardingPage()");
+		LocalTime before = consoleLogStart("Testing testAllElementsOnOnboardingPage_ONB1_FREE()");
 		boolean allElementsDisplayedOnOnboardingPage = onboardingPage.showAllElements();
 		Assert.assertTrue("One of the elements on Onboarding Page is not displayed as expected.",allElementsDisplayedOnOnboardingPage);
-		consoleLogEnd(before, allElementsDisplayedOnOnboardingPage,  "Tested testAllElementsOnOnboardingPage() in TestOnboarding.java");
+		consoleLogEnd(before, allElementsDisplayedOnOnboardingPage,  "Tested testAllElementsOnOnboardingPage_ONB1_FREE() in TestOnboarding.java");
 	}
 	
 	/**
@@ -45,14 +45,14 @@ public class TestOnboarding extends TestRoot {
 	 */
 	@Test
 	public void testUIScrollViewOnOnboardingPage_ONB2_FREE(){
-		LocalTime before = consoleLogStart("Testing testUIScrollViewOnOnboardingPage()");
+		LocalTime before = consoleLogStart("Testing testUIScrollViewOnOnboardingPage_ONB2_FREE()");
 		//Part One
 		System.out.println("Testing that Titles are as expected.");
 		Set<String> foundWithinApp = onboardingPage.getThreeTextFields();
 		Set<String> shouldBeInApp = new HashSet<String>();
 		shouldBeInApp.add("Join the party.");
 		shouldBeInApp.add("Music to your ears.");
-		shouldBeInApp.add("Don’t miss a beat.");
+		shouldBeInApp.add("Radio and unlimited music.");
 		Assert.assertTrue("Titles on Onboarding Screen have changed.",foundWithinApp.containsAll(shouldBeInApp));
 		//Part Two
 		System.out.println("Testing that Descriptions are as expected.");
@@ -60,11 +60,11 @@ public class TestOnboarding extends TestRoot {
 		Set<String> descriptionsShouldBeInApp = new HashSet<String>();
 		descriptionsShouldBeInApp.add("Thousands of live radio and artist stations. Connect with your favorites. Always free.");
 		descriptionsShouldBeInApp.add("Discover millions of songs and new releases. All your music, wherever you go.");
-		descriptionsShouldBeInApp.add("Running or relaxing. Pre-party or post-breakup. We have a station perfect for you.");
+		descriptionsShouldBeInApp.add("Unlimited skips, listen offline, save and replay songs from the radio.");
 		Assert.assertTrue("Descriptions have changed.",foundDescriptionsWithinApp.containsAll(descriptionsShouldBeInApp));
 		//End
 		boolean result = (foundDescriptionsWithinApp.containsAll(descriptionsShouldBeInApp) && foundWithinApp.containsAll(shouldBeInApp));
-		consoleLogEnd(before, result,  "Tested testUIScrollViewOnOnboardingPage() in TestOnboarding.java");
+		consoleLogEnd(before, result,  "Tested testUIScrollViewOnOnboardingPage_ONB2_FREE() in TestOnboarding.java");
 	}
 
 	/**
@@ -72,11 +72,11 @@ public class TestOnboarding extends TestRoot {
 	 */
 	@Test
 	public void testCreateAccountAndLogInButtons_ONB3_FREE(){
-		LocalTime before = consoleLogStart("Testing testCreateAccountLogInAndMaybeLater().");
+		LocalTime before = consoleLogStart("Testing testCreateAccountAndLogInButtons_ONB3_FREE().");
 		Assert.assertTrue("Could not click 'Log In' Button", onboardingPage.clickOnboardingLoginButton());
 		loginPage.tapBack();
 		Assert.assertTrue("Could not click 'Create Account' Button", onboardingPage.clickOnboardingCreateAccountButton());
-		consoleLogEnd(before, true,  "Tested CreateAccountAndLogInButtons in TestOnboarding.java");
+		consoleLogEnd(before, true,  "Tested testCreateAccountAndLogInButtons_ONB3_FREE");
 	}
 	
 	@Test
@@ -90,7 +90,7 @@ public class TestOnboarding extends TestRoot {
 		System.out.println("Launching app.");
 		driver.launchApp();
 		Assert.assertTrue("Closing app and relaunching app after logging in should save log in information.", homePage.isCurrentlyOnForYouTab());
-		consoleLogEnd(before, true,  "Tested CreateAccountAndLogInButtons in TestOnboarding.java");
+		consoleLogEnd(before, true,  "Tested testOnboardingDisappearal_ONB4_FREE in TestOnboarding.java");
 		driver.closeApp();
 		//Login with email. 
 		//Play live station. 

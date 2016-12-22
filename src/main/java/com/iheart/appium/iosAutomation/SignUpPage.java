@@ -17,7 +17,7 @@ public class SignUpPage extends Page {
 	//NavBar at top of page. 
 	@iOSFindBy(accessibility ="NavBar-BackButton-UIButton") private IOSElement NavBarBackButton;
 	
-	@iOSFindBy(xpath="//UIAApplication[1]/UIAWindow[1]/UIANavigationBar[1]/UIAStaticText[2]") private IOSElement NavBarTitleCreateAccount;
+	//@iOSFindBy(xpath="//UIAApplication[1]/UIAWindow[1]/UIANavigationBar[1]/UIAStaticText[2]") private IOSElement NavBarTitleCreateAccount;
 	//Main Container with Table View and Agreement Container
 	@iOSFindBy(accessibility = "IHRiPhoneSignUpView-mainContainer-UIView") private IOSElement IHRSignUpViewMainContainerUIView;
 		//Table View with Email Address, Password, Zip Code, Birth Year, and Gender buttons. 
@@ -161,7 +161,7 @@ public class SignUpPage extends Page {
 		System.out.println("Checking all elements in SignUpPage to verify they are in iOS app");
 		onboardingPage.clickOnboardingCreateAccountButton();
 		printElementInformation(NavBarBackButton);
-		printElementInformation(NavBarTitleCreateAccount);
+		//printElementInformation(NavBarTitleCreateAccount);
 		//Main Container with Table View and Agreement Container
 		printElementInformation(IHRSignUpViewMainContainerUIView);
 			//Table View with Email Address, Password, Zip Code, Birth Year, and Gender buttons. 

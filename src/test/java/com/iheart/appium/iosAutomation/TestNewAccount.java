@@ -33,31 +33,34 @@ public class TestNewAccount extends TestRoot {
 	@Test
 	public void testCreateNewEmailAccount_SIGN1_FREE() {
 		LocalTime before = consoleLogStart(
-				">>>>>testCreateNewAccountWithDefaultParameters() : Creating a new account with the default parameters. ");
+				">>>>>testCreateNewEmailAccount_SIGN1_FREE() : Creating a new account with the default parameters. ");
 		Assert.assertTrue(signupPage.createNewAccount());
-		consoleLogEnd(before, true, "<<<<<testCreateNewAccountWithDefaultParameters");
+		consoleLogEnd(before, true, "<<<<<testCreateNewEmailAccount_SIGN1_FREE");
 
 	}
 	@Test
 	@Ignore
 	public void testCreateNewGmailAccount_SIGN2_FREE(){
+		
+		System.out.println("testCreateNewGmailAccount_SIGN2_FREE() - Isn't created yet.");
 		//Can't keep using Gmail accounts
 		//Most likely cannot be automated.
 	}
 	@Test
 	@Ignore
 	public void testCreateNewFacebookAccount_SIGN3_FREE(){
+		System.out.println("testCreateNewFacebookAccount_SIGN3_FREE() - Isn't created yet.");
 		//Can't keep using Facebook accounts
 		//Most likely cannot be automated.
 	}
 	@Test
 	public void testAllElements_SIGN4_FREE() {
 		LocalTime before = consoleLogStart(
-				">>>>>testAllElementsOnSignUpPage() : Checking all the iOS Elements on the Onboarding / Sign Up Page.");
+				">>>>>testAllElements_SIGN4_FREE() : Checking all the iOS Elements on the Onboarding / Sign Up Page.");
 		// We only care about console output here
 		signupPage.checkAllElements();
 		consoleLogEnd(before, true,
-				"<<<<<testAllElementsOnSignUpPage() : Test completed and all elements must be on the Onboarding Screen as expected.");
+				"<<<<<testAllElements_SIGN4_FREE() : Test completed and all elements must be on the Onboarding Screen as expected.");
 	}
 
 	/**
@@ -68,7 +71,7 @@ public class TestNewAccount extends TestRoot {
 	 */
 	@Test
 	public void testGenreGameForNewAccount_GEN1_FREE() {
-		LocalTime before = consoleLogStart(">>>>>testGenreGameForNewAccount(): Testing Genre Game for New Account.");
+		LocalTime before = consoleLogStart(">>>>>testGenreGameForNewAccount_GEN1_FREE(): Testing Genre Game for New Account.");
 		Assert.assertTrue("Could not create a new account and get the genre picker", signupPage.createNewAccount());
 		Assert.assertFalse("Done Button shouldn't be enabled for a new account.", genrePage.isDoneEnabled());
 		// Assert all genres are present
@@ -99,6 +102,6 @@ public class TestNewAccount extends TestRoot {
 		Assert.assertTrue("Could not verify genre after deselecting and selecting again!",
 				genrePage.isGenreSelected("Top 40 & Pop"));
 
-		consoleLogEnd(before, true, "<<<<<testGenreGameForNewAccount() : Tested Genre Game for New Account");
+		consoleLogEnd(before, true, "<<<<<testGenreGameForNewAccount_GEN1_FREE() : Tested Genre Game for New Account");
 	}
 }

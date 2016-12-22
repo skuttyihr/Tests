@@ -35,7 +35,7 @@ public class GenrePage extends Page {
 	}
 	
 	public void clickDone(){
-		System.out.println("generPage.clickDone()");
+		System.out.println("genrePage.clickDone()");
 		genreDone.click();
 	}
 	

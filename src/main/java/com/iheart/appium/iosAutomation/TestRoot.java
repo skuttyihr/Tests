@@ -34,6 +34,7 @@ import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.appium.java_client.MobileBy;
+import io.appium.java_client.MultiTouchAction;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
@@ -638,7 +639,27 @@ public class TestRoot {
 		} catch (Exception e) {
 		}
 	}
-
+	
+	/**
+	 * scrollUp really just Swipes up. A swipe up covers about 3.5 cells on the iPhone. So two of these scrollDown calls will swipe up 7 cells. Test it thoroughly.
+	 */
+	public static void rootScrollUp(){
+		System.out.println("rootScrollUp() : Swiping Up Once.");
+		TouchAction ta1 = new TouchAction(driver);
+		MultiTouchAction ma = new MultiTouchAction(driver);
+		ta1.press(100, 550).waitAction(1000).moveTo(0, 200).release();
+		ma.add(ta1).perform();
+	}
+	/**
+	 * scrollDown really just Swipes up. A swipe up covers about 3.5 cells on the iPhone. So two of these scrollDown calls will swipe up 7 cells. Test it thoroughly.
+	 */
+	public static void rootScrollDown(){
+		System.out.println("rootScrollDown() : Swiping Up Once.");
+		TouchAction ta1 = new TouchAction(driver);
+		MultiTouchAction ma = new MultiTouchAction(driver);
+		ta1.press(100, 250).waitAction(1000).moveTo(0, -200).release();
+		ma.add(ta1).perform();
+	}
 	/**
 	 * Swipes on an element, keeping within the bounds of the element, if
 	 * possible Will try to swipe to/from 10%-90% of the element +/- 4/5 from

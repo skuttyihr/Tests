@@ -3,6 +3,7 @@ package com.iheart.appium.iosAutomation;
 import java.time.LocalTime;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
@@ -30,22 +31,22 @@ public class TestLogin extends TestRoot {
 	 * LOG-1 - Login with Free Account
 	 */
 	@Test
-	public void testLoginViaEmail() {
+	public void testLoginViaEmail_LOG1_FREE() {
 		LocalTime before = consoleLogStart("Testing login via Email." + name.getMethodName());
 		boolean testResult = loginPage.login();
 		Assert.assertTrue("Could not log in with email and password : ((LOG-1))", testResult);
-		consoleLogEnd(before, testResult, "Tested Log In via Email. ((LOG-1))");
+		consoleLogEnd(before, testResult, "Tested testLoginViaEmail_LOG1_FREE ((LOG-1))");
 	}
 	/**
 	 * LOG-2    Login via Facebook Account
-	 * Fails on Entering Password
+	 * 
 	 */
 	@Test(timeout = 200000)
-	public void testLoginViaFacebook() {
-		LocalTime before = consoleLogStart("Testing login via Facebook.");
+	public void testLoginViaFacebook_LOG2_FREE() {
+		LocalTime before = consoleLogStart("Testing testLoginViaFacebook_LOG2_FREE");
 		boolean testResult = loginPage.loginViaFacebook();
 		Assert.assertTrue("Could not log in via Facebook : ((LOG-2))", testResult);
-		consoleLogEnd(before, testResult, "Tested login via Facebook. ((LOG-2))");
+		consoleLogEnd(before, testResult, "Tested testLoginViaFacebook_LOG2_FREE ((LOG-2))");
 	}
 	/**
 	 * LOG-3    Login via Google Account
@@ -60,11 +61,11 @@ public class TestLogin extends TestRoot {
 	 * // sk 11/5 - Got Google Login to work
 	 */
 	@Test
-	public void testLoginViaGoogle() {
-		LocalTime before = consoleLogStart("Testing Login with Google+");
+	public void testLoginViaGoogle_LOG3_FREE() {
+		LocalTime before = consoleLogStart("Testing Login with Google+ testLoginViaGoogle_LOG3_FREE");
 		boolean testResult = loginPage.loginViaGoogle();
 		Assert.assertTrue("Could not log in via Google+ : ((LOG-3))", testResult);
-		consoleLogEnd(before, testResult, "Tested Google Login. ((LOG-3))");
+		consoleLogEnd(before, testResult, "Tested testLoginViaGoogle_LOG3_FREE. ((LOG-3))");
 
 	}
 	/**
@@ -72,8 +73,8 @@ public class TestLogin extends TestRoot {
 	 * Does not actually reset password for a good account.
 	 */
 	@Test
-	public void testResetPasswordPage() {
-		LocalTime before = consoleLogStart("Testing IOSElements on resetPasswordPage : " + name.getMethodName() );
+	public void testResetPasswordPage_LOG4_FREE() {
+		LocalTime before = consoleLogStart("Testing testResetPasswordPage_LOG4_FREE : " + name.getMethodName() );
 		onboardingPage.clickOnboardingLoginButton();
 		loginPage.clickForgotYourPasswordButton();
 		Assert.assertTrue("Clicking 'Forgot your Password' didn't bring app to Reset Password Page",
@@ -88,11 +89,24 @@ public class TestLogin extends TestRoot {
 		Assert.assertTrue("Not currently on loginPage, check for ResetPassword issues. ((LOG-4))", onLoginPage);
 		consoleLogEnd(before, onLoginPage, "Tested IOSElements on resetPasswordPage. ((LOG-4))");
 	}
+	
+	@Test
+	@Ignore
+	public void testResetPasswordRealAccount_LOG5_FREE() {
+		//This may be impossible to adequately test through automation.
+	}
+	
+	@Test
+	@Ignore
+	public void testEmailMismatch_LOG6_FREE() {
+		//This may be impossible to adequately test through automation.
+	}
+	
 	/**
 	 * LOG-7    Free Account
 	 */
 	@Test
-	public void testLoginViaEmail_FREEACCOUNT(){
+	public void testLoginViaEmail_LOG7_FREE(){
 		LocalTime before = consoleLogStart("Testing login via Email with a FREE Account : " + name.getMethodName());
 		loginPage.loginWithoutVerifying("trav@free.com", "travfree");
 		boolean testResult = homePage.isCurrentlyOnForYouTab();
@@ -103,7 +117,7 @@ public class TestLogin extends TestRoot {
 	 * LOG-8    Plus Account
 	 */
 	@Test
-	public void testLoginViaEmail_PLUSACCOUNT(){
+	public void testLoginViaEmail_LOG8_PLUS(){
 		LocalTime before = consoleLogStart("Testing login via Email with a PLUS Account : " + name.getMethodName());
 		loginPage.loginWithoutVerifying("trav@plus.com", "travplus");
 		boolean testResult = homePage.isCurrentlyOnForYouTab();
@@ -114,7 +128,7 @@ public class TestLogin extends TestRoot {
 	 * LOG-9  All Access Account
 	 */
 	@Test
-	public void testLoginViaEmail_ALLACCESSACCOUNT(){
+	public void testLoginViaEmail_LOG9_ALLACCESS(){
 		LocalTime before = consoleLogStart("Testing login via Email with a ALL Account : " + name.getMethodName());
 		loginPage.loginWithoutVerifying("trav@all.com", "travall");
 		boolean testResult = homePage.isCurrentlyOnForYouTab();
@@ -126,7 +140,7 @@ public class TestLogin extends TestRoot {
 	 * LOG-10
 	 */
 	@Test
-	public void testIOSElementsOnPage() {
+	public void testIOSElementsOnPage_LOG10_FREE() {
 		LocalTime before = consoleLogStart("Testing IOSElements on Log In Page : " + name.getMethodName());
 		loginPage.checkValuesOfElements();
 		consoleLogEnd(before, true, "Tested IOSElements. ((LOG-10))");

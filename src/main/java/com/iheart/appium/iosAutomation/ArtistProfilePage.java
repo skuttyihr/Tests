@@ -139,23 +139,26 @@ public class ArtistProfilePage extends Page{
 		@iOSFindBy(accessibility="AlbumProfileViewController-TrackCell-UICollectionViewCell-3") private IOSElement AlbumProfileViewControllerTrackCellUICollectionViewCell3;
 		@iOSFindBy(accessibility="AlbumProfileViewController-TrackCell-UICollectionViewCell-4") private IOSElement AlbumProfileViewControllerTrackCellUICollectionViewCell4;
 
-	public void showAllElements(){
-		//Print out elements on the first page - Header, Latest Release, 5 Top Songs
+	public void printArtistHero(){
 		System.out.println("::::Printing elements for Artist Profile Header ::::");
 		printElementInformation(ArtistProfileBioHeaderViewShadowViewUIView); //visible -  false, enabled = true
 		printElementInformation(ArtistProfileBioHeaderViewBackgroundImageViewUIImageView);  //visible -  false, enabled = true
 		printElementInformation(ArtistProfileBioHeaderViewArtistImageViewUIImage);   //visible -  false, enabled = true
-		printElementInformation(ArtistProfileBioHeaderTitleViewTitleLabelUILabel); //visible -  true, enabled = true
-		//printElementInformation(ArtistProfileBioHeaderTitleViewBioButtonUIButton); //visible -  true, enabled = false
-		printElementInformation(ArtistProfileBioHeaderViewPlayButtonUIButton);    //enabled: true  visible: true  (when viewing an artist profile you're not currently playing)
+		printElementInformation(ArtistProfileBioHeaderTitleViewTitleLabelUILabel); //visible -  true, enabled = true	
+		printElementInformation(ArtistProfileBioHeaderViewPlayButtonUIButton);
+	}
+	public void printArtistBioElements(){
 		System.out.println("::::Printing elements for Artist Profile - Artist Bio ::::");
 		artistProfilePage.clickBioButtonToOpenArtistBio();
 		artistProfilePage.printArtistBioInformation();
-		//Latest Release Header and Album TitleLabel and SubtitleLabel
+	}
+	public void printLatestRelease(){
 		System.out.println("::::Printing elements for Artist Profile - Latest Release ::::");
 		printElementInformation(ArtistProfileSectionLatestReleaseAlbumCellLatestRelease);
 		printElementInformation(ArtistProfileAlbumCellTitleViewTitleLabelUILabelLatestRelease); //The Fall of Hearts (album)
 		printElementInformation(ArtistProfileAlbumCellTitleViewSubtitleLabelUILabelLatestRelease); //May 2016 • 12 songs (release, number of songs)
+	}
+	public void printTopSongs(){
 		//Top Songs Limit of 5 Top Songs - Cell(0-4), IndexLabel(number 1-5), and Song TitleLabel
 		System.out.println("::::Printing elements for Artist Profile - Top Songs  ::::");
 		printElementInformation(ArtistProfileSectionTopSongsTopSongsCell0);
@@ -173,9 +176,8 @@ public class ArtistProfilePage extends Page{
 		printElementInformation(ArtistProfileSectionTopSongsTopSongsCell4);
 		printElementInformation(ArtistProfileTrackCellIndexLabelUILabel4);
 		//printElementInformation(ArtistProfileTrackCellTitleLabelUILabel4);
-        //two scrolls
-		artistProfilePage.scrollArtistProfilePageDown();
-		artistProfilePage.scrollArtistProfilePageDown();
+	}
+	public void printAlbums(){
 		System.out.println("::::Printing elements for Artist Profile - Three Albums ::::");
 		//Should be 3 albums and then Show All Albums button collection cell. 
 		printElementInformation(ArtistProfileSectionAlbumsAlbumCell0);
@@ -188,7 +190,8 @@ public class ArtistProfilePage extends Page{
 		printElementInformation(ArtistProfileAlbumCellTitleViewTitleLabelUILabel2);
 		printElementInformation(ArtistProfileAlbumCellTitleViewSubtitleLabelUILabel2);
 		printElementInformation(ArtistProfileSectionAllAlbumsShowAllAlbumsUICollectionViewCell);
-		artistProfilePage.scrollArtistProfilePageDown();
+	}
+	public void printRelatedArtists(){
 		//RELATED ARTISTS =  GRID OF ARTISTS
 		System.out.println("::::Printing elements for Artist Profile - Grid of 4 Related Artists ::::");
 		//CELL 0 (Top Left)
@@ -203,9 +206,8 @@ public class ArtistProfilePage extends Page{
 		//CELL 3 (Bottom Right)
 		printElementInformation(ArtistProfileSectionRelatedArtistsArtistCell3);
 		printElementInformation(ArtistProfileArtistCellTitleLabelUILabel3);
-		//Scroll Down to show the up to 3 Live Radio Cells (We know there are 3 associated with Red Hot Chili Peppers)
-		artistProfilePage.scrollArtistProfilePageDown();
-		artistProfilePage.scrollArtistProfilePageDown(); //Popular On Cell 3 is hidden by MiniPlayer - Cannot be found unless FullPlayer is opened and then minimized again. 
+	}
+	public void printPopularOn(){
 		//POPULAR ON
 		System.out.println("::::Printing elements for Artist Profile - Popular On - 3 Live Radio Cells ::::");
 		//Radio Station 0
@@ -220,9 +222,22 @@ public class ArtistProfilePage extends Page{
 		printElementInformation(ArtistProfileSectionPopularOnLiveRadioCell2);
 		printElementInformation(ArtistProfileLiveRadioCellTitleViewTitleLabelUIView2);
 		printElementInformation(ArtistProfileLiveRadioCellTitleViewSubtitleLabelUILabel2);
+	}
+	public void printAllAlbums(){
+	
+
+        //two scrolls
+		
+		
+		
+
+		//Scroll Down to show the up to 3 Live Radio Cells (We know there are 3 associated with Red Hot Chili Peppers)
+		artistProfilePage.scrollArtistProfilePageDown();
+		artistProfilePage.scrollArtistProfilePageDown(); //Popular On Cell 3 is hidden by MiniPlayer - Cannot be found unless FullPlayer is opened and then minimized again. 
+		
 		System.out.println("::::Printing elements for Artist Profile - All Albums ::::");
 		artistProfilePage.scrollArtistProfilePageUp();
-		artistProfilePage.clickShowAllAlbumsCellButton();
+		
 		artistProfilePage.printAllAlbumsInformation();
 		artistProfilePage.clickNavBarBackButton();
 	}
@@ -230,7 +245,6 @@ public class ArtistProfilePage extends Page{
 	 * Prints all albums list information. Assumes that clickShowALlAlbumsCellButton() was clicked first. 
 	 */
 	public void printAllAlbumsInformation(){
-		//printElementInformation(AlbumsNavBarHeader);	
 		printElementInformation(ArtistProfileAlbumsViewControllerCollectionViewUIView);
 		printElementInformation(ArtistProfileAlbumsViewAlbumCell0); //Britney has 42 of these in the collectionView. 
 		printElementInformation(ArtistProfileAlbumCellTitleViewTitleLabelUILabel0);
@@ -253,10 +267,8 @@ public class ArtistProfilePage extends Page{
 		printElementInformation(ArtistProfileAlbumsViewAlbumCell6); 
 		printElementInformation(ArtistProfileAlbumCellTitleViewTitleLabelUILabel6);
 		printElementInformation(ArtistProfileAlbumCellTitleViewSubtitleLabelUILabel6);
-		System.out.println(":::: Printing Element Information for Album Profile::::");
-		artistProfilePage.clickFirstAlbumCell();
-		artistProfilePage.printAlbumProfileInformation();
-		artistProfilePage.clickNavBarBackButton();
+		
+
 	}
 	/**
 	 * Artist Bio Information - Artist, Horizontal Sliding Images view, and ScrollView with BioLabel text. 
@@ -299,6 +311,7 @@ public class ArtistProfilePage extends Page{
 	 */
 	public void printAlbumProfileInformation(){
 		if(isCurrentlyOnAlbumProfile()){
+			System.out.println(":::: Printing Element Information for Album Profile::::");
 			printElementInformation(AlbumProfileHeaderTitleViewTitleLabelUILabel);
 			printElementInformation(AlbumProfileHeaderTitleViewsubtitle1LabelUILabel);
 			printElementInformation(AlbumProfileHeaderTitleViewsubtitle2LabelUILabel);
@@ -327,14 +340,17 @@ public class ArtistProfilePage extends Page{
 	 */
 	public void scrollArtistProfilePageDown(){
 		System.out.println("scrollArtistProfilePageDown() : Swiping Up Once.");
-		ArtistProfilePage.swipeUp();
+		artistProfilePage.rootScrollDown();
 	}
 	/**
 	 * Uses default swipeDown behavior to scroll the Simulator up Once. Usually moves about half the height of the collection cell. 
 	 */
 	public void scrollArtistProfilePageUp(){
 		System.out.println("scrollArtistProfilePageUp() : Swiping Down Once.");
-		ArtistProfilePage.swipeDown();
+		artistProfilePage.rootScrollUp();
+	}
+	public boolean isCurrentlyOnPlayButton(){
+		return (isCurrentlyOn("isCurrentlyOnPlayButton" , ArtistProfileBioHeaderViewPlayButtonUIButton));
 	}
 	/**
 	 * Gets the Bio Header Title View Title Label Label. This will be the Artist name.
@@ -509,11 +525,14 @@ public class ArtistProfilePage extends Page{
 	public boolean clickFirstRelatedArtistCellToOpenTheirArtistRadioClickPlayCheckForNewSong(){
 		//then we can click Play button and start this artist radio. 
 		String currentPlayingArtist = miniPlayer.getArtistName();
+		//String currentPlayingSong = miniPlayer.getSongTitle();
 		ArtistProfileSectionRelatedArtistsArtistCell0.click();
 		artistProfilePage.clickPlayButtonOnArtistProfile();
+		sleep(5000);
 		String newSongPlayingArtist = miniPlayer.getArtistName();
+		//String newPlayingSong = miniPlayer.getArtistName();
 		System.out.println("clickFirstRelatedArtistCellToOpenTheirArtistRadioClickPlayCheckForNewSong(): originalArtist : " + currentPlayingArtist + ". newArtist : " + newSongPlayingArtist);
-		return currentPlayingArtist.equals(newSongPlayingArtist);
+		return !currentPlayingArtist.equals(newSongPlayingArtist);
 	}
 	/**
 	 * This returns true if Clicking on Live Radio Cell Opens a Live Radio Station. It checks that FullPlayer's Station Type is equal to "Live Radio"

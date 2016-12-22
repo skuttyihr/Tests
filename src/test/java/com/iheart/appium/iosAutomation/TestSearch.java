@@ -4,6 +4,8 @@ import java.time.LocalTime;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
+import org.junit.runners.MethodSorters;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
@@ -12,7 +14,7 @@ import org.openqa.selenium.By;
 import io.appium.java_client.SwipeElementDirection;
 import io.appium.java_client.ios.IOSElement;
 
-
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestSearch extends TestRoot {
 
 	@Before
@@ -163,7 +165,31 @@ public class TestSearch extends TestRoot {
 		String actualStationName = fullPlayer.getStationName();
 		Assert.assertEquals("Expected Full Player to be on '"+ expectedRadioType + "' but it's not matching up with actual :" + actualStationType, expectedRadioType, actualStationType);
 		consoleLogEnd(before, true, "<<<<<testSearchLiveRadio() : " + actualStationType +" : "+ actualStationName);
-
+	}
+	/**
+	 * Search result hierarchy displays as such:
+		Top Hit: Just displays one top result, top hit not repeated in other sections
+		Live Stations: Top 2 live stations plus See More option
+		Artists: Top 2 Artists plus See More option
+		Tracks: Top 2 Tracks plus See More option. An overflow menu appears with options to Save to My Music/Add to Playlist
+		Playlists: Now displays list of Top 2 curated playlists plus See More option. An overflow menu appears with options to Save to My Music/Add to Playlist
+		Podcasts: Top 2 Podcasts plus option to see more
+	 */
+	@Test
+	public void testSearchResults_SEA9_PLUS(){
+		
+	}
+	/**
+	 * Search result hierarchy displays as such:
+		Top Hit: Just displays one top result, top hit not repeated in other sections
+		Live Stations: Top 2 live stations plus See More option
+		Artists: Top 2 Artists plus See More option
+		Tracks: Top 2 Tracks plus See More option. An overflow menu appears with options to Save to My Music/Add to Playlist
+		Playlists: Now displays list of Top 2 curated playlists plus See More option. An overflow menu appears with options to Save to My Music/Add to Playlist
+		Podcasts: Top 2 Podcasts plus option to see more
+	 */
+	@Test
+	public void testSearchResults_SEA10_ALLACCESS(){
 		
 	}
 
