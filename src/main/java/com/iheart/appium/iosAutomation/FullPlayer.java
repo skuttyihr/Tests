@@ -797,4 +797,13 @@ public class FullPlayer extends Page {
     		return true;
     	} return false;
     }
+    
+    /**
+     * Runs the isCurrentlyOn Method for the HeartView Image that shows up next to the Station name on Full Player. 
+     * @return
+     */
+    public boolean isStationHearted(){
+    	return isCurrentlyOn("isStationHearted", IHRPlayerTitleViewHeartViewUIImageView);
+
+}
 }

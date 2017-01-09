@@ -38,7 +38,7 @@ public class TestFullPlayerAndMiniPlayer extends TestRoot {
 	public void testMiniPlayerArtistRadio_MPLAY1_FREE() {
 		LocalTime before = consoleLogStart(
 				"Testing testMiniPlayerArtistRadio_MPLAY1_FREE() - login, start MiniPlayer for Artist Radio, show all elements, test functionality.");
-		loginPage.loginWithoutVerifying("trav@free.com", "travfree");
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("trav@free.com", "travfree", "FREE"));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		// Start Artist Radio
 		searchPage.enterTextIntoSearchBar("Rage against the machine");
@@ -108,7 +108,7 @@ public class TestFullPlayerAndMiniPlayer extends TestRoot {
 	public void testMiniPlayerWorksOnAllPages_MPLAY2_FREE() {
 		LocalTime before = consoleLogStart(
 				"Testing testMiniPlayerWorksOnAllPages_MPLAY2_FREE - login, start MiniPlayer for Artist Radio, Open other pages, check that MiniPlayer is still running.");
-		loginPage.loginWithoutVerifying("steph@free.com", "stephfree");
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("steph@free.com", "stephfree", "FREE"));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		// Start Artist Radio
 		searchPage.enterTextIntoSearchBar("Inanimate Existence");
@@ -157,7 +157,7 @@ public class TestFullPlayerAndMiniPlayer extends TestRoot {
 	@Test
 	public void testMiniPlayerRadioStation_MPLAY3_FREE() {
 		LocalTime before = consoleLogStart("Testing testMiniPlayerRadioStationAfterLogin");
-		loginPage.loginWithoutVerifying();
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("steph@free.com", "stephfree", "FREE"));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		searchPage.enterTextIntoSearchBar("HOT 99.5");
 		searchPage.clickTopResult();
@@ -232,7 +232,7 @@ public class TestFullPlayerAndMiniPlayer extends TestRoot {
 	@Test
 	public void testFullPlayer_FPLAY1_FREE() {
 		LocalTime before = consoleLogStart("Testing testFullPlayer_FPLAY1_FREE");
-		loginPage.loginWithoutVerifying("test66@test.com", "test");
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test66@test.com", "test", "FREE"));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		// New accounts start a Full Player
 		searchPage.enterTextIntoSearchBar("Opeth");
@@ -262,7 +262,7 @@ public class TestFullPlayerAndMiniPlayer extends TestRoot {
 	@Test
 	public void testFullPlayerFunctionality_FPLAY2_FREE() {
 		LocalTime before = consoleLogStart("Testing testFullPlayerFunctionality_FPLAY2_FREE()");
-		loginPage.loginWithoutVerifying("test66@test.com", "test");
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test66@test.com", "test", "FREE"));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		searchPage.enterTextIntoSearchBar("Britney");
 		searchPage.clickTopResult();
@@ -337,7 +337,7 @@ public class TestFullPlayerAndMiniPlayer extends TestRoot {
 	@Test
 	public void testFullPlayerSaveAndReplayButton_FPLAY3_FREE(){
 		LocalTime before = consoleLogStart("Testing testFullPlayerSaveAndReplayButton_FPLAY3_FREE()");
-		loginPage.loginWithoutVerifying("trav@free.com", "travfree");
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("trav@free.com", "travfree", "FREE"));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		searchPage.enterTextIntoSearchBar("Job for a cowboy");
 		searchPage.clickTopResult();
@@ -366,16 +366,21 @@ public class TestFullPlayerAndMiniPlayer extends TestRoot {
 		Assert.assertTrue("Apple ID sign in should be displayed to buy Plus",upsellPage.isAppleIDSignInModalDisplayed());
 		upsellPage.clickCancelButton();
 	    fullPlayer.clickSaveButtonToOpenSaveModal();
+	    System.out.println("Testing 'Save Station' puts the Heart next Station Name");
 	    if(fullPlayer.isSaveStationInSaveModalDisplayed()){
 	    	fullPlayer.clickSaveStationInSaveModal();
+	    	Assert.assertTrue("Clicking Save Station should have made the Station Hearted/Favorited.",fullPlayer.isStationHearted());
 	    }else if(fullPlayer.isRemoveStationInSaveModalDisplayed()){
 	    	fullPlayer.clickRemoveStationInSaveModal();
+	    	Assert.assertFalse("Clicking Remove Station should have removed the station's Heart from being visible.",fullPlayer.isStationHearted());
 	    }
 	    fullPlayer.clickSaveButtonToOpenSaveModal();
 	    if(fullPlayer.isSaveStationInSaveModalDisplayed()){
 	    	fullPlayer.clickSaveStationInSaveModal();
+	    	Assert.assertTrue("Clicking Save Station should have made the Station Hearted/Favorited.",fullPlayer.isStationHearted());
 	    }else if(fullPlayer.isRemoveStationInSaveModalDisplayed()){
 	    	fullPlayer.clickRemoveStationInSaveModal();
+	    	Assert.assertFalse("Clicking Remove Station should have removed the station's Heart from being visible.",fullPlayer.isStationHearted());
 	    }
 	    consoleLogEnd(before, true, "Tested Replay Button, Save Button[Save Song, Add to Playlist, Save/Remove Station] in testFullPlayerSaveAndReplayButton_FPLAY3_FREE().");
 	}
@@ -390,7 +395,7 @@ public class TestFullPlayerAndMiniPlayer extends TestRoot {
 	@Test
 	public void testFullPlayerSaveReplaySkip_FPLAY4_PLUS(){
 		LocalTime before = consoleLogStart("Testing testFullPlayerSaveReplaySkip_FPLAY4_PLUS()");
-		loginPage.loginWithoutVerifying("trav@plus.com", "travplus");
+		Assert.assertTrue("Should log in successfully to PLUS account.",loginPage.loginVerifyEntitlement("trav@plus.com", "travplus", "PLUS"));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		searchPage.enterTextIntoSearchBar("Chimaira");
 		searchPage.clickTopResult();
@@ -399,9 +404,10 @@ public class TestFullPlayerAndMiniPlayer extends TestRoot {
 		fullPlayer.clickSaveButtonToOpenSaveModal();
 		Assert.assertTrue("Clicking 'Add to Playlist' should show Upsell Modal.", fullPlayer.clickAddToPlaylistButtonInSaveModal("PLUS"));
 		upsellPage.clickSubscribeAllAccessButton();
-		Assert.assertTrue("Should show account was made on Web and only has 'Got It' button to escape from AA Upsell.",upsellPage.clickGotItWebUpsellDisplayed());
-		//Assert.assertTrue("Apple ID sign in should be displayed to buy All Access",upsellPage.isAppleIDSignInModalDisplayed());
-		upsellPage.clickXtoCloseUpsellModal();
+		//Assert.assertTrue("Should show account was made on Web and only has 'Got It' button to escape from AA Upsell.",upsellPage.clickGotItWebUpsellDisplayed());
+		Assert.assertTrue("Apple ID sign in should be displayed to buy All Access",upsellPage.isAppleIDSignInModalDisplayed());
+		upsellPage.clickCancelButton();
+		//upsellPage.clickXtoCloseUpsellModal();
 		fullPlayer.clickSaveButtonToOpenSaveModal();
 		fullPlayer.clickSaveSongInSaveModal();
 		//Get name of currently playing song.
@@ -433,9 +439,9 @@ public class TestFullPlayerAndMiniPlayer extends TestRoot {
 	 * It then skips 8 times and then Replays the Last three tracks, Track 3, Track 2, Track 1.
 	 */
 	@Test
-	public void testFullPlayerSaveReplaySkip_FPLAY5_ALLACCESS(){
-		LocalTime before = consoleLogStart("Testing testFullPlayerSaveReplaySkip_FPLAY5_ALLACCESS()");
-		loginPage.loginWithoutVerifying("trav@all.com", "travall");
+	public void testFullPlayerSaveReplaySkip_FPLAY5_ALLA(){
+		LocalTime before = consoleLogStart("Testing testFullPlayerSaveReplaySkip_FPLAY5_ALLA()");
+		Assert.assertTrue("Should log in successfully to ALLA account.",loginPage.loginVerifyEntitlement("trav@all.com", "travall", "ALLA"));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		searchPage.enterTextIntoSearchBar("Chimaira");
 		searchPage.clickTopResult();
@@ -469,7 +475,7 @@ public class TestFullPlayerAndMiniPlayer extends TestRoot {
 		fullPlayer.clickReplaySecondCell();
 		fullPlayer.clickReplayButtonToOpenReplayModal();
 		fullPlayer.clickReplayFirstCell();
-		consoleLogEnd(before, fullPlayer.isCurrentlyOnFullPlayer(), "Tested testFullPlayerSaveReplaySkip_FPLAY5_ALLACCESS().");
+		consoleLogEnd(before, fullPlayer.isCurrentlyOnFullPlayer(), "Tested testFullPlayerSaveReplaySkip_FPLAY5_ALLA().");
 	}
 	/**
 	 * //Logs in, plays artist radio
@@ -486,7 +492,7 @@ public class TestFullPlayerAndMiniPlayer extends TestRoot {
 	 */
 	@Test
 	@Ignore
-	public void testFullPlayerAddToPlaylist_FPLAY6_ALLACCESS(){
+	public void testFullPlayerAddToPlaylist_FPLAY6_ALLA(){
 		//empty
 	}
 }

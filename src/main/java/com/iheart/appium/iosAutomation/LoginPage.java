@@ -242,8 +242,8 @@ public class LoginPage extends Page {
 	 * password and clicks Log in. Minimizes player, handles pop-ups. Selects
 	 * Alternative genre.
 	 */
-	public void loginWithoutVerifying(String email, String password) {
-		System.out.println("about to loginWithoutVerifying()...");
+	public void loginWithCredentials(String email, String password) {
+		System.out.println("about to loginWithCredentials(email, password)...");
 		onboardingPage.clickOnboardingLoginButton();
 		waitForElementToBeVisible(IHRAuthorizationViewEmailAddressTextField, 5);
 		enterLoginEmailAddress(email);
@@ -270,7 +270,7 @@ public class LoginPage extends Page {
 		chooseStayConnected(false);
 		sleep(2000);
 		Page.handlePossiblePopUp();  //added after genre screen sometimes pops up again. 
-		System.out.println("Logged in without verifying.");
+		System.out.println("Logged in");
 	}
 
 	/**
@@ -443,15 +443,22 @@ public class LoginPage extends Page {
 		boolean loggedIn = false;
 		boolean doesEntitlementMatch = false;
 		// Log in
-		loginWithoutVerifying(email, password);
+		loginWithCredentials(email, password);
 		// verify we are in
 		if(homePage.isCurrentlyOnForYouTab()){
 			loggedIn = true;
 		}
-		sideNavBar.clickNavBarSideMenuButton(); //Open Settings
-		doesEntitlementMatch = settingsPage.doesEntitlementMatch(entitlementType);
-		
-		sideNavBar.gotoHomePage();
+		if(entitlementType.equals("PLUS")){
+			doesEntitlementMatch = homePage.isCurrentlyOnPlusAccountLogo();
+		}else if(entitlementType.equals("ALLA")){
+			doesEntitlementMatch = homePage.isCurrentlyOnAllAccessAccountLogo();
+		}else if(entitlementType.equals("FREE")){
+			doesEntitlementMatch = homePage.isCurrentlyOnFreeAccountLogo();
+		}
+		//sideNavBar.clickNavBarSideMenuButton(); //Open Settings
+		//doesEntitlementMatch = settingsPage.doesEntitlementMatch(entitlementType);
+		//
+		//sideNavBar.gotoHomePage();
 		return loggedIn && doesEntitlementMatch;
 		
 	}

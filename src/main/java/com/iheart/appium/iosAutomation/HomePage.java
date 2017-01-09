@@ -21,6 +21,8 @@ public class HomePage extends Page {
 	@iOSFindBy(accessibility = "IHRiPhoneHomePageView") private IOSElement IHRiPhoneHomePageView;
 	@iOSFindBy(accessibility = "NavBar-SideMenuButton-UIButton") private IOSElement NavBarSideMenuButtonUIButton;
 	@iOSFindBy(accessibility = "iheartradio_logo_full") private IOSElement  iheartradio_logo_full;
+	@iOSFindBy(accessibility = "iheartradio_logo_full_allaccess") private IOSElement iheartradio_logo_full_allaccess;
+	@iOSFindBy(accessibility = "iheartradio_logo_full_plus") private IOSElement iheartradio_logo_full_plus;
 	@iOSFindBy(accessibility = "IHRCastingBarButtonItem-UIButton") private IOSElement IHRCastingBarButtonItemUIButton;
 	@iOSFindBy(accessibility = "NavBar-SearchBarButton-UIButton") private IOSElement NavBarSearchBarButtonUIButton;
 	@iOSFindBy(accessibility="HomeSegmentedControl-TitleLabel-UIButton-For You") private IOSElement HomeSegmentedControlTitleLabelUIButtonForYou;
@@ -130,6 +132,16 @@ public class HomePage extends Page {
 	public void clickFreeTrialUpsellButton(){
 		System.out.println("clickFreeTrialUpsellButton().");
 		freeTrialUpsellButton.click();
+	}
+	
+	public boolean isCurrentlyOnPlusAccountLogo(){
+		return isCurrentlyOn("isCurrentlyOnPlusAccountLogo",iheartradio_logo_full_plus);
+	}
+	public boolean isCurrentlyOnAllAccessAccountLogo(){
+		return isCurrentlyOn("isCurrentlyOnAllAccessAccountLogo",iheartradio_logo_full_allaccess);
+	}
+	public boolean isCurrentlyOnFreeAccountLogo(){
+		return isCurrentlyOn("isCurrentlyOnFreeAccountLogo",iheartradio_logo_full);
 	}
 	
 	
