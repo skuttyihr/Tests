@@ -45,9 +45,9 @@ public class FullPlayer extends Page {
     @iOSFindBy(accessibility ="IHRPlayerView-CenterView-UIView" ) private IOSElement IHRPlayerViewCenterViewUIView;
     @iOSFindBy(accessibility ="IHRPlayerView-SliderView-UIView") private IOSElement IHRPlayerViewSliderViewUIView;
     @iOSFindBy(accessibility ="IHRPlayerView-ButtonContainer-UIView" ) private IOSElement IHRPlayerViewButtonContainerUIView;
-    	@iOSFindBy(accessibility ="IHRPlayerView-PlayButton-UIButton" ) private IOSElement IHRPlayerViewPlayButtonUIButton;
-    	@iOSFindBy(accessibility ="IHRPlayerView-ForwardButton-UIButton" ) private IOSElement IHRPlayerViewForwardButtonUIButton;
-    	@iOSFindBy(accessibility ="IHRPlayerView-BackButton-UIButton") private IOSElement  IHRPlayerViewBackButtonUIButton;
+    @iOSFindBy(accessibility ="IHRPlayerView-PlayButton-UIButton" ) private IOSElement IHRPlayerViewPlayButtonUIButton;
+    @iOSFindBy(accessibility ="IHRPlayerView-ForwardButton-UIButton" ) private IOSElement IHRPlayerViewForwardButtonUIButton;
+    @iOSFindBy(accessibility ="IHRPlayerView-BackButton-UIButton") private IOSElement  IHRPlayerViewBackButtonUIButton;
     @iOSFindBy(accessibility ="IHRPlayer-SaveButton-UIButton" ) private IOSElement IHRPlayerSaveButtonUIButton;  
     @iOSFindBy(accessibility ="IHRPlayer-ReplayButton-UIButton" ) private IOSElement IHRPlayerReplayButtonUIButton;
     @iOSFindBy(accessibility ="IHRPlayer-MoreButton-UIButton" ) private IOSElement IHRPlayerMoreButtonUIButton;
@@ -123,15 +123,12 @@ public class FullPlayer extends Page {
      * Have Full Player Open and playing a SONG with Artist Radio before calling this method. 
      */
     public void showAllElements(){
-    	
     	System.out.println("Checking NavBar elements...");
-
     	printElementInformation(PlayerViewMinimizePlayerDownarrowUIButton);
     	//printElementInformation(NavBarFavoriteButtonUIButton); This button has been removed and replaced in the Save Modal
     	printElementInformation(NavBarShareButtonUIButton);
     	//printElementInformation(IHRCastingBarButtonItemUIButton);
     	System.out.println("Checking Slider elements...");
-    	
     	printElementInformation(PlayerSliderViewPositionLabelUILabel);
     	printElementInformation(PlayerSliderViewDurationLabelUILabel);
     	printElementInformation(PlayerSliderViewProgressSliderUISlider);
@@ -154,13 +151,12 @@ public class FullPlayer extends Page {
     	printElementInformation(IHROptionMenuMetadataViewSubTitleLabelUILabel);
     	
     	if(fullPlayer.clickMoreLyricsButtonIfEnabled()){
-    	
+    		System.out.println("Checking Lyrics Elements...");
     		printElementInformation(LyricsVCLyricsTextUIView);
     		printElementInformation(LyricsVCArtistNameLabelUILabel);
     		printElementInformation(LyricsVCTrackNameLabelUILabel);
     		fullPlayer.clickNavBarBackButton(); //This goes back to FullPlayers
     	}else{
-
     		fullPlayer.clickMoreCancelButton();
     	}
     	//IHRPlayerTitleView
@@ -196,7 +192,6 @@ public class FullPlayer extends Page {
     public void minimizeFullPlayerToMiniPlayer(){
     	System.out.println("minimizeFullPlayerToMiniPlayer()");
     	PlayerViewMinimizePlayerDownarrowUIButton.click();
-    	
     }
     /**
      * Clicks the Down Arrow at the top of FullPlayer to minimize it into MiniPlayer. 
@@ -470,7 +465,6 @@ public class FullPlayer extends Page {
     public void clickNavBarBackButton() {
     	System.out.println("clickNavBarBackButton()");
     	NavBarBackButton.click();
-		
 	}
 
     /**
@@ -619,7 +613,6 @@ public class FullPlayer extends Page {
     	}else{ 
     		return false;
     	}
-    		
     }
     
     /**
@@ -804,6 +797,5 @@ public class FullPlayer extends Page {
      */
     public boolean isStationHearted(){
     	return isCurrentlyOn("isStationHearted", IHRPlayerTitleViewHeartViewUIImageView);
-
-}
+    }
 }
