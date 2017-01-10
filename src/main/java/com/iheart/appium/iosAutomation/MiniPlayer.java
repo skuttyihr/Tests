@@ -150,8 +150,10 @@ public class MiniPlayer extends Page {
 	 */
 	public void swipeMiniPlayerToLeftAndClickSkipButton(){
 		System.out.println("swipeMiniPlayerToLeftAndClickSkipButton()");
+		sleep(1000);
 		//System.out.println("AppWidth = " + Page.getAppWidth()  + " SkipButton : " + MiniPlayerViewRedSkipButtonUIButton.getSize().getWidth());
 		MiniPlayerViewImageViewUIImageView.swipe(SwipeElementDirection.LEFT, 5);
+		sleep(1000);
 		MiniPlayerViewRedSkipButtonUIButton.click();
 	}
 	

@@ -108,10 +108,8 @@ public class TestLogin extends TestRoot {
 	@Test
 	public void testLoginViaEmail_LOG7_FREE(){
 		LocalTime before = consoleLogStart("Testing login via Email with a FREE Account : " + name.getMethodName());
-		loginPage.loginWithoutVerifying("trav@free.com", "travfree");
-		boolean testResult = homePage.isCurrentlyOnForYouTab();
-		Assert.assertTrue("Could not log in with email and password. : ((LOG-7))", testResult);
-		consoleLogEnd(before, testResult, "Tested Log In via Email with a FREE Account. ((LOG-7))");
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("trav@free.com", "travfree", "FREE"));
+		consoleLogEnd(before, true, "Tested Log In via Email with a FREE Account. ((LOG-7))");
 	}
 	/**
 	 * LOG-8    Plus Account
@@ -119,10 +117,8 @@ public class TestLogin extends TestRoot {
 	@Test
 	public void testLoginViaEmail_LOG8_PLUS(){
 		LocalTime before = consoleLogStart("Testing login via Email with a PLUS Account : " + name.getMethodName());
-		loginPage.loginWithoutVerifying("trav@plus.com", "travplus");
-		boolean testResult = homePage.isCurrentlyOnForYouTab();
-		Assert.assertTrue("Could not log in with email and password. ((LOG-8))", testResult);
-		consoleLogEnd(before, testResult, "Tested Log In via Email with a PLUS Account. ((LOG-8))");
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("trav@plus.com", "travplus", "PLUS"));
+		consoleLogEnd(before, true, "Tested Log In via Email with a PLUS Account. ((LOG-8))");
 	}
 	/**
 	 * LOG-9  All Access Account
@@ -130,10 +126,8 @@ public class TestLogin extends TestRoot {
 	@Test
 	public void testLoginViaEmail_LOG9_ALLACCESS(){
 		LocalTime before = consoleLogStart("Testing login via Email with a ALL Account : " + name.getMethodName());
-		loginPage.loginWithoutVerifying("trav@all.com", "travall");
-		boolean testResult = homePage.isCurrentlyOnForYouTab();
-		Assert.assertTrue("Could not log in with email and password. ((LOG-9))", testResult);
-		consoleLogEnd(before, testResult, "Tested Log In via Email with a ALL Account. ((LOG-9))");
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("trav@all.com", "travall", "ALLA"));
+		consoleLogEnd(before, true, "Tested Log In via Email with a ALL Account. ((LOG-9))");
 	}
 
 	/**
