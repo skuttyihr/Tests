@@ -78,6 +78,9 @@ public class TestRoot {
 	protected static MiniPlayer miniPlayer;
 	protected static SettingsPage settingsPage;
 	protected static UpsellPage upsellPage;
+	protected static ArtistProfileOverflowPage artistProfileOverflowPage;
+	protected static AlbumProfilePage albumProfilePage;
+
 
 	// New On Demand Elements
 	protected static ArtistProfilePage artistProfilePage;
@@ -274,6 +277,9 @@ public class TestRoot {
 		miniPlayer = new MiniPlayer(driver);
 		settingsPage = new SettingsPage(driver);
 		artistProfilePage = new ArtistProfilePage(driver);
+		artistProfileOverflowPage = new ArtistProfileOverflowPage(driver);
+		albumProfilePage = new AlbumProfilePage(driver);
+		
 		driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 		System.out.println("Testing on: " + MODEL);
 

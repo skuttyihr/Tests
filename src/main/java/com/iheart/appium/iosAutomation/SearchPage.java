@@ -487,8 +487,8 @@ public class SearchPage extends Page {
 	}
 
 	public void clickTopResult() {
-		System.out.println("clickTopResult().");
 		GlobalSearchDataSourceSearchResultCellTopResultRow0.click();
+		System.out.println("clickTopResult()."); 
 	}
 
 	public void clickFirstLiveStation() {

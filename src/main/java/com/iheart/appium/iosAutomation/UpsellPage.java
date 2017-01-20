@@ -4,6 +4,10 @@ import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
 import io.appium.java_client.pagefactory.iOSFindBy;
 
+/**
+ * @author skutty
+ *
+ */
 public class UpsellPage extends Page{
 	
 	public UpsellPage() {
@@ -48,6 +52,11 @@ public class UpsellPage extends Page{
 	@iOSFindBy(accessibility="Cancel") private IOSElement cancelButton;
 	@iOSFindBy(accessibility="Got it") private IOSElement gotItButton;
 	@iOSFindBy(accessibility="Use Existing Apple ID") private IOSElement useExistingAppleIDButton;
+		
+	//sk - 1/15 - Text on upsells based on where the upsell is trigerred from
+	@iOSFindBy(id="Save any album you want. Try iHeartRadio All Access.") private IOSElement albumUpsellText;
+	@iOSFindBy(id="Save any song you want. Try iHeartRadio All Access.") private IOSElement songUpsellText;
+	@iOSFindBy(id="Create unlimited playlists. Try iHeartRadio All Access.") private IOSElement addToPlaylistUpsellText;
 	
 	/**
 	 * Clicks the simple 'Cancel' Button which is usually a modal for trying to access Upsell flow
@@ -145,4 +154,53 @@ public class UpsellPage extends Page{
 		}
 		return false;
 	}
+	
+	/**
+	 * sk - 1/15
+	 * @return the addToPlaylistUpsellText
+	 */
+	public IOSElement getAddToPlaylistUpsellText() {
+		return addToPlaylistUpsellText;
+	}
+	
+	/**
+	 * sk - 1/15
+	 * @return the songUpsellText
+	 */	
+	public IOSElement getSongUpsellText() {
+		return songUpsellText;
+	}
+	
+	/**
+	 * sk - 1/15
+	 * @return the albumUpsellText
+	 */	
+	public IOSElement getAlbumUpsellText() {
+		return albumUpsellText;
+	}
+	
+	/**
+	 * sk - 1/15
+	 * @return status if both Subscribe to Plus and Premium buttons are enabled
+	 */
+	public boolean isPlusAndAAButtonsActive(){
+		return (IHRPremiumUpsellViewSubscribePlusButtonUIButton.isEnabled() && IHRPremiumUpsellViewSubscribePremiumButtonUIButton.isEnabled());
+	}
+	
+	/**
+	 * sk - 1/15
+	 * @return status if Subscribe to Plus button is enabled
+	 */
+	public boolean isPlusButtonActive(){
+		return (IHRPremiumUpsellViewSubscribePlusButtonUIButton.isEnabled());
+	}
+	
+	/**
+	 * sk - 1/15
+	 * @return status ifSubscribe to AA button is enabled
+	 */
+	public boolean isPremiumButtonActive(){
+		return (IHRPremiumUpsellViewSubscribePremiumButtonUIButton.isEnabled());
+	}
+	
 }
