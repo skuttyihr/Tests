@@ -63,7 +63,6 @@ public class TestRoot {
 	protected static String MODEL;
 
 	// Page elements
-
 	protected static LoginPage loginPage;
 	protected static SignUpPage signupPage;
 	protected static ResetPasswordPage resetPasswordPage;
@@ -80,6 +79,7 @@ public class TestRoot {
 	protected static UpsellPage upsellPage;
 	protected static ArtistProfileOverflowPage artistProfileOverflowPage;
 	protected static AlbumProfilePage albumProfilePage;
+	protected static Errors err;
 
 
 	// New On Demand Elements
@@ -96,6 +96,12 @@ public class TestRoot {
 	protected static String GOOGLEUSERNAME;
 	protected static String GOOGLEPASSWORD;
 	protected static String NEWACCOUNTPASSWORD;
+	protected static String IHEARTFREEUSERNAME;
+	protected static String IHEARTPLUSUSERNAME;
+	protected static String IHEARTPREMIUMUSERNAME;
+	protected static String IHEARTFREEPASSWD;
+	protected static String IHEARTPLUSPASSWD;
+	protected static String IHEARTPREMIUMPASSWD;
 
 	// Screenshot directory and URL
 	protected static String SCREENSHOT_DIRECTORY;
@@ -184,7 +190,13 @@ public class TestRoot {
 		if (passwords != null) {
 			// Use decrypted local properties
 			IHEARTUSERNAME = passwords.getProperty("IHEART.USERNAME");
+			IHEARTFREEUSERNAME = passwords.getProperty("IHEART.FREE.USERNAME");
+			IHEARTPLUSUSERNAME = passwords.getProperty("IHEART.PLUS.USERNAME");
+			IHEARTPREMIUMUSERNAME = passwords.getProperty("IHEART.PREMIUM.USERNAME");
 			IHEARTPASSWORD = passwords.getProperty("IHEART.PASSWORD");
+			IHEARTFREEPASSWD = passwords.getProperty("IHEART.FREE.PASSWORD");
+			IHEARTPLUSPASSWD = passwords.getProperty("IHEART.PLUS.PASSWORD");
+			IHEARTPREMIUMPASSWD = passwords.getProperty("IHEART.PREMIUM.PASSWORD");
 			FACEBOOKUSERNAME = passwords.getProperty("FACEBOOK.USERNAME");
 			FACEBOOKFULLNAME = passwords.getProperty("FACEBOOK.FULLNAME");
 			FACEBOOKPASSWORD = passwords.getProperty("FACEBOOK.PASSWORD");
@@ -279,7 +291,7 @@ public class TestRoot {
 		artistProfilePage = new ArtistProfilePage(driver);
 		artistProfileOverflowPage = new ArtistProfileOverflowPage(driver);
 		albumProfilePage = new AlbumProfilePage(driver);
-		
+		err = new Errors();		
 		driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 		System.out.println("Testing on: " + MODEL);
 
@@ -303,7 +315,7 @@ public class TestRoot {
 			String[] aId = iosElement.toString().split(">");
 			//String getText = iosElement.getAttribute("name");
 			String value = iosElement.getAttribute("value");
-//!value.equals("") ||
+			//!value.equals("") ||
 			if ( value != null) {
 				// .isSelected() doesnt work anymore with Appium 1.6.0beta3
 				System.out.println("  [" + aId[1] + "  text: [" + value + "]  tagName: [" + iosElement.getTagName()
@@ -324,6 +336,7 @@ public class TestRoot {
 				// If app isn't resetting through appium, try running a test
 				// with this un-commented
 				// driver.resetApp();
+				System.out.println(err.toString());
 				driver.quit();
 			} catch (Exception e) {
 				System.err.println("ERROR SHUTTING DOWN DRIVER");
@@ -595,6 +608,7 @@ public class TestRoot {
 		int centerX = size.height / 2;
 		int centerY = size.width / 2;
 		new TouchAction(driver).press(centerX, centerY).waitAction(1000).moveTo(0, -250).release().perform();
+		System.out.println("Swipe Up");
 	}
 
 	/**

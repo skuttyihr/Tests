@@ -263,6 +263,8 @@ public class LoginPage extends Page {
 			if(!genrePage.isDoneEnabled()){
 				genrePage.selectGenre("Alternative");
 				System.out.println("Selected 'Alternative' genre.");
+				genrePage.genreDone.click();
+				System.out.println("Clicked Done");
 			}
 		}
 		// Dismiss stay connected popup that sometimes shows up AFTER genre

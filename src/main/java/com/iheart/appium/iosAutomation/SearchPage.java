@@ -430,7 +430,6 @@ public class SearchPage extends Page {
 	public void enterTextIntoSearchBar(String searchQuery) {
 		System.out.println("enterTextIntoSearchBar() : " + searchQuery);
 		IHRGlobalSearchBarSearchBarTextFieldUITextField.sendKeys(searchQuery);
-
 	}
 
 	/**

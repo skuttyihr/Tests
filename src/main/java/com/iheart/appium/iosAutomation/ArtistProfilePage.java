@@ -347,14 +347,14 @@ public class ArtistProfilePage extends Page{
 	 */
 	public void scrollArtistProfilePageDown(){
 		System.out.println("scrollArtistProfilePageDown() : Swiping Up Once.");
-		artistProfilePage.rootScrollDown();
+		TestRoot.rootScrollDown();
 	}
 	/**
 	 * Uses default swipeDown behavior to scroll the Simulator up Once. Usually moves about half the height of the collection cell. 
 	 */
 	public void scrollArtistProfilePageUp(){
 		System.out.println("scrollArtistProfilePageUp() : Swiping Down Once.");
-		artistProfilePage.rootScrollUp();
+		TestRoot.rootScrollUp();
 	}
 	public boolean isCurrentlyOnPlayButton(){
 		return (isCurrentlyOn("isCurrentlyOnPlayButton" , ArtistProfileBioHeaderViewPlayButtonUIButton));
@@ -623,7 +623,6 @@ public class ArtistProfilePage extends Page{
 	 * sk-1/15
 	 * Go to an Artist Profile Page using Search from any page that has search - Rihanna
 	 * @return 
-	 * @return
 	 */
 	public boolean gotoArtistProfile(String name){
 		homePage.clickNavBarSearchButtonToOpenSearch();
@@ -636,9 +635,9 @@ public class ArtistProfilePage extends Page{
 	 * sk - 1/15
 	 * @go to first listed albums profile page from artist profile page
 	 */
-	public void gotoAlbumProfilefromArtistProfilePage() {
-			ArtistProfileAlbumCellTitleViewTitleLabelUILabel0.click();
-		}		
+	public void gotoAlbumProfilePage(){
+		ArtistProfileAlbumCellTitleViewTitleLabelUILabel0.click();	
+	}		
 	
 	/**
 	 * @return the artistProfileSectionLatestReleaseAlbumCellLatestRelease
@@ -670,6 +669,14 @@ public class ArtistProfilePage extends Page{
 	public IOSElement getArtistProfileSectionAlbumsHeader() {
 		return ArtistProfileSectionAlbumsHeader;
 	}
+	
+	public void gotoAlbumsOnArtistProfilePage(String artist){
+		homePage.clickNavBarSearchButtonToOpenSearch();
+		searchPage.enterTextIntoSearchBar(artist);
+		searchPage.clickTopResult();
+		artistProfilePage.scrollArtistProfilePageDown();
+	}
+	
 }
 
 

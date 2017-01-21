@@ -28,23 +28,43 @@ public class ArtistProfileOverflowPage extends Page{
 		super(_driver);
 	}
 		
-	public void saveSong() {
-		waitForElementToBeVisible(saveSongButton, 2);
-		saveSongButton.click();
+	public Errors saveSong() {
+		if (waitForElementToBeVisible(saveSongButton, 2)){
+				saveSongButton.click();
+		}
+		else{
+			err.add("Could not save song, button was not visible.", "saveSong");
+		}
+		return err;		
 	}
 
 	/**
 	 */
-	public void addToPlaylist() {
-		waitForElementToBeVisible(addToPlaylistButton, 2);
-		addToPlaylistButton.click();
+	public Errors addToPlaylist() {
+		if (waitForElementToBeVisible(addToPlaylistButton, 2)){
+			addToPlaylistButton.click();
+		}		
+		else{
+			err.add("Could not click Add to Playlist, button was not visible", "addToPlaylist");
+		}
+		return err;
 	}
-
+			
 	/**
 	 * sk-1/15 close upsell
 	 */
-	public void closeUpsell() {
+	public void closeUpsellandOverflow() {
 		closeUpsellButton.click();
+		closeOverflow.click();
+	}
+	
+	public void closeUpsell(){
+		closeUpsellButton.click();
+	}
+	
+	public void closeUpsellclickAddToPlaylist(){
+		closeUpsellButton.click();
+		addToPlaylistButton.click();
 	}
 	
 	/**
@@ -57,9 +77,14 @@ public class ArtistProfileOverflowPage extends Page{
 	/**
 	 * sk-1/15 - save album from artist profile overflow 
 	 */
-	public void saveAlbum() {
-		waitForVisible(driver, By.id("Save Album"), 5).click();
-		//saveAlbumButton.click();
+	public Errors saveAlbum(){
+		artistProfilePage.getArtistProfileAlbumCellActionsButtonUIButton0().click();
+		if (waitForElementToBeVisible(saveAlbumButton, 2)){
+				saveAlbumButton.click();
+		}
+		else
+			err.add("Could not save song, button was not visible.", "saveAlbum");
+		return err;
 	}
 	
 }

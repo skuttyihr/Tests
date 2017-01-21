@@ -12,7 +12,7 @@ import io.appium.java_client.pagefactory.iOSFindBy;
 
 public class AlbumProfilePage extends Page{
 
-	@iOSFindBy(accessibility="ArtistProfileTrackCell-ActionsButton-UIButton-0") private IOSElement ArtistProfileTrackCellActionsButtonUIButton0;
+	//@iOSFindBy(accessibility="ArtistProfileTrackCell-ActionsButton-UIButton-0") private IOSElement ArtistProfileTrackCellActionsButtonUIButton0;
 	@iOSFindBy(id="Save Track") private IOSElement saveTrackButton;
 
 	public AlbumProfilePage(){
@@ -22,14 +22,10 @@ public class AlbumProfilePage extends Page{
 		super(_driver);
 	}
 	
-	public void clickTrackOverflowOnArtistProfilePage(){
-		ArtistProfileTrackCellActionsButtonUIButton0.click();
-	}
-	
-	public IOSElement getArtistProfileTrackCellActionsButtonUIButton0() {
-		return ArtistProfileTrackCellActionsButtonUIButton0;
-	}
-	
+	public void clickTrackOverflow(){
+		artistProfilePage.getArtistProfileTrackCellActionsButtonUIButton0().click();
+	}	
+
 	public void saveTrack() {
 		saveTrackButton.click();
 	}

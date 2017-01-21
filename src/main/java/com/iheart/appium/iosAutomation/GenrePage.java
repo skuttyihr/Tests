@@ -305,6 +305,7 @@ public class GenrePage extends Page {
 	public boolean isGenreSelected(IOSElement genre){
 		boolean genreSelected = false;
 		String trueOrNull = genre.getAttribute("value");
+		System.out.println("isGenreSelected" + trueOrNull);
 		if(trueOrNull == null){
 			genreSelected = false;
 		}
@@ -329,6 +330,8 @@ public class GenrePage extends Page {
 	public boolean isDoneEnabled(){
 		boolean doneEnabled = false;
 		String trueOrNull = genreDone.getAttribute("value");
+		System.out.println("isDoneEnabled " + trueOrNull);
+
 		if(trueOrNull == null){
 			doneEnabled = false;
 		}
