@@ -229,7 +229,6 @@ public class LoginPage extends Page {
 		// Select Genre
 		if (waitForVisible(driver, By.name("IHRiPhoneGenrePickerView"), 5) != null) {
 			genrePage.selectGenre("Alternative");
-			genrePage.selectGenre("Country");
 			genrePage.clickDone();
 			System.out.println("Genre Selected.");
 		}
