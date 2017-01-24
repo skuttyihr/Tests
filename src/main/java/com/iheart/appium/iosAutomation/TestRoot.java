@@ -39,7 +39,7 @@ import io.appium.java_client.TouchAction;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
 
-public class TestRoot       {
+public class TestRoot{
 
 	protected static final int UP = 0;
 	protected static final int RIGHT = 1;
@@ -1094,10 +1094,9 @@ public class TestRoot       {
 	/**
 	 * sk - 1/23 - added method to enable going to any album on artist profile page indicated by an integre
 	 */
-	public  IOSElement generateIOSElementId(String eleName, int x){
+	public IOSElement generateIOSElementId(String eleName, int x){
 		String value = eleName + "-" + x;
 		return (findElement(driver, By.id(value)));
 	}
-	
 	
 }
