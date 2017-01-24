@@ -23,8 +23,8 @@ public class GenrePage extends Page {
 	@iOSFindBy(accessibility = "Done") public IOSElement genreDone;
 	@iOSFindBy(accessibility = "Cancel") public IOSElement genreCancel;
 	@iOSFindBy(accessibility = "Improve Recommendations") public IOSElement improveRecommendationsButton;
-	@iOSFindBy(accessibility = "Country") public IOSElement genre2;
-	@iOSFindBy(accessibility = "Alternative") public IOSElement genre1;
+	@iOSFindBy(accessibility = "Country") public IOSElement countryGenre;
+	@iOSFindBy(accessibility = "Alternative") public IOSElement alternativeGenre;
 
 	
 	// Behavior methods
