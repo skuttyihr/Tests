@@ -146,7 +146,7 @@ public class ArtistProfilePage extends Page{
 		@iOSFindBy(accessibility="ArtistProfileTrackCell-ActionsButton-UIButton-0") private IOSElement ArtistProfileTrackCellActionsButtonUIButton0;
 		@iOSFindBy(accessibility="ArtistProfileAlbumCell-ActionsButton-UIButton-LatestRelease") private IOSElement ArtistProfileAlbumCellActionsButtonUIButtonLatestRelease;
 	
-		public void printArtistHero(){
+	public void printArtistHero(){
 		System.out.println("::::Printing elements for Artist Profile Header ::::");
 		printElementInformation(ArtistProfileBioHeaderViewShadowViewUIView); //visible -  false, enabled = true
 		printElementInformation(ArtistProfileBioHeaderViewBackgroundImageViewUIImageView);  //visible -  false, enabled = true
