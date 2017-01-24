@@ -184,7 +184,7 @@ public class UpsellPage extends Page{
 	 * @return status if both Subscribe to Plus and Premium buttons are enabled
 	 */
 	public boolean isPlusAndAAButtonsActive(){
-		return (IHRPremiumUpsellViewSubscribePlusButtonUIButton.isEnabled() && IHRPremiumUpsellViewSubscribePremiumButtonUIButton.isEnabled());
+		return (isEnabled(IHRPremiumUpsellViewSubscribePlusButtonUIButton) && isEnabled(IHRPremiumUpsellViewSubscribePremiumButtonUIButton));
 	}
 	
 	/**
@@ -192,7 +192,7 @@ public class UpsellPage extends Page{
 	 * @return status if Subscribe to Plus button is enabled
 	 */
 	public boolean isPlusButtonActive(){
-		return (IHRPremiumUpsellViewSubscribePlusButtonUIButton.isEnabled());
+		return (isEnabled(IHRPremiumUpsellViewSubscribePlusButtonUIButton));
 	}
 	
 	/**
@@ -200,7 +200,7 @@ public class UpsellPage extends Page{
 	 * @return status ifSubscribe to AA button is enabled
 	 */
 	public boolean isPremiumButtonActive(){
-		return (IHRPremiumUpsellViewSubscribePremiumButtonUIButton.isEnabled());
+		return (isEnabled(IHRPremiumUpsellViewSubscribePremiumButtonUIButton));
 	}
 	
 }
