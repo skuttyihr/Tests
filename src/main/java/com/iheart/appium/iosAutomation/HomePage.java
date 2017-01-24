@@ -320,6 +320,7 @@ public class HomePage extends Page {
 	 * sk - 1/21/17 - changed to return Error as it failed constantly after login
 	 */
 	public Errors clickNavBarSearchButtonToOpenSearch(){
+		Errors err = new Errors();
 		System.out.println("clickNavBarSearchButtonToOpenSearch()...");
 		if (waitForElementToBeVisible(NavBarSearchBarButtonUIButton, 3))
 				NavBarSearchBarButtonUIButton.click();

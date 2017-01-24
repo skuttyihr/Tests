@@ -28,15 +28,9 @@ public class TestUpsellsDisplay_OD extends TestRoot {
 		setup();
 	}
 	
-	//@Rule
-	//public ScreenshotRule screenshot = new ScreenshotRule();
+	@Rule
+	public ScreenshotRule screenshot = new ScreenshotRule();
 	
-	//sk -  1/19 - Errors class has been used to return errs from elements not being visible or null.
-	//Added in after method to print out any errors returned 
-	@After
-	public void after() {
-		tearDown();	
-	}
 	
 	@Test
 	public void testArtistProfilePageAlbumOverflow_Free(){
@@ -58,7 +52,7 @@ public class TestUpsellsDisplay_OD extends TestRoot {
 		consoleLogEnd(before, true, "Free User - Upsells passed for Artist Profile Page - Albums");	
 		
 		//verify upsells are seen on albums profile page - track overflow
-		artistProfilePage.gotoAlbumProfilePage();
+		artistProfilePage.gotoAlbumProfilePage(0);
 		albumProfilePage.clickTrackOverflow();
 		artistProfileOverflowPage.saveSong();
 		String upsellText = upsellPage.getSongUpsellText().getText();
@@ -67,7 +61,7 @@ public class TestUpsellsDisplay_OD extends TestRoot {
 		artistProfileOverflowPage.closeUpsellclickAddToPlaylist();
 		upsellPlaylistText = upsellPage.getAddToPlaylistUpsellText().getText();
 		assertPlaylistUpsell("Free", upsellPlaylistText);
-		artistProfileOverflowPage.closeOverflow();	
+		artistProfileOverflowPage.closeUpsellandOverflow();
 		consoleLogEnd(before, true, "Free User - Upsells passed for tracks on Album Profile Page.");	
 	}
 	
@@ -90,7 +84,7 @@ public class TestUpsellsDisplay_OD extends TestRoot {
 		consoleLogEnd(before, true, "Plus User - Upsells passed for Artist Profile Page - Albums");
 
 		//verify upsells are seen on albums profile page - track overflow
-		artistProfilePage.gotoAlbumProfilePage();
+		artistProfilePage.gotoAlbumProfilePage(0);
 		albumProfilePage.clickTrackOverflow();
 		artistProfileOverflowPage.saveSong();
 		String upsellText = upsellPage.getSongUpsellText().getText();	
@@ -155,7 +149,7 @@ public class TestUpsellsDisplay_OD extends TestRoot {
 			Assert.assertTrue("Upsell page at 'Album overflow - Save Song' for free user should not have Plus subs button deactivated", 
 					upsellPage.isPlusButtonActive());	
 			Assert.assertTrue("Upsell page at 'Album overflow - Save Song' for free user should not have Premium subs button deactivated", 
-					upsellPage.isPremiumButtonActive());artistProfileOverflowPage.closeUpsell();
+					upsellPage.isPremiumButtonActive());
 			System.out.println("Album Profile Page - Save Song Upsell text verified; plus and premium subs buttons are activated for free user.");		
 		}
 		else if (type == "Plus") {

@@ -229,7 +229,9 @@ public class LoginPage extends Page {
 		// Select Genre
 		if (waitForVisible(driver, By.name("IHRiPhoneGenrePickerView"), 5) != null) {
 			genrePage.selectGenre("Alternative");
-			System.out.println("Selected 'Alternative' genre.");
+			genrePage.selectGenre("Country");
+			genrePage.clickDone();
+			System.out.println("Genre Selected.");
 		}
 		// Dismiss stay connected popup that sometimes shows up AFTER genre
 		// picker
@@ -261,8 +263,9 @@ public class LoginPage extends Page {
 		// Select Genre
 		if (waitForVisible(driver, By.name("IHRiPhoneGenrePickerView"), 5) != null) {
 			if(!genrePage.isDoneEnabled()){
-				genrePage.selectGenre("Alternative");
-				System.out.println("Selected 'Alternative' genre.");
+				genrePage.clickGenreElement(findElement(driver,By.id("Country")));
+				genrePage.clickGenreElement(findElement(driver, By.id("Alternative")));
+				System.out.println("Selected 'Alternative' and 'Country' genre.");
 				genrePage.genreDone.click();
 				System.out.println("Clicked Done");
 			}

@@ -12,7 +12,6 @@ import io.appium.java_client.pagefactory.iOSFindBy;
 
 public class AlbumProfilePage extends Page{
 
-	//@iOSFindBy(accessibility="ArtistProfileTrackCell-ActionsButton-UIButton-0") private IOSElement ArtistProfileTrackCellActionsButtonUIButton0;
 	@iOSFindBy(id="Save Track") private IOSElement saveTrackButton;
 
 	public AlbumProfilePage(){
@@ -23,10 +22,15 @@ public class AlbumProfilePage extends Page{
 	}
 	
 	public void clickTrackOverflow(){
-		artistProfilePage.getArtistProfileTrackCellActionsButtonUIButton0().click();
+		if (artistProfilePage.getArtistProfileTrackCellActionsButtonUIButton0() != null)
+			artistProfilePage.getArtistProfileTrackCellActionsButtonUIButton0().click();
 	}	
 
 	public void saveTrack() {
-		saveTrackButton.click();
+		Errors err = new Errors();
+		if (isVisible(saveTrackButton))
+			saveTrackButton.click();
+		else
+			err.add("Save Song button was not visible.", "saveTrack");			
 	}
 }

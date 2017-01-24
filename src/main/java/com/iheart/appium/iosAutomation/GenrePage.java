@@ -23,6 +23,9 @@ public class GenrePage extends Page {
 	@iOSFindBy(accessibility = "Done") public IOSElement genreDone;
 	@iOSFindBy(accessibility = "Cancel") public IOSElement genreCancel;
 	@iOSFindBy(accessibility = "Improve Recommendations") public IOSElement improveRecommendationsButton;
+	@iOSFindBy(accessibility = "Country") public IOSElement genre2;
+	@iOSFindBy(accessibility = "Alternative") public IOSElement genre1;
+
 	
 	// Behavior methods
 	// By position in list
@@ -46,7 +49,7 @@ public class GenrePage extends Page {
 	 * @param genre
 	 * @return
 	 */
-	private boolean clickGenreElement(IOSElement genre){
+	public boolean clickGenreElement(IOSElement genre){
 		boolean couldBeFound = false;
 		if(isVisible(genre)){
 			genre.click();

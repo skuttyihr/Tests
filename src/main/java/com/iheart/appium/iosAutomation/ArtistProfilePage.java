@@ -634,9 +634,12 @@ public class ArtistProfilePage extends Page{
 	/**
 	 * sk - 1/15
 	 * @go to first listed albums profile page from artist profile page
+	 * sk - 1/23 - modified to enable going to any album at a certain position indicated by and integer
 	 */
-	public void gotoAlbumProfilePage(){
-		ArtistProfileAlbumCellTitleViewTitleLabelUILabel0.click();	
+	public void gotoAlbumProfilePage(int position){
+		IOSElement selectedAlbum = generateIOSElementId("ArtistProfileAlbumCellTitleView-TitleLabel-UILabel", position);
+		if (selectedAlbum != null)
+			selectedAlbum.click();
 	}		
 	
 	/**
@@ -674,7 +677,8 @@ public class ArtistProfilePage extends Page{
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		searchPage.enterTextIntoSearchBar(artist);
 		searchPage.clickTopResult();
-		artistProfilePage.scrollArtistProfilePageDown();
+		if (!isVisible(ArtistProfileAlbumsViewAlbumCell0))
+			artistProfilePage.scrollArtistProfilePageDown();
 	}
 	
 }
