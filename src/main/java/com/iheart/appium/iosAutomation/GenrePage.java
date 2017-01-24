@@ -23,6 +23,9 @@ public class GenrePage extends Page {
 	@iOSFindBy(accessibility = "Done") public IOSElement genreDone;
 	@iOSFindBy(accessibility = "Cancel") public IOSElement genreCancel;
 	@iOSFindBy(accessibility = "Improve Recommendations") public IOSElement improveRecommendationsButton;
+	@iOSFindBy(accessibility = "Country") public IOSElement countryGenre;
+	@iOSFindBy(accessibility = "Alternative") public IOSElement alternativeGenre;
+
 	
 	// Behavior methods
 	// By position in list
@@ -34,9 +37,17 @@ public class GenrePage extends Page {
 				By.xpath("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell[" + g + "]"), 10);
 	}
 	
-	public void clickDone(){
+	public Errors clickDone(){
+		Errors err = new Errors();
 		System.out.println("genrePage.clickDone()");
-		genreDone.click();
+		if (waitForElementToBeVisible(genreDone, 5) && genreDone.isEnabled()){
+			clickDone();
+		}
+		else{
+			err.add("Could not click done button. Either was not visible or was not enabled.", "clickDone");
+		}
+		
+		return err;
 	}
 	
 	/**
@@ -46,7 +57,7 @@ public class GenrePage extends Page {
 	 * @param genre
 	 * @return
 	 */
-	private boolean clickGenreElement(IOSElement genre){
+	public boolean clickGenreElement(IOSElement genre){
 		boolean couldBeFound = false;
 		if(isVisible(genre)){
 			genre.click();
@@ -82,7 +93,7 @@ public class GenrePage extends Page {
 		}
 
 		if (!selectingMultiple) {
-			genreDone.click();
+			clickDone();
 		}
 	}
 
@@ -97,7 +108,7 @@ public class GenrePage extends Page {
 			selectGenre(g, true);
 		}
 		if(clickDone){
-			genreDone.click();
+			clickDone();
 		}
 	}
 	public void selectGenres(int[] gs){
@@ -125,7 +136,7 @@ public class GenrePage extends Page {
 			e.printStackTrace();
 		}
 		if (clickDone) {
-			genreDone.click();
+			clickDone();
 		}
 	}
 	public void selectGenre(String g) {
@@ -143,7 +154,7 @@ public class GenrePage extends Page {
 			selectGenre(g, false);
 		}
 		if(clickDone){
-			genreDone.click();
+			clickDone();
 		}
 	}
 	public void selectGenres(String[] gs) {
@@ -168,7 +179,7 @@ public class GenrePage extends Page {
 		}
 
 		if (!selectingMultiple) {
-			genreDone.click();
+			clickDone();
 		}
 	}
 
@@ -183,7 +194,7 @@ public class GenrePage extends Page {
 			deselectGenre(g, true);
 		}
 		if(clickDone){
-			genreDone.click();
+			clickDone();
 		}
 	}
 	public void deselectGenres(int[] gs){
@@ -211,7 +222,7 @@ public class GenrePage extends Page {
 			e.printStackTrace();
 		}
 		if (clickDone) {
-			genreDone.click();
+			clickDone();
 		}
 	}
 	public void deselectGenre(String g) {
@@ -229,7 +240,7 @@ public class GenrePage extends Page {
 			deselectGenre(g, false);
 		}
 		if(clickDone){
-			genreDone.click();
+			clickDone();
 		}
 	}
 	public void deselectGenres(String[] gs) {
@@ -305,6 +316,7 @@ public class GenrePage extends Page {
 	public boolean isGenreSelected(IOSElement genre){
 		boolean genreSelected = false;
 		String trueOrNull = genre.getAttribute("value");
+		System.out.println("isGenreSelected: " + trueOrNull);
 		if(trueOrNull == null){
 			genreSelected = false;
 		}
@@ -329,6 +341,8 @@ public class GenrePage extends Page {
 	public boolean isDoneEnabled(){
 		boolean doneEnabled = false;
 		String trueOrNull = genreDone.getAttribute("value");
+		System.out.println("isDoneEnabled " + trueOrNull);
+
 		if(trueOrNull == null){
 			doneEnabled = false;
 		}

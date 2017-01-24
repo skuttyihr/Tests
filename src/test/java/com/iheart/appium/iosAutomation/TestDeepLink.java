@@ -31,6 +31,6 @@ public class TestDeepLink extends TestRoot {
 
 	@After
 	public void after() {
-		TestRoot.tearDown();
+		tearDown();
 	}
 }
