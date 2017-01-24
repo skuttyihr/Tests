@@ -262,9 +262,8 @@ public class LoginPage extends Page {
 		// Select Genre
 		if (waitForVisible(driver, By.name("IHRiPhoneGenrePickerView"), 5) != null) {
 			if(!genrePage.isDoneEnabled()){
-				genrePage.clickGenreElement(findElement(driver,By.id("Country")));
 				genrePage.clickGenreElement(findElement(driver, By.id("Alternative")));
-				System.out.println("Selected 'Alternative' and 'Country' genre.");
+				System.out.println("Selected 'Alternative' genre.");
 				genrePage.genreDone.click();
 				System.out.println("Clicked Done");
 			}
