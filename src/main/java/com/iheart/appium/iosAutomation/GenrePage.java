@@ -316,7 +316,7 @@ public class GenrePage extends Page {
 	public boolean isGenreSelected(IOSElement genre){
 		boolean genreSelected = false;
 		String trueOrNull = genre.getAttribute("value");
-		System.out.println("isGenreSelected" + trueOrNull);
+		System.out.println("isGenreSelected: " + trueOrNull);
 		if(trueOrNull == null){
 			genreSelected = false;
 		}
