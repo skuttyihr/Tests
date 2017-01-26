@@ -85,7 +85,7 @@ public class TestLogin extends TestRoot {
 			resetPasswordPage.clickResetPasswordButtonWithBadEmail();
 			resetPasswordPage.clickBackButton();
 		}
-		boolean onLoginPage = loginPage.currentlyOnLoginPage();
+		boolean onLoginPage = loginPage.isCurrentlyOnLoginPage();
 		Assert.assertTrue("Not currently on loginPage, check for ResetPassword issues. ((LOG-4))", onLoginPage);
 		consoleLogEnd(before, onLoginPage, "Tested IOSElements on resetPasswordPage. ((LOG-4))");
 	}

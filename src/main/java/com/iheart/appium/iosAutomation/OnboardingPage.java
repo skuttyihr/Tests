@@ -139,7 +139,7 @@ public class OnboardingPage extends Page {
 	 */
 	public boolean clickOnboardingLoginButton(){
 		IHROnboardingViewLogInButtonUIButton.click();
-		return loginPage.currentlyOnLoginPage();
+		return loginPage.isCurrentlyOnLoginPage();
 	}
 	/**
 	 * Returns true if currently on SignUpPage

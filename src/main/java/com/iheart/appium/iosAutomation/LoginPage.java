@@ -363,14 +363,8 @@ public class LoginPage extends Page {
 		}
 	}
 
-	public boolean currentlyOnLoginPage() {
-		if (IHRAuthorizationViewForgotPasswordButtonUIButton.isDisplayed()) {
-			System.out.println("Currently on LoginPage");
-			return true;
-		} else {
-			return false;
-		}
-
+	public boolean isCurrentlyOnLoginPage() {
+		return isCurrentlyOn("isCurrentlyOnLoginPage()", IHRAuthorizationViewForgotPasswordButtonUIButton);
 	}
 
 	public void tapBack() {
@@ -379,7 +373,7 @@ public class LoginPage extends Page {
 	}
 
 	public boolean loginVerifyEntitlement(String email, String password, String entitlementType) {
-		System.out.println("About to loginVerifyEntitlement()");
+		System.out.println("loginVerifyEntitlement()...");
 		boolean loggedIn = false;
 		boolean doesEntitlementMatch = false;
 		// Log in
