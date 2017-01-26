@@ -39,7 +39,7 @@ import io.appium.java_client.TouchAction;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
 
-public class TestRoot {
+public class TestRoot{
 
 	protected static final int UP = 0;
 	protected static final int RIGHT = 1;
@@ -63,7 +63,6 @@ public class TestRoot {
 	protected static String MODEL;
 
 	// Page elements
-
 	protected static LoginPage loginPage;
 	protected static SignUpPage signupPage;
 	protected static ResetPasswordPage resetPasswordPage;
@@ -78,6 +77,8 @@ public class TestRoot {
 	protected static MiniPlayer miniPlayer;
 	protected static SettingsPage settingsPage;
 	protected static UpsellPage upsellPage;
+	protected static ArtistProfileOverflowPage artistProfileOverflowPage;
+	protected static AlbumProfilePage albumProfilePage;
 
 	// New On Demand Elements
 	protected static ArtistProfilePage artistProfilePage;
@@ -93,6 +94,12 @@ public class TestRoot {
 	protected static String GOOGLEUSERNAME;
 	protected static String GOOGLEPASSWORD;
 	protected static String NEWACCOUNTPASSWORD;
+	protected static String IHEARTFREEUSERNAME;
+	protected static String IHEARTPLUSUSERNAME;
+	protected static String IHEARTPREMIUMUSERNAME;
+	protected static String IHEARTFREEPASSWD;
+	protected static String IHEARTPLUSPASSWD;
+	protected static String IHEARTPREMIUMPASSWD;
 
 	// Screenshot directory and URL
 	protected static String SCREENSHOT_DIRECTORY;
@@ -181,7 +188,13 @@ public class TestRoot {
 		if (passwords != null) {
 			// Use decrypted local properties
 			IHEARTUSERNAME = passwords.getProperty("IHEART.USERNAME");
+			IHEARTFREEUSERNAME = passwords.getProperty("IHEART.FREE.USERNAME");
+			IHEARTPLUSUSERNAME = passwords.getProperty("IHEART.PLUS.USERNAME");
+			IHEARTPREMIUMUSERNAME = passwords.getProperty("IHEART.PREMIUM.USERNAME");
 			IHEARTPASSWORD = passwords.getProperty("IHEART.PASSWORD");
+			IHEARTFREEPASSWD = passwords.getProperty("IHEART.FREE.PASSWORD");
+			IHEARTPLUSPASSWD = passwords.getProperty("IHEART.PLUS.PASSWORD");
+			IHEARTPREMIUMPASSWD = passwords.getProperty("IHEART.PREMIUM.PASSWORD");
 			FACEBOOKUSERNAME = passwords.getProperty("FACEBOOK.USERNAME");
 			FACEBOOKFULLNAME = passwords.getProperty("FACEBOOK.FULLNAME");
 			FACEBOOKPASSWORD = passwords.getProperty("FACEBOOK.PASSWORD");
@@ -261,6 +274,7 @@ public class TestRoot {
 		Page.setDriver(driver);
 		resetPasswordPage = new ResetPasswordPage(driver);
 		homePage = new HomePage(driver);
+		genrePage = new GenrePage(driver);
 		loginPage = new LoginPage(driver);
 		signupPage = new SignUpPage(driver);
 		fullPlayer = new FullPlayer(driver);
@@ -274,6 +288,8 @@ public class TestRoot {
 		miniPlayer = new MiniPlayer(driver);
 		settingsPage = new SettingsPage(driver);
 		artistProfilePage = new ArtistProfilePage(driver);
+		artistProfileOverflowPage = new ArtistProfileOverflowPage(driver);
+		albumProfilePage = new AlbumProfilePage(driver);
 		driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 		System.out.println("Testing on: " + MODEL);
 
@@ -297,7 +313,7 @@ public class TestRoot {
 			String[] aId = iosElement.toString().split(">");
 			//String getText = iosElement.getAttribute("name");
 			String value = iosElement.getAttribute("value");
-//!value.equals("") ||
+			//!value.equals("") ||
 			if ( value != null) {
 				// .isSelected() doesnt work anymore with Appium 1.6.0beta3
 				System.out.println("  [" + aId[1] + "  text: [" + value + "]  tagName: [" + iosElement.getTagName()
@@ -589,6 +605,7 @@ public class TestRoot {
 		int centerX = size.height / 2;
 		int centerY = size.width / 2;
 		new TouchAction(driver).press(centerX, centerY).waitAction(1000).moveTo(0, -250).release().perform();
+		System.out.println("Swipe Up");
 	}
 
 	/**
@@ -1073,5 +1090,13 @@ public class TestRoot {
 			};
 		}
 	}
-
+	
+	/**
+	 * sk - 1/23 - added method to enable going to any album on artist profile page indicated by an integre
+	 */
+	public IOSElement generateIOSElementId(String eleName, int x){
+		String value = eleName + "-" + x;
+		return (findElement(driver, By.id(value)));
+	}
+	
 }

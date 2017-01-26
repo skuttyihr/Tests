@@ -52,6 +52,7 @@ public class ArtistProfilePage extends Page{
 	@iOSFindBy(accessibility="ArtistProfileTrackCell-TitleLabel-UILabel-4") private IOSElement ArtistProfileTrackCellTitleLabelUILabel4;
 
 	//Search Result - ALBUMS
+	@iOSFindBy(accessibility="ALBUMS") private IOSElement ArtistProfileSectionAlbumsHeader;
 	@iOSFindBy(accessibility="ArtistProfileSectionAlbums-AlbumCell-0") private IOSElement ArtistProfileSectionAlbumsAlbumCell0;
 		@iOSFindBy(accessibility="ArtistProfileAlbumCellTitleView-TitleLabel-UILabel-0") private IOSElement ArtistProfileAlbumCellTitleViewTitleLabelUILabel0;
 		@iOSFindBy(accessibility="ArtistProfileAlbumCellTitleView-SubtitleLabel-UILabel-0") private IOSElement ArtistProfileAlbumCellTitleViewSubtitleLabelUILabel0;
@@ -139,6 +140,12 @@ public class ArtistProfilePage extends Page{
 		@iOSFindBy(accessibility="AlbumProfileViewController-TrackCell-UICollectionViewCell-3") private IOSElement AlbumProfileViewControllerTrackCellUICollectionViewCell3;
 		@iOSFindBy(accessibility="AlbumProfileViewController-TrackCell-UICollectionViewCell-4") private IOSElement AlbumProfileViewControllerTrackCellUICollectionViewCell4;
 
+
+	//sk-1/15 - overflows at position 1 or 0
+		@iOSFindBy(accessibility="ArtistProfileAlbumCell-ActionsButton-UIButton-0") private IOSElement ArtistProfileAlbumCellActionsButtonUIButton0;
+		@iOSFindBy(accessibility="ArtistProfileTrackCell-ActionsButton-UIButton-0") private IOSElement ArtistProfileTrackCellActionsButtonUIButton0;
+		@iOSFindBy(accessibility="ArtistProfileAlbumCell-ActionsButton-UIButton-LatestRelease") private IOSElement ArtistProfileAlbumCellActionsButtonUIButtonLatestRelease;
+	
 	public void printArtistHero(){
 		System.out.println("::::Printing elements for Artist Profile Header ::::");
 		printElementInformation(ArtistProfileBioHeaderViewShadowViewUIView); //visible -  false, enabled = true
@@ -340,14 +347,14 @@ public class ArtistProfilePage extends Page{
 	 */
 	public void scrollArtistProfilePageDown(){
 		System.out.println("scrollArtistProfilePageDown() : Swiping Up Once.");
-		artistProfilePage.rootScrollDown();
+		TestRoot.rootScrollDown();
 	}
 	/**
 	 * Uses default swipeDown behavior to scroll the Simulator up Once. Usually moves about half the height of the collection cell. 
 	 */
 	public void scrollArtistProfilePageUp(){
 		System.out.println("scrollArtistProfilePageUp() : Swiping Down Once.");
-		artistProfilePage.rootScrollUp();
+		TestRoot.rootScrollUp();
 	}
 	public boolean isCurrentlyOnPlayButton(){
 		return (isCurrentlyOn("isCurrentlyOnPlayButton" , ArtistProfileBioHeaderViewPlayButtonUIButton));
@@ -611,4 +618,70 @@ public class ArtistProfilePage extends Page{
 		System.out.println("isShareMenuOpen() : "+ isThere);
 		return isThere;
 	}
+	
+	/**
+	 * sk-1/15
+	 * Go to an Artist Profile Page using Search from any page that has search - Rihanna
+	 * @return 
+	 */
+	public boolean gotoArtistProfile(String name){
+		homePage.clickNavBarSearchButtonToOpenSearch();
+		searchPage.enterTextIntoSearchBar(name);
+		searchPage.clickTopResult();
+		return artistProfilePage.isCurrentlyOnArtistProfilePage();
+	}
+	
+	/**
+	 * sk - 1/15
+	 * @go to first listed albums profile page from artist profile page
+	 * sk - 1/23 - modified to enable going to any album at a certain position indicated by and integer
+	 */
+	public void gotoAlbumProfilePage(int position){
+		IOSElement selectedAlbum = generateIOSElementId("ArtistProfileAlbumCellTitleView-TitleLabel-UILabel", position);
+		if (selectedAlbum != null)
+			selectedAlbum.click();
+	}		
+	
+	/**
+	 * @return the artistProfileSectionLatestReleaseAlbumCellLatestRelease
+	 */
+	public IOSElement getArtistProfileSectionLatestReleaseAlbumCellLatestRelease() {
+		return ArtistProfileSectionLatestReleaseAlbumCellLatestRelease;
+	}
+		
+	/**
+	 * sk-1/15
+	 * @return the artistProfileAlbumCellActionsButtonUIButton0
+	 */
+	public IOSElement getArtistProfileAlbumCellActionsButtonUIButton0() {
+		return ArtistProfileAlbumCellActionsButtonUIButton0;
+	}
+	
+	/**
+	 * sk-1/15
+	 * @return the artistProfileTrackCellActionsButtonUIButton0
+	 */
+	public IOSElement getArtistProfileTrackCellActionsButtonUIButton0() {
+		return ArtistProfileTrackCellActionsButtonUIButton0;
+	}
+	
+	/**
+	 * sk-1/15
+	 * @return the artistProfileSectionAlbumsHeader
+	 */
+	public IOSElement getArtistProfileSectionAlbumsHeader() {
+		return ArtistProfileSectionAlbumsHeader;
+	}
+	
+	public void gotoAlbumsOnArtistProfilePage(String artist){
+		homePage.clickNavBarSearchButtonToOpenSearch();
+		searchPage.enterTextIntoSearchBar(artist);
+		searchPage.clickTopResult();
+		if (!isVisible(ArtistProfileAlbumsViewAlbumCell0))
+			artistProfilePage.scrollArtistProfilePageDown();
+	}
+	
 }
+
+
+

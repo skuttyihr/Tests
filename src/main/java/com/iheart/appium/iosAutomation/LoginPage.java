@@ -231,7 +231,8 @@ public class LoginPage extends Page {
 		// Select Genre
 		if (waitForVisible(driver, By.name("IHRiPhoneGenrePickerView"), 5) != null) {
 			genrePage.selectGenre("Alternative");
-			System.out.println("Selected 'Alternative' genre.");
+			genrePage.clickDone();
+			System.out.println("Genre Selected.");
 		}
 		// Dismiss stay connected popup that sometimes shows up AFTER genre
 		// picker
@@ -261,10 +262,10 @@ public class LoginPage extends Page {
 		Page.handlePossiblePopUp();
 		System.out.println("Dismissed Zip code and handled possible popups.");
 		// Select Genre
-		if (genrePage.isCurrentlyOnGenrePage()) {//waitForVisible(driver, By.name("IHRiPhoneGenrePickerView"), 5) != null)
-			if(!genrePage.isDoneButtonEnabled()){
-				genrePage.clickSeveralRandomGenres();
-				genrePage.clickDoneButton();
+		if (waitForVisible(driver, By.name("IHRiPhoneGenrePickerView"), 5) != null) {
+			if(!genrePage.isDoneEnabled()){
+				genrePage.selectGenre("Alternative");
+				System.out.println("Selected 'Alternative' genre.");
 			}
 		}
 		// Dismiss stay connected popup that sometimes shows up AFTER genre

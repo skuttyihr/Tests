@@ -317,12 +317,18 @@ public class HomePage extends Page {
 	}
 	/**
 	 * Clicks the Search Icon to open Search. Use SearchPage object hereafter.
+	 * sk - 1/21/17 - changed to return Error as it failed constantly after login
 	 */
-	public void clickNavBarSearchButtonToOpenSearch(){
+	public Errors clickNavBarSearchButtonToOpenSearch(){
+		Errors err = new Errors();
 		System.out.println("clickNavBarSearchButtonToOpenSearch()...");
-		Page.waitForElementToBeVisible(NavBarSearchBarButtonUIButton, 5);
-		NavBarSearchBarButtonUIButton.click();
+		if (waitForElementToBeVisible(NavBarSearchBarButtonUIButton, 3))
+				NavBarSearchBarButtonUIButton.click();
+		else
+			err.add("Could not click Search icon as it was not visible", "clickNavBarSearhButtonToOpenSearch");
+		return err;
 	}
+	
 	/**
 	 * Clicks the Casting Button to Connect streaming to a device. 
 	 */

@@ -430,7 +430,6 @@ public class SearchPage extends Page {
 	public void enterTextIntoSearchBar(String searchQuery) {
 		System.out.println("enterTextIntoSearchBar() : " + searchQuery);
 		IHRGlobalSearchBarSearchBarTextFieldUITextField.sendKeys(searchQuery);
-
 	}
 
 	/**
@@ -487,8 +486,8 @@ public class SearchPage extends Page {
 	}
 
 	public void clickTopResult() {
-		System.out.println("clickTopResult().");
 		GlobalSearchDataSourceSearchResultCellTopResultRow0.click();
+		System.out.println("clickTopResult()."); 
 	}
 
 	public void clickFirstLiveStation() {
