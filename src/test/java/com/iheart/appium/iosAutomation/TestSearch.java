@@ -26,20 +26,20 @@ public class TestSearch extends TestRoot {
 	public ScreenshotRule screenshot = new ScreenshotRule();
 	
 	
-	@Test
+	//@Test
 	public void testSearchPageResults_SEA1_FREE(){
 		LocalTime before = consoleLogStart("Testing testSearchPageResults_SEA1_FREE");
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("search11@test.com", "test", "FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("search11//@Test.com", "test", "FREE"));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		searchPage.showAllElements();
 		searchPage.enterTextIntoSearchBar("rap");
 		searchPage.showAllElementsVoid();
 		consoleLogEnd(before, true, "Tested testSearchPageResults_SEA1_FREE");
 	}
-	@Test
+	//@Test
 	public void testSearchPageTextfield_SEA2_FREE(){
 		LocalTime before = consoleLogStart("Testing testSearchPageTextfield_SEA2_FREE");
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@test.com","test", "FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55//@Test.com","test", "FREE"));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		searchPage.showAllElements();
 		searchPage.enterTextIntoSearchBar("asdf");
@@ -49,10 +49,10 @@ public class TestSearch extends TestRoot {
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		consoleLogEnd(before, true, "Tested testSearchPageTextfield_SEA2_FREE");
 	}
-	@Test
+	//@Test
 	public void testNoResults_SEA3_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testNoResults_SEA3_FREE() : Testing testNoResults");
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@test.com","test", "FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55//@Test.com","test", "FREE"));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		String searchTerm = "xqWtlzap";
 		searchPage.enterTextIntoSearchBar(searchTerm);
@@ -75,10 +75,10 @@ public class TestSearch extends TestRoot {
 
 		
 	}
-	@Test
+	//@Test
 	public void testSearchTrack_SEA4_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testSearchTrack_SEA4_FREE() : Searching a song, clicking Top Result, hoping for Artist Radio.");
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@test.com","test","FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55//@Test.com","test","FREE"));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		//sk - 11/5/16- updated to reflect the changed behavior - playing track from search creates <ArtistName> Radio
 		String expectedRadioType = "Artist Radio";
@@ -98,7 +98,7 @@ public class TestSearch extends TestRoot {
 	@Test
 	public void testSearchArtist_SEA5_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testSearchArtist_SEA5_FREE() : Searching a song, clicking Top Result, hoping for Artist Radio.");
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@test.com","test", "FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@Test.com","test", "FREE"));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		String artistName = "Black Crown Initiate";
 		String expectedRadioType = "Artist Radio";
@@ -114,11 +114,11 @@ public class TestSearch extends TestRoot {
 		
 	}
 	
-	@Test
+	//@Test
 	//@Ignore
 	public void testSearchPlaylist_SEA6_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testSearchPlaylist_SEA6_FREE() : Searching a song, clicking Top Result, hoping for Artist Radio.");
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@test.com","test", "FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@Test.com","test", "FREE"));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		String playlistName = "workout hits";
 		//String expectedRadioType = "Theme Radio";
@@ -136,7 +136,7 @@ public class TestSearch extends TestRoot {
 	@Test
 	public void testSearchPodcasts_SEA7_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testSearchPodcasts_SEA7_FREE() : Searching for 'starta', clicking First Podcast Cell, hoping for Podcast List of episodes");
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@test.com","test", "FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@Test.com","test", "FREE"));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		String podcastName = "starta";
 		searchPage.enterTextAndPressEnterIntoSearchBar(podcastName);
@@ -152,7 +152,7 @@ public class TestSearch extends TestRoot {
 	@Test
 	public void testSearchLive_SEA8_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testSearchLiveRadio() : Searching for 'rock', clicking First Live Station, hoping for Live Radio.");
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@test.com","test", "FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@Test.com","test", "FREE"));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		String liveSearchName = "rock";
 		String expectedRadioType = "Live Radio";
@@ -175,7 +175,7 @@ public class TestSearch extends TestRoot {
 		Playlists: Now displays list of Top 2 curated playlists plus See More option. An overflow menu appears with options to Save to My Music/Add to Playlist
 		Podcasts: Top 2 Podcasts plus option to see more
 	 */
-	@Test
+	//@Test
 	public void testSearchResults_SEA9_PLUS(){
 		
 	}
@@ -188,7 +188,7 @@ public class TestSearch extends TestRoot {
 		Playlists: Now displays list of Top 2 curated playlists plus See More option. An overflow menu appears with options to Save to My Music/Add to Playlist
 		Podcasts: Top 2 Podcasts plus option to see more
 	 */
-	@Test
+	//@Test
 	public void testSearchResults_SEA10_ALLACCESS(){
 		
 	}

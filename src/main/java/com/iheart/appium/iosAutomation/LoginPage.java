@@ -120,6 +120,7 @@ public class LoginPage extends Page {
 		// Log in
 		loginWithoutVerifying();
 		// verify we are in
+		quickDismissPopUp();
 		IOSElement forYouTest = waitForVisible(driver, By.name("For You"), 20);
 		if (forYouTest != null && isVisible(forYouTest)) {
 			loggedIn = settingsPage.isLoggedIn();
@@ -227,10 +228,11 @@ public class LoginPage extends Page {
 		Page.handlePossiblePopUp();
 		System.out.println("Dismissed Zip code and handled possible popups.");
 		// Select Genre
-		if (waitForVisible(driver, By.name("IHRiPhoneGenrePickerView"), 5) != null) {
-			genrePage.selectGenre("Alternative");
-			genrePage.clickDone();
-			System.out.println("Genre Selected.");
+		if(!genrePage.isDoneEnabled()){
+			genrePage.clickGenreElement(findElement(driver, By.id("Alternative")));
+			System.out.println("Selected 'Alternative' genre.");
+			genrePage.genreDone.click();
+			System.out.println("Clicked Done");
 		}
 		// Dismiss stay connected popup that sometimes shows up AFTER genre
 		// picker
@@ -342,16 +344,20 @@ public class LoginPage extends Page {
 			fbloginButton.click();
 			System.out.println("Clicked Facebook Login");
 		}
-		System.out.println("If Test Ends right here, it means that Facebook has blocked access to this account, the test will probably run again tomorrow");
-		waitForElementToBeVisible(btnAuthorize, 8);
-		btnAuthorize.click();
-		// Now switch to native view
+		//System.out.println("If Test Ends right here, it means that Facebook has blocked access to this account, the test will probably run again tomorrow");
+		if (waitForElementToBeVisible(btnAuthorize,3))
+			btnAuthorize.click();
 		dismissLoginPopups();
-		try {
-			genrePage.selectGenre(1);
-		} catch (Exception e) {
-		} // This doesn't always display
+		if (waitForVisible(driver, By.name("IHRiPhoneGenrePickerView"), 5) != null) {
+			if(!genrePage.isDoneEnabled()){
+				genrePage.clickGenreElement(findElement(driver, By.id("Alternative")));
+				System.out.println("Selected 'Alternative' genre.");
+				genrePage.genreDone.click();
+				System.out.println("Clicked Done");
+			}
+		}
 		dismissLoginPopups();
+		System.out.println("Dismissed Popups");
 
 		// check status
 		return settingsPage.isLoggedIn();

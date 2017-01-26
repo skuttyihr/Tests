@@ -32,7 +32,7 @@ public class TestUpsellsDisplay_OD extends TestRoot {
 	public ScreenshotRule screenshot = new ScreenshotRule();
 	
 	
-	@Test
+	//@Test
 	public void testArtistProfilePageAlbumOverflow_Free(){
 		
 		LocalTime before = consoleLogStart(
@@ -66,7 +66,7 @@ public class TestUpsellsDisplay_OD extends TestRoot {
 	}
 	
 	//verify upsells at albums on artist profile page and album profile page for plus user
-	@Test
+	//@Test
 	public void testArtistProfilePageAlbumOverflow_Plus(){
 		LocalTime before = consoleLogStart(
 				"Testing Plus User - Overflow Menus on Artist Profile Page.");
