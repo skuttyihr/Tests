@@ -109,26 +109,7 @@ public class LoginPage extends Page {
 		super(_driver);
 	}
 
-	/**
-	 * Logs in, verifies log in, and returns to home page
-	 * 
-	 * @return
-	 */
-	/*
-	public boolean login() { 
-		System.out.println("About to login()");
-		boolean loggedIn = false;
-		// Log in
-		loginWithoutVerifying();
-		// verify we are in
-		IOSElement forYouTest = waitForVisible(driver, By.name("For You"), 20);
-		if (forYouTest != null && isVisible(forYouTest)) {
-			loggedIn = settingsPage.isLoggedIn();
-		}
-		sideNavBar.gotoHomePage();
-		return loggedIn;
-	}
-*/
+
 	/**
 	 * If String emailAddress is null, it will use default system property email
 	 * address.
@@ -212,39 +193,6 @@ public class LoginPage extends Page {
 	 * password and clicks Log in. Minimizes player, handles pop-ups. Selects
 	 * Alternative genre.
 	 */
-	/*
-	public void loginWithoutVerifying() {
-		System.out.println("about to loginWithoutVerifying()...");
-		onboardingPage.clickOnboardingLoginButton();
-		waitForElementToBeVisible(IHRAuthorizationViewEmailAddressTextField, 5);
-		enterLoginEmailAddress(IHEARTUSERNAME);
-		enterLoginPassword(IHEARTPASSWORD);
-		System.out.println("Sent keys for Username and Password.");
-		clickLogInAuthButton();
-		System.out.println("Clicked Log In form button.");
-		chooseStayConnected(false);
-		// Dismiss zip code
-		Page.enterZip();
-		// Dismiss stay connected popup
-		Page.handlePossiblePopUp();
-		System.out.println("Dismissed Zip code and handled possible popups.");
-		// Select Genre
-		if (waitForVisible(driver, By.name("IHRiPhoneGenrePickerView"), 5) != null) {
-			genrePage.selectGenre("Alternative");
-			genrePage.clickDone();
-			System.out.println("Genre Selected.");
-		}
-		// Dismiss stay connected popup that sometimes shows up AFTER genre
-		// picker
-		chooseStayConnected(false);
-		System.out.println("Logged in without verifying.");
-	}
-*/
-	/**
-	 * Logs in without checking settings.isLoggedIn(). Enters userName and
-	 * password and clicks Log in. Minimizes player, handles pop-ups. Selects
-	 * Alternative genre.
-	 */
 	public void loginWithCredentials(String email, String password) {
 		System.out.println("about to loginWithCredentials(email, password)...");
 		onboardingPage.clickOnboardingLoginButton();
@@ -262,10 +210,9 @@ public class LoginPage extends Page {
 		Page.handlePossiblePopUp();
 		System.out.println("Dismissed Zip code and handled possible popups.");
 		// Select Genre
-		if (waitForVisible(driver, By.name("IHRiPhoneGenrePickerView"), 5) != null) {
-			if(!genrePage.isDoneEnabled()){
-				genrePage.selectGenre("Alternative");
-				System.out.println("Selected 'Alternative' genre.");
+		if (genrePage.isCurrentlyOnGenrePage()){//waitForVisible(driver, By.name("IHRiPhoneGenrePickerView"), 5) != null) {
+			if(!genrePage.isDoneButtonEnabled()){
+				genrePage.selectGenresAndClickDone();
 			}
 		}
 		// Dismiss stay connected popup that sometimes shows up AFTER genre
@@ -347,12 +294,12 @@ public class LoginPage extends Page {
 		btnAuthorize.click();
 		// Now switch to native view
 		dismissLoginPopups();
-		try {
-			genrePage.clickSeveralRandomGenres();
-		} catch (Exception e) {
-		} // This doesn't always display
+		if (genrePage.isCurrentlyOnGenrePage()){
+			if(!genrePage.isDoneButtonEnabled()){
+				genrePage.selectGenresAndClickDone();
+			}
+		}
 		dismissLoginPopups();
-
 		// check status
 		return settingsPage.isLoggedIn();
 	}
@@ -362,19 +309,9 @@ public class LoginPage extends Page {
 	 */
 	void dismissLoginPopups() {
 		handlePossiblePopUp();
-		handleWantYourLocalRadioPopup();
+		//handleWantYourLocalRadioPopup();
 		tellUsWhatYouLike();
 		dismissStayConnectedPopup();
-	}
-
-	private void handleWantYourLocalRadioPopup() {
-
-		try {
-			driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAButton[3]")).click();
-		} catch (Exception e) {
-
-		}
-
 	}
 
 	public boolean loginViaGoogle() {
@@ -458,10 +395,6 @@ public class LoginPage extends Page {
 		}else if(entitlementType.equals("FREE")){
 			doesEntitlementMatch = homePage.isCurrentlyOnFreeAccountLogo();
 		}
-		//sideNavBar.clickNavBarSideMenuButton(); //Open Settings
-		//doesEntitlementMatch = settingsPage.doesEntitlementMatch(entitlementType);
-		//
-		//sideNavBar.gotoHomePage();
 		return loggedIn && doesEntitlementMatch;
 		
 	}

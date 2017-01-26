@@ -56,7 +56,7 @@ public class GenrePage extends Page {
 	 * Title, subtitle, cancel, done and done button, and the genre collection view. 
 	 */
 	public void printGenreElements(){
-		
+		System.out.println("printGenreElements()...");
 		printElementInformation(IHRGenrePickerViewControllerTitleLabelUILabel);
 		printElementInformation(IHRGenrePickerViewControllerSubtitleLabelUILabel);
 		printElementInformation(IHRGenrePickerViewControllerCancelButtonUIButton);
@@ -69,6 +69,7 @@ public class GenrePage extends Page {
 	 * Clicks Several random genres, scrolls down, clicks Genre Cell 17, then clicks Done button and handles pop-ups
 	 */
 	public void selectGenresAndClickDone(){
+		System.out.println("selectGenresAndClickDone()...");
 		clickSeveralRandomGenres();
 		scrollGenreCollectionDown();
 		scrollGenreCollectionDown();
@@ -101,8 +102,8 @@ public class GenrePage extends Page {
 	 * Clicks the Done button, but doesn't factor in whether the Done button is enabled. 
 	 */
 	public void clickDoneButton(){
-		    System.out.println("clickDoneButton()");
-			IHRGenrePickerViewControllerDoneButtonUIButton.click();
+		System.out.println("clickDoneButton()");
+		IHRGenrePickerViewControllerDoneButtonUIButton.click();
 	}
 	/**
 	 * Checks whether the Done button is enabled, meaning that a Genre cell has been clicked and the user can move on.
@@ -153,6 +154,8 @@ public class GenrePage extends Page {
 			String genre = "IHRGenrePickerViewController-Cell-UICollectionViewCell-" + g;
 			System.out.println("creating an IOSElement for Genre and clicking it : "+ genre );
 			findElement(driver, MobileBy.AccessibilityId(genre)).click();
+		}else{
+			System.out.println("Input integer is out of bounds!!");
 		}
 	}
 	/**
