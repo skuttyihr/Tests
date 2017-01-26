@@ -73,35 +73,13 @@ public class TestNewAccount extends TestRoot {
 	public void testGenreGameForNewAccount_GEN1_FREE() {
 		LocalTime before = consoleLogStart(">>>>>testGenreGameForNewAccount_GEN1_FREE(): Testing Genre Game for New Account.");
 		Assert.assertTrue("Could not create a new account and get the genre picker", signupPage.createNewAccount());
-		Assert.assertFalse("Done Button shouldn't be enabled for a new account.", genrePage.isDoneEnabled());
-		// Assert all genres are present
-		String missingGenres = genrePage.verifyGenres();
-		Assert.assertTrue("Not all expected genres were present!\nMissing:\n" + missingGenres,
-				missingGenres.length() <= 0);
-		// Select multiple genres, both by name and by position on list.
-		for (int i = 0; i < 4; i++) {
-			swipeDown(); // Scrolls back to the top of the genre page
-		}
-		int[] genres = { 3, 4 };
-		genrePage.selectGenres(genres, false);
-		genrePage.selectGenre("Top 40 & Pop"); // This one will click done
-		Page.handlePossiblePopUp(); // Yet another popup
-		Assert.assertTrue("Could not select genre", isVisible(Page.iheartradio_logo_full));
-		// Perish pesky popups!
+		//Assert.assertFalse("Done Button shouldn't be enabled for a new account.", genrePage.isDoneEnabled());
+		genrePage.printGenreElements();
+		Assert.assertEquals("GenrePage TitleLabel should say 'Tell us all the genres you like.' but the Strings didn't match","Tell us all the genres you like.", genrePage.getTitleLabelText());
+		Assert.assertEquals("GenrePage SubtitleLabel should say 'We'll suggest stations just For You.' but the Strings didn't match","We'll suggest stations just For You.", genrePage.getSubtitleLabelText());
+		genrePage.selectGenresAndClickDone();
 		Page.handlePossiblePopUp();
-		// Test genre game improve recommendations
-		Assert.assertTrue("Could not click improve recommendations to get to genre selection page",
-				genrePage.improveRecommendations());
-		// Make sure everything we selected earlier is still selected and saved
-		Assert.assertTrue("Could not verify genre!", genrePage.isGenreSelected(3));
-		Assert.assertTrue("Could not verify genre!", genrePage.isGenreSelected(4));
-		Assert.assertTrue("Could not verify genre!", genrePage.isGenreSelected("Top 40 & Pop"));
-		genrePage.deselectGenre("Top 40 & Pop", false);
-		Assert.assertTrue("Could not deselect genre!", !genrePage.isGenreSelected("Top 40 & Pop"));
-		genrePage.selectGenre("Top 40 & Pop", false);
-		Assert.assertTrue("Could not verify genre after deselecting and selecting again!",
-				genrePage.isGenreSelected("Top 40 & Pop"));
-
+		Assert.assertTrue("Clicking Done button should have landed on For You in Homepage.", homePage.isCurrentlyOnForYouTab());
 		consoleLogEnd(before, true, "<<<<<testGenreGameForNewAccount_GEN1_FREE() : Tested Genre Game for New Account");
 	}
 }

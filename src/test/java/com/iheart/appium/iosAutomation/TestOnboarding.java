@@ -83,7 +83,7 @@ public class TestOnboarding extends TestRoot {
 	@Ignore //still doesn't work
 	public void testOnboardingDisappearal_ONB4_FREE(){
 		LocalTime before = consoleLogStart("Testing testOnboardingDisappearal_ONB4_FREE().");
-		loginPage.login();//VerifyEntitlement("trav@free.com", "travfree", "FREE");
+		loginPage.loginVerifyEntitlement("trav@free.com", "travfree", "FREE");
 		System.out.println("Closing app.");
 		driver.resetApp();
 		//closeApp();

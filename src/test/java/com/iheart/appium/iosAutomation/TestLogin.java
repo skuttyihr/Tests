@@ -33,7 +33,7 @@ public class TestLogin extends TestRoot {
 	@Test
 	public void testLoginViaEmail_LOG1_FREE() {
 		LocalTime before = consoleLogStart("Testing login via Email." + name.getMethodName());
-		boolean testResult = loginPage.login();
+		boolean testResult = loginPage.loginVerifyEntitlement("trav@free.com", "travfree", "FREE");
 		Assert.assertTrue("Could not log in with email and password : ((LOG-1))", testResult);
 		consoleLogEnd(before, testResult, "Tested testLoginViaEmail_LOG1_FREE ((LOG-1))");
 	}

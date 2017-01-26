@@ -114,6 +114,7 @@ public class LoginPage extends Page {
 	 * 
 	 * @return
 	 */
+	/*
 	public boolean login() { 
 		System.out.println("About to login()");
 		boolean loggedIn = false;
@@ -127,7 +128,7 @@ public class LoginPage extends Page {
 		sideNavBar.gotoHomePage();
 		return loggedIn;
 	}
-
+*/
 	/**
 	 * If String emailAddress is null, it will use default system property email
 	 * address.
@@ -211,6 +212,7 @@ public class LoginPage extends Page {
 	 * password and clicks Log in. Minimizes player, handles pop-ups. Selects
 	 * Alternative genre.
 	 */
+	/*
 	public void loginWithoutVerifying() {
 		System.out.println("about to loginWithoutVerifying()...");
 		onboardingPage.clickOnboardingLoginButton();
@@ -236,7 +238,7 @@ public class LoginPage extends Page {
 		chooseStayConnected(false);
 		System.out.println("Logged in without verifying.");
 	}
-
+*/
 	/**
 	 * Logs in without checking settings.isLoggedIn(). Enters userName and
 	 * password and clicks Log in. Minimizes player, handles pop-ups. Selects
@@ -259,10 +261,10 @@ public class LoginPage extends Page {
 		Page.handlePossiblePopUp();
 		System.out.println("Dismissed Zip code and handled possible popups.");
 		// Select Genre
-		if (waitForVisible(driver, By.name("IHRiPhoneGenrePickerView"), 5) != null) {
-			if(!genrePage.isDoneEnabled()){
-				genrePage.selectGenre("Alternative");
-				System.out.println("Selected 'Alternative' genre.");
+		if (genrePage.isCurrentlyOnGenrePage()) {//waitForVisible(driver, By.name("IHRiPhoneGenrePickerView"), 5) != null)
+			if(!genrePage.isDoneButtonEnabled()){
+				genrePage.clickSeveralRandomGenres();
+				genrePage.clickDoneButton();
 			}
 		}
 		// Dismiss stay connected popup that sometimes shows up AFTER genre
@@ -345,7 +347,7 @@ public class LoginPage extends Page {
 		// Now switch to native view
 		dismissLoginPopups();
 		try {
-			genrePage.selectGenre(1);
+			genrePage.clickSeveralRandomGenres();
 		} catch (Exception e) {
 		} // This doesn't always display
 		dismissLoginPopups();

@@ -1,10 +1,11 @@
 package com.iheart.appium.iosAutomation;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
-import org.openqa.selenium.By;
-
+import io.appium.java_client.MobileBy;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
 import io.appium.java_client.pagefactory.iOSFindBy;
@@ -19,324 +20,159 @@ public class GenrePage extends Page {
 	}
 
 	// Elements
-	@iOSFindBy(accessibility = "IHRiPhoneGenrePickerView") public IOSElement genrePicker;
-	@iOSFindBy(accessibility = "Done") public IOSElement genreDone;
-	@iOSFindBy(accessibility = "Cancel") public IOSElement genreCancel;
-	@iOSFindBy(accessibility = "Improve Recommendations") public IOSElement improveRecommendationsButton;
 	
-	// Behavior methods
-	// By position in list
-	public void selectGenre(int g) {
-		selectGenre(g, false);
-	}
-	public IOSElement getGenre(int g){
-		return waitForVisible(driver,
-				By.xpath("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell[" + g + "]"), 10);
-	}
-	
-	public void clickDone(){
-		System.out.println("genrePage.clickDone()");
-		genreDone.click();
-	}
+	@iOSFindBy(accessibility = "IHRGenrePickerViewController-TitleLabel-UILabel") 				public IOSElement IHRGenrePickerViewControllerTitleLabelUILabel;
+	@iOSFindBy(accessibility = "IHRGenrePickerViewController-SubtitleLabel-UILabel") 			public IOSElement IHRGenrePickerViewControllerSubtitleLabelUILabel;
+	@iOSFindBy(accessibility = "IHRGenrePickerViewController-CancelButton-UIButton") 			public IOSElement IHRGenrePickerViewControllerCancelButtonUIButton;
+	@iOSFindBy(accessibility = "IHRGenrePickerViewController-DoneButton-UIButton") 				public IOSElement IHRGenrePickerViewControllerDoneButtonUIButton;
+	@iOSFindBy(accessibility = "IHRGenrePickerViewController-BottomBar-UIView") 				public IOSElement IHRGenrePickerViewControllerBottomBarUIView;
+	@iOSFindBy(accessibility = "IHRGenrePickerViewController-GenreCollectionView-UICollectionView") public IOSElement IHRGenrePickerViewControllerGenreCollectionViewUICollectionView;
+
+	@iOSFindBy(accessibility = "IHRGenrePickerViewController-Cell-UICollectionViewCell-0") 		public IOSElement IHRGenrePickerViewControllerCellUICollectionViewCell0;
+	@iOSFindBy(accessibility = "IHRGenrePickerViewController-Cell-UICollectionViewCell-1") 		public IOSElement IHRGenrePickerViewControllerCellUICollectionViewCell1;
+	@iOSFindBy(accessibility = "IHRGenrePickerViewController-Cell-UICollectionViewCell-2") 		public IOSElement IHRGenrePickerViewControllerCellUICollectionViewCell2;
+	@iOSFindBy(accessibility = "IHRGenrePickerViewController-Cell-UICollectionViewCell-3") 		public IOSElement IHRGenrePickerViewControllerCellUICollectionViewCell3;
+	@iOSFindBy(accessibility = "IHRGenrePickerViewController-Cell-UICollectionViewCell-4") 		public IOSElement IHRGenrePickerViewControllerCellUICollectionViewCell4;
+	@iOSFindBy(accessibility = "IHRGenrePickerViewController-Cell-UICollectionViewCell-5") 		public IOSElement IHRGenrePickerViewControllerCellUICollectionViewCell5;
+	@iOSFindBy(accessibility = "IHRGenrePickerViewController-Cell-UICollectionViewCell-6") 		public IOSElement IHRGenrePickerViewControllerCellUICollectionViewCell6;
+	@iOSFindBy(accessibility = "IHRGenrePickerViewController-Cell-UICollectionViewCell-7") 		public IOSElement IHRGenrePickerViewControllerCellUICollectionViewCell7;
+	@iOSFindBy(accessibility = "IHRGenrePickerViewController-Cell-UICollectionViewCell-8") 		public IOSElement IHRGenrePickerViewControllerCellUICollectionViewCell8;
+	@iOSFindBy(accessibility = "IHRGenrePickerViewController-Cell-UICollectionViewCell-9") 		public IOSElement IHRGenrePickerViewControllerCellUICollectionViewCell9;
+	@iOSFindBy(accessibility = "IHRGenrePickerViewController-Cell-UICollectionViewCell-10") 	public IOSElement IHRGenrePickerViewControllerCellUICollectionViewCell10;
+	@iOSFindBy(accessibility = "IHRGenrePickerViewController-Cell-UICollectionViewCell-11") 	public IOSElement IHRGenrePickerViewControllerCellUICollectionViewCell11;
+	@iOSFindBy(accessibility = "IHRGenrePickerViewController-Cell-UICollectionViewCell-12")		public IOSElement IHRGenrePickerViewControllerCellUICollectionViewCell12;
+	@iOSFindBy(accessibility = "IHRGenrePickerViewController-Cell-UICollectionViewCell-13") 	public IOSElement IHRGenrePickerViewControllerCellUICollectionViewCell13;
+	@iOSFindBy(accessibility = "IHRGenrePickerViewController-Cell-UICollectionViewCell-14") 	public IOSElement IHRGenrePickerViewControllerCellUICollectionViewCell14;
+	@iOSFindBy(accessibility = "IHRGenrePickerViewController-Cell-UICollectionViewCell-15") 	public IOSElement IHRGenrePickerViewControllerCellUICollectionViewCell15;
+	@iOSFindBy(accessibility = "IHRGenrePickerViewController-Cell-UICollectionViewCell-16") 	public IOSElement IHRGenrePickerViewControllerCellUICollectionViewCell16;
+	@iOSFindBy(accessibility = "IHRGenrePickerViewController-Cell-UICollectionViewCell-17") 	public IOSElement IHRGenrePickerViewControllerCellUICollectionViewCell17;
+	@iOSFindBy(accessibility = "IHRGenrePickerViewController-Cell-UICollectionViewCell-18") 	public IOSElement IHRGenrePickerViewControllerCellUICollectionViewCell18;
+	@iOSFindBy(accessibility = "IHRGenrePickerViewController-Cell-UICollectionViewCell-19") 	public IOSElement IHRGenrePickerViewControllerCellUICollectionViewCell19;
+	@iOSFindBy(accessibility = "IHRGenreCollectionViewCell-ContainerView-UIView") 				public IOSElement IHRGenreCollectionViewCellContainerViewUIView;
+	@iOSFindBy(accessibility = "IHRGenreCollectionViewCell-TitleBackgroundView-UIView") 		public IOSElement IHRGenreCollectionViewCellTitleBackgroundViewUIView;
 	
 	/**
-	 * Can't call normal click because it doesn't know to scroll it into view
-	 * Can be used for both selection and deselection
-	 * Replaced click method
-	 * @param genre
+	 * Prints the elements in the Genre Picker Screen 
+	 * Title, subtitle, cancel, done and done button, and the genre collection view. 
+	 */
+	public void printGenreElements(){
+		
+		printElementInformation(IHRGenrePickerViewControllerTitleLabelUILabel);
+		printElementInformation(IHRGenrePickerViewControllerSubtitleLabelUILabel);
+		printElementInformation(IHRGenrePickerViewControllerCancelButtonUIButton);
+		printElementInformation(IHRGenrePickerViewControllerDoneButtonUIButton);
+		printElementInformation(IHRGenrePickerViewControllerBottomBarUIView);
+		printElementInformation(IHRGenrePickerViewControllerGenreCollectionViewUICollectionView);
+		printElementInformation(IHRGenrePickerViewControllerCellUICollectionViewCell0);
+	}
+	/**
+	 * Clicks Several random genres, scrolls down, clicks Genre Cell 17, then clicks Done button and handles pop-ups
+	 */
+	public void selectGenresAndClickDone(){
+		clickSeveralRandomGenres();
+		scrollGenreCollectionDown();
+		scrollGenreCollectionDown();
+		clickGenreCell(17);
+		if(isDoneButtonEnabled())
+			clickDoneButton();
+		Page.handlePossiblePopUp();
+	}
+	/**
+	 * Gets the text out of the Title Label which should look like:
+	 * 'Tell us all the genres you like.'
 	 * @return
 	 */
-	private boolean clickGenreElement(IOSElement genre){
-		boolean couldBeFound = false;
-		if(isVisible(genre)){
-			genre.click();
-			couldBeFound = true;
-		}
-		else{
-			int counter = 3;
-			for(int i = 0; i < counter; i++){
-				swipeUp();
-				if(isVisible(genre)){
-					System.out.println("selecting genres in clickGenre");
-					genre.click();
-					couldBeFound = true;
-					break;
-				}
+	public String getTitleLabelText(){
+		String title = IHRGenrePickerViewControllerTitleLabelUILabel.getText();
+		System.out.println("getTitleLabelText() : " + title);
+		return title;
+	}
+	/**
+	 * Gets the text out of the Subtitle Label which should look like:
+	 * 'We'll suggest stations just For You.'
+	 * @return String of subtitleLabel
+	 */
+	public String getSubtitleLabelText(){
+		String subtitle = IHRGenrePickerViewControllerSubtitleLabelUILabel.getText();
+		System.out.println("getSubtitleLabelText() : " + subtitle);
+		return subtitle;
+	}
+	/**
+	 * Clicks the Done button, but doesn't factor in whether the Done button is enabled. 
+	 */
+	public void clickDoneButton(){
+		    System.out.println("clickDoneButton()");
+			IHRGenrePickerViewControllerDoneButtonUIButton.click();
+	}
+	/**
+	 * Checks whether the Done button is enabled, meaning that a Genre cell has been clicked and the user can move on.
+	 * @return true if isEnabled()
+	 */
+	public boolean isDoneButtonEnabled(){
+		boolean isEnabled = IHRGenrePickerViewControllerDoneButtonUIButton.isEnabled();
+		System.out.println("isDoneButtonEnabled() : " + isEnabled);
+		return isEnabled;
+	}
+	/**
+	 * Uses Random number generator to select between 1 and 6 genres on the first page.
+	 */
+	public void clickSeveralRandomGenres(){
+		Random rand = new Random();
+		//Create number of genres
+		int numberOfGenres = ThreadLocalRandom.current().nextInt(1, 6 + 1);
+		HashSet<Integer> intSet = new HashSet<Integer>(7);
+		int first = rand.nextInt(10);
+		for(int i = 0; i < numberOfGenres; i++){
+			if(!intSet.contains(first)){
+				intSet.add(first);
 			}
-		}		
-		return couldBeFound;
-	}
-	
-	/**
-	 * Select a genre based on its position
-	 * @param g
-	 * @param selectingMultiple
-	 */
-	public void selectGenre(int g, boolean selectingMultiple) {
-		IOSElement genre = getGenre(g);
-		if(!isGenreSelected(genre)){
-			clickGenreElement(genre);
+			first = rand.nextInt(10);
 		}
-		else{
-			System.out.println("Genre in position: " + g + " was already selected. If you'd like to deselect, call the deselect method.");
-		}
-
-		if (!selectingMultiple) {
-			genreDone.click();
+		Iterator<Integer> hashItr = intSet.iterator();
+		while(hashItr.hasNext()){
+			clickGenreCell((int) hashItr.next());
 		}
 	}
-
 	/**
-	 * Selects genres by position, not name
+	 * Selects genres based on an int array, iterates through array, creates IOSElements and clicks on them. 
 	 * @param gs
-	 * @param clickDone
 	 */
-	public void selectGenres(int[] gs, boolean clickDone) {		
-		for (int g : gs) {
-			System.out.println("selecting genres");
-			selectGenre(g, true);
-		}
-		if(clickDone){
-			genreDone.click();
-		}
-	}
 	public void selectGenres(int[] gs){
-		selectGenres(gs, true);
+		for(int i : gs){
+			String genre = "IHRGenrePickerViewController-Cell-UICollectionViewCell-" + gs[i];
+			System.out.println("creating an IOSElement for Genre and clicking it : "+ genre );
+			findElement(driver, MobileBy.AccessibilityId(genre)).click();
+		}
 	}
-
-	// By name
 	/**
-	 * Select a genre by the name if the genre category
+	 * Checks that g is between 0 and 19 and then creates an element and clicks on it. 
 	 * @param g
-	 * @param clickDone
 	 */
-	public void selectGenre(String g, boolean clickDone) {
-		// Examples: Top 40 & Pop, Country, Hip Hop and R&B, Alternative, etc
-		try{
-			IOSElement genre = waitForVisible(driver, By.name(g), 5);
-			if(!isGenreSelected(genre) ){
-				clickGenreElement(genre);
-			}
-			else{
-				System.out.println("Genre: " + g + " was already selected. If you'd like to deselect, call the deselect method.");
-			}
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}
-		if (clickDone) {
-			genreDone.click();
+	public void clickGenreCell(int g){
+		if(g < 20 && g >= 0){
+			String genre = "IHRGenrePickerViewController-Cell-UICollectionViewCell-" + g;
+			System.out.println("creating an IOSElement for Genre and clicking it : "+ genre );
+			findElement(driver, MobileBy.AccessibilityId(genre)).click();
 		}
 	}
-	public void selectGenre(String g) {
-		selectGenre(g, true);
-	}
-
 	/**
-	 * Selects genres, will only click done if told to do so
-	 * Will only select a genre if it is not already selected
-	 * @param gs
-	 * @param clickDone
+	 * checks if the Genre Collection View is open indicating the SIM is on the Genre Page.
+	 * @return true if on GenrePage
 	 */
-	public void selectGenres(String[] gs, boolean clickDone) {
-		for (String g : gs) {
-			selectGenre(g, false);
-		}
-		if(clickDone){
-			genreDone.click();
-		}
+	public boolean isCurrentlyOnGenrePage(){
+		return isCurrentlyOn("isCurrentlyOnGenrePage", IHRGenrePickerViewControllerGenreCollectionViewUICollectionView);
 	}
-	public void selectGenres(String[] gs) {
-		selectGenres(gs, true);
-	}
-	
-	
-	/**** Deselect Genre ****/
-	
 	/**
-	 * Deselect a genre based on its position
-	 * @param g
-	 * @param selectingMultiple
+	 * Scrolls the GenrePage Down
 	 */
-	public void deselectGenre(int g, boolean selectingMultiple) {
-		IOSElement genre = getGenre(g);
-		if(isGenreSelected(genre)){
-			clickGenreElement(genre);
-		}
-		else{
-			System.out.println("Genre in position: " + g + " was not selected. If you'd like to select, call the select method.");
-		}
-
-		if (!selectingMultiple) {
-			genreDone.click();
-		}
+	public void scrollGenreCollectionDown(){
+		Page.rootScrollDown();
 	}
-
 	/**
-	 * Deselects genres by position, not name
-	 * @param gs
-	 * @param clickDone
+	 * Scrolls the GenrePage Up
 	 */
-	public void deselectGenres(int[] gs, boolean clickDone) {
-		
-		for (int g : gs) {
-			deselectGenre(g, true);
-		}
-		if(clickDone){
-			genreDone.click();
-		}
-	}
-	public void deselectGenres(int[] gs){
-		deselectGenres(gs, true);
+	public void scrollGenreCollectionUp(){
+		Page.rootScrollUp();
 	}
 
-	// By name
-	/**
-	 * Deselect a genre by the name if the genre category
-	 * @param g
-	 * @param clickDone
-	 */
-	public void deselectGenre(String g, boolean clickDone) {
-		// Examples: Top 40 & Pop, Country, Hip Hop and R&B, Alternative, etc
-		try{
-			IOSElement genre = waitForVisible(driver, By.name(g), 10);
-			if(isGenreSelected(genre)){
-				clickGenreElement(genre);
-			}
-			else{
-				System.out.println("Genre: " + g + " was not selected. If you'd like to select, call the select method.");
-			}
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}
-		if (clickDone) {
-			genreDone.click();
-		}
-	}
-	public void deselectGenre(String g) {
-		deselectGenre(g, true);
-	}
-
-	/**
-	 * deselects genres, will only click done if told to do so
-	 * Will only deselect a genre if it is selected
-	 * @param gs
-	 * @param clickDone
-	 */
-	public void deselectGenres(String[] gs, boolean clickDone) {
-		for (String g : gs) {
-			deselectGenre(g, false);
-		}
-		if(clickDone){
-			genreDone.click();
-		}
-	}
-	public void deselectGenres(String[] gs) {
-		deselectGenres(gs, true);
-	}
-	
-	
-	
-	
-	public String verifyGenres(){
-		System.out.println("Verifying genres.");
-		List<String> genreList = new ArrayList<String>();
-		StringBuilder missingGenres = new StringBuilder();
-		// Add all genres
-		genreList.add("Top 40 & Pop");
-		genreList.add("Country");
-		genreList.add("Hip Hop and R&B");
-		genreList.add("Alternative");
-		genreList.add("News & Talk");
-		genreList.add("Classic Rock");
-		genreList.add("Soft Rock");
-		genreList.add("Mix & Variety");
-		genreList.add("Rock");
-		genreList.add("Sports");
-		// Below fold
-		genreList.add("Spanish");
-		genreList.add("Dance");
-		genreList.add("Comedy");
-		genreList.add("Oldies");
-		genreList.add("Christian & Gospel");
-		genreList.add("Jazz");
-		genreList.add("Classical");
-		genreList.add("World");
-		genreList.add("Reggae & Island");
-		genreList.add("College Radio");
-		
-		for(String g : genreList){
-			IOSElement genre = findElement(driver, By.name(g));
-			if(genre == null || !genre.isDisplayed()){
-				// First see if we need to scroll down
-				swipeUp();
-				genre = findElement(driver, By.name(g));
-				if(genre == null || !genre.isDisplayed()){
-					missingGenres.append(g + "\n");
-				}
-			}
-		}
-		
-		return missingGenres.toString(); // If this is longer than 0, we're missing genres
-	}
-	
-	public boolean improveRecommendations(){
-		System.out.println("Testing Improve Recommendations.");
-		int maxSwipes = 10;
-		while(maxSwipes > 0 && !isVisible(improveRecommendationsButton)){
-			maxSwipes--;
-			swipeUp();
-		}
-		improveRecommendationsButton.click();
-		handlePossiblePopUp();
-		if(!isVisible(genrePicker)){
-			return false;
-		}
-		return true;
-	}
-
-	public boolean isGenreSelected(int g){
-		return isGenreSelected(getGenre(g));
-	}
-	public boolean isGenreSelected(String s){
-		return isGenreSelected(findElement(driver, By.name(s)));
-	}
-	public boolean isGenreSelected(IOSElement genre){
-		boolean genreSelected = false;
-		String trueOrNull = genre.getAttribute("value");
-		if(trueOrNull == null){
-			genreSelected = false;
-		}
-		else if( trueOrNull.equals("true")){
-			genreSelected = true;
-		}else {
-			genreSelected = false; //default
-		}
-		
-		//System.out.println(genre.isSelected());
-		System.out.println("genrePage.isGenreSelected() ? : " + genreSelected);
-		//if(Integer.parseInt(genre.getAttribute("value")) == 1){
-		//	genreSelected = true;
-		//}		
-		return genreSelected;
-	}
-
-	public boolean isCurrentlyOnGenrePickerPage() {
-		return genrePicker.isDisplayed();
-	}
-	
-	public boolean isDoneEnabled(){
-		boolean doneEnabled = false;
-		String trueOrNull = genreDone.getAttribute("value");
-		if(trueOrNull == null){
-			doneEnabled = false;
-		}
-		else if( trueOrNull.equals("true")){
-			doneEnabled = true;
-		}else {
-			doneEnabled = false; //default
-		}
-		return doneEnabled;
-	}
 }
