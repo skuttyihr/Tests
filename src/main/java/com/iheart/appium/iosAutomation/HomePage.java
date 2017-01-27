@@ -188,7 +188,7 @@ public class HomePage extends Page {
 	}
 	/**
 	 * Prints out the elements on the My Stations Tab. 
-	 * Currently works with test66@test.com/test
+	 * Currently works with test66//@Test.com/test
 	 */
 	public void printMyStationsElements(){ 
 		System.out.println("::::showAllElements() on HomePage -> My Stations -> Favorites");// Should be 4 artist radios, one Favorites Radio, and 2 Radio Stations (based on what I favorited).

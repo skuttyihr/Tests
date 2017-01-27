@@ -109,7 +109,6 @@ public class LoginPage extends Page {
 		super(_driver);
 	}
 
-
 	/**
 	 * If String emailAddress is null, it will use default system property email
 	 * address.
@@ -193,6 +192,7 @@ public class LoginPage extends Page {
 	 * password and clicks Log in. Minimizes player, handles pop-ups. Selects
 	 * Alternative genre.
 	 */
+
 	public void loginWithCredentials(String email, String password) {
 		System.out.println("about to loginWithCredentials(email, password)...");
 		onboardingPage.clickOnboardingLoginButton();
@@ -289,16 +289,9 @@ public class LoginPage extends Page {
 			fbloginButton.click();
 			System.out.println("Clicked Facebook Login");
 		}
-		System.out.println("If Test Ends right here, it means that Facebook has blocked access to this account, the test will probably run again tomorrow");
-		waitForElementToBeVisible(btnAuthorize, 8);
-		btnAuthorize.click();
-		// Now switch to native view
-		dismissLoginPopups();
-		if (genrePage.isCurrentlyOnGenrePage()){
-			if(!genrePage.isDoneButtonEnabled()){
-				genrePage.selectGenresAndClickDone();
-			}
-		}
+		//System.out.println("If Test Ends right here, it means that Facebook has blocked access to this account, the test will probably run again tomorrow");
+		if (waitForElementToBeVisible(btnAuthorize,3))
+			btnAuthorize.click();
 		dismissLoginPopups();
 		// check status
 		return settingsPage.isLoggedIn();

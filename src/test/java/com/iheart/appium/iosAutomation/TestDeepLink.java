@@ -19,7 +19,7 @@ public class TestDeepLink extends TestRoot {
 	}
 
 	@Ignore
-	@Test
+	//@Test
 	/**
 	 * Deep Link doesn't currently work. 
 	 * @throws Exception

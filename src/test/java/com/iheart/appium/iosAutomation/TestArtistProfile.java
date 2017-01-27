@@ -21,10 +21,10 @@ public class TestArtistProfile extends TestRoot {
 	@Rule
 	public ScreenshotRule screenshot = new ScreenshotRule();
 
-	@Test
+	//@Test
 	public void testArtistHero_ARTP1_FREE(){
 		LocalTime before = consoleLogStart("Testing elements on Artist Profile Page - testArtistProfileElements()");
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("artistProfilePage@test.com", "test", "FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("artistProfilePage//@Test.com", "test", "FREE"));
 		homePage.clickMyStationsTab();
 		//This should play Red Hot Chili Peppers Radio - the only favorite for this account.
 		homePage.clickCertainCellOnMyStationsToBeginPlaying(1);
@@ -34,10 +34,10 @@ public class TestArtistProfile extends TestRoot {
 		consoleLogEnd(before, true, "Tested testArtistHero_ARTP1_FREE().");
 		
 	}
-	@Test
+	//@Test
 	public void testArtistBio_ARTP2_FREE(){
 		LocalTime before = consoleLogStart("Testing elements on Artist Profile Page - testArtistBio_ARTP2_FREE()");
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("artistProfilePage@test.com", "test", "FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("artistProfilePage//@Test.com", "test", "FREE"));
 		homePage.clickMyStationsTab();
 		//This should play Red Hot Chili Peppers Radio - the only favorite for this account.
 		homePage.clickCertainCellOnMyStationsToBeginPlaying(1);
@@ -46,10 +46,10 @@ public class TestArtistProfile extends TestRoot {
 		artistProfilePage.printArtistBioElements();
 		consoleLogEnd(before, true, "Tested testArtistBio_ARTP2_FREE().");
 	}
-	@Test
+	//@Test
 	public void testLatestReleaseTopSongsAlbumsRelatedPopular_ARTP3_FREE(){
 		LocalTime before = consoleLogStart("Testing elements on Artist Profile Page - testLatestReleaseTopSongsAlbumsRelatedPopular_ARTP3_FREE()");
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("artistProfilePage@test.com", "test", "FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("artistProfilePage//@Test.com", "test", "FREE"));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		searchPage.enterTextIntoSearchBar("nicki minaj");
 		searchPage.clickTopResult();
@@ -68,10 +68,10 @@ public class TestArtistProfile extends TestRoot {
 		consoleLogEnd(before, true, "Tested testLatestReleaseTopSongsAlbumsRelatedPopular_ARTP3_FREE().");
 	}
 	
-	@Test
+	//@Test
 	public void testAlbumsAndAlbumProfile_ARTP4_FREE(){
 		LocalTime before = consoleLogStart("Testing elements on Artist Profile Page - testAlbumsAndAlbumProfile_ARTP4_FREE()");
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("artistProfilePage@test.com", "test", "FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("artistProfilePage//@Test.com", "test", "FREE"));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		searchPage.enterTextIntoSearchBar("britney");
 		searchPage.clickTopResult();
@@ -88,10 +88,10 @@ public class TestArtistProfile extends TestRoot {
 	}
 	
 	
-	@Test
+	//@Test
 	public void testFunctions_ARTP5_FREE(){
 		LocalTime before = consoleLogStart("Testing methods on testFunctions_ARTP5_FREE");
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("artistProfileFunctions@test.com", "test", "FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("artistProfileFunctions//@Test.com", "test", "FREE"));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		searchPage.enterTextIntoSearchBar("Rihanna");
 		searchPage.clickTopResult();
@@ -109,14 +109,14 @@ public class TestArtistProfile extends TestRoot {
 	}
 	
 
-	@Test
+	//@Test
 	public void testFunctions_ARTP6_PLUS(){
 		LocalTime before = consoleLogStart("Testing methods on testFunctions_ARTP6_PLUS");
 		System.out.println("This test case still needs work. Thinking is that there must be differences we should expect for PLUS users as they navigate");
 		System.out.println("What is different for Plus Users on Artist Profile Page? Navigating Album Profile, Song to Start, Overflow buttons and their options. Any Save to or Add to playlist? modals" );
 		consoleLogEnd(before, true, "Tested testFunctions_ARTP6_PLUS()");
 	}
-	@Test
+	//@Test
 	public void testFunctions_ARTP7_ALLA(){
 		LocalTime before = consoleLogStart("Testing methods on testFunctions_ARTP7_ALLA");
 		System.out.println("This test case still needs work. Thinking is that there must be differences we should expect for ALLA users as they navigate");
