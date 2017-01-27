@@ -30,7 +30,7 @@ public class TestLogin extends TestRoot {
 	/**
 	 * LOG-1 - Login with Free Account
 	 */
-	@Test
+	//@Test
 	public void testLoginViaEmail_LOG1_FREE() {
 		LocalTime before = consoleLogStart("Testing login via Email." + name.getMethodName());
 		boolean testResult = loginPage.loginVerifyEntitlement("trav@free.com", "travfree", "FREE");
@@ -41,7 +41,7 @@ public class TestLogin extends TestRoot {
 	 * LOG-2    Login via Facebook Account
 	 * 
 	 */
-	@Test(timeout = 200000)
+	@Test
 	public void testLoginViaFacebook_LOG2_FREE() {
 		LocalTime before = consoleLogStart("Testing testLoginViaFacebook_LOG2_FREE");
 		boolean testResult = loginPage.loginViaFacebook();
@@ -72,7 +72,7 @@ public class TestLogin extends TestRoot {
 	 * LOG-4   Reset Password Page, attempts to reset password for bad account. 
 	 * Does not actually reset password for a good account.
 	 */
-	@Test
+	//@Test
 	public void testResetPasswordPage_LOG4_FREE() {
 		LocalTime before = consoleLogStart("Testing testResetPasswordPage_LOG4_FREE : " + name.getMethodName() );
 		onboardingPage.clickOnboardingLoginButton();
@@ -90,13 +90,13 @@ public class TestLogin extends TestRoot {
 		consoleLogEnd(before, onLoginPage, "Tested IOSElements on resetPasswordPage. ((LOG-4))");
 	}
 	
-	@Test
+	//@Test
 	@Ignore
 	public void testResetPasswordRealAccount_LOG5_FREE() {
 		//This may be impossible to adequately test through automation.
 	}
 	
-	@Test
+	//@Test
 	@Ignore
 	public void testEmailMismatch_LOG6_FREE() {
 		//This may be impossible to adequately test through automation.
@@ -108,7 +108,7 @@ public class TestLogin extends TestRoot {
 	@Test
 	public void testLoginViaEmail_LOG7_FREE(){
 		LocalTime before = consoleLogStart("Testing login via Email with a FREE Account : " + name.getMethodName());
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("trav@free.com", "travfree", "FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement(IHEARTFREEUSERNAME, IHEARTFREEPASSWD, "FREE"));
 		consoleLogEnd(before, true, "Tested Log In via Email with a FREE Account. ((LOG-7))");
 	}
 	/**
@@ -117,7 +117,7 @@ public class TestLogin extends TestRoot {
 	@Test
 	public void testLoginViaEmail_LOG8_PLUS(){
 		LocalTime before = consoleLogStart("Testing login via Email with a PLUS Account : " + name.getMethodName());
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("trav@plus.com", "travplus", "PLUS"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement(IHEARTPLUSUSERNAME, IHEARTPLUSPASSWD, "PLUS"));
 		consoleLogEnd(before, true, "Tested Log In via Email with a PLUS Account. ((LOG-8))");
 	}
 	/**
@@ -126,14 +126,14 @@ public class TestLogin extends TestRoot {
 	@Test
 	public void testLoginViaEmail_LOG9_ALLACCESS(){
 		LocalTime before = consoleLogStart("Testing login via Email with a ALL Account : " + name.getMethodName());
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("trav@all.com", "travall", "ALLA"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement(IHEARTPREMIUMUSERNAME, IHEARTPREMIUMPASSWD, "ALLA"));
 		consoleLogEnd(before, true, "Tested Log In via Email with a ALL Account. ((LOG-9))");
 	}
 
 	/**
 	 * LOG-10
 	 */
-	@Test
+	//@Test
 	public void testIOSElementsOnPage_LOG10_FREE() {
 		LocalTime before = consoleLogStart("Testing IOSElements on Log In Page : " + name.getMethodName());
 		loginPage.checkValuesOfElements();

@@ -26,7 +26,7 @@ public class TestPages extends TestRoot {
 	@Rule
 	public ScreenshotRule screenshot = new ScreenshotRule();
 
-	@Test
+	//@Test
 	// @Ignore
 	/**
 	 * Test for Logo and Title on Pages. Checks a variety of Logos and Titles

@@ -34,7 +34,7 @@ public class TestMiniPlayer extends TestRoot {
      * (todo)Verify that Artist Profile was navigated to.
      * (todo)Play Artist in mini player if something is already playing. 
 	 */
-	@Test
+	//@Test
 	public void testMiniPlayerArtistRadio_MPLAY1_FREE() {
 		LocalTime before = consoleLogStart(
 				"Testing testMiniPlayerArtistRadio_MPLAY1_FREE() - login, start MiniPlayer for Artist Radio, show all elements, test functionality.");
@@ -72,7 +72,7 @@ public class TestMiniPlayer extends TestRoot {
 	}
 	/*
 	 * Comment this in if you need to do short tests for functionality. 
-	@Test
+	//@Test
 	public void testHiddenSkip(){
 		loginPage.loginWithoutVerifying("trav@free.com", "travfree");
 		homePage.clickNavBarSearchButtonToOpenSearch();
@@ -104,7 +104,7 @@ public class TestMiniPlayer extends TestRoot {
  	 *  ts - 12/08/16 - altered username, testname.
 	 */
 	
-	@Test
+	//@Test
 	public void testMiniPlayerWorksOnAllPages_MPLAY2_FREE() {
 		LocalTime before = consoleLogStart(
 				"Testing testMiniPlayerWorksOnAllPages_MPLAY2_FREE - login, start MiniPlayer for Artist Radio, Open other pages, check that MiniPlayer is still running.");
@@ -154,7 +154,7 @@ public class TestMiniPlayer extends TestRoot {
 		Verify that hidden Skip button is a 'Scan' button
 		Verify that Elapsed view is hidden
 	 */
-	@Test
+	//@Test
 	public void testMiniPlayerRadioStation_MPLAY3_FREE() {
 		LocalTime before = consoleLogStart("Testing testMiniPlayerRadioStationAfterLogin");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("steph@free.com", "stephfree", "FREE"));
@@ -195,7 +195,7 @@ public class TestMiniPlayer extends TestRoot {
 		Verify that hidden Skip button is a 'Skip' button
 		Verify that Elapsed view is shown
 	 */
-	@Test
+	//@Test
 	@Ignore
 	public void testMiniPlayerPlaylist_MPLAY4_FREE() {
 	
@@ -209,7 +209,7 @@ public class TestMiniPlayer extends TestRoot {
 		Verify that hidden Skip button is a 'Scan' button
 		Verify that Elapsed view is shown
 	 */
-	@Test
+	//@Test
 	@Ignore
 	public void testMiniPlayerPodcast_MPLAY5_FREE() {
 	
