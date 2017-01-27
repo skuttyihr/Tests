@@ -101,16 +101,22 @@ public class GenrePage extends Page {
 	/**
 	 * Clicks the Done button, but doesn't factor in whether the Done button is enabled. 
 	 */
-	public void clickDoneButton(){
-		System.out.println("clickDoneButton()");
-		IHRGenrePickerViewControllerDoneButtonUIButton.click();
+	public Errors clickDoneButton(){
+		Errors err = new Errors();
+		if(waitForElementToBeVisible(IHRGenrePickerViewControllerDoneButtonUIButton, 5) && isDoneButtonEnabled()){
+			System.out.println("clickDoneButton()");
+			IHRGenrePickerViewControllerDoneButtonUIButton.click();
+		}else{
+			 err.add("Could not click done button. Either was not visible or was not enabled.", "clickDoneButton");
+		}
+		return err;
 	}
 	/**
 	 * Checks whether the Done button is enabled, meaning that a Genre cell has been clicked and the user can move on.
 	 * @return true if isEnabled()
 	 */
 	public boolean isDoneButtonEnabled(){
-		boolean isEnabled = IHRGenrePickerViewControllerDoneButtonUIButton.isEnabled();
+		boolean isEnabled = TestRoot.isEnabled(IHRGenrePickerViewControllerDoneButtonUIButton);
 		System.out.println("isDoneButtonEnabled() : " + isEnabled);
 		return isEnabled;
 	}
@@ -120,7 +126,7 @@ public class GenrePage extends Page {
 	public void clickSeveralRandomGenres(){
 		Random rand = new Random();
 		//Create number of genres
-		int numberOfGenres = ThreadLocalRandom.current().nextInt(1, 6 + 1);
+		int numberOfGenres = ThreadLocalRandom.current().nextInt(1, 7); //Range between 1 and 6
 		HashSet<Integer> intSet = new HashSet<Integer>(7);
 		int first = rand.nextInt(10);
 		for(int i = 0; i < numberOfGenres; i++){
@@ -138,25 +144,37 @@ public class GenrePage extends Page {
 	 * Selects genres based on an int array, iterates through array, creates IOSElements and clicks on them. 
 	 * @param gs
 	 */
-	public void selectGenres(int[] gs){
+	public Errors selectGenres(int[] gs){
+		Errors err = new Errors();
 		for(int i : gs){
 			String genre = "IHRGenrePickerViewController-Cell-UICollectionViewCell-" + gs[i];
 			System.out.println("creating an IOSElement for Genre and clicking it : "+ genre );
-			findElement(driver, MobileBy.AccessibilityId(genre)).click();
+			if(waitForElementToBeVisible(findElement(driver, MobileBy.AccessibilityId(genre)), 5)){
+				findElement(driver, MobileBy.AccessibilityId(genre)).click();
+			}else{
+				err.add("The Genre cell wasn't visible and thus couldn't be clicked.", "clickGenreCell");
+			}
 		}
+		return err;
 	}
 	/**
 	 * Checks that g is between 0 and 19 and then creates an element and clicks on it. 
 	 * @param g
 	 */
-	public void clickGenreCell(int g){
+	public Errors clickGenreCell(int g){
+		Errors err = new Errors();
 		if(g < 20 && g >= 0){
 			String genre = "IHRGenrePickerViewController-Cell-UICollectionViewCell-" + g;
 			System.out.println("creating an IOSElement for Genre and clicking it : "+ genre );
-			findElement(driver, MobileBy.AccessibilityId(genre)).click();
+			if(waitForElementToBeVisible(findElement(driver, MobileBy.AccessibilityId(genre)), 5)){
+				findElement(driver, MobileBy.AccessibilityId(genre)).click();
+			}else{
+				err.add("The Genre cell wasn't visible and thus couldn't be clicked.", "clickGenreCell");
+			}
 		}else{
-			System.out.println("Input integer is out of bounds!!");
+			err.add("Input integer is out of bounds!!", "clickGenreCell");
 		}
+		return err;
 	}
 	/**
 	 * checks if the Genre Collection View is open indicating the SIM is on the Genre Page.
@@ -169,13 +187,13 @@ public class GenrePage extends Page {
 	 * Scrolls the GenrePage Down
 	 */
 	public void scrollGenreCollectionDown(){
-		Page.rootScrollDown();
+		rootScrollDown();
 	}
 	/**
 	 * Scrolls the GenrePage Up
 	 */
 	public void scrollGenreCollectionUp(){
-		Page.rootScrollUp();
+		rootScrollUp();
 	}
 
 }
