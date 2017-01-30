@@ -75,9 +75,9 @@ public class TestNewAccount extends TestRoot {
 		Assert.assertTrue("Could not create a new account and get the genre picker", signupPage.createNewAccount());
 		//Assert.assertFalse("Done Button shouldn't be enabled for a new account.", genrePage.isDoneEnabled());
 		genrePage.printGenreElements();
-		Assert.assertEquals("GenrePage TitleLabel should say 'Tell us all the genres you like.' but the Strings didn't match","Tell us all the genres you like.", genrePage.getTitleLabelText());
-		Assert.assertEquals("GenrePage SubtitleLabel should say 'We'll suggest stations just For You.' but the Strings didn't match","We'll suggest stations just For You.", genrePage.getSubtitleLabelText());
-		genrePage.selectGenresAndClickDone();
+		Assert.assertEquals("GenrePage TitleLabel should say [" + genrePage.GENREPAGE_TITLE + "] but the Strings didn't match",genrePage.GENREPAGE_TITLE, genrePage.getTitleLabelText());
+		Assert.assertEquals("GenrePage SubtitleLabel should say [" + genrePage.GENREPAGE_SUBTITLE + "] but the Strings didn't match",genrePage.GENREPAGE_SUBTITLE, genrePage.getSubtitleLabelText());
+		Assert.assertTrue("Selecting Genres should have enabled the Done Button, allowing it to be clicked.", genrePage.selectGenresAndClickDone());
 		Page.handlePossiblePopUp();
 		Assert.assertTrue("Clicking Done button should have landed on For You in Homepage.", homePage.isCurrentlyOnForYouTab());
 		consoleLogEnd(before, true, "<<<<<testGenreGameForNewAccount_GEN1_FREE() : Tested Genre Game for New Account");

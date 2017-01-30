@@ -51,6 +51,8 @@ public class GenrePage extends Page {
 	@iOSFindBy(accessibility = "IHRGenreCollectionViewCell-ContainerView-UIView") 				public IOSElement IHRGenreCollectionViewCellContainerViewUIView;
 	@iOSFindBy(accessibility = "IHRGenreCollectionViewCell-TitleBackgroundView-UIView") 		public IOSElement IHRGenreCollectionViewCellTitleBackgroundViewUIView;
 	
+	public final String GENREPAGE_SUBTITLE = "We'll suggest stations just For You.";
+	public final String GENREPAGE_TITLE = "Tell us all the genres you like.";
 	/**
 	 * Prints the elements in the Genre Picker Screen 
 	 * Title, subtitle, cancel, done and done button, and the genre collection view. 
@@ -68,15 +70,19 @@ public class GenrePage extends Page {
 	/**
 	 * Clicks Several random genres, scrolls down, clicks Genre Cell 17, then clicks Done button and handles pop-ups
 	 */
-	public void selectGenresAndClickDone(){
+	public boolean selectGenresAndClickDone(){
 		System.out.println("selectGenresAndClickDone()...");
 		clickSeveralRandomGenres();
 		scrollGenreCollectionDown();
 		scrollGenreCollectionDown();
 		clickGenreCell(17);
-		if(isDoneButtonEnabled())
+		if(isDoneButtonEnabled()){
 			clickDoneButton();
-		Page.handlePossiblePopUp();
+			Page.handlePossiblePopUp();
+			return true;
+		}
+		else return false;
+			
 	}
 	/**
 	 * Gets the text out of the Title Label which should look like:
