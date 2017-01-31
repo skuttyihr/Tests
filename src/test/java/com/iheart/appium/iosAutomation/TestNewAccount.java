@@ -38,7 +38,7 @@ public class TestNewAccount extends TestRoot {
 		consoleLogEnd(before, true, "<<<<<testCreateNewEmailAccount_SIGN1_FREE");
 
 	}
-	//@Test
+	@Test
 	@Ignore
 	public void testCreateNewGmailAccount_SIGN2_FREE(){
 		
@@ -46,14 +46,14 @@ public class TestNewAccount extends TestRoot {
 		//Can't keep using Gmail accounts
 		//Most likely cannot be automated.
 	}
-	//@Test
+	@Test
 	@Ignore
 	public void testCreateNewFacebookAccount_SIGN3_FREE(){
 		System.out.println("testCreateNewFacebookAccount_SIGN3_FREE() - Isn't created yet.");
 		//Can't keep using Facebook accounts
 		//Most likely cannot be automated.
 	}
-	//@Test
+	@Test
 	public void testAllElements_SIGN4_FREE() {
 		LocalTime before = consoleLogStart(
 				">>>>>testAllElements_SIGN4_FREE() : Checking all the iOS Elements on the Onboarding / Sign Up Page.");
@@ -69,7 +69,7 @@ public class TestNewAccount extends TestRoot {
 	 * handles popups, improvesRecommendations, and deselects and reselects Top
 	 * 40.
 	 */
-	//@Test
+	@Test
 	public void testGenreGameForNewAccount_GEN1_FREE() {
 		LocalTime before = consoleLogStart(">>>>>testGenreGameForNewAccount_GEN1_FREE(): Testing Genre Game for New Account.");
 		Assert.assertTrue("Could not create a new account and get the genre picker", signupPage.createNewAccount());
@@ -77,7 +77,7 @@ public class TestNewAccount extends TestRoot {
 		genrePage.printGenreElements();
 		Assert.assertEquals("GenrePage TitleLabel should say [" + genrePage.GENREPAGE_TITLE + "] but the Strings didn't match",genrePage.GENREPAGE_TITLE, genrePage.getTitleLabelText());
 		Assert.assertEquals("GenrePage SubtitleLabel should say [" + genrePage.GENREPAGE_SUBTITLE + "] but the Strings didn't match",genrePage.GENREPAGE_SUBTITLE, genrePage.getSubtitleLabelText());
-		Assert.assertTrue("Selecting Genres should have enabled the Done Button, allowing it to be clicked.", genrePage.selectGenresAndClickDone());
+		Assert.assertTrue("Selecting Genres should have enabled the Done Button, allowing it to be clicked.", genrePage.selectGenresAndClickDone().noErrors());
 		Page.handlePossiblePopUp();
 		Assert.assertTrue("Clicking Done button should have landed on For You in Homepage.", homePage.isCurrentlyOnForYouTab());
 		consoleLogEnd(before, true, "<<<<<testGenreGameForNewAccount_GEN1_FREE() : Tested Genre Game for New Account");

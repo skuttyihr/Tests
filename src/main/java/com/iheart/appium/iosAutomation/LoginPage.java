@@ -199,28 +199,30 @@ public class LoginPage extends Page {
 		waitForElementToBeVisible(IHRAuthorizationViewEmailAddressTextField, 5);
 		enterLoginEmailAddress(email);
 		enterLoginPassword(password);
-		System.out.println("Sent keys for Username and Password.");
+		System.out.println("Sent keys for Username and Password and about to click LogInAuthButton");
 		clickLogInAuthButton();
-		System.out.println("Clicked Log In form button.");
+		System.out.println("Clicked LogInAuthButton.");
 		chooseStayConnected(false);
-
 		// Dismiss zip code
 		Page.enterZip("");
 		// Dismiss stay connected popup
 		Page.handlePossiblePopUp();
 		System.out.println("Dismissed Zip code and handled possible popups.");
 		// Select Genre
-		if (genrePage.isCurrentlyOnGenrePage()){//waitForVisible(driver, By.name("IHRiPhoneGenrePickerView"), 5) != null) {
+		int[] genres = new int[] {1, 2} ;
+		if (genrePage.isCurrentlyOnGenrePage()){
 			if(!genrePage.isDoneButtonEnabled()){
-				genrePage.selectGenresAndClickDone();
+				genrePage.selectGenres(genres);
+				genrePage.clickDoneButton();
+			}else{
+				genrePage.clickDoneButton();
 			}
 		}
-		// Dismiss stay connected popup that sometimes shows up AFTER genre
-		// picker
+		// Dismiss stay connected popup that sometimes shows up AFTER genre picker
 		chooseStayConnected(false);
 		sleep(2000);
 		Page.handlePossiblePopUp();  //added after genre screen sometimes pops up again. 
-		System.out.println("Logged in");
+		System.out.println("Logged in to account with email:[" + email + "] password ["+ password + "]");
 	}
 
 	/**

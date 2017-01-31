@@ -70,8 +70,9 @@ public class GenrePage extends Page {
 	/**
 	 * Clicks Several random genres, scrolls down, clicks Genre Cell 17, then clicks Done button and handles pop-ups
 	 */
-	public boolean selectGenresAndClickDone(){
+	public Errors selectGenresAndClickDone(){
 		System.out.println("selectGenresAndClickDone()...");
+		Errors happyNow = new Errors();
 		clickSeveralRandomGenres();
 		scrollGenreCollectionDown();
 		scrollGenreCollectionDown();
@@ -79,9 +80,10 @@ public class GenrePage extends Page {
 		if(isDoneButtonEnabled()){
 			clickDoneButton();
 			Page.handlePossiblePopUp();
-			return true;
+		}else{
+			happyNow.add("Done Button was NOT enabled after clicking Genre cells and was not able to move to next step.","selectGenresAndClickDone");
 		}
-		else return false;
+		return happyNow;
 			
 	}
 	/**
@@ -130,6 +132,7 @@ public class GenrePage extends Page {
 	 * Uses Random number generator to select between 1 and 6 genres on the first page.
 	 */
 	public void clickSeveralRandomGenres(){
+		System.out.println("clickSeveralRandomGenres()");
 		Random rand = new Random();
 		//Create number of genres
 		int numberOfGenres = ThreadLocalRandom.current().nextInt(1, 7); //Range between 1 and 6
