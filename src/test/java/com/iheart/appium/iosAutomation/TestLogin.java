@@ -33,7 +33,7 @@ public class TestLogin extends TestRoot {
 	//@Test
 	public void testLoginViaEmail_LOG1_FREE() {
 		LocalTime before = consoleLogStart("Testing login via Email." + name.getMethodName());
-		boolean testResult = loginPage.login();
+		boolean testResult = loginPage.loginVerifyEntitlement("trav@free.com", "travfree", "FREE");
 		Assert.assertTrue("Could not log in with email and password : ((LOG-1))", testResult);
 		consoleLogEnd(before, testResult, "Tested testLoginViaEmail_LOG1_FREE ((LOG-1))");
 	}
@@ -85,7 +85,7 @@ public class TestLogin extends TestRoot {
 			resetPasswordPage.clickResetPasswordButtonWithBadEmail();
 			resetPasswordPage.clickBackButton();
 		}
-		boolean onLoginPage = loginPage.currentlyOnLoginPage();
+		boolean onLoginPage = loginPage.isCurrentlyOnLoginPage();
 		Assert.assertTrue("Not currently on loginPage, check for ResetPassword issues. ((LOG-4))", onLoginPage);
 		consoleLogEnd(before, onLoginPage, "Tested IOSElements on resetPasswordPage. ((LOG-4))");
 	}

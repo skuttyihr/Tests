@@ -98,7 +98,7 @@ public class ResetPasswordPage extends Page {
 		//Password Reset Success Notification comes up. Now Click Ok.
 		waitForVisible(driver, By.name("OK"), 2).click();
 		//Goes to Login Page
-		return loginPage.currentlyOnLoginPage();
+		return loginPage.isCurrentlyOnLoginPage();
 	}
 	public boolean isCurrentlyOnResetPasswordPage(){
 		return IHRiPhoneForgotPasswordViewTableViewUITableView.isDisplayed();

@@ -38,7 +38,7 @@ public class TestPages extends TestRoot {
 	public void testForLogoAndTitleOnPages() {
 		LocalTime before = consoleLogStart(
 				"Testing testForLogoAndTitleOnPages()- checks Logos and Titles for MyStations, Local Radio, Live Radio, Live Artist Page, Podcasts Page, Perfect  For, Listening History, Alarm, & Sleep");
-		loginPage.loginWithoutVerifying();
+		loginPage.loginVerifyEntitlement("trav@free.com", "travfree", "FREE");
 		// Verify each page
 		Assert.assertTrue("Logo was not visible", isVisible(Page.iheartradio_logo_full));
 		//homePage.gotoMyStations();

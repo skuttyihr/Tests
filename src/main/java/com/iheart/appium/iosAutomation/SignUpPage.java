@@ -219,10 +219,11 @@ public class SignUpPage extends Page {
 		System.out.println("Information entered, about to click on Create Account Button.");
 		clickCreateAccountButton();
 		enterZip();
-		TestRoot.waitForElementToBeVisible(genrePage.genrePicker, 15);
+		
+		//TestRoot.waitForElementToBeVisible(genrePage.genrePicker, 15);
 
 		// verify that 'Tell us what you like' page shows up
-		return TestRoot.isVisible(genrePage.genrePicker) || TestRoot.isVisible(homePage.forYou);
+		return genrePage.isCurrentlyOnGenrePage() || homePage.isCurrentlyOnHomePage();
 		
 	}
 	/**
@@ -251,10 +252,7 @@ public class SignUpPage extends Page {
 		System.out.println("Information entered, about to click on Create Account Button.");
 		clickCreateAccountButton();
 		enterZip();
-		TestRoot.waitForElementToBeVisible(genrePage.genrePicker, 15);
-
-		// verify that 'Tell us what you like' page shows up
-		return TestRoot.isVisible(genrePage.genrePicker) || TestRoot.isVisible(homePage.forYou);
+		return genrePage.isCurrentlyOnGenrePage() || homePage.isCurrentlyOnHomePage();
 		
 	}
 
