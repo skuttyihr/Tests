@@ -669,4 +669,15 @@ public class SearchPage extends Page {
 			searchPage.clickNavBarBackButton();
 		}
 	}
+	
+	/**
+	 * sk - method to search and play a playlist from the homepage or any page which has a search bar
+	 * @param name
+	 */
+	public void searchAndPlayPlaylist(String name) {
+		homePage.clickNavBarSearchButtonToOpenSearch();
+		searchPage.enterTextAndPressEnterIntoSearchBar(name);
+		searchPage.clickFirstPlaylistCell();
+		System.out.println("Playing Curated Playlist");
+	}
 }

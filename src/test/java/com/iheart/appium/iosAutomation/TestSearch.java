@@ -114,16 +114,16 @@ public class TestSearch extends TestRoot {
 		
 	}
 	
-	//@Test
+	@Test
 	//@Ignore
 	public void testSearchPlaylist_SEA6_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testSearchPlaylist_SEA6_FREE() : Searching a song, clicking Top Result, hoping for Artist Radio.");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@Test.com","test", "FREE"));
 		homePage.clickNavBarSearchButtonToOpenSearch();
-		String playlistName = "workout hits";
-		//String expectedRadioType = "Theme Radio";
+		String playlistName = "Workout Hits";
+		String expectedRadioType = "Playlist by iHeartRadio";
 		searchPage.enterTextAndPressEnterIntoSearchBar(playlistName);
-		searchPage.scrollSearchResultsCollectionView(SwipeElementDirection.DOWN, 100, 200, 100);
+		//searchPage.scrollSearchResultsCollectionView(SwipeElementDirection.DOWN, 100, 200, 100);
 		searchPage.clickFirstPlaylistCell();
 		//Playlist Results open
 		//Learn More Button

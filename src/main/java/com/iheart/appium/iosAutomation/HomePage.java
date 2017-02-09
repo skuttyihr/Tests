@@ -322,7 +322,7 @@ public class HomePage extends Page {
 	public Errors clickNavBarSearchButtonToOpenSearch(){
 		Errors err = new Errors();
 		System.out.println("clickNavBarSearchButtonToOpenSearch()...");
-		if (waitForElementToBeVisible(NavBarSearchBarButtonUIButton, 3))
+		if (waitForElementToBeVisible(NavBarSearchBarButtonUIButton, 1))
 				NavBarSearchBarButtonUIButton.click();
 		else
 			err.add("Could not click Search icon as it was not visible", "clickNavBarSearhButtonToOpenSearch");
