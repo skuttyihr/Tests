@@ -1,5 +1,7 @@
 package com.iheart.appium.iosAutomation;
 
+import org.junit.Assert;
+
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
 import io.appium.java_client.pagefactory.iOSFindBy;
@@ -27,14 +29,12 @@ public class UpsellPage extends Page{
 	@iOSFindBy(accessibility="IHRPlusUpsellView-LearnMoreButton-UIButton")
 	private IOSElement IHRPlusUpsellViewLearnMoreButtonUIButton;
 	
+/**	sk - 2/8 - upsells have changed to Appboy upsells so the below ids are not appearing in the app any longer
 	@iOSFindBy(accessibility="IHRPremiumUpsellView-SubscribeButton-UIButton")		private IOSElement IHRPremiumUpsellViewSubscribeButtonUIButton;
 	@iOSFindBy(accessibility="IHRPremiumUpsellView-NapsterLogoView-UIImageView")	private IOSElement IHRPremiumUpsellViewNapsterLogoViewUIImageView;
 	@iOSFindBy(accessibility="IHRPremiumUpsellView-FeatureTableView-UIView")		private IOSElement IHRPremiumUpsellViewFeatureTableViewUIView;
-	@iOSFindBy(accessibility="IHRPremiumUpsellView-SubscribePlusButton-UIButton")	private IOSElement IHRPremiumUpsellViewSubscribePlusButtonUIButton;
-	@iOSFindBy(accessibility="IHRPremiumUpsellView-SubscribePremiumButton-UIButton")private IOSElement IHRPremiumUpsellViewSubscribePremiumButtonUIButton;
 	@iOSFindBy(accessibility="IHRPremiumUpsellView-SubscribePlusLabel-UILabel")		private IOSElement IHRPremiumUpsellViewSubscribePlusLabelUILabel;
 	@iOSFindBy(accessibility="IHRPremiumUpsellView-SubscribePremiumLabel-UILabel")	private IOSElement IHRPremiumUpsellViewSubscribePremiumLabelUILabel;
-	
 	@iOSFindBy(accessibility="IHRUpsellBulletsView-Label-UILabel")					private IOSElement IHRUpsellBulletsViewLabelUILabel;
 	@iOSFindBy(accessibility="IHRUpsellBulletsView-CircleView-UIView")				private IOSElement IHRUpsellBulletsViewCircleViewUIView;
 	@iOSFindBy(accessibility="IHRUpsellView-ContainerView-UIView")					private IOSElement IHRUpsellViewContainerViewUIView;
@@ -42,14 +42,16 @@ public class UpsellPage extends Page{
 	@iOSFindBy(accessibility="IHRUpsellView-ScrollContentView-UIView")				private IOSElement IHRUpsellViewScrollContentViewUIView;
 	@iOSFindBy(accessibility="IHRUpsellView-HeaderView-UIImageView")				private IOSElement IHRUpsellViewHeaderViewUIImageView;
 	@iOSFindBy(accessibility="IHRUpsellView-BannerImageView-UIImageView")			private IOSElement IHRUpsellViewBannerImageViewUIImageView;
-	@iOSFindBy(accessibility="IHRUpsellView-MessageLabel-UILabel")					private IOSElement IHRUpsellViewMessageLabelUILabel;
-	@iOSFindBy(accessibility="IHRUpsellView-CancelButton-UIButton")					private IOSElement IHRUpsellViewCancelButtonUIButton;
+	@iOSFindBy(accessibility="IHRUpsellView-MessageLabel-UILabel")					private IOSElement IHRUpsellViewMessageLabelUILabel
+*/	//@iOSFindBy(accessibility="IHRUpsellView-CancelButton-UIButton")				private IOSElement IHRUpsellViewCancelButtonUIButton;
+	@iOSFindBy(accessibility="Cancel") 												private IOSElement IHRUpsellViewCancelButtonUIButton;
 	@iOSFindBy(accessibility="IHRUpsellView-ContentView-UIView")					private IOSElement IHRUpsellViewContentViewUIView;
+	@iOSFindBy(accessibility="Subscribe To Plus") private IOSElement IHRPremiumUpsellViewSubscribePlusButtonUIButton;
+	@iOSFindBy(accessibility="Subscribe To All Access") private IOSElement IHRPremiumUpsellViewSubscribePremiumButtonUIButton;
+
 	//Upsell Modal
 	//@iOSFindBy(accessibility = "Start Free 30 Day Trial")
 	//private IOSElement startFree30DayTrialButton;
-	
-	@iOSFindBy(accessibility="Cancel") private IOSElement cancelButton;
 	@iOSFindBy(accessibility="Got it") private IOSElement gotItButton;
 	@iOSFindBy(accessibility="Use Existing Apple ID") private IOSElement useExistingAppleIDButton;
 		
@@ -57,14 +59,14 @@ public class UpsellPage extends Page{
 	@iOSFindBy(id="Save any album you want. Try iHeartRadio All Access.") private IOSElement albumUpsellText;
 	@iOSFindBy(id="Save any song you want. Try iHeartRadio All Access.") private IOSElement songUpsellText;
 	@iOSFindBy(id="Create unlimited playlists. Try iHeartRadio All Access.") private IOSElement addToPlaylistUpsellText;
-	
+	@iOSFindBy(id="Encore! Instantly replay songs on the radio with iHeartRadio Plus.") private IOSElement replaySongsUpsellText;
+
 	/**
-	 * Clicks the simple 'Cancel' Button which is usually a modal for trying to access Upsell flow
 	 * @return
 	 */
 	public boolean clickCancelButton(){
-		waitForElementToBeVisible(cancelButton, 5);
-		cancelButton.click();
+		waitForElementToBeVisible(IHRUpsellViewCancelButtonUIButton, 5);
+		IHRUpsellViewCancelButtonUIButton.click();
 		System.out.println("ClickCancelButton()");
 		return true;
 	}
@@ -95,20 +97,31 @@ public class UpsellPage extends Page{
 	}
 	/**
 	 * Checks whether the Table View, a central part of the Upsell Modal, is not null and isDisplayed. 
+	 * SK - 2/9 - changing as all upsells have been replaced by Appboy Upsells and IDs no longer exist
 	 * @return boolean
 	 */
-	public boolean isUpsellModalOpen(){
-		if(IHRPremiumUpsellViewFeatureTableViewUIView!= null){
-			boolean upsellOpen = IHRPremiumUpsellViewFeatureTableViewUIView.isDisplayed();
+	/*public boolean isUpsellModalOpen(){
+		//if(IHRPremiumUpsellViewFeatureTableViewUIView!= null){
+		if(IHRPremiumUpsellViewSubscribePremiumButtonUIButton!= null){
+		boolean upsellOpen = IHRPremiumUpsellViewFeatureTableViewUIView.isDisplayed();
+		if(IHRPremiumUpsellViewFeatureTableViewUIView.isDisplayed();
 			System.out.println("isUpsellModalOpen() : " + upsellOpen);
 			return upsellOpen;
 		}else return false;
+	}*/
+	
+	public boolean isUpsellModalOpen(){
+		if(IHRPremiumUpsellViewSubscribePremiumButtonUIButton!= null){
+			boolean upsellOpen = IHRPremiumUpsellViewSubscribePremiumButtonUIButton.isDisplayed();
+		return upsellOpen;
 	}
+		else return false;
+}
 	/**
 	 * Checks whether the Table View, a central part of the Upsell Modal, is not null and isDisplayed. 
 	 * @return boolean
 	 */
-	public boolean isCurrentlyOnUpsellModal(){
+/*	public boolean isCurrentlyOnUpsellModal(){
 		return (isCurrentlyOn("isCurrentlyOnUpsellModal", IHRPremiumUpsellViewFeatureTableViewUIView));
 	}
 	/**
@@ -117,9 +130,10 @@ public class UpsellPage extends Page{
 	 * @return boolean
 	 */
 	public boolean clickXtoCloseUpsellModal(){
+		
 		if(IHRUpsellViewCancelButtonUIButton != null){
 			IHRUpsellViewCancelButtonUIButton.click();
-			System.out.println("clickXtoCloseUpsellModal(). Upsell Modal should be gone.");
+			//System.out.println("clickXtoCloseUpsellModal(). Upsell Modal should be gone.");
 			return true;
 		}
 		System.out.println("clickXtoCloseUpsellModal() : Returned False. Couldn't find Cancel Button.");
@@ -199,8 +213,85 @@ public class UpsellPage extends Page{
 	 * sk - 1/15
 	 * @return status ifSubscribe to AA button is enabled
 	 */
-	public boolean isPremiumButtonActive(){
+	public boolean isPremiumButtonActive() {
 		return (isEnabled(IHRPremiumUpsellViewSubscribePremiumButtonUIButton));
 	}
 	
+	/**
+	 * sk - 2/10
+	 * @return the replaySongUpsellText
+	 */	
+	public IOSElement getReplaySongUpsellText() {
+		return replaySongsUpsellText;
+	}
+	
+	public void assertPlaylistUpsell(String type,String text) {
+		if (type == "Free") {
+			Assert.assertEquals("Album Upsell should display", "Create unlimited playlists. Try iHeartRadio All Access.", text );	
+			//assert plus and premium subscribe buttons are activated
+			Assert.assertTrue("Upsell page at 'Album overflow - Add to Playlist' for free user should not have Plus subs button deactivated", upsellPage.isPlusButtonActive());					
+			Assert.assertTrue("Upsell page at 'Album overflow - Add to Playlist' for free user should not have Premium subs button deactivated", upsellPage.isPremiumButtonActive());
+			System.out.println("Artist Profile page - Add to Playlist upsell text verified; plus and premium subs buttons are activated for free user.");				
+			
+		}
+		else if (type == "Plus") {
+			Assert.assertEquals("Album Upsell should display", "Create unlimited playlists. Try iHeartRadio All Access.", text );
+			//To do - assert plus and premium buttons are activated
+			Assert.assertFalse("Upsell page at 'Album overflow - Save Song' for plus user should not have Plus subs button deactivated", 
+					upsellPage.isPlusButtonActive());	
+			Assert.assertTrue("Upsell page at 'Album overflow - Save Song' for plus user should not have Premium subs button deactivated", 
+					upsellPage.isPremiumButtonActive());
+			System.out.println("Artist Profile Page - Add to Playlist upsell text verified; plus subs button is not enabled and premium subs button is enabled for plus user");
+		}
+	}
+	
+	//sk - 11/21
+	public void assertTrackUpsell(String type, String text) {
+		if (type == "Free") {
+			Assert.assertEquals("Song Upsell should display", "Save any song you want. Try iHeartRadio All Access.",text);
+			Assert.assertTrue("Upsell page at 'Album overflow - Save Song' for free user should not have Plus subs button deactivated", 
+					upsellPage.isPlusButtonActive());	
+			Assert.assertTrue("Upsell page at 'Album overflow - Save Song' for free user should not have Premium subs button deactivated", 
+					upsellPage.isPremiumButtonActive());
+			System.out.println("Album Profile Page - Save Song Upsell text verified; plus and premium subs buttons are activated for free user.");		
+		}
+		else if (type == "Plus") {
+			Assert.assertEquals("Song Upsell should display", "Save any song you want. Try iHeartRadio All Access.",text);
+			Assert.assertFalse("Upsell page at 'Album overflow - Save Song' for plus user should not have Plus subs button deactivated", 
+					upsellPage.isPlusButtonActive());	
+			Assert.assertTrue("Upsell page at 'Album overflow - Save Song' for plus user should not have Premium subs button deactivated", 
+					upsellPage.isPremiumButtonActive());
+			System.out.println("Album Profile Page - Save Song upsell text verified; plus subs button is not enabled and premium subs button is enabled for plus user");			
+		}
+	}
+	
+	public void assertAlbumUpsell(String type,String text) {
+		if (type == "Free") {
+			Assert.assertEquals("Album Upsell should display", "Save any album you want. Try iHeartRadio All Access.", text );
+			Assert.assertTrue("Upsell page at 'Album overflow - Save Album' for free user should not have Plus subs button deactivated", 
+				upsellPage.isPlusButtonActive());	
+			Assert.assertTrue("Upsell page at 'Album overflow - Save Album' for free user should not have Premium subs button deactivated", 
+				upsellPage.isPremiumButtonActive());
+			System.out.println("Artist Profile Page - Album upsell text verified; plus and premium subs buttons are activated for free user.");
+		}
+		else if (type == "Plus") {
+			Assert.assertEquals("Album Upsell should display", "Save any album you want. Try iHeartRadio All Access.", text);
+			Assert.assertFalse("Upsell page at 'Album overflow - Save Song' for plus user should not have Plus subs button deactivated", 
+					upsellPage.isPlusButtonActive());	
+			Assert.assertTrue("Upsell page at 'Album overflow - Save Song' for plus user should not have Premiu subs button deactivated", 
+					upsellPage.isPremiumButtonActive());
+			System.out.println("Artist Profile Page - Album upsell text verified; plus subs button is not enabled and premium subs button is enabled for plus user");
+		}		
+	}
+	
+	public void replaySongUpsell(String type,String text) {
+		if (type == "Free") {
+			Assert.assertEquals("Replay Upsell should display", "Encore! Instantly replay songs on the radio with iHeartRadio Plus.", text );
+			Assert.assertTrue("Upsell page at 'Player - Replay' for free user should not have Plus subs button deactivated", 
+				upsellPage.isPlusButtonActive());	
+			Assert.assertTrue("Upsell page at 'Album overflow - Save Album' for free user should not have Premium subs button deactivated", 
+				upsellPage.isPremiumButtonActive());
+			System.out.println("Artist Profile Page - Album upsell text verified; plus and premium subs buttons are activated for free user.");
+		}		
+	}
 }

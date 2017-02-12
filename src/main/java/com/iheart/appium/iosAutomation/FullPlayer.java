@@ -129,31 +129,31 @@ public class FullPlayer extends Page {
     	printElementInformation(NavBarShareButtonUIButton);
     	//printElementInformation(IHRCastingBarButtonItemUIButton);
     	System.out.println("Checking Slider elements...");
-    	printElementInformation(PlayerSliderViewPositionLabelUILabel);
-    	printElementInformation(PlayerSliderViewDurationLabelUILabel);
+    	printElementName(PlayerSliderViewPositionLabelUILabel);
+    	printElementName(PlayerSliderViewDurationLabelUILabel);
     	printElementInformation(PlayerSliderViewProgressSliderUISlider);
     	printElementInformation(PlayerImageViewImageViewUIImageView);
         //IHROptionMenuView
     	fullPlayer.clickMoreInfoButton();
     	System.out.println("Checking Option Menu View elements...");
-    	printElementInformation(IHROptionMenuViewMenuContainerUIView);
-    	printElementInformation(IHROptionMenuViewMetadataViewUIView);
-    	printElementInformation(IHROptionMenuViewUpperContainerUIView);
+    	printElementName(IHROptionMenuViewMenuContainerUIView);
+    	printElementName(IHROptionMenuViewMetadataViewUIView);
+    	printElementName(IHROptionMenuViewUpperContainerUIView);
     	printElementInformation(IHROptionMenuViewDividerViewUIView);
     	printElementInformation(IHROptionMenuViewButtonsContainerUIView);
-    	printElementInformation(BuySongButton);
-    	printElementInformation(LyricsButton);
-    	printElementInformation(GoToArtistProfileButton);
-    	printElementInformation(IHROptionMenuViewCancelButtonUIButton);
-    	printElementInformation(IHROptionMenuMetadataViewImageViewUIImageView);
-    	printElementInformation(IHROptionMenuMetadataViewLabelContainerUIView);
-    	printElementInformation(IHROptionMenuMetadataViewTitleLabelUILabel);
-    	printElementInformation(IHROptionMenuMetadataViewSubTitleLabelUILabel);
+    	printElementName(BuySongButton);
+    	printElementName(LyricsButton);
+    	printElementName(GoToArtistProfileButton);
+    	printElementName(IHROptionMenuViewCancelButtonUIButton);
+    	printElementName(IHROptionMenuMetadataViewImageViewUIImageView);
+    	printElementName(IHROptionMenuMetadataViewLabelContainerUIView);
+    	printElementName(IHROptionMenuMetadataViewTitleLabelUILabel);
+    	printElementName(IHROptionMenuMetadataViewSubTitleLabelUILabel);
     	
     	if(fullPlayer.clickMoreLyricsButtonIfEnabled()){
     		System.out.println("Checking Lyrics Elements...");
-    		printElementInformation(LyricsVCLyricsTextUIView);
-    		printElementInformation(LyricsVCArtistNameLabelUILabel);
+    		printElementName(LyricsVCLyricsTextUIView);
+    		printElementName(LyricsVCArtistNameLabelUILabel);
     		printElementInformation(LyricsVCTrackNameLabelUILabel);
     		fullPlayer.clickNavBarBackButton(); //This goes back to FullPlayers
     	}else{
@@ -161,30 +161,30 @@ public class FullPlayer extends Page {
     	}
     	//IHRPlayerTitleView
     	System.out.println("Checking Title View elements... Station Name and Station Type");
-    	printElementInformation(IHRPlayerTitleViewTitleLabelUILabel);
-    	printElementInformation(IHRPlayerTitleViewSubTitleLabelUILabel);
+    	printElementName(IHRPlayerTitleViewTitleLabelUILabel);
+    	printElementName(IHRPlayerTitleViewSubTitleLabelUILabel);
     	//IHRPlayerBackgroundView
     	System.out.println("Checking Background View elements...");
     	printElementInformation(IHRPlayerBackgroundViewImageViewUIImageView);
     	printElementInformation(IHRPlayerBackgroundViewVisualEffectViewUIVisualEffectView);
     	//interface IHRPlayerView 
     	System.out.println("Checking FullPlayer elements...like Play Button, Skip, More Info, Thumbs, and Song Title/Artist");
-    	printElementInformation(IHRPlayerViewBackgroundImageViewUIImageView);
+    	printElementName(IHRPlayerViewBackgroundImageViewUIImageView);
     	printElementInformation(IHRPlayerViewImageViewUIImageView);
     	printElementInformation(IHRPlayerViewCenterViewUIView);
-    	printElementInformation(IHRPlayerViewSliderViewUIView);
+    	printElementName(IHRPlayerViewSliderViewUIView);
     	printElementInformation(IHRPlayerViewButtonContainerUIView);
     	printElementInformation(IHRPlayerViewPlayButtonUIButton);
-    	printElementInformation(IHRPlayerViewForwardButtonUIButton);
-    	printElementInformation(IHRPlayerMoreButtonUIButton);
-    	printElementInformation(IHRPlayerViewThumbDownButtonUIButton);
-    	printElementInformation(IHRPlayerViewThumbUpButtonUIButton);
-    	printElementInformation(IHRPlayerViewLabelContainerUIView);
+    	printElementName(IHRPlayerViewForwardButtonUIButton);
+    	printElementName(IHRPlayerMoreButtonUIButton);
+    	printElementName(IHRPlayerViewThumbDownButtonUIButton);
+    	printElementName(IHRPlayerViewThumbUpButtonUIButton);
+    	printElementName(IHRPlayerViewLabelContainerUIView);
     	printElementInformation(IHRPlayerViewTitleLabelUILabel);
-    	printElementInformation(IHRPlayerViewSubTitleLabelUILabel);
+    	printElementName(IHRPlayerViewSubTitleLabelUILabel);
     	System.out.println("Checking if Replay and Save Buttons exist on FullPlayer");
-    	printElementInformation(IHRPlayerReplayButtonUIButton);
-    	printElementInformation(IHRPlayerSaveButtonUIButton);     
+    	printElementName(IHRPlayerReplayButtonUIButton);
+    	printElementName(IHRPlayerSaveButtonUIButton);     
     }
     /**
      * Clicks the Down Arrow at the top of FullPlayer to minimize it into MiniPlayer. 
@@ -198,14 +198,14 @@ public class FullPlayer extends Page {
      * This method has the same functionality as above but different wording to keep up the 'click' actions idea. 
      */
     public void clickDownArrowOnNavBarToMinimizeFullPlayer(){
-    	System.out.println("clickDownArrowOnNavBarToMinimizeFullPlayer()");
+    	//System.out.println("clickDownArrowOnNavBarToMinimizeFullPlayer()");
     	PlayerViewMinimizePlayerDownarrowUIButton.click();
     }
     /**
      * Clicks the Play, Pause, Stop etc Button on the Full Player.
      */
     public void clickPlayButton(){
-    	System.out.println("clickPlayButton()");
+    	//System.out.println("clickPlayButton()");
     	IHRPlayerViewPlayButtonUIButton.click();
     }
     
@@ -213,7 +213,7 @@ public class FullPlayer extends Page {
      * Clicks the Thumb Up Button. It can already be selected. 
      */
     public void clickThumbUpButton(){
-    	System.out.println("clickThumbUpButton()");
+    	//System.out.println("clickThumbUpButton()");
     	IHRPlayerViewThumbUpButtonUIButton.click();
     }
     
@@ -221,7 +221,7 @@ public class FullPlayer extends Page {
      * Clicks the Thumb Down button. It can already be selected. 
      */
     public void clickThumbDownButton(){
-    	System.out.println("clickThumbDownButton()");
+    	//System.out.println("clickThumbDownButton()");
     	IHRPlayerViewThumbDownButtonUIButton.click();
     }
     
@@ -344,11 +344,11 @@ public class FullPlayer extends Page {
 	 * Clicks Cancel Button on the bottom of the Share Menu. Expect to return to Full Player. 
 	 */
 	public void clickCancelOnShareMenuToReturnToFullPlayer(){
-		IOSElement cancelButton = waitForVisible(driver, By.name("Cancel"), 10);
+		IOSElement cancelButton = waitForVisible(driver, By.name("Cancel"), 5);
 		if(cancelButton !=null){
 			cancelButton.click();
 		}
-		System.out.println("clickCancelOnShareMenuToReturnToFullPlayer(). ");
+		//System.out.println("clickCancelOnShareMenuToReturnToFullPlayer(). ");
 		
 	}
 	/**
@@ -672,6 +672,7 @@ public class FullPlayer extends Page {
     			AddToPlaylistButton.click();
     			System.out.println("AddToPlaylistButton was clicked for PLUS User - Expect Upsell Modal to appear");
     			return upsellPage.isUpsellModalOpen();
+    			//return upsellPage.isad
     		}else if(entitlement.equals("ALLACCESS")){
     			AddToPlaylistButton.click();
     			System.out.println("AddToPlaylistButton was clicked for ALLACCESS User - Expect Add to Playlist Modal to appear");

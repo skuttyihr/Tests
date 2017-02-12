@@ -21,10 +21,11 @@ public class TestArtistProfile extends TestRoot {
 	@Rule
 	public ScreenshotRule screenshot = new ScreenshotRule();
 
-	//@Test
+	@Test
+	//Pass
 	public void testArtistHero_ARTP1_FREE(){
 		LocalTime before = consoleLogStart("Testing elements on Artist Profile Page - testArtistProfileElements()");
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("artistProfilePage//@Test.com", "test", "FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("artistProfilePage@Test.com", "test", "FREE"));
 		homePage.clickMyStationsTab();
 		//This should play Red Hot Chili Peppers Radio - the only favorite for this account.
 		homePage.clickCertainCellOnMyStationsToBeginPlaying(1);
@@ -34,10 +35,12 @@ public class TestArtistProfile extends TestRoot {
 		consoleLogEnd(before, true, "Tested testArtistHero_ARTP1_FREE().");
 		
 	}
-	//@Test
+	
+	@Test	
+	//Pass
 	public void testArtistBio_ARTP2_FREE(){
 		LocalTime before = consoleLogStart("Testing elements on Artist Profile Page - testArtistBio_ARTP2_FREE()");
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("artistProfilePage//@Test.com", "test", "FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("artistProfilePage@Test.com", "test", "FREE"));
 		homePage.clickMyStationsTab();
 		//This should play Red Hot Chili Peppers Radio - the only favorite for this account.
 		homePage.clickCertainCellOnMyStationsToBeginPlaying(1);
@@ -46,10 +49,11 @@ public class TestArtistProfile extends TestRoot {
 		artistProfilePage.printArtistBioElements();
 		consoleLogEnd(before, true, "Tested testArtistBio_ARTP2_FREE().");
 	}
-	//@Test
+	
+	@Test
 	public void testLatestReleaseTopSongsAlbumsRelatedPopular_ARTP3_FREE(){
 		LocalTime before = consoleLogStart("Testing elements on Artist Profile Page - testLatestReleaseTopSongsAlbumsRelatedPopular_ARTP3_FREE()");
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("artistProfilePage//@Test.com", "test", "FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("artistProfilePage@Test.com", "test", "FREE"));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		searchPage.enterTextIntoSearchBar("nicki minaj");
 		searchPage.clickTopResult();
@@ -68,19 +72,21 @@ public class TestArtistProfile extends TestRoot {
 		consoleLogEnd(before, true, "Tested testLatestReleaseTopSongsAlbumsRelatedPopular_ARTP3_FREE().");
 	}
 	
-	//@Test
+	@Test
+	//Pass
 	public void testAlbumsAndAlbumProfile_ARTP4_FREE(){
 		LocalTime before = consoleLogStart("Testing elements on Artist Profile Page - testAlbumsAndAlbumProfile_ARTP4_FREE()");
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("artistProfilePage//@Test.com", "test", "FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("artistProfilePage@Test.com", "test", "FREE"));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		searchPage.enterTextIntoSearchBar("britney");
 		searchPage.clickTopResult();
 		artistProfilePage.scrollArtistProfilePageDown();
 		artistProfilePage.scrollArtistProfilePageDown();
 		artistProfilePage.scrollArtistProfilePageDown();
+		//sk - 2/8 - commenting out for now
 		artistProfilePage.clickShowAllAlbumsCellButton();
 		Assert.assertFalse("Play Button should NOT show up on 'All Albums' page.", artistProfilePage.isCurrentlyOnPlayButton());
-		artistProfilePage.printAllAlbumsInformation();
+		//artistProfilePage.printAllAlbumsInformation();
 		artistProfilePage.clickFirstAlbumCell();
 		Assert.assertFalse("Play Button should NOT show up on 'Album Profile'", artistProfilePage.isCurrentlyOnPlayButton());
 		artistProfilePage.printAlbumProfileInformation();
@@ -88,16 +94,18 @@ public class TestArtistProfile extends TestRoot {
 	}
 	
 	
-	//@Test
+	@Test
+	//Pass
 	public void testFunctions_ARTP5_FREE(){
 		LocalTime before = consoleLogStart("Testing methods on testFunctions_ARTP5_FREE");
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("artistProfileFunctions//@Test.com", "test", "FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("artistProfileFunctions@Test.com", "test", "FREE"));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		searchPage.enterTextIntoSearchBar("Rihanna");
 		searchPage.clickTopResult();
 		Assert.assertTrue("Artist Profile should be open for Rihanna", artistProfilePage.isCurrentlyOnArtistProfilePage());
 		Assert.assertTrue("MiniPlayer should be open for Rihanna", miniPlayer.isCurrentlyOnMiniPlayer());
-		Assert.assertEquals("Rihanna's Latest Release should be 'Love On The Brain'", "Love On The Brain", artistProfilePage.getLatestReleaseAlbumTitle());
+		//sk - 2/10 - updated the Latest Release track for Rihanna
+		Assert.assertEquals("Rihanna's Latest Release should be 'Sex With Me (Dance Remixes)'", "Sex With Me (Dance Remixes)", artistProfilePage.getLatestReleaseAlbumTitle());
 		artistProfilePage.clickFirstTopSongsCell();
 		miniPlayer.openFullPlayer();
 		Assert.assertEquals("Clicking on a Top Song should have started Artist Radio", "Artist Radio", fullPlayer.getStationType());
@@ -109,7 +117,7 @@ public class TestArtistProfile extends TestRoot {
 	}
 	
 
-	//@Test
+/*	//@Test
 	public void testFunctions_ARTP6_PLUS(){
 		LocalTime before = consoleLogStart("Testing methods on testFunctions_ARTP6_PLUS");
 		System.out.println("This test case still needs work. Thinking is that there must be differences we should expect for PLUS users as they navigate");
@@ -123,5 +131,5 @@ public class TestArtistProfile extends TestRoot {
 		System.out.println("What is different for ALLA Users on Artist Profile Page? Navigating Album Profile, Song to Start, Overflow buttons and their options. Any Save to or Add to playlist? modals" );
 		
 		consoleLogEnd(before, true, "Tested testFunctions_ARTP7_ALLA()");
-	}
+	} */
 }

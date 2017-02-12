@@ -154,37 +154,42 @@ public class HomePage extends Page {
 		printElementInformation(NavBarSideMenuButtonUIButton);
 		//printElementInformation(iheartradio_logo_full);
 		//printElementInformation(IHRCastingBarButtonItemUIButton);
-		printElementInformation(NavBarSearchBarButtonUIButton);
+	/*	printElementInformation(NavBarSearchBarButtonUIButton);
 		printElementInformation(HomeSegmentedControlTitleLabelUIButtonForYou);
 		printElementInformation(HomeSegmentedControlTitleLabelUIButtonMyStations);
-		printElementInformation(HomeSegmentedControlTitleLabelUIButtonMyMusic);
+		printElementInformation(HomeSegmentedControlTitleLabelUIButtonMyMusic); */
+		
+		printElementName(NavBarSearchBarButtonUIButton);
+		printElementName(HomeSegmentedControlTitleLabelUIButtonForYou);
+		printElementName(HomeSegmentedControlTitleLabelUIButtonMyStations);
+		printElementName(HomeSegmentedControlTitleLabelUIButtonMyMusic);
 		//FOR YOU Cells
 		System.out.println("::::Free Trial Upsell Message");
 		printElementInformation(takeControlOfTheRadioTitle);
 		//printElementInformation(forYouUpsellCloseX);
-		printElementInformation(freeTrialUpsellButton);
-		printElementInformation(upsellMessage);
+		printElementName(freeTrialUpsellButton);
+		printElementName(upsellMessage);
 		System.out.println("::::printForYouElements() on HomePage -> For You Cells");
-		printElementInformation(ForYouTabCollectionView);
-		printElementInformation(ForYouCellNumber0);
-		printElementInformation(ForYouCellNumber1);
-		printElementInformation(ForYouCellNumber2);
-		printElementInformation(ForYouCellNumber3);
-		printElementInformation(ForYouCellNumber4);
+		printElementName(ForYouTabCollectionView);
+		printElementName(ForYouCellNumber0);
+		printElementName(ForYouCellNumber1);
+		printElementName(ForYouCellNumber2);
+/*		printElementName(ForYouCellNumber3);
+		printElementName(ForYouCellNumber4);
 		printElementInformation(ForYouCellNumber5);
-		printElementInformation(ForYouCellNumber6);
+		printElementInformation(ForYouCellNumber6); */
 		System.out.println("::::showAllElements() on HomePage -> For You Second Page Cells");
 		scrollDown();
-		printElementInformation(ForYouCellNumber7);
+/*		printElementInformation(ForYouCellNumber7);
 		printElementInformation(ForYouCellNumber8);
 		printElementInformation(ForYouCellNumber9);
+*/		scrollDown();
 		scrollDown();
-		scrollDown();
-		printElementInformation(ForYouCellNumber10);
+/*		printElementInformation(ForYouCellNumber10);
 		printElementInformation(ForYouCellNumber11);
 		printElementInformation(ForYouTCShowMoreButtonUIButton);
-		//Clicking Show More opens 12 more cells. 
-		printElementInformation(ForYouTCRecommendationButtonUIButton);
+*/		//Clicking Show More opens 12 more cells. 
+		printElementName(ForYouTCRecommendationButtonUIButton);
 	}
 	/**
 	 * Prints out the elements on the My Stations Tab. 
@@ -194,21 +199,23 @@ public class HomePage extends Page {
 		System.out.println("::::showAllElements() on HomePage -> My Stations -> Favorites");// Should be 4 artist radios, one Favorites Radio, and 2 Radio Stations (based on what I favorited).
 		printElementInformation(MyStationsTabCollectionView); //Collection is the same AID as For You. 
 		printElementInformation(SavedStations); //Header at the top - Now says Saved Stations instead of Favorite Stations
-		printElementInformation(FavoritesCellNumber0);
-		printElementInformation(FavoritesCellNumber1);
-		printElementInformation(FavoritesCellNumber2);
+		printElementName(FavoritesCellNumber0);
+		printElementName(FavoritesCellNumber1);
+		//sk - 2/10 - commenting out a few that can be added back for regression
+		//at this point, the test that Saved Stations are seen under My Stations is verified
+	/*	printElementInformation(FavoritesCellNumber2);
 		printElementInformation(FavoritesCellNumber3);
 		printElementInformation(FavoritesCellNumber4);
 		printElementInformation(FavoritesCellNumber5);
-		printElementInformation(FavoritesCellNumber6);
+		printElementInformation(FavoritesCellNumber6); */
 		scrollDown();
 		//My Stations - Recent Stations
 		System.out.println("::::showAllElements() on HomePage -> My Stations -> Recents");
-		printElementInformation(RecentlyPlayed); //Header at the top
-		printElementInformation(RecentsCellNumber0);
-		printElementInformation(RecentsCellNumber1);
-		printElementInformation(RecentsCellNumber2);
-		scrollDown();
+		printElementName(RecentlyPlayed); //Header at the top
+		printElementName(RecentsCellNumber0);
+		printElementName(RecentsCellNumber1);
+		printElementName(RecentsCellNumber2);
+/*		scrollDown();
 		printElementInformation(RecentsCellNumber3);
 		printElementInformation(RecentsCellNumber4);
 		printElementInformation(RecentsCellNumber5);
@@ -219,7 +226,7 @@ public class HomePage extends Page {
 		scrollDown();
 		scrollDown();
 		printElementInformation(FavoritesShowMoreButtonUIButton);
-
+*/
 	}
 	private enum CellStrings {
 		LOCALRADIO("LocalRadio"), RECENTS("Recents"), FAVORITES("Favorites"), FORYOU("ForYou");

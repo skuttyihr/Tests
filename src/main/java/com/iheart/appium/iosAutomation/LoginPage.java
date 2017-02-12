@@ -55,8 +55,7 @@ public class LoginPage extends Page {
 	private IOSElement IHRAuthorizationViewFacebookButtonUIButton;
 	@iOSFindBy(accessibility = "IHRAuthorizationView-GoogleButton-UIButton")
 	private IOSElement IHRAuthorizationViewGoogleButtonUIButton;
-	@iOSFindBy(accessibility = "Open")
-	private IOSElement openButton;
+	@iOSFindBy(accessibility = "Open") private IOSElement openButton;
 
 	// Web Elements for Facebook Login
 	@iOSFindBy(accessibility = "Email or Phone")
@@ -75,31 +74,23 @@ public class LoginPage extends Page {
 	private WebElement facebookLogin;
 
 	// Native version
-	@iOSFindBy(className = "XCUIElementTypeTextField")
-	private IOSElement fbemailField;
-	@iOSFindBy(className = "XCUIElementTypeSecureTextField")
-	private IOSElement fbpasswordField;
-	@iOSFindBy(id = "Log In")
-	private IOSElement fbloginButton;
-	@iOSFindBy(id = "OK")
-	private IOSElement btnAuthorize;
+	@iOSFindBy(className = "XCUIElementTypeTextField") private IOSElement fbemailField;
+	@iOSFindBy(className = "XCUIElementTypeSecureTextField") private IOSElement fbpasswordField;
+	@iOSFindBy(id = "Log In") private IOSElement fbloginButton;
+	@iOSFindBy(id = "OK") private IOSElement btnAuthorize;
+	
+	//sk - 2/6/17
+	@iOSFindBy(className = "XCUIElementTypeTextField") private IOSElement txtEmail;
+	@iOSFindBy(id = "NEXT") private IOSElement btnNext;
+	@iOSFindBy(className = "XCUIElementTypeSecureTextField") private IOSElement txtPasswd;
+	@iOSFindBy(id = "SIGN IN") private IOSElement btnSubmit;
+	@iOSFindBy(id = "ALLOW") private IOSElement btnAllow;
+	@iOSFindBy(accessibility = "Open this page in “iHeartRadio”?") private IOSElement openInAppPrompt;
 
-	@iOSFindBy(className = "UIATextField")
-	private IOSElement txtEmail;
-	@iOSFindBy(id = "Next")
-	private IOSElement btnNext;
-	@iOSFindBy(id = "Password")
-	private IOSElement txtPasswd;
-	@iOSFindBy(id = "Sign in")
-	private IOSElement btnSubmit;
-	@iOSFindBy(id = "Allow")
-	private IOSElement btnAllow;
 
 	// for first-timer
-	@iOSFindBy(accessibility = "Continue")
-	private WebElement continueButton; // for first-time login user
-	@iOSFindBy(accessibility = "Allow")
-	private WebElement allowButton;
+	@iOSFindBy(accessibility = "Continue") private WebElement continueButton; // for first-time login user
+	@iOSFindBy(accessibility = "Allow") private WebElement allowButton;
 
 	public LoginPage() {
 		super();
@@ -128,7 +119,7 @@ public class LoginPage extends Page {
 	}
 
 	public void clearLoginEmailAddress() {
-		System.out.println("clearLoginEmailAddress()");
+		//System.out.println("clearLoginEmailAddress()");
 		IHRAuthorizationViewEmailAddressTextField.clear();
 	}
 
@@ -150,7 +141,7 @@ public class LoginPage extends Page {
 	}
 
 	public void clearLoginPassword() {
-		System.out.println("clearLoginPassword()");
+		//System.out.println("clearLoginPassword()");
 		IHRAuthorizationViewPasswordTextField.clear();
 	}
 
@@ -158,7 +149,7 @@ public class LoginPage extends Page {
 	 * Click Facebook Login Button
 	 */
 	public void clickFacebookLoginButton() {
-		System.out.println("clickFacebookLoginButton()");
+		//System.out.println("clickFacebookLoginButton()");
 		IHRAuthorizationViewFacebookButtonUIButton.click();
 	}
 
@@ -166,7 +157,7 @@ public class LoginPage extends Page {
 	 * Click Google Login Button
 	 */
 	public void clickGoogleLoginButton() {
-		System.out.println("clickGoogleLoginButton()");
+		//System.out.println("clickGoogleLoginButton()");
 		IHRAuthorizationViewGoogleButtonUIButton.click();
 	}
 
@@ -183,7 +174,7 @@ public class LoginPage extends Page {
 	 * Click the Forgot your Password? button to reset your account's password.
 	 */
 	public void clickForgotYourPasswordButton() {
-		System.out.println("clickForgotYourPasswordButton()");
+		//System.out.println("clickForgotYourPasswordButton()");
 		IHRAuthorizationViewForgotPasswordButtonUIButton.click();
 	}
 
@@ -192,16 +183,16 @@ public class LoginPage extends Page {
 	 * password and clicks Log in. Minimizes player, handles pop-ups. Selects
 	 * Alternative genre.
 	 */
-
+	//sk - 2/8 - commented out a few print to console statements - can readd for regression
 	public void loginWithCredentials(String email, String password) {
-		System.out.println("about to loginWithCredentials(email, password)...");
+		//System.out.println("about to loginWithCredentials(email, password)...");
 		onboardingPage.clickOnboardingLoginButton();
 		waitForElementToBeVisible(IHRAuthorizationViewEmailAddressTextField, 5);
 		enterLoginEmailAddress(email);
 		enterLoginPassword(password);
-		System.out.println("Sent keys for Username and Password and about to click LogInAuthButton");
+		//System.out.println("Sent keys for Username and Password and about to click LogInAuthButton");
 		clickLogInAuthButton();
-		System.out.println("Clicked LogInAuthButton.");
+		//System.out.println("Clicked LogInAuthButton.");
 		chooseStayConnected(false);
 		// Dismiss zip code
 		Page.enterZip("");
@@ -313,19 +304,21 @@ public class LoginPage extends Page {
 		onboardingPage.clickOnboardingLoginButton();
 		clickGoogleLoginButton();
 		if (waitForElementToBeVisible(txtEmail, 2)) {
-			txtEmail.click();
+			System.out.println("Google email field is displayed");
+			txtEmail.tap(1, 20);
 			txtEmail.sendKeys(GOOGLEUSERNAME);
 		}
+		if (waitForElementToBeVisible(btnNext, 4))
+			btnNext.click();
+		if (waitForElementToBeVisible(txtPasswd, 8))
+			txtPasswd.sendKeys(GOOGLEPASSWORD);
 		if (waitForElementToBeVisible(btnNext, 2))
 			btnNext.click();
-		if (waitForElementToBeVisible(txtPasswd, 2))
-			txtPasswd.sendKeys(GOOGLEPASSWORD);
-		if (waitForElementToBeVisible(btnSubmit, 2))
-			btnSubmit.click();
 		if (waitForElementToBeVisible(btnAllow, 2))
 			btnAllow.click();
-		if (waitForElementToBeVisible(openButton, 5))
+		if (waitForElementToBeVisible(openInAppPrompt, 5))
 			openButton.click();
+		TestRoot.sleep(4000);
 		dismissStayConnectedPopup();
 		dismissLoginPopups();
 		return settingsPage.isLoggedIn();
@@ -343,7 +336,7 @@ public class LoginPage extends Page {
 			if (stayConnected)
 				waitForVisible(driver, By.name("Get Notifications"), 2).click();
 			else
-				waitForVisible(driver, By.name("Maybe Later"), 2).click();
+				waitForVisible(driver, By.name("Maybe Later"), 1).click();
 		} catch (Exception e) {
 		}
 	}
@@ -363,12 +356,12 @@ public class LoginPage extends Page {
 	}
 
 	public void tapBack() {
-		System.out.println("Hitting 'Back' from LoginPage to go back to OnboardingPage");
+		//System.out.println("Hitting 'Back' from LoginPage to go back to OnboardingPage");
 		NavBarBackButton.click();
 	}
 
 	public boolean loginVerifyEntitlement(String email, String password, String entitlementType) {
-		System.out.println("loginVerifyEntitlement()...");
+		//System.out.println("loginVerifyEntitlement()...");
 		boolean loggedIn = false;
 		boolean doesEntitlementMatch = false;
 		// Log in

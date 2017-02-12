@@ -1099,4 +1099,36 @@ public class TestRoot{
 		return (findElement(driver, By.id(value)));
 	}
 	
+	/**
+	 * sk - 2/8 - method to print out Element Names as they appear in the app.
+	 * @param element
+	 * @return
+	 */
+	public boolean printElementName(IOSElement element) {
+		String getText = "";
+		String value = "";
+		String label = "";
+			
+		if (!(isVisible(element)) ) {
+			System.out.println("Element is null or is not visible.");
+			return false;
+		} 
+		else {				
+			getText = element.getAttribute("name");
+			value = element.getAttribute("value");
+			label = element.getAttribute("label");
+		}			
+		if ( getText != null) 
+			System.out.println("Element '" + getText + "' is displayed.");
+		else if (value != null) 
+			System.out.println("Element '" + value + "' is displayed.");
+		else if (label != null)
+			System.out.println("Element '" + label + "' is displayed.");
+		else
+			System.out.println("Element '" + element.getTagName() + "' is displayed.");
+
+		return element.isDisplayed();
+
+	}
+	
 }

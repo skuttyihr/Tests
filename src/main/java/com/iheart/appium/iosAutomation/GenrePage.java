@@ -93,7 +93,7 @@ public class GenrePage extends Page {
 	 */
 	public String getTitleLabelText(){
 		String title = IHRGenrePickerViewControllerTitleLabelUILabel.getText();
-		System.out.println("getTitleLabelText() : " + title);
+		//System.out.println("getTitleLabelText() : " + title);
 		return title;
 	}
 	/**
@@ -103,7 +103,7 @@ public class GenrePage extends Page {
 	 */
 	public String getSubtitleLabelText(){
 		String subtitle = IHRGenrePickerViewControllerSubtitleLabelUILabel.getText();
-		System.out.println("getSubtitleLabelText() : " + subtitle);
+		//System.out.println("getSubtitleLabelText() : " + subtitle);
 		return subtitle;
 	}
 	/**
@@ -157,7 +157,7 @@ public class GenrePage extends Page {
 		Errors err = new Errors();
 		for(int i : gs){
 			String genre = "IHRGenrePickerViewController-Cell-UICollectionViewCell-" + gs[i];
-			System.out.println("creating an IOSElement for Genre and clicking it : "+ genre );
+			//System.out.println("creating an IOSElement for Genre and clicking it : "+ genre );
 			if(waitForElementToBeVisible(findElement(driver, MobileBy.AccessibilityId(genre)), 5)){
 				findElement(driver, MobileBy.AccessibilityId(genre)).click();
 			}else{

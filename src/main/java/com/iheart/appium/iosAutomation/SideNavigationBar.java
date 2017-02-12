@@ -11,7 +11,7 @@ public class SideNavigationBar extends Page {
 
 	// ******* Side Navigation Bar *******
 	// @iOSFindBy(accessibility="nav")
-//	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIANavigationBar[1]/UIAButton[1]") public IOSElement navIcon;
+	//	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIANavigationBar[1]/UIAButton[1]") public IOSElement navIcon;
 	//private final String navIconString = "Side Menu";
 	//@iOSFindBy(accessibility = navIconString) public IOSElement navIcon;
 	@iOSFindBy(accessibility = "NavBar-SideMenuButton-UIButton") private IOSElement NavBarSideMenuButtonUIButton;
@@ -26,17 +26,16 @@ public class SideNavigationBar extends Page {
 	@iOSFindBy(accessibility = "Listening History") public IOSElement listeningHistory;
 	@iOSFindBy(accessibility = "Alarm Clock") public IOSElement alarm;
 	@iOSFindBy(accessibility = "Sleep Timer") public IOSElement sleep;
-//	@iOSFindBy(accessibility = "Songs") public IOSElement songs;
-	@iOSFindBy(accessibility = "Settings") public IOSElement settings;
-
-	// ****** End of Side Nav page ******
-
-	// Fields in Settings page
-	@iOSFindBy(accessibility = "Logged In As")
-	private IOSElement loggedInAs;
+	//@iOSFindBy(accessibility = "Songs") public IOSElement songs;		 +	//@iOSFindBy(accessibility = "Songs") public IOSElement songs;
+	/** 
+	 * sk 2/10 -- 7.2.0 - changes
+	 */
+	//@iOSFindBy(accessibility = "Settings") public IOSElement settings;		 +	//@iOSFindBy(accessibility = "Settings") public IOSElement settings;
+	@iOSFindBy(accessibility = "Account") public IOSElement settings;
+	@iOSFindBy(accessibility = "Logged In As") 	private IOSElement loggedInAs;
 	@iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[4]/UIAAlert[1]/UIACollectionView[1]/UIACollectionCell[2]/UIAButton[1]")
 	private IOSElement logout;
-
+	
 	public SideNavigationBar(IOSDriver<IOSElement> _driver) {
 		super(_driver);
 		setSideNavigationBar(this);
