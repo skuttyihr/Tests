@@ -1,4 +1,4 @@
-package com.iheart.appium.iosAutomation;
+package com.iheart.appium.utilities;
 
 import java.io.File;
 import java.io.InputStream;
@@ -32,6 +32,25 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import com.iheart.appium.iosAutomation.AlbumProfilePage;
+import com.iheart.appium.iosAutomation.ArtistProfileOverflowPage;
+import com.iheart.appium.iosAutomation.ArtistProfilePage;
+import com.iheart.appium.iosAutomation.DeepLink;
+import com.iheart.appium.iosAutomation.FullPlayer;
+import com.iheart.appium.iosAutomation.GenrePage;
+import com.iheart.appium.iosAutomation.HomePage;
+import com.iheart.appium.iosAutomation.LoginPage;
+import com.iheart.appium.iosAutomation.MiniPlayer;
+import com.iheart.appium.iosAutomation.OnboardingPage;
+import com.iheart.appium.iosAutomation.Page;
+import com.iheart.appium.iosAutomation.PodcastsPage;
+import com.iheart.appium.iosAutomation.ResetPasswordPage;
+import com.iheart.appium.iosAutomation.SearchPage;
+import com.iheart.appium.iosAutomation.SettingsPage;
+import com.iheart.appium.iosAutomation.SideNavigationBar;
+import com.iheart.appium.iosAutomation.SignUpPage;
+import com.iheart.appium.iosAutomation.UpsellPage;
 
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.MultiTouchAction;
@@ -782,7 +801,7 @@ public class TestRoot{
 	}
 
 	//// Waiting Methods ////
-	static boolean isVisible(IOSElement e) {
+	public static boolean isVisible(IOSElement e) {
 		boolean isVisible = false;
 		if (e == null) {
 			return false;
@@ -797,7 +816,7 @@ public class TestRoot{
 		return isVisible;
 	}
 
-	static boolean isEnabled(IOSElement e) {
+	public static boolean isEnabled(IOSElement e) {
 		boolean isEnabled = false;
 		if (e == null)
 			return false;

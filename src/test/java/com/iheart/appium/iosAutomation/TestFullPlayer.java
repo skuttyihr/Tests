@@ -9,6 +9,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
 
+import com.iheart.appium.utilities.TestRoot;
+
 public class TestFullPlayer extends TestRoot {
 
 	@Rule

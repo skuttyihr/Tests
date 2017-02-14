@@ -4,10 +4,11 @@ import java.time.LocalTime;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
+
+import com.iheart.appium.utilities.TestRoot;
 
 public class TestMiniPlayer extends TestRoot {
 

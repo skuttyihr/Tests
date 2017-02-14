@@ -6,9 +6,10 @@ import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
+
+import com.iheart.appium.utilities.TestRoot;
 
 public class TestOnboarding extends TestRoot {
 
