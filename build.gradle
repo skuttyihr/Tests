@@ -20,12 +20,13 @@ dependencies {
     compile 'org.apache.httpcomponents:httpclient:4.5.1'
     compile 'org.apache.commons:commons-lang3:3.4'
     compile 'org.apache.maven.surefire:surefire-api:2.19.1'
+    compile ':test-commons'
 }
 
 sourceSets {
     test{
         java{
-            srcDirs = ['src/test/java', 'src/main/java']
+            srcDirs = ['src/test-commons/src/main/java', 'src/test/java', 'src/main/java']
             
         }
         resources{
@@ -45,4 +46,14 @@ test{
     systemProperties = System.getProperties()
 }
 
+eclipse {
+	classpath {
+		file {
+			withXml {
+				def node = it.asNode()
+				node.remove (node.find { it.@path == '/test-commons' } )
+			}
+		}
+	}
+}
 
