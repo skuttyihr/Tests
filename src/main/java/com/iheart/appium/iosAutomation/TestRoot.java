@@ -344,8 +344,7 @@ public class TestRoot{
 			System.out.println("Element is null or is not visible.");
 			return false;
 		} 
-		else 
-		{				
+		else {				
 			getText = element.getAttribute("name");
 			value = element.getAttribute("value");
 			label = element.getAttribute("label");

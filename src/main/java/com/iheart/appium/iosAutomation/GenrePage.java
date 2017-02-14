@@ -27,7 +27,6 @@ public class GenrePage extends Page {
 	@iOSFindBy(accessibility = "IHRGenrePickerViewController-DoneButton-UIButton") 				public IOSElement IHRGenrePickerViewControllerDoneButtonUIButton;
 	@iOSFindBy(accessibility = "IHRGenrePickerViewController-BottomBar-UIView") 				public IOSElement IHRGenrePickerViewControllerBottomBarUIView;
 	@iOSFindBy(accessibility = "IHRGenrePickerViewController-GenreCollectionView-UICollectionView") public IOSElement IHRGenrePickerViewControllerGenreCollectionViewUICollectionView;
-
 	@iOSFindBy(accessibility = "IHRGenrePickerViewController-Cell-UICollectionViewCell-0") 		public IOSElement IHRGenrePickerViewControllerCellUICollectionViewCell0;
 	@iOSFindBy(accessibility = "IHRGenrePickerViewController-Cell-UICollectionViewCell-1") 		public IOSElement IHRGenrePickerViewControllerCellUICollectionViewCell1;
 	@iOSFindBy(accessibility = "IHRGenrePickerViewController-Cell-UICollectionViewCell-2") 		public IOSElement IHRGenrePickerViewControllerCellUICollectionViewCell2;
@@ -155,7 +154,6 @@ public class GenrePage extends Page {
 	 */
 	public Errors selectGenres(int[] gs){
 		Errors err = new Errors();
-		int k = 0;
 		for(int i : gs){
 			String genre = "IHRGenrePickerViewController-Cell-UICollectionViewCell-" + gs[i];
 			System.out.println("creating an IOSElement for Genre and clicking it : "+ genre );

@@ -675,7 +675,6 @@ public class SearchPage extends Page {
 	 * @param name
 	 */
 	public void searchAndPlayPlaylist(String name) {
-		homePage.clickNavBarSearchButtonToOpenSearch();
 		searchPage.enterTextAndPressEnterIntoSearchBar(name);
 		searchPage.clickFirstPlaylistCell();
 		System.out.println("Playing Curated Playlist");

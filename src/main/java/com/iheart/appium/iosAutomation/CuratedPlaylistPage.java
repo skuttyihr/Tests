@@ -1,5 +1,7 @@
 package com.iheart.appium.iosAutomation;
 
+import org.openqa.selenium.By;
+
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
 import io.appium.java_client.pagefactory.iOSFindBy;
@@ -24,23 +26,6 @@ public class CuratedPlaylistPage extends Page{
 	@iOSFindBy(accessibility = "NavBar-BackButton-UIButton") private IOSElement statusBar;
 	@iOSFindBy(className = "XCUIElementTypeImage") private IOSElement cPlaylistCoverArt;
 	@iOSFindBy(accessibility = "Shuffle") private IOSElement shuffleButton;
-	@iOSFindBy(xpath = "//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/"
-			+ "XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/"
-			+ "XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeCollectionView[1]/"
-			+ "XCUIElementTypeCell[2]/XCUIElementTypeStaticText[1]")
-			private IOSElement cPlaylistCell1SongName;
-	@iOSFindBy(xpath = "//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/"
-			+ "XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/"
-			+ "XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeCollectionView[1]/"
-			+ "XCUIElementTypeCell[3]/XCUIElementTypeStaticText[1]")
-			private IOSElement cPlaylistCell2SongName;
-	@iOSFindBy(xpath = "//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/"
-			+ "XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/"
-			+ "XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeCollectionView[1]/"
-			+ "XCUIElementTypeCell[4]/XCUIElementTypeStaticText[1]")
-			private IOSElement cPlaylistCell3SongName;
-	
-	
 	
 	// ***************   Behaviors   ***************//
 	/** 
@@ -53,7 +38,16 @@ public class CuratedPlaylistPage extends Page{
 	}
 	
 	public IOSElement getPlaylistOverflow() {
-		return waitForVisible(btnPause, 1);
+		waitForElementToBeVisible(btnPause,2);
+		return btnPause;
+	}
+	
+	public IOSElement getPlaylistCellSongName(int cellnumber) {
+		IOSElement cPlaylistCellSongName = findElement(driver, By.xpath("//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/"
+				+ "XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/"
+				+ "XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeCollectionView[1]/"
+				+ "XCUIElementTypeCell[" + cellnumber + "]/XCUIElementTypeStaticText[1]"));
+				return cPlaylistCellSongName;				
 	}
 
 	public Errors verifyPlaylistProfilePage() {
@@ -70,20 +64,17 @@ public class CuratedPlaylistPage extends Page{
 			err.add("Curated Playlist Profile Page Overflow is not seen.");
 		if (!printElementName(shuffleButton))
 			err.add("Curated Playlist Profile Page Shuffle button is not seen.");
-		if (!printElementName(cPlaylistCell1SongName))
+		if (!printElementName(getPlaylistCellSongName(1)))
 			err.add("Curated Playlist Profile Page - cells are not showing tracks.");
-		if (!printElementName(cPlaylistCell2SongName))
+		if (!printElementName(getPlaylistCellSongName(2)))
 			err.add("Curated Playlist Profile Page - cells are not showing tracks.");
-		if (!printElementName(cPlaylistCell3SongName))
+		if (!printElementName(getPlaylistCellSongName(3)))
 			err.add("Curated Playlist Profile Page - cells are not showing tracks.");
 		if (!printElementName(btnPause))
 			err.add("Curated Playlist Profile Page - Play button is in play station as pause button is displayed.");
 		return err;	
 	}
 }
-			
-
-
 
 	
 	
