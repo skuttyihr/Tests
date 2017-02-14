@@ -4,12 +4,10 @@ import java.time.LocalTime;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Rule;
-import org.junit.Test;
-import org.openqa.selenium.By;
 
-import io.appium.java_client.ios.IOSElement;
+import com.iheart.appium.utilities.TestRoot;
+
 
 public class TestPages extends TestRoot {
 

@@ -6,12 +6,12 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.openqa.selenium.By;
 
-import io.appium.java_client.SwipeElementDirection;
+import com.iheart.appium.utilities.TestRoot;
+
 import io.appium.java_client.ios.IOSElement;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)

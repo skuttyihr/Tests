@@ -1,6 +1,7 @@
 package com.iheart.appium.iosAutomation;
 import org.openqa.selenium.By;
 
+import com.iheart.appium.utilities.Errors;
 
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.MultiTouchAction;

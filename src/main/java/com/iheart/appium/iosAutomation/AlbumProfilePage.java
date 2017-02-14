@@ -6,6 +6,8 @@
 
 package com.iheart.appium.iosAutomation;
 
+import com.iheart.appium.utilities.*;
+
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
 import io.appium.java_client.pagefactory.iOSFindBy;

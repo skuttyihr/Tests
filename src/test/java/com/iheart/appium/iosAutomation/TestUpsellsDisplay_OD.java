@@ -8,14 +8,11 @@ package com.iheart.appium.iosAutomation;
 
 import java.time.LocalTime;
 
-import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
-import org.junit.Test;
 import org.junit.rules.TestName;
 
-import com.iheart.appium.iosAutomation.TestRoot.ScreenshotRule;
+import com.iheart.appium.utilities.TestRoot;
 
 public class TestUpsellsDisplay_OD extends TestRoot {
 

@@ -3,6 +3,8 @@ package com.iheart.appium.iosAutomation;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.PageFactory;
 
+import com.iheart.appium.utilities.TestRoot;
+
 //import org.apache.log4j.Logger;
 
 import io.appium.java_client.ios.IOSDriver;

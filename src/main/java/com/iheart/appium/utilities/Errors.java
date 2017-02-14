@@ -1,4 +1,4 @@
-package com.iheart.appium.iosAutomation;
+package com.iheart.appium.utilities;
 
 import java.io.File;
 import java.io.IOException;
