@@ -1,7 +1,6 @@
-package com.iheart.appium.iosAutomation;
+package com.iheart.appium.utilities;
 
 import java.io.File;
-import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -33,11 +32,31 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.iheart.appium.iosAutomation.AlbumProfilePage;
+import com.iheart.appium.iosAutomation.ArtistProfileOverflowPage;
+import com.iheart.appium.iosAutomation.ArtistProfilePage;
+import com.iheart.appium.iosAutomation.DeepLink;
+import com.iheart.appium.iosAutomation.FullPlayer;
+import com.iheart.appium.iosAutomation.GenrePage;
+import com.iheart.appium.iosAutomation.HomePage;
+import com.iheart.appium.iosAutomation.LoginPage;
+import com.iheart.appium.iosAutomation.MiniPlayer;
+import com.iheart.appium.iosAutomation.OnboardingPage;
+import com.iheart.appium.iosAutomation.Page;
+import com.iheart.appium.iosAutomation.PodcastsPage;
+import com.iheart.appium.iosAutomation.ResetPasswordPage;
+import com.iheart.appium.iosAutomation.SearchPage;
+import com.iheart.appium.iosAutomation.SettingsPage;
+import com.iheart.appium.iosAutomation.SideNavigationBar;
+import com.iheart.appium.iosAutomation.SignUpPage;
+import com.iheart.appium.iosAutomation.UpsellPage;
+
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.MultiTouchAction;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
+import testCommons.LoadProperties;
 
 public class TestRoot{
 
@@ -114,104 +133,63 @@ public class TestRoot{
 		Properties props = null;
 		try {
 			System.out.println("Loading properties at ios.properties.local");
-			props = loadProperties("ios.properties.local");
+			props = LoadProperties.loadProperties("ios.properties.local");
 		} catch (Exception e) {
 			System.out.println("Could not load properties, defaulting to system properties.");
 			props = null;
 		}
 		// Create the desired capabilities
-		if (props != null) {
-			DEVICE_NAME = props.getProperty("APPIUM.DEVICE.NAME");
-			UDID = props.getProperty("APPIUM.DEVICE.UDID");
-			PLATFORM_VERSION = props.getProperty("APPIUM.DEVICE.PLATFORMVERSION");
-			BUNDLE_ID = props.getProperty("APPIUM.APP.BUNDLEID");
-			IPA_NAME = props.getProperty("APPIUM.APP.PATH");
-			SIMULATOR = Boolean.parseBoolean(props.getProperty("APPIUM.USESIMULATOR"));
-			appiumUrl = props.getProperty("APPIUM.WEBDRIVER.URL");
-			appiumPort = props.getProperty("APPIUM.WEBDRIVER.PORT");
-			try {
-				MODEL = props.getProperty("APPIUM.DEVICE.MODEL");
-			} catch (Exception e) {
-			}
+		DEVICE_NAME = LoadProperties.getProperties(props, "APPIUM.DEVICE.NAME");
+		UDID = LoadProperties.getProperties(props, "APPIUM.DEVICE.UDID");
+		PLATFORM_VERSION = LoadProperties.getProperties(props, "APPIUM.DEVICE.PLATFORMVERSION");
+		BUNDLE_ID = LoadProperties.getProperties(props, "APPIUM.APP.BUNDLEID");
+		IPA_NAME = LoadProperties.getProperties(props, "APPIUM.APP.PATH");
+		SIMULATOR = Boolean.parseBoolean(LoadProperties.getProperties(props, "APPIUM.USESIMULATOR"));
+		appiumUrl = LoadProperties.getProperties(props, "APPIUM.WEBDRIVER.URL");
+		appiumPort = LoadProperties.getProperties(props, "APPIUM.WEBDRIVER.PORT");
+		try {
+			MODEL = LoadProperties.getProperties(props, "APPIUM.DEVICE.MODEL");
+		} catch (Exception e) {
+		}
 
-			// Set the screenshot directory
-			try {
-				SCREENSHOT_DIRECTORY = props.getProperty("OPTIONS.SCREENSHOT.DIRECTORY");
-				if (!strGood(SCREENSHOT_DIRECTORY)) {
-					SCREENSHOT_DIRECTORY = "screenshots/";
-				}
-				SCREENSHOT_URL = props.getProperty("OPTIONS.SCREENSHOT.URL");
-				if (!strGood(SCREENSHOT_URL)) {
-					SCREENSHOT_URL = "";
-				}
-			} catch (Exception e) {
-				// These aren't mandatory, so do nothing
+		// Set the screenshot directory
+		try {
+			SCREENSHOT_DIRECTORY = LoadProperties.getProperties(props, "OPTIONS.SCREENSHOT.DIRECTORY");
+			if (!strGood(SCREENSHOT_DIRECTORY)) {
+				SCREENSHOT_DIRECTORY = "screenshots/";
 			}
-		} else {
-			// Use system properties
-			DEVICE_NAME = System.getProperty("APPIUM.DEVICE.NAME");
-			UDID = System.getProperty("APPIUM.DEVICE.UDID");
-			PLATFORM_VERSION = System.getProperty("APPIUM.DEVICE.PLATFORMVERSION");
-			BUNDLE_ID = System.getProperty("APPIUM.APP.BUNDLEID");
-			IPA_NAME = System.getProperty("APPIUM.APP.PATH");
-			SIMULATOR = Boolean.parseBoolean(System.getProperty("APPIUM.USESIMULATOR"));
-			appiumUrl = System.getProperty("APPIUM.URL");
-			appiumPort = System.getProperty("APPIUM.PORT");
-			try {
-				MODEL = System.getProperty("APPIUM.DEVICE.MODEL");
-			} catch (Exception e) {
+			SCREENSHOT_URL = LoadProperties.getProperties(props, "OPTIONS.SCREENSHOT.URL");
+			if (!strGood(SCREENSHOT_URL)) {
+				SCREENSHOT_URL = "";
 			}
-
-			// Set the screenshot directory
-			try {
-				SCREENSHOT_DIRECTORY = System.getProperty("OPTIONS.SCREENSHOT.DIRECTORY");
-				if (!strGood(SCREENSHOT_DIRECTORY)) {
-					SCREENSHOT_DIRECTORY = "screenshots/";
-				}
-				SCREENSHOT_URL = System.getProperty("OPTIONS.SCREENSHOT.URL");
-				if (!strGood(SCREENSHOT_URL)) {
-					SCREENSHOT_URL = "";
-				}
-			} catch (Exception e) {
-				// These aren't mandatory, so do nothing
-			}
+		} catch (Exception e) {
+			// These aren't mandatory, so do nothing
 		}
 
 		// Load the passwords
 		Properties passwords = null;
 		try {
-			passwords = loadProperties("passwords.local");
+			passwords = LoadProperties.loadProperties("passwords.local");
 		} catch (Exception e) {
 			System.out.println("Could not load passwords, defaulting to system properties to load passwords.");
 			passwords = null;
 		}
-		if (passwords != null) {
-			// Use decrypted local properties
-			IHEARTUSERNAME = passwords.getProperty("IHEART.USERNAME");
-			IHEARTFREEUSERNAME = passwords.getProperty("IHEART.FREE.USERNAME");
-			IHEARTPLUSUSERNAME = passwords.getProperty("IHEART.PLUS.USERNAME");
-			IHEARTPREMIUMUSERNAME = passwords.getProperty("IHEART.PREMIUM.USERNAME");
-			IHEARTPASSWORD = passwords.getProperty("IHEART.PASSWORD");
-			IHEARTFREEPASSWD = passwords.getProperty("IHEART.FREE.PASSWORD");
-			IHEARTPLUSPASSWD = passwords.getProperty("IHEART.PLUS.PASSWORD");
-			IHEARTPREMIUMPASSWD = passwords.getProperty("IHEART.PREMIUM.PASSWORD");
-			FACEBOOKUSERNAME = passwords.getProperty("FACEBOOK.USERNAME");
-			FACEBOOKFULLNAME = passwords.getProperty("FACEBOOK.FULLNAME");
-			FACEBOOKPASSWORD = passwords.getProperty("FACEBOOK.PASSWORD");
-			GOOGLEUSERNAME = passwords.getProperty("GOOGLE.USERNAME");
-			GOOGLEPASSWORD = passwords.getProperty("GOOGLE.PASSWORD");
-			NEWACCOUNTPASSWORD = passwords.getProperty("NEWACCOUNT.PASSWORD");
-		} else {
-			// Use system properties
-			IHEARTUSERNAME = System.getProperty("IHEART.USERNAME");
-			IHEARTPASSWORD = System.getProperty("IHEART.PASSWORD");
-			FACEBOOKUSERNAME = System.getProperty("FACEBOOK.USERNAME");
-			FACEBOOKFULLNAME = System.getProperty("FACEBOOK.FULLNAME");
-			FACEBOOKPASSWORD = System.getProperty("FACEBOOK.PASSWORD");
-			GOOGLEUSERNAME = System.getProperty("GOOGLE.USERNAME");
-			GOOGLEPASSWORD = System.getProperty("GOOGLE.PASSWORD");
-			NEWACCOUNTPASSWORD = System.getProperty("NEWACCOUNT.PASSWORD");
-		}
+		
+		// Use decrypted local properties
+		IHEARTUSERNAME = LoadProperties.getProperties(passwords, "IHEART.USERNAME");
+		IHEARTFREEUSERNAME = LoadProperties.getProperties(passwords, "IHEART.FREE.USERNAME");
+		IHEARTPLUSUSERNAME = LoadProperties.getProperties(passwords, "IHEART.PLUS.USERNAME");
+		IHEARTPREMIUMUSERNAME = LoadProperties.getProperties(passwords, "IHEART.PREMIUM.USERNAME");
+		IHEARTPASSWORD = LoadProperties.getProperties(passwords, "IHEART.PASSWORD");
+		IHEARTFREEPASSWD = LoadProperties.getProperties(passwords, "IHEART.FREE.PASSWORD");
+		IHEARTPLUSPASSWD = LoadProperties.getProperties(passwords, "IHEART.PLUS.PASSWORD");
+		IHEARTPREMIUMPASSWD = LoadProperties.getProperties(passwords, "IHEART.PREMIUM.PASSWORD");
+		FACEBOOKUSERNAME = LoadProperties.getProperties(passwords, "FACEBOOK.USERNAME");
+		FACEBOOKFULLNAME = LoadProperties.getProperties(passwords, "FACEBOOK.FULLNAME");
+		FACEBOOKPASSWORD = LoadProperties.getProperties(passwords, "FACEBOOK.PASSWORD");
+		GOOGLEUSERNAME = LoadProperties.getProperties(passwords, "GOOGLE.USERNAME");
+		GOOGLEPASSWORD = LoadProperties.getProperties(passwords, "GOOGLE.PASSWORD");
+		NEWACCOUNTPASSWORD = LoadProperties.getProperties(passwords, "NEWACCOUNT.PASSWORD");
 
 		// Create a new driver object
 		URL url = null;
@@ -372,28 +350,6 @@ public class TestRoot{
 		// "screenshot.png"
 		FileUtils.copyFile(scrFile, new File(screenshotName));
 		System.out.println("Screenshot is taken.");
-	}
-
-	/**
-	 * Passed in a property file, it returns the loaded properties
-	 * 
-	 * @param propFile
-	 * @return
-	 * @throws Exception
-	 */
-	public static Properties loadProperties(String propFile) throws Exception {
-		Properties loadedProps = new Properties();
-		InputStream in = null;
-		try {
-			in = TestRoot.class.getClassLoader().getResourceAsStream(propFile);
-			loadedProps.load(in);
-		} catch (Exception e) {
-			System.out.println(
-					"Properties couldn't be loaded - most likely the propFile: " + propFile + " couldn't be found.");
-		} finally {
-			in.close();
-		}
-		return loadedProps;
 	}
 
 	/**
@@ -782,7 +738,7 @@ public class TestRoot{
 	}
 
 	//// Waiting Methods ////
-	static boolean isVisible(IOSElement e) {
+	public static boolean isVisible(IOSElement e) {
 		boolean isVisible = false;
 		if (e == null) {
 			return false;
@@ -797,7 +753,7 @@ public class TestRoot{
 		return isVisible;
 	}
 
-	static boolean isEnabled(IOSElement e) {
+	public static boolean isEnabled(IOSElement e) {
 		boolean isEnabled = false;
 		if (e == null)
 			return false;
