@@ -31,7 +31,8 @@ public class TestCuratedPlaylist extends TestRoot {
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		searchPage.searchAndPlayPlaylist("workout hits");
 		Errors err = curatedPlaylistPage.verifyPlaylistProfilePage();
-		Assert.assertEquals("Curated Playlist profile page metadata and image test failed",  true, err.noErrors());
+		//Assert.assertEquals("Curated Playlist profile page metadata and image test failed", true, err.noErrors());
+		Assert.assertTrue("String for error: " + err, err.noErrors());
 		consoleLogEnd(before, true, "Plus User - Curated Playlist Profile Page Title, Description, Image, Curator Details and Date are displayed.");
 	}
 	

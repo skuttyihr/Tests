@@ -1133,27 +1133,4 @@ public class TestRoot{
 		String value = eleName + "-" + x;
 		return (findElement(driver, By.id(value)));
 	}
-	
-	/**
-	 * sk - 2/8 - modified an existing method to accept the page object factory id and return an IOSElement
-	 */
-	public static IOSElement waitForVisible(IOSElement testElement, long timeoutInSec) {
-		// Wait for it to be present (not just clickable/visible, but loaded)
-		long timeLeftMil = timeoutInSec * 1000;
-		while (timeLeftMil > 0) {
-			if (testElement != null && testElement.isDisplayed()) {
-				break;
-			}
-			timeLeftMil -= 1000; // Takes about a second each time
-		}
-
-		IOSElement returnElement = null;
-		try {
-			returnElement = testElement;
-		} catch (Exception e) {
-			System.out.println(
-					"waitForVisible() failed because the element could not be found...  " + testElement.getAttribute("id"));
-		}
-		return returnElement;
-	}
 }

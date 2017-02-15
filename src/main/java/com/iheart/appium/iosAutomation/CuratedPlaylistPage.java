@@ -34,12 +34,13 @@ public class CuratedPlaylistPage extends Page{
 	 */
 	
 	public IOSElement getPauseButton() {
-		return waitForVisible(btnPause, 1);
+		waitForElementToBeVisible(btnPause, 1);
+		return btnPause;
 	}
 	
 	public IOSElement getPlaylistOverflow() {
-		waitForElementToBeVisible(btnPause,2);
-		return btnPause;
+		waitForElementToBeVisible(cPlaylistOverflow,2);
+		return cPlaylistOverflow;
 	}
 	
 	public IOSElement getPlaylistCellSongName(int cellnumber) {
