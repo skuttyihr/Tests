@@ -35,7 +35,7 @@ public class TestMiniPlayer extends TestRoot {
      * (todo)Verify that Artist Profile was navigated to.
      * (todo)Play Artist in mini player if something is already playing. 
 	 */
-	//@Test
+	@Test
 	public void testMiniPlayerArtistRadio_MPLAY1_FREE() {
 		LocalTime before = consoleLogStart(
 				"Testing testMiniPlayerArtistRadio_MPLAY1_FREE() - login, start MiniPlayer for Artist Radio, show all elements, test functionality.");
@@ -51,7 +51,8 @@ public class TestMiniPlayer extends TestRoot {
 		Assert.assertTrue("Expected 'Play Buffering' or 'Play' because MiniPlayer should be playing an Artist track.",
 				miniPlayer.getTypeOfPlayButton().contains("Play"));
 		miniPlayer.clickPlayPauseButton();
-		int numberOfSkipsRemaining = miniPlayer.getNumberOfSkipsRemaining();
+		//sk - 2/7 - swipe left on the player doesn't work correctly, commenting out till we can find a solution
+/*		int numberOfSkipsRemaining = miniPlayer.getNumberOfSkipsRemaining();
 		if (numberOfSkipsRemaining > 2) {
 			miniPlayer.swipeMiniPlayerToLeftAndClickSkipButton();
 			Assert.assertTrue("Skip may not have worked - song title is the same.",
@@ -61,7 +62,7 @@ public class TestMiniPlayer extends TestRoot {
 		System.out.println("SkipButton type = [" + miniPlayer.getTypeOfSkipButton() + "]");
 		Assert.assertTrue("Expected 'Skip' instead of 'Scan' because MiniPlayer should be playing an Artist track.",
 				miniPlayer.getTypeOfSkipButton().contains("Skip"));
-		miniPlayer.swipeMiniPlayerToRightToHideSkipButton();
+		miniPlayer.swipeMiniPlayerToRightToHideSkipButton();   */
 		Assert.assertTrue("Track should not be Thumbed Up or Down yet...",
 				miniPlayer.isThumbUpAndThumbDownButtonNotActivated());
 		miniPlayer.clickThumbUpButton();
@@ -73,7 +74,7 @@ public class TestMiniPlayer extends TestRoot {
 	}
 	/*
 	 * Comment this in if you need to do short tests for functionality. 
-	//@Test
+	@Test
 	public void testHiddenSkip(){
 		loginPage.loginWithoutVerifying("trav@free.com", "travfree");
 		homePage.clickNavBarSearchButtonToOpenSearch();
@@ -105,7 +106,7 @@ public class TestMiniPlayer extends TestRoot {
  	 *  ts - 12/08/16 - altered username, testname.
 	 */
 	
-	//@Test
+	@Test
 	public void testMiniPlayerWorksOnAllPages_MPLAY2_FREE() {
 		LocalTime before = consoleLogStart(
 				"Testing testMiniPlayerWorksOnAllPages_MPLAY2_FREE - login, start MiniPlayer for Artist Radio, Open other pages, check that MiniPlayer is still running.");
@@ -141,7 +142,6 @@ public class TestMiniPlayer extends TestRoot {
 		System.out.print("Listening History  :");
 		Assert.assertTrue("Mini player was not visible on listening history page",
 				miniPlayer.isCurrentlyOnMiniPlayer());
-
 		consoleLogEnd(before, true, "Tested testMiniPlayerWorksOnAllPages_MPLAY2_FREE, Controls in MiniPlayer for artist radio");
 	}
 
@@ -155,7 +155,7 @@ public class TestMiniPlayer extends TestRoot {
 		Verify that hidden Skip button is a 'Scan' button
 		Verify that Elapsed view is hidden
 	 */
-	//@Test
+	@Test
 	public void testMiniPlayerRadioStation_MPLAY3_FREE() {
 		LocalTime before = consoleLogStart("Testing testMiniPlayerRadioStationAfterLogin");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("steph@free.com", "stephfree", "FREE"));
@@ -196,8 +196,8 @@ public class TestMiniPlayer extends TestRoot {
 		Verify that hidden Skip button is a 'Skip' button
 		Verify that Elapsed view is shown
 	 */
-	//@Test
-	@Ignore
+/*	@Test
+	//@Ignore
 	public void testMiniPlayerPlaylist_MPLAY4_FREE() {
 	
 	}
@@ -209,11 +209,10 @@ public class TestMiniPlayer extends TestRoot {
 		Verify that Thumbs up, down works.
 		Verify that hidden Skip button is a 'Scan' button
 		Verify that Elapsed view is shown
-	 */
-	//@Test
+	@Test
 	@Ignore
 	public void testMiniPlayerPodcast_MPLAY5_FREE() {
 	
 	}
-
+*/
 }

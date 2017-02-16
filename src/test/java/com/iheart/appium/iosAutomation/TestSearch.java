@@ -26,22 +26,22 @@ public class TestSearch extends TestRoot {
 	public ScreenshotRule screenshot = new ScreenshotRule();
 	
 	
-	//@Test
+	@Test
 	public void testSearchPageResults_SEA1_FREE(){
 		LocalTime before = consoleLogStart("Testing testSearchPageResults_SEA1_FREE");
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("search11//@Test.com", "test", "FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("search11@Test.com", "test", "FREE"));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		searchPage.showAllElements();
 		searchPage.enterTextIntoSearchBar("rap");
 		searchPage.showAllElementsVoid();
 		consoleLogEnd(before, true, "Tested testSearchPageResults_SEA1_FREE");
 	}
-	//@Test
+	@Test
 	public void testSearchPageTextfield_SEA2_FREE(){
 		LocalTime before = consoleLogStart("Testing testSearchPageTextfield_SEA2_FREE");
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55//@Test.com","test", "FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@Test.com","test", "FREE"));
 		homePage.clickNavBarSearchButtonToOpenSearch();
-		searchPage.showAllElements();
+		//searchPage.showAllElements();
 		searchPage.enterTextIntoSearchBar("asdf");
 		searchPage.clearSearchBarTextField();
 		searchPage.enterTextIntoSearchBar("MORE");
@@ -49,16 +49,16 @@ public class TestSearch extends TestRoot {
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		consoleLogEnd(before, true, "Tested testSearchPageTextfield_SEA2_FREE");
 	}
-	//@Test
+	@Test
 	public void testNoResults_SEA3_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testNoResults_SEA3_FREE() : Testing testNoResults");
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55//@Test.com","test", "FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@Test.com","test", "FREE"));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		String searchTerm = "xqWtlzap";
 		searchPage.enterTextIntoSearchBar(searchTerm);
-		//sk - 11/5/16 - only leaving the actual verification text for novalidresults - commenting out the rest
+		//sk - 11/5/16 - only leaving the actual verification text for no valid results - commenting out the rest
 		boolean invalidSearch = searchPage.isNoResultsCellDisplayedCorrectly();
-		Assert.assertTrue("Garbage search should have returned no results cell.", searchPage.isNoResultsCellDisplayedCorrectly());
+		Assert.assertTrue("Garbage search should have returned no results cell.", invalidSearch);
 		/*searchPage.enterBackSpaceKeyIntoSearchBar(4);
 		Assert.assertTrue("Deleting one space shouldn't have shown results yet.", searchPage.isNoResultsCellDisplayedCorrectly());
 		searchPage.clearSearchBarTextField();
@@ -75,10 +75,10 @@ public class TestSearch extends TestRoot {
 
 		
 	}
-	//@Test
+	@Test
 	public void testSearchTrack_SEA4_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testSearchTrack_SEA4_FREE() : Searching a song, clicking Top Result, hoping for Artist Radio.");
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55//@Test.com","test","FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@Test.com","test","FREE"));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		//sk - 11/5/16- updated to reflect the changed behavior - playing track from search creates <ArtistName> Radio
 		String expectedRadioType = "Artist Radio";
@@ -123,6 +123,10 @@ public class TestSearch extends TestRoot {
 		String playlistName = "Workout Hits";
 		String expectedRadioType = "Playlist by iHeartRadio";
 		searchPage.enterTextAndPressEnterIntoSearchBar(playlistName);
+<<<<<<< HEAD
+=======
+		//sk - 2/8 - the Playlist section is visible, so scrolldown is not required
+>>>>>>> origin/master
 		//searchPage.scrollSearchResultsCollectionView(SwipeElementDirection.DOWN, 100, 200, 100);
 		searchPage.clickFirstPlaylistCell();
 		//Playlist Results open

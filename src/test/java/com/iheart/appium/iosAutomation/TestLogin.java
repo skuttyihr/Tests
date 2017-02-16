@@ -62,7 +62,7 @@ public class TestLogin extends TestRoot {
 	 * 
 	 * // sk 11/5 - Got Google Login to work
 	 */
-	@Test
+	//@Test
 	public void testLoginViaGoogle_LOG3_FREE() {
 		LocalTime before = consoleLogStart("Testing Login with Google+ testLoginViaGoogle_LOG3_FREE");
 		boolean testResult = loginPage.loginViaGoogle();

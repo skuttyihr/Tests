@@ -79,14 +79,14 @@ public class TestOnboarding extends TestRoot {
 		Assert.assertTrue("Could not click 'Create Account' Button", onboardingPage.clickOnboardingCreateAccountButton());
 		consoleLogEnd(before, true,  "Tested testCreateAccountAndLogInButtons_ONB3_FREE");
 	}
-	
+/*	
 	//@Test
-	@Ignore //still doesn't work
+	//@Ignore //still doesn't work
 	public void testOnboardingDisappearal_ONB4_FREE(){
 		LocalTime before = consoleLogStart("Testing testOnboardingDisappearal_ONB4_FREE().");
 		loginPage.loginVerifyEntitlement("trav@free.com", "travfree", "FREE");
 		System.out.println("Closing app.");
-		driver.resetApp();
+		driver.closeApp();
 		//closeApp();
 		System.out.println("Launching app.");
 		driver.launchApp();
@@ -97,5 +97,5 @@ public class TestOnboarding extends TestRoot {
 		//Play live station. 
 		//Kill app. 
 		//Relaunch app.
-	}
+	} */
 }

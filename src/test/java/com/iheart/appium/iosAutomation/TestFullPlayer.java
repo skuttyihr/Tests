@@ -41,7 +41,7 @@ public class TestFullPlayer extends TestRoot {
 	@Test
 	public void testFullPlayer_FPLAY1_FREE() {
 		LocalTime before = consoleLogStart("Testing testFullPlayer_FPLAY1_FREE");
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test66//@Test.com", "test", "FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test66@Test.com", "test", "FREE"));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		// New accounts start a Full Player
 		searchPage.enterTextIntoSearchBar("Opeth");
@@ -60,7 +60,7 @@ public class TestFullPlayer extends TestRoot {
 		6. Check the Progress Slider makes sense, Check Artist, Station Type
 		7. Use the Skip button and ensure the count goes down each skip
 		8. Try the Casting Button and the Favorite Button
-	 * Verify that Artist Radio starts and you're on Full Player
+	 *  Verify that Artist Radio starts and you're on Full Player
 		Verify that MiniPlayer and FullPlayer can be switched between
 		Verify that Thumbs Up and Thumbs Down can be double tapped
 		Verify the Share Screen
@@ -71,7 +71,7 @@ public class TestFullPlayer extends TestRoot {
 	@Test
 	public void testFullPlayerFunctionality_FPLAY2_FREE() {
 		LocalTime before = consoleLogStart("Testing testFullPlayerFunctionality_FPLAY2_FREE()");
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test66//@Test.com", "test", "FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test66@Test.com", "test", "FREE"));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		searchPage.enterTextIntoSearchBar("Britney");
 		searchPage.clickTopResult();
@@ -152,7 +152,9 @@ public class TestFullPlayer extends TestRoot {
 		searchPage.clickTopResult();
 		miniPlayer.openFullPlayer();
 		fullPlayer.clickReplayButtonToOpenReplayModal();
-		Assert.assertTrue("Clicking Replay Button for a Free User should have triggered Upsell.", upsellPage.isUpsellModalOpen());
+		//Assert.assertTrue("Clicking Replay Button for a Free User should have triggered Upsell.", upsellPage.isUpsellModalOpen());
+		String replayUpsellText = upsellPage.getReplaySongUpsellText().getText();
+		upsellPage.replaySongUpsell("Free", "Encore! Instantly replay songs on the radio with iHeartRadio Plus.");
 		upsellPage.clickXtoCloseUpsellModal();
 		fullPlayer.clickSaveButtonToOpenSaveModal();
 		Assert.assertFalse("Clicking 'Save' should have opened Save Modal and hidden the FullPlayer under it", fullPlayer.isCurrentlyOnFullPlayer());
@@ -161,19 +163,12 @@ public class TestFullPlayer extends TestRoot {
 		Assert.assertTrue("Clicking 'Save Song' should have popped up a growl and continued on the fullPlayer.", fullPlayer.isCurrentlyOnFullPlayer());
 		fullPlayer.clickSaveButtonToOpenSaveModal();
 		fullPlayer.clickAddToPlaylistButtonInSaveModal("FREE");
-		Assert.assertTrue("Upsell Modal should be open after clicking 'Add to Playlist' " ,upsellPage.isUpsellModalOpen());
+		//Assert.assertTrue("Upsell Modal should be open after clicking 'Add to Playlist' " ,upsellPage.isUpsellModalOpen());
 		upsellPage.clickXtoCloseUpsellModal();
 		Assert.assertTrue("Upsell Modal should be closed and  FullPlayer should be open.", fullPlayer.isCurrentlyOnFullPlayer());
-		fullPlayer.clickSaveButtonToOpenSaveModal();
-		fullPlayer.clickAddToPlaylistButtonInSaveModal("FREE");
-		upsellPage.clickSubscribeAllAccessButton();
-		Assert.assertTrue("Apple ID sign in should be displayed to buy All Access",upsellPage.isAppleIDSignInModalDisplayed());
-		upsellPage.clickCancelButton();
-		fullPlayer.clickSaveButtonToOpenSaveModal();
-		fullPlayer.clickAddToPlaylistButtonInSaveModal("FREE");
-		upsellPage.clickSubscribePlusButton();
-		Assert.assertTrue("Apple ID sign in should be displayed to buy Plus",upsellPage.isAppleIDSignInModalDisplayed());
-		upsellPage.clickCancelButton();
+		//upsellPage.clickSubscribeAllAccessButton();
+		//Assert.assertTrue("Apple ID sign in should be displayed to buy All Access",upsellPage.isAppleIDSignInModalDisplayed());
+		//Assert.assertTrue("Apple ID sign in should be displayed to buy Plus",upsellPage.isAppleIDSignInModalDisplayed());
 	    fullPlayer.clickSaveButtonToOpenSaveModal();
 	    System.out.println("Testing 'Save Station' puts the Heart next Station Name");
 	    if(fullPlayer.isSaveStationInSaveModalDisplayed()){
@@ -204,7 +199,7 @@ public class TestFullPlayer extends TestRoot {
 	@Test
 	public void testFullPlayerSaveReplaySkip_FPLAY4_PLUS(){
 		LocalTime before = consoleLogStart("Testing testFullPlayerSaveReplaySkip_FPLAY4_PLUS()");
-		Assert.assertTrue("Should log in successfully to PLUS account.",loginPage.loginVerifyEntitlement("trav@plus.com", "travplus", "PLUS"));
+		Assert.assertTrue("Should log in successfully to PLUS account.",loginPage.loginVerifyEntitlement(IHEARTPLUSUSERNAME,IHEARTPLUSPASSWD,"PLUS"));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		searchPage.enterTextIntoSearchBar("Chimaira");
 		searchPage.clickTopResult();
@@ -212,13 +207,16 @@ public class TestFullPlayer extends TestRoot {
 		System.out.println("Testing to see if Save Button works for PLUS user...");
 		fullPlayer.clickSaveButtonToOpenSaveModal();
 		Assert.assertTrue("Clicking 'Add to Playlist' should show Upsell Modal.", fullPlayer.clickAddToPlaylistButtonInSaveModal("PLUS"));
-		upsellPage.clickSubscribeAllAccessButton();
+		//upsellPage.clickSubscribeAllAccessButton();
+		String upsellPlaylistText = upsellPage.getAddToPlaylistUpsellText().getText();		
+		upsellPage.assertPlaylistUpsell("Plus",upsellPlaylistText);
 		//Assert.assertTrue("Should show account was made on Web and only has 'Got It' button to escape from AA Upsell.",upsellPage.clickGotItWebUpsellDisplayed());
-		Assert.assertTrue("Apple ID sign in should be displayed to buy All Access",upsellPage.isAppleIDSignInModalDisplayed());
-		upsellPage.clickCancelButton();
-		//upsellPage.clickXtoCloseUpsellModal();
+		//Assert.assertTrue("Apple ID sign in should be displayed to buy All Access", upsellPage.isAppleIDSignInModalDisplayed());
+		upsellPage.clickXtoCloseUpsellModal();
 		fullPlayer.clickSaveButtonToOpenSaveModal();
 		fullPlayer.clickSaveSongInSaveModal();
+		String songUpsellText = upsellPage.getSongUpsellText().getText();		
+		upsellPage.assertTrackUpsell("Plus", songUpsellText);
 		//Get name of currently playing song.
 		//Go to My Music
 		//Get title of last added Song in My Playlist 
@@ -250,7 +248,7 @@ public class TestFullPlayer extends TestRoot {
 	@Test
 	public void testFullPlayerSaveReplaySkip_FPLAY5_ALLA(){
 		LocalTime before = consoleLogStart("Testing testFullPlayerSaveReplaySkip_FPLAY5_ALLA()");
-		Assert.assertTrue("Should log in successfully to ALLA account.",loginPage.loginVerifyEntitlement("trav@all.com", "travall", "ALLA"));
+		Assert.assertTrue("Should log in successfully to ALLA account.",loginPage.loginVerifyEntitlement(IHEARTPREMIUMUSERNAME, IHEARTPREMIUMPASSWD, "ALLA"));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		searchPage.enterTextIntoSearchBar("Chimaira");
 		searchPage.clickTopResult();

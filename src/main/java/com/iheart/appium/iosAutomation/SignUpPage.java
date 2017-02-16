@@ -62,8 +62,9 @@ public class SignUpPage extends Page {
 		 * Enter Email Address to Create Account, if parameter is null, creates a new random mailinator email, otherwise uses String input.
 		 * @param email
 		 */
+	//sk - 2/8 - commenting out System Out statements for individual steps/clicks on elements, but retaining those at the end of methods
 	public void enterNewAccountEmailAddress(String email){
-		System.out.println("enterNewAccountEmailAddress()");
+		//System.out.println("enterNewAccountEmailAddress()");
 		IHRAuthorizationViewEmailAddressTextField.click();
 		if(email == null){
 			// Generate a random email
@@ -75,12 +76,12 @@ public class SignUpPage extends Page {
 			
 	}
 	public void clearNewAccountEmailAddress(){
-		System.out.println("clearNewAccountEmailAddress()");
+		//System.out.println("clearNewAccountEmailAddress()");
 		IHRAuthorizationViewEmailAddressTextField.clear();
 	}
 	//Mutate Password Text Field
 	public void enterNewAccountPassword(String password){
-		System.out.println("enterNewAccountPassword()");
+		//System.out.println("enterNewAccountPassword()");
 		IHRAuthorizationViewPasswordTextField.click();
 		if(password == null){
 			IHRAuthorizationViewPasswordTextField.sendKeys(NEWACCOUNTPASSWORD);
@@ -90,12 +91,12 @@ public class SignUpPage extends Page {
 			
 	}
 	public void clearNewAccountPassword(){
-		System.out.println("clearNewAccountPassword()");
+		//System.out.println("clearNewAccountPassword()");
 		IHRAuthorizationViewPasswordTextField.clear();
 	}
 	//Mutate Zip Code Text Field
 	public void enterNewAccountZipcode(String zipcode){
-		System.out.println("enterNewAccountZipcode()");
+		//System.out.println("enterNewAccountZipcode()");
 		IHRiPhoneSignUpViewZipCodeTextFieldUITextField.click();
 		if(zipcode == null){
 			IHRiPhoneSignUpViewZipCodeTextFieldUITextField.sendKeys("10001");
@@ -111,7 +112,7 @@ public class SignUpPage extends Page {
 	
 	//Mutate Birth Year Text Field
 	public void enterNewAccountBirthYear(String birthyear){
-		System.out.println("enterNewAccountBirthYear()");
+		//System.out.println("enterNewAccountBirthYear()");
 		IHRiPhoneSignUpViewBirthYearTextFieldUITextField.click();
 		if(birthyear == null){
 			IHRiPhoneSignUpViewBirthYearTextFieldUITextField.sendKeys("1989");
@@ -121,25 +122,25 @@ public class SignUpPage extends Page {
 			
 	}
 	public void clearNewAccountBirthYear(){
-		System.out.println("clearNewAccountBirthYear()");
+		//System.out.println("clearNewAccountBirthYear()");
 		IHRiPhoneSignUpViewBirthYearTextFieldUITextField.clear();
 	}
 	
 	public void clickMaleGenderButton(){
-		System.out.println("clickMaleGenderButton()");
+		//System.out.println("clickMaleGenderButton()");
 		IHRiPhoneSignUpViewMaleButtonUIButton.click();
 	}
 	public void clickFemaleGenderButton(){
-		System.out.println("clickFemaleGenderButton()");
+		//System.out.println("clickFemaleGenderButton()");
 		IHRiPhoneSignUpViewFemaleButtonUIButton.click();
 	}
 	
 	public void clickTermsOfService(){
-		System.out.println("clickTermsOfService()");
+		//System.out.println("clickTermsOfService()");
 		IHRiPhoneSignUpViewTermsOfServiceButtonUIButton.click();
 	}
 	public void clickPrivacyPolicy(){
-		System.out.println("clickPrivacyPolicy()");
+		//System.out.println("clickPrivacyPolicy()");
 		IHRiPhoneSignUpViewPrivacyPolicyButtonUIButton.click();
 	}
 	

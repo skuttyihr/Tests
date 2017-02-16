@@ -68,8 +68,9 @@ public class SearchPage extends Page {
 
 	@iOSFindBy(accessibility = "GlobalSearchNoResultsCell-ClosingQuoteLabel-UILabel")
 	private IOSElement GlobalSearchNoResultsCellClosingQuoteLabelUILabel;
-	@iOSFindBy(accessibility = "GlobalSearchNoResultsCell-NoResultsLabel-UILabel")
-	private IOSElement GlobalSearchNoResultsCellNoResultsLabelUILabel;
+	//sk - 2/8 - updated id for this element
+	//@iOSFindBy(accessibility = "GlobalSearchNoResultsCell-NoResultsLabel-UILabel") private IOSElement GlobalSearchNoResultsCellNoResultsLabelUILabel;
+	@iOSFindBy(accessibility = "No Results For \"") private IOSElement GlobalSearchNoResultsCellNoResultsLabelUILabel;
 	@iOSFindBy(accessibility = "GlobalSearchNoResultsCell-NoResultsSubtitleLabel-UILabel")
 	private IOSElement GlobalSearchNoResultsCellNoResultsSubtitleLabelUILabel;
 	// Search Results
@@ -269,28 +270,33 @@ public class SearchPage extends Page {
 	@iOSFindBy(accessibility = "Cosmic Queries: Galactic Grab Bag")
 	private IOSElement CosmicQueriesGalacticGrabBagEpisode;
 	
+	/** 
+	 * sk -2/8-commenting out printing to console for element clicks
+	 * We can uncomment after the inital demo
+	 * Retaining those that show status after a method
+	 */
 	public void clickNavBarBackButton() {
-		System.out.println("clickNavBarBackButton().");
+		//System.out.println("clickNavBarBackButton().");
 		NavBarBackButtonUIButton.click();
 	}
 
 	public void clickShowAllArtists() {
-		System.out.println("clickShowAllArtists().");
+		//System.out.println("clickShowAllArtists().");
 		GlobalSearchDataSourceShowAllArtistsDisclosureCell.click();
 	}
 
 	public void clickShowAllPodcasts() {
-		System.out.println("clickShowAllPodcasts().");
+		//System.out.println("clickShowAllPodcasts().");
 		GlobalSearchDataSourceShowAllPodcastsDisclosureCell.click();
 	}
 
 	public void clickShowAllSongs() {
-		System.out.println("clickShowAllSongs().");
+		//System.out.println("clickShowAllSongs().");
 		GlobalSearchDataSourceShowAllSongsDisclosureCell.click();
 	}
 
 	public void clickShowAllLiveStations() {
-		System.out.println("clickShowAllLiveStations().");
+		//System.out.println("clickShowAllLiveStations().");
 		GlobalSearchDataSourceShowAllLiveStationsDisclosureCell.click();
 	}
 
@@ -308,7 +314,7 @@ public class SearchPage extends Page {
 	 * Click Cancel to get out of Search and back to other page.
 	 */
 	public void clickCancelButtonOnSearchBar() {
-		System.out.println("clickCancelButtonOnSearchBar().");
+		//System.out.println("clickCancelButtonOnSearchBar().");
 		IHRGlobalSearchBarCancelButtonUIButton.click();
 	}
 
@@ -364,12 +370,13 @@ public class SearchPage extends Page {
 	 * @return
 	 */
 	public boolean isNoResultsCellDisplayedCorrectly() {
-		waitForElementToBeVisible(GlobalSearchNoResultsCellNoResultsLabelUILabel, 3);
-		printElementInformation(GlobalSearchNoResultsCellNoResultsLabelUILabel);
-		printElementInformation(GlobalSearchNoResultsCellNoResultsSubtitleLabelUILabel);
+		waitForElementToBeVisible(GlobalSearchNoResultsCellNoResultsLabelUILabel, 1);
+		//printElementInformation(GlobalSearchNoResultsCellNoResultsLabelUILabel);
+		//printElementInformation(GlobalSearchNoResultsCellNoResultsSubtitleLabelUILabel);
 		String noResultsLabel = GlobalSearchNoResultsCellNoResultsSubtitleLabelUILabel.getText();
 		boolean subtitleCorrect = noResultsLabel.equals("Check your spelling or try another search");
-		System.out.println("isNoResultsCellDisplayedCorrectly() : " + subtitleCorrect);
+		//System.out.println("isNoResultsCellDisplayedCorrectly() : " + subtitleCorrect);
+		System.out.println(noResultsLabel + " is displayed.");
 		return subtitleCorrect;
 
 	}
@@ -417,9 +424,9 @@ public class SearchPage extends Page {
 	 * @param searchQuery
 	 */
 	public void enterTextAndPressEnterIntoSearchBar(String searchQuery) {
-		System.out.println("enterTextAndPressEnterIntoSearchBar() : " + searchQuery);
 		IHRGlobalSearchBarSearchBarTextFieldUITextField.sendKeys(searchQuery);
 		IHRGlobalSearchBarSearchBarTextFieldUITextField.sendKeys(Keys.ENTER);
+		System.out.println("enteredTextAndPressedEnterIntoSearchBar() : " + searchQuery);
 	}
 
 	/**
@@ -428,7 +435,7 @@ public class SearchPage extends Page {
 	 * @param searchQuery
 	 */
 	public void enterTextIntoSearchBar(String searchQuery) {
-		System.out.println("enterTextIntoSearchBar() : " + searchQuery);
+		//System.out.println("enterTextIntoSearchBar() : " + searchQuery);
 		IHRGlobalSearchBarSearchBarTextFieldUITextField.sendKeys(searchQuery);
 	}
 
@@ -463,7 +470,7 @@ public class SearchPage extends Page {
 	 */
 	public String getSearchBarText() {
 		String text = IHRGlobalSearchBarSearchBarTextFieldUITextField.getText();
-		System.out.println("getSearchBarText() : " + text);
+		//System.out.println("getSearchBarText() : " + text);
 		return text;
 	}
 
@@ -491,7 +498,7 @@ public class SearchPage extends Page {
 	}
 
 	public void clickFirstLiveStation() {
-		System.out.println("clickFirstLiveStation().");
+		//System.out.println("clickFirstLiveStation().");
 		GlobalSearchDataSourceSearchResultCellLiveStationsRow0.click();
 	}
 
@@ -501,49 +508,49 @@ public class SearchPage extends Page {
 	}
 
 	public void clickFirstArtist() {
-		System.out.println("clickFirstArtist().");
+		//System.out.println("clickFirstArtist().");
 		GlobalSearchDataSourceSearchResultCellArtistsRow0.click();
 	}
 
 	public void clickSecondArtist() {
-		System.out.println("clickSecondArtist().");
+		//System.out.println("clickSecondArtist().");
 		GlobalSearchDataSourceSearchResultCellArtistsRow1.click();
 	}
 
 	public void clickFirstSong() {
-		System.out.println("clickFirstSong().");
+		//System.out.println("clickFirstSong().");
 		GlobalSearchDataSourceSearchResultCellSongsRow0.click();
 	}
 
 	public void clickSecondSong() {
-		System.out.println("clickSecondSong().");
+		//System.out.println("clickSecondSong().");
 		GlobalSearchDataSourceSearchResultCellSongsRow1.click();
 	}
 
 	public void clickFirstPodcastsCell() {
-		System.out.println("clickFirstPodcastsCell().");
+		//System.out.println("clickFirstPodcastsCell().");
 		GlobalSearchDataSourceSearchResultCellPodcastsRow0.click();
 	}
 
 	public void clickSecondPodcastsCell() {
-		System.out.println("clickSecondPodcastsCell().");
+		//System.out.println("clickSecondPodcastsCell().");
 		GlobalSearchDataSourceSearchResultCellPodcastsRow1.click();
 	}
 
 	public void clickFirstPlaylistCell(){
-		System.out.println("clickFirstPlaylistCell()");
+		//System.out.println("clickFirstPlaylistCell()");
 		GlobalSearchDataSourceSearchResultCellPlaylistsRow0.click();
 	}
 	
 	public void clickSecondPlaylistCell(){
-		System.out.println("clickSecondPlaylistCell()");
+		//System.out.println("clickSecondPlaylistCell()");
 		GlobalSearchDataSourceSearchResultCellPlaylistsRow1.click();
 	}
 	public boolean isCurrentlyOnLearnMore(){
 		return isCurrentlyOn("isCurrentlyOnLearnMore",learnMoreButton);
 	}
 	public void clickLearnMoreButton(){
-		System.out.println("clickLearnMoreButton()");
+		//System.out.println("clickLearnMoreButton()");
 		learnMoreButton.click();
 	}
 	
@@ -552,7 +559,7 @@ public class SearchPage extends Page {
 	}
 	
 	public void clickStartalkPodcastEpisode(){
-		System.out.println("clickStartalkPodcastEpisode().");
+		//System.out.println("clickStartalkPodcastEpisode().");
 		CosmicQueriesGalacticGrabBagEpisode.click();
 	}
 	/**
@@ -563,13 +570,22 @@ public class SearchPage extends Page {
 	 */
 	public void showAllElements() {
 		System.out.println("::::Printing out SEARCH Elements.::::");
-		printElementInformation(IHRGlobalSearchBarCancelButtonUIButton);
+		//sk - 2/7 - replacing with printing the names of elements as it appears in the app,
+		//can put back for regression
+		/*printElementInformation(IHRGlobalSearchBarCancelButtonUIButton);
 		printElementInformation(IHRGlobalSearchBarSearchBarUISearchBar);
 		printElementInformation(IHRGlobalSearchBarSearchBarTextFieldUITextField);
 		printElementInformation(IHRGlobalSearchInstructionsViewIconViewUIImageView);
 		printElementInformation(IHRGlobalSearchInstructionsViewSpacer1UIView);
 		printElementInformation(IHRGlobalSearchInstructionsViewSpacer2UIView);
-		printElementInformation(IHRGlobalSearchInstructionsViewInstructionsLabelUILabel);
+		printElementInformation(IHRGlobalSearchInstructionsViewInstructionsLabelUILabel);*/
+		printElementName(IHRGlobalSearchBarCancelButtonUIButton);
+		printElementName(IHRGlobalSearchBarSearchBarUISearchBar);
+		printElementName(IHRGlobalSearchBarSearchBarTextFieldUITextField);
+		printElementName(IHRGlobalSearchInstructionsViewIconViewUIImageView);
+		printElementName(IHRGlobalSearchInstructionsViewSpacer1UIView);
+		printElementName(IHRGlobalSearchInstructionsViewSpacer2UIView);
+		printElementName(IHRGlobalSearchInstructionsViewInstructionsLabelUILabel);
 	}
 
 	public void showAllElementsVoid() {
