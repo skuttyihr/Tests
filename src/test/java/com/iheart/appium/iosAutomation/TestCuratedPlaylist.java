@@ -18,7 +18,7 @@ public class TestCuratedPlaylist extends TestRoot {
 
 	@Before
 	public void setUp() {
-		setup();
+		setUp();
 	}
 	
 	@Rule
