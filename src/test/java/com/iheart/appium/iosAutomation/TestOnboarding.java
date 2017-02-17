@@ -70,12 +70,17 @@ public class TestOnboarding extends TestRoot {
 	/**
 	 * Simply click the 'Log In' Button and the 'Create Account' Button and ensure the next pages are as expected. 
 	 */
-	//@Test
+	@Test
 	public void testCreateAccountAndLogInButtons_ONB3_FREE(){
 		LocalTime before = consoleLogStart("Testing testCreateAccountAndLogInButtons_ONB3_FREE().");
+		GifSequenceWriter writer = loginPage.initGIFWriter();
 		Assert.assertTrue("Could not click 'Log In' Button", onboardingPage.clickOnboardingLoginButton());
+		loginPage.addPageToGif(writer);
 		loginPage.tapBack();
+		loginPage.addPageToGif(writer);
 		Assert.assertTrue("Could not click 'Create Account' Button", onboardingPage.clickOnboardingCreateAccountButton());
+		loginPage.addPageToGif(writer);
+		loginPage.closeGifWriter(writer);
 		consoleLogEnd(before, true,  "Tested testCreateAccountAndLogInButtons_ONB3_FREE");
 	}
 	

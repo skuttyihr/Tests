@@ -36,10 +36,10 @@ public class TestFullPlayer extends TestRoot {
 		Verify Background View
 		Verify Slider, PlayButton, Forward, More, Thumb Down, Thumb Up, Title (track), Subtitle (artist)
 	 */
-	//@Test
+	@Test
 	public void testFullPlayer_FPLAY1_FREE() {
 		LocalTime before = consoleLogStart("Testing testFullPlayer_FPLAY1_FREE");
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test66//@Test.com", "test", "FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test66@Test.com", "test", "FREE"));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		// New accounts start a Full Player
 		searchPage.enterTextIntoSearchBar("Opeth");
@@ -66,10 +66,10 @@ public class TestFullPlayer extends TestRoot {
 		Verify that the skip button works
 		Verify that the casting button works
 	 */
-	//@Test
+	@Test
 	public void testFullPlayerFunctionality_FPLAY2_FREE() {
 		LocalTime before = consoleLogStart("Testing testFullPlayerFunctionality_FPLAY2_FREE()");
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test66//@Test.com", "test", "FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test66@Test.com", "test", "FREE"));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		searchPage.enterTextIntoSearchBar("Britney");
 		searchPage.clickTopResult();
@@ -141,7 +141,7 @@ public class TestFullPlayer extends TestRoot {
 	 * Verify that 'Replay' button triggers upsell.
 	 *
 	 */
-	//@Test
+	@Test
 	public void testFullPlayerSaveAndReplayButton_FPLAY3_FREE(){
 		LocalTime before = consoleLogStart("Testing testFullPlayerSaveAndReplayButton_FPLAY3_FREE()");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("trav@free.com", "travfree", "FREE"));
@@ -199,7 +199,7 @@ public class TestFullPlayer extends TestRoot {
 	 * Test more than 6 tracks,
 	 * then Replay second to last played song and make sure it is the same name.
 	 */
-	//@Test
+	@Test
 	public void testFullPlayerSaveReplaySkip_FPLAY4_PLUS(){
 		LocalTime before = consoleLogStart("Testing testFullPlayerSaveReplaySkip_FPLAY4_PLUS()");
 		Assert.assertTrue("Should log in successfully to PLUS account.",loginPage.loginVerifyEntitlement("trav@plus.com", "travplus", "PLUS"));

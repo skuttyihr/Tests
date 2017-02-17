@@ -1,6 +1,8 @@
 package com.iheart.appium.iosAutomation;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -16,6 +18,10 @@ import java.util.Properties;
 import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+
+import javax.imageio.ImageIO;
+import javax.imageio.stream.FileImageOutputStream;
+import javax.imageio.stream.ImageOutputStream;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.rules.MethodRule;
@@ -82,7 +88,8 @@ public class TestRoot{
 
 	// New On Demand Elements
 	protected static ArtistProfilePage artistProfilePage;
-
+	protected static MyMusicPage myMusicPage;
+	
 	protected static boolean useSimulator = false;
 
 	// Login Info
@@ -290,6 +297,7 @@ public class TestRoot{
 		artistProfilePage = new ArtistProfilePage(driver);
 		artistProfileOverflowPage = new ArtistProfileOverflowPage(driver);
 		albumProfilePage = new AlbumProfilePage(driver);
+		myMusicPage = new MyMusicPage(driver);
 		driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 		System.out.println("Testing on: " + MODEL);
 
@@ -306,6 +314,8 @@ public class TestRoot{
 	}
 
 	public boolean printElementInformation(IOSElement iosElement) {
+		
+		try{
 		if (iosElement == null) {
 			System.out.println("is NULL! Returning false. ");
 			return false;
@@ -323,6 +333,11 @@ public class TestRoot{
 						+ iosElement.isDisplayed() + "] isEnabled: [" + iosElement.isEnabled() + "].");
 			}
 			return iosElement.isDisplayed();
+		}
+		}
+		catch(NoSuchElementException e){
+			System.out.println("NoSuchElementException for element e = "+ e.getMessage());
+			return false;
 		}
 
 	}
@@ -1099,4 +1114,55 @@ public class TestRoot{
 		return (findElement(driver, By.id(value)));
 	}
 	
+	public GifSequenceWriter initGIFWriter(){
+		String filePath = "";
+		if (driver != null) {
+			filePath = Errors.captureScreenshot(driver, "");
+		}
+		 BufferedImage firstImage;
+		 ImageOutputStream output;
+		 GifSequenceWriter gifSequenceWriter = null;
+		try {
+			firstImage = ImageIO.read(new File(filePath));
+			filePath = filePath.substring(0, filePath.length()-4) + "-GIF" + ".png";
+			output = new FileImageOutputStream(new File(filePath));
+			gifSequenceWriter = new GifSequenceWriter(output, firstImage.getType(), 1500, true);
+			gifSequenceWriter.writeToSequence(firstImage);
+		} catch (IOException e) {
+			System.out.println("Init GIF Writer Failed");
+		}
+		
+		return gifSequenceWriter;
+		
+		
+	}
+	public void addPageToGif(GifSequenceWriter writer){
+		sleep(1000);
+		String filePath = "";
+		if (driver != null) {
+			filePath = Errors.captureScreenshot(driver, "");
+		}
+		 try {
+			BufferedImage nextImage = ImageIO.read(new File(filePath));
+			writer.writeToSequence(nextImage);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
+	public boolean closeGifWriter(GifSequenceWriter writer){
+		try {
+		BufferedImage endImage = ImageIO.read(new File("screenshots/endImage.png"));
+			writer.writeToSequence(endImage);
+
+			writer.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+		return true;
+	}
 }

@@ -125,7 +125,7 @@ public class FullPlayer extends Page {
     public void showAllElements(){
     	System.out.println("Checking NavBar elements...");
     	printElementInformation(PlayerViewMinimizePlayerDownarrowUIButton);
-    	//printElementInformation(NavBarFavoriteButtonUIButton); This button has been removed and replaced in the Save Modal
+    	//printElementInformation(NavBarFavoriteButtonUIButton); //This button has been removed and replaced in the Save Modal
     	printElementInformation(NavBarShareButtonUIButton);
     	//printElementInformation(IHRCastingBarButtonItemUIButton);
     	System.out.println("Checking Slider elements...");
@@ -161,7 +161,8 @@ public class FullPlayer extends Page {
     	}
     	//IHRPlayerTitleView
     	System.out.println("Checking Title View elements... Station Name and Station Type");
-    	printElementInformation(IHRPlayerTitleViewTitleLabelUILabel);
+    	//sleep(2000);
+    	//printElementInformation(IHRPlayerTitleViewTitleLabelUILabel);
     	printElementInformation(IHRPlayerTitleViewSubTitleLabelUILabel);
     	//IHRPlayerBackgroundView
     	System.out.println("Checking Background View elements...");
@@ -185,6 +186,7 @@ public class FullPlayer extends Page {
     	System.out.println("Checking if Replay and Save Buttons exist on FullPlayer");
     	printElementInformation(IHRPlayerReplayButtonUIButton);
     	printElementInformation(IHRPlayerSaveButtonUIButton);     
+    	
     }
     /**
      * Clicks the Down Arrow at the top of FullPlayer to minimize it into MiniPlayer. 

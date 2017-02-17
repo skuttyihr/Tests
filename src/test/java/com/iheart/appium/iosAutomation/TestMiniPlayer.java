@@ -34,40 +34,53 @@ public class TestMiniPlayer extends TestRoot {
      * (todo)Verify that Artist Profile was navigated to.
      * (todo)Play Artist in mini player if something is already playing. 
 	 */
-	//@Test
+	@Test
 	public void testMiniPlayerArtistRadio_MPLAY1_FREE() {
 		LocalTime before = consoleLogStart(
 				"Testing testMiniPlayerArtistRadio_MPLAY1_FREE() - login, start MiniPlayer for Artist Radio, show all elements, test functionality.");
+		GifSequenceWriter writer = loginPage.initGIFWriter();
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("trav@free.com", "travfree", "FREE"));
+		loginPage.addPageToGif(writer);
 		homePage.clickNavBarSearchButtonToOpenSearch();
+		loginPage.addPageToGif(writer);
 		// Start Artist Radio
 		searchPage.enterTextIntoSearchBar("Rage against the machine");
+		loginPage.addPageToGif(writer);
 		searchPage.clickTopResult();
+		loginPage.addPageToGif(writer);
 		Assert.assertTrue("Expected 'Pause Buffering' or 'Pause' because MiniPlayer should be playing an Artist track.",
 				miniPlayer.getTypeOfPlayButton().contains("Pause"));
 		miniPlayer.showAllElements();
 		miniPlayer.clickPlayPauseButton();
+		loginPage.addPageToGif(writer);
 		Assert.assertTrue("Expected 'Play Buffering' or 'Play' because MiniPlayer should be playing an Artist track.",
 				miniPlayer.getTypeOfPlayButton().contains("Play"));
 		miniPlayer.clickPlayPauseButton();
+		loginPage.addPageToGif(writer);
 		int numberOfSkipsRemaining = miniPlayer.getNumberOfSkipsRemaining();
 		if (numberOfSkipsRemaining > 2) {
 			miniPlayer.swipeMiniPlayerToLeftAndClickSkipButton();
+			loginPage.addPageToGif(writer);
 			Assert.assertTrue("Skip may not have worked - song title is the same.",
 					miniPlayer.isTitleDifferentAfterSkip());
 		}
 		miniPlayer.swipeMiniPlayerToLeftToShowSkipButton();
+		loginPage.addPageToGif(writer);
 		System.out.println("SkipButton type = [" + miniPlayer.getTypeOfSkipButton() + "]");
 		Assert.assertTrue("Expected 'Skip' instead of 'Scan' because MiniPlayer should be playing an Artist track.",
 				miniPlayer.getTypeOfSkipButton().contains("Skip"));
 		miniPlayer.swipeMiniPlayerToRightToHideSkipButton();
+		loginPage.addPageToGif(writer);
 		Assert.assertTrue("Track should not be Thumbed Up or Down yet...",
 				miniPlayer.isThumbUpAndThumbDownButtonNotActivated());
 		miniPlayer.clickThumbUpButton();
+		loginPage.addPageToGif(writer);
 		Assert.assertTrue("ThumbUpButton is not Selected", miniPlayer.isThumbUpButtonActivated());
 		miniPlayer.clickThumbDownButton();
+		loginPage.addPageToGif(writer);
 		Assert.assertTrue("ThumbDownButton is not Selected", miniPlayer.isThumbDownButtonActivated());
 		Assert.assertTrue("Test that it is still currently on Mini Player", miniPlayer.isCurrentlyOnMiniPlayer());
+		loginPage.closeGifWriter(writer);
 		consoleLogEnd(before, true, "Tested testMiniPlayerArtistRadio_MPLAY1_FREE in MiniPlayer for artist radio");
 	}
 	/*

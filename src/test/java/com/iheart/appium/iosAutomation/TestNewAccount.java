@@ -29,6 +29,8 @@ public class TestNewAccount extends TestRoot {
 	 * Conditions, Creates account, and then uses enters a zip code and expects
 	 * the Genre page to open.
 	 * 
+	 * SANITY TEST
+	 * 
 	 */
 	@Test
 	public void testCreateNewEmailAccount_SIGN1_FREE() {
@@ -53,6 +55,9 @@ public class TestNewAccount extends TestRoot {
 		//Can't keep using Facebook accounts
 		//Most likely cannot be automated.
 	}
+	/**
+	 * REGRESSION TEST - less important - longer run time. 
+	 */
 	@Test
 	public void testAllElements_SIGN4_FREE() {
 		LocalTime before = consoleLogStart(
