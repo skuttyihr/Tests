@@ -24,7 +24,6 @@ public class TestArtistProfile extends TestRoot {
 	public ScreenshotRule screenshot = new ScreenshotRule();
 
 	@Test
-	//Pass
 	public void testArtistHero_ARTP1_FREE(){
 		LocalTime before = consoleLogStart("Testing elements on Artist Profile Page - testArtistProfileElements()");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("artistProfilePage@Test.com", "test", "FREE"));
@@ -37,9 +36,7 @@ public class TestArtistProfile extends TestRoot {
 		consoleLogEnd(before, true, "Tested testArtistHero_ARTP1_FREE().");
 		
 	}
-	
-	@Test	
-	//Pass
+	@Test
 	public void testArtistBio_ARTP2_FREE(){
 		LocalTime before = consoleLogStart("Testing elements on Artist Profile Page - testArtistBio_ARTP2_FREE()");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("artistProfilePage@Test.com", "test", "FREE"));
@@ -51,7 +48,6 @@ public class TestArtistProfile extends TestRoot {
 		artistProfilePage.printArtistBioElements();
 		consoleLogEnd(before, true, "Tested testArtistBio_ARTP2_FREE().");
 	}
-	
 	@Test
 	public void testLatestReleaseTopSongsAlbumsRelatedPopular_ARTP3_FREE(){
 		LocalTime before = consoleLogStart("Testing elements on Artist Profile Page - testLatestReleaseTopSongsAlbumsRelatedPopular_ARTP3_FREE()");
@@ -75,7 +71,6 @@ public class TestArtistProfile extends TestRoot {
 	}
 	
 	@Test
-	//Pass
 	public void testAlbumsAndAlbumProfile_ARTP4_FREE(){
 		LocalTime before = consoleLogStart("Testing elements on Artist Profile Page - testAlbumsAndAlbumProfile_ARTP4_FREE()");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("artistProfilePage@Test.com", "test", "FREE"));
@@ -97,7 +92,6 @@ public class TestArtistProfile extends TestRoot {
 	
 	
 	@Test
-	//Pass
 	public void testFunctions_ARTP5_FREE(){
 		LocalTime before = consoleLogStart("Testing methods on testFunctions_ARTP5_FREE");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("artistProfileFunctions@Test.com", "test", "FREE"));
@@ -106,8 +100,7 @@ public class TestArtistProfile extends TestRoot {
 		searchPage.clickTopResult();
 		Assert.assertTrue("Artist Profile should be open for Rihanna", artistProfilePage.isCurrentlyOnArtistProfilePage());
 		Assert.assertTrue("MiniPlayer should be open for Rihanna", miniPlayer.isCurrentlyOnMiniPlayer());
-		//sk - 2/10 - updated the Latest Release track for Rihanna
-		Assert.assertEquals("Rihanna's Latest Release should be 'Sex With Me (Dance Remixes)'", "Sex With Me (Dance Remixes)", artistProfilePage.getLatestReleaseAlbumTitle());
+		Assert.assertEquals("Rihanna's Latest Release should be 'Love On The Brain'", "Love On The Brain", artistProfilePage.getLatestReleaseAlbumTitle());
 		artistProfilePage.clickFirstTopSongsCell();
 		miniPlayer.openFullPlayer();
 		Assert.assertEquals("Clicking on a Top Song should have started Artist Radio", "Artist Radio", fullPlayer.getStationType());
@@ -119,19 +112,19 @@ public class TestArtistProfile extends TestRoot {
 	}
 	
 
-/*	//@Test
+	//@Test
 	public void testFunctions_ARTP6_PLUS(){
 		LocalTime before = consoleLogStart("Testing methods on testFunctions_ARTP6_PLUS");
 		System.out.println("This test case still needs work. Thinking is that there must be differences we should expect for PLUS users as they navigate");
 		System.out.println("What is different for Plus Users on Artist Profile Page? Navigating Album Profile, Song to Start, Overflow buttons and their options. Any Save to or Add to playlist? modals" );
 		consoleLogEnd(before, true, "Tested testFunctions_ARTP6_PLUS()");
 	}
-	//@Test
+	@Test
 	public void testFunctions_ARTP7_ALLA(){
 		LocalTime before = consoleLogStart("Testing methods on testFunctions_ARTP7_ALLA");
 		System.out.println("This test case still needs work. Thinking is that there must be differences we should expect for ALLA users as they navigate");
 		System.out.println("What is different for ALLA Users on Artist Profile Page? Navigating Album Profile, Song to Start, Overflow buttons and their options. Any Save to or Add to playlist? modals" );
 		
 		consoleLogEnd(before, true, "Tested testFunctions_ARTP7_ALLA()");
-	} */
+	}
 }

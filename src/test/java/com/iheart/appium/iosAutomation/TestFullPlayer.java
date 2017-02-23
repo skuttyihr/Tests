@@ -297,7 +297,7 @@ public class TestFullPlayer extends TestRoot {
 		//Add to Playlist, use MyPlaylist
 		//Check songs, get titles in player.
 	 */
-	//@Test
+	@Test
 	@Ignore
 	public void testFullPlayerAddToPlaylist_FPLAY6_ALLA(){
 		//empty

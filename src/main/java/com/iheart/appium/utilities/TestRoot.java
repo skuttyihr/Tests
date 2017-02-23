@@ -98,6 +98,8 @@ public class TestRoot{
 	protected static UpsellPage upsellPage;
 	protected static ArtistProfileOverflowPage artistProfileOverflowPage;
 	protected static AlbumProfilePage albumProfilePage;
+	protected static CuratedPlaylistPage curatedPlaylistPage;
+
 
 	// New On Demand Elements
 	protected static ArtistProfilePage artistProfilePage;
@@ -268,6 +270,7 @@ public class TestRoot{
 		artistProfilePage = new ArtistProfilePage(driver);
 		artistProfileOverflowPage = new ArtistProfileOverflowPage(driver);
 		albumProfilePage = new AlbumProfilePage(driver);
+		curatedPlaylistPage = new CuratedPlaylistPage(driver);
 		driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 		System.out.println("Testing on: " + MODEL);
 
@@ -302,6 +305,38 @@ public class TestRoot{
 			}
 			return iosElement.isDisplayed();
 		}
+	}
+	
+	
+	/**
+	 * sk - 2/8 - method to print out Element Names as they appear in the app.
+	 * @param element
+	 * @return
+	 */
+	public boolean printElementName(IOSElement element) {
+		String getText = "";
+		String value = "";
+		String label = "";
+			
+		if (!(isVisible(element)) ) {
+			System.out.println("Element is null or is not visible.");
+			return false;
+		} 
+		else {				
+			getText = element.getAttribute("name");
+			value = element.getAttribute("value");
+			label = element.getAttribute("label");
+		}			
+		if ( getText != null) 
+			System.out.println("Element '" + getText + "' is displayed.");
+		else if (value != null) 
+			System.out.println("Element '" + value + "' is displayed.");
+		else if (label != null)
+			System.out.println("Element '" + label + "' is displayed.");
+		else
+			System.out.println("Element '" + element.getTagName() + "' is displayed.");
+
+		return element.isDisplayed();
 
 	}
 
@@ -1048,7 +1083,7 @@ public class TestRoot{
 	}
 	
 	/**
-	 * sk - 1/23 - added method to enable going to any album on artist profile page indicated by an integre
+	 * sk - 1/23 - added method to enable going to any album on artist profile page indicated by an integer
 	 */
 	public IOSElement generateIOSElementId(String eleName, int x){
 		String value = eleName + "-" + x;
