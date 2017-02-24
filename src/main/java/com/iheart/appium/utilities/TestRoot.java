@@ -319,15 +319,15 @@ public class TestRoot{
 		String value = "";
 		String label = "";
 			
-		if (!(isVisible(element)) ) {
-			System.out.println("Element is null or is not visible.");
+		if (!isVisible(element)) {
+			waitForElementToBeVisible(element, 5);
+			System.out.println("element is null or is not visible.");
 			return false;
-		} 
-		else {				
-			getText = element.getAttribute("name");
-			value = element.getAttribute("value");
-			label = element.getAttribute("label");
-		}			
+		}	
+		getText = element.getAttribute("name");
+		value = element.getAttribute("value");
+		label = element.getAttribute("label");
+		
 		if ( getText != null) 
 			System.out.println("Element '" + getText + "' is displayed.");
 		else if (value != null) 
@@ -336,9 +336,7 @@ public class TestRoot{
 			System.out.println("Element '" + label + "' is displayed.");
 		else
 			System.out.println("Element '" + element.getTagName() + "' is displayed.");
-
 		return element.isDisplayed();
-
 	}
 
 	protected static void tearDown() {
@@ -774,14 +772,18 @@ public class TestRoot{
 	}
 
 	//// Waiting Methods ////
+	//sk - 2/24 - the method was returning false even when the element was displayed as there was no 'return true' stea
 	public static boolean isVisible(IOSElement e) {
 		boolean isVisible = false;
 		if (e == null) {
+			System.out.println("Failing in isVisible(), element is being sent as null");
 			return false;
 		}
 		try {
-			driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
+			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 			isVisible = e.isDisplayed();
+			System.out.println("isDisplayed() in isVisible(): " +  isVisible);
+			return true;
 		} catch (Exception x) {
 		} finally {
 			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
@@ -794,8 +796,10 @@ public class TestRoot{
 		if (e == null)
 			return false;
 		try {
-			driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
+			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 			isEnabled = e.isEnabled();
+			System.out.println("isEnabled() in isVisible(): " + isEnabled);			
+			return true;
 		} catch (Exception x) {
 		} finally {
 			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);

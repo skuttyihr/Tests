@@ -19,7 +19,7 @@ public class TestCuratedPlaylist extends TestRoot {
 
 	@Before
 	public void setUp() {
-		setUp();
+		setup();
 	}
 	
 	@Rule
@@ -27,8 +27,8 @@ public class TestCuratedPlaylist extends TestRoot {
 
 	@Test
 	public void testPlaylistProfilePageMetadata_CUR_1_PLUS() {
-		LocalTime before = consoleLogStart("Testing elements on Artist Profile Page - testArtistProfileElements()");
-		loginPage.loginVerifyEntitlement(IHEARTPLUSUSERNAME, IHEARTPLUSPASSWD,"PLUS");
+		LocalTime before = consoleLogStart("Testing elements on Curated Playlist Page Metadata - Plus User - testPlaylistProfilePageMetadata_CUR_1_PLUS().");
+		loginPage.loginVerifyEntitlement(IHEARTPLUSUSERNAME, IHEARTPLUSPASSWD, "PLUS");
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		searchPage.searchAndPlayPlaylist("workout hits");
 		Errors err = curatedPlaylistPage.verifyPlaylistProfilePage();
@@ -39,7 +39,7 @@ public class TestCuratedPlaylist extends TestRoot {
 	
 	@Test
 	public void testPlaylistProfilePageMetadata_CUR_2_ALLA() {
-		LocalTime before = consoleLogStart("Testing elements on Artist Profile Page - testArtistProfileElements()");
+		LocalTime before = consoleLogStart("Testing elements on Curated Playlist Page Metadata - Plus User - testPlaylistProfilePageMetadata_CUR_2_ALLA()");
 		loginPage.loginVerifyEntitlement(IHEARTPREMIUMUSERNAME, IHEARTPREMIUMPASSWD,"ALLA");
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		searchPage.searchAndPlayPlaylist("workout hits");
