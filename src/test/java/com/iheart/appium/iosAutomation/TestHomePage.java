@@ -1,4 +1,4 @@
-	package com.iheart.appium.iosAutomation;
+package com.iheart.appium.iosAutomation;
 
 import java.time.LocalTime;
 
