@@ -10,6 +10,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.openqa.selenium.By;
 
+import com.iheart.appium.utilities.TestRoot;
+
 import io.appium.java_client.SwipeElementDirection;
 import io.appium.java_client.ios.IOSElement;
 

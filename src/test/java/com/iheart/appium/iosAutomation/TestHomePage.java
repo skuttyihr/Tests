@@ -1,10 +1,11 @@
-package com.iheart.appium.iosAutomation;
+	package com.iheart.appium.iosAutomation;
 
 import java.time.LocalTime;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -25,7 +26,8 @@ public class TestHomePage extends TestRoot {
 	public ScreenshotRule screenshot = new ScreenshotRule();
 	
 	
-	//@Test
+	@Test
+	@Ignore
 	public void testForYou_HOME1_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testForYou_HOME1_FREE() : Testing all elements on HomePage - For You, My Stations, Local Radio");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("homepageelements@Test.com","test", "FREE"));
@@ -40,7 +42,7 @@ public class TestHomePage extends TestRoot {
 	@Test
 	public void testMyStations_HOME2_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testMyStations_HOME2_FREE() : Testing all elements on HomePage - For You, My Stations, Local Radio");
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("homepageelements//@Test.com","test", "FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("homepageelements@Test.com","test", "FREE"));
 		if(homePage.isCurrentlyOnHomePage()){
 			homePage.clickMyStationsTab();
 			homePage.printMyStationsElements();
@@ -51,7 +53,7 @@ public class TestHomePage extends TestRoot {
 	@Ignore
 	public void testMyMusic_HOME3_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testMyStations_HOME3_FREE() : Testing all elements on HomePage - For You, My Stations, Local Radio");
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("homepageelements//@Test.com","test", "FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("homepageelements@Test.com","test", "FREE"));
 		if(homePage.isCurrentlyOnHomePage()){
 			homePage.clickMyMusicTab();
 			homePage.printMyMusicElements();
@@ -92,7 +94,7 @@ public class TestHomePage extends TestRoot {
 		Station is deleted but it keeps playing
 		the station is also display under 'Favorite Stations' and the equalizer is only showing near the Favorite Station
 	 */
-	//@Test
+	@Test
 	@Ignore
 	public void testMiscHomePage_HOME6_FREE(){
 	
@@ -121,7 +123,7 @@ public class TestHomePage extends TestRoot {
 	//@Ignore
 	public void testAddToFavoritesFromHome(){
 		LocalTime before = consoleLogStart("testAddToFavoritesFromHome() - Login, Swipe Station and try to Add to Favorites ");
-		loginPage.loginWithoutVerifying();
+		loginPage.loginVerifyEntitlement("homepageelements@Test.com","test", "FREE"));
 		createdFavorite = true; // This test will create a favorite
 		// Search for an item so we know what we're working with
 		String artist = "Tegan and Sara";
@@ -170,7 +172,7 @@ public class TestHomePage extends TestRoot {
 	/**
 	 * Log in, load up a station, check that it's in recents, add it to favorites, check that it's a favorite as well as a recent. 
 	 
-	//@Test
+	@Test
 	@Ignore
 	public void testAddToFavoritesFromRecents(){
 		LocalTime before = consoleLogStart("testAddToFavoritesFromRecents() - Log in, load up a station, check that it's in recents, add it to favorites, check that it's a favorite as well as a recent. ");
@@ -218,7 +220,7 @@ public class TestHomePage extends TestRoot {
 	/**
 	 * testAddToFavoritesFromLocalRadio- Log in, go to Live/Local Radio tab, add a station, check my stations for it being there
 	 
-	//@Test
+	@Test
 	@Ignore
 	public void testAddToFavoritesFromLocalRadio(){  
 		LocalTime before = consoleLogStart("testAddToFavoritesFromLocalRadio- Log in, go to Live/Local Radio tab, add a station, check my stations for it being there ");
@@ -263,7 +265,7 @@ public class TestHomePage extends TestRoot {
 		// Scroll to bottom of each list, verify what's visible, then keep scrolling
 		// Use XPath to grab visible names, as any other method will hold them even if they're not visible
 	
-	//@Test
+	@Test
 	@Ignore
 	public void testShowMore(){  
 		LocalTime before = consoleLogStart("testShowMore() is testing the Show More on the For You and My Stations");
@@ -284,13 +286,12 @@ public class TestHomePage extends TestRoot {
 	 */
 	/**
 	 * // Test that we can scroll to the bottom, then jump back to the top
-	
-	//@Test
+
+	@Test
 	@Ignore
 	public void testScrollAndTapBar(){   
 		LocalTime before = consoleLogStart("testScrollAndTapBar()");
-		
-		loginPage.loginWithoutVerifying();
+		loginPage.loginVerifyEntitlement("homepageelements@Test.com","test", "FREE")
 		sideNavBar.gotoHomePage();
 		List<String> topItems = homePage.getVisibleListItems();
 		for(int i = 0; i < 3; i++)

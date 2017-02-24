@@ -4,6 +4,7 @@ import java.time.LocalTime;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
@@ -112,7 +113,8 @@ public class TestArtistProfile extends TestRoot {
 	}
 	
 
-	//@Test
+	@Test
+	@Ignore
 	public void testFunctions_ARTP6_PLUS(){
 		LocalTime before = consoleLogStart("Testing methods on testFunctions_ARTP6_PLUS");
 		System.out.println("This test case still needs work. Thinking is that there must be differences we should expect for PLUS users as they navigate");

@@ -2,6 +2,8 @@ package com.iheart.appium.iosAutomation;
 
 import org.openqa.selenium.By;
 
+import com.iheart.appium.utilities.Errors;
+
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
 import io.appium.java_client.pagefactory.iOSFindBy;
@@ -48,7 +50,7 @@ public class CuratedPlaylistPage extends Page{
 				+ "XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/"
 				+ "XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeCollectionView[1]/"
 				+ "XCUIElementTypeCell[" + cellnumber + "]/XCUIElementTypeStaticText[1]"));
-				return cPlaylistCellSongName;				
+		return cPlaylistCellSongName;				
 	}
 
 	public Errors verifyPlaylistProfilePage() {

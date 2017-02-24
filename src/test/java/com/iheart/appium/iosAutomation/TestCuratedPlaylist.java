@@ -8,7 +8,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
 
-import com.iheart.appium.iosAutomation.TestRoot.ScreenshotRule;
+import com.iheart.appium.utilities.Errors;
+import com.iheart.appium.utilities.TestRoot;
 
 
 public class TestCuratedPlaylist extends TestRoot {
@@ -18,7 +19,7 @@ public class TestCuratedPlaylist extends TestRoot {
 
 	@Before
 	public void setUp() {
-		setup();
+		setUp();
 	}
 	
 	@Rule
