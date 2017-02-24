@@ -101,7 +101,7 @@ public class TestArtistProfile extends TestRoot {
 		searchPage.clickTopResult();
 		Assert.assertTrue("Artist Profile should be open for Rihanna", artistProfilePage.isCurrentlyOnArtistProfilePage());
 		Assert.assertTrue("MiniPlayer should be open for Rihanna", miniPlayer.isCurrentlyOnMiniPlayer());
-		Assert.assertEquals("Rihanna's Latest Release should be 'Love On The Brain'", "Love On The Brain", artistProfilePage.getLatestReleaseAlbumTitle());
+		Assert.assertNotNull("Latest Release section display but there is no album title displayed", artistProfilePage.getLatestReleaseAlbumTitle());
 		artistProfilePage.clickFirstTopSongsCell();
 		miniPlayer.openFullPlayer();
 		Assert.assertEquals("Clicking on a Top Song should have started Artist Radio", "Artist Radio", fullPlayer.getStationType());
