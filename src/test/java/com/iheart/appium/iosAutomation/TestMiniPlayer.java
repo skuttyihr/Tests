@@ -39,7 +39,8 @@ public class TestMiniPlayer extends TestRoot {
 	public void testMiniPlayerArtistRadio_MPLAY1_FREE() {
 		LocalTime before = consoleLogStart(
 				"Testing testMiniPlayerArtistRadio_MPLAY1_FREE() - login, start MiniPlayer for Artist Radio, show all elements, test functionality.");
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("trav@free.com", "travfree", "FREE"));
+		//sk - 2/23 - changing login id as the earlier one failed
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("testfree@mail.com", "tester", "FREE"));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		// Start Artist Radio
 		searchPage.enterTextIntoSearchBar("Rage against the machine");

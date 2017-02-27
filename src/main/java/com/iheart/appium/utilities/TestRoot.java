@@ -35,6 +35,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import com.iheart.appium.iosAutomation.AlbumProfilePage;
 import com.iheart.appium.iosAutomation.ArtistProfileOverflowPage;
 import com.iheart.appium.iosAutomation.ArtistProfilePage;
+import com.iheart.appium.iosAutomation.CuratedPlaylistPage;
 import com.iheart.appium.iosAutomation.DeepLink;
 import com.iheart.appium.iosAutomation.FullPlayer;
 import com.iheart.appium.iosAutomation.GenrePage;
@@ -98,6 +99,8 @@ public class TestRoot{
 	protected static UpsellPage upsellPage;
 	protected static ArtistProfileOverflowPage artistProfileOverflowPage;
 	protected static AlbumProfilePage albumProfilePage;
+	protected static CuratedPlaylistPage curatedPlaylistPage;
+
 
 	// New On Demand Elements
 	protected static ArtistProfilePage artistProfilePage;
@@ -268,6 +271,7 @@ public class TestRoot{
 		artistProfilePage = new ArtistProfilePage(driver);
 		artistProfileOverflowPage = new ArtistProfileOverflowPage(driver);
 		albumProfilePage = new AlbumProfilePage(driver);
+		curatedPlaylistPage = new CuratedPlaylistPage(driver);
 		driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 		System.out.println("Testing on: " + MODEL);
 
@@ -302,7 +306,37 @@ public class TestRoot{
 			}
 			return iosElement.isDisplayed();
 		}
-
+	}
+	
+	
+	/**
+	 * sk - 2/8 - method to print out Element Names as they appear in the app.
+	 * @param element
+	 * @return
+	 */
+	public boolean printElementName(IOSElement element) {
+		String getText = "";
+		String value = "";
+		String label = "";
+			
+		if (!isVisible(element)) {
+			waitForElementToBeVisible(element, 5);
+			System.out.println("element is null or is not visible.");
+			return false;
+		}	
+		getText = element.getAttribute("name");
+		value = element.getAttribute("value");
+		label = element.getAttribute("label");
+		
+		if ( getText != null) 
+			System.out.println("Element '" + getText + "' is displayed.");
+		else if (value != null) 
+			System.out.println("Element '" + value + "' is displayed.");
+		else if (label != null)
+			System.out.println("Element '" + label + "' is displayed.");
+		else
+			System.out.println("Element '" + element.getTagName() + "' is displayed.");
+		return element.isDisplayed();
 	}
 
 	protected static void tearDown() {
@@ -738,14 +772,18 @@ public class TestRoot{
 	}
 
 	//// Waiting Methods ////
+	//sk - 2/24 - the method was returning false even when the element was displayed as there was no 'return true' stea
 	public static boolean isVisible(IOSElement e) {
 		boolean isVisible = false;
 		if (e == null) {
+			System.out.println("Failing in isVisible(), element is being sent as null");
 			return false;
 		}
 		try {
-			driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
+			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 			isVisible = e.isDisplayed();
+			System.out.println("isDisplayed() in isVisible(): " +  isVisible);
+			return true;
 		} catch (Exception x) {
 		} finally {
 			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
@@ -758,8 +796,10 @@ public class TestRoot{
 		if (e == null)
 			return false;
 		try {
-			driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
+			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 			isEnabled = e.isEnabled();
+			System.out.println("isEnabled() in isVisible(): " + isEnabled);			
+			return true;
 		} catch (Exception x) {
 		} finally {
 			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
@@ -1048,43 +1088,10 @@ public class TestRoot{
 	}
 	
 	/**
-	 * sk - 1/23 - added method to enable going to any album on artist profile page indicated by an integre
+	 * sk - 1/23 - added method to enable going to any album on artist profile page indicated by an integer
 	 */
 	public IOSElement generateIOSElementId(String eleName, int x){
 		String value = eleName + "-" + x;
 		return (findElement(driver, By.id(value)));
-	}
-	
-	/**
-	 * sk - 2/8 - method to print out Element Names as they appear in the app.
-	 * @param element
-	 * @return
-	 */
-	public boolean printElementName(IOSElement element) {
-		String getText = "";
-		String value = "";
-		String label = "";
-			
-		if (!(isVisible(element)) ) {
-			System.out.println("Element is null or is not visible.");
-			return false;
-		} 
-		else {				
-			getText = element.getAttribute("name");
-			value = element.getAttribute("value");
-			label = element.getAttribute("label");
-		}			
-		if ( getText != null) 
-			System.out.println("Element '" + getText + "' is displayed.");
-		else if (value != null) 
-			System.out.println("Element '" + value + "' is displayed.");
-		else if (label != null)
-			System.out.println("Element '" + label + "' is displayed.");
-		else
-			System.out.println("Element '" + element.getTagName() + "' is displayed.");
-
-		return element.isDisplayed();
-
-	}
-	
+	}	
 }

@@ -30,7 +30,6 @@ public class GenrePage extends Page {
 	@iOSFindBy(accessibility = "IHRGenrePickerViewController-DoneButton-UIButton") 				public IOSElement IHRGenrePickerViewControllerDoneButtonUIButton;
 	@iOSFindBy(accessibility = "IHRGenrePickerViewController-BottomBar-UIView") 				public IOSElement IHRGenrePickerViewControllerBottomBarUIView;
 	@iOSFindBy(accessibility = "IHRGenrePickerViewController-GenreCollectionView-UICollectionView") public IOSElement IHRGenrePickerViewControllerGenreCollectionViewUICollectionView;
-
 	@iOSFindBy(accessibility = "IHRGenrePickerViewController-Cell-UICollectionViewCell-0") 		public IOSElement IHRGenrePickerViewControllerCellUICollectionViewCell0;
 	@iOSFindBy(accessibility = "IHRGenrePickerViewController-Cell-UICollectionViewCell-1") 		public IOSElement IHRGenrePickerViewControllerCellUICollectionViewCell1;
 	@iOSFindBy(accessibility = "IHRGenrePickerViewController-Cell-UICollectionViewCell-2") 		public IOSElement IHRGenrePickerViewControllerCellUICollectionViewCell2;
@@ -127,9 +126,26 @@ public class GenrePage extends Page {
 	 * @return true if isEnabled()
 	 */
 	public boolean isDoneButtonEnabled(){
-		boolean isEnabled = TestRoot.isEnabled(IHRGenrePickerViewControllerDoneButtonUIButton);
-		System.out.println("isDoneButtonEnabled() : " + isEnabled);
-		return isEnabled;
+		/** sk - 2/23 - modifying this method as isEnabled() no longer works with Appium 1.6.0
+		 * 	Found this while testing AIOS-5585
+		 */
+		//boolean isEnabled = TestRoot.isEnabled(IHRGenrePickerViewControllerDoneButtonUIButton);
+		//System.out.println("isDoneButtonEnabled() : " + isEnabled);
+		//return isEnabled;
+		boolean doneEnabled = false;
+		String trueOrNull = IHRGenrePickerViewControllerDoneButtonUIButton.getAttribute("value");
+		System.out.println("isDoneEnabled " + trueOrNull);
+
+		if(trueOrNull == null){
+			doneEnabled = false;
+		}
+		else if( trueOrNull.equals("true")){
+			doneEnabled = true;
+		}else {
+			doneEnabled = false; //default
+		}
+		return doneEnabled;
+		
 	}
 	/**
 	 * Uses Random number generator to select between 1 and 6 genres on the first page.
@@ -159,7 +175,7 @@ public class GenrePage extends Page {
 	public Errors selectGenres(int[] gs){
 		Errors err = new Errors();
 		for(int i : gs){
-			String genre = "IHRGenrePickerViewController-Cell-UICollectionViewCell-" + gs[i];
+			String genre = "IHRGenrePickerViewController-Cell-UICollectionViewCell-" + i;
 			//System.out.println("creating an IOSElement for Genre and clicking it : "+ genre );
 			if(waitForElementToBeVisible(findElement(driver, MobileBy.AccessibilityId(genre)), 5)){
 				findElement(driver, MobileBy.AccessibilityId(genre)).click();

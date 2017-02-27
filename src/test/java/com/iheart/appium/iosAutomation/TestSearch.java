@@ -12,6 +12,7 @@ import org.openqa.selenium.By;
 
 import com.iheart.appium.utilities.TestRoot;
 
+import io.appium.java_client.SwipeElementDirection;
 import io.appium.java_client.ios.IOSElement;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -19,7 +20,7 @@ public class TestSearch extends TestRoot {
 
 	@Before
 	public void setUp() throws Exception {
-		TestRoot.setup();
+		setup();
 	}
 	
 	@Rule
@@ -41,7 +42,7 @@ public class TestSearch extends TestRoot {
 		LocalTime before = consoleLogStart("Testing testSearchPageTextfield_SEA2_FREE");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@Test.com","test", "FREE"));
 		homePage.clickNavBarSearchButtonToOpenSearch();
-		//searchPage.showAllElements();
+		searchPage.showAllElements();
 		searchPage.enterTextIntoSearchBar("asdf");
 		searchPage.clearSearchBarTextField();
 		searchPage.enterTextIntoSearchBar("MORE");
@@ -120,10 +121,9 @@ public class TestSearch extends TestRoot {
 		LocalTime before = consoleLogStart(">>>>>testSearchPlaylist_SEA6_FREE() : Searching a song, clicking Top Result, hoping for Artist Radio.");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@Test.com","test", "FREE"));
 		homePage.clickNavBarSearchButtonToOpenSearch();
-		String playlistName = "workout hits";
-		//String expectedRadioType = "Theme Radio";
+		String playlistName = "Workout Hits";
+		String expectedRadioType = "Playlist by iHeartRadio";
 		searchPage.enterTextAndPressEnterIntoSearchBar(playlistName);
-		//sk - 2/8 - the Playlist section is visible, so scrolldown is not required
 		//searchPage.scrollSearchResultsCollectionView(SwipeElementDirection.DOWN, 100, 200, 100);
 		searchPage.clickFirstPlaylistCell();
 		//Playlist Results open
