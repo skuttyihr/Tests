@@ -20,7 +20,7 @@ public class TestSearch extends TestRoot {
 
 	@Before
 	public void setUp() throws Exception {
-		TestRoot.setup();
+		setup();
 	}
 	
 	@Rule

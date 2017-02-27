@@ -127,7 +127,7 @@ public class TestRoot{
 	protected static String SCREENSHOT_DIRECTORY;
 	protected static String SCREENSHOT_URL;
 
-	protected static void setup() {
+	protected void setup() {
 		System.out.println("TestRoot.setup()");
 		String appiumUrl = "";
 		String appiumPort = "";

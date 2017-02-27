@@ -20,7 +20,10 @@ public class CuratedPlaylistPage extends Page{
 
 	// ***************  Elements   ***************// 
 	
-	@iOSFindBy(accessibility = "Workout Hits") private IOSElement cPlaylistTitle;
+	//@iOSFindBy(accessibility = "Workout Hits") private IOSElement cPlaylistTitle;
+	@iOSFindBy(xpath = "//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/"
+			+ "XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/"
+			+ "XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeStaticText[1]") private IOSElement cPlaylistTitle;
 	@iOSFindBy(accessibility = "Top Hits to keep you motivated in the gym") private IOSElement cPlaylistDescription;
 	@iOSFindBy(xpath = "By iHeartRadio /.*") private IOSElement cPlaylistCurator_Duration;
 	@iOSFindBy(id = "pause button") private IOSElement btnPause;
@@ -31,9 +34,10 @@ public class CuratedPlaylistPage extends Page{
 	@iOSFindBy(accessibility = "Stronger") private IOSElement firstTrack;
 	@iOSFindBy(accessibility = "Rock Your Body") private IOSElement secondTrack;
 	@iOSFindBy(accessibility = "'Till I Collapse") private IOSElement thirdTrack;
-	@iOSFindBy(xpath = "//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/"
+	@iOSFindBy(xpath = "//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[2]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/"
 			+ "XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/"
-			+ "XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeStaticText[3]")
+			+ "XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/"
+			+ "XCUIElementTypeStaticText[1]]")
 	private IOSElement curatedByAndDurationText;
 
 	// ***************  Behaviors  ***************//

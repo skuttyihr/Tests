@@ -26,7 +26,7 @@ public class TestCuratedPlaylist extends TestRoot {
 	public ScreenshotRule screenshot = new ScreenshotRule();
 
 	@Test
-	public void testPlaylistProfilePageMetadata_CUR_1_PLUS() {
+	public void testPlaylistProfilePageMetadata_CUR1_PLUS() {
 		LocalTime before = consoleLogStart("Testing elements on Curated Playlist Page Metadata - Plus User - testPlaylistProfilePageMetadata_CUR_1_PLUS().");
 		loginPage.loginVerifyEntitlement(IHEARTPLUSUSERNAME, IHEARTPLUSPASSWD, "PLUS");
 		homePage.clickNavBarSearchButtonToOpenSearch();
@@ -38,7 +38,7 @@ public class TestCuratedPlaylist extends TestRoot {
 	}
 	
 	@Test
-	public void testPlaylistProfilePageMetadata_CUR_2_ALLA() {
+	public void testPlaylistProfilePageMetadata_CUR2_ALLA() {
 		LocalTime before = consoleLogStart("Testing elements on Curated Playlist Page Metadata - Plus User - testPlaylistProfilePageMetadata_CUR_2_ALLA()");
 		loginPage.loginVerifyEntitlement(IHEARTPREMIUMUSERNAME, IHEARTPREMIUMPASSWD,"ALLA");
 		homePage.clickNavBarSearchButtonToOpenSearch();

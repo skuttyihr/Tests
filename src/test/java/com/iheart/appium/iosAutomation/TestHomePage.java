@@ -15,7 +15,7 @@ public class TestHomePage extends TestRoot {
 	
 	@Before
 	public void setUp() throws Exception {
-		TestRoot.setup();
+		setup();
 	}
 	@After
 	public void after() {
