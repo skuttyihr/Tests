@@ -23,7 +23,7 @@ public class CuratedPlaylistPage extends Page{
 	//@iOSFindBy(accessibility = "Workout Hits") private IOSElement cPlaylistTitle;
 	@iOSFindBy(xpath = "//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/"
 			+ "XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/"
-			+ "XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeStaticText[1]") private IOSElement cPlaylistTitle;
+			+ "XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeStaticText[1]") private IOSElement cPlaylistTitle;	
 	@iOSFindBy(accessibility = "Top Hits to keep you motivated in the gym") private IOSElement cPlaylistDescription;
 	@iOSFindBy(xpath = "By iHeartRadio /.*") private IOSElement cPlaylistCurator_Duration;
 	@iOSFindBy(id = "pause button") private IOSElement btnPause;
@@ -66,6 +66,7 @@ public class CuratedPlaylistPage extends Page{
 	
 	public Errors verifyPlaylistProfilePage() {
 		Errors err = new Errors();
+		waitForElementToBeVisible(cPlaylistDescription, 3);
 		if (!printElementName(cPlaylistTitle))
 			err.add("Curated Playlist Profile Page Title is not seen.");
 		if (!printElementName(cPlaylistDescription))

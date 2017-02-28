@@ -33,6 +33,7 @@ import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.iheart.appium.iosAutomation.AlbumProfilePage;
+import com.iheart.appium.iosAutomation.AppboyUpsellsPage;
 import com.iheart.appium.iosAutomation.ArtistProfileOverflowPage;
 import com.iheart.appium.iosAutomation.ArtistProfilePage;
 import com.iheart.appium.iosAutomation.CuratedPlaylistPage;
@@ -100,6 +101,7 @@ public class TestRoot{
 	protected static ArtistProfileOverflowPage artistProfileOverflowPage;
 	protected static AlbumProfilePage albumProfilePage;
 	protected static CuratedPlaylistPage curatedPlaylistPage;
+	protected static AppboyUpsellsPage appboyUpsellsPage;
 
 
 	// New On Demand Elements
@@ -272,6 +274,7 @@ public class TestRoot{
 		artistProfileOverflowPage = new ArtistProfileOverflowPage(driver);
 		albumProfilePage = new AlbumProfilePage(driver);
 		curatedPlaylistPage = new CuratedPlaylistPage(driver);
+		appboyUpsellsPage = new AppboyUpsellsPage(driver);
 		driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 		System.out.println("Testing on: " + MODEL);
 
@@ -772,17 +775,15 @@ public class TestRoot{
 	}
 
 	//// Waiting Methods ////
-	//sk - 2/24 - the method was returning false even when the element was displayed as there was no 'return true' stea
+	//sk - 2/24 - the method was returning false even when the element was displayed as there was no 'return true'
 	public static boolean isVisible(IOSElement e) {
 		boolean isVisible = false;
 		if (e == null) {
-			System.out.println("Failing in isVisible(), element is being sent as null");
-			return false;
+			isVisible = false;
 		}
 		try {
 			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 			isVisible = e.isDisplayed();
-			System.out.println("isDisplayed() in isVisible(): " +  isVisible);
 			return true;
 		} catch (Exception x) {
 		} finally {
@@ -793,18 +794,19 @@ public class TestRoot{
 
 	public static boolean isEnabled(IOSElement e) {
 		boolean isEnabled = false;
-		if (e == null)
-			return false;
+		if (e == null) {
+			waitForElementToBeVisible(e, 4);
+			if ( e == null)
+				return false;
+		}
 		try {
 			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 			isEnabled = e.isEnabled();
-			System.out.println("isEnabled() in isVisible(): " + isEnabled);			
 			return true;
 		} catch (Exception x) {
 		} finally {
 			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 		}
-
 		return isEnabled;
 	}
 
@@ -880,7 +882,8 @@ public class TestRoot{
 			// searching for element
 			timeLeftMil -= 1000;
 		}
-
+		if (isVisible(ele) == false)
+			System.out.println("waitForElementToBeVisible() is returning false");
 		return isVisible(ele);
 	}
 
@@ -889,7 +892,7 @@ public class TestRoot{
 			waitForElementToBeVisible(ele, maxWaitTimeSeconds);
 			maxWaitTimeSeconds = 1;
 		}
-		if (ele.isEnabled()) {
+		if (ele.isEnabled() && (ele.isDisplayed())) {
 			return true;
 		}
 
@@ -897,15 +900,18 @@ public class TestRoot{
 			try {
 				driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
 				if (ele.isEnabled()) {
+					System.out.println("WaitForElementToBeEnabled(): Element is enabled");
 					break;
 				}
 			} catch (Exception e) {
 			} finally {
 				maxWaitTimeSeconds -= 1;
+				System.out.println("WaitForElementToBeEnabled(): in finally section");
 				driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 			}
 		}
 		if (!isVisible(ele)) {
+			System.out.println("WaitForElementToBeEnabled(): in finally section");
 			return false;
 		}
 		return ele.isEnabled();

@@ -122,7 +122,7 @@ public class Errors {
 			err.addAll(newErrors.getErrorList());
 		}
 	}
-	
+
 	// Added to make converting from StringBuilder easier, but the add is likely preferred (less typing)
 	public void append(String s){
 		add(s);

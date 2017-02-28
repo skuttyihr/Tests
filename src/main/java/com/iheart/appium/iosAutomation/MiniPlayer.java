@@ -1,5 +1,7 @@
 package com.iheart.appium.iosAutomation;
 
+import com.iheart.appium.utilities.Errors;
+
 import io.appium.java_client.SwipeElementDirection;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
@@ -58,9 +60,15 @@ public class MiniPlayer extends Page {
 	/**
 	 * Clicks the MiniPlayer to open Full Player. 
 	 */
-	public void openFullPlayer(){
+	public Errors openFullPlayer(){
+		Errors err = new Errors();
 		System.out.println("Opening Full Player by clicking on MiniPlayerViewImageViewUIImageView element.");
+		if (!waitForElementToBeVisible(MiniPlayerViewImageViewUIImageView, 6)) {
+			err.add("MiniPlayer was not displayed.");
+			return err;
+		} 
 		MiniPlayerViewImageViewUIImageView.click();
+		return err;
 	}
 	
 	/**

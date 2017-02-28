@@ -6,6 +6,7 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 import com.iheart.appium.utilities.Errors;
+import com.iheart.appium.utilities.TestRoot;
 
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.ios.IOSDriver;
@@ -157,11 +158,24 @@ public class GenrePage extends Page {
 	 */
 	public Errors selectGenres(int[] gs){
 		Errors err = new Errors();
+<<<<<<< Updated upstream
 		for(int i : gs){
 			String genre = "IHRGenrePickerViewController-Cell-UICollectionViewCell-" + i;
-			System.out.println("creating an IOSElement for Genre and clicking it : "+ genre );
+			//System.out.println("creating an IOSElement for Genre and clicking it : "+ genre );
 			if(waitForElementToBeVisible(findElement(driver, MobileBy.AccessibilityId(genre)), 5)){
 				findElement(driver, MobileBy.AccessibilityId(genre)).click();
+=======
+		System.out.println(gs.length);
+		for(int i : (gs)){
+			String accessibility = "IHRGenrePickerViewController-Cell-UICollectionViewCell-" + gs[i-1];
+			IOSElement genre = findElement(driver, MobileBy.AccessibilityId(accessibility));
+			System.out.println("creating an IOSElement for Genre and clicking it : " + genre);
+			//if(waitForElementToBeVisible(findElement(driver, MobileBy.AccessibilityId(genre)), 5)){
+			if(waitForElementToBeVisible(genre, 5)){
+				System.out.println("creating an IOSElement for Genre and clicking it : " + genre.getText());
+				genre.click();
+				//findElement(driver, MobileBy.AccessibilityId(accessibility)).click();
+>>>>>>> Stashed changes
 			}else{
 				err.add("The Genre cell wasn't visible and thus couldn't be clicked.", "clickGenreCell");
 			}

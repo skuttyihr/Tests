@@ -6,6 +6,8 @@ import java.math.RoundingMode;
 
 import org.openqa.selenium.By;
 
+import com.iheart.appium.utilities.Errors;
+
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
 import io.appium.java_client.pagefactory.iOSFindBy;
@@ -391,7 +393,7 @@ public class FullPlayer extends Page {
 	 * @return
 	 */
 	public int getNumberOfSkipsRemaining(){
-		String skips = IHRPlayerViewForwardButtonUIButton.getText();
+		String skips = IHRPlayerViewForwardButtonUIButton.getAttribute("innertext");
 		int skipsLeft = Integer.parseInt(skips.substring(6, 7));
 		System.out.println("getNumberOfSkipsRemaining() : " + skipsLeft);
 		return skipsLeft;
@@ -401,6 +403,7 @@ public class FullPlayer extends Page {
 	 */
 	public void clickSkipButton(){
 		System.out.println("clickSkipButton()... ");
+		waitForElementToBeVisible(IHRPlayerViewForwardButtonUIButton, 2);
 		IHRPlayerViewForwardButtonUIButton.click();
 	}
 	
@@ -409,6 +412,7 @@ public class FullPlayer extends Page {
 	 * @return
 	 */
 	public String getTitleOfSongPlaying(){
+		waitForElementToBeVisible(IHRPlayerViewTitleLabelUILabel,4);
 		String title = IHRPlayerViewTitleLabelUILabel.getText();
 		System.out.println("getTitleOfSongPlaying() : " + title);
 		return title;
@@ -541,7 +545,6 @@ public class FullPlayer extends Page {
     	}
     }
     
-   
     /**
      * Returns a String of the type of Play Button it is. Could be Play, Pause, Stop etc. 
      * @return
@@ -650,13 +653,24 @@ public class FullPlayer extends Page {
      * Clicks the 'Replay' button to open the Replay Modal. If user is FREE -> expect Upsell Modal.
      * If User is Plus/AA, expect to be able to click a song or cancel. 
      * @return
+     * sk - 2/24 - modified this method to account for Replay button being disabled when instream ads are playing.
      */
-    public boolean clickReplayButtonToOpenReplayModal(){
-    	if( IHRPlayerReplayButtonUIButton!= null){
+    public Errors clickReplayButtonToOpenReplayModal(){
+    	Errors err = new Errors();
+    	while (!waitForElementToBeEnabled(IHRPlayerReplayButtonUIButton, 10)) {
+    		System.out.println("Replay button was not enabled - could have been playing non-track content on live radio. Scanning to next.");
+    		clickSkipButton();
+    		fullPlayer.clickPlayButton();
+    		fullPlayer.clickPlayButton();
+    	}
+    	if(waitForElementToBeVisible(IHRPlayerReplayButtonUIButton, 4)) {
     		IHRPlayerReplayButtonUIButton.click();
     		System.out.println("clickReplayButtonToOpenReplayModal() .");
-    		return true;
-    	} return false;
+    		return err;
+    	}
+    	else
+    		err.add("Replay button was not displayed or was not enabled on full player");
+    	return err;
     }
     /**
      * Clicks the Add to Playlist Button, uses String entitlement to determine expected action. 
@@ -799,4 +813,68 @@ public class FullPlayer extends Page {
     public boolean isStationHearted(){
     	return isCurrentlyOn("isStationHearted", IHRPlayerTitleViewHeartViewUIImageView);
     }
+    /**
+     * sk - 2/26 - Skip to the skip limit
+     */
+    public void skipToTheLimit() {
+    	int i = 0;
+    	if (isCurrentlyOnFullPlayer()) {
+			clickSkipButton();
+    		while (!(isVisible(appboyUpsellsPage.getNewFeatureTag()) && isVisible(IHRPlayerViewForwardButtonUIButton))) {
+    				clickSkipButton();
+    				i++;
+    			}
+    			if(i==5) {
+    				String trackName = getTitleOfSongPlaying();
+    				System.out.println("TrackName at " + i + " skips remaining: '" + trackName +"'");
+    			}
+    	}
+    }
+    
+    /**
+     * sk - 2/27 - there is another method above that does the same thing. However considering that we cannot really click the 
+     * Save Song or Add to Playlist options without clicking the Save button first, I'm adding that in as a first step.
+     * Changes made are:
+     * 1. Adding in click on Save button first
+     * 2. Changed the method to return Errors object to capture text on what actually failed. Have found that this helps to identify 
+     * 	  step and reason failure quickly as compared to only a screenshot.
+     * This will help make the actual test more compact.
+     * I am not removing the existing method cause FullPlayer tests are using that.
+     * I'll add in a ticket to refactor the FullPlayer tests with this method if we all agree on it?
+     */
+    public Errors clickSaveModalAddToPlaylist(String entitlement) {
+    	Errors err = new Errors();
+    	if (clickSaveButtonToOpenSaveModal()) {
+    		if(entitlement!= null && AddToPlaylistButton != null && !entitlement.equals("")){
+    			if(entitlement.equals("FREE")){
+    				AddToPlaylistButton.click();
+    				System.out.println("AddToPlaylistButton was clicked for FREE User - Expect Upsell Modal to appear");
+    				if(!(appboyUpsellsPage.isUpsellDisplayed())) {
+    					err.add("Upsell page was not displayed on clicking Save Modal - Add to Playlist button for Free User");
+    					return err;
+    				}
+    			}else if(entitlement.equals("PLUS")){
+    				AddToPlaylistButton.click();
+    				System.out.println("AddToPlaylistButton was clicked for PLUS User - Expect Upsell Modal to appear");
+    				if(!appboyUpsellsPage.isUpsellDisplayed())
+    					err.add("Upsell page was not displayed on clicking Save Modal - Add to Playlist button for Plus user");
+    				return err;
+    				//return upsellPage.isad
+    			}else if(entitlement.equals("ALLACCESS")){
+    				AddToPlaylistButton.click();
+    				System.out.println("AddToPlaylistButton was clicked for ALLACCESS User - Expect Add to Playlist Modal to appear");
+    				if(appboyUpsellsPage.isUpsellDisplayed())
+    					err.add("Upsell page was displayed on clicking Save Modal - Add to Playlist button for All Access User");
+    				return err;
+    				//addToPlaylistModal.clickFirstPlaylist(); This can be filled in once AddToPlaylist page Object is done!!!!
+    			}
+    		}
+    	}
+    	else {
+    		err.add("Player - Save modal did not open");
+    		return err;
+    	}
+    	return err;
+    }
+
 }

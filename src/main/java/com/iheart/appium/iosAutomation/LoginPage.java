@@ -205,6 +205,7 @@ public class LoginPage extends Page {
 		// Select Genre
 		int[] genres = new int[] {1, 2} ;
 		if (genrePage.isCurrentlyOnGenrePage()){
+			System.out.println("onGenrePage.");
 			if(!genrePage.isDoneButtonEnabled()){
 				genrePage.selectGenres(genres);
 				genrePage.clickDoneButton();
