@@ -3,6 +3,8 @@ package com.iheart.appium.iosAutomation;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.PageFactory;
 
+import com.iheart.appium.iosAutomation.AppboyUpsellsPage.Entitlement;
+import com.iheart.appium.utilities.Errors;
 import com.iheart.appium.utilities.TestRoot;
 
 //import org.apache.log4j.Logger;
@@ -261,4 +263,38 @@ public class Page extends TestRoot {
 
 		return false;
 	}
+	
+	/** sk - 2/24 - helper method originally developed for Appboy Upsell testing
+	 * Used to login, play the top result, and open the full player
+	 * @param free
+	 * @param isTrialEligible
+	 * @param stationName
+	 * @return
+	 */
+	public static Errors playStationOpenFullPlayer(Entitlement entitlement, boolean isTrialEligible, String stationName) {
+		Errors err = new Errors();
+		login(entitlement, isTrialEligible);
+		homePage.clickNavBarSearchButtonToOpenSearch();
+		searchPage.searchAndPlayTopResults(stationName);
+		err.add(miniPlayer.openFullPlayer());
+		System.out.println("Full player opened, playing " + stationName + " Radio");
+		return err;
+	}
+	
+	/** sk - 2/24 - helper method originally developed for Appboy Upsell testing 
+	 * Used to login as a user with certain entitlements
+	 * @param free
+	 * @param isTrialEligible
+	 * @return
+	 */
+	public static void login(Entitlement e, boolean isTrialEligible)  {
+		if (e == Entitlement.FREE && isTrialEligible ==  true)
+			loginPage.loginVerifyEntitlement(IHEARTFREEUSERNAME, IHEARTFREEPASSWD,"FREE");
+		else if(e == Entitlement.FREE && isTrialEligible ==  false)
+			loginPage.loginVerifyEntitlement("plustrial@mail.com", "tester","FREE");
+		else if(e == Entitlement.PLUS)
+			loginPage.loginVerifyEntitlement(IHEARTPLUSUSERNAME, IHEARTPLUSPASSWD, "PLUS");
+		else
+			loginPage.loginVerifyEntitlement(IHEARTPREMIUMUSERNAME, IHEARTPREMIUMPASSWD, "ALLA");
+	}		
 }

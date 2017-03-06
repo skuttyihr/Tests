@@ -703,6 +703,5 @@ public class SearchPage extends Page {
 	public void searchAndPlayTopResults(String stationName) {
 		enterTextAndPressEnterIntoSearchBar(stationName);
 		clickTopResult();
-		System.out.println("Playing TopResult");
 	}
 }

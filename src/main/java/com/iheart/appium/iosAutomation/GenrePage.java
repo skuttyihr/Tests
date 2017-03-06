@@ -113,7 +113,7 @@ public class GenrePage extends Page {
 	public boolean clickDoneButton(){
 		if(waitForElementToBeVisible(IHRGenrePickerViewControllerDoneButtonUIButton, 3)) {
 			IHRGenrePickerViewControllerDoneButtonUIButton.click();
-			System.out.println("clickDoneButton() done");
+			System.out.println("clickDoneButton(): Clicked.");
 			return true;
 		}
 		return false;
@@ -123,11 +123,11 @@ public class GenrePage extends Page {
 	 * @return true if isEnabled()
 	 */
 	public boolean isDoneButtonEnabled(){
-		System.out.println("inisDoneButtonEnabled.");
 		boolean doneEnabled = false;
-		if (waitForElementToBeVisible(IHRGenrePickerViewControllerDoneButtonUIButton, 5))
-			return true;
-		System.out.println("isDoneEnabled(): after inDoneButtonEnaled" + doneEnabled);
+		if (waitForElementToBeVisible(IHRGenrePickerViewControllerDoneButtonUIButton, 5)) {
+			doneEnabled = true;
+			return doneEnabled;
+		}
 		return doneEnabled;		
 	}
 	/**

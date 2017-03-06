@@ -66,7 +66,8 @@ public class CuratedPlaylistPage extends Page{
 	
 	public Errors verifyPlaylistProfilePage() {
 		Errors err = new Errors();
-		waitForElementToBeVisible(cPlaylistDescription, 3);
+		if (!waitForElementToBeVisible(cPlaylistDescription, 3))
+			err.add("Curated Playlist profile page metadata was not visible");
 		if (!printElementName(cPlaylistTitle))
 			err.add("Curated Playlist Profile Page Title is not seen.");
 		if (!printElementName(cPlaylistDescription))

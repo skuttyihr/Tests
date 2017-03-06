@@ -794,6 +794,21 @@ public class TestRoot{
 
 	public static boolean isEnabled(IOSElement e) {
 		boolean isEnabled = false;
+		if ( e == null)
+			return false;
+		try {
+			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
+			isEnabled = e.isEnabled();
+			return true;
+		} catch (Exception x) {
+		} finally {
+			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
+		}
+		return isEnabled;
+	}
+	
+	public static boolean waitForEnabled(IOSElement e) {
+		boolean isEnabled = false;
 		if (e == null) {
 			waitForElementToBeVisible(e, 4);
 			if ( e == null)
@@ -809,6 +824,7 @@ public class TestRoot{
 		}
 		return isEnabled;
 	}
+
 
 	public static void sleep(int timeInMs) {
 		try {
@@ -875,15 +891,13 @@ public class TestRoot{
 		}
 		long timeLeftMil = timeInSeconds * 1000;
 		while (timeLeftMil > 0) {
-			if (isVisible(ele)) {
+			if (isVisible(ele) && isEnabled(ele)) {
 				break;
 			}
 			// sleep(100); // Intentionally mismatched to make up for time
 			// searching for element
 			timeLeftMil -= 1000;
 		}
-		if (isVisible(ele) == false)
-			System.out.println("waitForElementToBeVisible() is returning false");
 		return isVisible(ele);
 	}
 
@@ -892,7 +906,7 @@ public class TestRoot{
 			waitForElementToBeVisible(ele, maxWaitTimeSeconds);
 			maxWaitTimeSeconds = 1;
 		}
-		if (ele.isEnabled() && (ele.isDisplayed())) {
+		if (ele.isEnabled()) {
 			return true;
 		}
 
@@ -906,12 +920,10 @@ public class TestRoot{
 			} catch (Exception e) {
 			} finally {
 				maxWaitTimeSeconds -= 1;
-				System.out.println("WaitForElementToBeEnabled(): in finally section");
 				driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 			}
 		}
 		if (!isVisible(ele)) {
-			System.out.println("WaitForElementToBeEnabled(): in finally section");
 			return false;
 		}
 		return ele.isEnabled();

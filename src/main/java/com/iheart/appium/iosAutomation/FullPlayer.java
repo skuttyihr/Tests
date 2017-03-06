@@ -6,6 +6,7 @@ import java.math.RoundingMode;
 
 import org.openqa.selenium.By;
 
+import com.iheart.appium.iosAutomation.AppboyUpsellsPage.Entitlement;
 import com.iheart.appium.utilities.Errors;
 
 import io.appium.java_client.ios.IOSDriver;
@@ -23,6 +24,8 @@ public class FullPlayer extends Page {
 		setPlayer(this);
 	}
 	
+	 public enum entitlementType {FREE, PLUS, ALLA }
+
 	//IHRPlayerTitleView
 	@iOSFindBy(accessibility = "IHRPlayerTitleView-TitleLabel-UILabel") private IOSElement IHRPlayerTitleViewTitleLabelUILabel;
 	@iOSFindBy(accessibility = "IHRPlayerTitleView-SubTitleLabel-UILabel") private IOSElement IHRPlayerTitleViewSubTitleLabelUILabel;
@@ -80,15 +83,15 @@ public class FullPlayer extends Page {
     @iOSFindBy(accessibility ="IHROptionMenuView-DividerView-UIView" ) private IOSElement IHROptionMenuViewDividerViewUIView;
     @iOSFindBy(accessibility ="IHROptionMenuView-ButtonsContainer-UIView" ) private IOSElement IHROptionMenuViewButtonsContainerUIView;
     //These aren't true Objects - can't figure how to add AccessibilityIdentifiers to them. 
-    @iOSFindBy(accessibility ="Buy on iTunes") private IOSElement BuySongButton;
-    @iOSFindBy(accessibility ="Lyrics") private IOSElement LyricsButton;
-    @iOSFindBy(accessibility ="Go to Artist") private IOSElement GoToArtistProfileButton;
+    @iOSFindBy(accessibility ="Buy on iTunes") private IOSElement buySongButton;
+    @iOSFindBy(accessibility ="Lyrics") private IOSElement lyricsButton;
+    @iOSFindBy(accessibility ="Go to Artist") private IOSElement goToArtistProfileButton;
     //OD - Click SaveButton and these should appear. Remove/Save Station are interchangeable. 
-    @iOSFindBy(accessibility ="Remove Station") private IOSElement RemoveStationButton;  //Growl: Station removed from My Stations
-    @iOSFindBy(accessibility ="Save Station") private IOSElement SaveStationButton;  //Saved 'name' to My Stations
-    @iOSFindBy(accessibility ="Save Song") private IOSElement SaveSongButton; //Song saved to My Music
-    @iOSFindBy(accessibility ="Add to Playlist") private IOSElement AddToPlaylistButton;
-    @iOSFindBy(accessibility ="Cancel") private IOSElement CancelOutOfSaveButton;
+    @iOSFindBy(accessibility ="Remove Station") private IOSElement removeStationButton;  //Growl: Station removed from My Stations
+    @iOSFindBy(accessibility ="Save Station") private IOSElement saveStationButton;  //Saved 'name' to My Stations
+    @iOSFindBy(accessibility ="Save Song") private IOSElement saveSongButton; //Song saved to My Music
+    @iOSFindBy(accessibility ="Add to Playlist") private IOSElement addToPlaylistButton;
+    @iOSFindBy(accessibility ="Cancel") private IOSElement cancelOutOfSaveButton;
     
     @iOSFindBy(accessibility ="IHROptionMenuView-CancelButton-UIButton" ) private IOSElement IHROptionMenuViewCancelButtonUIButton;
     //Album and song title at the top of the More Info Option Menu screen
@@ -143,9 +146,9 @@ public class FullPlayer extends Page {
     	printElementName(IHROptionMenuViewUpperContainerUIView);
     	printElementInformation(IHROptionMenuViewDividerViewUIView);
     	printElementInformation(IHROptionMenuViewButtonsContainerUIView);
-    	printElementName(BuySongButton);
-    	printElementName(LyricsButton);
-    	printElementName(GoToArtistProfileButton);
+    	printElementName(buySongButton);
+    	printElementName(lyricsButton);
+    	printElementName(goToArtistProfileButton);
     	printElementName(IHROptionMenuViewCancelButtonUIButton);
     	printElementName(IHROptionMenuMetadataViewImageViewUIImageView);
     	printElementName(IHROptionMenuMetadataViewLabelContainerUIView);
@@ -388,23 +391,27 @@ public class FullPlayer extends Page {
 	}
 	
 	/**
-	 * Checks if the IHRPlayerViewForwardButtonUIButton is present and then returns an integer equal to the number of Skips left. Returns -1 if the label couldn't be found.
-	 * 
+	 * Checks if the IHRPlayerViewForwardButtonUIButton is present and then returns an integer equal to the number of Skips left. 
+	 * Returns -1 if the label couldn't be found.
+	 * sk - 3/2 - getText() isn't getting the whole label text ie. Skip. 5 skips remaining. It only returns skip.
 	 * @return
 	 */
 	public int getNumberOfSkipsRemaining(){
-		String skips = IHRPlayerViewForwardButtonUIButton.getAttribute("innertext");
-		int skipsLeft = Integer.parseInt(skips.substring(6, 7));
-		System.out.println("getNumberOfSkipsRemaining() : " + skipsLeft);
-		return skipsLeft;
+		if (waitForElementToBeVisible(IHRPlayerViewForwardButtonUIButton, 4)) {
+			String skips = IHRPlayerViewForwardButtonUIButton.getText();
+			int skipsLeft = Integer.parseInt(skips.substring(6, 7));
+			System.out.println("getNumberOfSkipsRemaining() : " + skipsLeft);
+			return skipsLeft;
+		}
+		return 0;		
 	}
 	/**
 	 * Clicks the Skip/ Scan Button
 	 */
 	public void clickSkipButton(){
 		System.out.println("clickSkipButton()... ");
-		waitForElementToBeVisible(IHRPlayerViewForwardButtonUIButton, 2);
-		IHRPlayerViewForwardButtonUIButton.click();
+		if (waitForElementToBeVisible(IHRPlayerViewForwardButtonUIButton, 2))
+			IHRPlayerViewForwardButtonUIButton.click();
 	}
 	
 	/**
@@ -412,10 +419,12 @@ public class FullPlayer extends Page {
 	 * @return
 	 */
 	public String getTitleOfSongPlaying(){
-		waitForElementToBeVisible(IHRPlayerViewTitleLabelUILabel,4);
-		String title = IHRPlayerViewTitleLabelUILabel.getText();
-		System.out.println("getTitleOfSongPlaying() : " + title);
-		return title;
+		if (waitForElementToBeVisible(IHRPlayerViewTitleLabelUILabel,4)) {
+			String title = IHRPlayerViewTitleLabelUILabel.getText();
+			System.out.println("getTitleOfSongPlaying() : " + title);
+			return title;
+		}
+		return "";
 	}
 	
 	/**
@@ -588,9 +597,9 @@ public class FullPlayer extends Page {
      */
     public boolean clickMoreLyricsButtonIfEnabled(){
     	System.out.println("clickMoreLyricsButton() - On More Info Pane - clicking Lyrics");
-    	if(LyricsButton.isEnabled()){
-    		System.out.println("LyricsButton is Enabled? : " + LyricsButton.isEnabled() );
-    		LyricsButton.click();
+    	if(lyricsButton.isEnabled()){
+    		System.out.println("LyricsButton is Enabled? : " + lyricsButton.isEnabled() );
+    		lyricsButton.click();
     		System.out.println("Clicked Lyrics Button. ");
     		return true;
     	}else{
@@ -605,9 +614,9 @@ public class FullPlayer extends Page {
      */
     public boolean clickGoToArtistProfileButtonIfEnabled(){
     	if(IHROptionMenuViewCancelButtonUIButton.isDisplayed()){
-    		if(GoToArtistProfileButton.isEnabled()){
+    		if(goToArtistProfileButton.isEnabled()){
     			System.out.println("clickGoToArtistProfileButtonIfEnabled() - On More Info Pane - clicking 'Go To Artist Profile'");
-    			GoToArtistProfileButton.click();
+    			goToArtistProfileButton.click();
     			return true;
     		}else{
     			System.out.println("GoToArtistProfileButton wasn't enabled. - couldn't click. Returning False.");
@@ -643,7 +652,7 @@ public class FullPlayer extends Page {
     	System.out.print("clickSaveButton() : Opening Save Overflow. SaveSongButton.isDisplayed() : ");
     	IHRPlayerSaveButtonUIButton.click();
     	//Save Modal should be up now
-    	boolean isSaveSongVisible = SaveSongButton.isDisplayed();
+    	boolean isSaveSongVisible = saveSongButton.isDisplayed();
     	System.out.println(isSaveSongVisible);
     	return isSaveSongVisible;
     	
@@ -658,37 +667,34 @@ public class FullPlayer extends Page {
     public Errors clickReplayButtonToOpenReplayModal(){
     	Errors err = new Errors();
     	while (!waitForElementToBeEnabled(IHRPlayerReplayButtonUIButton, 10)) {
-    		System.out.println("Replay button was not enabled - could have been playing non-track content on live radio. Scanning to next.");
-    		clickSkipButton();
-    		fullPlayer.clickPlayButton();
-    		fullPlayer.clickPlayButton();
+    		err.add("Replay button was disabled - could have been playing non-track content on live radio.");
+    		return err;
     	}
     	if(waitForElementToBeVisible(IHRPlayerReplayButtonUIButton, 4)) {
     		IHRPlayerReplayButtonUIButton.click();
-    		System.out.println("clickReplayButtonToOpenReplayModal() .");
-    		return err;
+    		System.out.println("clickReplayButtonToOpenReplayModal(): Clicked.");
     	}
     	else
-    		err.add("Replay button was not displayed or was not enabled on full player");
-    	return err;
+    		err.add("Replay button was not displayed/visible on full player.");
+		return err;
     }
     /**
      * Clicks the Add to Playlist Button, uses String entitlement to determine expected action. 
      * entitlement must be "FREE", "PLUS", or "ALLACCESS"
      */
     public boolean clickAddToPlaylistButtonInSaveModal(String entitlement){
-    	if(entitlement!= null && AddToPlaylistButton != null && !entitlement.equals("")){
+    	if(entitlement!= null && addToPlaylistButton != null && !entitlement.equals("")){
     		if(entitlement.equals("FREE")){
-    			AddToPlaylistButton.click();
+    			addToPlaylistButton.click();
     			System.out.println("AddToPlaylistButton was clicked for FREE User - Expect Upsell Modal to appear");
     			return upsellPage.isUpsellModalOpen();
     		}else if(entitlement.equals("PLUS")){
-    			AddToPlaylistButton.click();
+    			addToPlaylistButton.click();
     			System.out.println("AddToPlaylistButton was clicked for PLUS User - Expect Upsell Modal to appear");
     			return upsellPage.isUpsellModalOpen();
     			//return upsellPage.isad
     		}else if(entitlement.equals("ALLACCESS")){
-    			AddToPlaylistButton.click();
+    			addToPlaylistButton.click();
     			System.out.println("AddToPlaylistButton was clicked for ALLACCESS User - Expect Add to Playlist Modal to appear");
     			//addToPlaylistModal.clickFirstPlaylist(); This can be filled in once AddToPlaylist page Object is done!!!!
     			return true;
@@ -700,8 +706,8 @@ public class FullPlayer extends Page {
      * @return fullPlayer.isCurrentlyOnFullPlayer();
      */
     public boolean clickSaveSongInSaveModal(){
-    	if(SaveSongButton != null){
-    		SaveSongButton.click();
+    	if(saveSongButton != null){
+    		saveSongButton.click();
     		System.out.println("clickSaveSongInSaveModal().");
     	}
     	return fullPlayer.isCurrentlyOnFullPlayer();
@@ -711,8 +717,8 @@ public class FullPlayer extends Page {
      * @return fullPlayer.isCurrentlyOnFullPlayer();
      */
     public boolean clickRemoveStationInSaveModal(){
-    	if(RemoveStationButton!=null){
-    		RemoveStationButton.click();
+    	if(removeStationButton!=null){
+    		removeStationButton.click();
     		System.out.println("clickRemoveStationInSaveModal().");
     	}
     	
@@ -723,8 +729,8 @@ public class FullPlayer extends Page {
      * @return fullPlayer.isCurrentlyOnFullPlayer();
      */
     public boolean clickCancelInSaveModal(){
-    	if(CancelOutOfSaveButton!= null){
-    		CancelOutOfSaveButton.click();
+    	if(cancelOutOfSaveButton!= null){
+    		cancelOutOfSaveButton.click();
     	}
     	System.out.println("clickCancelInSaveModal().");
     	return fullPlayer.isCurrentlyOnFullPlayer();
@@ -734,8 +740,8 @@ public class FullPlayer extends Page {
      * @return fullPlayer.isCurrentlyOnFullPlayer();
      */
     public boolean clickSaveStationInSaveModal(){
-    	if(SaveStationButton != null){
-    		SaveStationButton.click();
+    	if(saveStationButton != null){
+    		saveStationButton.click();
     	}
     	System.out.println("clickSaveStationInSaveModal().");
     	return fullPlayer.isCurrentlyOnFullPlayer();
@@ -746,7 +752,7 @@ public class FullPlayer extends Page {
      * @return boolean
      */
     public boolean isRemoveStationInSaveModalDisplayed(){
-    	return (fullPlayer.isCurrentlyOn("isCurrentlyOnSaveModal with 'Remove Station' Button", RemoveStationButton));
+    	return (fullPlayer.isCurrentlyOn("isCurrentlyOnSaveModal with 'Remove Station' Button", removeStationButton));
     }
     /**
      * Checks if the 'Save Station' is available/displayed.
@@ -754,7 +760,7 @@ public class FullPlayer extends Page {
      * @return
      */
     public boolean isSaveStationInSaveModalDisplayed(){
-    	return (fullPlayer.isCurrentlyOn("isCurrentlyOnSaveModal with 'Save Station' Button", SaveStationButton));
+    	return (fullPlayer.isCurrentlyOn("isCurrentlyOnSaveModal with 'Save Station' Button", saveStationButton));
     }
     
     /**
@@ -800,12 +806,12 @@ public class FullPlayer extends Page {
      */
     public boolean clickReplayThirdCell(){
     	if(IHRPlayerReplayOptionsViewControllerCELL2!=null){
-    		 IHRPlayerReplayOptionsViewControllerCELL2.click();
+    		IHRPlayerReplayOptionsViewControllerCELL2.click();
     		System.out.println("clickReplayThirdCell().");
     		return true;
     	} return false;
     }
-    
+
     /**
      * Runs the isCurrentlyOn Method for the HeartView Image that shows up next to the Station name on Full Player. 
      * @return
@@ -819,18 +825,20 @@ public class FullPlayer extends Page {
     public void skipToTheLimit() {
     	int i = 0;
     	if (isCurrentlyOnFullPlayer()) {
-			clickSkipButton();
+    		clickSkipButton();
     		while (!(isVisible(appboyUpsellsPage.getNewFeatureTag()) && isVisible(IHRPlayerViewForwardButtonUIButton))) {
-    				clickSkipButton();
-    				i++;
-    			}
-    			if(i==5) {
-    				String trackName = getTitleOfSongPlaying();
-    				System.out.println("TrackName at " + i + " skips remaining: '" + trackName +"'");
-    			}
+    			clickSkipButton();
+    			i++;
+    			if (i > 7)
+    				break;
+    		}
+    		if(i==5) {
+    			String trackName = getTitleOfSongPlaying();
+    			System.out.println("TrackName at " + i + " skips remaining: '" + trackName +"'");
+    		}
     	}
     }
-    
+
     /**
      * sk - 2/27 - there is another method above that does the same thing. However considering that we cannot really click the 
      * Save Song or Add to Playlist options without clicking the Save button first, I'm adding that in as a first step.
@@ -842,32 +850,55 @@ public class FullPlayer extends Page {
      * I am not removing the existing method cause FullPlayer tests are using that.
      * I'll add in a ticket to refactor the FullPlayer tests with this method if we all agree on it?
      */
-    public Errors clickSaveModalAddToPlaylist(String entitlement) {
+    public Errors clickSaveModalAddToPlaylist(Entitlement entitlement) {
     	Errors err = new Errors();
     	if (clickSaveButtonToOpenSaveModal()) {
-    		if(entitlement!= null && AddToPlaylistButton != null && !entitlement.equals("")){
-    			if(entitlement.equals("FREE")){
-    				AddToPlaylistButton.click();
-    				System.out.println("AddToPlaylistButton was clicked for FREE User - Expect Upsell Modal to appear");
-    				if(!(appboyUpsellsPage.isUpsellDisplayed())) {
-    					err.add("Upsell page was not displayed on clicking Save Modal - Add to Playlist button for Free User");
-    					return err;
-    				}
-    			}else if(entitlement.equals("PLUS")){
-    				AddToPlaylistButton.click();
-    				System.out.println("AddToPlaylistButton was clicked for PLUS User - Expect Upsell Modal to appear");
-    				if(!appboyUpsellsPage.isUpsellDisplayed())
-    					err.add("Upsell page was not displayed on clicking Save Modal - Add to Playlist button for Plus user");
-    				return err;
-    				//return upsellPage.isad
-    			}else if(entitlement.equals("ALLACCESS")){
-    				AddToPlaylistButton.click();
-    				System.out.println("AddToPlaylistButton was clicked for ALLACCESS User - Expect Add to Playlist Modal to appear");
-    				if(appboyUpsellsPage.isUpsellDisplayed())
-    					err.add("Upsell page was displayed on clicking Save Modal - Add to Playlist button for All Access User");
-    				return err;
-    				//addToPlaylistModal.clickFirstPlaylist(); This can be filled in once AddToPlaylist page Object is done!!!!
+    		if(entitlement!= null && addToPlaylistButton != null && !entitlement.equals("")) {
+    			// check if Add to Playlist button is enabled, else return error
+    			if(entitlement.equals(entitlementType.FREE) && isVisible(addToPlaylistButton)) {
+    				addToPlaylistButton.click();
     			}
+    			else {
+    				err.add("Add to playlist button was not enabled - this can occur if station tested is a live radio.");
+    				return err;
+    			}
+    			//check if upsell is displayed after clicking Add to Playlist button
+    			if (!(appboyUpsellsPage.isUpsellDisplayed())) {
+    				err.add("Upsell page was not displayed on clicking Save Modal - Add to Playlist button for Free User");
+    				return err;
+    			}
+    			return err;
+    		}
+    		else if(entitlement.equals(entitlementType.PLUS)) {
+    			// check if Add to Playlist button is enabled, else return error
+    			if (isEnabled(addToPlaylistButton)) {
+    				addToPlaylistButton.click();
+    			} 
+    			else {
+    				err.add("Add to playlist button was not enabled - this can occur if station tested is a live radio.");
+    				return err;
+    			}
+    			//check if upsell is displayed after clicking Add to Playlist button
+    			if (!(appboyUpsellsPage.isUpsellDisplayed())) {
+    				err.add("Upsell page was not displayed on clicking Save Modal - Add to Playlist button for Plus User");
+    				return err;
+    			}
+    			return err;
+    		}
+    		else if(entitlement.equals(entitlementType.ALLA)) {
+    			if (isEnabled(addToPlaylistButton)) {
+    				addToPlaylistButton.click();
+    			} 
+    			else {
+    				err.add("Add to playlist button was not enabled - this can occur if station tested is a live radio.");
+    				return err;
+    			}
+    			//check if upsell is displayed after clicking Add to Playlist button
+    			if (!(appboyUpsellsPage.isUpsellDisplayed())) {
+    				err.add("Upsell page was not displayed on clicking Save Modal - Add to Playlist button for AA User");
+    				return err;
+    			}
+    			return err;
     		}
     	}
     	else {
@@ -876,5 +907,4 @@ public class FullPlayer extends Page {
     	}
     	return err;
     }
-
 }

@@ -8,6 +8,7 @@ import io.appium.java_client.ios.IOSElement;
 import io.appium.java_client.pagefactory.iOSFindBy;
 
 public class MiniPlayer extends Page {
+	
 	public MiniPlayer(){
 		super();
 	}
@@ -67,7 +68,9 @@ public class MiniPlayer extends Page {
 			err.add("MiniPlayer was not displayed.");
 			return err;
 		} 
-		MiniPlayerViewImageViewUIImageView.click();
+		else {
+			MiniPlayerViewImageViewUIImageView.click();
+		}
 		return err;
 	}
 	
