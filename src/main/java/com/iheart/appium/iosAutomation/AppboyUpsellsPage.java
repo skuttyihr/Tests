@@ -7,10 +7,7 @@
 package com.iheart.appium.iosAutomation;
 
 import org.openqa.selenium.By;
-
-import com.iheart.appium.iosAutomation.FullPlayer.entitlementType;
 import com.iheart.appium.utilities.Errors;
-
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
 import io.appium.java_client.pagefactory.iOSFindBy;
@@ -20,7 +17,9 @@ public class AppboyUpsellsPage extends Page{
 	/**
 	 * sk - 2/19 - Upsell modal elements
 	 */
-	@iOSFindBy(accessibility = "Cancel") private IOSElement closeUpsellButton;
+	@iOSFindBy(xpath = "//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[4]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/"
+			+ "XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeLink[1]/XCUIElementTypeImage[1]")
+	private IOSElement closeUpsellButton;
 	@iOSFindBy(accessibility = "IHRUpsellView-ContentView-UIView") private IOSElement IHRUpsellViewContentViewUIView;
 	@iOSFindBy(id = "Subscribe, to Plus") private IOSElement subscribeToPlusButton;
 	@iOSFindBy(id = "Subscribe, to All Access") private IOSElement subscribeToAllAccessButton;
@@ -116,6 +115,11 @@ public class AppboyUpsellsPage extends Page{
 			return isUpsellDisplayed;
 		}
 		return false;
+	}
+	
+	public void closeUpsell() {
+		if (waitForElementToBeVisible(closeUpsellButton, 3))
+			closeUpsellButton.click();
 	}
 
 	public String getTextFromPlusButton() {
@@ -307,7 +311,6 @@ public class AppboyUpsellsPage extends Page{
 			else {
 				System.out.println("appboyUpsellPage.verifyUpsellPlusButtonStatePlusUser(): Plus user : Clicked on 'Subscribe to Plus' Button, "
 						+ "and did no connect to App Store.");
-				return err;
 			}
 		}
 		return err;

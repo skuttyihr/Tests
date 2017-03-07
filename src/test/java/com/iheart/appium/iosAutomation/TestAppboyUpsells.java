@@ -19,8 +19,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.TestName;
-
 import com.iheart.appium.iosAutomation.AppboyUpsellsPage.Entitlement;
 import com.iheart.appium.iosAutomation.AppboyUpsellsPage.RepeatAction;
 import com.iheart.appium.utilities.Errors;
@@ -46,10 +44,11 @@ public class TestAppboyUpsells extends TestRoot {
 	 * Naming convention for expected upsell headline - page_element_overflow option - where the upsell occurs	
 	 * sk - 2/27 -Test unlimited skips upsell shows for FREE TRIAL ELIGIBILE user on ARTIST radio - should have both buttons active
 	 * Button should show Free Trial 
+	 * 3/6 - Pass
 	 */
 	@Test
 	public void UPS1_testPlayerSkipLimitUpsell_FREE_TRLELG() {
-		LocalTime before = consoleLogStart("Testing artist radio unlimited skip upsell UPS1_FREE_TRLELG");
+		LocalTime before = consoleLogStart("Testing artist radio unlimited skip upsell UPS1_testPlayerSkipLimitUpsell_FREE_TRLELG");
 		Errors err = Page.playStationOpenFullPlayer(Entitlement.FREE, true, "Ed Sheeran");		
 		fullPlayer.skipToTheLimit();
 		err.add(appboyUpsellsPage.verifyUpsellHeadlineIsAsExpected(appboyUpsellsPage.ARTISTRADIOFULLPLAYER_SKIP));	
@@ -64,6 +63,7 @@ public class TestAppboyUpsells extends TestRoot {
 	
 	/**
 	 * sk - 3/5 -Test unlimited skips upsell shows for FREE NON TRIAL ELIGIBILE user on ARTIST radio
+	 * 3/6 - Pass
 	 */
 	@Test
 	public void UPS2_testPlayerSkipLimitUpsell_FREE_TRLEXP() {
@@ -175,8 +175,8 @@ public class TestAppboyUpsells extends TestRoot {
 		err.add(fullPlayer.clickReplayButtonToOpenReplayModal());
 		if (appboyUpsellsPage.isUpsellDisplayed())
 			err.add("Upsell page should not display for replay feature for Plus User.");
-		Assert.assertTrue("Upsell display test for replay feature - plus user failed." + err, err.noErrors());
-		consoleLogEnd(before, err.noErrors(), "Tested Full Player Live Radio Replay Upsell for Plus User");	
+		Assert.assertTrue("Upsell should not display for replay feature for Plus user." + err, err.noErrors());
+		consoleLogEnd(before, err.noErrors(), "Tested Full Player Live Radio Replay Upsell did not display for Plus User.");	
 	}
 /* */	
 	/**
@@ -280,8 +280,7 @@ public class TestAppboyUpsells extends TestRoot {
 	}
 	
 	/**
-	 * sk - 3/6 -Test replay upsell shows for PLUS user on ARTIST radio
-	 * For Plus and AA user, set the 2nd parameter to false always in step 2
+	 * sk - 3/6 -Test add to playlist upsell shows for PLUS user on ARTIST radio
 	 */
 	@Test
 	public void UPS15_testPlayerAddToPlaylistUpsell_Artist_PLUS() {
@@ -289,13 +288,13 @@ public class TestAppboyUpsells extends TestRoot {
 		Errors err = Page.playStationOpenFullPlayer(Entitlement.PLUS, false, "Luke Bryan");
 		err.add(fullPlayer.clickSaveModalAddToPlaylist(Entitlement.PLUS));
 		err.add(appboyUpsellsPage.verifyUpsellHeadlineIsAsExpected(appboyUpsellsPage.FULLPLAYER_SAVEBUTTON_ADDTOPLAYLIST));	
-		Assert.assertTrue("Upsell headline test for artist radio - 'Save - Add to Playlist' for free user failed." + err, err.noErrors());
-		err.add(appboyUpsellsPage.verifyUpsellPlusButtonState_FreeTrialEligibleUser());
+		Assert.assertTrue("Upsell headline test for artist radio - 'Save - Add to Playlist' for plus user failed." + err, err.noErrors());
+		err.add(appboyUpsellsPage.verifyUpsellPlusButtonState_PlusUser());
 		Assert.assertTrue("Button state test 1 failed." + err, err.noErrors());
 		err.add(fullPlayer.clickSaveModalAddToPlaylist(Entitlement.PLUS));
 		err.add(appboyUpsellsPage.verifyUpsellAAButtonState_PlusUser());
 		Assert.assertTrue("Button state test 2 failed." + err, err.noErrors());
-		consoleLogEnd(before, err.noErrors(), "Tested Full Player Artist Radio - Add to Playlist Upsell for Free Trial Eligible User");	
+		consoleLogEnd(before, err.noErrors(), "Tested Full Player Artist Radio - Add to Playlist Upsell for Plus User");	
 	}
 }
 

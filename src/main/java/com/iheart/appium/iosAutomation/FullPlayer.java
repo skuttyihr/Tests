@@ -23,8 +23,6 @@ public class FullPlayer extends Page {
 		super(_driver);
 		setPlayer(this);
 	}
-	
-	 public enum entitlementType {FREE, PLUS, ALLA }
 
 	//IHRPlayerTitleView
 	@iOSFindBy(accessibility = "IHRPlayerTitleView-TitleLabel-UILabel") private IOSElement IHRPlayerTitleViewTitleLabelUILabel;
@@ -649,7 +647,7 @@ public class FullPlayer extends Page {
      * @return
      */
     public boolean clickSaveButtonToOpenSaveModal(){
-    	System.out.print("clickSaveButton() : Opening Save Overflow. SaveSongButton.isDisplayed() : ");
+    	System.out.print("clickSaveButton(): ");
     	IHRPlayerSaveButtonUIButton.click();
     	//Save Modal should be up now
     	boolean isSaveSongVisible = saveSongButton.isDisplayed();
@@ -853,58 +851,46 @@ public class FullPlayer extends Page {
     public Errors clickSaveModalAddToPlaylist(Entitlement entitlement) {
     	Errors err = new Errors();
     	if (clickSaveButtonToOpenSaveModal()) {
-    		if(entitlement!= null && addToPlaylistButton != null && !entitlement.equals("")) {
-    			// check if Add to Playlist button is enabled, else return error
-    			if(entitlement.equals(entitlementType.FREE) && isVisible(addToPlaylistButton)) {
+    		if(entitlement.equals(Entitlement.FREE)) {
+    			if (isVisible(addToPlaylistButton)) {
     				addToPlaylistButton.click();
+    				System.out.println("clickSaveModalAddToPlaylist(): Clicked Add to Playlist button.");
+    				if (!appboyUpsellsPage.isUpsellDisplayed())
+    					err.add("Add to Playlist upsell page was not displayed for Free user.");
     			}
     			else {
     				err.add("Add to playlist button was not enabled - this can occur if station tested is a live radio.");
     				return err;
     			}
-    			//check if upsell is displayed after clicking Add to Playlist button
-    			if (!(appboyUpsellsPage.isUpsellDisplayed())) {
-    				err.add("Upsell page was not displayed on clicking Save Modal - Add to Playlist button for Free User");
+    		}
+    		else if(entitlement.equals(Entitlement.PLUS)) {
+    			// check if Add to Playlist button is enabled, else return error
+    			if (isVisible(addToPlaylistButton)) {
+    				addToPlaylistButton.click();
+    				System.out.println("clickSaveModalAddToPlaylist(): Clicked Add to Playlist button.");
+    				if (!appboyUpsellsPage.isUpsellDisplayed())
+    					err.add("Add to Playlist upsell page was not displayed for Plus user.");
+    			}
+    			else {
+    				err.add("Add to playlist button was not enabled - this can occur if station tested is a live radio.");
     				return err;
     			}
-    			return err;
     		}
-    		else if(entitlement.equals(entitlementType.PLUS)) {
-    			// check if Add to Playlist button is enabled, else return error
-    			if (isEnabled(addToPlaylistButton)) {
+    		else if(entitlement.equals(Entitlement.ALLA)) {
+    			if (isVisible(addToPlaylistButton)) {
     				addToPlaylistButton.click();
+    				System.out.println("clickSaveModalAddToPlaylist(): Clicked Add to Playlist button.");
     			} 
     			else {
     				err.add("Add to playlist button was not enabled - this can occur if station tested is a live radio.");
     				return err;
     			}
-    			//check if upsell is displayed after clicking Add to Playlist button
-    			if (!(appboyUpsellsPage.isUpsellDisplayed())) {
-    				err.add("Upsell page was not displayed on clicking Save Modal - Add to Playlist button for Plus User");
-    				return err;
-    			}
-    			return err;
     		}
-    		else if(entitlement.equals(entitlementType.ALLA)) {
-    			if (isEnabled(addToPlaylistButton)) {
-    				addToPlaylistButton.click();
-    			} 
-    			else {
-    				err.add("Add to playlist button was not enabled - this can occur if station tested is a live radio.");
-    				return err;
-    			}
-    			//check if upsell is displayed after clicking Add to Playlist button
-    			if (!(appboyUpsellsPage.isUpsellDisplayed())) {
-    				err.add("Upsell page was not displayed on clicking Save Modal - Add to Playlist button for AA User");
-    				return err;
-    			}
+    		else {
+    			err.add("Player - Save modal did not open");
     			return err;
     		}
     	}
-    	else {
-    		err.add("Player - Save modal did not open");
-    		return err;
-    	}
-    	return err;
+    	return err; 
     }
 }

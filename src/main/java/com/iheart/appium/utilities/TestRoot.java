@@ -103,7 +103,6 @@ public class TestRoot{
 	protected static CuratedPlaylistPage curatedPlaylistPage;
 	protected static AppboyUpsellsPage appboyUpsellsPage;
 
-
 	// New On Demand Elements
 	protected static ArtistProfilePage artistProfilePage;
 

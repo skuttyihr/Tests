@@ -274,8 +274,11 @@ public class Page extends TestRoot {
 	public static Errors playStationOpenFullPlayer(Entitlement entitlement, boolean isTrialEligible, String stationName) {
 		Errors err = new Errors();
 		login(entitlement, isTrialEligible);
+		if (isVisible(miniPlayer.getMiniPlayerViewImageViewUIImageView())) {
+			miniPlayer.clickPlayPauseButton();
+		} 		
 		homePage.clickNavBarSearchButtonToOpenSearch();
-		searchPage.searchAndPlayTopResults(stationName);
+		searchPage.searchAndPlayTopResults(stationName);		
 		err.add(miniPlayer.openFullPlayer());
 		System.out.println("Full player opened, playing " + stationName + " Radio");
 		return err;

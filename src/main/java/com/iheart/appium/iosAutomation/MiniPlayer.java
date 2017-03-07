@@ -16,7 +16,6 @@ public class MiniPlayer extends Page {
 		super(_driver);
 	}
 	@iOSFindBy(accessibility = "MiniPlayerView-ImageView-UIImageView") private IOSElement MiniPlayerViewImageViewUIImageView;
-
 	@iOSFindBy(accessibility = "MiniPlayerView-ScrollView-UIScrollView") private IOSElement MiniPlayerViewScrollViewUIScrollView;
 		@iOSFindBy(accessibility = "MiniPlayerView-ContentView-UIView") private IOSElement MiniPlayerViewContentViewUIView;
 			@iOSFindBy(accessibility = "MiniPlayerView-PlayButton-UIButton") private IOSElement  MiniPlayerViewPlayButtonUIButton;
@@ -26,8 +25,7 @@ public class MiniPlayer extends Page {
 			@iOSFindBy(accessibility = "MiniPlayerView-TitleLabel-UILabel") private IOSElement  MiniPlayerViewTitleLabelUILabel;
 			@iOSFindBy(accessibility = "MiniPlayerView-SubtitleLabel-UILabel") private IOSElement MiniPlayerViewSubtitleLabelUILabel;
 			
-	//Swipe MiniPlayer to Left - Skip button appears with number of tracks left.
-			
+	//Swipe MiniPlayer to Left - Skip button appears with number of tracks left.			
 	@iOSFindBy(accessibility = "MiniPlayerView-ClipView-UIView") private IOSElement MiniPlayerViewClipViewUIView;
 	@iOSFindBy(accessibility = "MiniPlayerView-SwipeButtonContainerView-UIView") private IOSElement MiniPlayerViewSwipeButtonContainerViewUIView;
 	@iOSFindBy(accessibility = "MiniPlayerView-RedSkipButton-UIButton") private IOSElement MiniPlayerViewRedSkipButtonUIButton;
@@ -64,12 +62,12 @@ public class MiniPlayer extends Page {
 	public Errors openFullPlayer(){
 		Errors err = new Errors();
 		System.out.println("Opening Full Player by clicking on MiniPlayerViewImageViewUIImageView element.");
-		if (!waitForElementToBeVisible(MiniPlayerViewImageViewUIImageView, 6)) {
+		if (!waitForElementToBeVisible(getMiniPlayerViewImageViewUIImageView(), 6)) {
 			err.add("MiniPlayer was not displayed.");
 			return err;
 		} 
 		else {
-			MiniPlayerViewImageViewUIImageView.click();
+			getMiniPlayerViewImageViewUIImageView().click();
 		}
 		return err;
 	}
@@ -79,7 +77,7 @@ public class MiniPlayer extends Page {
 	 */
 	public void clickPlayPauseButton(){
 		waitForElementToBeVisible(MiniPlayerViewPlayButtonUIButton, 5);
-		System.out.println("clickPlayPauseButton()");
+		System.out.println("clickPlayPauseButton(): " + MiniPlayerViewPlayButtonUIButton.getAttribute("value"));
 		MiniPlayerViewPlayButtonUIButton.click();
 	}
 	/**
@@ -136,7 +134,7 @@ public class MiniPlayer extends Page {
 	
 	public void swipeMiniPlayerToLeftToShowSkipButton(){
 		System.out.println("swipeMiniPlayerToLeftToShowSkipButton()");
-		MiniPlayerViewImageViewUIImageView.swipe(SwipeElementDirection.LEFT, 5);
+		getMiniPlayerViewImageViewUIImageView().swipe(SwipeElementDirection.LEFT, 5);
 	}
 	
 	/**
@@ -154,7 +152,7 @@ public class MiniPlayer extends Page {
 	 */
 	public void swipeMiniPlayerToRightToHideSkipButton(){
 		System.out.println("swipeMiniPlayerToRightToHideSkipButton()");
-		MiniPlayerViewImageViewUIImageView.swipe(SwipeElementDirection.RIGHT, 5);
+		getMiniPlayerViewImageViewUIImageView().swipe(SwipeElementDirection.RIGHT, 5);
 	}
 	/**
 	 * Swipes to left for half a second exposing Skip(scan) button and then clicks it. 
@@ -163,7 +161,7 @@ public class MiniPlayer extends Page {
 		System.out.println("swipeMiniPlayerToLeftAndClickSkipButton()");
 		sleep(1000);
 		//System.out.println("AppWidth = " + Page.getAppWidth()  + " SkipButton : " + MiniPlayerViewRedSkipButtonUIButton.getSize().getWidth());
-		MiniPlayerViewImageViewUIImageView.swipe(SwipeElementDirection.LEFT, 5);
+		getMiniPlayerViewImageViewUIImageView().swipe(SwipeElementDirection.LEFT, 5);
 		sleep(1000);
 		MiniPlayerViewRedSkipButtonUIButton.click();
 	}
@@ -223,6 +221,13 @@ public class MiniPlayer extends Page {
 		boolean bothDown = !getThumbUpStatus() && !getThumbDownStatus();
 		System.out.println("isThumbUpAndThumbDownButtonNotActivated: " + bothDown);
 		return bothDown; 
+	}
+	
+	/**
+	 * @return the miniPlayerViewImageViewUIImageView
+	 */
+	public IOSElement getMiniPlayerViewImageViewUIImageView() {
+		return MiniPlayerViewImageViewUIImageView;
 	}
 	
 	/**
