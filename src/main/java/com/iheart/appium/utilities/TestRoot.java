@@ -808,9 +808,8 @@ public class TestRoot{
 	
 	public static boolean waitForEnabled(IOSElement e) {
 		boolean isEnabled = false;
-		if (e == null) {
-			waitForElementToBeVisible(e, 4);
-			if ( e == null)
+		if (!waitForElementToBeVisible(e, 4)) {
+			if (e == null)
 				return false;
 		}
 		try {

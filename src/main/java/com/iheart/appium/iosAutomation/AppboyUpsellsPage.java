@@ -29,7 +29,7 @@ public class AppboyUpsellsPage extends Page{
 	@iOSFindBy(xpath = "//XCUIElementTypeApplication/XCUIElementTypeWindow[4]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/"
 			+ "XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeImage")
 	private IOSElement upsellPageFirstLine;
-	@iOSFindBy(id = "Cancel") private IOSElement cancelAppStoreModalButton ;
+	@iOSFindBy(id = "Cancel") private IOSElement cancelAppStoreModalButton;
 	@iOSFindBy(id = "Use Existing Apple ID") private IOSElement appleStoreModalButtonAppleId;
 	@iOSFindBy(xpath = "//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[4]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/"
 			+ "XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[13]/XCUIElementTypeLink[1]")
@@ -90,7 +90,7 @@ public class AppboyUpsellsPage extends Page{
 	}
 	
 	public enum Entitlement {FREE, PLUS, ALLA};
-	public enum RepeatAction {skip, replay, addToPlaylist};
+	public enum RepeatAction {SKIP, REPLAY, ADDTOPLAYLIST};
 
 	/**
 	 * sk - 2/24 - getting upsell text after appboy upsells kicked in
@@ -98,8 +98,7 @@ public class AppboyUpsellsPage extends Page{
 	 */
 	public String getUpsellText() {
 		if (waitForElementToBeVisible(upsellHeadlineText, 3)) {
-			String upsellHeadline = upsellHeadlineText.getText();
-			return upsellHeadline;
+			return  upsellHeadlineText.getText();			
 		}
 		return "";
 	}
@@ -242,12 +241,10 @@ public class AppboyUpsellsPage extends Page{
 			if (!(actualUpsellHeadline.equals(expectedHeadline))) {
 				System.out.println("appboyUpsellsPage.verifyUpsellHeadlineIsAsExpected(): Upsell headlines was not as expected.");
 				err.add("Actual upsell headline is: " + actualUpsellHeadline + " Expected is: " + expectedHeadline);
-				return err;
 			}
 		}
 		else {
 			err.add("Upsell is not displayed.");
-			return err;
 		}				
 		System.out.println("appboyUpsellsPage.verifyUpsellHeadlineIsAsExpected(): Upsell headline verified - Actual Upsell headline is: " + actualUpsellHeadline + " Expected is: " + expectedHeadline);
 		return err;
@@ -270,7 +267,6 @@ public class AppboyUpsellsPage extends Page{
 				String allAccessTrialButtonText = start30DayFreeTrialPlusUserButton.getText();
 				if (!(isStart30dayPlusUserButtonDisplayed) || !(isStart30dayAAUserButtonDisplayed)) {
 					err.add("Expected buttons: " + plusTrialButtonText + " and " + allAccessTrialButtonText + " are not displayed.");
-					return err;
 				}
 				System.out.println("appboyUpsellsPage.verifySubscriptionButtonText(): " +  start30DayFreeTrialPlusUserButton.getText() + " and " + start30DayFreeTrialAllAccessUserButton.getText() + ".");
 			}
@@ -279,7 +275,6 @@ public class AppboyUpsellsPage extends Page{
 				boolean isSubscribeToAAButtonDisplayed = subscribeToAllAccessButton.isDisplayed();
 				if (!isSubscribeToPlusButtonDisplayed || !isSubscribeToAAButtonDisplayed) {
 					err.add("Expected buttons: " + subscribeToPlusButton.getText() + " and " + subscribeToAllAccessButton.getText() + " are not displayed.");
-					return err;
 				}
 				System.out.println("Button state for trial expired free user was verified and showed " +  subscribeToPlusButton.getText() + " and " + subscribeToAllAccessButton.getText() + ".");
 			}
@@ -310,7 +305,7 @@ public class AppboyUpsellsPage extends Page{
 			}
 			else {
 				System.out.println("appboyUpsellPage.verifyUpsellPlusButtonStatePlusUser(): Plus user : Clicked on 'Subscribe to Plus' Button, "
-						+ "and did no connect to App Store.");
+						+ "and did not connect to App Store.");
 			}
 		}
 		return err;
@@ -395,13 +390,13 @@ public class AppboyUpsellsPage extends Page{
 	 * 2/5 - enum implemented
 	 */
 	public void repeatActionToTriggerUpsell(RepeatAction r) {
-		if (r == RepeatAction.replay) {
+		if (r == RepeatAction.REPLAY) {
 			fullPlayer.clickReplayButtonToOpenReplayModal();
 			System.out.println("Repeated action: Replay button clicked.");
 		}
-		else if (r == RepeatAction.skip) {
+		else if (r == RepeatAction.SKIP) {
 			fullPlayer.clickSkipButton();
 			System.out.println("Repeated action: Skip button clicked.");
 		}		
 	}
-}			
+}	

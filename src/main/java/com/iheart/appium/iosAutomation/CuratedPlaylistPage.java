@@ -105,7 +105,7 @@ public class CuratedPlaylistPage extends Page{
 		//System.out.println(cPlaylistTitle.getText());
 		waitForVisible(driver, By.xpath("//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/"
 				+ "XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/"
-				+ "XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeStaticText[1]"), 5000);
+				+ "XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeStaticText[1]"), 5);
 		if (!printElementName(cPlaylistTitle))
 			err.add("Curated Playlist Profile Page Title is not seen.");
 		if (!printElementName(cPlaylistDescription))
@@ -131,8 +131,8 @@ public class CuratedPlaylistPage extends Page{
 	
 	public Errors verifyPlaylistProfilePageOverflow(String subscription) {
 		Errors err = new Errors();
-		waitForElementToBeVisible(cPlaylistProfilePageOverflow, 3);
-		cPlaylistProfilePageOverflow.click();
+		if (waitForElementToBeVisible(cPlaylistProfilePageOverflow, 3))
+			cPlaylistProfilePageOverflow.click();
 		if (waitForElementToBeVisible(cPlaylistProfilePageOverflowMenuSavePlaylist, 3)) {
 			cPlaylistProfilePageOverflowMenuSavePlaylist.click();
 			System.out.println("verifyPlaylistProfilePageOverflow(): Save Playlist clicked");

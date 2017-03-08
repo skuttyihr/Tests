@@ -55,7 +55,7 @@ public class TestAppboyUpsells extends TestRoot {
 		Assert.assertTrue("Upsell headline test for artist radio unlimited skips for free user failed." + err, err.noErrors());
 		err.add(appboyUpsellsPage.verifyUpsellPlusButtonState_FreeTrialEligibleUser());
 		Assert.assertTrue("Upsell headline test for artist radio unlimited skips for free user failed." + err, err.noErrors());
-		appboyUpsellsPage.repeatActionToTriggerUpsell(RepeatAction.skip);
+		appboyUpsellsPage.repeatActionToTriggerUpsell(RepeatAction.SKIP);
 		err.add(appboyUpsellsPage.verifyUpsellAAButtonState_FreeTrialEligibleUser());
 		Assert.assertEquals("Buttons state test for artist radio unlimited skips for free user failed.", 0, err.getErrors().length());
 		consoleLogEnd(before, err.noErrors(), "Tested Full Player Artist Radio Unmlimited Skips Upsell for Free TrialEligible User");	
@@ -73,7 +73,7 @@ public class TestAppboyUpsells extends TestRoot {
 		err.add(appboyUpsellsPage.verifyUpsellHeadlineIsAsExpected(appboyUpsellsPage.ARTISTRADIOFULLPLAYER_SKIP));	
 		Assert.assertTrue("Upsell headline test for artist radio unlimited skips for free user failed." + err, err.noErrors());
 		err.add(appboyUpsellsPage.verifyUpsellPlusButtonState_FreeTrialExpiredUser());
-		appboyUpsellsPage.repeatActionToTriggerUpsell(RepeatAction.skip);
+		appboyUpsellsPage.repeatActionToTriggerUpsell(RepeatAction.SKIP);
 		err.add(appboyUpsellsPage.verifyUpsellAAButtonState_FreeTrialExpiredUser());
 		Assert.assertTrue("Buttons state test for artist radio unlimited skips for free user failed." + err, err.noErrors());
 		consoleLogEnd(before, err.noErrors(), "Tested Full Player Artist Radio Unmlimited Skips Upsell for Free TrialExpired User");	
@@ -297,26 +297,3 @@ public class TestAppboyUpsells extends TestRoot {
 		consoleLogEnd(before, err.noErrors(), "Tested Full Player Artist Radio - Add to Playlist Upsell for Plus User");	
 	}
 }
-
-	
-	
-	
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	

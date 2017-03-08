@@ -750,7 +750,7 @@ public class FullPlayer extends Page {
      * @return boolean
      */
     public boolean isRemoveStationInSaveModalDisplayed(){
-    	return (fullPlayer.isCurrentlyOn("isCurrentlyOnSaveModal with 'Remove Station' Button", removeStationButton));
+    	return fullPlayer.isCurrentlyOn("isCurrentlyOnSaveModal with 'Remove Station' Button", removeStationButton);
     }
     /**
      * Checks if the 'Save Station' is available/displayed.
@@ -803,11 +803,12 @@ public class FullPlayer extends Page {
      * @return
      */
     public boolean clickReplayThirdCell(){
-    	if(IHRPlayerReplayOptionsViewControllerCELL2!=null){
+    	if(IHRPlayerReplayOptionsViewControllerCELL2!=null) {
     		IHRPlayerReplayOptionsViewControllerCELL2.click();
     		System.out.println("clickReplayThirdCell().");
     		return true;
-    	} return false;
+    	} 
+    	return false;
     }
 
     /**
@@ -821,6 +822,7 @@ public class FullPlayer extends Page {
      * sk - 2/26 - Skip to the skip limit
      */
     public void skipToTheLimit() {
+    	System.out.println("skipToTheLimit();");
     	int i = 0;
     	if (isCurrentlyOnFullPlayer()) {
     		clickSkipButton();
@@ -860,7 +862,6 @@ public class FullPlayer extends Page {
     			}
     			else {
     				err.add("Add to playlist button was not enabled - this can occur if station tested is a live radio.");
-    				return err;
     			}
     		}
     		else if(entitlement.equals(Entitlement.PLUS)) {
@@ -873,7 +874,6 @@ public class FullPlayer extends Page {
     			}
     			else {
     				err.add("Add to playlist button was not enabled - this can occur if station tested is a live radio.");
-    				return err;
     			}
     		}
     		else if(entitlement.equals(Entitlement.ALLA)) {
@@ -883,7 +883,6 @@ public class FullPlayer extends Page {
     			} 
     			else {
     				err.add("Add to playlist button was not enabled - this can occur if station tested is a live radio.");
-    				return err;
     			}
     		}
     		else {
