@@ -29,7 +29,7 @@ public class AppboyUpsellsPage extends Page{
 	@iOSFindBy(xpath = "//XCUIElementTypeApplication/XCUIElementTypeWindow[4]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/"
 			+ "XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeImage")
 	private IOSElement upsellPageFirstLine;
-	@iOSFindBy(id = "Cancel") private IOSElement cancelAppStoreModalButton;
+	@iOSFindBy(id = "Cancel") private IOSElement cancelAppStoreModalButton	;
 	@iOSFindBy(id = "Use Existing Apple ID") private IOSElement appleStoreModalButtonAppleId;
 	@iOSFindBy(xpath = "//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[4]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/"
 			+ "XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[13]/XCUIElementTypeLink[1]")
@@ -252,7 +252,11 @@ public class AppboyUpsellsPage extends Page{
 
 		
 	/**
-	 * sk - 2/24 - verify Button Text should match that for Subcribe OR Free Trial
+	 * sk - 2/24 - verify Button Text should match that for Subscribe OR Free Trial
+	 * First checks if its a FREE user, then the nested if checks if its a trial eligible or non-trial eligible user.
+	 * Then for trial eligible user, it verifies that the button for Start 30 Day Free Trial for both Plus and AA are displayed.
+	 * Then for a trial expired user, it verifies that the buttons for 'Subscribe to' Plus and AA are displayed
+	 * Then checks the same for a Plus User - that it shows 'Subscribe to' buttons
 	 * @return status if Subscribe to AA button opens Apple modal
 	 */
 	public Errors verifySubscriptionButtonText(Entitlement e , boolean trialEligible) {
@@ -279,7 +283,7 @@ public class AppboyUpsellsPage extends Page{
 				System.out.println("Button state for trial expired free user was verified and showed " +  subscribeToPlusButton.getText() + " and " + subscribeToAllAccessButton.getText() + ".");
 			}
 		}
-
+		
 		if (e.equals(Entitlement.PLUS) && (trialEligible == false)) {
 			if (!subscribeToPlusButton.isDisplayed() || !subscribeToAllAccessButton.isDisplayed()) {
 				err.add("Expected button:" + subscribeToPlusButton.getText() + " is not displayed.");
@@ -298,6 +302,7 @@ public class AppboyUpsellsPage extends Page{
 	 */
 	public Errors verifyUpsellPlusButtonState_PlusUser() {
 		Errors err = new Errors();
+		System.out.println("appboyUpsellsPage.verifyUpsellPlusButtonState_PlusUser()");
 		if (isUpsellDisplayed()) {
 			if (isPlusButtonActive()) {
 				err.add("Plus user: Subscribe to Plus button shouldn't be active for a plus user and shouldn't connect to App Store - failed");
@@ -313,6 +318,7 @@ public class AppboyUpsellsPage extends Page{
 
 	public Errors verifyUpsellAAButtonState_PlusUser() {
 		Errors err = new Errors();
+		System.out.println("appboyUpsellsPage.verifyUpsellAAButtonState_PlusUser()");
 		if (isUpsellDisplayed()) {
 			if (!isPremiumButtonActive()) {
 				err.add("Plus user : 'Subscribe to All Access' button was not active for a plus user and could not connect to App Store.");	
@@ -328,6 +334,7 @@ public class AppboyUpsellsPage extends Page{
 	
 	public Errors verifyUpsellPlusButtonState_FreeTrialExpiredUser() {
 		Errors err = new Errors();
+		System.out.println("appboyUpsellsPage.verifyUpsellPlusButtonState_FreeTrialExpiredUser()");
 		if (isUpsellDisplayed()) {
 			if (!isPlusButtonActive()) {
 				err.add("Free non trial eligibile user: 'Subscribe to Plus' button was not active for a Free non trial eligible user and could not connect to App Store.");
@@ -344,6 +351,7 @@ public class AppboyUpsellsPage extends Page{
 	
 	public Errors verifyUpsellAAButtonState_FreeTrialExpiredUser() {
 		Errors err = new Errors();
+		System.out.println("appboyUpsellsPage.verifyUpsellAAButtonState_FreeTrialExpiredUser()");
 		if (isUpsellDisplayed()) {
 			if (!isPremiumButtonActive()) {
 				err.add("Free non trial eligibile user:  Subscribe to All Access button was not active for a Free non trial eligible user and could not connect to App Store.");
@@ -359,6 +367,7 @@ public class AppboyUpsellsPage extends Page{
 	
 	public Errors verifyUpsellPlusButtonState_FreeTrialEligibleUser() {
 		Errors err = new Errors();
+		System.out.println("appboyUpsellsPage.verifyUpsellPlusButtonState_FreeTrialEligibleUser()");
 		if (isUpsellDisplayed()) {
 			if (!isPlusButtonActive()) {
 				err.add("Free trial eligibile user: 'Start 30 day Free Trial' Plus Button was not active and couldn't connect to App Store.");
@@ -374,6 +383,7 @@ public class AppboyUpsellsPage extends Page{
 
 	public Errors verifyUpsellAAButtonState_FreeTrialEligibleUser() {
 		Errors err = new Errors();
+		System.out.println("appboyUpsellsPage.verifyUpsellAAButtonState_FreeTrialEligibleUser()");
 		if (isUpsellDisplayed()) {
 			if (!isPremiumButtonActive()) {
 				err.add("Free trial eligibile user: 'Start 30 day Free Trial' All Access Button was not active and could not connect to App Store.");

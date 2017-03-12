@@ -274,7 +274,7 @@ public class Page extends TestRoot {
 	public static Errors playStationOpenFullPlayer(Entitlement entitlement, boolean isTrialEligible, String stationName) {
 		Errors err = new Errors();
 		login(entitlement, isTrialEligible);
-		if (isVisible(miniPlayer.getMiniPlayerViewImageViewUIImageView())) {
+		if (miniPlayer.getMiniPlayer()) {
 			miniPlayer.clickPlayPauseButton();
 		} 		
 		homePage.clickNavBarSearchButtonToOpenSearch();
@@ -294,7 +294,7 @@ public class Page extends TestRoot {
 		if (e == Entitlement.FREE && isTrialEligible ==  true)
 			loginPage.loginVerifyEntitlement(IHEARTFREEUSERNAME, IHEARTFREEPASSWD,"FREE");
 		else if(e == Entitlement.FREE && isTrialEligible ==  false)
-			loginPage.loginVerifyEntitlement("plustrial@mail.com", "tester","FREE");
+			loginPage.loginVerifyEntitlement(IHEARTFREETRIALEXPUSERNAME, IHEARTFREETRIALEXPPASSWD,"FREE");
 		else if(e == Entitlement.PLUS)
 			loginPage.loginVerifyEntitlement(IHEARTPLUSUSERNAME, IHEARTPLUSPASSWD, "PLUS");
 		else

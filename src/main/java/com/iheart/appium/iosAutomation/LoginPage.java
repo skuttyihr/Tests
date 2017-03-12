@@ -270,7 +270,7 @@ public class LoginPage extends Page {
 	 */
 	public boolean loginViaFacebook() {
 		onboardingPage.clickOnboardingLoginButton();
-		waitForElementToBeVisible(IHRAuthorizationViewEmailAddressTextField, 3);
+		waitForVisible(driver, By.className("XCUIElementTypeTextField"), 10);
 		clickFacebookLoginButton();
 		System.out.println("Testing Facebook login.");
 		// adding in wait

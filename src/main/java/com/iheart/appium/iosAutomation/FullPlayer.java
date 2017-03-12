@@ -396,6 +396,7 @@ public class FullPlayer extends Page {
 	 */
 	public int getNumberOfSkipsRemaining(){
 		if (waitForElementToBeVisible(IHRPlayerViewForwardButtonUIButton, 4)) {
+			//TODO: This line needs to be fixed so as to get the entire text for the Skip button, if possible, for the method to work.
 			String skips = IHRPlayerViewForwardButtonUIButton.getText();
 			int skipsLeft = Integer.parseInt(skips.substring(6, 7));
 			System.out.println("getNumberOfSkipsRemaining() : " + skipsLeft);
@@ -650,7 +651,7 @@ public class FullPlayer extends Page {
     	System.out.print("clickSaveButton(): ");
     	IHRPlayerSaveButtonUIButton.click();
     	//Save Modal should be up now
-    	boolean isSaveSongVisible = saveSongButton.isDisplayed();
+    	boolean isSaveSongVisible = isVisible(saveSongButton);
     	System.out.println(isSaveSongVisible);
     	return isSaveSongVisible;
     	
@@ -680,18 +681,18 @@ public class FullPlayer extends Page {
      * Clicks the Add to Playlist Button, uses String entitlement to determine expected action. 
      * entitlement must be "FREE", "PLUS", or "ALLACCESS"
      */
-    public boolean clickAddToPlaylistButtonInSaveModal(String entitlement){
-    	if(entitlement!= null && addToPlaylistButton != null && !entitlement.equals("")){
-    		if(entitlement.equals("FREE")){
+    public boolean clickAddToPlaylistButtonInSaveModal(Entitlement e) {
+    	if(waitForElementToBeVisible(addToPlaylistButton, 3)) {
+    		if(e.equals(Entitlement.FREE)) {
     			addToPlaylistButton.click();
     			System.out.println("AddToPlaylistButton was clicked for FREE User - Expect Upsell Modal to appear");
     			return upsellPage.isUpsellModalOpen();
-    		}else if(entitlement.equals("PLUS")){
+    		}else if(e.equals(Entitlement.PLUS)) {
     			addToPlaylistButton.click();
     			System.out.println("AddToPlaylistButton was clicked for PLUS User - Expect Upsell Modal to appear");
     			return upsellPage.isUpsellModalOpen();
     			//return upsellPage.isad
-    		}else if(entitlement.equals("ALLACCESS")){
+    		}else if(e.equals(Entitlement.ALLA)) {
     			addToPlaylistButton.click();
     			System.out.println("AddToPlaylistButton was clicked for ALLACCESS User - Expect Add to Playlist Modal to appear");
     			//addToPlaylistModal.clickFirstPlaylist(); This can be filled in once AddToPlaylist page Object is done!!!!
@@ -703,8 +704,8 @@ public class FullPlayer extends Page {
      * Clicks the Save Song button in the Save Modal to Save currently playing song to My Playlist. 
      * @return fullPlayer.isCurrentlyOnFullPlayer();
      */
-    public boolean clickSaveSongInSaveModal(){
-    	if(saveSongButton != null){
+    public boolean clickSaveSongInSaveModal() {
+    	if(isVisible(saveSongButton)) {
     		saveSongButton.click();
     		System.out.println("clickSaveSongInSaveModal().");
     	}
@@ -714,8 +715,8 @@ public class FullPlayer extends Page {
      * Clicks the Remove Station button in the Save Station Modal, and returns whether it reached the FullPlayer.
      * @return fullPlayer.isCurrentlyOnFullPlayer();
      */
-    public boolean clickRemoveStationInSaveModal(){
-    	if(removeStationButton!=null){
+    public boolean clickRemoveStationInSaveModal() {
+    	if(isVisible(removeStationButton)) {
     		removeStationButton.click();
     		System.out.println("clickRemoveStationInSaveModal().");
     	}
@@ -737,8 +738,8 @@ public class FullPlayer extends Page {
      * Clicks the Save Station to 'Heart' or 'Favorite' the Station. 
      * @return fullPlayer.isCurrentlyOnFullPlayer();
      */
-    public boolean clickSaveStationInSaveModal(){
-    	if(saveStationButton != null){
+    public boolean clickSaveStationInSaveModal() {
+    	if(isVisible(saveStationButton)) {
     		saveStationButton.click();
     	}
     	System.out.println("clickSaveStationInSaveModal().");
@@ -845,7 +846,7 @@ public class FullPlayer extends Page {
      * Changes made are:
      * 1. Adding in click on Save button first
      * 2. Changed the method to return Errors object to capture text on what actually failed. Have found that this helps to identify 
-     * 	  step and reason failure quickly as compared to only a screenshot.
+     * step and reason failure quickly as compared to only a screenshot.
      * This will help make the actual test more compact.
      * I am not removing the existing method cause FullPlayer tests are using that.
      * I'll add in a ticket to refactor the FullPlayer tests with this method if we all agree on it?

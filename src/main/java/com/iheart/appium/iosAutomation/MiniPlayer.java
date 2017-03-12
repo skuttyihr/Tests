@@ -62,12 +62,12 @@ public class MiniPlayer extends Page {
 	public Errors openFullPlayer(){
 		Errors err = new Errors();
 		System.out.println("Opening Full Player by clicking on MiniPlayerViewImageViewUIImageView element.");
-		if (!waitForElementToBeVisible(getMiniPlayerViewImageViewUIImageView(), 6)) {
+		if (!waitForElementToBeVisible(MiniPlayerViewImageViewUIImageView, 6)) {
 			err.add("MiniPlayer was not displayed.");
 			return err;
 		} 
 		else {
-			getMiniPlayerViewImageViewUIImageView().click();
+			MiniPlayerViewImageViewUIImageView.click();
 		}
 		return err;
 	}
@@ -134,7 +134,7 @@ public class MiniPlayer extends Page {
 	
 	public void swipeMiniPlayerToLeftToShowSkipButton(){
 		System.out.println("swipeMiniPlayerToLeftToShowSkipButton()");
-		getMiniPlayerViewImageViewUIImageView().swipe(SwipeElementDirection.LEFT, 5);
+		MiniPlayerViewImageViewUIImageView.swipe(SwipeElementDirection.LEFT, 5);
 	}
 	
 	/**
@@ -152,7 +152,7 @@ public class MiniPlayer extends Page {
 	 */
 	public void swipeMiniPlayerToRightToHideSkipButton(){
 		System.out.println("swipeMiniPlayerToRightToHideSkipButton()");
-		getMiniPlayerViewImageViewUIImageView().swipe(SwipeElementDirection.RIGHT, 5);
+		MiniPlayerViewImageViewUIImageView.swipe(SwipeElementDirection.RIGHT, 5);
 	}
 	/**
 	 * Swipes to left for half a second exposing Skip(scan) button and then clicks it. 
@@ -161,7 +161,7 @@ public class MiniPlayer extends Page {
 		System.out.println("swipeMiniPlayerToLeftAndClickSkipButton()");
 		sleep(1000);
 		//System.out.println("AppWidth = " + Page.getAppWidth()  + " SkipButton : " + MiniPlayerViewRedSkipButtonUIButton.getSize().getWidth());
-		getMiniPlayerViewImageViewUIImageView().swipe(SwipeElementDirection.LEFT, 5);
+		MiniPlayerViewImageViewUIImageView.swipe(SwipeElementDirection.LEFT, 5);
 		sleep(1000);
 		MiniPlayerViewRedSkipButtonUIButton.click();
 	}
@@ -224,10 +224,12 @@ public class MiniPlayer extends Page {
 	}
 	
 	/**
-	 * @return the miniPlayerViewImageViewUIImageView
+	 * @return if miniplayer is seen
 	 */
-	public IOSElement getMiniPlayerViewImageViewUIImageView() {
-		return MiniPlayerViewImageViewUIImageView;
+	public boolean getMiniPlayer() {
+		if (isCurrentlyOnMiniPlayer())
+			return true;
+		return false;
 	}
 	
 	/**

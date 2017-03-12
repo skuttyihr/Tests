@@ -123,6 +123,8 @@ public class TestRoot{
 	protected static String IHEARTFREEPASSWD;
 	protected static String IHEARTPLUSPASSWD;
 	protected static String IHEARTPREMIUMPASSWD;
+	protected static String IHEARTFREETRIALEXPUSERNAME;
+	protected static String IHEARTFREETRIALEXPPASSWD;
 
 	// Screenshot directory and URL
 	protected static String SCREENSHOT_DIRECTORY;
@@ -184,10 +186,12 @@ public class TestRoot{
 		IHEARTFREEUSERNAME = LoadProperties.getProperties(passwords, "IHEART.FREE.USERNAME");
 		IHEARTPLUSUSERNAME = LoadProperties.getProperties(passwords, "IHEART.PLUS.USERNAME");
 		IHEARTPREMIUMUSERNAME = LoadProperties.getProperties(passwords, "IHEART.PREMIUM.USERNAME");
+		IHEARTFREETRIALEXPUSERNAME = LoadProperties.getProperties(passwords, "IHEART.FREETRIALEXP.USERNAME");
 		IHEARTPASSWORD = LoadProperties.getProperties(passwords, "IHEART.PASSWORD");
 		IHEARTFREEPASSWD = LoadProperties.getProperties(passwords, "IHEART.FREE.PASSWORD");
 		IHEARTPLUSPASSWD = LoadProperties.getProperties(passwords, "IHEART.PLUS.PASSWORD");
 		IHEARTPREMIUMPASSWD = LoadProperties.getProperties(passwords, "IHEART.PREMIUM.PASSWORD");
+		IHEARTFREETRIALEXPPASSWD = LoadProperties.getProperties(passwords, "IHEART.FREETRIALEXP.PASSWORD");
 		FACEBOOKUSERNAME = LoadProperties.getProperties(passwords, "FACEBOOK.USERNAME");
 		FACEBOOKFULLNAME = LoadProperties.getProperties(passwords, "FACEBOOK.FULLNAME");
 		FACEBOOKPASSWORD = LoadProperties.getProperties(passwords, "FACEBOOK.PASSWORD");
@@ -793,7 +797,7 @@ public class TestRoot{
 
 	public static boolean isEnabled(IOSElement e) {
 		boolean isEnabled = false;
-		if ( e == null)
+		if (e == null)
 			return false;
 		try {
 			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);

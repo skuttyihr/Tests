@@ -164,7 +164,7 @@ public class TestFullPlayer extends TestRoot {
 		//No real way to check if Growl displays. But we can verify that Save Modal disappears and fullPlayer opens back up. //'SongName' saved to My Music
 		Assert.assertTrue("Clicking 'Save Song' should have popped up a growl and continued on the fullPlayer.", fullPlayer.isCurrentlyOnFullPlayer());
 		fullPlayer.clickSaveButtonToOpenSaveModal();
-		fullPlayer.clickAddToPlaylistButtonInSaveModal("FREE");
+		fullPlayer.clickAddToPlaylistButtonInSaveModal(Entitlement.FREE);
 		//Assert.assertTrue("Upsell Modal should be open after clicking 'Add to Playlist' " ,upsellPage.isUpsellModalOpen());
 		upsellPage.clickXtoCloseUpsellModal();
 		Assert.assertTrue("Upsell Modal should be closed and  FullPlayer should be open.", fullPlayer.isCurrentlyOnFullPlayer());
