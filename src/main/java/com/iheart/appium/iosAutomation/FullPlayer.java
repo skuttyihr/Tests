@@ -649,7 +649,7 @@ public class FullPlayer extends Page {
      */
     public boolean clickSaveButtonToOpenSaveModal(){
     	System.out.print("clickSaveButton(): ");
-    	IHRPlayerSaveButtonUIButton.click();
+    	IHRPlayerSaveButtonUIButton.click();	
     	//Save Modal should be up now
     	boolean isSaveSongVisible = isVisible(saveSongButton);
     	System.out.println(isSaveSongVisible);
@@ -665,7 +665,7 @@ public class FullPlayer extends Page {
      */
     public Errors clickReplayButtonToOpenReplayModal(){
     	Errors err = new Errors();
-    	while (!waitForElementToBeEnabled(IHRPlayerReplayButtonUIButton, 10)) {
+    	if (!waitForElementToBeEnabled(IHRPlayerReplayButtonUIButton, 10)) {
     		err.add("Replay button was disabled - could have been playing non-track content on live radio.");
     		return err;
     	}
