@@ -195,7 +195,7 @@ public class Page extends TestRoot {
 	}
 
 	public void clickNavBarBackButton() {
-		System.out.println("Page.getBack()");
+		System.out.println("Page.clickNavBarBackButton().");
 		NavBarBackButton.click();
 	}
 

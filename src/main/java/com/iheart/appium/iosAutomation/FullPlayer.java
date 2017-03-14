@@ -640,7 +640,9 @@ public class FullPlayer extends Page {
      */
     public boolean clickSaveButtonToOpenSaveModal(){
     	System.out.print("clickSaveButton() : Opening Save Overflow. SaveSongButton.isDisplayed() : ");
-    	IHRPlayerSaveButtonUIButton.click();
+    	if(waitForElementToBeVisible(IHRPlayerSaveButtonUIButton, 3)){
+    		IHRPlayerSaveButtonUIButton.click();
+    	}
     	//Save Modal should be up now
     	boolean isSaveSongVisible = SaveSongButton.isDisplayed();
     	System.out.println(isSaveSongVisible);
@@ -662,7 +664,7 @@ public class FullPlayer extends Page {
     }
     /**
      * Clicks the Add to Playlist Button, uses String entitlement to determine expected action. 
-     * entitlement must be "FREE", "PLUS", or "ALLACCESS"
+     * entitlement must be "FREE", "PLUS", or "ALLA"
      */
     public boolean clickAddToPlaylistButtonInSaveModal(String entitlement){
     	if(entitlement!= null && AddToPlaylistButton != null && !entitlement.equals("")){
@@ -674,7 +676,7 @@ public class FullPlayer extends Page {
     			AddToPlaylistButton.click();
     			System.out.println("AddToPlaylistButton was clicked for PLUS User - Expect Upsell Modal to appear");
     			return upsellPage.isUpsellModalOpen();
-    		}else if(entitlement.equals("ALLACCESS")){
+    		}else if(entitlement.equals("ALLA")){
     			AddToPlaylistButton.click();
     			System.out.println("AddToPlaylistButton was clicked for ALLACCESS User - Expect Add to Playlist Modal to appear");
     			//addToPlaylistModal.clickFirstPlaylist(); This can be filled in once AddToPlaylist page Object is done!!!!

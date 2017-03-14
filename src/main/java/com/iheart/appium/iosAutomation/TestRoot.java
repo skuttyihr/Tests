@@ -89,7 +89,7 @@ public class TestRoot{
 	// New On Demand Elements
 	protected static ArtistProfilePage artistProfilePage;
 	protected static MyMusicPage myMusicPage;
-	
+	protected static AddToPlaylistPage addToPlaylistPage;
 	protected static boolean useSimulator = false;
 
 	// Login Info
@@ -298,6 +298,7 @@ public class TestRoot{
 		artistProfileOverflowPage = new ArtistProfileOverflowPage(driver);
 		albumProfilePage = new AlbumProfilePage(driver);
 		myMusicPage = new MyMusicPage(driver);
+		addToPlaylistPage = new AddToPlaylistPage(driver);
 		driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 		System.out.println("Testing on: " + MODEL);
 
@@ -556,6 +557,8 @@ public class TestRoot{
 					boolean onPage = element.isDisplayed();
 					System.out.println(isCurrentlyOnPageMessage + "() : " + onPage);
 					return onPage;
+				}else{
+					System.out.println(isCurrentlyOnPageMessage + "() Element is null : " + false);
 				}
 			}
 		} catch (NoSuchElementException e) {

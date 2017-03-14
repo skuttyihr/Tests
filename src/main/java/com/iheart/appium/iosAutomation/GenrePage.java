@@ -156,7 +156,7 @@ public class GenrePage extends Page {
 	public Errors selectGenres(int[] gs){
 		Errors err = new Errors();
 		for(int i : gs){
-			String genre = "IHRGenrePickerViewController-Cell-UICollectionViewCell-" + gs[i];
+			String genre = "IHRGenrePickerViewController-Cell-UICollectionViewCell-" + i;
 			System.out.println("creating an IOSElement for Genre and clicking it : "+ genre );
 			if(waitForElementToBeVisible(findElement(driver, MobileBy.AccessibilityId(genre)), 5)){
 				findElement(driver, MobileBy.AccessibilityId(genre)).click();

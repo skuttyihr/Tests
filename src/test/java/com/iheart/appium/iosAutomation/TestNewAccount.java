@@ -36,7 +36,7 @@ public class TestNewAccount extends TestRoot {
 	public void testCreateNewEmailAccount_SIGN1_FREE() {
 		LocalTime before = consoleLogStart(
 				">>>>>testCreateNewEmailAccount_SIGN1_FREE() : Creating a new account with the default parameters. ");
-		Assert.assertTrue(signupPage.createNewAccount());
+		Assert.assertTrue(signupPage.createNewAccount());//"travused@all.com","travUsed66t","11206","1977","male"));
 		consoleLogEnd(before, true, "<<<<<testCreateNewEmailAccount_SIGN1_FREE");
 
 	}

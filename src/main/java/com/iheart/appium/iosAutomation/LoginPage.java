@@ -223,6 +223,9 @@ public class LoginPage extends Page {
 		sleep(2000);
 		Page.handlePossiblePopUp();  //added after genre screen sometimes pops up again. 
 		System.out.println("Logged in to account with email:[" + email + "] password ["+ password + "]");
+		//if(artistProfilePage.isCurrentlyOnArtistProfilePage()){
+		//	artistProfilePage.clickNavBarBackButton();
+		//}
 	}
 
 	/**
