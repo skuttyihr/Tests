@@ -69,7 +69,7 @@ public class TestNewAccount extends TestRoot {
 		consoleLogEnd(before, true,
 				"<<<<<testAllElements_SIGN4_FREE() : Test completed and all elements must be on the Onboarding Screen as expected.");
 	}
-*/
+
 	/**
 	 * Verifies all the genres on the genre page and ensures that all are
 	 * present. Then it swipes to the top of the page, selects some genres,

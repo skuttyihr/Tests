@@ -7,6 +7,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;
+
+import com.iheart.appium.utilities.TestRoot;
+
 import org.junit.Rule;
 import org.junit.Test;
 
