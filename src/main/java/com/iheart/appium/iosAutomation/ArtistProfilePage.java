@@ -2,6 +2,8 @@ package com.iheart.appium.iosAutomation;
 
 import org.openqa.selenium.By;
 
+import com.iheart.appium.utilities.TestRoot;
+
 import io.appium.java_client.SwipeElementDirection;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
@@ -148,11 +150,18 @@ public class ArtistProfilePage extends Page{
 	
 	public void printArtistHero(){
 		System.out.println("::::Printing elements for Artist Profile Header ::::");
-		printElementInformation(ArtistProfileBioHeaderViewShadowViewUIView); //visible -  false, enabled = true
+		//sk - 2/10 - adding in printElementName method - Think it might make more sense to those viewing test results to see the elementname as it appears in the app
+		//instead of the id/details at the backend.
+		/*printElementInformation(ArtistProfileBioHeaderViewShadowViewUIView); //visible -  false, enabled = true
 		printElementInformation(ArtistProfileBioHeaderViewBackgroundImageViewUIImageView);  //visible -  false, enabled = true
 		printElementInformation(ArtistProfileBioHeaderViewArtistImageViewUIImage);   //visible -  false, enabled = true
 		printElementInformation(ArtistProfileBioHeaderTitleViewTitleLabelUILabel); //visible -  true, enabled = true	
-		printElementInformation(ArtistProfileBioHeaderViewPlayButtonUIButton);
+		printElementInformation(ArtistProfileBioHeaderViewPlayButtonUIButton);*/
+		printElementName(ArtistProfileBioHeaderViewShadowViewUIView); //visible -  false, enabled = true
+		printElementName(ArtistProfileBioHeaderViewBackgroundImageViewUIImageView);  //visible -  false, enabled = true
+		printElementName(ArtistProfileBioHeaderViewArtistImageViewUIImage);   //visible -  false, enabled = true
+		printElementName(ArtistProfileBioHeaderTitleViewTitleLabelUILabel); //visible -  true, enabled = true	
+		printElementName(ArtistProfileBioHeaderViewPlayButtonUIButton);
 	}
 	public void printArtistBioElements(){
 		System.out.println("::::Printing elements for Artist Profile - Artist Bio ::::");
@@ -161,20 +170,30 @@ public class ArtistProfilePage extends Page{
 	}
 	public void printLatestRelease(){
 		System.out.println("::::Printing elements for Artist Profile - Latest Release ::::");
-		printElementInformation(ArtistProfileSectionLatestReleaseAlbumCellLatestRelease);
+/*		printElementInformation(ArtistProfileSectionLatestReleaseAlbumCellLatestRelease);
 		printElementInformation(ArtistProfileAlbumCellTitleViewTitleLabelUILabelLatestRelease); //The Fall of Hearts (album)
-		printElementInformation(ArtistProfileAlbumCellTitleViewSubtitleLabelUILabelLatestRelease); //May 2016 • 12 songs (release, number of songs)
+*/		//printElementInformation(ArtistProfileAlbumCellTitleViewSubtitleLabelUILabelLatestRelease); //May 2016 • 12 songs (release, number of songs)
+		printElementName(ArtistProfileSectionLatestReleaseAlbumCellLatestRelease);
+		printElementName(ArtistProfileAlbumCellTitleViewTitleLabelUILabelLatestRelease); 
+	
 	}
 	public void printTopSongs(){
 		//Top Songs Limit of 5 Top Songs - Cell(0-4), IndexLabel(number 1-5), and Song TitleLabel
-		System.out.println("::::Printing elements for Artist Profile - Top Songs  ::::");
+	/*	System.out.println("::::Printing elements for Artist Profile - Top Songs  ::::");
 		printElementInformation(ArtistProfileSectionTopSongsTopSongsCell0);
 		printElementInformation(ArtistProfileTrackCellIndexLabelUILabel0);
 		//printElementInformation(ArtistProfileTrackCellTitleLabelUILabel0);
 		printElementInformation(ArtistProfileSectionTopSongsTopSongsCell1);
-		printElementInformation(ArtistProfileTrackCellIndexLabelUILabel1);
+		printElementInformation(ArtistProfileTrackCellIndexLabelUILabel1); */
+		printElementName(ArtistProfileSectionTopSongsTopSongsCell0);
+		printElementName(ArtistProfileTrackCellIndexLabelUILabel0);
+		//printElementInformation(ArtistProfileTrackCellTitleLabelUILabel0);
+		printElementName(ArtistProfileSectionTopSongsTopSongsCell1);
+		printElementName(ArtistProfileTrackCellIndexLabelUILabel1);
+		
+		//sk - 2/8 - verifying that tracks are displayed by printing 1-2 top songs
 		//printElementInformation(ArtistProfileTrackCellTitleLabelUILabel1);
-		printElementInformation(ArtistProfileSectionTopSongsTopSongsCell2);
+		/*printElementInformation(ArtistProfileSectionTopSongsTopSongsCell2);
 		printElementInformation(ArtistProfileTrackCellIndexLabelUILabel2);
 		//printElementInformation(ArtistProfileTrackCellTitleLabelUILabel2);
 		printElementInformation(ArtistProfileSectionTopSongsTopSongsCell3);
@@ -182,7 +201,7 @@ public class ArtistProfilePage extends Page{
 		//printElementInformation(ArtistProfileTrackCellTitleLabelUILabel3);
 		printElementInformation(ArtistProfileSectionTopSongsTopSongsCell4);
 		printElementInformation(ArtistProfileTrackCellIndexLabelUILabel4);
-		//printElementInformation(ArtistProfileTrackCellTitleLabelUILabel4);
+		//printElementInformation(ArtistProfileTrackCellTitleLabelUILabel4);*/
 	}
 	public void printAlbums(){
 		System.out.println("::::Printing elements for Artist Profile - Three Albums ::::");
@@ -252,7 +271,7 @@ public class ArtistProfilePage extends Page{
 	 * Prints all albums list information. Assumes that clickShowALlAlbumsCellButton() was clicked first. 
 	 */
 	public void printAllAlbumsInformation(){
-		printElementInformation(ArtistProfileAlbumsViewControllerCollectionViewUIView);
+/*		printElementInformation(ArtistProfileAlbumsViewControllerCollectionViewUIView);
 		printElementInformation(ArtistProfileAlbumsViewAlbumCell0); //Britney has 42 of these in the collectionView. 
 		printElementInformation(ArtistProfileAlbumCellTitleViewTitleLabelUILabel0);
 		printElementInformation(ArtistProfileAlbumCellTitleViewSubtitleLabelUILabel0);
@@ -274,8 +293,29 @@ public class ArtistProfilePage extends Page{
 		printElementInformation(ArtistProfileAlbumsViewAlbumCell6); 
 		printElementInformation(ArtistProfileAlbumCellTitleViewTitleLabelUILabel6);
 		printElementInformation(ArtistProfileAlbumCellTitleViewSubtitleLabelUILabel6);
-		
-
+*/		
+		printElementName(ArtistProfileAlbumsViewControllerCollectionViewUIView);
+		printElementName(ArtistProfileAlbumsViewAlbumCell0); //Britney has 42 of these in the collectionView. 
+		printElementName(ArtistProfileAlbumCellTitleViewTitleLabelUILabel0);
+		printElementName(ArtistProfileAlbumCellTitleViewSubtitleLabelUILabel0);
+		printElementName(ArtistProfileAlbumsViewAlbumCell1);  
+		printElementName(ArtistProfileAlbumCellTitleViewTitleLabelUILabel1);
+		printElementName(ArtistProfileAlbumCellTitleViewSubtitleLabelUILabel1);
+		printElementName(ArtistProfileAlbumsViewAlbumCell2); 
+		printElementName(ArtistProfileAlbumCellTitleViewTitleLabelUILabel2);
+		printElementName(ArtistProfileAlbumCellTitleViewSubtitleLabelUILabel2);
+		printElementName(ArtistProfileAlbumsViewAlbumCell3); 
+		printElementName(ArtistProfileAlbumCellTitleViewTitleLabelUILabel3);
+		printElementName(ArtistProfileAlbumCellTitleViewSubtitleLabelUILabel3);
+		printElementName(ArtistProfileAlbumsViewAlbumCell4); 
+		printElementName(ArtistProfileAlbumCellTitleViewTitleLabelUILabel4);
+		printElementName(ArtistProfileAlbumCellTitleViewSubtitleLabelUILabel4);
+		printElementName(ArtistProfileAlbumsViewAlbumCell5); 
+		printElementName(ArtistProfileAlbumCellTitleViewTitleLabelUILabel5);
+		printElementName(ArtistProfileAlbumCellTitleViewSubtitleLabelUILabel5);
+		printElementName(ArtistProfileAlbumsViewAlbumCell6); 
+		printElementName(ArtistProfileAlbumCellTitleViewTitleLabelUILabel6);
+		printElementName(ArtistProfileAlbumCellTitleViewSubtitleLabelUILabel6);		
 	}
 	/**
 	 * Artist Bio Information - Artist, Horizontal Sliding Images view, and ScrollView with BioLabel text. 
@@ -392,7 +432,10 @@ public class ArtistProfilePage extends Page{
 		}
 	}
 	public String getLatestReleaseAlbumTitle(){
-		String album = ArtistProfileAlbumCellTitleViewTitleLabelUILabelLatestRelease.getText();
+		String album = "";
+		if (isVisible(ArtistProfileSectionLatestReleaseAlbumCellLatestRelease)) {
+			album = ArtistProfileAlbumCellTitleViewTitleLabelUILabelLatestRelease.getText();
+		}
 		System.out.println("getLatestReleaseAlbumTitle() : " + album);
 		return album;
 	}
@@ -443,7 +486,7 @@ public class ArtistProfilePage extends Page{
 	 * Shows All Albums as a list. 
 	 */
 	public void clickShowAllAlbumsCellButton(){
-		System.out.println("clickShowAllAlbumsCellButton() : Clicking Show All Albums to open List of Albums");
+		//System.out.println("clickShowAllAlbumsCellButton() : Clicking Show All Albums to open List of Albums");
 		ArtistProfileSectionAllAlbumsShowAllAlbumsUICollectionViewCell.click();
 	}
 
@@ -574,8 +617,8 @@ public class ArtistProfilePage extends Page{
 	public void clickFavoriteButtonOnNavBar(Boolean clickYes, Boolean clickMaybeLater){
 		System.out.println("clickFavoriteButtonOnNavBar() ");
 		NavBarFavoriteButtonUIButton.click();
-		IOSElement yesButton =	waitForVisible(driver, By.name("Yes"), 5);
-		IOSElement noButton =	waitForVisible(driver, By.name("No"), 5);
+		IOSElement yesButton =	waitForVisible(driver, By.name("Yes"), 3);
+		IOSElement noButton =	waitForVisible(driver, By.name("No"), 3);
 		if(yesButton != null && noButton != null){
 			if(clickYes){
 				yesButton.click();
@@ -586,8 +629,8 @@ public class ArtistProfilePage extends Page{
 				System.out.println("Clicked on No Button to keep the station");
 			}
 		}
-		IOSElement maybeLater = waitForVisible(driver, By.name("Maybe Later"), 5);
-		IOSElement notifyMe = waitForVisible(driver, By.name("Notify Me"), 5);
+		IOSElement maybeLater = waitForVisible(driver, By.name("Maybe Later"), 3);
+		IOSElement notifyMe = waitForVisible(driver, By.name("Notify Me"), 3);
 		if(maybeLater != null && notifyMe!=null){
 			if(clickMaybeLater){
 				maybeLater.click();
@@ -614,7 +657,7 @@ public class ArtistProfilePage extends Page{
 	 * @return
 	 */
 	public boolean isShareMenuOpen(){
-		boolean isThere = waitForVisible(driver, By.name("Mail"), 10) != null;
+		boolean isThere = waitForVisible(driver, By.name("Mail"), 5) != null;
 		System.out.println("isShareMenuOpen() : "+ isThere);
 		return isThere;
 	}

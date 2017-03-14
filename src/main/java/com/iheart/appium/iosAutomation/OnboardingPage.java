@@ -1,9 +1,10 @@
 package com.iheart.appium.iosAutomation;
 
-
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
+
+import com.iheart.appium.utilities.TestRoot;
+
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
 import io.appium.java_client.pagefactory.iOSFindBy;

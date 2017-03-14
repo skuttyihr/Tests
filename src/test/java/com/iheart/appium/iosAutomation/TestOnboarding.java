@@ -6,9 +6,10 @@ import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
+
+import com.iheart.appium.utilities.TestRoot;
 
 public class TestOnboarding extends TestRoot {
 
@@ -27,7 +28,7 @@ public class TestOnboarding extends TestRoot {
 	 *
 	 * This works at 169 seconds. 
 	 */
-	//@Test
+	@Test
 	public void testAllElementsOnOnboardingPage_ONB1_FREE(){ 
 		LocalTime before = consoleLogStart("Testing testAllElementsOnOnboardingPage_ONB1_FREE()");
 		boolean allElementsDisplayedOnOnboardingPage = onboardingPage.showAllElements();
@@ -43,7 +44,7 @@ public class TestOnboarding extends TestRoot {
 	 * No page swiping or timing is required, we expect to get 3 unique Strings within 10 tries. If this method fails, first thing to do is to increase the max number of fails.
 	 * We could also add Sleeps. 
 	 */
-	//@Test
+	@Test
 	public void testUIScrollViewOnOnboardingPage_ONB2_FREE(){
 		LocalTime before = consoleLogStart("Testing testUIScrollViewOnOnboardingPage_ONB2_FREE()");
 		//Part One
@@ -83,14 +84,14 @@ public class TestOnboarding extends TestRoot {
 		loginPage.closeGifWriter(writer);
 		consoleLogEnd(before, true,  "Tested testCreateAccountAndLogInButtons_ONB3_FREE");
 	}
-	
+/*	
 	//@Test
-	@Ignore //still doesn't work
+	//@Ignore //still doesn't work
 	public void testOnboardingDisappearal_ONB4_FREE(){
 		LocalTime before = consoleLogStart("Testing testOnboardingDisappearal_ONB4_FREE().");
 		loginPage.loginVerifyEntitlement("trav@free.com", "travfree", "FREE");
 		System.out.println("Closing app.");
-		driver.resetApp();
+		driver.closeApp();
 		//closeApp();
 		System.out.println("Launching app.");
 		driver.launchApp();
@@ -101,5 +102,5 @@ public class TestOnboarding extends TestRoot {
 		//Play live station. 
 		//Kill app. 
 		//Relaunch app.
-	}
+	} */
 }

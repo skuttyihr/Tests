@@ -156,13 +156,12 @@ public class FullPlayer extends Page {
     		printElementInformation(LyricsVCArtistNameLabelUILabel);
     		printElementInformation(LyricsVCTrackNameLabelUILabel);
     		fullPlayer.clickNavBarBackButton(); //This goes back to FullPlayers
-    	}else{
+    	{else{
     		fullPlayer.clickMoreCancelButton();
     	}
     	//IHRPlayerTitleView
     	System.out.println("Checking Title View elements... Station Name and Station Type");
-    	//sleep(2000);
-    	//printElementInformation(IHRPlayerTitleViewTitleLabelUILabel);
+    	printElementInformation(IHRPlayerTitleViewTitleLabelUILabel);
     	printElementInformation(IHRPlayerTitleViewSubTitleLabelUILabel);
     	//IHRPlayerBackgroundView
     	System.out.println("Checking Background View elements...");
@@ -185,8 +184,7 @@ public class FullPlayer extends Page {
     	printElementInformation(IHRPlayerViewSubTitleLabelUILabel);
     	System.out.println("Checking if Replay and Save Buttons exist on FullPlayer");
     	printElementInformation(IHRPlayerReplayButtonUIButton);
-    	printElementInformation(IHRPlayerSaveButtonUIButton);     
-    	
+    	printElementInformation(IHRPlayerSaveButtonUIButton);         
     }
     /**
      * Clicks the Down Arrow at the top of FullPlayer to minimize it into MiniPlayer. 
@@ -346,7 +344,7 @@ public class FullPlayer extends Page {
 	 * Clicks Cancel Button on the bottom of the Share Menu. Expect to return to Full Player. 
 	 */
 	public void clickCancelOnShareMenuToReturnToFullPlayer(){
-		IOSElement cancelButton = waitForVisible(driver, By.name("Cancel"), 10);
+		IOSElement cancelButton = waitForVisible(driver, By.name("Cancel"), 5);
 		if(cancelButton !=null){
 			cancelButton.click();
 		}

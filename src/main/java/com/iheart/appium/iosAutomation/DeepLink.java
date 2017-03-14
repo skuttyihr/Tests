@@ -5,6 +5,8 @@ import io.appium.java_client.pagefactory.*;
 
 import org.openqa.selenium.support.PageFactory;
 
+import com.iheart.appium.utilities.TestRoot;
+
 public class DeepLink extends Page {
 
 	@iOSFindBy(xpath = "//*[@id='push-content']/header/section[1]/div[3]/a") private IOSElement playButton;

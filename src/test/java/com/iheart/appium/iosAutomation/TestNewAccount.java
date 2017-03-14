@@ -8,6 +8,8 @@ import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
+import com.iheart.appium.utilities.TestRoot;
+
 public class TestNewAccount extends TestRoot {
 
 	@Before
@@ -40,7 +42,8 @@ public class TestNewAccount extends TestRoot {
 		consoleLogEnd(before, true, "<<<<<testCreateNewEmailAccount_SIGN1_FREE");
 
 	}
-	@Test
+	//sk - 2/8 - block commeting tests that are not ready, so that runtime is not increased by printing out info on skipped methods
+/*	@Test
 	@Ignore
 	public void testCreateNewGmailAccount_SIGN2_FREE(){
 		
@@ -57,8 +60,7 @@ public class TestNewAccount extends TestRoot {
 	}
 	/**
 	 * REGRESSION TEST - less important - longer run time. 
-	 */
-	@Test
+	 */	@Test
 	public void testAllElements_SIGN4_FREE() {
 		LocalTime before = consoleLogStart(
 				">>>>>testAllElements_SIGN4_FREE() : Checking all the iOS Elements on the Onboarding / Sign Up Page.");
@@ -67,18 +69,19 @@ public class TestNewAccount extends TestRoot {
 		consoleLogEnd(before, true,
 				"<<<<<testAllElements_SIGN4_FREE() : Test completed and all elements must be on the Onboarding Screen as expected.");
 	}
-
+*/
 	/**
 	 * Verifies all the genres on the genre page and ensures that all are
 	 * present. Then it swipes to the top of the page, selects some genres,
 	 * handles popups, improvesRecommendations, and deselects and reselects Top
 	 * 40.
 	 */
+	//sk - 2/8 - commented the elements verification, can be added back or separated out for regression tests
 	@Test
 	public void testGenreGameForNewAccount_GEN1_FREE() {
 		LocalTime before = consoleLogStart(">>>>>testGenreGameForNewAccount_GEN1_FREE(): Testing Genre Game for New Account.");
 		Assert.assertTrue("Could not create a new account and get the genre picker", signupPage.createNewAccount());
-		//Assert.assertFalse("Done Button shouldn't be enabled for a new account.", genrePage.isDoneEnabled());
+		Assert.assertFalse("Done Button shouldn't be enabled for a new account.", genrePage.isDoneButtonEnabled());
 		genrePage.printGenreElements();
 		Assert.assertEquals("GenrePage TitleLabel should say [" + genrePage.GENREPAGE_TITLE + "] but the Strings didn't match",genrePage.GENREPAGE_TITLE, genrePage.getTitleLabelText());
 		Assert.assertEquals("GenrePage SubtitleLabel should say [" + genrePage.GENREPAGE_SUBTITLE + "] but the Strings didn't match",genrePage.GENREPAGE_SUBTITLE, genrePage.getSubtitleLabelText());
