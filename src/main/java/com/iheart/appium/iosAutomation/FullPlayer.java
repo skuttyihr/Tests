@@ -156,7 +156,7 @@ public class FullPlayer extends Page {
     		printElementInformation(LyricsVCArtistNameLabelUILabel);
     		printElementInformation(LyricsVCTrackNameLabelUILabel);
     		fullPlayer.clickNavBarBackButton(); //This goes back to FullPlayers
-    	{else{
+    	}else{
     		fullPlayer.clickMoreCancelButton();
     	}
     	//IHRPlayerTitleView
