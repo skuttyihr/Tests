@@ -39,6 +39,7 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.iheart.appium.iosAutomation.AddToPlaylistPage;
 import com.iheart.appium.iosAutomation.AlbumProfilePage;
 import com.iheart.appium.iosAutomation.ArtistProfileOverflowPage;
 import com.iheart.appium.iosAutomation.ArtistProfilePage;
@@ -46,9 +47,11 @@ import com.iheart.appium.iosAutomation.CuratedPlaylistPage;
 import com.iheart.appium.iosAutomation.DeepLink;
 import com.iheart.appium.iosAutomation.FullPlayer;
 import com.iheart.appium.iosAutomation.GenrePage;
+import com.iheart.appium.iosAutomation.GifSequenceWriter;
 import com.iheart.appium.iosAutomation.HomePage;
 import com.iheart.appium.iosAutomation.LoginPage;
 import com.iheart.appium.iosAutomation.MiniPlayer;
+import com.iheart.appium.iosAutomation.MyMusicPage;
 import com.iheart.appium.iosAutomation.OnboardingPage;
 import com.iheart.appium.iosAutomation.Page;
 import com.iheart.appium.iosAutomation.PodcastsPage;
@@ -295,27 +298,28 @@ public class TestRoot{
 	}
 
 	public boolean printElementInformation(IOSElement iosElement) {
-		try{
-		if (iosElement == null) {
-			System.out.println("is NULL! Returning false. ");
-			return false;
-		} else {
-			String[] aId = iosElement.toString().split(">");
-			//String getText = iosElement.getAttribute("name");
-			String value = iosElement.getAttribute("value");
-			//!value.equals("") ||
-			if ( value != null) {
-				// .isSelected() doesnt work anymore with Appium 1.6.0beta3
-				System.out.println("  [" + aId[1] + "  text: [" + value + "]  tagName: [" + iosElement.getTagName()
-				+ "] isDisplayed: [" + iosElement.isDisplayed() + "] isEnabled: [" + iosElement.isEnabled() + "].");
-			} else { // Element has no Text, not printing it.
-				System.out.println("  [" + aId[1] + " tagName: [" + iosElement.getTagName() + "] isDisplayed: ["
-						+ iosElement.isDisplayed() + "] isEnabled: [" + iosElement.isEnabled() + "].");
+		try {
+			if (iosElement == null) {
+				System.out.println("is NULL! Returning false. ");
+				return false;
+			} else {
+				String[] aId = iosElement.toString().split(">");
+				// String getText = iosElement.getAttribute("name");
+				String value = iosElement.getAttribute("value");
+				// !value.equals("") ||
+				if (value != null) {
+					// .isSelected() doesnt work anymore with Appium 1.6.0beta3
+					System.out.println("  [" + aId[1] + "  text: [" + value + "]  tagName: [" + iosElement.getTagName()
+							+ "] isDisplayed: [" + iosElement.isDisplayed() + "] isEnabled: [" + iosElement.isEnabled()
+							+ "].");
+				} else { // Element has no Text, not printing it.
+					System.out.println("  [" + aId[1] + " tagName: [" + iosElement.getTagName() + "] isDisplayed: ["
+							+ iosElement.isDisplayed() + "] isEnabled: [" + iosElement.isEnabled() + "].");
+				}
+				return iosElement.isDisplayed();
 			}
-			return iosElement.isDisplayed();
-		}
-		catch(NoSuchElementException e){
-			System.out.println("NoSuchElementException for element e = "+ e.getMessage());
+		} catch (NoSuchElementException e) {
+			System.out.println("NoSuchElementException for element e = " + e.getMessage());
 			return false;
 		}
 	}
