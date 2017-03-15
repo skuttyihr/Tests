@@ -1,17 +1,3 @@
-
-/**
- * @author skutty
- * iOS flagship app switched to Appboy Upsells in Feb 2017.
- * Test objective are to verify that when a Free or Plus user clicks on certain features, they are presented and upsell. The upsell should be tested for
- * 1. Upsell Headline - the headline on the upsell should match with the expected value on the upsell page
- * 2. If the user is Free and trial eligible - then the upsell buttons should show 'Start 30 day Free Trial' text for both Plus and AllAccess 
- *    subscription buttons, both the buttons should be enabled and connect to AppStore.
- * 3. If the user is Free and trial expired - then the upsell should show 'Subscribe To <Plus/All Access>' text for both Plus and AllAccess 
- *    subscription buttons, both the buttons should be enabled and connect to AppStore.
- * 4. If the user is Plus - then the upsell should show 'Subscribe To All Access' text for the AllAccess 
- *    subscription buttons, only the All Access button should be enabled and connect to AppStore.
- */
-
 package com.iheart.appium.iosAutomation;
 import java.time.LocalTime;
 
@@ -26,6 +12,19 @@ import com.iheart.appium.utilities.TestRoot;
 import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;
 
+
+/**
+ * @author skutty
+ * iOS flagship app switched to Appboy Upsells in Feb 2017.
+ * Test objective are to verify that when a Free or Plus user clicks on certain features, they are presented and upsell. The upsell should be tested for
+ * 1. Upsell Headline - the headline on the upsell should match with the expected value on the upsell page
+ * 2. If the user is Free and trial eligible - then the upsell buttons should show 'Start 30 day Free Trial' text for both Plus and AllAccess 
+ *    subscription buttons, both the buttons should be enabled and connect to AppStore.
+ * 3. If the user is Free and trial expired - then the upsell should show 'Subscribe To <Plus/All Access>' text for both Plus and AllAccess 
+ *    subscription buttons, both the buttons should be enabled and connect to AppStore.
+ * 4. If the user is Plus - then the upsell should show 'Subscribe To All Access' text for the AllAccess 
+ *    subscription buttons, only the All Access button should be enabled and connect to AppStore.
+*/
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestAppboyUpsells extends TestRoot {
