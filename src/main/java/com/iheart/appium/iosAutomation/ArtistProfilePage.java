@@ -432,7 +432,10 @@ public class ArtistProfilePage extends Page{
 		}
 	}
 	public String getLatestReleaseAlbumTitle(){
-		String album = ArtistProfileAlbumCellTitleViewTitleLabelUILabelLatestRelease.getText();
+		String album = "";
+		if (isVisible(ArtistProfileSectionLatestReleaseAlbumCellLatestRelease)) {
+			album = ArtistProfileAlbumCellTitleViewTitleLabelUILabelLatestRelease.getText();
+		}
 		System.out.println("getLatestReleaseAlbumTitle() : " + album);
 		return album;
 	}

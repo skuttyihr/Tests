@@ -35,6 +35,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import com.iheart.appium.iosAutomation.AlbumProfilePage;
 import com.iheart.appium.iosAutomation.ArtistProfileOverflowPage;
 import com.iheart.appium.iosAutomation.ArtistProfilePage;
+import com.iheart.appium.iosAutomation.CuratedPlaylistPage;
 import com.iheart.appium.iosAutomation.DeepLink;
 import com.iheart.appium.iosAutomation.FullPlayer;
 import com.iheart.appium.iosAutomation.GenrePage;
@@ -318,15 +319,15 @@ public class TestRoot{
 		String value = "";
 		String label = "";
 			
-		if (!(isVisible(element)) ) {
-			System.out.println("Element is null or is not visible.");
+		if (!isVisible(element)) {
+			waitForElementToBeVisible(element, 5);
+			System.out.println("element is null or is not visible.");
 			return false;
-		} 
-		else {				
-			getText = element.getAttribute("name");
-			value = element.getAttribute("value");
-			label = element.getAttribute("label");
-		}			
+		}	
+		getText = element.getAttribute("name");
+		value = element.getAttribute("value");
+		label = element.getAttribute("label");
+		
 		if ( getText != null) 
 			System.out.println("Element '" + getText + "' is displayed.");
 		else if (value != null) 
@@ -335,9 +336,7 @@ public class TestRoot{
 			System.out.println("Element '" + label + "' is displayed.");
 		else
 			System.out.println("Element '" + element.getTagName() + "' is displayed.");
-
 		return element.isDisplayed();
-
 	}
 
 	protected static void tearDown() {
@@ -773,14 +772,16 @@ public class TestRoot{
 	}
 
 	//// Waiting Methods ////
+	//sk - 2/24 - the method was returning false even when the element was displayed as there was no 'return true' stea
 	public static boolean isVisible(IOSElement e) {
 		boolean isVisible = false;
 		if (e == null) {
 			return false;
 		}
 		try {
-			driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
+			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 			isVisible = e.isDisplayed();
+			return true;
 		} catch (Exception x) {
 		} finally {
 			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
@@ -793,8 +794,9 @@ public class TestRoot{
 		if (e == null)
 			return false;
 		try {
-			driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
-			isEnabled = e.isEnabled();
+			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
+			isEnabled = e.isEnabled();		
+			return true;
 		} catch (Exception x) {
 		} finally {
 			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
@@ -1089,9 +1091,6 @@ public class TestRoot{
 		String value = eleName + "-" + x;
 		return (findElement(driver, By.id(value)));
 	}
-<<<<<<< HEAD:src/main/java/com/iheart/appium/utilities/TestRoot.java
-=======
-	
 	/**
 	 * sk - 2/8 - method to print out Element Names as they appear in the app.
 	 * @param element
@@ -1123,6 +1122,4 @@ public class TestRoot{
 		return element.isDisplayed();
 
 	}
-	
->>>>>>> origin/master:src/main/java/com/iheart/appium/utilities/TestRoot.java
 }

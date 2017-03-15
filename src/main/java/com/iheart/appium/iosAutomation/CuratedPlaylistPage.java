@@ -20,16 +20,27 @@ public class CuratedPlaylistPage extends Page{
 
 	// ***************  Elements   ***************// 
 	
-	@iOSFindBy(accessibility = "Workout Hits") private IOSElement cPlaylistTitle;
+	//@iOSFindBy(accessibility = "Workout Hits") private IOSElement cPlaylistTitle;
+	@iOSFindBy(xpath = "//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/"
+			+ "XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/"
+			+ "XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeStaticText[1]") private IOSElement cPlaylistTitle;
 	@iOSFindBy(accessibility = "Top Hits to keep you motivated in the gym") private IOSElement cPlaylistDescription;
-	@iOSFindBy(accessibility = "By iHeartRadio • 1 hr 22 min") private IOSElement cPlaylistCurator_Duration;
-	@iOSFindBy(accessibility = "pause button") private IOSElement btnPause;
+	@iOSFindBy(xpath = "By iHeartRadio /.*") private IOSElement cPlaylistCurator_Duration;
+	@iOSFindBy(id = "pause button") private IOSElement btnPause;
 	@iOSFindBy(accessibility = "overflow list") private IOSElement cPlaylistOverflow;
 	@iOSFindBy(accessibility = "NavBar-BackButton-UIButton") private IOSElement statusBar;
 	@iOSFindBy(className = "XCUIElementTypeImage") private IOSElement cPlaylistCoverArt;
 	@iOSFindBy(accessibility = "Shuffle") private IOSElement shuffleButton;
-	
-	// ***************   Behaviors   ***************//
+	@iOSFindBy(accessibility = "Stronger") private IOSElement firstTrack;
+	@iOSFindBy(accessibility = "Rock Your Body") private IOSElement secondTrack;
+	@iOSFindBy(accessibility = "'Till I Collapse") private IOSElement thirdTrack;
+	@iOSFindBy(xpath = "//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[2]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/"
+			+ "XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/"
+			+ "XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/"
+			+ "XCUIElementTypeStaticText[1]]")
+	private IOSElement curatedByAndDurationText;
+
+	// ***************  Behaviors  ***************//
 	/** 
 	 * getters
 	 * @return IOSElement
@@ -50,16 +61,16 @@ public class CuratedPlaylistPage extends Page{
 				+ "XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/"
 				+ "XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeCollectionView[1]/"
 				+ "XCUIElementTypeCell[" + cellnumber + "]/XCUIElementTypeStaticText[1]"));
-				return cPlaylistCellSongName;				
+		return cPlaylistCellSongName;				
 	}
-
+	
 	public Errors verifyPlaylistProfilePage() {
 		Errors err = new Errors();
 		if (!printElementName(cPlaylistTitle))
 			err.add("Curated Playlist Profile Page Title is not seen.");
 		if (!printElementName(cPlaylistDescription))
 			err.add("Curated Playlist Profile Page Description is not seen.");
-		if (!printElementName(cPlaylistCurator_Duration))
+		if (!printElementName(curatedByAndDurationText))
 			err.add("Curated Playlist Profile Page Curator and Duration is not seen.");
 		if (!printElementName(cPlaylistCoverArt))
 			err.add("Curated Playlist Profile Page Cover Art is not seen.");
@@ -67,11 +78,11 @@ public class CuratedPlaylistPage extends Page{
 			err.add("Curated Playlist Profile Page Overflow is not seen.");
 		if (!printElementName(shuffleButton))
 			err.add("Curated Playlist Profile Page Shuffle button is not seen.");
-		if (!printElementName(getPlaylistCellSongName(1)))
+		if (!printElementName(firstTrack))
 			err.add("Curated Playlist Profile Page - cells are not showing tracks.");
-		if (!printElementName(getPlaylistCellSongName(2)))
+		if (!printElementName(secondTrack))
 			err.add("Curated Playlist Profile Page - cells are not showing tracks.");
-		if (!printElementName(getPlaylistCellSongName(3)))
+		if (!printElementName(thirdTrack))
 			err.add("Curated Playlist Profile Page - cells are not showing tracks.");
 		if (!printElementName(btnPause))
 			err.add("Curated Playlist Profile Page - Play button is in play station as pause button is displayed.");

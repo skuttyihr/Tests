@@ -78,7 +78,7 @@ public class TestNewAccount extends TestRoot {
 	public void testGenreGameForNewAccount_GEN1_FREE() {
 		LocalTime before = consoleLogStart(">>>>>testGenreGameForNewAccount_GEN1_FREE(): Testing Genre Game for New Account.");
 		Assert.assertTrue("Could not create a new account and get the genre picker", signupPage.createNewAccount());
-		//Assert.assertFalse("Done Button shouldn't be enabled for a new account.", genrePage.isDoneEnabled());
+		Assert.assertFalse("Done Button shouldn't be enabled for a new account.", genrePage.isDoneButtonEnabled());
 		//genrePage.printGenreElements();
 		Assert.assertEquals("GenrePage TitleLabel should say [" + genrePage.GENREPAGE_TITLE + "] but the Strings didn't match",genrePage.GENREPAGE_TITLE, genrePage.getTitleLabelText());
 		Assert.assertEquals("GenrePage SubtitleLabel should say [" + genrePage.GENREPAGE_SUBTITLE + "] but the Strings didn't match",genrePage.GENREPAGE_SUBTITLE, genrePage.getSubtitleLabelText());

@@ -8,7 +8,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
 
-import com.iheart.appium.iosAutomation.TestRoot.ScreenshotRule;
+import com.iheart.appium.utilities.Errors;
+import com.iheart.appium.utilities.TestRoot;
 
 
 public class TestCuratedPlaylist extends TestRoot {
@@ -25,9 +26,9 @@ public class TestCuratedPlaylist extends TestRoot {
 	public ScreenshotRule screenshot = new ScreenshotRule();
 
 	@Test
-	public void testPlaylistProfilePageMetadata_CUR_1_PLUS() {
-		LocalTime before = consoleLogStart("Testing elements on Artist Profile Page - testArtistProfileElements()");
-		loginPage.loginVerifyEntitlement(IHEARTPLUSUSERNAME, IHEARTPLUSPASSWD,"PLUS");
+	public void testPlaylistProfilePageMetadata_CUR1_PLUS() {
+		LocalTime before = consoleLogStart("Testing elements on Curated Playlist Page Metadata - Plus User - testPlaylistProfilePageMetadata_CUR_1_PLUS().");
+		loginPage.loginVerifyEntitlement(IHEARTPLUSUSERNAME, IHEARTPLUSPASSWD, "PLUS");
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		searchPage.searchAndPlayPlaylist("workout hits");
 		Errors err = curatedPlaylistPage.verifyPlaylistProfilePage();
@@ -37,8 +38,8 @@ public class TestCuratedPlaylist extends TestRoot {
 	}
 	
 	@Test
-	public void testPlaylistProfilePageMetadata_CUR_2_ALLA() {
-		LocalTime before = consoleLogStart("Testing elements on Artist Profile Page - testArtistProfileElements()");
+	public void testPlaylistProfilePageMetadata_CUR2_ALLA() {
+		LocalTime before = consoleLogStart("Testing elements on Curated Playlist Page Metadata - Plus User - testPlaylistProfilePageMetadata_CUR_2_ALLA()");
 		loginPage.loginVerifyEntitlement(IHEARTPREMIUMUSERNAME, IHEARTPREMIUMPASSWD,"ALLA");
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		searchPage.searchAndPlayPlaylist("workout hits");
