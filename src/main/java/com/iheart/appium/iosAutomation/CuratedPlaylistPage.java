@@ -85,21 +85,22 @@ public class CuratedPlaylistPage extends Page{
 		+ "XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeCollectionView[1]/XCUIElementTypeCell[" + cellnumber + "]"), 3);
 		return cPlaylistCellSongName;				
 	}
-	
+
 	public IOSElement getTrackOverflow(int cellnumber) {
 		IOSElement cPlaylistTrackOverflow = findElement(driver, By.xpath("//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[2]/"
 				+ "XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/"
 				+ "XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeCollectionView[1]/"
 				+ "XCUIElementTypeCell[" + 	cellnumber + "]/XCUIElementTypeButton[1]"));
-				return cPlaylistTrackOverflow;				
+		return cPlaylistTrackOverflow;				
 	}
-	
+
 	public void clickShare() {
-		waitForElementToBeVisible(cPlaylistProfilePageOverflowShare, 5);
-		cPlaylistProfilePageOverflowShare.click();
-		System.out.println("Share button clicked.");
+		if (waitForElementToBeVisible(cPlaylistProfilePageOverflowShare, 5)) {
+			cPlaylistProfilePageOverflowShare.click();
+			System.out.println("Share button clicked.");
+		}
 	}
-	
+
 	public Errors verifyPlaylistProfilePage() {
 		Errors err = new Errors();
 		//System.out.println(cPlaylistTitle.getText());
@@ -128,7 +129,7 @@ public class CuratedPlaylistPage extends Page{
 			err.add("Curated Playlist Profile Page - Pause state play button is not displayed, as cur playlist stn should have started streamining on search and play.");
 		return err;	
 	}
-	
+
 	public Errors verifyPlaylistProfilePageOverflow(String subscription) {
 		Errors err = new Errors();
 		if (waitForElementToBeVisible(cPlaylistProfilePageOverflow, 3))
@@ -152,6 +153,7 @@ public class CuratedPlaylistPage extends Page{
 		return err;
 	}	
 }
+
 
 	
 	

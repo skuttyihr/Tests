@@ -395,14 +395,14 @@ public class FullPlayer extends Page {
 	 * @return
 	 */
 	public int getNumberOfSkipsRemaining(){
+		int skipsLeft = 0;;
 		if (waitForElementToBeVisible(IHRPlayerViewForwardButtonUIButton, 4)) {
 			//TODO: This line needs to be fixed so as to get the entire text for the Skip button, if possible, for the method to work.
 			String skips = IHRPlayerViewForwardButtonUIButton.getText();
-			int skipsLeft = Integer.parseInt(skips.substring(6, 7));
+			skipsLeft = Integer.parseInt(skips.substring(6, 7));
 			System.out.println("getNumberOfSkipsRemaining() : " + skipsLeft);
-			return skipsLeft;
 		}
-		return 0;		
+		return skipsLeft;		
 	}
 	/**
 	 * Clicks the Skip/ Scan Button
@@ -827,7 +827,7 @@ public class FullPlayer extends Page {
     	int i = 0;
     	if (isCurrentlyOnFullPlayer()) {
     		clickSkipButton();
-    		while (!(isVisible(appboyUpsellsPage.getNewFeatureTag()) && isVisible(IHRPlayerViewForwardButtonUIButton))) {
+    		while (!isVisible(appboyUpsellsPage.getNewFeatureTag()) && isVisible(IHRPlayerViewForwardButtonUIButton)) {
     			clickSkipButton();
     			i++;
     			if (i > 7)

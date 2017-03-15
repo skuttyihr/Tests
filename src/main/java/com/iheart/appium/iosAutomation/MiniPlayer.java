@@ -64,7 +64,6 @@ public class MiniPlayer extends Page {
 		System.out.println("Opening Full Player by clicking on MiniPlayerViewImageViewUIImageView element.");
 		if (!waitForElementToBeVisible(MiniPlayerViewImageViewUIImageView, 6)) {
 			err.add("MiniPlayer was not displayed.");
-			return err;
 		} 
 		else {
 			MiniPlayerViewImageViewUIImageView.click();
@@ -227,9 +226,7 @@ public class MiniPlayer extends Page {
 	 * @return if miniplayer is seen
 	 */
 	public boolean getMiniPlayer() {
-		if (isCurrentlyOnMiniPlayer())
-			return true;
-		return false;
+		return (isCurrentlyOnMiniPlayer());
 	}
 	
 	/**

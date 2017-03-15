@@ -108,35 +108,32 @@ public class AppboyUpsellsPage extends Page{
 	}
 
 	public boolean isUpsellDisplayed() {
-		if(waitForElementToBeVisible(newFeatureTag, 8)) {
-			boolean isUpsellDisplayed = (isVisible(newFeatureTag));
-			System.out.println("appboyUpsellsPage.isUpsellDisplayed(): " + isUpsellDisplayed);
-			return isUpsellDisplayed;
-		}
-		return false;
+		boolean isUpsellDisplayed = waitForElementToBeVisible(newFeatureTag, 8); 
+		System.out.println("appboyUpsellsPage.isUpsellDisplayed(): " + isUpsellDisplayed);
+		return isUpsellDisplayed;
 	}
 	
 	public void closeUpsell() {
-		if (waitForElementToBeVisible(closeUpsellButton, 3))
+		if (waitForElementToBeVisible(closeUpsellButton, 3)) {
 			closeUpsellButton.click();
+		}
 	}
 
 	public String getTextFromPlusButton() {
+		String buttonText = "";
 		if (waitForElementToBeVisible(subscribeToPlusButton, 2)) {
-			String plusSubscribeButtonText = subscribeToPlusButton.getText();
-			System.out.println("appboyUpsellsPage.getTextFromPlusButton():" + plusSubscribeButtonText);
-			return plusSubscribeButtonText;
+			buttonText = subscribeToPlusButton.getText();
+			System.out.println("appboyUpsellsPage.getTextFromPlusButton():" + buttonText);
 		} else if (waitForElementToBeVisible(start30DayFreeTrialPlusUserButton,2)) {
-			String plusFreeTrialButtonText = start30DayFreeTrialPlusUserButton.getText();
-			System.out.println("appboyUpsellsPage.SubscribeToPlusButton.getText():" + plusFreeTrialButtonText);
-			return plusFreeTrialButtonText;
+			buttonText = start30DayFreeTrialPlusUserButton.getText();
+			System.out.println("appboyUpsellsPage.SubscribeToPlusButton.getText():" + buttonText);
 		}
-		return "";
+		return buttonText;
 	}
 
 	public String getTextFromAllAccessButton() {
 		if (waitForElementToBeVisible(subscribeToAllAccessButton, 2)) {
-			System.out.println("appboyUpsellsPage..getTextFromAllAccessButton(): All Access subscription button is visible.");
+			System.out.println("appboyUpsellsPage.getTextFromAllAccessButton(): All Access subscription button is visible.");
 			return subscribeToAllAccessButton.getText();
 		}
 		return "";
@@ -150,12 +147,9 @@ public class AppboyUpsellsPage extends Page{
 	 * @return
 	 */
 	public boolean isAppleSignInModalDisplayed() {
-		if(existingAppleIDButtonOnAppleStoreSignInModal != null){
-			boolean isAppleModalDisplayed = existingAppleIDButtonOnAppleStoreSignInModal.isDisplayed();
-			System.out.println("appboyUpsellsPage.isAppleISignInModalDisplayed() : " + isAppleModalDisplayed);
-			return isAppleModalDisplayed;
-		}
-		return false;
+		boolean isAppleModalDisplayed = isVisible(existingAppleIDButtonOnAppleStoreSignInModal);
+		System.out.println("appboyUpsellsPage.isAppleISignInModalDisplayed() : " + isAppleModalDisplayed);
+		return isAppleModalDisplayed;	
 	}
 	
 	public void clickCancelAppStoreModalButton(){
@@ -174,9 +168,8 @@ public class AppboyUpsellsPage extends Page{
 			subscribeToPlusButton.click();
 			if (!waitForElementToBeVisible(existingAppleIDButtonOnAppleStoreSignInModal, 10)) {
 				System.out.println("appboyUpsellsPage.isPlusButtonActive(): Clicking 'Subscribe to Plus' button did not connect to app store.");
-				return false;
 			}
-			else if(isVisible(existingAppleIDButtonOnAppleStoreSignInModal)) {
+			else {
 				clickCancelAppStoreModalButton();
 				return true;
 			}
@@ -185,9 +178,9 @@ public class AppboyUpsellsPage extends Page{
 			System.out.println("Start Trial for 30 days Plus button is displayed.");
 			start30DayFreeTrialPlusUserButton.click();
 			if (!waitForElementToBeVisible(existingAppleIDButtonOnAppleStoreSignInModal, 10)) {
-				return false;
+				System.out.println("appboyUpsellsPage.isPlusButtonActive(): Clicking 'Start 30 Day FreeTrial Plus' button did not connect to app store.");
 			}
-			else if(isVisible(existingAppleIDButtonOnAppleStoreSignInModal)) {
+			else {
 				System.out.println("appboyUpsellsPage.isPlusButtonActive(): 'Start Trial for 30 days Plus button' connected to the app store.");
 				clickCancelAppStoreModalButton();
 				return true;
@@ -205,9 +198,8 @@ public class AppboyUpsellsPage extends Page{
 			subscribeToAllAccessButton.click();
 			if (!waitForElementToBeVisible(existingAppleIDButtonOnAppleStoreSignInModal, 10)) {
 				System.out.println("appboyUpsellsPage.isPremiumButtonActive(): Subscribe to All Access button did not connect to the app store.");
-				return false;
 			}
-			else if(isVisible(existingAppleIDButtonOnAppleStoreSignInModal)) {
+			else {
 				System.out.println("appboyUpsellsPage.isPremiumButtonActive(): Subscribe to All Access button connected to the app store.");
 				clickCancelAppStoreModalButton();
 				return true;
@@ -219,7 +211,7 @@ public class AppboyUpsellsPage extends Page{
 			if (!waitForElementToBeVisible(existingAppleIDButtonOnAppleStoreSignInModal, 10)) {
 				System.out.println("appboyUpsellsPage.isPremiumButtonActive(): Start Trial for 30 days All Access button did not connect to the app store.");
 			}	
-			else if (isVisible(existingAppleIDButtonOnAppleStoreSignInModal)) {
+			else {
 				System.out.println("appboyUpsellsPage.isPremiumButtonActive(): Start Trial for 30 days All Access button connected to the app store.");
 				clickCancelAppStoreModalButton();
 				return true;
@@ -250,49 +242,6 @@ public class AppboyUpsellsPage extends Page{
 		return err;
 	}
 
-		
-	/**
-	 * sk - 2/24 - verify Button Text should match that for Subscribe OR Free Trial
-	 * First checks if its a FREE user, then the nested if checks if its a trial eligible or non-trial eligible user.
-	 * Then for trial eligible user, it verifies that the button for Start 30 Day Free Trial for both Plus and AA are displayed.
-	 * Then for a trial expired user, it verifies that the buttons for 'Subscribe to' Plus and AA are displayed
-	 * Then checks the same for a Plus User - that it shows 'Subscribe to' buttons
-	 * @return status if Subscribe to AA button opens Apple modal
-	 */
-	public Errors verifySubscriptionButtonText(Entitlement e , boolean trialEligible) {
-		Errors err = new Errors();
-		if (e.equals(Entitlement.FREE)) {
-			if (trialEligible == true) {
-				System.out.println("Checking Free TrialEligible user button text. Start trial button is displayed for plus user: " + 
-						start30DayFreeTrialPlusUserButton.isDisplayed() + "Start trial button AA is displayed: " + start30DayFreeTrialAllAccessUserButton.isDisplayed());
-				boolean isStart30dayPlusUserButtonDisplayed = start30DayFreeTrialPlusUserButton.isDisplayed();
-				boolean isStart30dayAAUserButtonDisplayed = start30DayFreeTrialAllAccessUserButton.isDisplayed();
-				String plusTrialButtonText = start30DayFreeTrialPlusUserButton.getText();
-				String allAccessTrialButtonText = start30DayFreeTrialPlusUserButton.getText();
-				if (!(isStart30dayPlusUserButtonDisplayed) || !(isStart30dayAAUserButtonDisplayed)) {
-					err.add("Expected buttons: " + plusTrialButtonText + " and " + allAccessTrialButtonText + " are not displayed.");
-				}
-				System.out.println("appboyUpsellsPage.verifySubscriptionButtonText(): " +  start30DayFreeTrialPlusUserButton.getText() + " and " + start30DayFreeTrialAllAccessUserButton.getText() + ".");
-			}
-			else if (trialEligible == false) {
-				boolean isSubscribeToPlusButtonDisplayed = subscribeToPlusButton.isDisplayed();
-				boolean isSubscribeToAAButtonDisplayed = subscribeToAllAccessButton.isDisplayed();
-				if (!isSubscribeToPlusButtonDisplayed || !isSubscribeToAAButtonDisplayed) {
-					err.add("Expected buttons: " + subscribeToPlusButton.getText() + " and " + subscribeToAllAccessButton.getText() + " are not displayed.");
-				}
-				System.out.println("Button state for trial expired free user was verified and showed " +  subscribeToPlusButton.getText() + " and " + subscribeToAllAccessButton.getText() + ".");
-			}
-		}
-		
-		if (e.equals(Entitlement.PLUS) && (trialEligible == false)) {
-			if (!subscribeToPlusButton.isDisplayed() || !subscribeToAllAccessButton.isDisplayed()) {
-				err.add("Expected button:" + subscribeToPlusButton.getText() + " is not displayed.");
-				return err;
-			}
-			System.out.println("Button state for plus user was verified and showed " +  subscribeToAllAccessButton.getText() + ".");
-		}
-		return err;
-	}
 
 	/**
 	 * sk - 2/27 - verify Buttons are in the correct state (active/inactive) based on if user is free or plus.
@@ -306,7 +255,6 @@ public class AppboyUpsellsPage extends Page{
 		if (isUpsellDisplayed()) {
 			if (isPlusButtonActive()) {
 				err.add("Plus user: Subscribe to Plus button shouldn't be active for a plus user and shouldn't connect to App Store - failed");
-				return err;
 			}
 			else {
 				System.out.println("appboyUpsellPage.verifyUpsellPlusButtonStatePlusUser(): Plus user : Clicked on 'Subscribe to Plus' Button, "
@@ -322,11 +270,9 @@ public class AppboyUpsellsPage extends Page{
 		if (isUpsellDisplayed()) {
 			if (!isPremiumButtonActive()) {
 				err.add("Plus user : 'Subscribe to All Access' button was not active for a plus user and could not connect to App Store.");	
-				return err;
 			}
 			else {
 				System.out.println("Plus user : Subscribe to All Access Button was active, and connected to App Store.");
-				return err;
 			}
 		}
 		return err;
@@ -387,7 +333,6 @@ public class AppboyUpsellsPage extends Page{
 		if (isUpsellDisplayed()) {
 			if (!isPremiumButtonActive()) {
 				err.add("Free trial eligibile user: 'Start 30 day Free Trial' All Access Button was not active and could not connect to App Store.");
-				return err;
 			}
 		}
 		return err;

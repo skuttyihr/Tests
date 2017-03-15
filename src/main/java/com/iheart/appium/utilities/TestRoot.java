@@ -326,9 +326,10 @@ public class TestRoot{
 		String label = "";
 			
 		if (!isVisible(element)) {
-			waitForElementToBeVisible(element, 5);
-			System.out.println("element is null or is not visible.");
-			return false;
+			if (waitForElementToBeVisible(element, 5)  || (waitForVisible(driver, By.xpath(element.getAttribute("xpath")), 5) == null)) {
+				System.out.println("element is null or is not visible.");
+				return false;
+			}
 		}	
 		getText = element.getAttribute("name");
 		value = element.getAttribute("value");
@@ -802,31 +803,12 @@ public class TestRoot{
 		try {
 			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 			isEnabled = e.isEnabled();
-			return true;
 		} catch (Exception x) {
 		} finally {
 			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 		}
 		return isEnabled;
 	}
-	
-	public static boolean waitForEnabled(IOSElement e) {
-		boolean isEnabled = false;
-		if (!waitForElementToBeVisible(e, 4)) {
-			if (e == null)
-				return false;
-		}
-		try {
-			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
-			isEnabled = e.isEnabled();
-			return true;
-		} catch (Exception x) {
-		} finally {
-			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
-		}
-		return isEnabled;
-	}
-
 
 	public static void sleep(int timeInMs) {
 		try {
@@ -893,7 +875,7 @@ public class TestRoot{
 		}
 		long timeLeftMil = timeInSeconds * 1000;
 		while (timeLeftMil > 0) {
-			if (isVisible(ele) && isEnabled(ele)) {
+			if (isVisible(ele)) {
 				break;
 			}
 			// sleep(100); // Intentionally mismatched to make up for time
