@@ -230,7 +230,7 @@ public class AppboyUpsellsPage extends Page{
 		String actualUpsellHeadline = "";
 		if (isUpsellDisplayed()) {
 			actualUpsellHeadline = getUpsellText();
-			if (!(actualUpsellHeadline.equals(expectedHeadline))) {
+			if (!actualUpsellHeadline.equals(expectedHeadline)) {
 				System.out.println("appboyUpsellsPage.verifyUpsellHeadlineIsAsExpected(): Upsell headlines was not as expected.");
 				err.add("Actual upsell headline is: " + actualUpsellHeadline + " Expected is: " + expectedHeadline);
 			}
@@ -284,11 +284,9 @@ public class AppboyUpsellsPage extends Page{
 		if (isUpsellDisplayed()) {
 			if (!isPlusButtonActive()) {
 				err.add("Free non trial eligibile user: 'Subscribe to Plus' button was not active for a Free non trial eligible user and could not connect to App Store.");
-				return err;
 			}
 			else {
 				System.out.println("Free non trial eligibile user : 'Subscribe to Plus' button was active, and connected to App Store.");
-				return err;
 			}
 		}
 		return err;
@@ -301,11 +299,9 @@ public class AppboyUpsellsPage extends Page{
 		if (isUpsellDisplayed()) {
 			if (!isPremiumButtonActive()) {
 				err.add("Free non trial eligibile user:  Subscribe to All Access button was not active for a Free non trial eligible user and could not connect to App Store.");
-				return err;
 			}
 			else {
 				System.out.println("Free non trial eligibile user : Subscribe to All Access Button was active, and connected to App Store.");
-				return err;
 			}
 		}
 		return err;
@@ -317,11 +313,9 @@ public class AppboyUpsellsPage extends Page{
 		if (isUpsellDisplayed()) {
 			if (!isPlusButtonActive()) {
 				err.add("Free trial eligibile user: 'Start 30 day Free Trial' Plus Button was not active and couldn't connect to App Store.");
-				return err;
 			} 
 			else {
 				System.out.println("Free trial eligibile user: Start 30 day Free Trial Plus Button was active, and connected to App Store.");
-				return err;
 			}
 		}
 		return err;	
