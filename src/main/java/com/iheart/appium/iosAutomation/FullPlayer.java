@@ -697,8 +697,10 @@ public class FullPlayer extends Page {
 				System.out.println("AddToPlaylistButton was clicked for ALLACCESS User - Expect Add to Playlist Modal to appear");
 				//addToPlaylistModal.clickFirstPlaylist(); This can be filled in once AddToPlaylist page Object is done!!!!
 				return true;
-			}else return false;
-		}else return false;
+			}else 
+				return false;
+		}else 
+			return false;
 	}
 	/**
 	 * Clicks the Save Song button in the Save Modal to Save currently playing song to My Playlist. 
@@ -786,7 +788,8 @@ public class FullPlayer extends Page {
 			 IHRPlayerReplayOptionsViewControllerCELL0.click();
 			System.out.println("clickReplayFirstCell().");
 			return true;
-		} return false;
+		} 
+		return false;
 	}
 	/**
 	 * Clicks the Second Replay Cell. This should be the last song played(even if skipped).
@@ -797,7 +800,8 @@ public class FullPlayer extends Page {
 			 IHRPlayerReplayOptionsViewControllerCELL1.click();
 			System.out.println("clickReplaySecondCell().");
 			return true;
-		} return false;
+		} 
+		return false;
 	}
 	/**
 	 * Clicks the Third Replay Cell. This should be the second to last song played.

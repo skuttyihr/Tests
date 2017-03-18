@@ -126,7 +126,6 @@ public class GenrePage extends Page {
 		boolean doneEnabled = false;
 		if (waitForElementToBeVisible(IHRGenrePickerViewControllerDoneButtonUIButton, 5)) {
 			doneEnabled = true;
-			return doneEnabled;
 		}
 		return doneEnabled;		
 	}

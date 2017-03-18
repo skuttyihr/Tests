@@ -80,9 +80,9 @@ public class CuratedPlaylistPage extends Page{
 	 * @return
 	 */
 	public IOSElement getPlaylistCellSongName(int cellnumber) {
-		IOSElement cPlaylistCellSongName = waitForVisible(driver, By.xpath("//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/"
-		+ "XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/"
-		+ "XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeCollectionView[1]/XCUIElementTypeCell[" + cellnumber + "]"), 3);
+		IOSElement cPlaylistCellSongName = waitForVisible(driver, By.xpath("//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/"
+				+ "XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/"
+				+ "XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeCollectionView[1]/XCUIElementTypeCell[" + cellnumber + "]"), 3);
 		return cPlaylistCellSongName;				
 	}
 
@@ -126,7 +126,7 @@ public class CuratedPlaylistPage extends Page{
 		if (!printElementName(getPlaylistCellSongName(4)))
 			err.add("Curated Playlist Profile Page - cells are not showing tracks.");
 		if (!printElementName(btnPause))
-			err.add("Curated Playlist Profile Page - Pause state play button is not displayed, as cur playlist stn should have started streamining on search and play.");
+			err.add("Curated Playlist Profile Page - Pause state play button is not displayed, as curated playlist station should have started streamining on search and play.");
 		return err;	
 	}
 
