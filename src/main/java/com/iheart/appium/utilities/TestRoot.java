@@ -67,7 +67,7 @@ import io.appium.java_client.MultiTouchAction;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
-import testCommons.LoadProperties;
+import src.main.java.testCommons.*;
 
 public class TestRoot{
 
@@ -147,7 +147,7 @@ public class TestRoot{
 		Properties props = null;
 		try {
 			System.out.println("Loading properties at ios.properties.local");
-			props = LoadProperties.loadProperties("ios.properties.local");
+			props = src.main.java.testCommons.LoadProperties.loadProperties("ios.properties.local");
 		} catch (Exception e) {
 			System.out.println("Could not load properties, defaulting to system properties.");
 			props = null;
@@ -323,6 +323,16 @@ public class TestRoot{
 			return false;
 		}
 	}
+	public boolean waitAndClick(IOSElement iosElement, int timeInSeconds) {
+		boolean didClick = false;
+		if(waitForElementToBeVisible(iosElement, timeInSeconds)) {
+			iosElement.click();
+			didClick = true;
+		}
+		System.out.println("waitAndClick() : Element["+iosElement + "][ Did Click? : "+ didClick + "].");
+		return didClick;
+	}
+	
 /**
 	 * sk - 2/8 - method to print out Element Names as they appear in the app.
 	 * @param element

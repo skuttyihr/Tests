@@ -28,36 +28,51 @@ public class AddToPlaylistPage extends Page{
 	@iOSFindBy(accessibility = "PlaylistPickerPresentationViewController-PlaylistPickerViewCell-Cell-2") private IOSElement PlaylistPickerPresentationViewControllerPlaylistPickerViewCellCell2;
 	@iOSFindBy(accessibility = "PlaylistPickerPresentationViewController-PlaylistPickerViewCell-Cell-3") private IOSElement PlaylistPickerPresentationViewControllerPlaylistPickerViewCellCell3;
 	@iOSFindBy(accessibility = "PlaylistPickerPresentationViewController-PlaylistPickerViewCell-Cell-4") private IOSElement PlaylistPickerPresentationViewControllerPlaylistPickerViewCellCell4;
+	//Using screen's text to create elements....
+	@iOSFindBy(accessibility = "Cancel") private IOSElement cancelButton;
 	
-	
-	public void clickFirstPlaylistInCollection(){
-		PlaylistPickerPresentationViewControllerPlaylistPickerViewCellCell0.click();
+	/**
+	 * Waits, then clicks the First Playlist in the Collection. This should add the song to the selected Playlist. 
+	 * @return true if it was able to click. 
+	 */
+	public boolean clickFirstPlaylistInCollection(){
+		return waitAndClick(PlaylistPickerPresentationViewControllerPlaylistPickerViewCellCell0, 2);
 	}
-	public void clickSecondPlaylistInCollection(){
-		
+	/**
+	 * Waits, then clicks the Second Playlist in the Collection. This should add the song to the selected Playlist. 
+	 * @return true if it was able to click. 
+	 */
+	public boolean clickSecondPlaylistInCollection(){
+		return waitAndClick(PlaylistPickerPresentationViewControllerPlaylistPickerViewCellCell1, 2);
 	}
-	
-	public void clickCreateNewPlaylist(){
-		//PlaylistPickerNewViewCellCreatePlaylistLabelUILabel.click();
-		//OR IS IT?
-		PlaylistPickerPresentationViewControllerPlaylistPickerNewViewCellCell0.click();
+	/**
+	 * Waits, then clicks the Create New Playlist (the first cell). This should launch the 
+	 * @return true if it was able to click. 
+	 */
+	public boolean clickCreateNewPlaylist(){
+		return waitAndClick(PlaylistPickerPresentationViewControllerPlaylistPickerNewViewCellCell0, 2);
 	}
-	
-	public void clickCancelButton(){
-		
+	/**
+	 * Waits, then clicks the Cancel Button to dismiss the AddToPlaylistPage. 
+	 * @return true if it was able to click. 
+	 */
+	public boolean clickCancelButton(){
+		return waitAndClick(cancelButton, 2);
 	}
+	/**
+	 * Checks if the UICollectionView isDisplayed.
+	 * @return true if it was displayed. 
+	 */
 	public boolean isCurrentlyOnAddToPlaylist(){
 		return isCurrentlyOn("isCurrentlyOnAddToPlaylist", PlaylistPickerPresentationViewControllerPlaylistCollectionViewUICollectionView);
 	}
 	
-	public String getTitle(){
-		return "";
-	}
-	
+	/**
+	 * Once the AddToPlaylistPage is open, this prints out the Labels, the view, 
+	 * the first cell which contains the Create New Playlist button, and the first three Playlist cells.
+	 */
 	public void printAllElements(){
 		printElementInformation(PlaylistPickerNewViewCellCreatePlaylistLabelUILabel);  //works
-		//printElementInformation(PlaylistPickerNewViewCellImageViewUIImageView);        //no worky
-		//printElementInformation(PlaylistPickerNewViewCellDividerUIView);               //no worky
 		printElementInformation(PlaylistPickerPresentationViewControllerPlaylistCollectionViewUICollectionView);
 		printElementInformation(PlaylistPickerPresentationViewControllerPlaylistPickerNewViewCellCell0);//must be Create New Playlist button
 		printElementInformation(PlaylistPickerPresentationViewControllerPlaylistPickerViewCellCell0);   //Must be first playlist to click. 
