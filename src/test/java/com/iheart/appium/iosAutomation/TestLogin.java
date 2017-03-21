@@ -6,9 +6,11 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.rules.TestName;
 
 import com.iheart.appium.utilities.TestRoot;
+import com.iheart.appium.utilities.TestRoot.Stable;
 
 public class TestLogin extends TestRoot {
 
@@ -108,6 +110,7 @@ public class TestLogin extends TestRoot {
 	 * LOG-7    Free Account
 	 */
 	@Test
+	@Category(Stable.class)
 	public void testLoginViaEmail_LOG7_FREE(){
 		LocalTime before = consoleLogStart("Testing login via Email with a FREE Account : " + name.getMethodName());
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement(IHEARTFREEUSERNAME, IHEARTFREEPASSWD, "FREE"));
@@ -117,6 +120,7 @@ public class TestLogin extends TestRoot {
 	 * LOG-8    Plus Account
 	 */
 	@Test
+	@Category(Stable.class)
 	public void testLoginViaEmail_LOG8_PLUS(){
 		LocalTime before = consoleLogStart("Testing login via Email with a PLUS Account : " + name.getMethodName());
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement(IHEARTPLUSUSERNAME, IHEARTPLUSPASSWD, "PLUS"));
@@ -126,6 +130,7 @@ public class TestLogin extends TestRoot {
 	 * LOG-9  All Access Account
 	 */
 	@Test
+	@Category(Stable.class)
 	public void testLoginViaEmail_LOG9_ALLACCESS(){
 		LocalTime before = consoleLogStart("Testing login via Email with a ALL Account : " + name.getMethodName());
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement(IHEARTPREMIUMUSERNAME, IHEARTPREMIUMPASSWD, "ALLA"));

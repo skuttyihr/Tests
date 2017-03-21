@@ -19,7 +19,12 @@ import com.iheart.appium.utilities.TestRoot.Stable;
 @RunWith(Categories.class)
 @IncludeCategory(Stable.class)
 @Suite.SuiteClasses({
-	// Example: Tests.TestGate.class,
+	com.iheart.appium.iosAutomation.TestSearch.class,
+	com.iheart.appium.iosAutomation.TestOnboarding.class,
+	com.iheart.appium.iosAutomation.TestLogin.class,
+	com.iheart.appium.iosAutomation.TestNewAccount.class,
+	com.iheart.appium.iosAutomation.TestMiniPlayer.class,
+	com.iheart.appium.iosAutomation.TestFullPlayer.class,
 })
 
 /**
@@ -28,5 +33,4 @@ import com.iheart.appium.utilities.TestRoot.Stable;
  *
  */
 public class PassingSuite {
-
 }
