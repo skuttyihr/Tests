@@ -32,11 +32,8 @@ public class TestMyMusic extends TestRoot{
 		LocalTime before = consoleLogStart("MYMU1_testMyMusic_FREE_POST_TRIAL()");
 		loginPage.loginVerifyEntitlement("trav@free.com", "travfree", "FREE");
 		homePage.clickMyMusicTab();
-		//myMusicPage.handleNewInitialMessage();
-		System.out.println("Looking for the null pointer 1");
-		sleep(10000);
+		myMusicPage.handleNewInitialMessage();
 		myMusicPage.showAllElementsForFREEPOSTUsers();
-		System.out.println("Looking for the null pointer 3");
 		Assert.assertEquals("Playlists Title in PlaylistHeaderView does not match.", 
 				myMusicPage.PLAYLIST_HEADER_VIEW_PLAYLIST_LABEL_FREE, myMusicPage.getPlaylistsTitle());
 		Assert.assertEquals("Upsell Cell Title Label for a Free account after a Trial does not match expected. ", 
@@ -108,9 +105,12 @@ public class TestMyMusic extends TestRoot{
 		myMusicPage.handleNewInitialMessage();
 		String myPlaylist = myMusicPage.getCollapseableHeaderTitleLabelText();
 		Assert.assertEquals("Top Cell should be My Playlist.", "My Playlist", myPlaylist);
-		myMusicPage.clickFirstSongOnPlaylist();
+
+		myMusicPage.clickPlayButtonOnPlaylist();
 		myMusicPage.handleNewInitialMessage();
-		Assert.assertTrue("Clicking the first song on the My Playlist should have launched miniPlayer but not song to start", miniPlayer.isCurrentlyOnMiniPlayer());
+		Assert.assertTrue("Clicking the Play Button on the My Playlist should have launched miniPlayer but not song to start", miniPlayer.isCurrentlyOnMiniPlayer());
+		//myMusicPage.clickFirstSongOnPlaylist(); This would cause Upsell message to AA
+		//check that upsell page is open, that plus button isn't enabled, that alla button IS enabled, and that you can click X to dismiss.
 		consoleLogEnd(before, true, "Tested MYMU3_testElements_PLUS()");
 	}
 	
@@ -130,22 +130,11 @@ public class TestMyMusic extends TestRoot{
 		//if(artistProfilePage.isCurrentlyOnArtistProfilePage()){
 		//	artistProfilePage.clickNavBarBackButton();
 		//}
-		/*
-		sleep(5000);
-		if(myMusicPage.isCurrentlyOnMyMusicInitialMessage()){
-			Assert.assertEquals("Initial Message Title Label didn't match expected. ", 
-					myMusicPage.INITIAL_MESSAGE_TITLE_LABEL_FREE, myMusicPage.getInitialMessageTitleLabel());
-			Assert.assertEquals("Initial Message SubTitle Label didn't match expected. ", 
-					myMusicPage.INITIAL_MESSAGE_SUBTITLE_LABEL_FREE, myMusicPage.getInitialMessageSubtitleLabel());
-			Assert.assertEquals("Initial Message Dismiss Label didn't match expected. ", 
-					myMusicPage.INITIAL_MESSAGE_DISMISS_LABEL_FREE, myMusicPage.getInitialMessageDismissLabel());
-			myMusicPage.dismissInitialMessage();
-		}
-		*/
+		myMusicPage.handleNewInitialMessage();
 		Assert.assertFalse("Upcell Cell should not exist on My Music Page for ALLA users. ", 
 				myMusicPage.isCurrentlyOnUpsellCell());
 		
-		Assert.assertTrue("The method should have verified that the three empty cells exist for a Fresh ALLA acct.", myMusicPage.manageAllPlaylists()); //showAllElementsForOldALLAUsers();
+		Assert.assertTrue("", myMusicPage.manageAllPlaylists()); 
 		consoleLogEnd(before, true, "Tested MYMU4_managePlaylists_ALLA_POP()");
 	}
 	
