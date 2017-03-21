@@ -8,8 +8,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import com.iheart.appium.utilities.TestRoot;
+import com.iheart.appium.utilities.TestRoot.Stable;
 
 public class TestOnboarding extends TestRoot {
 
@@ -45,6 +47,7 @@ public class TestOnboarding extends TestRoot {
 	 * We could also add Sleeps. 
 	 */
 	@Test
+	@Category(Stable.class)
 	public void testUIScrollViewOnOnboardingPage_ONB2_FREE(){
 		LocalTime before = consoleLogStart("Testing testUIScrollViewOnOnboardingPage_ONB2_FREE()");
 		//Part One
@@ -72,6 +75,7 @@ public class TestOnboarding extends TestRoot {
 	 * Simply click the 'Log In' Button and the 'Create Account' Button and ensure the next pages are as expected. 
 	 */
 	@Test
+	@Category(Stable.class)
 	public void testCreateAccountAndLogInButtons_ONB3_FREE(){
 		LocalTime before = consoleLogStart("Testing testCreateAccountAndLogInButtons_ONB3_FREE().");
 		Assert.assertTrue("Could not click 'Log In' Button", onboardingPage.clickOnboardingLoginButton());

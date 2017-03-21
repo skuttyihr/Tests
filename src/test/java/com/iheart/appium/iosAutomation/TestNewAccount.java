@@ -6,8 +6,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import com.iheart.appium.utilities.TestRoot;
+import com.iheart.appium.utilities.TestRoot.Stable;
 
 public class TestNewAccount extends TestRoot {
 
@@ -32,6 +34,7 @@ public class TestNewAccount extends TestRoot {
 	 * 
 	 */
 	@Test
+	@Category(Stable.class)
 	public void testCreateNewEmailAccount_SIGN1_FREE() {
 		LocalTime before = consoleLogStart(
 				">>>>>testCreateNewEmailAccount_SIGN1_FREE() : Creating a new account with the default parameters. ");

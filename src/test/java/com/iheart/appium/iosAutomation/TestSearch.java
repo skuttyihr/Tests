@@ -8,6 +8,7 @@ import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.openqa.selenium.By;
 
 import com.iheart.appium.utilities.TestRoot;
@@ -50,7 +51,9 @@ public class TestSearch extends TestRoot {
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		consoleLogEnd(before, true, "Tested testSearchPageTextfield_SEA2_FREE");
 	}
+	
 	@Test
+	@Category(Stable.class)
 	public void testNoResults_SEA3_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testNoResults_SEA3_FREE() : Testing testNoResults");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@Test.com","test", "FREE"));
@@ -76,7 +79,9 @@ public class TestSearch extends TestRoot {
 
 		
 	}
+	
 	@Test
+	@Category(Stable.class)
 	public void testSearchTrack_SEA4_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testSearchTrack_SEA4_FREE() : Searching a song, clicking Top Result, hoping for Artist Radio.");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@Test.com","test","FREE"));
@@ -97,6 +102,7 @@ public class TestSearch extends TestRoot {
 		
 	}
 	@Test
+	@Category(Stable.class)
 	public void testSearchArtist_SEA5_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testSearchArtist_SEA5_FREE() : Searching a song, clicking Top Result, hoping for Artist Radio.");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@Test.com","test", "FREE"));
@@ -116,7 +122,7 @@ public class TestSearch extends TestRoot {
 	}
 	
 	@Test
-	//@Ignore
+	@Category(Stable.class)
 	public void testSearchPlaylist_SEA6_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testSearchPlaylist_SEA6_FREE() : Searching a song, clicking Top Result, hoping for Artist Radio.");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@Test.com","test", "FREE"));
@@ -135,6 +141,7 @@ public class TestSearch extends TestRoot {
 	}
 	
 	@Test
+	@Category(Stable.class)
 	public void testSearchPodcasts_SEA7_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testSearchPodcasts_SEA7_FREE() : Searching for 'starta', clicking First Podcast Cell, hoping for Podcast List of episodes");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@Test.com","test", "FREE"));
@@ -150,7 +157,9 @@ public class TestSearch extends TestRoot {
 		consoleLogEnd(before, true, "<<<<<testSearchPodcasts_SEA7_FREE() : ");
 		
 	}
+	
 	@Test
+	@Category(Stable.class)
 	public void testSearchLive_SEA8_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testSearchLiveRadio() : Searching for 'rock', clicking First Live Station, hoping for Live Radio.");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@Test.com","test", "FREE"));
