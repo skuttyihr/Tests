@@ -25,6 +25,8 @@ public class TestHomePage extends TestRoot {
 	@Rule
 	public ScreenshotRule screenshot = new ScreenshotRule();
 	
+	@Rule
+	public RetryRule retry = new RetryRule(1);
 	
 	@Test
 	@Ignore

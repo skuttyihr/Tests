@@ -20,6 +20,9 @@ public class TestDeepLink extends TestRoot {
 		setup();
 	}
 
+	@Rule
+	public RetryRule retry = new RetryRule(1);
+	
 	@Ignore
 	//@Test
 	/**

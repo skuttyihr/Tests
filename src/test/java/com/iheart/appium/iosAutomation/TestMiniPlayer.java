@@ -23,6 +23,9 @@ public class TestMiniPlayer extends TestRoot {
 	}
 
 	@Rule
+	public RetryRule retry = new RetryRule(1);
+	
+	@Rule
 	public ScreenshotRule screenshot = new ScreenshotRule();
 
 	/**

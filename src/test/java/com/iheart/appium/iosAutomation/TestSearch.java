@@ -27,6 +27,8 @@ public class TestSearch extends TestRoot {
 	@Rule
 	public ScreenshotRule screenshot = new ScreenshotRule();
 	
+	@Rule
+	public RetryRule retry = new RetryRule(1);
 	
 	@Test
 	public void testSearchPageResults_SEA1_FREE(){
