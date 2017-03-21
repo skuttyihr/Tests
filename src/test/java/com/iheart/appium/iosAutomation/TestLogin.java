@@ -29,7 +29,8 @@ public class TestLogin extends TestRoot {
 	// Only fails when ran in a suite
 	// Starting with a reset seems to help
 
-	
+	@Rule
+	public RetryRule retry = new RetryRule(1);
 
 	/**
 	 * LOG-1 - Login with Free Account

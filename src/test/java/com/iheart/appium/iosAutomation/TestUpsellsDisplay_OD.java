@@ -28,6 +28,8 @@ public class TestUpsellsDisplay_OD extends TestRoot {
 	@Rule
 	public ScreenshotRule screenshot = new ScreenshotRule();
 	
+	@Rule
+	public RetryRule retry = new RetryRule(1);
 	
 	//@Test
 	public void testArtistProfilePageAlbumOverflow_Free(){

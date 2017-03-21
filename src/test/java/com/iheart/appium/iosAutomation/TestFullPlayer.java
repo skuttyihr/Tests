@@ -26,6 +26,9 @@ public class TestFullPlayer extends TestRoot {
 	@Rule
 	public ScreenshotRule screenshot = new ScreenshotRule();
 
+	@Rule
+	public RetryRule retry = new RetryRule(1);
+	
 	/**
 	 * 1. Login with Free user, Search for an Artist, Click Top Result, open Full Player, Show all elements.
 	 * Verify Nav Bar Elements - Down Arrow, Favorite Button, Share Button, Cast Button

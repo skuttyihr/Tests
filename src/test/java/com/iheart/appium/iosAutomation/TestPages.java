@@ -15,6 +15,9 @@ public class TestPages extends TestRoot {
 	public void setUp() throws Exception {
 		setup();
 	}
+	
+	@Rule
+	public RetryRule retry = new RetryRule(1);
 
 	// @After
 	// public void after() {
