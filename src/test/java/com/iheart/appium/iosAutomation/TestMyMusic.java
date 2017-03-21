@@ -169,7 +169,12 @@ public class TestMyMusic extends TestRoot{
 		consoleLogEnd(before, true, "Tested MYMU6_testSongsAlbumsArtistsPlaylists_ALLA_POP()");
 	}
 	/**
-	 * This test logs in with a FRESH ALLA account that still has a 
+	 * This test logs in with a FRESH ALLA account.
+	 * It creates a new playlist, opens it, then clicks the Search Action button and adds a song.
+	 * Then it redoes the process and adds another song. 
+	 * Then it renames the playlist, makes sure it contains 2 songs, and clicks Offline and Shuffle. 
+	 * Then it clicks the Edit Playlist button but doesn't do any actual editing. 
+	 * Finally, it deletes the playlist. 
 	 */
 	@Test
 	public void MYMU7_createNewPlaylist_ALLA_FRESH(){

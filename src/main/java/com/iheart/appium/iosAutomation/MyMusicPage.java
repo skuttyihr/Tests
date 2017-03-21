@@ -457,7 +457,7 @@ public class MyMusicPage extends Page{
 		printElementInformation(MyMusicPlaylistViewControllerHeaderUICollectionReusableView);
 		printElementInformation(MyMusicPlaylistViewControllerDoneButtonUIBarButtonItem);
 		printElementInformation(MyMusicPlaylistViewControllerCancelButtonUIBarButtonItem);
-		printElementInformation(MyMusicPlaylistViewControllerMyMusicSongCellMyMusicViewCell0);
+		//printElementInformation(MyMusicPlaylistViewControllerMyMusicSongCellMyMusicViewCell0);
 		printElementInformation(MyMusicPlaylistViewControllerMyMusicSongCellMyMusicViewCell1);
 	}
 	/**
