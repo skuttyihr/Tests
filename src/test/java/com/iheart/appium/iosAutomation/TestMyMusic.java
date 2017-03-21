@@ -32,16 +32,11 @@ public class TestMyMusic extends TestRoot{
 		LocalTime before = consoleLogStart("MYMU1_testMyMusic_FREE_POST_TRIAL()");
 		loginPage.loginVerifyEntitlement("trav@free.com", "travfree", "FREE");
 		homePage.clickMyMusicTab();
-		if(myMusicPage.isCurrentlyOnMyMusicInitialMessage()){
-			Assert.assertEquals("Initial Message Title Label didn't match expected. ", 
-					myMusicPage.INITIAL_MESSAGE_TITLE_LABEL_FREE, myMusicPage.getInitialMessageTitleLabel());
-			Assert.assertEquals("Initial Message SubTitle Label didn't match expected. ", 
-					myMusicPage.INITIAL_MESSAGE_SUBTITLE_LABEL_FREE, myMusicPage.getInitialMessageSubtitleLabel());
-			Assert.assertEquals("Initial Message Dismiss Label didn't match expected. ", 
-					myMusicPage.INITIAL_MESSAGE_DISMISS_LABEL_FREE, myMusicPage.getInitialMessageDismissLabel());
-			myMusicPage.dismissInitialMessage();
-		}
+		//myMusicPage.handleNewInitialMessage();
+		System.out.println("Looking for the null pointer 1");
+		sleep(10000);
 		myMusicPage.showAllElementsForFREEPOSTUsers();
+		System.out.println("Looking for the null pointer 3");
 		Assert.assertEquals("Playlists Title in PlaylistHeaderView does not match.", 
 				myMusicPage.PLAYLIST_HEADER_VIEW_PLAYLIST_LABEL_FREE, myMusicPage.getPlaylistsTitle());
 		Assert.assertEquals("Upsell Cell Title Label for a Free account after a Trial does not match expected. ", 

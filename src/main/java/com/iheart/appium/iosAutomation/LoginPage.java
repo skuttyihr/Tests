@@ -111,7 +111,7 @@ public class LoginPage extends Page {
 	 */
 	public void enterLoginEmailAddress(String emailAddress) {
 
-		IHRAuthorizationViewEmailAddressTextField.click();
+		waitAndClick(IHRAuthorizationViewEmailAddressTextField, 5);
 		if (emailAddress != null) {
 			System.out.println("enterLoginEmailAddress() : " + emailAddress);
 			IHRAuthorizationViewEmailAddressTextField.sendKeys(emailAddress);

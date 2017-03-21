@@ -275,7 +275,7 @@ public class HomePage extends Page {
 	public void clickMyMusicTab(){
 		System.out.println("clickMyMusicTab(). Then Entering Zip.");
 		HomeSegmentedControlTitleLabelUIButtonMyMusic.click();
-		Page.enterZip();
+		//Page.enterZip();
 	}
 	
 	/**

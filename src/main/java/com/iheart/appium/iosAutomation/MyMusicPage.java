@@ -156,6 +156,7 @@ public class MyMusicPage extends Page{
 	@iOSFindBy(accessibility = "MyMusicViewPremiumPresenter-PlaylistViewCell-MyMusicViewCell-2") private IOSElement MyMusicViewPremiumPresenterPlaylistViewCellMyMusicViewCell2;
 	@iOSFindBy(accessibility = "MyMusicViewPremiumPresenter-PlaylistViewCell-MyMusicViewCell-3") private IOSElement MyMusicViewPremiumPresenterPlaylistViewCellMyMusicViewCell3;
 	@iOSFindBy(accessibility = "MyMusicViewPremiumPresenter-PlaylistViewCell-MyMusicViewCell-4") private IOSElement MyMusicViewPremiumPresenterPlaylistViewCellMyMusicViewCell4;
+	
 	//Modal elements that cannot have real accessibilityIDs (most likely to change / break)
 	@iOSFindBy(accessibility = "Playlist Name") private IOSElement playlistNameTextBoxCreateNew;
 	@iOSFindBy(accessibility = "Create") private IOSElement createPlaylistModalButton;
@@ -189,6 +190,7 @@ public class MyMusicPage extends Page{
 	 * The Free user has to have been an ALLA user previously, but they disabled that (trial expired). (post trial)
 	 */
 	public void showAllElementsForFREEPOSTUsers(){
+		System.out.println("Looking for the null pointer 2");
 		System.out.println("myMusicPage.showAllElementsForFREEPOSTUsers() : Printing out AIDs for PlaylistHeaderView - a MyMusicViewCell at top of MyMusic.");
 		printElementInformation(PlaylistHeaderViewHeaderViewUICollectionReusableView);
 		System.out.println("Printing out AIDs for PlaylistHeaderView - the three buttons for Songs, Albums, and Artists playlists.");

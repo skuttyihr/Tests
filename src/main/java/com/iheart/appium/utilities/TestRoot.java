@@ -329,7 +329,8 @@ public class TestRoot{
 			iosElement.click();
 			didClick = true;
 		}
-		System.out.println("waitAndClick() : Element["+iosElement + "][ Did Click? : "+ didClick + "].");
+		String[] splitUp = iosElement.toString().split(">");
+		System.out.println("waitAndClick() : Element["+splitUp[1] + "][ Did Click? : "+ didClick + "].");
 		return didClick;
 	}
 	
@@ -802,14 +803,14 @@ public class TestRoot{
 	public static boolean isVisible(IOSElement e) {
 		boolean isVisible = false;
 		if (e == null) {
-			System.out.println("Failing in isVisible(), element is being sent as null");
+			//System.out.println("Failing in isVisible(), element is being sent as null");
 			return false;
 		}
 		try {
 			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 			isVisible = e.isDisplayed();
-			System.out.println("isDisplayed() in isVisible(): " +  isVisible);
-			return true;
+			//System.out.println("isDisplayed() in isVisible(): " +  isVisible);
+			return isVisible;
 		} catch (Exception x) {
 		} finally {
 			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
@@ -824,7 +825,7 @@ public class TestRoot{
 		try {
 			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 			isEnabled = e.isEnabled();
-			System.out.println("isEnabled(): " + isEnabled);			
+			//System.out.println("isEnabled(): " + isEnabled);			
 			return true;
 		} catch (Exception x) {
 		} finally {
