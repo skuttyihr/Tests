@@ -61,6 +61,10 @@ import testCommons.LoadProperties;
 
 public class TestRoot{
 
+	// Suite categories
+	public static interface Stable{
+	}
+	
 	protected static final int UP = 0;
 	protected static final int RIGHT = 1;
 	protected static final int DOWN = 2;
