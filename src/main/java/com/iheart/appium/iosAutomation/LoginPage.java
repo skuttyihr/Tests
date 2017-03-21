@@ -144,7 +144,7 @@ public class LoginPage extends Page {
 	}
 
 	public void clearLoginPassword() {
-		//System.out.println("clearLoginPassword()");
+		System.out.println("clearLoginPassword()");
 		IHRAuthorizationViewPasswordTextField.clear();
 	}
 
@@ -152,7 +152,7 @@ public class LoginPage extends Page {
 	 * Click Facebook Login Button
 	 */
 	public void clickFacebookLoginButton() {
-		//System.out.println("clickFacebookLoginButton()");
+		System.out.println("clickFacebookLoginButton()");
 		IHRAuthorizationViewFacebookButtonUIButton.click();
 	}
 
@@ -160,7 +160,7 @@ public class LoginPage extends Page {
 	 * Click Google Login Button
 	 */
 	public void clickGoogleLoginButton() {
-		//System.out.println("clickGoogleLoginButton()");
+		System.out.println("clickGoogleLoginButton()");
 		IHRAuthorizationViewGoogleButtonUIButton.click();
 	}
 
@@ -177,7 +177,7 @@ public class LoginPage extends Page {
 	 * Click the Forgot your Password? button to reset your account's password.
 	 */
 	public void clickForgotYourPasswordButton() {
-		//System.out.println("clickForgotYourPasswordButton()");
+		System.out.println("clickForgotYourPasswordButton()");
 		IHRAuthorizationViewForgotPasswordButtonUIButton.click();
 	}
 
@@ -367,7 +367,7 @@ public class LoginPage extends Page {
 	}
 
 	public boolean loginVerifyEntitlement(String email, String password, String entitlementType) {
-		//System.out.println("loginVerifyEntitlement()...");
+		System.out.println("loginVerifyEntitlement()...");
 		boolean loggedIn = false;
 		boolean doesEntitlementMatch = false;
 		// Log in

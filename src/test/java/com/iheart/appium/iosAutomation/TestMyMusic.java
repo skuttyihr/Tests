@@ -38,9 +38,6 @@ public class TestMyMusic extends TestRoot{
 				myMusicPage.PLAYLIST_HEADER_VIEW_PLAYLIST_LABEL_FREE, myMusicPage.getPlaylistsTitle());
 		Assert.assertEquals("Upsell Cell Title Label for a Free account after a Trial does not match expected. ", 
 				myMusicPage.UPSELL_CELL_TITLE_LABEL_FREE_POST_TRIAL, myMusicPage.getUpsellCellTitleLabel());
-		//Assert.assertEquals("Upsell Cell Title Label for a Free account after a Trial does not match expected. ", 
-		//		myMusicPage.UPSELL_CELL_TITLE_LABEL_FREE_POST_TRIAL, myMusicPage.getPlaylistsTitle());
-		
 		//clickMyPlaylist();
 		//clickLearnMoreOnMyPlaylist();
 		//upsellPage.clickXtoCloseUpsellModal();
@@ -78,7 +75,6 @@ public class TestMyMusic extends TestRoot{
 				myMusicPage.UPSELL_CELL_TITLE_LABEL_FREE_PRE_TRIAL, myMusicPage.getUpsellCellTitleLabel());
 		Assert.assertEquals("Upsell Cell Intro Title Label for a Free account pre-trial did not match expected.", 
 				myMusicPage.UPSELL_CELL_INTRO_TITLE_LABEL_FREE_PRE_TRIAL, myMusicPage.getUpsellCellIntroTitleLabel());
-		
 		//Radio and unlimited music on demand, all in one app.
 		//clickMyPlaylist();
 		//clickLearnMoreOnMyPlaylist();
@@ -127,9 +123,6 @@ public class TestMyMusic extends TestRoot{
 		Assert.assertTrue("Should have logged in to an All Access Account.", 
 				loginPage.loginVerifyEntitlement("mymu4@all.com", "Mymu44moo", "ALLA"));
 		homePage.clickMyMusicTab();
-		//if(artistProfilePage.isCurrentlyOnArtistProfilePage()){
-		//	artistProfilePage.clickNavBarBackButton();
-		//}
 		myMusicPage.handleNewInitialMessage();
 		Assert.assertFalse("Upcell Cell should not exist on My Music Page for ALLA users. ", 
 				myMusicPage.isCurrentlyOnUpsellCell());
@@ -147,10 +140,9 @@ public class TestMyMusic extends TestRoot{
 	public void MYMU5_testEmptySongsAlbumsArtistsPlaylists_ALLA_FRESH(){
 		LocalTime before = consoleLogStart("MYMU5_testEmptySongsAlbumsArtistsPlaylists_ALLA_FRESH()");
 		Assert.assertTrue("Should have logged in to an All Access Account.", 
-				loginPage.loginVerifyEntitlement("mymu5fresh@all.com", "mymu55t", "ALLA"));//travfresh@all.com", "travFresh66t", "ALLA"));
+				loginPage.loginVerifyEntitlement("mymu5fresh@all.com", "mymu55t", "ALLA"));
 	
 		homePage.clickMyMusicTab();
-		sleep(5000);
 		myMusicPage.handleNewInitialMessage();
 		Assert.assertFalse("Upcell Cell should not exist on My Music Page for ALLA users. ", 
 				myMusicPage.isCurrentlyOnUpsellCell());
@@ -168,18 +160,8 @@ public class TestMyMusic extends TestRoot{
 		LocalTime before = consoleLogStart("MYMU6_testSongsAlbumsArtistsPlaylists_ALLA_POP()");
 		Assert.assertTrue("Should have logged in to an All Access Account.", 
 				loginPage.loginVerifyEntitlement("travused@all.com", "travUsed66t", "ALLA"));
-	
 		homePage.clickMyMusicTab();
-		sleep(5000);
-		if(myMusicPage.isCurrentlyOnMyMusicInitialMessage()){
-			Assert.assertEquals("Initial Message Title Label didn't match expected. ", 
-					myMusicPage.INITIAL_MESSAGE_TITLE_LABEL_FREE, myMusicPage.getInitialMessageTitleLabel());
-			Assert.assertEquals("Initial Message SubTitle Label didn't match expected. ", 
-					myMusicPage.INITIAL_MESSAGE_SUBTITLE_LABEL_FREE, myMusicPage.getInitialMessageSubtitleLabel());
-			Assert.assertEquals("Initial Message Dismiss Label didn't match expected. ", 
-					myMusicPage.INITIAL_MESSAGE_DISMISS_LABEL_FREE, myMusicPage.getInitialMessageDismissLabel());
-			myMusicPage.dismissInitialMessage();
-		}
+		myMusicPage.handleNewInitialMessage();
 		Assert.assertFalse("Upcell Cell should not exist on My Music Page for ALLA users. "
 				,myMusicPage.isCurrentlyOnUpsellCell());
 		Assert.assertTrue("The method should have verified that the third (2) cells for Playlists, Albums, Artists, and Songs are visible for an ALLA acct with multiple songs saved."
@@ -195,17 +177,7 @@ public class TestMyMusic extends TestRoot{
 		Assert.assertTrue("Should have logged in to an All Access Account.", 
 				loginPage.loginVerifyEntitlement("travfresh@all.com", "travFresh66t", "ALLA"));
 		homePage.clickMyMusicTab();	
-		sleep(5000);
-		if(myMusicPage.isCurrentlyOnMyMusicInitialMessage()){
-			Assert.assertEquals("Initial Message Title Label didn't match expected. ", 
-					myMusicPage.INITIAL_MESSAGE_TITLE_LABEL_FREE, myMusicPage.getInitialMessageTitleLabel());
-			Assert.assertEquals("Initial Message SubTitle Label didn't match expected. ", 
-					myMusicPage.INITIAL_MESSAGE_SUBTITLE_LABEL_FREE, myMusicPage.getInitialMessageSubtitleLabel());
-			Assert.assertEquals("Initial Message Dismiss Label didn't match expected. ", 
-					myMusicPage.INITIAL_MESSAGE_DISMISS_LABEL_FREE, myMusicPage.getInitialMessageDismissLabel());
-			myMusicPage.dismissInitialMessage();
-		}
-		
+		myMusicPage.handleNewInitialMessage();
 		Assert.assertFalse("Upcell Cell should not exist on My Music Page for ALLA users. ", 
 				myMusicPage.isCurrentlyOnUpsellCell());
 		myMusicPage.clickCreateNewPlaylistButton();
