@@ -121,6 +121,7 @@ public class GenrePage extends Page {
 		}
 		return err;
 	}
+	
 	/**
 	 * Checks whether the Done button is enabled, meaning that a Genre cell has been clicked and the user can move on.
 	 * @return true if isEnabled()
@@ -129,24 +130,23 @@ public class GenrePage extends Page {
 		/** sk - 2/23 - modifying this method as isEnabled() no longer works with Appium 1.6.0
 		 * 	Found this while testing AIOS-5585
 		 */
-		//boolean isEnabled = TestRoot.isEnabled(IHRGenrePickerViewControllerDoneButtonUIButton);
-		//System.out.println("isDoneButtonEnabled() : " + isEnabled);
-		//return isEnabled;
 		boolean doneEnabled = false;
-		String trueOrNull = IHRGenrePickerViewControllerDoneButtonUIButton.getAttribute("value");
-		System.out.println("isDoneEnabled " + trueOrNull);
-
-		if(trueOrNull == null){
-			doneEnabled = false;
-		}
-		else if( trueOrNull.equals("true")){
-			doneEnabled = true;
-		}else {
-			doneEnabled = false; //default
+		int maxCount = 20; // ~2 seconds
+		int count = 0;
+		if (waitForElementToBeVisible(IHRGenrePickerViewControllerDoneButtonUIButton, 5)){
+			String trueOrNull = IHRGenrePickerViewControllerDoneButtonUIButton.getAttribute("value");
+			System.out.println("isDoneEnabled " + trueOrNull);
+			doneEnabled = trueOrNull != null && trueOrNull.equalsIgnoreCase("true");
+			while (!doneEnabled && count < maxCount){
+				count++;
+				sleep(100); // Fluid wait since we break out as soon as it's enabled
+				trueOrNull = IHRGenrePickerViewControllerDoneButtonUIButton.getAttribute("value");
+				doneEnabled = trueOrNull != null && trueOrNull.equalsIgnoreCase("true");
+			}
 		}
 		return doneEnabled;
-		
 	}
+	
 	/**
 	 * Uses Random number generator to select between 1 and 6 genres on the first page.
 	 */
