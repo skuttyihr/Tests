@@ -22,16 +22,11 @@ public class GifSequenceWriter {
 	 * 
 	 * 
 	 * 
-	 * @param outputStream
-	 *            the ImageOutputStream to be written to
-	 * @param imageType
-	 *            one of the imageTypes specified in BufferedImage
-	 * @param timeBetweenFramesMS
-	 *            the time between frames in miliseconds
-	 * @param loopContinuously
-	 *            whether the gif should loop repeatedly
-	 * @throws IIOException
-	 *             if no gif ImageWriters are found
+	 * @param outputStream the ImageOutputStream to be written to
+	 * @param imageType one of the imageTypes specified in BufferedImage
+	 * @param timeBetweenFramesMS  the time between frames in milliseconds
+	 * @param loopContinuously  whether the gif should loop repeatedly
+	 * @throws IIOException   if no gif ImageWriters are found
 	 *
 	 * @author Elliot Kroo (elliot[at]kroo[dot]net)
 	 */
@@ -96,7 +91,7 @@ public class GifSequenceWriter {
 	 * 
 	 * @return a GIF ImageWriter object
 	 * @throws IIOException
-	 *             if no GIF image writers are returned
+	 *			 if no GIF image writers are returned
 	 */
 	private static ImageWriter getWriter() throws IIOException {
 		Iterator<ImageWriter> iter = ImageIO.getImageWritersBySuffix("gif");
@@ -106,18 +101,14 @@ public class GifSequenceWriter {
 			return iter.next();
 		}
 	}
-
+	
 	/**
 	 * Returns an existing child node, or creates and returns a new child node
 	 * (if the requested node does not exist).
 	 * 
-	 * @param rootNode
-	 *            the <tt>IIOMetadataNode</tt> to search for the child node.
-	 * @param nodeName
-	 *            the name of the child node.
-	 * 
-	 * @return the child node, if found or a new node created with the given
-	 *         name.
+	 * @param rootNode  the <tt>IIOMetadataNode</tt> to search for the child node.
+	 * @param nodeName  the name of the child node.
+	 * @return the child node, if found or a new node created with the given name.
 	 */
 	private static IIOMetadataNode getNode(IIOMetadataNode rootNode, String nodeName) {
 		int nNodes = rootNode.getLength();
