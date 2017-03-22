@@ -55,8 +55,10 @@ import com.iheart.appium.iosAutomation.SignUpPage;
 import com.iheart.appium.iosAutomation.UpsellPage;
 
 import io.appium.java_client.MobileBy;
+import io.appium.java_client.MobileElement;
 import io.appium.java_client.MultiTouchAction;
 import io.appium.java_client.TouchAction;
+import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
 import testCommons.LoadProperties;
@@ -133,7 +135,7 @@ public class TestRoot{
 	protected static String SCREENSHOT_DIRECTORY;
 	protected static String SCREENSHOT_URL;
 
-	protected static void setup() {
+	protected static boolean setup() {
 		System.out.println("TestRoot.setup()");
 		String appiumUrl = "";
 		String appiumPort = "";
@@ -236,11 +238,11 @@ public class TestRoot{
 			capabilities.setCapability("udid", UDID);
 		}
 
+		
 		// Start the driver
 		try {
 			driver = new IOSDriver<IOSElement>(url, capabilities);
 		} catch (Exception e) {
-
 			System.err.println(
 					"Could not start driver. Emulator or device may be unavailable. Appium may have disconnected or stopped. Sleeping 30 seconds to retry.\n"
 							+ "Properties:\n" + "Device name: " + DEVICE_NAME + "\n" + "UDID: " + UDID + "\n"
@@ -248,13 +250,40 @@ public class TestRoot{
 							+ "IPA/App file name: " + IPA_NAME + "\n" + "Using simulator: " + SIMULATOR + "\n"
 							+ "Appium URL: " + appiumUrl + "\n" + "Appium port: " + appiumPort + "\n" + "Model name: "
 							+ MODEL + "\n");
-			for (int i = 30; i > 0; i -= 5) {
-				System.err.println("Retrying in: " + i + "...");
-				sleep(5000);
+			
+			
+			// Retry a few times until we get it right
+			int maxRetries = 7;
+			int secondDelay = 30;
+			for (int retry = 0; retry < maxRetries; retry++){
+	    		// Delay for X seconds before retrying
+	        	for(int i = secondDelay; i > 0; i--){
+	        		if (i % 5 == 0){
+	        			System.err.println("Retrying in: " + i + "...");
+	        		}
+	        		sleep(1000);
+	        	}
+	        	
+	        	// Attempt to restart the driver
+	        	System.err.println("RETRYING INITIALIZATION (" + (retry + 1) + " tries so far).");
+	        	try{
+	        		driver = new IOSDriver<IOSElement>(url, capabilities);
+	        	}
+	        	catch(Exception e2){
+	    			driver = null;
+	        	}
+	        	
+	        	if (driver != null){
+	        		System.out.println("Success!");
+	        		break;
+	        	}
 			}
-			System.err.println("LAST CHANCE... TRYING TO START APPIUM BEFORE RETRYING DRIVER INITIALIZATION...\n");
-			driver = new IOSDriver<IOSElement>(url, capabilities);
-			sleep(100);
+			
+			// If it still hasn't gotten this right, stop trying
+			if (driver == null){
+				System.err.println("\n\n\nCould not start driver. Is a device/emulator connected? Is the Jenkins Build Agent active?\n\n\n");
+				return false;
+			}
 		}
 
 		// Create pages and set driver status
@@ -286,6 +315,8 @@ public class TestRoot{
 
 		// Wait for OnboardingPage to display
 		onboardingPage.waitForOnboardingPage();
+		
+		return driver != null;
 	}
 
 	public String stringifyElementInformation(IOSElement iosElement) {
