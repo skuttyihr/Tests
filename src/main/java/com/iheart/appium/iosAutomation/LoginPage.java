@@ -113,7 +113,7 @@ public class LoginPage extends Page {
 
 		IHRAuthorizationViewEmailAddressTextField.click();
 		if (emailAddress != null) {
-			System.out.println("enterLoginEmailAddress() : " + emailAddress);
+			System.out.println("enterLoginEmailAddress()");
 			IHRAuthorizationViewEmailAddressTextField.sendKeys(emailAddress);
 		} else {
 			System.out.println("enterLoginEmailAddress() : " + IHEARTUSERNAME);
@@ -135,7 +135,7 @@ public class LoginPage extends Page {
 
 		IHRAuthorizationViewPasswordTextField.click();
 		if (password != null) {
-			System.out.println("enterLoginPassword() : " + password);
+			System.out.println("enterLoginPassword()");
 			IHRAuthorizationViewPasswordTextField.sendKeys(password);
 		} else {
 			System.out.println("enterLoginPassword() : " + IHEARTPASSWORD);
