@@ -66,7 +66,7 @@ public class TestMyMusic extends TestRoot{
 					myMusicPage.INITIAL_MESSAGE_SUBTITLE_LABEL_FREE, myMusicPage.getInitialMessageSubtitleLabel());
 			Assert.assertEquals("Initial Message Dismiss Label didn't match expected. ", 
 					myMusicPage.INITIAL_MESSAGE_DISMISS_LABEL_FREE, myMusicPage.getInitialMessageDismissLabel());
-			myMusicPage.dismissInitialMessage();
+			myMusicPage.clickDismissInitialMessage();
 		}
 		myMusicPage.showAllElementsForFREEPREUsers();
 		Assert.assertEquals("Playlists Title in PlaylistHeaderView does not match.", 
