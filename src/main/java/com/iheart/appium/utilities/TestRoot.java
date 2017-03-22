@@ -325,14 +325,18 @@ public class TestRoot{
 			return false;
 		}
 	}
-	public boolean waitAndClick(IOSElement iosElement, int timeInSeconds) {
+	public boolean waitAndClick(IOSElement iosElement, int timeInSeconds, String pageAndMethodName) {
 		boolean didClick = false;
 		if(waitForElementToBeVisible(iosElement, timeInSeconds)) {
 			iosElement.click();
 			didClick = true;
 		}
 		String[] splitUp = iosElement.toString().split(">");
-		System.out.println("waitAndClick() : Element["+splitUp[1] + "][ Did Click? : "+ didClick + "].");
+		if(pageAndMethodName.equals("")) {
+			System.out.println("waitAndClick() : Element["+splitUp[1] + "][ Did Click? : "+ didClick + "].");
+		}else {
+			System.out.println(pageAndMethodName + "() : IOS Element["+splitUp[1] + "][ Did Click? : "+ didClick + "].");
+		}
 		return didClick;
 	}
 	

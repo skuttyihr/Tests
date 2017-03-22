@@ -36,28 +36,28 @@ public class AddToPlaylistPage extends Page{
 	 * @return true if it was able to click. 
 	 */
 	public boolean clickFirstPlaylistInCollection(){
-		return waitAndClick(PlaylistPickerPresentationViewControllerPlaylistPickerViewCellCell0, 2);
+		return waitAndClick(PlaylistPickerPresentationViewControllerPlaylistPickerViewCellCell0, 2, "addToPlaylistPage.clickFirstPlaylistInCollection");
 	}
 	/**
 	 * Waits, then clicks the Second Playlist in the Collection. This should add the song to the selected Playlist. 
 	 * @return true if it was able to click. 
 	 */
 	public boolean clickSecondPlaylistInCollection(){
-		return waitAndClick(PlaylistPickerPresentationViewControllerPlaylistPickerViewCellCell1, 2);
+		return waitAndClick(PlaylistPickerPresentationViewControllerPlaylistPickerViewCellCell1, 2, "addToPlaylistPage.clickSecondPlaylistInCollection");
 	}
 	/**
 	 * Waits, then clicks the Create New Playlist (the first cell). This should launch the 
 	 * @return true if it was able to click. 
 	 */
 	public boolean clickCreateNewPlaylist(){
-		return waitAndClick(PlaylistPickerPresentationViewControllerPlaylistPickerNewViewCellCell0, 2);
+		return waitAndClick(PlaylistPickerPresentationViewControllerPlaylistPickerNewViewCellCell0, 2, "addToPlaylistPage.clickCreateNewPlaylist");
 	}
 	/**
 	 * Waits, then clicks the Cancel Button to dismiss the AddToPlaylistPage. 
 	 * @return true if it was able to click. 
 	 */
 	public boolean clickCancelButton(){
-		return waitAndClick(cancelButton, 2);
+		return waitAndClick(cancelButton, 2, "addToPlaylistPage.clickCancelButton");
 	}
 	/**
 	 * Checks if the UICollectionView isDisplayed.

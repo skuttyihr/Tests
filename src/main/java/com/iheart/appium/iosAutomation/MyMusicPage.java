@@ -490,27 +490,24 @@ public class MyMusicPage extends Page{
 	 *		plus - Upsell
 	 *      alla - opens list of saved Songs
 	 */
-	public void clickSongsPlaylistButton(){
-		System.out.println("myMusicPage.clickSongsPlaylistButton(). ");
-		PlaylistHeaderViewSongsBackgroundUIImageView.click();
+	public boolean clickSongsPlaylistButton(){
+		return waitAndClick(PlaylistHeaderViewSongsBackgroundUIImageView, 2, "myMusicPage.clickSongsPlaylistButton()");
 	}
 	/**
 	 * 		free - Upsell modal pops up
 	 * 		plus - Upsell
 	 *      alla - opens list of saved Albums - Albums are clickable and open Album Playlist View. 
 	 */
-	public void clickAlbumsPlaylistButton(){
-		System.out.println("myMusicPage.clickAlbumPlaylistButton(). ");
-		PlaylistHeaderViewAlbumBackgroundUIImageView.click();
+	public boolean clickAlbumsPlaylistButton(){
+		return waitAndClick(PlaylistHeaderViewAlbumBackgroundUIImageView, 2, "myMusicPage.clickAlbumPlaylistButton");
 	}
 	/**
 	 * 		free - Upsell modal pops up
 	 * 		plus - Upsell
 	 *      alla - opens list of saved Artists
 	 */
-	public void clickArtistsPlaylistButton(){
-		System.out.println("myMusicPage.clickArtistPlaylistButton(). ");
-		PlaylistHeaderViewArtistBackgroundUIImageView.click();
+	public boolean clickArtistsPlaylistButton(){
+		return waitAndClick(PlaylistHeaderViewArtistBackgroundUIImageView, 2, "myMusicPage.clickArtistPlaylistButton");
 	}
 	/**
 	 * Gets the text out of the Offline Label - it should just say 'Offline'. 

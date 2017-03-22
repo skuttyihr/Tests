@@ -111,7 +111,7 @@ public class LoginPage extends Page {
 	 */
 	public void enterLoginEmailAddress(String emailAddress) {
 
-		waitAndClick(IHRAuthorizationViewEmailAddressTextField, 5);
+		waitAndClick(IHRAuthorizationViewEmailAddressTextField, 5, "");
 		if (emailAddress != null) {
 			System.out.println("enterLoginEmailAddress() : " + emailAddress);
 			IHRAuthorizationViewEmailAddressTextField.sendKeys(emailAddress);
@@ -122,7 +122,7 @@ public class LoginPage extends Page {
 	}
 
 	public void clearLoginEmailAddress() {
-		//System.out.println("clearLoginEmailAddress()");
+		System.out.println("clearLoginEmailAddress()");
 		IHRAuthorizationViewEmailAddressTextField.clear();
 	}
 
