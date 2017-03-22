@@ -90,7 +90,83 @@ public class Page extends TestRoot {
 		// navBar = PageFactory.initElements(driver, SideNavigationBar.class);
 		// player = PageFactory.initElements(driver, Player.class);
 	}
+	
+	
+	//////////////////////
+	//		Getters		//
+	//////////////////////
+	
+	public static IOSElement getMaybeLater(IOSDriver<IOSElement> d){
+		return getMaybeLater(d, 5);
+	}
+	
+	public static IOSElement getMaybeLater(IOSDriver<IOSElement> d, int maxWait){
+		return waitForVisible(d, By.name("Maybe Later"), maxWait);
+	}
+	
+	public static IOSElement getNoThanks(IOSDriver<IOSElement> d){
+		return waitForVisible(driver, By.name("No Thanks"), 5);
+	}
+	
+	public static IOSElement getNotifyMe(IOSDriver<IOSElement> d){
+		return getMaybeLater(d, 5);
+	}
+	
+	public static IOSElement getNotifyMe(IOSDriver<IOSElement> d, int maxWait){
+		return waitForVisible(d, By.name("Notify Me"), maxWait);
+	}
 
+	
+	/**
+	 * Scroll to the bottom of a list until a show more button displays
+	 * 
+	 * @return
+	 */
+	public static IOSElement swipeToShowMore() { // TODO
+		IOSElement showMore = null;
+		boolean foundShowMore = false;
+		for (int i = 0; i < 7; i++) {
+			if (foundShowMore) {
+				break;
+			}
+			swipeUp();
+			showMore = findElement(driver, By.name("Show More"));
+			if (isVisible(showMore)) {
+				foundShowMore = true;
+				break;
+			} else {
+				// There's a chance that we're on My Stations, and it found the
+				// For You show more button by name
+				int offset = 2;
+				do {
+					showMore = findElement(driver, By
+							.xpath("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIAButton[" + offset + "]"));
+					if (isVisible(showMore)) {
+						foundShowMore = true;
+						break;
+					}
+					offset++;
+				} while (!isVisible(showMore) && offset < 5);
+			}
+		}
+
+		if (showMore == null) {
+			return null;
+		}
+		swipeUp(); // In case mini player is hiding it
+		return showMore;
+	}
+	
+	public static IOSElement getStationFromList(int selector) {
+		String xpathForItem = "//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell[" + selector
+				+ "]";
+		return waitForVisible(driver, find(xpathForItem, "xpath"), 5);
+	}
+	
+	//////////////////////
+	//		Actions		//
+	//////////////////////
+	
 	// The popup: Like iHeartRadio? Let us know!
 	public void likeIheart() {
 
@@ -125,22 +201,12 @@ public class Page extends TestRoot {
 		return winHandleBefore;
 	}
 
-	public static IOSElement getStationFromList(int selector) {
-		String xpathForItem = "//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell[" + selector
-				+ "]";
-		return waitForVisible(driver, find(xpathForItem, "xpath"), 5);
-	}
-
 	// Want your local radio?
 	public static void handlePossiblePopUp() {
 		try {
 			IOSElement dismiss = waitForVisible(driver, By.name("No Thanks"), 3);
 			if (!isVisible(dismiss)) {
-				dismiss = findElement(driver, By.name("Maybe Later")); // Has
-																		// already
-																		// waited
-																		// 3
-																		// seconds
+				dismissStayConnectedPopup();
 			}
 			if (isVisible(dismiss)) {
 				dismiss.click();
@@ -149,9 +215,21 @@ public class Page extends TestRoot {
 		} // No chance of this failing a test
 	}
 
+	public static void dismissStayConnectedPopup() {
+		chooseStayConnected(false);
+	}
+
+	public static void chooseStayConnected(boolean stayConnected) {
+		if (stayConnected)
+			click(driver, waitForVisible(driver, By.name("Get Notifications"), 20));
+		else{
+			click(driver, getMaybeLater(driver, 20));
+		}
+	}
+	
 	public static void quickDismissPopUp() {
-		IOSElement noThanks = findElement(driver, By.name("No Thanks"));
-		IOSElement maybeLater = findElement(driver, By.name("Maybe Later"));
+		IOSElement noThanks = getNoThanks(driver);
+		IOSElement maybeLater = getMaybeLater(driver);
 		if (isVisible(noThanks)) {
 			noThanks.click();
 		} else if (isVisible(maybeLater)) {
@@ -199,46 +277,6 @@ public class Page extends TestRoot {
 	public void clickNavBarBackButton() {
 		System.out.println("Page.getBack()");
 		NavBarBackButton.click();
-	}
-
-	/**
-	 * Scroll to the bottom of a list until a show more button displays
-	 * 
-	 * @return
-	 */
-	public static IOSElement swipeToShowMore() { // TODO
-		IOSElement showMore = null;
-		boolean foundShowMore = false;
-		for (int i = 0; i < 7; i++) {
-			if (foundShowMore) {
-				break;
-			}
-			swipeUp();
-			showMore = findElement(driver, By.name("Show More"));
-			if (isVisible(showMore)) {
-				foundShowMore = true;
-				break;
-			} else {
-				// There's a chance that we're on My Stations, and it found the
-				// For You show more button by name
-				int offset = 2;
-				do {
-					showMore = findElement(driver, By
-							.xpath("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIAButton[" + offset + "]"));
-					if (isVisible(showMore)) {
-						foundShowMore = true;
-						break;
-					}
-					offset++;
-				} while (!isVisible(showMore) && offset < 5);
-			}
-		}
-
-		if (showMore == null) {
-			return null;
-		}
-		swipeUp(); // In case mini player is hiding it
-		return showMore;
 	}
 
 	public static boolean clickShowMore() {

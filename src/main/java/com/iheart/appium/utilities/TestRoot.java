@@ -977,22 +977,7 @@ public class TestRoot{
 			try {
 				ele.click();
 				couldClick = true;
-			} catch (Exception e) {
-				try {
-					System.out.println("Error clicking element (see below), retyring.");
-					System.out.println(e.getMessage());
-					int x = ele.getLocation().getX();
-					int y = ele.getLocation().getY();
-					d.tap(1, x, y, 300);
-					couldClick = true;
-				} catch (Exception e1) {
-					System.err.println("Could not click element!");
-					System.out.println("Error 1:");
-					e.printStackTrace();
-					System.out.println("\n\nError 2:");
-					e1.printStackTrace();
-				}
-			}
+			} catch (Exception e) {}
 		}
 
 		return couldClick;
