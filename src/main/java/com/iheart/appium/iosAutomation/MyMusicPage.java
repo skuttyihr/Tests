@@ -27,7 +27,6 @@ public class MyMusicPage extends Page{
 		super(_driver);
 	}
 	
-	
 	//PlaylistHeaderView  - at top of My Music  (Aids added)
 	@iOSFindBy(accessibility = "PlaylistHeaderView-HeaderView-UICollectionReusableView") private IOSElement PlaylistHeaderViewHeaderViewUICollectionReusableView;
 	@iOSFindBy(accessibility = "PlaylistHeaderView-PlaylistLabel-UILabel") private IOSElement PlaylistHeaderViewPlaylistLabelUILabel;
@@ -175,12 +174,8 @@ public class MyMusicPage extends Page{
 	public final String UPSELL_CELL_TITLE_LABEL_FREE_PRE_TRIAL = "Radio and unlimited music on demand, all in one app.";
 	public final String UPSELL_CELL_TITLE_LABEL_PLUS_PRE_TRIAL1 = "Your playlists are still here waiting for you. Subscribe to All Access to play them now.";
 	public final String UPSELL_CELL_TITLE_LABEL_PLUS_PRE_TRIAL = "Your playlists are still here waiting for you. Subscribe to All Access to play them now.";
-	public final String UPSELL_CELL_TITLE_LABEL_ALLA_PRE_TRIAL1 = "";
-	public final String UPSELL_CELL_TITLE_LABEL_ALLA_PRE_TRIAL = "";
 	public final String UPSELL_CELL_INTRO_TITLE_LABEL_FREE_PRE_TRIAL = "INTRODUCING";
 	public final String PLAYLIST_HEADER_VIEW_PLAYLIST_LABEL_FREE = "PLAYLISTS";
-	public final String PLAYLIST_HEADER_VIEW_PLAYLIST_LABEL_PLUS = "PLAYLISTS";
-	public final String PLAYLIST_HEADER_VIEW_PLAYLIST_LABEL_ALLA = "PLAYLISTS";
 	public final String INITIAL_MESSAGE_TITLE_LABEL_FREE = "New!";
 	public final String INITIAL_MESSAGE_SUBTITLE_LABEL_FREE = "My Playlist contains all your saved songs";
 	public final String INITIAL_MESSAGE_DISMISS_LABEL_FREE = "Tap anywhere to dismiss";
@@ -522,7 +517,7 @@ public class MyMusicPage extends Page{
 	}
 	public void handleNewInitialMessage(){
 		if(myMusicPage.isCurrentlyOnMyMusicInitialMessage()){
-			System.out.println("handleNewInitialMessage() is required.");
+			System.out.println("myMusicPage.handleNewInitialMessage() is required.");
 			myMusicPage.clickDismissInitialMessage();
 		}
 	}
@@ -675,60 +670,35 @@ public class MyMusicPage extends Page{
 	 * @return
 	 */
 	public String getUpsellCellTitleLabel(){
-		String cellTitle = "";
-		if(waitForElementToBeVisible(MyMusicUpsellCellTitleUILabel, 2)){
-			cellTitle = MyMusicUpsellCellTitleUILabel.getText();
-		}
-		System.out.println("myMusicPage.getUpsellCellTitleLabel() : "+ cellTitle);
-		return cellTitle;
+		return waitAndGetText(MyMusicUpsellCellTitleUILabel, 2, "myMusicPage.getUpsellCellTitleLabel");
 	}
 	/**
 	 * the Intro label may say INTRODUCING, but this will only appear for Free users who haven't tried ALLA
 	 * @return
 	 */
 	public String getUpsellCellIntroTitleLabel(){
-		String introTitle = "";
-		if(waitForElementToBeVisible(MyMusicUpsellCellIntroTitleUILabel, 2)){
-			introTitle = MyMusicUpsellCellIntroTitleUILabel.getText();
-		}
-		System.out.println("myMusicPage.getPlaylistsTitle() : "+ introTitle);
-		return introTitle;
+		return waitAndGetText(MyMusicUpsellCellIntroTitleUILabel, 2, "myMusicPage.getUpsellCellIntroTitleLabel");
 	}
 	/**
 	 * This gets the initial Message Title label - this modal pops up on MyMusic after some delay. 
 	 * @return
 	 */
 	public String getInitialMessageTitleLabel(){
-		String titleLabel = "";
-		if(waitForElementToBeVisible(MyMusicInitialMessageViewControllerTitleLabelUILabel, 2)){
-			titleLabel = MyMusicInitialMessageViewControllerTitleLabelUILabel.getText();
-		}
-		System.out.println("myMusicPage.getInitialMessageTitleLabel() : "+ titleLabel);
-		return titleLabel;
+		return waitAndGetText(MyMusicInitialMessageViewControllerTitleLabelUILabel, 2, "myMusicPage.getInitialMessageTitleLabel");
 	}
 	/**
 	 * Gets the Subtitle Label text in the Initial Message upsell. 
 	 * @return
 	 */
 	public String getInitialMessageSubtitleLabel(){
-		String subtitleLabel = "";
-		if(waitForElementToBeVisible(MyMusicInitialMessageViewControllerSubtitleLabelUILabel, 2)){
-			subtitleLabel = MyMusicInitialMessageViewControllerSubtitleLabelUILabel.getText();
-		}
-		System.out.println("myMusicPage.getInitialMessageSubtitleLabel() : "+ subtitleLabel);
-		return subtitleLabel;
+		return waitAndGetText(MyMusicInitialMessageViewControllerSubtitleLabelUILabel, 2, "myMusicPage.getInitialMessageSubtitleLabel");
 	}
 	/**
 	 * //Tap anywhere to dismiss
 	 * @return
 	 */
 	public String getInitialMessageDismissLabel(){
-		String dismissLabel = "";
-		if(waitForElementToBeVisible(MyMusicInitialMessageViewControllerDismissLabelUILabel, 2)){
-			dismissLabel = MyMusicInitialMessageViewControllerDismissLabelUILabel.getText();
-		}
-		System.out.println("myMusicPage.getInitialMessageDismissLabel() : "+ dismissLabel);
-		return dismissLabel;
+		return waitAndGetText(MyMusicInitialMessageViewControllerDismissLabelUILabel, 2, "myMusicPage.getInitialMessageDismissLabel");
 	}
 	/**
 	 * This enters the string param into the new playlist modal and clicks the Create button. 
@@ -740,7 +710,7 @@ public class MyMusicPage extends Page{
 		System.out.println("myMusicPage.enterNewPlaylistNameAndClickCreate() : "+ string);
 		playlistNameTextBoxCreateNew.sendKeys(string);
 		System.out.println("myMusicPage.Clicking on 'Create' button");
-		createPlaylistModalButton.click();
+		waitAndClick(createPlaylistModalButton, 2, "");
 		return string;
 		
 	}
@@ -764,13 +734,7 @@ public class MyMusicPage extends Page{
 	 * @return
 	 */
 	public boolean clickSearchActionButtonOnEmptyPlaylist(){
-		boolean didClick = false;
-		if(waitForElementToBeVisible(MyMusicEmptyCellActionButtonUIButton, 2)){
-			MyMusicEmptyCellActionButtonUIButton.click();
-			didClick = true;
-		}
-		System.out.println("myMusicPage.clickSearchActionButtonOnEmptyPlaylist() : " + didClick);
-		return didClick;	
+		return waitAndClick(MyMusicEmptyCellActionButtonUIButton, 3, "myMusicPage.clickSearchActionButtonOnEmptyPlaylist");	
 	}
 
 	/**
@@ -778,139 +742,88 @@ public class MyMusicPage extends Page{
 	 * @return
 	 */
 	public boolean clickOfflineButtonOnPlaylist(){
-		boolean didClick = false;
-		if(waitForElementToBeVisible(MyMusicPlaylistHeaderCellOfflineSwitchUISwitch, 2)){
-			MyMusicPlaylistHeaderCellOfflineSwitchUISwitch.click();
-			didClick = true;
-		}
-		System.out.println("myMusicPage.clickOfflineButtonOnPlaylist() :" + didClick);
-		return didClick;	
+		return waitAndClick(MyMusicPlaylistHeaderCellOfflineSwitchUISwitch, 3, "myMusicPage.clickOfflineButtonOnPlaylist");	
 	}
 	/**
 	 * This clicks the Shuffle button. 
 	 * @return
 	 */
 	public boolean clickShuffleButtonOnPlaylist(){
-		boolean didClick = false;
-		if(waitForElementToBeVisible(MyMusicPlaylistHeaderCellShuffleButtonUIButton, 2)){
-			MyMusicPlaylistHeaderCellShuffleButtonUIButton.click();
-			didClick = true;
-		}
-		System.out.println("myMusicPage.clickShuffleButtonOnPlaylist() : " + didClick);
-		return didClick;
-		
+		return waitAndClick(MyMusicPlaylistHeaderCellShuffleButtonUIButton, 3, "myMusicPage.clickShuffleButtonOnPlaylist");	
 	}
 	/**
 	 * After clicking the Playlist Overflow button, you can click Edit if there are songs within the playlist. 
 	 */
-	public void clickEditOnPlaylistOverflow() {
-		if(waitForElementToBeVisible(editPlaylistOverflowButton, 2)){
-			editPlaylistOverflowButton.click();
-			System.out.println("myMusicPage.clickEditOnPlaylistOverflow() : Clicked.");
-		}else{
-			System.out.println("myMusicPage.clickEditOnPlaylistOverflow() : COULD NOT CLICK");
-		}
+	public boolean clickEditOnPlaylistOverflow() {
+		return waitAndClick(editPlaylistOverflowButton, 3, "myMusicPage.clickEditOnPlaylistOverflow");	
 	}
 	/**
 	 * This clicks the Done button in the top right of the Edit Playlist. 
 	 */
-	public void clickDoneButtonWhileEditingPlaylist() {
-		if(waitForElementToBeVisible(MyMusicPlaylistViewControllerDoneButtonUIBarButtonItem, 2)){
-			MyMusicPlaylistViewControllerDoneButtonUIBarButtonItem.click();
-			System.out.println("myMusicPage.clickDoneButtonWhileEditingPlaylist() : MyMusicPlaylistViewControllerDoneButtonUIBarButtonItem Clicked.");
-		}
+	public boolean clickDoneButtonWhileEditingPlaylist() {
+		return waitAndClick(MyMusicPlaylistViewControllerDoneButtonUIBarButtonItem, 3, "myMusicPage.clickDoneButtonWhileEditingPlaylist");	
 	}
 	/**
 	 * This clicks the Cancel button on the top left of the Edit Playlist. 
 	 */
-	public void clickCancelButtonWhileEditingPlaylist() {
-		if(waitForElementToBeVisible(MyMusicPlaylistViewControllerCancelButtonUIBarButtonItem, 2)){
-			MyMusicPlaylistViewControllerCancelButtonUIBarButtonItem.click();
-			System.out.println("myMusicPage.clickCancelButtonWhileEditingPlaylist() : MyMusicPlaylistViewControllerCancelButtonUIBarButtonItem Clicked.");
-		}
+	public boolean clickCancelButtonWhileEditingPlaylist() {
+		return waitAndClick(MyMusicPlaylistViewControllerCancelButtonUIBarButtonItem, 3, "myMusicPage.clickCancelButtonWhileEditingPlaylist");	
 	}
 	/**
 	 * This clicks the Show All Playlists Cell when there are 2 or more playlists. 
 	 */
-	public void clickShowAllPlaylistsCell(){
-		if(waitForElementToBeVisible(MyMusicViewPremiumPresenterNavigationCellMyMusicViewCell, 2)){
-			MyMusicViewPremiumPresenterNavigationCellMyMusicViewCell.click();
-			System.out.println("myMusicPage.clickShowAllPlaylistsCell() : MyMusicViewPremiumPresenterNavigationCellMyMusicViewCell Clicked.");
-		}
+	public boolean clickShowAllPlaylistsCell(){
+		return waitAndClick(MyMusicViewPremiumPresenterNavigationCellMyMusicViewCell, 3, "myMusicPage.clickShowAllPlaylistsCell");
 	}
 	/**
 	 * Clicks the Overflow button on the Playlists screen. 
 	 * Manage is available, so is Create New Playlist.
 	 */
-	public void clickOverflowBarButtonItemOnShowAllPlaylists(){
-		if(waitForElementToBeVisible(MyMusicPlaylistsViewControllerOverflowButtonItemUIBarButtonItem, 2)){
-			MyMusicPlaylistsViewControllerOverflowButtonItemUIBarButtonItem.click();
-			System.out.println("myMusicPage.clickOverflowBarButtonItemOnShowAllPlaylists() : MyMusicPlaylistsViewControllerOverflowButtonItemUIBarButtonItem Clicked.");
-		}
+	public boolean clickOverflowBarButtonItemOnShowAllPlaylists(){
+		return waitAndClick(MyMusicPlaylistsViewControllerOverflowButtonItemUIBarButtonItem, 3, "myMusicPage.clickOverflowBarButtonItemOnShowAllPlaylists");
 	}
 	/**
 	 * This clicks the Manage Playlists modal button. Doesn't use AID. 
 	 */
-	public void clickManagePlaylistsButton(){
-		if(waitForElementToBeVisible(managePlaylistButtonOnOverflow, 2)){
-			managePlaylistButtonOnOverflow.click();
-			System.out.println("myMusicPage.clickManagePlaylist() : managePlaylistButtonOnOverflow Clicked.");
-		}
+	public boolean clickManagePlaylistsButton(){
+		return waitAndClick(managePlaylistButtonOnOverflow, 3, "myMusicPage.clickManagePlaylistsButton");
 	}
 	/**
 	 * This clicks the First album cell in the list of albums. 
 	 */
-	public void clickFirstAlbumCell(){
-		if(waitForElementToBeVisible(MyMusicAlbumsViewViewCellUICollectionViewCell0, 2)){
-			MyMusicAlbumsViewViewCellUICollectionViewCell0.click();
-			System.out.println("myMusicPage.clickFirstAlbumCell() : MyMusicAlbumsViewViewCellUICollectionViewCell0 Clicked.");
-		}
+	public boolean clickFirstAlbumCell(){
+		return waitAndClick(MyMusicAlbumsViewViewCellUICollectionViewCell0, 3, "myMusicPage.clickFirstAlbumCell");
 	}
 	/**
 	 * This clicks the Second album cell in the list of albums. 
 	 */
-	public void clickSecondAlbumCell(){
-		if(waitForElementToBeVisible(MyMusicAlbumsViewViewCellUICollectionViewCell1, 2)){
-			MyMusicAlbumsViewViewCellUICollectionViewCell1.click();
-			System.out.println("myMusicPage.clickSecondAlbumCell() : MyMusicAlbumsViewViewCellUICollectionViewCell1 Clicked.");
-		}
+	public boolean clickSecondAlbumCell(){
+		return waitAndClick(MyMusicAlbumsViewViewCellUICollectionViewCell1, 3, "myMusicPage.clickSecondAlbumCell");
 	}
 	/**
 	 * This clicks the Second album cell in the list of albums. 
 	 */
-	public void clickEighthAlbumCell(){
-		if(waitForElementToBeVisible(MyMusicAlbumsViewViewCellUICollectionViewCell7, 2)){
-			MyMusicAlbumsViewViewCellUICollectionViewCell7.click();
-			System.out.println("myMusicPage.clickEighthAlbumCell() : MyMusicAlbumsViewViewCellUICollectionViewCell7 Clicked.");
-		}
+	public boolean clickEighthAlbumCell(){
+		return waitAndClick(MyMusicAlbumsViewViewCellUICollectionViewCell7, 3, "myMusicPage.clickEighthAlbumCell");
 	}
 	/**
 	 * This clicks the Done button once you've managed the playlists (deleted or moved order). 
 	 */
-	public void clickDoneButtonAfterManagingPlaylists(){
-		if(waitForElementToBeVisible(MyMusicPlaylistsViewControllerDoneButtonUIBarButtonItem, 2)){
-			MyMusicPlaylistsViewControllerDoneButtonUIBarButtonItem.click();
-			System.out.println("myMusicPage.clickDoneButtonAfterManagingPlaylists() : MyMusicPlaylistsViewControllerDoneButtonUIBarButtonItem Clicked.");
-		}
+	public boolean clickDoneButtonAfterManagingPlaylists(){
+		return waitAndClick(MyMusicPlaylistsViewControllerDoneButtonUIBarButtonItem, 3, "myMusicPage.clickDoneButtonAfterManagingPlaylists");
 	}
 	/**
 	 * This clicks the Done button once you've managed the playlists (deleted or moved order). 
 	 */
-	public void clickCancelButtonAfterManagingPlaylists(){
-		if(waitForElementToBeVisible(MyMusicPlaylistsViewControllerCancelButtonUIBarButtonItem, 2)){
-			MyMusicPlaylistsViewControllerCancelButtonUIBarButtonItem.click();
-			System.out.println("myMusicPage.clickCancelButtonAfterManagingPlaylists() : MyMusicPlaylistsViewControllerCancelButtonUIBarButtonItem Clicked.");
-		}
+	public boolean clickCancelButtonAfterManagingPlaylists(){
+		return waitAndClick(MyMusicPlaylistsViewControllerCancelButtonUIBarButtonItem, 3, "myMusicPage.clickCancelButtonAfterManagingPlaylists");
 	}
 	/**
 	 * Clicks the first song on My Playlist. This could be used to demonstrate Plus allows MyPlaylist playback. 
 	 * This also clicks the second MyMusicSongCell, the  first one has Offline Label etc
 	 */
-	public void clickFirstSongOnPlaylist(){
-		if(waitForElementToBeVisible(MyMusicPlaylistViewControllerMyMusicSongCellMyMusicViewCell1, 2)){
-		MyMusicPlaylistViewControllerMyMusicSongCellMyMusicViewCell1.click();
-		System.out.println("myMusicPage.clickFirstSongOnPlaylist() : MyMusicPlaylistViewControllerMyMusicSongCellMyMusicViewCell1 Clicked.");
-		}
+	public boolean clickFirstSongOnPlaylist(){
+		return waitAndClick(MyMusicPlaylistViewControllerMyMusicSongCellMyMusicViewCell1, 3, "myMusicPage.clickFirstSongOnPlaylist");
 	}
 
 }
