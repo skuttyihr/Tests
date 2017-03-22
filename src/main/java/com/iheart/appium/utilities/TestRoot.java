@@ -72,7 +72,7 @@ public class TestRoot{
 	protected static final int DOWN = 2;
 	protected static final int LEFT = 3;
 
-	protected static int implicitWaitTimeout = 375;
+	protected static int implicitWaitTimeout = 500;
 
 	protected static IOSDriver<IOSElement> driver;
 
@@ -789,7 +789,6 @@ public class TestRoot{
 			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 			isVisible = e.isDisplayed();
 			System.out.println("isDisplayed() in isVisible(): " +  isVisible);
-			return true;
 		} catch (Exception x) {
 		} finally {
 			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
