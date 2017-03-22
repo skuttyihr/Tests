@@ -133,7 +133,15 @@ public class GenrePage extends Page {
 		boolean doneEnabled = false;
 		int maxCount = 20; // ~2 seconds
 		int count = 0;
-		if (waitForElementToBeVisible(IHRGenrePickerViewControllerDoneButtonUIButton, 5)){
+		if (waitForElementToBeVisible(IHRGenrePickerViewControllerDoneButtonUIButton, 10)){
+			try{
+				if (isEnabled(IHRGenrePickerViewControllerDoneButtonUIButton)){
+					return true;
+				}
+			}
+			catch(Exception e){}
+			
+			// Try to get enabled boolean by value
 			String trueOrNull = IHRGenrePickerViewControllerDoneButtonUIButton.getAttribute("value");
 			System.out.println("isDoneEnabled " + trueOrNull);
 			doneEnabled = trueOrNull != null && trueOrNull.equalsIgnoreCase("true");
@@ -143,6 +151,9 @@ public class GenrePage extends Page {
 				trueOrNull = IHRGenrePickerViewControllerDoneButtonUIButton.getAttribute("value");
 				doneEnabled = trueOrNull != null && trueOrNull.equalsIgnoreCase("true");
 			}
+		}
+		else{
+			System.err.println("Genre Picker Done Button was NOT visible!");
 		}
 		return doneEnabled;
 	}

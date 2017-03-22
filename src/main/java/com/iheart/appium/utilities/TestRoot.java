@@ -805,7 +805,6 @@ public class TestRoot{
 			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 			isEnabled = e.isEnabled();
 			System.out.println("isEnabled() in isVisible(): " + isEnabled);			
-			return true;
 		} catch (Exception x) {
 		} finally {
 			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
