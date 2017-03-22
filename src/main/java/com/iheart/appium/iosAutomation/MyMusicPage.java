@@ -1,7 +1,5 @@
 package com.iheart.appium.iosAutomation;
 
-import org.junit.Assert;
-
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
 import io.appium.java_client.pagefactory.iOSFindBy;
@@ -290,16 +288,7 @@ public class MyMusicPage extends Page{
 		clickNavBarBackButton();
 		
 		//INITIAL MESSAGE POPUP HANDLING
-		if(myMusicPage.isCurrentlyOnMyMusicInitialMessage()){
-			System.out.println("It appears that New! pops up after returning to MyMusic");
-			Assert.assertEquals("Initial Message Title Label didn't match expected. ", 
-					myMusicPage.INITIAL_MESSAGE_TITLE_LABEL_FREE, myMusicPage.getInitialMessageTitleLabel());
-			Assert.assertEquals("Initial Message SubTitle Label didn't match expected. ", 
-					myMusicPage.INITIAL_MESSAGE_SUBTITLE_LABEL_FREE, myMusicPage.getInitialMessageSubtitleLabel());
-			Assert.assertEquals("Initial Message Dismiss Label didn't match expected. ", 
-					myMusicPage.INITIAL_MESSAGE_DISMISS_LABEL_FREE, myMusicPage.getInitialMessageDismissLabel());
-			myMusicPage.dismissInitialMessage();
-		}
+		myMusicPage.handleNewInitialMessage();
 		//SONGS
 		clickSongsPlaylistButton();
 		System.out.println("Printing out AIDs for Songs - Should be empty. ");
@@ -379,15 +368,7 @@ public class MyMusicPage extends Page{
 		printElementInformation(MyMusicAlbumsViewViewCellUICollectionViewCell4);
 		clickNavBarBackButton();
 		sleep(2000);
-		if(myMusicPage.isCurrentlyOnMyMusicInitialMessage()){
-			Assert.assertEquals("Initial Message Title Label didn't match expected. ", 
-					myMusicPage.INITIAL_MESSAGE_TITLE_LABEL_FREE, myMusicPage.getInitialMessageTitleLabel());
-			Assert.assertEquals("Initial Message SubTitle Label didn't match expected. ", 
-					myMusicPage.INITIAL_MESSAGE_SUBTITLE_LABEL_FREE, myMusicPage.getInitialMessageSubtitleLabel());
-			Assert.assertEquals("Initial Message Dismiss Label didn't match expected. ", 
-					myMusicPage.INITIAL_MESSAGE_DISMISS_LABEL_FREE, myMusicPage.getInitialMessageDismissLabel());
-			myMusicPage.dismissInitialMessage();
-		}
+		handleNewInitialMessage();
 		clickSongsPlaylistButton();
 		printElementInformation(MyMusicSongViewSongViewUICollectionView);
 		printElementInformation(MyMusicSongViewNotAvailableOfflineViewUIView);
@@ -514,24 +495,14 @@ public class MyMusicPage extends Page{
 	 * @return
 	 */
 	public String getPlaylistHeaderCellOfflineLabelText(){
-		String offlineLabel = "";
-		if(waitForElementToBeVisible(MyMusicPlaylistHeaderCellOfflineLabelUILabel, 2)){
-			offlineLabel = MyMusicPlaylistHeaderCellOfflineLabelUILabel.getText();
-		}
-		System.out.println("myMusicPage.getPlaylistHeaderCellOfflineLabelText() : " + offlineLabel);
-		return offlineLabel;
+		return waitAndGetText(MyMusicPlaylistHeaderCellOfflineLabelUILabel, 2, "myMusicPage.getPlaylistHeaderCellOfflineLabelText");
 	}
 	/**
 	 *  Gets the text out of the Shuffle Label - it should just say 'Shuffle'
 	 * @return
 	 */
 	public String getPlaylistHeaderCellShuffleLabelText(){
-		String shuffleLabel = "";
-		if(waitForElementToBeVisible(MyMusicPlaylistHeaderCellShuffleLabelUILabel, 2)){
-			shuffleLabel = MyMusicPlaylistHeaderCellShuffleLabelUILabel.getText();
-		}
-		System.out.println("myMusicPage.getPlaylistHeaderCellShuffleLabelText() : " + shuffleLabel);
-		return shuffleLabel;
+		return waitAndGetText(MyMusicPlaylistHeaderCellShuffleLabelUILabel, 2, "myMusicPage.getPlaylistHeaderCellShuffleLabelText");
 	}
 	/**
 	 * Gets a true or false value depending on the attribute on the IOSElement of the OfflineUISwitch which returns either a string of "true" or "false"
@@ -544,17 +515,15 @@ public class MyMusicPage extends Page{
 			offlineSwitch = MyMusicPlaylistHeaderCellOfflineSwitchUISwitch.getAttribute("value");
 		}
 		System.out.println("myMusicPage.getPlaylistHeaderCellOfflineSwitchText() : " + offlineSwitch);
-		if(offlineSwitch.equals("false")){
-			return false;
-		}else if(offlineSwitch.equals("true")){
+		 if(offlineSwitch.equals("true")){
 			return true;
-		}else
-		return false;
+		}else 
+			return false;
 	}
 	public void handleNewInitialMessage(){
 		if(myMusicPage.isCurrentlyOnMyMusicInitialMessage()){
 			System.out.println("handleNewInitialMessage() is required.");
-			myMusicPage.dismissInitialMessage();
+			myMusicPage.clickDismissInitialMessage();
 		}
 	}
 	/**
@@ -564,12 +533,7 @@ public class MyMusicPage extends Page{
 	 * @return
 	 */
 	public String getCollapseableHeaderSubtitle1LabelText(){
-		String subtitle1 = "";
-		if(waitForElementToBeVisible(MyMusicCollapseableHeaderSubtitle1LabelUILabel, 2)){
-			subtitle1 = MyMusicCollapseableHeaderSubtitle1LabelUILabel.getText();
-		}
-		System.out.println("myMusicPage.getCollapseableHeaderSubtitle1LabelText() : " + subtitle1);
-		return subtitle1;
+		return waitAndGetText(MyMusicCollapseableHeaderSubtitle1LabelUILabel, 2, "myMusicPage.getCollapseableHeaderSubtitle1LabelText");
 	}
 	/**
 	 * 0 songs • 0 min
@@ -577,12 +541,7 @@ public class MyMusicPage extends Page{
 	 * @return
 	 */
 	public String getCollapseableHeaderSubtitle2LabelText(){
-		String subtitle2 = "";
-		if(waitForElementToBeVisible(MyMusicCollapseableHeaderSubtitle2LabelUILabel, 2)){
-			subtitle2 = MyMusicCollapseableHeaderSubtitle2LabelUILabel.getText();
-		}
-		System.out.println("myMusicPage.getCollapseableHeaderSubtitle2LabelText() : " + subtitle2);
-		return subtitle2;
+		return waitAndGetText(MyMusicCollapseableHeaderSubtitle2LabelUILabel, 2, "myMusicPage.getCollapseableHeaderSubtitle2LabelText");
 	}
 	/**
 	 * Gets the name of the playlist - playlist must be open.
@@ -590,14 +549,8 @@ public class MyMusicPage extends Page{
 	 * @return
 	 */
 	public String getCollapseableHeaderTitleLabelText(){
-		String titleLabel = "";
-		if(waitForElementToBeVisible(MyMusicCollapseableHeaderTitleLabelUILabel, 2)){
-			titleLabel = MyMusicCollapseableHeaderTitleLabelUILabel.getText();
-		}
-		System.out.println("myMusicPage.getCollapseableHeaderTitleLabelText() : " + titleLabel);
-		return titleLabel;
+		return waitAndGetText(MyMusicCollapseableHeaderTitleLabelUILabel, 2, "myMusicPage.getCollapseableHeaderTitleLabelText");
 	}
-	
 
 	/**
 	 * 	Tap on the ￼ button next to a song,
@@ -605,25 +558,14 @@ public class MyMusicPage extends Page{
 	 * @return
 	 */
 	public String getPlaylistEmptyCellTitleLabelText(){
-		String titleLabel = "";
-		if(waitForElementToBeVisible(MyMusicEmptyCellTitleUILabel, 2)){
-			titleLabel = MyMusicEmptyCellTitleUILabel.getText();
-		}
-		System.out.println("myMusicPage.getPlaylistEmptyCellTitleLabelText() : " + titleLabel);
-		return titleLabel;
+		return waitAndGetText(MyMusicEmptyCellTitleUILabel, 2, "myMusicPage.getPlaylistEmptyCellTitleLabelText");
 	}
 	/**
 	 * This clicks the Play Button on the Playlist that is currently open. The play Button may also be a pause button. 
 	 * @return
 	 */
 	public boolean clickPlayButtonOnPlaylist(){
-		if(waitForElementToBeVisible(MyMusicCollapseableHeaderPlayButtonUIButton, 2)){
-			MyMusicCollapseableHeaderPlayButtonUIButton.click();
-			System.out.println("myMusicPage.clickPlayButtonOnPlaylist() : true.");
-			return true;
-		}
-		System.out.println("myMusicPage.clickPlayButtonOnPlaylist() : false.");
-		return false;
+		return waitAndClick(MyMusicCollapseableHeaderPlayButtonUIButton, 2, "myMusicPage.clickPlayButtonOnPlaylist");
 	}
 	/**
 	 * This clicks the top right overflow (...) button. It will open a modal with other options. 
@@ -631,26 +573,14 @@ public class MyMusicPage extends Page{
 	 * @return
 	 */
 	public boolean clickPlaylistOverflowButton(){
-		if(waitForElementToBeVisible(MyMusicPlaylistViewControllerOverflowBarButtonItemUIBarButtonItem, 2)){
-			MyMusicPlaylistViewControllerOverflowBarButtonItemUIBarButtonItem.click();
-			System.out.println("myMusicPage.clickPlaylistOverflowButton() : true.");
-			return true;
-		}
-		System.out.println("clickPlaylistOverflowButton() : false.");
-		return false;
+		return waitAndClick(MyMusicPlaylistViewControllerOverflowBarButtonItemUIBarButtonItem, 2, "myMusicPage.clickPlaylistOverflowButton");
 	}
 	/**
 	 * Clicks the delete Playlist on the Playlist Overflow. A confirm Modal will popup after this. 
 	 * @return true if method worked
 	 */
 	public boolean clickDeletePlaylistOnPlaylistOverflow(){
-		if(waitForElementToBeVisible(deletePlaylistOverflowButton, 3)){
-			deletePlaylistOverflowButton.click();
-			System.out.println("myMusicPage.clickDeletePlaylistOnPlaylistOverflow() : true.");
-			return true;
-		}
-		System.out.println("myMusicPage.clickDeletePlaylistOnPlaylistOverflow() : false.");
-		return false;
+		return waitAndClick(deletePlaylistOverflowButton, 2, "myMusicPage.clickDeletePlaylistOnPlaylistOverflow");
 	}
 	/**
 	 * This clicks the Delete button to confirm the Delete Playlist. 
@@ -658,26 +588,14 @@ public class MyMusicPage extends Page{
 	 * @return
 	 */
 	public boolean clickDeleteToConfirm(){
-		if(waitForElementToBeEnabled(deleteConfirmButton, 3)){
-			deleteConfirmButton.click();
-			System.out.println("myMusicPage.clickDeleteToConfirm() : true. - This should have closed the Delete Playlist modal and landed back on My Music.");
-			return true;
-		}
-		System.out.println("myMusicPage.clickDeletePlaylistOnPlaylistOverflow() : false.");
-		return false;
+		return waitAndClick(deleteConfirmButton, 3, "myMusicPage.clickDeleteToConfirm");
 	}
 	/**
 	 * This clicks the Rename button on the Playlist Overflow. Rename keeps the current playlist name in the modal and then you use another method to add text to it. 
 	 * @return
 	 */
 	public boolean clickRenameOnPlaylistOverflow(){
-		if(waitForElementToBeVisible(renamePlaylistOverflowButton, 2)){
-			renamePlaylistOverflowButton.click();
-			System.out.println("myMusicPage.clickRenameOnPlaylistOverflow() : true.");
-			return true;
-		}
-		System.out.println("myMusicPage.clickRenameOnPlaylistOverflow() : false.");
-		return false;
+		return waitAndClick(renamePlaylistOverflowButton, 3, "myMusicPage.clickRenameOnPlaylistOverflow");
 	}
 	/**
 	 * Checks if the Initial Message dismiss label is currently displayed. 
@@ -691,9 +609,8 @@ public class MyMusicPage extends Page{
 	 * This clicks the Dismiss label, even though you can click anywhere on the page to dismiss the method. 
 	 * @return
 	 */
-	public boolean dismissInitialMessage(){
-		System.out.println("myMusicPage.dismissInitialMessage() : Clicking Dismiss Label(area) to 'tap anywhere to dismiss'");
-		MyMusicInitialMessageViewControllerDismissLabelUILabel.click();
+	public boolean clickDismissInitialMessage(){
+		waitAndClick(MyMusicInitialMessageViewControllerDismissLabelUILabel, 3, "myMusicPage.clickDismissInitialMessage");
 		return isCurrentlyOnMyMusicInitialMessage();
 	}
 
@@ -707,9 +624,8 @@ public class MyMusicPage extends Page{
 	/**
 	 * May have other names instead of just Learn More. 
 	 */
-	public void clickLearnMoreUpsellButton(){
-		System.out.println("myMusicPage.clickLearnMoreUpsellButton(): ");
-		MyMusicUpsellCellActionButtonUIButton.click();
+	public boolean clickLearnMoreUpsellButton(){
+		return waitAndClick(MyMusicUpsellCellActionButtonUIButton, 3, "myMusicPage.clickLearnMoreUpsellButton");
 	}
 
 	/**
@@ -717,20 +633,14 @@ public class MyMusicPage extends Page{
 	 * It launches a Create New Playlist Modal that takes in text input. 
 	 * Expect to run enterNewPlaylistNameAndClickCreate() next. 
 	 */
-	public void clickCreateNewPlaylistButton(){
-		if(waitForElementToBeVisible(PlaylistHeaderViewCreatePlaylistButtonUIButton, 2)){
-			PlaylistHeaderViewCreatePlaylistButtonUIButton.click();
-			System.out.println("myMusicPage.clickCreateNewPlaylistButton(): Clicked. ");
-		}else{
-			System.out.println("myMusicPage.clickCreateNewPlaylistButton(): Couldn't be found. ");
-		}
+	public boolean clickCreateNewPlaylistButton(){
+		return waitAndClick(PlaylistHeaderViewCreatePlaylistButtonUIButton, 3, "myMusicPage.clickCreateNewPlaylistButton");
 	}
 	/**
 	 * Not even calling this yet. We can use it once Upsells are in place. 
 	 */
-	public void clickSubscribeButton(){
-		System.out.println("myMusicPage.clickSubscribeButtonOnUpsellCell(). ");
-		MyMusicUpsellCellActionButtonUIButton.click();
+	public boolean clickSubscribeButton(){
+		return waitAndClick(MyMusicUpsellCellActionButtonUIButton, 3, "myMusicPage.clickSubscribeButtonOnUpsellCell");
 		//on free - full screen upsell slide up.
 	}
 	/**
@@ -739,23 +649,13 @@ public class MyMusicPage extends Page{
 	 * @return
 	 */
 	public String getPlaylistsTitle(){
-		String playlistLabel = "";
-		if(waitForElementToBeVisible(PlaylistHeaderViewPlaylistLabelUILabel, 2)){
-			playlistLabel = PlaylistHeaderViewPlaylistLabelUILabel.getText();
-		}
-		System.out.println("myMusicPage.getPlaylistsTitle() : "+ playlistLabel);
-		return playlistLabel;
-		//should return PLAYLISTS
+		return waitAndGetText(PlaylistHeaderViewPlaylistLabelUILabel, 2, "myMusicPage.getPlaylistsTitle");
 	}
 	/**
 	 * This clicks the First Playlist cell in My Music. For free accounts  this will be the MyPlaylist. 
 	 */
-	public void clickFirstPlaylistInMyMusic(){
-		System.out.println("myMusicPage.clickMyPlaylist(): Clicking the first cell in the Playlist Collection with AID of 0 (if new acct with no playlists, then this is My Playlist)");
-		if(waitForElementToBeVisible(MyMusicViewPremiumPresenterPlaylistViewCellMyMusicViewCell0, 2)){
-			MyMusicViewPremiumPresenterPlaylistViewCellMyMusicViewCell0.click();
-		}
-		
+	public boolean clickFirstPlaylistInMyMusic(){
+		return waitAndClick(MyMusicViewPremiumPresenterPlaylistViewCellMyMusicViewCell0, 3, "myMusicPage.clickFirstPlaylistInMyMusic");
 	}
 	/**
 	 * This is prone to breaking as it parses a String and cuts out the first 'word',
@@ -763,15 +663,12 @@ public class MyMusicPage extends Page{
 	 * @return
 	 */
 	public int getNumberOfSongsInMyPlaylist(){
-		if(waitForElementToBeVisible(MyMusicCollapseableHeaderSubtitle2LabelUILabel, 2)){
-			String subtitle2 = MyMusicCollapseableHeaderSubtitle2LabelUILabel.getText();
+		int returnInt = -1;
+			String subtitle2 = waitAndGetText(MyMusicCollapseableHeaderSubtitle2LabelUILabel, 2, "");
 			String[] split2 = subtitle2.split(" ");
-			int returnInt = Integer.parseInt(split2[0]);
+			returnInt = Integer.parseInt(split2[0]);
 			System.out.println("myMusicPage.getNumberOfSongsInMyPlaylist(): " + returnInt);
 			return returnInt;
-		}
-		System.out.println("myMusicPage.getNumberOfSongsInMyPlaylist(): Something went wrong and the 'MyMusicCollapseableHeaderSubtitle2LabelUILabel' wasn't visible.");
-		return -1;
 	}
 	/**
 	 * text: [Radio and unlimited music on demand, all in one app.]

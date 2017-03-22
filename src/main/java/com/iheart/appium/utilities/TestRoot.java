@@ -325,6 +325,14 @@ public class TestRoot{
 			return false;
 		}
 	}
+	/**
+	 * Use this to get click on a IOSElement. 
+	 * Pass in the element, the time to wait for the element, and if possible, the pageObject and Method name as a String. 
+	 * @param iosElement
+	 * @param timeInSeconds
+	 * @param pageAndMethodName  ex: pageObject.clickOnCreateAccountButton 
+	 * @return
+	 */
 	public boolean waitAndClick(IOSElement iosElement, int timeInSeconds, String pageAndMethodName) {
 		boolean didClick = false;
 		if(waitForElementToBeVisible(iosElement, timeInSeconds)) {
@@ -338,6 +346,27 @@ public class TestRoot{
 			System.out.println(pageAndMethodName + "() : IOS Element["+splitUp[1] + "][ Did Click? : "+ didClick + "].");
 		}
 		return didClick;
+	}
+	/**
+	 * Use this to get text out of an IOSElement. 
+	 * Pass in the element, the time to wait for the element, and if possible, the pageObject and Method name as a String. 
+	 * @param iosElement
+	 * @param timeInSeconds     ex: 3 
+	 * @param pageAndMethodName  ex: pageObject.clickOnCreateAccountButton 
+	 * @return
+	 */
+	public String waitAndGetText(IOSElement iosElement, int timeInSeconds, String pageAndMethodName) {
+		String text = "";
+		if(waitForElementToBeVisible(iosElement, timeInSeconds)) {
+			text = iosElement.getText();
+		}
+		String[] splitUp = iosElement.toString().split(">");
+		if(pageAndMethodName.equals("")) {
+			System.out.println("waitAndGetText() : Element["+splitUp[1] + "][ Text : "+ text + "].");
+		}else {
+			System.out.println(pageAndMethodName + "() : IOS Element["+splitUp[1] + "][ Text : "+ text + "].");
+		}
+		return text;
 	}
 	
 /**
