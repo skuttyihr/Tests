@@ -24,6 +24,9 @@ public class TestNewAccount extends TestRoot {
 	@Rule
 	public ScreenshotRule screenshot = new ScreenshotRule();
 
+	@Rule
+	public RetryRule retry = new RetryRule(1);
+	
 	/**
 	 * Test: CreateNewAccount creates a new account in iOS. It fills out email,
 	 * password, zipcode, birth year(selection), gender, checks Terms and

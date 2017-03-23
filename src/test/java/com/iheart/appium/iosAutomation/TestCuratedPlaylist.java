@@ -12,7 +12,6 @@ import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;
 
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestCuratedPlaylist extends TestRoot {
 	
 	@Before
@@ -23,6 +22,9 @@ public class TestCuratedPlaylist extends TestRoot {
 	@Rule
 	public ScreenshotRule screenshot = new ScreenshotRule();
 
+	@Rule
+	public RetryRule retry = new RetryRule(1);
+	
 	@Test
 	public void CUR1_testPlaylistProfilePageMetadata_PLUS() {
 		LocalTime before = consoleLogStart("Testing elements on Curated Playlist Page Metadata - Plus User - testPlaylistProfilePageMetadata_CUR_1_PLUS().");

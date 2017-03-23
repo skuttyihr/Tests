@@ -24,6 +24,10 @@ public class TestArtistProfile extends TestRoot {
 	@Rule
 	public ScreenshotRule screenshot = new ScreenshotRule();
 
+	@Rule
+	public RetryRule retry = new RetryRule(1);
+	
+	
 	@Test
 	public void testArtistHero_ARTP1_FREE(){
 		LocalTime before = consoleLogStart("Testing elements on Artist Profile Page - testArtistProfileElements()");
