@@ -276,27 +276,27 @@ public class SearchPage extends Page {
 	 * Retaining those that show status after a method
 	 */
 	public void clickNavBarBackButton() {
-		//System.out.println("clickNavBarBackButton().");
+		System.out.println("clickNavBarBackButton().");
 		NavBarBackButtonUIButton.click();
 	}
 
 	public void clickShowAllArtists() {
-		//System.out.println("clickShowAllArtists().");
+		System.out.println("clickShowAllArtists().");
 		GlobalSearchDataSourceShowAllArtistsDisclosureCell.click();
 	}
 
 	public void clickShowAllPodcasts() {
-		//System.out.println("clickShowAllPodcasts().");
+		System.out.println("clickShowAllPodcasts().");
 		GlobalSearchDataSourceShowAllPodcastsDisclosureCell.click();
 	}
 
 	public void clickShowAllSongs() {
-		//System.out.println("clickShowAllSongs().");
+		System.out.println("clickShowAllSongs().");
 		GlobalSearchDataSourceShowAllSongsDisclosureCell.click();
 	}
 
 	public void clickShowAllLiveStations() {
-		//System.out.println("clickShowAllLiveStations().");
+		System.out.println("clickShowAllLiveStations().");
 		GlobalSearchDataSourceShowAllLiveStationsDisclosureCell.click();
 	}
 
@@ -314,7 +314,7 @@ public class SearchPage extends Page {
 	 * Click Cancel to get out of Search and back to other page.
 	 */
 	public void clickCancelButtonOnSearchBar() {
-		//System.out.println("clickCancelButtonOnSearchBar().");
+		System.out.println("clickCancelButtonOnSearchBar().");
 		IHRGlobalSearchBarCancelButtonUIButton.click();
 	}
 
