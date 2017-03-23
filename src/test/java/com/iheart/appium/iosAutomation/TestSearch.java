@@ -13,7 +13,6 @@ import org.openqa.selenium.By;
 
 import com.iheart.appium.utilities.TestRoot;
 
-import io.appium.java_client.SwipeElementDirection;
 import io.appium.java_client.ios.IOSElement;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -130,7 +129,7 @@ public class TestSearch extends TestRoot {
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@Test.com","test", "FREE"));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		String playlistName = "Workout Hits";
-		String expectedRadioType = "Playlist by iHeartRadio";
+//		String expectedRadioType = "Playlist by iHeartRadio";
 		searchPage.enterTextAndPressEnterIntoSearchBar(playlistName);
 		//searchPage.scrollSearchResultsCollectionView(SwipeElementDirection.DOWN, 100, 200, 100);
 		searchPage.clickFirstPlaylistCell();
@@ -143,7 +142,6 @@ public class TestSearch extends TestRoot {
 	}
 	
 	@Test
-	@Category(Stable.class)
 	public void testSearchPodcasts_SEA7_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testSearchPodcasts_SEA7_FREE() : Searching for 'starta', clicking First Podcast Cell, hoping for Podcast List of episodes");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@Test.com","test", "FREE"));
@@ -161,7 +159,6 @@ public class TestSearch extends TestRoot {
 	}
 	
 	@Test
-	@Category(Stable.class)
 	public void testSearchLive_SEA8_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testSearchLiveRadio() : Searching for 'rock', clicking First Live Station, hoping for Live Radio.");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@Test.com","test", "FREE"));

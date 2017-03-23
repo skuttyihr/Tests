@@ -6,11 +6,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
 import org.junit.rules.TestName;
 
 import com.iheart.appium.utilities.TestRoot;
-import com.iheart.appium.utilities.TestRoot.Stable;
 
 public class TestMiniPlayer extends TestRoot {
 
@@ -41,7 +39,6 @@ public class TestMiniPlayer extends TestRoot {
      * (todo)Play Artist in mini player if something is already playing. 
 	 */
 	@Test
-	@Category(Stable.class)
 	public void testMiniPlayerArtistRadio_MPLAY1_FREE() {
 		LocalTime before = consoleLogStart(
 				"Testing testMiniPlayerArtistRadio_MPLAY1_FREE() - login, start MiniPlayer for Artist Radio, show all elements, test functionality.");

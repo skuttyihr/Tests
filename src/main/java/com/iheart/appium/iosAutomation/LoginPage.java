@@ -113,7 +113,7 @@ public class LoginPage extends Page {
 
 		IHRAuthorizationViewEmailAddressTextField.click();
 		if (emailAddress != null) {
-			System.out.println("enterLoginEmailAddress() : " + emailAddress);
+			System.out.println("enterLoginEmailAddress()");
 			IHRAuthorizationViewEmailAddressTextField.sendKeys(emailAddress);
 		} else {
 			System.out.println("enterLoginEmailAddress() : " + IHEARTUSERNAME);
@@ -135,7 +135,7 @@ public class LoginPage extends Page {
 
 		IHRAuthorizationViewPasswordTextField.click();
 		if (password != null) {
-			System.out.println("enterLoginPassword() : " + password);
+			System.out.println("enterLoginPassword()");
 			IHRAuthorizationViewPasswordTextField.sendKeys(password);
 		} else {
 			System.out.println("enterLoginPassword() : " + IHEARTPASSWORD);
@@ -321,27 +321,9 @@ public class LoginPage extends Page {
 			btnAllow.click();
 		if (waitForElementToBeVisible(openInAppPrompt, 5))
 			openButton.click();
-		TestRoot.sleep(4000);
 		dismissStayConnectedPopup();
 		dismissLoginPopups();
 		return settingsPage.isLoggedIn();
-	}
-
-	public void dismissStayConnectedPopup() {
-		try {
-			waitForVisible(driver, By.name("Maybe Later"), 4).click();
-		} catch (Exception e) {
-		}
-	}
-
-	public void chooseStayConnected(boolean stayConnected) {
-		try {
-			if (stayConnected)
-				waitForVisible(driver, By.name("Get Notifications"), 2).click();
-			else
-				waitForVisible(driver, By.name("Maybe Later"), 1).click();
-		} catch (Exception e) {
-		}
 	}
 
 	// Tell us what you like

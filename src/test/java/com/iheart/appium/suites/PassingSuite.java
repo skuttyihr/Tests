@@ -22,8 +22,6 @@ import com.iheart.appium.utilities.TestRoot.Stable;
 	com.iheart.appium.iosAutomation.TestSearch.class,
 	com.iheart.appium.iosAutomation.TestOnboarding.class,
 	com.iheart.appium.iosAutomation.TestLogin.class,
-	com.iheart.appium.iosAutomation.TestNewAccount.class,
-	com.iheart.appium.iosAutomation.TestMiniPlayer.class,
 	com.iheart.appium.iosAutomation.TestFullPlayer.class,
 })
 
