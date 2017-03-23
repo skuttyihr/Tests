@@ -6,7 +6,6 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import com.iheart.appium.iosAutomation.AppboyUpsellsPage.Entitlement;
-import com.iheart.appium.iosAutomation.AppboyUpsellsPage.RepeatAction;
 import com.iheart.appium.utilities.Errors;
 import com.iheart.appium.utilities.TestRoot;
 import org.junit.FixMethodOrder;
@@ -54,7 +53,7 @@ public class TestAppboyUpsells extends TestRoot {
 		Assert.assertTrue("Upsell headline test for artist radio unlimited skips for free user failed." + err, err.noErrors());
 		err.add(appboyUpsellsPage.verifyUpsellPlusButtonState_FreeTrialEligibleUser());
 		Assert.assertTrue("Upsell headline test for artist radio unlimited skips for free user failed." + err, err.noErrors());
-		appboyUpsellsPage.repeatActionToTriggerUpsell(RepeatAction.SKIP);
+		fullPlayer.skipToTheLimit();
 		err.add(appboyUpsellsPage.verifyUpsellAAButtonState_FreeTrialEligibleUser());
 		Assert.assertEquals("Buttons state test for artist radio unlimited skips for free user failed.", 0, err.getErrors().length());
 		consoleLogEnd(before, err.noErrors(), "Tested Full Player Artist Radio Unmlimited Skips Upsell for Free TrialEligible User");	
@@ -72,7 +71,7 @@ public class TestAppboyUpsells extends TestRoot {
 		err.add(appboyUpsellsPage.verifyUpsellHeadlineIsAsExpected(appboyUpsellsPage.ARTISTRADIOFULLPLAYER_SKIP));	
 		Assert.assertTrue("Upsell headline test for artist radio unlimited skips for free user failed." + err, err.noErrors());
 		err.add(appboyUpsellsPage.verifyUpsellPlusButtonState_FreeTrialExpiredUser());
-		appboyUpsellsPage.repeatActionToTriggerUpsell(RepeatAction.SKIP);
+		fullPlayer.skipToTheLimit();
 		err.add(appboyUpsellsPage.verifyUpsellAAButtonState_FreeTrialExpiredUser());
 		Assert.assertTrue("Buttons state test for artist radio unlimited skips for free user failed." + err, err.noErrors());
 		consoleLogEnd(before, err.noErrors(), "Tested Full Player Artist Radio Unmlimited Skips Upsell for Free TrialExpired User");	

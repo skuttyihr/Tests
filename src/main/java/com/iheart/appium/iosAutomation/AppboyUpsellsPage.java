@@ -90,7 +90,6 @@ public class AppboyUpsellsPage extends Page{
 	}
 	
 	public enum Entitlement {FREE, PLUS, ALLA};
-	public enum RepeatAction {SKIP, REPLAY, ADDTOPLAYLIST};
 
 	/**
 	 * sk - 2/24 - getting upsell text after appboy upsells kicked in
@@ -329,23 +328,8 @@ public class AppboyUpsellsPage extends Page{
 				err.add("Free trial eligibile user: 'Start 30 day Free Trial' All Access Button was not active and could not connect to App Store.");
 			}
 		}
+		else
+			err.add("Upsell is not displayed.");
 		return err;
 	}	
-	
-	/** sk - 2/28 - when verifying that upsell buttons for Plus and AA work, this method is used to repeat the action that trigerred the upsell
-	 * to run the AllAccess button state test (Plus button verification closes it).
-	 * 
-	 * @param r   - says which action is being tested
-	 * 2/5 - enum implemented
-	 */
-	public void repeatActionToTriggerUpsell(RepeatAction r) {
-		if (r == RepeatAction.REPLAY) {
-			fullPlayer.clickReplayButtonToOpenReplayModal();
-			System.out.println("Repeated action: Replay button clicked.");
-		}
-		else if (r == RepeatAction.SKIP) {
-			fullPlayer.clickSkipButton();
-			System.out.println("Repeated action: Skip button clicked.");
-		}		
-	}
 }	

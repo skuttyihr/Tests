@@ -321,17 +321,21 @@ public class TestRoot{
 	 * @return
 	 */
 	public boolean printElementName(IOSElement element) {
+		if (element == null) {
+			System.out.println("printElementName(): element is null.");
+			return false;
+		}
 		String getText = "";
 		String value = "";
 		String label = "";
 			
 		if (!isVisible(element)) {
-			if (waitForElementToBeVisible(element, 5)  || (waitForVisible(driver, By.xpath(element.getAttribute("xpath")), 5) == null)) {
+			if (waitForElementToBeVisible(element, 5)) {
 				System.out.println("element is null or is not visible.");
 				return false;
 			}
 		}	
-		getText = element.getAttribute("name");
+		getText = element.getText();
 		value = element.getAttribute("value");
 		label = element.getAttribute("label");
 		
