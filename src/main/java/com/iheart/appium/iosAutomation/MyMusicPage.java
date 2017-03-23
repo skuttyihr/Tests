@@ -571,11 +571,14 @@ public class MyMusicPage extends Page{
 		return waitAndClick(MyMusicPlaylistViewControllerOverflowBarButtonItemUIBarButtonItem, 2, "myMusicPage.clickPlaylistOverflowButton");
 	}
 	/**
-	 * Clicks the delete Playlist on the Playlist Overflow. A confirm Modal will popup after this. 
+	 * Clicks the delete Playlist on the Playlist Overflow. A confirm Modal will popup after this.
+	 * Sleeps help here on modals, better to use them than waitFors.  
 	 * @return true if method worked
 	 */
-	public boolean clickDeletePlaylistOnPlaylistOverflow(){
-		return waitAndClick(deletePlaylistOverflowButton, 2, "myMusicPage.clickDeletePlaylistOnPlaylistOverflow");
+	public void clickDeletePlaylistOnPlaylistOverflow(){
+		sleep(2000);
+		System.out.println("myMusicPage.clickDeletePlaylistOnPlaylistOverflow().");
+		deletePlaylistOverflowButton.click();
 	}
 	/**
 	 * This clicks the Delete button to confirm the Delete Playlist. 
@@ -628,8 +631,23 @@ public class MyMusicPage extends Page{
 	 * It launches a Create New Playlist Modal that takes in text input. 
 	 * Expect to run enterNewPlaylistNameAndClickCreate() next. 
 	 */
-	public boolean clickCreateNewPlaylistButton(){
-		return waitAndClick(PlaylistHeaderViewCreatePlaylistButtonUIButton, 3, "myMusicPage.clickCreateNewPlaylistButton");
+	public void clickCreateNewPlaylistButton(){
+		System.out.println("myMusicPage.clickCreateNewPlaylistButton()");
+		PlaylistHeaderViewCreatePlaylistButtonUIButton.click();
+		//return waitAndClick(PlaylistHeaderViewCreatePlaylistButtonUIButton, 3, "myMusicPage.clickCreateNewPlaylistButton");
+	}
+	/**
+	 * This enters the string param into the new playlist modal and clicks the Create button. 
+	 * Expect this playlist to pop up into the first cell in MyMusic.
+	 * @param string
+	 * @return
+	 */
+	public String enterNewPlaylistNameAndClickCreate(String string) {
+		System.out.println("myMusicPage.enterNewPlaylistNameAndClickCreate() : "+ string);
+		playlistNameTextBoxCreateNew.sendKeys(string);
+		createPlaylistModalButton.click();
+		return string;
+		
 	}
 	/**
 	 * Not even calling this yet. We can use it once Upsells are in place. 
@@ -700,20 +718,7 @@ public class MyMusicPage extends Page{
 	public String getInitialMessageDismissLabel(){
 		return waitAndGetText(MyMusicInitialMessageViewControllerDismissLabelUILabel, 2, "myMusicPage.getInitialMessageDismissLabel");
 	}
-	/**
-	 * This enters the string param into the new playlist modal and clicks the Create button. 
-	 * Expect this playlist to pop up into the first cell in MyMusic.
-	 * @param string
-	 * @return
-	 */
-	public String enterNewPlaylistNameAndClickCreate(String string) {
-		System.out.println("myMusicPage.enterNewPlaylistNameAndClickCreate() : "+ string);
-		playlistNameTextBoxCreateNew.sendKeys(string);
-		System.out.println("myMusicPage.Clicking on 'Create' button");
-		waitAndClick(createPlaylistModalButton, 2, "");
-		return string;
-		
-	}
+
 	/**
 	 * This appends text to the Rename dialog's textbox which already contains the current playlist. 
 	 * @param string
@@ -767,7 +772,10 @@ public class MyMusicPage extends Page{
 	 * This clicks the Cancel button on the top left of the Edit Playlist. 
 	 */
 	public boolean clickCancelButtonWhileEditingPlaylist() {
-		return waitAndClick(MyMusicPlaylistViewControllerCancelButtonUIBarButtonItem, 3, "myMusicPage.clickCancelButtonWhileEditingPlaylist");	
+		System.out.println("clickCancelButtonWhileEditingPlaylist()");
+		MyMusicPlaylistViewControllerCancelButtonUIBarButtonItem.click();
+		return true;
+		//return waitAndClick(MyMusicPlaylistViewControllerCancelButtonUIBarButtonItem, 5, "myMusicPage.clickCancelButtonWhileEditingPlaylist");	
 	}
 	/**
 	 * This clicks the Show All Playlists Cell when there are 2 or more playlists. 
