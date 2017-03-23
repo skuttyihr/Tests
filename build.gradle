@@ -37,6 +37,7 @@ sourceSets {
 }
 
 test{
+	exclude "src/Suites/*"
     useJUnit()
     testLogging {
         exceptionFormat = 'full'

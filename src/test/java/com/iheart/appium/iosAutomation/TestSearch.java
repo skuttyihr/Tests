@@ -8,11 +8,11 @@ import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.openqa.selenium.By;
 
 import com.iheart.appium.utilities.TestRoot;
 
-import io.appium.java_client.SwipeElementDirection;
 import io.appium.java_client.ios.IOSElement;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -26,6 +26,8 @@ public class TestSearch extends TestRoot {
 	@Rule
 	public ScreenshotRule screenshot = new ScreenshotRule();
 	
+	@Rule
+	public RetryRule retry = new RetryRule(1);
 	
 	@Test
 	public void testSearchPageResults_SEA1_FREE(){
@@ -50,7 +52,9 @@ public class TestSearch extends TestRoot {
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		consoleLogEnd(before, true, "Tested testSearchPageTextfield_SEA2_FREE");
 	}
+	
 	@Test
+	@Category(Stable.class)
 	public void testNoResults_SEA3_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testNoResults_SEA3_FREE() : Testing testNoResults");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@Test.com","test", "FREE"));
@@ -76,7 +80,9 @@ public class TestSearch extends TestRoot {
 
 		
 	}
+	
 	@Test
+	@Category(Stable.class)
 	public void testSearchTrack_SEA4_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testSearchTrack_SEA4_FREE() : Searching a song, clicking Top Result, hoping for Artist Radio.");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@Test.com","test","FREE"));
@@ -97,6 +103,7 @@ public class TestSearch extends TestRoot {
 		
 	}
 	@Test
+	@Category(Stable.class)
 	public void testSearchArtist_SEA5_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testSearchArtist_SEA5_FREE() : Searching a song, clicking Top Result, hoping for Artist Radio.");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@Test.com","test", "FREE"));
@@ -116,13 +123,13 @@ public class TestSearch extends TestRoot {
 	}
 	
 	@Test
-	//@Ignore
+	@Category(Stable.class)
 	public void testSearchPlaylist_SEA6_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testSearchPlaylist_SEA6_FREE() : Searching a song, clicking Top Result, hoping for Artist Radio.");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@Test.com","test", "FREE"));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		String playlistName = "Workout Hits";
-		String expectedRadioType = "Playlist by iHeartRadio";
+//		String expectedRadioType = "Playlist by iHeartRadio";
 		searchPage.enterTextAndPressEnterIntoSearchBar(playlistName);
 		//searchPage.scrollSearchResultsCollectionView(SwipeElementDirection.DOWN, 100, 200, 100);
 		searchPage.clickFirstPlaylistCell();
@@ -150,6 +157,7 @@ public class TestSearch extends TestRoot {
 		consoleLogEnd(before, true, "<<<<<testSearchPodcasts_SEA7_FREE() : ");
 		
 	}
+	
 	@Test
 	public void testSearchLive_SEA8_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testSearchLiveRadio() : Searching for 'rock', clicking First Live Station, hoping for Live Radio.");

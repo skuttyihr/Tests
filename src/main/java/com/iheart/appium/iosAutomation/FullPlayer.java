@@ -292,8 +292,8 @@ public class FullPlayer extends Page {
 				else noButton.click();
 				System.out.println("Clicked on Yes Button to unFavorite the station");
 			}
-		IOSElement maybeLater = waitForVisible(driver, By.name("Maybe Later"), 5);
-		IOSElement NotifyMe = waitForVisible(driver, By.name("Notify Me"), 5);
+		IOSElement maybeLater = Page.getMaybeLater(driver, 10);
+		IOSElement NotifyMe = Page.getNotifyMe(driver, 10);
 		if(maybeLater != null && NotifyMe!=null){
 			if(clickMaybeLater){
 				maybeLater.click();

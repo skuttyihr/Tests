@@ -11,7 +11,6 @@ import org.junit.rules.TestName;
 import com.iheart.appium.utilities.Errors;
 import com.iheart.appium.utilities.TestRoot;
 
-
 public class TestCuratedPlaylist extends TestRoot {
 	
 	@Rule
@@ -25,6 +24,9 @@ public class TestCuratedPlaylist extends TestRoot {
 	@Rule
 	public ScreenshotRule screenshot = new ScreenshotRule();
 
+	@Rule
+	public RetryRule retry = new RetryRule(1);
+	
 	@Test
 	public void testPlaylistProfilePageMetadata_CUR1_PLUS() {
 		LocalTime before = consoleLogStart("Testing elements on Curated Playlist Page Metadata - Plus User - testPlaylistProfilePageMetadata_CUR_1_PLUS().");

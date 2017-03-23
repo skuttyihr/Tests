@@ -7,9 +7,11 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.rules.TestName;
 
 import com.iheart.appium.utilities.TestRoot;
+import com.iheart.appium.utilities.TestRoot.Stable;
 
 public class TestFullPlayer extends TestRoot {
 
@@ -24,6 +26,9 @@ public class TestFullPlayer extends TestRoot {
 	@Rule
 	public ScreenshotRule screenshot = new ScreenshotRule();
 
+	@Rule
+	public RetryRule retry = new RetryRule(1);
+	
 	/**
 	 * 1. Login with Free user, Search for an Artist, Click Top Result, open Full Player, Show all elements.
 	 * Verify Nav Bar Elements - Down Arrow, Favorite Button, Share Button, Cast Button
@@ -39,6 +44,7 @@ public class TestFullPlayer extends TestRoot {
 		Verify Slider, PlayButton, Forward, More, Thumb Down, Thumb Up, Title (track), Subtitle (artist)
 	 */
 	@Test
+	@Category(Stable.class)
 	public void testFullPlayer_FPLAY1_FREE() {
 		LocalTime before = consoleLogStart("Testing testFullPlayer_FPLAY1_FREE");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test66@Test.com", "test", "FREE"));
@@ -246,6 +252,7 @@ public class TestFullPlayer extends TestRoot {
 	 * It then skips 8 times and then Replays the Last three tracks, Track 3, Track 2, Track 1.
 	 */
 	@Test
+	@Category(Stable.class)
 	public void testFullPlayerSaveReplaySkip_FPLAY5_ALLA(){
 		LocalTime before = consoleLogStart("Testing testFullPlayerSaveReplaySkip_FPLAY5_ALLA()");
 		Assert.assertTrue("Should log in successfully to ALLA account.",loginPage.loginVerifyEntitlement(IHEARTPREMIUMUSERNAME, IHEARTPREMIUMPASSWD, "ALLA"));
