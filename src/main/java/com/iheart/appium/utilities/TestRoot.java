@@ -339,6 +339,10 @@ public class TestRoot{
 			iosElement.click();
 			didClick = true;
 		}
+		if(iosElement == null) {
+			System.out.println("waitAndClick() : ELEMENT WAS NULL!");
+			return false;
+		}
 		String[] splitUp = iosElement.toString().split(">");
 		if(pageAndMethodName.equals("")) {
 			System.out.println("waitAndClick() : Element["+splitUp[1] + "][ Did Click? : "+ didClick + "].");
