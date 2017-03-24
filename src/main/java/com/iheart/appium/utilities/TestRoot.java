@@ -25,6 +25,8 @@ import javax.imageio.stream.ImageOutputStream;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.rules.MethodRule;
+import org.junit.rules.TestRule;
+import org.junit.runner.Description;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.Statement;
 import org.openqa.selenium.By;
@@ -41,6 +43,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.iheart.appium.iosAutomation.AddToPlaylistPage;
 import com.iheart.appium.iosAutomation.AlbumProfilePage;
+import com.iheart.appium.iosAutomation.AppboyUpsellsPage;
 import com.iheart.appium.iosAutomation.ArtistProfileOverflowPage;
 import com.iheart.appium.iosAutomation.ArtistProfilePage;
 import com.iheart.appium.iosAutomation.CuratedPlaylistPage;
@@ -63,20 +66,26 @@ import com.iheart.appium.iosAutomation.SignUpPage;
 import com.iheart.appium.iosAutomation.UpsellPage;
 
 import io.appium.java_client.MobileBy;
+import io.appium.java_client.MobileElement;
 import io.appium.java_client.MultiTouchAction;
 import io.appium.java_client.TouchAction;
+import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
 import src.main.java.testCommons.*;
 
 public class TestRoot{
 
+	// Suite categories
+	public static interface Stable{
+	}
+	
 	protected static final int UP = 0;
 	protected static final int RIGHT = 1;
 	protected static final int DOWN = 2;
 	protected static final int LEFT = 3;
 
-	protected static int implicitWaitTimeout = 375;
+	protected static int implicitWaitTimeout = 500;
 
 	protected static IOSDriver<IOSElement> driver;
 
@@ -110,7 +119,7 @@ public class TestRoot{
 	protected static ArtistProfileOverflowPage artistProfileOverflowPage;
 	protected static AlbumProfilePage albumProfilePage;
 	protected static CuratedPlaylistPage curatedPlaylistPage;
-
+	protected static AppboyUpsellsPage appboyUpsellsPage;
 
 	// New On Demand Elements
 	protected static ArtistProfilePage artistProfilePage;
@@ -133,12 +142,14 @@ public class TestRoot{
 	protected static String IHEARTFREEPASSWD;
 	protected static String IHEARTPLUSPASSWD;
 	protected static String IHEARTPREMIUMPASSWD;
+	protected static String IHEARTFREETRIALEXPUSERNAME;
+	protected static String IHEARTFREETRIALEXPPASSWD;
 
 	// Screenshot directory and URL
 	protected static String SCREENSHOT_DIRECTORY;
 	protected static String SCREENSHOT_URL;
 
-	protected static void setup() {
+	protected static boolean setup() {
 		System.out.println("TestRoot.setup()");
 		String appiumUrl = "";
 		String appiumPort = "";
@@ -194,10 +205,12 @@ public class TestRoot{
 		IHEARTFREEUSERNAME = LoadProperties.getProperties(passwords, "IHEART.FREE.USERNAME");
 		IHEARTPLUSUSERNAME = LoadProperties.getProperties(passwords, "IHEART.PLUS.USERNAME");
 		IHEARTPREMIUMUSERNAME = LoadProperties.getProperties(passwords, "IHEART.PREMIUM.USERNAME");
+		IHEARTFREETRIALEXPUSERNAME = LoadProperties.getProperties(passwords, "IHEART.FREETRIALEXP.USERNAME");
 		IHEARTPASSWORD = LoadProperties.getProperties(passwords, "IHEART.PASSWORD");
 		IHEARTFREEPASSWD = LoadProperties.getProperties(passwords, "IHEART.FREE.PASSWORD");
 		IHEARTPLUSPASSWD = LoadProperties.getProperties(passwords, "IHEART.PLUS.PASSWORD");
 		IHEARTPREMIUMPASSWD = LoadProperties.getProperties(passwords, "IHEART.PREMIUM.PASSWORD");
+		IHEARTFREETRIALEXPPASSWD = LoadProperties.getProperties(passwords, "IHEART.FREETRIALEXP.PASSWORD");
 		FACEBOOKUSERNAME = LoadProperties.getProperties(passwords, "FACEBOOK.USERNAME");
 		FACEBOOKFULLNAME = LoadProperties.getProperties(passwords, "FACEBOOK.FULLNAME");
 		FACEBOOKPASSWORD = LoadProperties.getProperties(passwords, "FACEBOOK.PASSWORD");
@@ -241,11 +254,11 @@ public class TestRoot{
 			capabilities.setCapability("udid", UDID);
 		}
 
+		
 		// Start the driver
 		try {
 			driver = new IOSDriver<IOSElement>(url, capabilities);
 		} catch (Exception e) {
-
 			System.err.println(
 					"Could not start driver. Emulator or device may be unavailable. Appium may have disconnected or stopped. Sleeping 30 seconds to retry.\n"
 							+ "Properties:\n" + "Device name: " + DEVICE_NAME + "\n" + "UDID: " + UDID + "\n"
@@ -253,13 +266,40 @@ public class TestRoot{
 							+ "IPA/App file name: " + IPA_NAME + "\n" + "Using simulator: " + SIMULATOR + "\n"
 							+ "Appium URL: " + appiumUrl + "\n" + "Appium port: " + appiumPort + "\n" + "Model name: "
 							+ MODEL + "\n");
-			for (int i = 30; i > 0; i -= 5) {
-				System.err.println("Retrying in: " + i + "...");
-				sleep(5000);
+			
+			
+			// Retry a few times until we get it right
+			int maxRetries = 7;
+			int secondDelay = 30;
+			for (int retry = 0; retry < maxRetries; retry++){
+	    		// Delay for X seconds before retrying
+	        	for(int i = secondDelay; i > 0; i--){
+	        		if (i % 5 == 0){
+	        			System.err.println("Retrying in: " + i + "...");
+	        		}
+	        		sleep(1000);
+	        	}
+	        	
+	        	// Attempt to restart the driver
+	        	System.err.println("RETRYING INITIALIZATION (" + (retry + 1) + " tries so far).");
+	        	try{
+	        		driver = new IOSDriver<IOSElement>(url, capabilities);
+	        	}
+	        	catch(Exception e2){
+	    			driver = null;
+	        	}
+	        	
+	        	if (driver != null){
+	        		System.out.println("Success!");
+	        		break;
+	        	}
 			}
-			System.err.println("LAST CHANCE... TRYING TO START APPIUM BEFORE RETRYING DRIVER INITIALIZATION...\n");
-			driver = new IOSDriver<IOSElement>(url, capabilities);
-			sleep(100);
+			
+			// If it still hasn't gotten this right, stop trying
+			if (driver == null){
+				System.err.println("\n\n\nCould not start driver. Is a device/emulator connected? Is the Jenkins Build Agent active?\n\n\n");
+				return false;
+			}
 		}
 
 		// Create pages and set driver status
@@ -282,8 +322,7 @@ public class TestRoot{
 		artistProfilePage = new ArtistProfilePage(driver);
 		artistProfileOverflowPage = new ArtistProfileOverflowPage(driver);
 		albumProfilePage = new AlbumProfilePage(driver);
-		myMusicPage = new MyMusicPage(driver);
-		addToPlaylistPage = new AddToPlaylistPage(driver);
+		curatedPlaylistPage = new CuratedPlaylistPage(driver);
 		driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 		System.out.println("Testing on: " + MODEL);
 
@@ -292,6 +331,8 @@ public class TestRoot{
 
 		// Wait for OnboardingPage to display
 		onboardingPage.waitForOnboardingPage();
+		
+		return driver != null;
 	}
 
 	public String stringifyElementInformation(IOSElement iosElement) {
@@ -382,16 +423,17 @@ public class TestRoot{
 		String getText = "";
 		String value = "";
 		String label = "";
-			
+
 		if (!isVisible(element)) {
-			waitForElementToBeVisible(element, 5);
-			System.out.println("element is null or is not visible.");
-			return false;
+			if (!waitForElementToBeVisible(element, 5)) {
+				System.out.println("element is null or is not visible.");
+				return false;
+			}
 		}	
-		getText = element.getAttribute("name");
+		getText = element.getText();
 		value = element.getAttribute("value");
 		label = element.getAttribute("label");
-		
+
 		if ( getText != null) 
 			System.out.println("Element '" + getText + "' is displayed.");
 		else if (value != null) 
@@ -838,17 +880,17 @@ public class TestRoot{
 	}
 
 	//// Waiting Methods ////
-	//sk - 2/24 - the method was returning false even when the element was displayed as there was no 'return true' stea
+	//sk - 2/24 - the method was returning false even when the element was displayed as there was no 'return true'
 	public static boolean isVisible(IOSElement e) {
 		boolean isVisible = false;
 		if (e == null) {
-			//System.out.println("Failing in isVisible(), element is being sent as null");
+			System.out.println("Failing in isVisible(), element is being sent as null");
 			return false;
 		}
 		try {
 			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 			isVisible = e.isDisplayed();
-			//System.out.println("isDisplayed() in isVisible(): " +  isVisible);
+			System.out.println("isDisplayed() in isVisible(): " +  isVisible);
 			return isVisible;
 		} catch (Exception x) {
 		} finally {
@@ -864,13 +906,12 @@ public class TestRoot{
 		try {
 			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 			isEnabled = e.isEnabled();
-			//System.out.println("isEnabled(): " + isEnabled);			
-			return true;
+			System.out.println("isEnabled() in isVisible(): " + isEnabled);			
+			return isEnabled;
 		} catch (Exception x) {
 		} finally {
 			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 		}
-
 		return isEnabled;
 	}
 
@@ -946,7 +987,6 @@ public class TestRoot{
 			// searching for element
 			timeLeftMil -= 1000;
 		}
-
 		return isVisible(ele);
 	}
 
@@ -963,6 +1003,7 @@ public class TestRoot{
 			try {
 				driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
 				if (ele.isEnabled()) {
+					System.out.println("WaitForElementToBeEnabled(): Element is enabled");
 					break;
 				}
 			} catch (Exception e) {
@@ -1008,22 +1049,7 @@ public class TestRoot{
 			try {
 				ele.click();
 				couldClick = true;
-			} catch (Exception e) {
-				try {
-					System.out.println("Error clicking element (see below), retyring.");
-					System.out.println(e.getMessage());
-					int x = ele.getLocation().getX();
-					int y = ele.getLocation().getY();
-					d.tap(1, x, y, 300);
-					couldClick = true;
-				} catch (Exception e1) {
-					System.err.println("Could not click element!");
-					System.out.println("Error 1:");
-					e.printStackTrace();
-					System.out.println("\n\nError 2:");
-					e1.printStackTrace();
-				}
-			}
+			} catch (Exception e) {}
 		}
 
 		return couldClick;
@@ -1108,6 +1134,59 @@ public class TestRoot{
 
 	}
 
+	/**
+	 * Retries is there is a failure related to a session termination, not an assert or other exception
+	 * @author daniellegolinsky
+	 *
+	 */
+	public class RetryRule implements TestRule{
+		int retries = 1; // default
+		public RetryRule(){
+			this.retries = 1;
+		}
+		public RetryRule(int r){
+			this.retries = r;
+		}
+		
+		@Override
+		public Statement apply(Statement base, Description description) {
+			return statement(base, description);
+		}
+		
+		private Statement statement(final Statement base, final Description description){
+			return new Statement(){
+				@Override
+				public void evaluate() throws Throwable {
+					// Save the exception for the end of the retries
+					Throwable caughtThrowable = null;
+					
+					for (int i = 0; i < retries; i++){
+						try{
+							base.evaluate();
+							return; // End
+						}
+						catch (Throwable t){
+							System.out.println(t);
+							caughtThrowable = t;
+							// Only retry if it was a driver issue, not an assertion
+							if(!(t instanceof java.lang.AssertionError)
+									&& t.getMessage().contains("session is either terminated or not started")){
+								System.err.println("\n\nRun #" + (i + 1) + " failed, may retry.");
+							}
+							else{
+								throw t;
+							}
+						}
+					}
+					if (caughtThrowable != null){
+						throw caughtThrowable;
+					}
+				}
+			};
+		}
+	}
+	
+	
 	/**
 	 * Screenshot Rule Runs after every test. If the test passed, this runs the
 	 * usual shutdown method If it failed, it takes a screenshot, then runs the

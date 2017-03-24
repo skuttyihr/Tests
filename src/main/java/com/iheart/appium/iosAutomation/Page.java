@@ -3,6 +3,8 @@ package com.iheart.appium.iosAutomation;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.PageFactory;
 
+import com.iheart.appium.iosAutomation.AppboyUpsellsPage.Entitlement;
+import com.iheart.appium.utilities.Errors;
 import com.iheart.appium.utilities.TestRoot;
 
 //import org.apache.log4j.Logger;
@@ -90,7 +92,83 @@ public class Page extends TestRoot {
 		// navBar = PageFactory.initElements(driver, SideNavigationBar.class);
 		// player = PageFactory.initElements(driver, Player.class);
 	}
+	
+	
+	//////////////////////
+	//		Getters		//
+	//////////////////////
+	
+	public static IOSElement getMaybeLater(IOSDriver<IOSElement> d){
+		return getMaybeLater(d, 5);
+	}
+	
+	public static IOSElement getMaybeLater(IOSDriver<IOSElement> d, int maxWait){
+		return waitForVisible(d, By.name("Maybe Later"), maxWait);
+	}
+	
+	public static IOSElement getNoThanks(IOSDriver<IOSElement> d){
+		return waitForVisible(driver, By.name("No Thanks"), 5);
+	}
+	
+	public static IOSElement getNotifyMe(IOSDriver<IOSElement> d){
+		return getMaybeLater(d, 5);
+	}
+	
+	public static IOSElement getNotifyMe(IOSDriver<IOSElement> d, int maxWait){
+		return waitForVisible(d, By.name("Notify Me"), maxWait);
+	}
 
+	
+	/**
+	 * Scroll to the bottom of a list until a show more button displays
+	 * 
+	 * @return
+	 */
+	public static IOSElement swipeToShowMore() { // TODO
+		IOSElement showMore = null;
+		boolean foundShowMore = false;
+		for (int i = 0; i < 7; i++) {
+			if (foundShowMore) {
+				break;
+			}
+			swipeUp();
+			showMore = findElement(driver, By.name("Show More"));
+			if (isVisible(showMore)) {
+				foundShowMore = true;
+				break;
+			} else {
+				// There's a chance that we're on My Stations, and it found the
+				// For You show more button by name
+				int offset = 2;
+				do {
+					showMore = findElement(driver, By
+							.xpath("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIAButton[" + offset + "]"));
+					if (isVisible(showMore)) {
+						foundShowMore = true;
+						break;
+					}
+					offset++;
+				} while (!isVisible(showMore) && offset < 5);
+			}
+		}
+
+		if (showMore == null) {
+			return null;
+		}
+		swipeUp(); // In case mini player is hiding it
+		return showMore;
+	}
+	
+	public static IOSElement getStationFromList(int selector) {
+		String xpathForItem = "//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell[" + selector
+				+ "]";
+		return waitForVisible(driver, find(xpathForItem, "xpath"), 5);
+	}
+	
+	//////////////////////
+	//		Actions		//
+	//////////////////////
+	
 	// The popup: Like iHeartRadio? Let us know!
 	public void likeIheart() {
 
@@ -125,22 +203,12 @@ public class Page extends TestRoot {
 		return winHandleBefore;
 	}
 
-	public static IOSElement getStationFromList(int selector) {
-		String xpathForItem = "//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIACollectionCell[" + selector
-				+ "]";
-		return waitForVisible(driver, find(xpathForItem, "xpath"), 5);
-	}
-
 	// Want your local radio?
 	public static void handlePossiblePopUp() {
 		try {
 			IOSElement dismiss = waitForVisible(driver, By.name("No Thanks"), 3);
 			if (!isVisible(dismiss)) {
-				dismiss = findElement(driver, By.name("Maybe Later")); // Has
-																		// already
-																		// waited
-																		// 3
-																		// seconds
+				dismissStayConnectedPopup();
 			}
 			if (isVisible(dismiss)) {
 				dismiss.click();
@@ -149,9 +217,21 @@ public class Page extends TestRoot {
 		} // No chance of this failing a test
 	}
 
+	public static void dismissStayConnectedPopup() {
+		chooseStayConnected(false);
+	}
+
+	public static void chooseStayConnected(boolean stayConnected) {
+		if (stayConnected)
+			click(driver, waitForVisible(driver, By.name("Get Notifications"), 20));
+		else{
+			click(driver, getMaybeLater(driver, 20));
+		}
+	}
+	
 	public static void quickDismissPopUp() {
-		IOSElement noThanks = findElement(driver, By.name("No Thanks"));
-		IOSElement maybeLater = findElement(driver, By.name("Maybe Later"));
+		IOSElement noThanks = getNoThanks(driver);
+		IOSElement maybeLater = getMaybeLater(driver);
 		if (isVisible(noThanks)) {
 			noThanks.click();
 		} else if (isVisible(maybeLater)) {
@@ -201,46 +281,6 @@ public class Page extends TestRoot {
 		NavBarBackButton.click();
 	}
 
-	/**
-	 * Scroll to the bottom of a list until a show more button displays
-	 * 
-	 * @return
-	 */
-	public static IOSElement swipeToShowMore() { // TODO
-		IOSElement showMore = null;
-		boolean foundShowMore = false;
-		for (int i = 0; i < 7; i++) {
-			if (foundShowMore) {
-				break;
-			}
-			swipeUp();
-			showMore = findElement(driver, By.name("Show More"));
-			if (isVisible(showMore)) {
-				foundShowMore = true;
-				break;
-			} else {
-				// There's a chance that we're on My Stations, and it found the
-				// For You show more button by name
-				int offset = 2;
-				do {
-					showMore = findElement(driver, By
-							.xpath("//UIAApplication[1]/UIAWindow[1]/UIACollectionView[1]/UIAButton[" + offset + "]"));
-					if (isVisible(showMore)) {
-						foundShowMore = true;
-						break;
-					}
-					offset++;
-				} while (!isVisible(showMore) && offset < 5);
-			}
-		}
-
-		if (showMore == null) {
-			return null;
-		}
-		swipeUp(); // In case mini player is hiding it
-		return showMore;
-	}
-
 	public static boolean clickShowMore() {
 		IOSElement showMore = findElement(driver, By.name("Show More"));
 		IOSElement showMoreMyStations = findElement(driver,
@@ -261,4 +301,42 @@ public class Page extends TestRoot {
 
 		return false;
 	}
+	
+	/** sk - 2/24 - helper method originally developed for Appboy Upsell testing
+	 * Used to login, play the top result, and open the full player
+	 * @param free
+	 * @param isTrialEligible
+	 * @param stationName
+	 * @return
+	 */
+	public static Errors playStationOpenFullPlayer(Entitlement entitlement, boolean isTrialEligible, String stationName) {
+		Errors err = new Errors();
+		login(entitlement, isTrialEligible);
+		homePage.clickNavBarSearchButtonToOpenSearch();
+		if (miniPlayer.getMiniPlayer()) {
+			if (!miniPlayer.getTypeOfPlayButton().equals("Play"))  //if station is not in paused or stopped state, then tap the play button
+			miniPlayer.clickPlayPauseButton();
+		}
+		searchPage.searchAndPlayTopResults(stationName);		
+		err.add(miniPlayer.openFullPlayer());
+		System.out.println("Full player opened, playing " + stationName + " Radio");
+		return err;
+	}
+	
+	/** sk - 2/24 - helper method originally developed for Appboy Upsell testing 
+	 * Used to login as a user with certain entitlements
+	 * @param free
+	 * @param isTrialEligible
+	 * @return
+	 */
+	public static void login(Entitlement e, boolean isTrialEligible)  {
+		if (e == Entitlement.FREE && isTrialEligible ==  true)
+			loginPage.loginVerifyEntitlement(IHEARTFREEUSERNAME, IHEARTFREEPASSWD,"FREE");
+		else if(e == Entitlement.FREE && isTrialEligible ==  false)
+			loginPage.loginVerifyEntitlement(IHEARTFREETRIALEXPUSERNAME, IHEARTFREETRIALEXPPASSWD,"FREE");
+		else if(e == Entitlement.PLUS)
+			loginPage.loginVerifyEntitlement(IHEARTPLUSUSERNAME, IHEARTPLUSPASSWD, "PLUS");
+		else
+			loginPage.loginVerifyEntitlement(IHEARTPREMIUMUSERNAME, IHEARTPREMIUMPASSWD, "ALLA");
+	}		
 }

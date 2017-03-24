@@ -113,7 +113,7 @@ public class LoginPage extends Page {
 
 		waitAndClick(IHRAuthorizationViewEmailAddressTextField, 5, "");
 		if (emailAddress != null) {
-			System.out.println("enterLoginEmailAddress() : " + emailAddress);
+			System.out.println("enterLoginEmailAddress()");
 			IHRAuthorizationViewEmailAddressTextField.sendKeys(emailAddress);
 		} else {
 			System.out.println("enterLoginEmailAddress() : " + IHEARTUSERNAME);
@@ -135,7 +135,7 @@ public class LoginPage extends Page {
 
 		IHRAuthorizationViewPasswordTextField.click();
 		if (password != null) {
-			System.out.println("enterLoginPassword() : " + password);
+			System.out.println("enterLoginPassword()");
 			IHRAuthorizationViewPasswordTextField.sendKeys(password);
 		} else {
 			System.out.println("enterLoginPassword() : " + IHEARTPASSWORD);
@@ -205,6 +205,7 @@ public class LoginPage extends Page {
 		// Select Genre
 		int[] genres = new int[] {1, 2} ;
 		if (genrePage.isCurrentlyOnGenrePage()){
+			//removed the println, cause the above method prints it out as well.
 			if(!genrePage.isDoneButtonEnabled()){
 				genrePage.selectGenres(genres);
 				genrePage.clickDoneButton();
@@ -272,7 +273,7 @@ public class LoginPage extends Page {
 	 */
 	public boolean loginViaFacebook() {
 		onboardingPage.clickOnboardingLoginButton();
-		waitForElementToBeVisible(IHRAuthorizationViewEmailAddressTextField, 3);
+		waitForVisible(driver, By.className("XCUIElementTypeTextField"), 10);
 		clickFacebookLoginButton();
 		System.out.println("Testing Facebook login.");
 		// adding in wait
@@ -324,27 +325,9 @@ public class LoginPage extends Page {
 			btnAllow.click();
 		if (waitForElementToBeVisible(openInAppPrompt, 5))
 			openButton.click();
-		TestRoot.sleep(4000);
 		dismissStayConnectedPopup();
 		dismissLoginPopups();
 		return settingsPage.isLoggedIn();
-	}
-
-	public void dismissStayConnectedPopup() {
-		try {
-			waitForVisible(driver, By.name("Maybe Later"), 4).click();
-		} catch (Exception e) {
-		}
-	}
-
-	public void chooseStayConnected(boolean stayConnected) {
-		try {
-			if (stayConnected)
-				waitForVisible(driver, By.name("Get Notifications"), 2).click();
-			else
-				waitForVisible(driver, By.name("Maybe Later"), 1).click();
-		} catch (Exception e) {
-		}
 	}
 
 	// Tell us what you like

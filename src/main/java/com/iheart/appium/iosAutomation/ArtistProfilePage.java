@@ -629,15 +629,15 @@ public class ArtistProfilePage extends Page{
 				System.out.println("Clicked on No Button to keep the station");
 			}
 		}
-		IOSElement maybeLater = waitForVisible(driver, By.name("Maybe Later"), 3);
-		IOSElement notifyMe = waitForVisible(driver, By.name("Notify Me"), 3);
+		IOSElement maybeLater = Page.getMaybeLater(driver);
+		IOSElement notifyMe = Page.getNotifyMe(driver, 15);
 		if(maybeLater != null && notifyMe!=null){
 			if(clickMaybeLater){
-				maybeLater.click();
+				click(driver, maybeLater);
 				System.out.println("Clicked on 'Maybe Later'Button to Favorite the Artist station, but not get notifications about favorite artist.");
 			}
 			else {
-				notifyMe.click();
+				click(driver, notifyMe);
 				System.out.println("Clicked on 'Notify Me' Button to Favorite the Artist station, AND get notifications about favorite artist.");
 			}
 		}

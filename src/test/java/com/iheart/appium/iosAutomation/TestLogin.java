@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.rules.TestName;
 
 import com.iheart.appium.utilities.TestRoot;
@@ -27,7 +28,8 @@ public class TestLogin extends TestRoot {
 	// Only fails when ran in a suite
 	// Starting with a reset seems to help
 
-	
+	@Rule
+	public RetryRule retry = new RetryRule(1);
 
 	/**
 	 * LOG-1 - Login with Free Account
@@ -117,6 +119,7 @@ public class TestLogin extends TestRoot {
 	 * LOG-8    Plus Account
 	 */
 	@Test
+	@Category(Stable.class)
 	public void testLoginViaEmail_LOG8_PLUS(){
 		LocalTime before = consoleLogStart("Testing login via Email with a PLUS Account : " + name.getMethodName());
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement(IHEARTPLUSUSERNAME, IHEARTPLUSPASSWD, "PLUS"));

@@ -6,6 +6,9 @@ import java.math.RoundingMode;
 
 import org.openqa.selenium.By;
 
+import com.iheart.appium.iosAutomation.AppboyUpsellsPage.Entitlement;
+import com.iheart.appium.utilities.Errors;
+
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
 import io.appium.java_client.pagefactory.iOSFindBy;
@@ -20,19 +23,19 @@ public class FullPlayer extends Page {
 		super(_driver);
 		setPlayer(this);
 	}
-	
+
 	//IHRPlayerTitleView
 	@iOSFindBy(accessibility = "IHRPlayerTitleView-TitleLabel-UILabel") private IOSElement IHRPlayerTitleViewTitleLabelUILabel;
 	@iOSFindBy(accessibility = "IHRPlayerTitleView-SubTitleLabel-UILabel") private IOSElement IHRPlayerTitleViewSubTitleLabelUILabel;
 	@iOSFindBy(accessibility = "IHRPlayerTitleView-HeartView-UIImageView") private IOSElement IHRPlayerTitleViewHeartViewUIImageView;
-	@iOSFindBy(accessibility = "NavBar-BackPlayer-UIButton") private IOSElement   NavBarBackPlayerUIButton;
+	@iOSFindBy(accessibility = "NavBar-BackPlayer-UIButton") private IOSElement NavBarBackPlayerUIButton;
 	@iOSFindBy(accessibility = "PlayerView-MinimizePlayer-Downarrow-UIButton") private IOSElement PlayerViewMinimizePlayerDownarrowUIButton;
-	@iOSFindBy(accessibility = "NavBar-SideMenuButton-UIButton") private IOSElement  NavBarSideMenuButtonUIButton;
-	@iOSFindBy(accessibility = "NavBar-RightDisableableBarButton-UIButton") private IOSElement   NavBarRightDisableableBarButtonUIButton;
-	@iOSFindBy(accessibility = "NavBar-SearchBarButton-UIButton") private IOSElement  NavBarSearchBarButtonUIButton;
-	@iOSFindBy(accessibility = "NavBar-FavoriteButton-UIButton") private IOSElement   NavBarFavoriteButtonUIButton;
-	@iOSFindBy(accessibility ="NavBar-ShareButton-UIButton") private IOSElement    NavBarShareButtonUIButton;
-	@iOSFindBy(accessibility ="NavBar-StyledLabelWithTitle-UILabel") private IOSElement    NavBarStyledLabelWithTitleUILabel;
+	@iOSFindBy(accessibility = "NavBar-SideMenuButton-UIButton") private IOSElement NavBarSideMenuButtonUIButton;
+	@iOSFindBy(accessibility = "NavBar-RightDisableableBarButton-UIButton") private IOSElement NavBarRightDisableableBarButtonUIButton;
+	@iOSFindBy(accessibility = "NavBar-SearchBarButton-UIButton") private IOSElement NavBarSearchBarButtonUIButton;
+	@iOSFindBy(accessibility = "NavBar-FavoriteButton-UIButton") private IOSElement NavBarFavoriteButtonUIButton;
+	@iOSFindBy(accessibility ="NavBar-ShareButton-UIButton") private IOSElement	NavBarShareButtonUIButton;
+	@iOSFindBy(accessibility ="NavBar-StyledLabelWithTitle-UILabel") private IOSElement	NavBarStyledLabelWithTitleUILabel;
 	@iOSFindBy(accessibility ="IHRCastingBarButtonItem-UIButton") private IOSElement IHRCastingBarButtonItemUIButton;
 	@iOSFindBy(accessibility ="NavBar-BackButton-UIButton") private IOSElement NavBarBackButton;
 	
@@ -40,78 +43,78 @@ public class FullPlayer extends Page {
 	@iOSFindBy(accessibility ="IHRPlayerBackgroundView-ImageView-UIImageView") private IOSElement IHRPlayerBackgroundViewImageViewUIImageView;
 	@iOSFindBy(accessibility ="IHRPlayerBackgroundView-VisualEffectView-UIVisualEffectView" ) private IOSElement IHRPlayerBackgroundViewVisualEffectViewUIVisualEffectView;
 	//interface IHRPlayerView 
-    @iOSFindBy(accessibility ="IHRPlayerView-BackgroundImageView-UIImageView") private IOSElement IHRPlayerViewBackgroundImageViewUIImageView;
-    @iOSFindBy(accessibility ="IHRPlayerView-ImageView-UIImageView" ) private IOSElement IHRPlayerViewImageViewUIImageView;
-    @iOSFindBy(accessibility ="IHRPlayerView-CenterView-UIView" ) private IOSElement IHRPlayerViewCenterViewUIView;
-    @iOSFindBy(accessibility ="IHRPlayerView-SliderView-UIView") private IOSElement IHRPlayerViewSliderViewUIView;
-    @iOSFindBy(accessibility ="IHRPlayerView-ButtonContainer-UIView" ) private IOSElement IHRPlayerViewButtonContainerUIView;
-    @iOSFindBy(accessibility ="IHRPlayerView-PlayButton-UIButton" ) private IOSElement IHRPlayerViewPlayButtonUIButton;
-    @iOSFindBy(accessibility ="IHRPlayerView-ForwardButton-UIButton" ) private IOSElement IHRPlayerViewForwardButtonUIButton;
-    @iOSFindBy(accessibility ="IHRPlayerView-BackButton-UIButton") private IOSElement  IHRPlayerViewBackButtonUIButton;
-    @iOSFindBy(accessibility ="IHRPlayer-SaveButton-UIButton" ) private IOSElement IHRPlayerSaveButtonUIButton;  
-    @iOSFindBy(accessibility ="IHRPlayer-ReplayButton-UIButton" ) private IOSElement IHRPlayerReplayButtonUIButton;
-    @iOSFindBy(accessibility ="IHRPlayer-MoreButton-UIButton" ) private IOSElement IHRPlayerMoreButtonUIButton;
-    @iOSFindBy(accessibility ="IHRPlayerView-ThumbDownButton-UIButton" ) private IOSElement IHRPlayerViewThumbDownButtonUIButton;
-    @iOSFindBy(accessibility ="IHRPlayerView-ThumbUpButton-UIButton" ) private IOSElement IHRPlayerViewThumbUpButtonUIButton;
-    @iOSFindBy(accessibility ="IHRPlayerView-LabelContainer-UIView" ) private IOSElement IHRPlayerViewLabelContainerUIView;
-    @iOSFindBy(accessibility ="IHRPlayerView-TitleLabel-UILabel" ) private IOSElement IHRPlayerViewTitleLabelUILabel;
-    @iOSFindBy(accessibility ="IHRPlayerView-SubTitleLabel-UILabel" ) private IOSElement IHRPlayerViewSubTitleLabelUILabel;
-    //IHRPlayerReplayTimerViewController    This isn't used yet
-    @iOSFindBy(accessibility ="IHRPlayerReplayTimerView-BackgroundView-UIView" ) private IOSElement IHRPlayerReplayTimerViewBackgroundViewUIView;
-    @iOSFindBy(accessibility ="IHRPlayerReplayTimerView-Label-UILabel" ) private IOSElement IHRPlayerReplayTimerViewLabelUILabel;
-    @iOSFindBy(accessibility ="IHRPlayerReplayTimerView-ProgressView-UIView" ) private IOSElement IHRPlayerReplayTimerViewProgressViewUIView;
-    @iOSFindBy(accessibility ="IHRPlayerReplayTimerView-CountLabel-UILabel" ) private IOSElement IHRPlayerReplayTimerViewCountLabelUILabel;
-    @iOSFindBy(accessibility ="IHRPlayerReplayTimerView-CancelButton-UIButton" ) private IOSElement IHRPlayerReplayTimerViewCancelButtonUIButton;
-    //PlayerCenterView
-    @iOSFindBy(accessibility ="PlayerCenterView-BannerView-UIView" ) private IOSElement PlayerCenterViewBannerViewUIView;
-    //PlayerSliderView
-    @iOSFindBy(accessibility ="PlayerSliderView-PositionLabel-UILabel" ) private IOSElement PlayerSliderViewPositionLabelUILabel;
-    @iOSFindBy(accessibility ="PlayerSliderView-DurationLabel-UILabel" ) private IOSElement PlayerSliderViewDurationLabelUILabel;
-    @iOSFindBy(accessibility ="PlayerSliderView-ProgressSlider-UISlider" ) private IOSElement PlayerSliderViewProgressSliderUISlider;
-    //CustomPlayerBannerController - Used for Ads - Don't look for it. 
-    @iOSFindBy(accessibility ="PlayerBanner-BlackOverlay-UIView" ) private IOSElement PlayerBannerBlackOverlayUIView;
-    @iOSFindBy(accessibility ="PlayerImageView-ImageView-UIImageView" ) private IOSElement PlayerImageViewImageViewUIImageView;
-    //IHROptionMenuView
-    @iOSFindBy(accessibility ="IHROptionMenuView-MenuContainer-UIView" ) private IOSElement IHROptionMenuViewMenuContainerUIView;
-    @iOSFindBy(accessibility ="IHROptionMenuView-MetadataView-UIView" ) private IOSElement IHROptionMenuViewMetadataViewUIView;
-    @iOSFindBy(accessibility ="IHROptionMenuView-UpperContainer-UIView" ) private IOSElement IHROptionMenuViewUpperContainerUIView;
-    @iOSFindBy(accessibility ="IHROptionMenuView-DividerView-UIView" ) private IOSElement IHROptionMenuViewDividerViewUIView;
-    @iOSFindBy(accessibility ="IHROptionMenuView-ButtonsContainer-UIView" ) private IOSElement IHROptionMenuViewButtonsContainerUIView;
-    //These aren't true Objects - can't figure how to add AccessibilityIdentifiers to them. 
-    @iOSFindBy(accessibility ="Buy on iTunes") private IOSElement BuySongButton;
-    @iOSFindBy(accessibility ="Lyrics") private IOSElement LyricsButton;
-    @iOSFindBy(accessibility ="Go to Artist") private IOSElement GoToArtistProfileButton;
-    //OD - Click SaveButton and these should appear. Remove/Save Station are interchangeable. 
-    @iOSFindBy(accessibility ="Remove Station") private IOSElement RemoveStationButton;  //Growl: Station removed from My Stations
-    @iOSFindBy(accessibility ="Save Station") private IOSElement SaveStationButton;  //Saved 'name' to My Stations
-    @iOSFindBy(accessibility ="Save Song") private IOSElement SaveSongButton; //Song saved to My Music
-    @iOSFindBy(accessibility ="Add to Playlist") private IOSElement AddToPlaylistButton;
-    @iOSFindBy(accessibility ="Cancel") private IOSElement CancelOutOfSaveButton;
-    
-    @iOSFindBy(accessibility ="IHROptionMenuView-CancelButton-UIButton" ) private IOSElement IHROptionMenuViewCancelButtonUIButton;
-    //Album and song title at the top of the More Info Option Menu screen
-    @iOSFindBy(accessibility ="IHROptionMenuMetadataView-ImageView-UIImageView" ) private IOSElement IHROptionMenuMetadataViewImageViewUIImageView;
-    @iOSFindBy(accessibility ="IHROptionMenuMetadataView-LabelContainer-UIView" ) private IOSElement IHROptionMenuMetadataViewLabelContainerUIView;
-    @iOSFindBy(accessibility ="IHROptionMenuMetadataView-TitleLabel-UILabel" ) private IOSElement IHROptionMenuMetadataViewTitleLabelUILabel;
-    @iOSFindBy(accessibility ="IHROptionMenuMetadataView-SubTitleLabel-UILabel" ) private IOSElement IHROptionMenuMetadataViewSubTitleLabelUILabel;
-    //lyricsVC
-    @iOSFindBy(accessibility ="LyricsVC-LyricsText-UIView" ) private IOSElement LyricsVCLyricsTextUIView;
-    @iOSFindBy(accessibility ="LyricsVC-ArtistNameLabel-UILabel" ) private IOSElement LyricsVCArtistNameLabelUILabel;
-    @iOSFindBy(accessibility ="LyricsVC-TrackNameLabel-UILabel" ) private IOSElement LyricsVCTrackNameLabelUILabel;
-    
-    @iOSFindBy(accessibility ="PlayButton-AnimatingView-UIImageView" ) private IOSElement PlayButtonAnimatingViewUIImageView;
-    @iOSFindBy(accessibility ="PlayerBannerView-BannerContainerView-UIView" ) private IOSElement PlayerBannerViewBannerContainerViewUIView;
-    @iOSFindBy(accessibility ="PlayerBannerView-DfpBanner-UIView" ) private IOSElement PlayerBannerViewDfpBannerUIView;
-    @iOSFindBy(accessibility ="PlayerBannerView-SyncBannerView-UIView" ) private IOSElement PlayerBannerViewSyncBannerViewUIView;
-    @iOSFindBy(accessibility ="PlayerBannerView-DismissButton-UIButton" ) private IOSElement PlayerBannerViewDismissButtonUIButton;
+	@iOSFindBy(accessibility ="IHRPlayerView-BackgroundImageView-UIImageView") private IOSElement IHRPlayerViewBackgroundImageViewUIImageView;
+	@iOSFindBy(accessibility ="IHRPlayerView-ImageView-UIImageView" ) private IOSElement IHRPlayerViewImageViewUIImageView;
+	@iOSFindBy(accessibility ="IHRPlayerView-CenterView-UIView" ) private IOSElement IHRPlayerViewCenterViewUIView;
+	@iOSFindBy(accessibility ="IHRPlayerView-SliderView-UIView") private IOSElement IHRPlayerViewSliderViewUIView;
+	@iOSFindBy(accessibility ="IHRPlayerView-ButtonContainer-UIView" ) private IOSElement IHRPlayerViewButtonContainerUIView;
+	@iOSFindBy(accessibility ="IHRPlayerView-PlayButton-UIButton" ) private IOSElement IHRPlayerViewPlayButtonUIButton;
+	@iOSFindBy(accessibility ="IHRPlayerView-ForwardButton-UIButton" ) private IOSElement IHRPlayerViewForwardButtonUIButton;
+	@iOSFindBy(accessibility ="IHRPlayerView-BackButton-UIButton") private IOSElement  IHRPlayerViewBackButtonUIButton;
+	@iOSFindBy(accessibility ="IHRPlayer-SaveButton-UIButton" ) private IOSElement IHRPlayerSaveButtonUIButton;  
+	@iOSFindBy(accessibility ="IHRPlayer-ReplayButton-UIButton" ) private IOSElement IHRPlayerReplayButtonUIButton;
+	@iOSFindBy(accessibility ="IHRPlayer-MoreButton-UIButton" ) private IOSElement IHRPlayerMoreButtonUIButton;
+	@iOSFindBy(accessibility ="IHRPlayerView-ThumbDownButton-UIButton" ) private IOSElement IHRPlayerViewThumbDownButtonUIButton;
+	@iOSFindBy(accessibility ="IHRPlayerView-ThumbUpButton-UIButton" ) private IOSElement IHRPlayerViewThumbUpButtonUIButton;
+	@iOSFindBy(accessibility ="IHRPlayerView-LabelContainer-UIView" ) private IOSElement IHRPlayerViewLabelContainerUIView;
+	@iOSFindBy(accessibility ="IHRPlayerView-TitleLabel-UILabel" ) private IOSElement IHRPlayerViewTitleLabelUILabel;
+	@iOSFindBy(accessibility ="IHRPlayerView-SubTitleLabel-UILabel" ) private IOSElement IHRPlayerViewSubTitleLabelUILabel;
+	//IHRPlayerReplayTimerViewController	This isn't used yet
+	@iOSFindBy(accessibility ="IHRPlayerReplayTimerView-BackgroundView-UIView" ) private IOSElement IHRPlayerReplayTimerViewBackgroundViewUIView;
+	@iOSFindBy(accessibility ="IHRPlayerReplayTimerView-Label-UILabel" ) private IOSElement IHRPlayerReplayTimerViewLabelUILabel;
+	@iOSFindBy(accessibility ="IHRPlayerReplayTimerView-ProgressView-UIView" ) private IOSElement IHRPlayerReplayTimerViewProgressViewUIView;
+	@iOSFindBy(accessibility ="IHRPlayerReplayTimerView-CountLabel-UILabel" ) private IOSElement IHRPlayerReplayTimerViewCountLabelUILabel;
+	@iOSFindBy(accessibility ="IHRPlayerReplayTimerView-CancelButton-UIButton" ) private IOSElement IHRPlayerReplayTimerViewCancelButtonUIButton;
+	//PlayerCenterView
+	@iOSFindBy(accessibility ="PlayerCenterView-BannerView-UIView" ) private IOSElement PlayerCenterViewBannerViewUIView;
+	//PlayerSliderView
+	@iOSFindBy(accessibility ="PlayerSliderView-PositionLabel-UILabel" ) private IOSElement PlayerSliderViewPositionLabelUILabel;
+	@iOSFindBy(accessibility ="PlayerSliderView-DurationLabel-UILabel" ) private IOSElement PlayerSliderViewDurationLabelUILabel;
+	@iOSFindBy(accessibility ="PlayerSliderView-ProgressSlider-UISlider" ) private IOSElement PlayerSliderViewProgressSliderUISlider;
+	//CustomPlayerBannerController - Used for Ads - Don't look for it. 
+	@iOSFindBy(accessibility ="PlayerBanner-BlackOverlay-UIView" ) private IOSElement PlayerBannerBlackOverlayUIView;
+	@iOSFindBy(accessibility ="PlayerImageView-ImageView-UIImageView" ) private IOSElement PlayerImageViewImageViewUIImageView;
+	//IHROptionMenuView
+	@iOSFindBy(accessibility ="IHROptionMenuView-MenuContainer-UIView" ) private IOSElement IHROptionMenuViewMenuContainerUIView;
+	@iOSFindBy(accessibility ="IHROptionMenuView-MetadataView-UIView" ) private IOSElement IHROptionMenuViewMetadataViewUIView;
+	@iOSFindBy(accessibility ="IHROptionMenuView-UpperContainer-UIView" ) private IOSElement IHROptionMenuViewUpperContainerUIView;
+	@iOSFindBy(accessibility ="IHROptionMenuView-DividerView-UIView" ) private IOSElement IHROptionMenuViewDividerViewUIView;
+	@iOSFindBy(accessibility ="IHROptionMenuView-ButtonsContainer-UIView" ) private IOSElement IHROptionMenuViewButtonsContainerUIView;
+	//These aren't true Objects - can't figure how to add AccessibilityIdentifiers to them. 
+	@iOSFindBy(accessibility ="Buy on iTunes") private IOSElement buySongButton;
+	@iOSFindBy(accessibility ="Lyrics") private IOSElement lyricsButton;
+	@iOSFindBy(accessibility ="Go to Artist") private IOSElement goToArtistProfileButton;
+	//OD - Click SaveButton and these should appear. Remove/Save Station are interchangeable. 
+	@iOSFindBy(accessibility ="Remove Station") private IOSElement removeStationButton;  //Growl: Station removed from My Stations
+	@iOSFindBy(accessibility ="Save Station") private IOSElement saveStationButton;  //Saved 'name' to My Stations
+	@iOSFindBy(accessibility ="Save Song") private IOSElement saveSongButton; //Song saved to My Music
+	@iOSFindBy(accessibility ="Add to Playlist") private IOSElement addToPlaylistButton;
+	@iOSFindBy(accessibility ="Cancel") private IOSElement cancelOutOfSaveButton;
+	
+	@iOSFindBy(accessibility ="IHROptionMenuView-CancelButton-UIButton" ) private IOSElement IHROptionMenuViewCancelButtonUIButton;
+	//Album and song title at the top of the More Info Option Menu screen
+	@iOSFindBy(accessibility ="IHROptionMenuMetadataView-ImageView-UIImageView" ) private IOSElement IHROptionMenuMetadataViewImageViewUIImageView;
+	@iOSFindBy(accessibility ="IHROptionMenuMetadataView-LabelContainer-UIView" ) private IOSElement IHROptionMenuMetadataViewLabelContainerUIView;
+	@iOSFindBy(accessibility ="IHROptionMenuMetadataView-TitleLabel-UILabel" ) private IOSElement IHROptionMenuMetadataViewTitleLabelUILabel;
+	@iOSFindBy(accessibility ="IHROptionMenuMetadataView-SubTitleLabel-UILabel" ) private IOSElement IHROptionMenuMetadataViewSubTitleLabelUILabel;
+	//lyricsVC
+	@iOSFindBy(accessibility ="LyricsVC-LyricsText-UIView" ) private IOSElement LyricsVCLyricsTextUIView;
+	@iOSFindBy(accessibility ="LyricsVC-ArtistNameLabel-UILabel" ) private IOSElement LyricsVCArtistNameLabelUILabel;
+	@iOSFindBy(accessibility ="LyricsVC-TrackNameLabel-UILabel" ) private IOSElement LyricsVCTrackNameLabelUILabel;
+	
+	@iOSFindBy(accessibility ="PlayButton-AnimatingView-UIImageView" ) private IOSElement PlayButtonAnimatingViewUIImageView;
+	@iOSFindBy(accessibility ="PlayerBannerView-BannerContainerView-UIView" ) private IOSElement PlayerBannerViewBannerContainerViewUIView;
+	@iOSFindBy(accessibility ="PlayerBannerView-DfpBanner-UIView" ) private IOSElement PlayerBannerViewDfpBannerUIView;
+	@iOSFindBy(accessibility ="PlayerBannerView-SyncBannerView-UIView" ) private IOSElement PlayerBannerViewSyncBannerViewUIView;
+	@iOSFindBy(accessibility ="PlayerBannerView-DismissButton-UIButton" ) private IOSElement PlayerBannerViewDismissButtonUIButton;
 
-    //Replay Modal
-    @iOSFindBy(accessibility ="IHRPlayerReplayOptionsViewController-TableView-UITableView" ) private IOSElement IHRPlayerReplayOptionsViewControllerTableViewUITableView;
-    @iOSFindBy(accessibility ="IHRPlayerReplayOptionsViewController-CELL-0" ) private IOSElement IHRPlayerReplayOptionsViewControllerCELL0;
-    @iOSFindBy(accessibility ="IHRPlayerReplayOptionsViewController-CELL-1" ) private IOSElement IHRPlayerReplayOptionsViewControllerCELL1;
-    @iOSFindBy(accessibility ="IHRPlayerReplayOptionsViewController-CELL-2" ) private IOSElement IHRPlayerReplayOptionsViewControllerCELL2;
+	//Replay Modal
+	@iOSFindBy(accessibility ="IHRPlayerReplayOptionsViewController-TableView-UITableView" ) private IOSElement IHRPlayerReplayOptionsViewControllerTableViewUITableView;
+	@iOSFindBy(accessibility ="IHRPlayerReplayOptionsViewController-CELL-0" ) private IOSElement IHRPlayerReplayOptionsViewControllerCELL0;
+	@iOSFindBy(accessibility ="IHRPlayerReplayOptionsViewController-CELL-1" ) private IOSElement IHRPlayerReplayOptionsViewControllerCELL1;
+	@iOSFindBy(accessibility ="IHRPlayerReplayOptionsViewController-CELL-2" ) private IOSElement IHRPlayerReplayOptionsViewControllerCELL2;
 
-    /* - To be used
+	/* - To be used
 	@iOSFindBy(accessibility = "Great, we’ll play you more  songs like this.") public IOSElement artistThumbUpGrowl; // //UIAApplication[1]/UIAWindow[1]/UIAStaticText[10]
 	@iOSFindBy(accessibility = "OK, we'll adjust your music mix.") public IOSElement artistThumbDownGrowl;
 	@iOSFindBy(accessibility = "Glad you like it!  We'll let our DJs know.") public IOSElement liveThumbUpGrowl; // //UIAApplication[1]/UIAWindow[1]/UIAStaticText[8]
@@ -125,7 +128,7 @@ public class FullPlayer extends Page {
     public void showAllElements(){
     	System.out.println("Checking NavBar elements...");
     	printElementInformation(PlayerViewMinimizePlayerDownarrowUIButton);
-    	//printElementInformation(NavBarFavoriteButtonUIButton); //This button has been removed and replaced in the Save Modal
+    	//printElementInformation(NavBarFavoriteButtonUIButton); This button has been removed and replaced in the Save Modal
     	printElementInformation(NavBarShareButtonUIButton);
     	//printElementInformation(IHRCastingBarButtonItemUIButton);
     	System.out.println("Checking Slider elements...");
@@ -198,14 +201,14 @@ public class FullPlayer extends Page {
      * This method has the same functionality as above but different wording to keep up the 'click' actions idea. 
      */
     public void clickDownArrowOnNavBarToMinimizeFullPlayer(){
-    	System.out.println("clickDownArrowOnNavBarToMinimizeFullPlayer()");
+    	//System.out.println("clickDownArrowOnNavBarToMinimizeFullPlayer()");
     	PlayerViewMinimizePlayerDownarrowUIButton.click();
     }
     /**
      * Clicks the Play, Pause, Stop etc Button on the Full Player.
      */
     public void clickPlayButton(){
-    	System.out.println("clickPlayButton()");
+    	//System.out.println("clickPlayButton()");
     	IHRPlayerViewPlayButtonUIButton.click();
     }
     
@@ -213,7 +216,7 @@ public class FullPlayer extends Page {
      * Clicks the Thumb Up Button. It can already be selected. 
      */
     public void clickThumbUpButton(){
-    	System.out.println("clickThumbUpButton()");
+    	//System.out.println("clickThumbUpButton()");
     	IHRPlayerViewThumbUpButtonUIButton.click();
     }
     
@@ -221,7 +224,7 @@ public class FullPlayer extends Page {
      * Clicks the Thumb Down button. It can already be selected. 
      */
     public void clickThumbDownButton(){
-    	System.out.println("clickThumbDownButton()");
+    	//System.out.println("clickThumbDownButton()");
     	IHRPlayerViewThumbDownButtonUIButton.click();
     }
     
@@ -292,8 +295,8 @@ public class FullPlayer extends Page {
 				else noButton.click();
 				System.out.println("Clicked on Yes Button to unFavorite the station");
 			}
-		IOSElement maybeLater = waitForVisible(driver, By.name("Maybe Later"), 5);
-		IOSElement NotifyMe = waitForVisible(driver, By.name("Notify Me"), 5);
+		IOSElement maybeLater = Page.getMaybeLater(driver, 10);
+		IOSElement NotifyMe = Page.getNotifyMe(driver, 10);
 		if(maybeLater != null && NotifyMe!=null){
 			if(clickMaybeLater){
 				maybeLater.click();
@@ -324,7 +327,7 @@ public class FullPlayer extends Page {
 	public void clickShareButtonOnNavBar(){
 		NavBarShareButtonUIButton.click();
 		System.out.println("clickShareButtonOnNavBar(). " );
-    	
+		
 	}
 	/**
 	 * Checks to see if the 'Mail' icon is there. 
@@ -386,22 +389,28 @@ public class FullPlayer extends Page {
 	}
 	
 	/**
-	 * Checks if the IHRPlayerViewForwardButtonUIButton is present and then returns an integer equal to the number of Skips left. Returns -1 if the label couldn't be found.
-	 * 
+	 * Checks if the IHRPlayerViewForwardButtonUIButton is present and then returns an integer equal to the number of Skips left. 
+	 * Returns -1 if the label couldn't be found.
+	 * sk - 3/2 - getText() isn't getting the whole label text ie. Skip. 5 skips remaining. It only returns skip.
 	 * @return
 	 */
 	public int getNumberOfSkipsRemaining(){
-		String skips = IHRPlayerViewForwardButtonUIButton.getText();
-		int skipsLeft = Integer.parseInt(skips.substring(6, 7));
-		System.out.println("getNumberOfSkipsRemaining() : " + skipsLeft);
-		return skipsLeft;
+		int skipsLeft = 0;
+		if (waitForElementToBeVisible(IHRPlayerViewForwardButtonUIButton, 4)) {
+			//TODO: This line needs to be fixed so as to get the entire text for the Skip button, if possible, for the method to work.
+			String skips = IHRPlayerViewForwardButtonUIButton.getText();
+			skipsLeft = Integer.parseInt(skips.substring(6, 7));
+			System.out.println("getNumberOfSkipsRemaining() : " + skipsLeft);
+		}
+		return skipsLeft;		
 	}
 	/**
 	 * Clicks the Skip/ Scan Button
 	 */
 	public void clickSkipButton(){
 		System.out.println("clickSkipButton()... ");
-		IHRPlayerViewForwardButtonUIButton.click();
+		if (waitForElementToBeVisible(IHRPlayerViewForwardButtonUIButton, 2))
+			IHRPlayerViewForwardButtonUIButton.click();
 	}
 	
 	/**
@@ -409,9 +418,12 @@ public class FullPlayer extends Page {
 	 * @return
 	 */
 	public String getTitleOfSongPlaying(){
-		String title = IHRPlayerViewTitleLabelUILabel.getText();
-		System.out.println("getTitleOfSongPlaying() : " + title);
-		return title;
+		if (waitForElementToBeVisible(IHRPlayerViewTitleLabelUILabel,4)) {
+			String title = IHRPlayerViewTitleLabelUILabel.getText();
+			System.out.println("getTitleOfSongPlaying() : " + title);
+			return title;
+		}
+		return "";
 	}
 	
 	/**
@@ -458,99 +470,98 @@ public class FullPlayer extends Page {
 		System.out.println("getStationType() : " + stationType);
 		return stationType;
 	}
-    
-    /**
-     * In the More Info pane on Full Player - it clicks the Back Button - the main NavBarBackButton. Can be used in Lyrics View, Artist Profile, etc.
-     */
-    public void clickNavBarBackButton() {
-    	System.out.println("clickNavBarBackButton()");
-    	NavBarBackButton.click();
+	
+	/**
+	 * In the More Info pane on Full Player - it clicks the Back Button - the main NavBarBackButton. Can be used in Lyrics View, Artist Profile, etc.
+	 */
+	public void clickNavBarBackButton() {
+		System.out.println("clickNavBarBackButton()");
+		NavBarBackButton.click();
 	}
 
-    /**
-     * Gets the current location of the Position (in time) for the currently playing song. 
-     * Note that using this in conjunction with getProgressSlider shouldn't be exactly equal to the percentage since these cammands take time.
-     * @return
-     */
-    public String getPositionLabelText(){
-    	String position = PlayerSliderViewPositionLabelUILabel.getText();
-    	System.out.println("getPositionLabelText() : " + position);
-    	return position;
-    }
-    /**
-     * Gets the Duration(song length in time) for the currently playing song. 
-     * Note that using this in conjunction with getProgressSlider shouldn't be exactly equal to the percentage since these cammands take time.
-     * @return
-     */
-    public String getDurationLabelText(){
-    	String duration = PlayerSliderViewDurationLabelUILabel.getText();
-    	System.out.println("getDurationLabelText() : " + duration);
-    	return duration;
-    }
-    /**
-     * Gets the PlayerSliderViewProgressSliderUISlider played percentage for the currently playing song. 
-     * position / duration = progress%, but first pause the player before checking this. 
-     * @return
-     */
-    public String getProgressSliderText(){
-    	String progress = PlayerSliderViewProgressSliderUISlider.getText();
-    	System.out.println("getProgressLabelText() : " + progress);
-    	return progress;
-    }
-    
-    /**
-     * This tests whether the Progress Slider Percentage is the same as the position and duration numbers. 
-     * First Presses the Play/Pause button - best to have the player already running for a decent number of seconds first. 
-     * Then gets the position and duration values, turns them into seconds, then gets the Progress text and turs it into a number. 
-     * I don't really expect this to fail much, but it was fun to code.
-     * 
-     * @return
-     */
-    public boolean checkProgressSliderAlignedToPosition(){
-    	clickPlayButton(); //Pause the player. 
-    	String[] position = getPositionLabelText().split(":");
-    	String[] duration = getDurationLabelText().split(":");
-    	double pSeconds = Integer.parseInt(position[1]);
-    	double dSeconds = Integer.parseInt(duration[1]);
-    	for(int minuteCounter = 0; minuteCounter < Integer.parseInt(position[0]); minuteCounter++ ){
-    		pSeconds+=60;
-    	}
-    	for(int minuteCounter = 0; minuteCounter < Integer.parseInt(duration[0]); minuteCounter++ ){
-    		dSeconds+=60;
-    	}
-    	String progress = getProgressSliderText();
-    	int progressPercentage = Integer.parseInt(progress.substring(0, progress.length()-1));
-    	double val = pSeconds / dSeconds;
-    	Double perc = new Double(val);
-    	BigDecimal prog = new BigDecimal(new Double(progressPercentage));
-    	System.out.println("Seconds passed in the song: " + pSeconds + " Total seconds: " + dSeconds + " Percentage :" + perc);
-    	BigDecimal bd = new BigDecimal(perc);
-    	prog = prog.divide(new BigDecimal("100"), new MathContext(2));
-    	bd = bd.round(new MathContext(2, RoundingMode.HALF_UP));
-    	System.out.println("Rounded bd : " + bd.toPlainString() + "   .    Progress% / 100 : " + prog.toPlainString());
-    	bd = bd.subtract(prog);
-    	System.out.println("Subtracted progress percentage from bd : " + bd.toPlainString());
-    	BigDecimal one = new BigDecimal("1");
-    	bd = bd.abs();
-    	System.out.println("Absolute value of bd should be less than 1.0 : " + bd.toPlainString());
-    	if(bd.abs().compareTo(one) < 0 ){ //we want compareTo to return -1, indicating that the bd is less than one.
-    		return true;
-    	}
-    	else {
-    		return false;
-    	}
-    }
-    
-   
-    /**
-     * Returns a String of the type of Play Button it is. Could be Play, Pause, Stop etc. 
-     * @return
-     */
-    public String getTypeOfPlayButton(){
-    	String type = IHRPlayerViewPlayButtonUIButton.getText();
-    	System.out.println("getTypeOfPlayButton() : " + type);
-    	return type;
-    }
+	/**
+	 * Gets the current location of the Position (in time) for the currently playing song. 
+	 * Note that using this in conjunction with getProgressSlider shouldn't be exactly equal to the percentage since these cammands take time.
+	 * @return
+	 */
+	public String getPositionLabelText(){
+		String position = PlayerSliderViewPositionLabelUILabel.getText();
+		System.out.println("getPositionLabelText() : " + position);
+		return position;
+	}
+	/**
+	 * Gets the Duration(song length in time) for the currently playing song. 
+	 * Note that using this in conjunction with getProgressSlider shouldn't be exactly equal to the percentage since these cammands take time.
+	 * @return
+	 */
+	public String getDurationLabelText(){
+		String duration = PlayerSliderViewDurationLabelUILabel.getText();
+		System.out.println("getDurationLabelText() : " + duration);
+		return duration;
+	}
+	/**
+	 * Gets the PlayerSliderViewProgressSliderUISlider played percentage for the currently playing song. 
+	 * position / duration = progress%, but first pause the player before checking this. 
+	 * @return
+	 */
+	public String getProgressSliderText(){
+		String progress = PlayerSliderViewProgressSliderUISlider.getText();
+		System.out.println("getProgressLabelText() : " + progress);
+		return progress;
+	}
+	
+	/**
+	 * This tests whether the Progress Slider Percentage is the same as the position and duration numbers. 
+	 * First Presses the Play/Pause button - best to have the player already running for a decent number of seconds first. 
+	 * Then gets the position and duration values, turns them into seconds, then gets the Progress text and turs it into a number. 
+	 * I don't really expect this to fail much, but it was fun to code.
+	 * 
+	 * @return
+	 */
+	public boolean checkProgressSliderAlignedToPosition(){
+		clickPlayButton(); //Pause the player. 
+		String[] position = getPositionLabelText().split(":");
+		String[] duration = getDurationLabelText().split(":");
+		double pSeconds = Integer.parseInt(position[1]);
+		double dSeconds = Integer.parseInt(duration[1]);
+		for(int minuteCounter = 0; minuteCounter < Integer.parseInt(position[0]); minuteCounter++ ){
+			pSeconds+=60;
+		}
+		for(int minuteCounter = 0; minuteCounter < Integer.parseInt(duration[0]); minuteCounter++ ){
+			dSeconds+=60;
+		}
+		String progress = getProgressSliderText();
+		int progressPercentage = Integer.parseInt(progress.substring(0, progress.length()-1));
+		double val = pSeconds / dSeconds;
+		Double perc = new Double(val);
+		BigDecimal prog = new BigDecimal(new Double(progressPercentage));
+		System.out.println("Seconds passed in the song: " + pSeconds + " Total seconds: " + dSeconds + " Percentage :" + perc);
+		BigDecimal bd = new BigDecimal(perc);
+		prog = prog.divide(new BigDecimal("100"), new MathContext(2));
+		bd = bd.round(new MathContext(2, RoundingMode.HALF_UP));
+		System.out.println("Rounded bd : " + bd.toPlainString() + " .   Progress% / 100 : " + prog.toPlainString());
+		bd = bd.subtract(prog);
+		System.out.println("Subtracted progress percentage from bd : " + bd.toPlainString());
+		BigDecimal one = new BigDecimal("1");
+		bd = bd.abs();
+		System.out.println("Absolute value of bd should be less than 1.0 : " + bd.toPlainString());
+		if(bd.abs().compareTo(one) < 0 ){ //we want compareTo to return -1, indicating that the bd is less than one.
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	/**
+	 * Returns a String of the type of Play Button it is. Could be Play, Pause, Stop etc. 
+	 * @return
+	 */
+	public String getTypeOfPlayButton(){
+		String type = IHRPlayerViewPlayButtonUIButton.getText();
+		System.out.println("getTypeOfPlayButton() : " + type);
+		return type;
+	}
 	/**
      * Returns true if the Full Player is open. 
      * Does a Null Check on the element so there won't be a NoSuchElementException
@@ -638,9 +649,9 @@ public class FullPlayer extends Page {
      */
     public boolean clickSaveButtonToOpenSaveModal(){
     	System.out.print("clickSaveButton() : Opening Save Overflow. SaveSongButton.isDisplayed() : ");
-    	if(waitForElementToBeVisible(IHRPlayerSaveButtonUIButton, 3)){
+	if(waitForElementToBeVisible(IHRPlayerSaveButtonUIButton, 3)){
     		IHRPlayerSaveButtonUIButton.click();
-    	}
+	}
     	//Save Modal should be up now
     	boolean isSaveSongVisible = SaveSongButton.isDisplayed();
     	System.out.println(isSaveSongVisible);
@@ -662,7 +673,7 @@ public class FullPlayer extends Page {
     }
     /**
      * Clicks the Add to Playlist Button, uses String entitlement to determine expected action. 
-     * entitlement must be "FREE", "PLUS", or "ALLA"
+     * entitlement must be "FREE", "PLUS", or "ALLACCESS"
      */
     public boolean clickAddToPlaylistButtonInSaveModal(String entitlement){
     	if(entitlement!= null && AddToPlaylistButton != null && !entitlement.equals("")){
@@ -674,6 +685,7 @@ public class FullPlayer extends Page {
     			AddToPlaylistButton.click();
     			System.out.println("AddToPlaylistButton was clicked for PLUS User - Expect Upsell Modal to appear");
     			return upsellPage.isUpsellModalOpen();
+    			//return upsellPage.isad
     		}else if(entitlement.equals("ALLA")){
     			AddToPlaylistButton.click();
     			System.out.println("AddToPlaylistButton was clicked for ALLACCESS User - Expect Add to Playlist Modal to appear");
@@ -751,53 +763,119 @@ public class FullPlayer extends Page {
     public boolean isCurrentlyOnReplayModal(){
     	return (fullPlayer.isCurrentlyOn("isCurrentlyOnReplayModal()", IHRPlayerReplayOptionsViewControllerTableViewUITableView));
 
-    }
-    /**
-     * Checks if the First Cell in Replay Modal is displayed. It can be clicked hereafter.
-     * @return
-     */
-    public boolean isCurrentlyOnReplayFirstTrackCell(){
-    	return (fullPlayer.isCurrentlyOn("isCurrentlyOnReplayModal()", IHRPlayerReplayOptionsViewControllerCELL0));
-    }
-    /**
-     * Clicks the First Replay Cell. This should be the current song playing.
-     * @return
-     */
-    public boolean clickReplayFirstCell(){
-    	if(IHRPlayerReplayOptionsViewControllerCELL0!=null){
-    		 IHRPlayerReplayOptionsViewControllerCELL0.click();
-    		System.out.println("clickReplayFirstCell().");
-    		return true;
-    	} return false;
-    }
-    /**
-     * Clicks the Second Replay Cell. This should be the last song played(even if skipped).
-     * @return
-     */
-    public boolean clickReplaySecondCell(){
-    	if(IHRPlayerReplayOptionsViewControllerCELL1!=null){
-    		 IHRPlayerReplayOptionsViewControllerCELL1.click();
-    		System.out.println("clickReplaySecondCell().");
-    		return true;
-    	} return false;
-    }
-    /**
-     * Clicks the Third Replay Cell. This should be the second to last song played.
-     * @return
-     */
-    public boolean clickReplayThirdCell(){
-    	if(IHRPlayerReplayOptionsViewControllerCELL2!=null){
-    		 IHRPlayerReplayOptionsViewControllerCELL2.click();
-    		System.out.println("clickReplayThirdCell().");
-    		return true;
-    	} return false;
-    }
-    
-    /**
-     * Runs the isCurrentlyOn Method for the HeartView Image that shows up next to the Station name on Full Player. 
-     * @return
-     */
-    public boolean isStationHearted(){
-    	return isCurrentlyOn("isStationHearted", IHRPlayerTitleViewHeartViewUIImageView);
-    }
+	}
+	/**
+	 * Checks if the First Cell in Replay Modal is displayed. It can be clicked hereafter.
+	 * @return
+	 */
+	public boolean isCurrentlyOnReplayFirstTrackCell(){
+		return (fullPlayer.isCurrentlyOn("isCurrentlyOnReplayModal()", IHRPlayerReplayOptionsViewControllerCELL0));
+	}
+	/**
+	 * Clicks the First Replay Cell. This should be the current song playing.
+	 * @return
+	 */
+	public boolean clickReplayFirstCell(){
+		if(IHRPlayerReplayOptionsViewControllerCELL0!=null){
+			 IHRPlayerReplayOptionsViewControllerCELL0.click();
+			System.out.println("clickReplayFirstCell().");
+			return true;
+		} 
+		return false;
+	}
+	/**
+	 * Clicks the Second Replay Cell. This should be the last song played(even if skipped).
+	 * @return
+	 */
+	public boolean clickReplaySecondCell(){
+		if(IHRPlayerReplayOptionsViewControllerCELL1!=null){
+			 IHRPlayerReplayOptionsViewControllerCELL1.click();
+			System.out.println("clickReplaySecondCell().");
+			return true;
+		} 
+		return false;
+	}
+	/**
+	 * Clicks the Third Replay Cell. This should be the second to last song played.
+	 * @return
+	 */
+	public boolean clickReplayThirdCell(){
+		if(IHRPlayerReplayOptionsViewControllerCELL2!=null) {
+			IHRPlayerReplayOptionsViewControllerCELL2.click();
+			System.out.println("clickReplayThirdCell().");
+			return true;
+		} 
+		return false;
+	}
+
+	/**
+	 * Runs the isCurrentlyOn Method for the HeartView Image that shows up next to the Station name on Full Player. 
+	 * @return
+	 */
+	public boolean isStationHearted(){
+		return isCurrentlyOn("isStationHearted", IHRPlayerTitleViewHeartViewUIImageView);
+	}
+	/**
+	 * sk - 2/26 - Skip to the skip limit
+	 */
+	public void skipToTheLimit() {
+		System.out.println("skipToTheLimit();");
+		int i = 0;
+		if (isCurrentlyOnFullPlayer()) {
+			clickSkipButton();
+			while (!isVisible(appboyUpsellsPage.getNewFeatureTag()) && isVisible(IHRPlayerViewForwardButtonUIButton)) {
+				clickSkipButton();
+				i++;
+				if (i > 7)
+					break;
+			}
+			if(i==5) {
+				String trackName = getTitleOfSongPlaying();
+				System.out.println("TrackName at " + i + " skips remaining: '" + trackName +"'");
+			}
+		}
+	}
+
+	/**
+	 * sk - 2/27 - there is another method above that does the same thing. However considering that we cannot really click the 
+	 * Save Song or Add to Playlist options without clicking the Save button first, I'm adding that in as a first step.
+	 * Changes made are:
+	 * 1. Adding in click on Save button first
+	 * 2. Changed the method to return Errors object to capture text on what actually failed. Have found that this helps to identify 
+	 * step and reason failure quickly as compared to only a screenshot.
+	 * This will help make the actual test more compact.
+	 * I am not removing the existing method cause FullPlayer tests are using that.
+	 * I'll add in a ticket to refactor the FullPlayer tests with this method if we all agree on it?
+	 */
+	public Errors clickSaveModalAddToPlaylist(Entitlement entitlement) {
+		Errors err = new Errors();
+		if (clickSaveButtonToOpenSaveModal()) {
+			if (isEnabled(addToPlaylistButton)) {
+				if(entitlement.equals(Entitlement.FREE)) {
+					addToPlaylistButton.click();
+					System.out.println("clickSaveModalAddToPlaylist(): Clicked Add to Playlist button.");
+					if (!appboyUpsellsPage.isUpsellDisplayed())
+						err.add("Add to Playlist upsell page was not displayed for Free user.");
+				}
+				else if(entitlement.equals(Entitlement.PLUS)) {
+					addToPlaylistButton.click();
+					System.out.println("clickSaveModalAddToPlaylist(): Clicked Add to Playlist button.");
+					if (!appboyUpsellsPage.isUpsellDisplayed())
+						err.add("Add to Playlist upsell page was not displayed for Plus user.");
+				}
+				else if(entitlement.equals(Entitlement.ALLA)) {
+					addToPlaylistButton.click();
+					System.out.println("clickSaveModalAddToPlaylist(): Clicked Add to Playlist button.");
+				} 
+			}
+			else {
+				err.add("Add to playlist button was not enabled - this can occur if station tested is a live radio.");
+			}
+		}
+		else {
+			err.add("Player - Save modal did not open");
+			return err;
+		}
+		return err; 
+	}
 }

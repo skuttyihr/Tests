@@ -691,8 +691,17 @@ public class SearchPage extends Page {
 	 * @param name
 	 */
 	public void searchAndPlayPlaylist(String name) {
-		searchPage.enterTextAndPressEnterIntoSearchBar(name);
+		enterTextAndPressEnterIntoSearchBar(name);
 		searchPage.clickFirstPlaylistCell();
 		System.out.println("Playing Curated Playlist");
+	}
+	
+	/**
+	 * sk - method to search and play Top Result
+	 * @param a station name
+	 */
+	public void searchAndPlayTopResults(String stationName) {
+		enterTextAndPressEnterIntoSearchBar(stationName);
+		clickTopResult();
 	}
 }
