@@ -90,7 +90,7 @@ public class CuratedPlaylistPage extends Page{
 		IOSElement cPlaylistTrackOverflow = findElement(driver, By.xpath("//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[2]/"
 				+ "XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/"
 				+ "XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeCollectionView[1]/"
-				+ "XCUIElementTypeCell[" + 	cellnumber + "]/XCUIElementTypeButton[1]"));
+				+ "XCUIElementTypeCell[" + cellnumber + "]/XCUIElementTypeButton[1]"));
 		return cPlaylistTrackOverflow;				
 	}
 

@@ -271,7 +271,7 @@ public class AppboyUpsellsPage extends Page{
 				err.add("Plus user : 'Subscribe to All Access' button was not active for a plus user and could not connect to App Store.");	
 			}
 			else {
-				System.out.println("Plus user : Subscribe to All Access Button was active, and connected to App Store.");
+				System.out.println("Plus user : Subscribe to All Access Button was active, and connected to App Store as expected.");
 			}
 		}
 		return err;
@@ -285,7 +285,7 @@ public class AppboyUpsellsPage extends Page{
 				err.add("Free non trial eligibile user: 'Subscribe to Plus' button was not active for a Free non trial eligible user and could not connect to App Store.");
 			}
 			else {
-				System.out.println("Free non trial eligibile user : 'Subscribe to Plus' button was active, and connected to App Store.");
+				System.out.println("Free non trial eligibile user : 'Subscribe to Plus' button was active, and connected to App Store as expected.");
 			}
 		}
 		return err;

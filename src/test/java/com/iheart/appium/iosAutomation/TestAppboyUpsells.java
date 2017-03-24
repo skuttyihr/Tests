@@ -289,7 +289,6 @@ public class TestAppboyUpsells extends TestRoot {
 		Assert.assertTrue("Upsell headline test for artist radio - 'Save - Add to Playlist' for plus user failed." + err, err.noErrors());
 		err.add(appboyUpsellsPage.verifyUpsellPlusButtonState_PlusUser());
 		Assert.assertTrue("Button state test 1 failed." + err, err.noErrors());
-		err.add(fullPlayer.clickSaveModalAddToPlaylist(Entitlement.PLUS));
 		err.add(appboyUpsellsPage.verifyUpsellAAButtonState_PlusUser());
 		Assert.assertTrue("Button state test 2 failed." + err, err.noErrors());
 		consoleLogEnd(before, err.noErrors(), "Tested Full Player Artist Radio - Add to Playlist Upsell for Plus User");	

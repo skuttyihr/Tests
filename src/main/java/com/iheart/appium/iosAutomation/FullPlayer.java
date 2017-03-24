@@ -28,12 +28,12 @@ public class FullPlayer extends Page {
 	@iOSFindBy(accessibility = "IHRPlayerTitleView-TitleLabel-UILabel") private IOSElement IHRPlayerTitleViewTitleLabelUILabel;
 	@iOSFindBy(accessibility = "IHRPlayerTitleView-SubTitleLabel-UILabel") private IOSElement IHRPlayerTitleViewSubTitleLabelUILabel;
 	@iOSFindBy(accessibility = "IHRPlayerTitleView-HeartView-UIImageView") private IOSElement IHRPlayerTitleViewHeartViewUIImageView;
-	@iOSFindBy(accessibility = "NavBar-BackPlayer-UIButton") private IOSElement   NavBarBackPlayerUIButton;
+	@iOSFindBy(accessibility = "NavBar-BackPlayer-UIButton") private IOSElement NavBarBackPlayerUIButton;
 	@iOSFindBy(accessibility = "PlayerView-MinimizePlayer-Downarrow-UIButton") private IOSElement PlayerViewMinimizePlayerDownarrowUIButton;
-	@iOSFindBy(accessibility = "NavBar-SideMenuButton-UIButton") private IOSElement  NavBarSideMenuButtonUIButton;
-	@iOSFindBy(accessibility = "NavBar-RightDisableableBarButton-UIButton") private IOSElement   NavBarRightDisableableBarButtonUIButton;
-	@iOSFindBy(accessibility = "NavBar-SearchBarButton-UIButton") private IOSElement  NavBarSearchBarButtonUIButton;
-	@iOSFindBy(accessibility = "NavBar-FavoriteButton-UIButton") private IOSElement   NavBarFavoriteButtonUIButton;
+	@iOSFindBy(accessibility = "NavBar-SideMenuButton-UIButton") private IOSElement NavBarSideMenuButtonUIButton;
+	@iOSFindBy(accessibility = "NavBar-RightDisableableBarButton-UIButton") private IOSElement NavBarRightDisableableBarButtonUIButton;
+	@iOSFindBy(accessibility = "NavBar-SearchBarButton-UIButton") private IOSElement NavBarSearchBarButtonUIButton;
+	@iOSFindBy(accessibility = "NavBar-FavoriteButton-UIButton") private IOSElement NavBarFavoriteButtonUIButton;
 	@iOSFindBy(accessibility ="NavBar-ShareButton-UIButton") private IOSElement	NavBarShareButtonUIButton;
 	@iOSFindBy(accessibility ="NavBar-StyledLabelWithTitle-UILabel") private IOSElement	NavBarStyledLabelWithTitleUILabel;
 	@iOSFindBy(accessibility ="IHRCastingBarButtonItem-UIButton") private IOSElement IHRCastingBarButtonItemUIButton;
@@ -395,7 +395,7 @@ public class FullPlayer extends Page {
 	 * @return
 	 */
 	public int getNumberOfSkipsRemaining(){
-		int skipsLeft = 0;;
+		int skipsLeft = 0;
 		if (waitForElementToBeVisible(IHRPlayerViewForwardButtonUIButton, 4)) {
 			//TODO: This line needs to be fixed so as to get the entire text for the Skip button, if possible, for the method to work.
 			String skips = IHRPlayerViewForwardButtonUIButton.getText();
@@ -858,42 +858,31 @@ public class FullPlayer extends Page {
 	public Errors clickSaveModalAddToPlaylist(Entitlement entitlement) {
 		Errors err = new Errors();
 		if (clickSaveButtonToOpenSaveModal()) {
-			if(entitlement.equals(Entitlement.FREE)) {
-				if (isVisible(addToPlaylistButton)) {
+			if (isEnabled(addToPlaylistButton)) {
+				if(entitlement.equals(Entitlement.FREE)) {
 					addToPlaylistButton.click();
 					System.out.println("clickSaveModalAddToPlaylist(): Clicked Add to Playlist button.");
 					if (!appboyUpsellsPage.isUpsellDisplayed())
 						err.add("Add to Playlist upsell page was not displayed for Free user.");
 				}
-				else {
-					err.add("Add to playlist button was not enabled - this can occur if station tested is a live radio.");
-				}
-			}
-			else if(entitlement.equals(Entitlement.PLUS)) {
-				// check if Add to Playlist button is enabled, else return error
-				if (isVisible(addToPlaylistButton)) {
+				else if(entitlement.equals(Entitlement.PLUS)) {
 					addToPlaylistButton.click();
 					System.out.println("clickSaveModalAddToPlaylist(): Clicked Add to Playlist button.");
 					if (!appboyUpsellsPage.isUpsellDisplayed())
 						err.add("Add to Playlist upsell page was not displayed for Plus user.");
 				}
-				else {
-					err.add("Add to playlist button was not enabled - this can occur if station tested is a live radio.");
-				}
-			}
-			else if(entitlement.equals(Entitlement.ALLA)) {
-				if (isVisible(addToPlaylistButton)) {
+				else if(entitlement.equals(Entitlement.ALLA)) {
 					addToPlaylistButton.click();
 					System.out.println("clickSaveModalAddToPlaylist(): Clicked Add to Playlist button.");
 				} 
-				else {
-					err.add("Add to playlist button was not enabled - this can occur if station tested is a live radio.");
-				}
 			}
 			else {
-				err.add("Player - Save modal did not open");
-				return err;
+				err.add("Add to playlist button was not enabled - this can occur if station tested is a live radio.");
 			}
+		}
+		else {
+			err.add("Player - Save modal did not open");
+			return err;
 		}
 		return err; 
 	}

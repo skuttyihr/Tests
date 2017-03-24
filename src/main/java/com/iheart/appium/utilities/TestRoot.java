@@ -367,7 +367,7 @@ public class TestRoot{
 		String label = "";
 			
 		if (!isVisible(element)) {
-			if (waitForElementToBeVisible(element, 5)) {
+			if (!waitForElementToBeVisible(element, 5)) {
 				System.out.println("element is null or is not visible.");
 				return false;
 			}
@@ -824,13 +824,11 @@ public class TestRoot{
 	public static boolean isVisible(IOSElement e) {
 		boolean isVisible = false;
 		if (e == null) {
-			System.out.println("Failing in isVisible(), element is being sent as null");
 			return false;
 		}
 		try {
 			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 			isVisible = e.isDisplayed();
-			System.out.println("isDisplayed() in isVisible(): " +  isVisible);
 		} catch (Exception x) {
 		} finally {
 			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);

@@ -312,10 +312,11 @@ public class Page extends TestRoot {
 	public static Errors playStationOpenFullPlayer(Entitlement entitlement, boolean isTrialEligible, String stationName) {
 		Errors err = new Errors();
 		login(entitlement, isTrialEligible);
-		if (miniPlayer.getMiniPlayer()) {
-			miniPlayer.clickPlayPauseButton();
-		} 		
 		homePage.clickNavBarSearchButtonToOpenSearch();
+		if (miniPlayer.getMiniPlayer()) {
+			if (!miniPlayer.getTypeOfPlayButton().equals("Play"))  //if station is not in paused or stopped state, then tap the play button
+			miniPlayer.clickPlayPauseButton();
+		}
 		searchPage.searchAndPlayTopResults(stationName);		
 		err.add(miniPlayer.openFullPlayer());
 		System.out.println("Full player opened, playing " + stationName + " Radio");
