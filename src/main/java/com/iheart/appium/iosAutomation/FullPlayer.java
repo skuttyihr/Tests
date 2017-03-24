@@ -144,9 +144,9 @@ public class FullPlayer extends Page {
     	printElementInformation(IHROptionMenuViewUpperContainerUIView);
     	printElementInformation(IHROptionMenuViewDividerViewUIView);
     	printElementInformation(IHROptionMenuViewButtonsContainerUIView);
-    	printElementInformation(BuySongButton);
-    	printElementInformation(LyricsButton);
-    	printElementInformation(GoToArtistProfileButton);
+    	printElementInformation(buySongButton);
+    	printElementInformation(lyricsButton);
+    	printElementInformation(goToArtistProfileButton);
     	printElementInformation(IHROptionMenuViewCancelButtonUIButton);
     	printElementInformation(IHROptionMenuMetadataViewImageViewUIImageView);
     	printElementInformation(IHROptionMenuMetadataViewLabelContainerUIView);
@@ -596,9 +596,9 @@ public class FullPlayer extends Page {
      */
     public boolean clickMoreLyricsButtonIfEnabled(){
     	System.out.println("clickMoreLyricsButton() - On More Info Pane - clicking Lyrics");
-    	if(LyricsButton.isEnabled()){
-    		System.out.println("LyricsButton is Enabled? : " + LyricsButton.isEnabled() );
-    		LyricsButton.click();
+    	if(lyricsButton.isEnabled()){
+    		System.out.println("LyricsButton is Enabled? : " + lyricsButton.isEnabled() );
+    		lyricsButton.click();
     		System.out.println("Clicked Lyrics Button. ");
     		return true;
     	}else{
@@ -613,9 +613,9 @@ public class FullPlayer extends Page {
      */
     public boolean clickGoToArtistProfileButtonIfEnabled(){
     	if(IHROptionMenuViewCancelButtonUIButton.isDisplayed()){
-    		if(GoToArtistProfileButton.isEnabled()){
+    		if(goToArtistProfileButton.isEnabled()){
     			System.out.println("clickGoToArtistProfileButtonIfEnabled() - On More Info Pane - clicking 'Go To Artist Profile'");
-    			GoToArtistProfileButton.click();
+    			goToArtistProfileButton.click();
     			return true;
     		}else{
     			System.out.println("GoToArtistProfileButton wasn't enabled. - couldn't click. Returning False.");
@@ -653,7 +653,7 @@ public class FullPlayer extends Page {
     		IHRPlayerSaveButtonUIButton.click();
 	}
     	//Save Modal should be up now
-    	boolean isSaveSongVisible = SaveSongButton.isDisplayed();
+    	boolean isSaveSongVisible = saveSongButton.isDisplayed();
     	System.out.println(isSaveSongVisible);
     	return isSaveSongVisible;
     	
@@ -676,18 +676,18 @@ public class FullPlayer extends Page {
      * entitlement must be "FREE", "PLUS", or "ALLACCESS"
      */
     public boolean clickAddToPlaylistButtonInSaveModal(String entitlement){
-    	if(entitlement!= null && AddToPlaylistButton != null && !entitlement.equals("")){
+    	if(entitlement!= null && addToPlaylistButton != null && !entitlement.equals("")){
     		if(entitlement.equals("FREE")){
-    			AddToPlaylistButton.click();
+    			addToPlaylistButton.click();
     			System.out.println("AddToPlaylistButton was clicked for FREE User - Expect Upsell Modal to appear");
     			return upsellPage.isUpsellModalOpen();
     		}else if(entitlement.equals("PLUS")){
-    			AddToPlaylistButton.click();
+    			addToPlaylistButton.click();
     			System.out.println("AddToPlaylistButton was clicked for PLUS User - Expect Upsell Modal to appear");
     			return upsellPage.isUpsellModalOpen();
     			//return upsellPage.isad
     		}else if(entitlement.equals("ALLA")){
-    			AddToPlaylistButton.click();
+    			addToPlaylistButton.click();
     			System.out.println("AddToPlaylistButton was clicked for ALLACCESS User - Expect Add to Playlist Modal to appear");
     			//addToPlaylistModal.clickFirstPlaylist(); This can be filled in once AddToPlaylist page Object is done!!!!
     			return true;
@@ -699,8 +699,8 @@ public class FullPlayer extends Page {
      * @return fullPlayer.isCurrentlyOnFullPlayer();
      */
     public boolean clickSaveSongInSaveModal(){
-    	if(SaveSongButton != null){
-    		SaveSongButton.click();
+    	if(saveSongButton != null){
+    		saveSongButton.click();
     		System.out.println("clickSaveSongInSaveModal().");
     	}
     	return fullPlayer.isCurrentlyOnFullPlayer();
@@ -710,8 +710,8 @@ public class FullPlayer extends Page {
      * @return fullPlayer.isCurrentlyOnFullPlayer();
      */
     public boolean clickRemoveStationInSaveModal(){
-    	if(RemoveStationButton!=null){
-    		RemoveStationButton.click();
+    	if(removeStationButton!=null){
+    		removeStationButton.click();
     		System.out.println("clickRemoveStationInSaveModal().");
     	}
     	
@@ -722,8 +722,8 @@ public class FullPlayer extends Page {
      * @return fullPlayer.isCurrentlyOnFullPlayer();
      */
     public boolean clickCancelInSaveModal(){
-    	if(CancelOutOfSaveButton!= null){
-    		CancelOutOfSaveButton.click();
+    	if(cancelOutOfSaveButton!= null){
+    		cancelOutOfSaveButton.click();
     	}
     	System.out.println("clickCancelInSaveModal().");
     	return fullPlayer.isCurrentlyOnFullPlayer();
@@ -733,8 +733,8 @@ public class FullPlayer extends Page {
      * @return fullPlayer.isCurrentlyOnFullPlayer();
      */
     public boolean clickSaveStationInSaveModal(){
-    	if(SaveStationButton != null){
-    		SaveStationButton.click();
+    	if(saveStationButton != null){
+    		saveStationButton.click();
     	}
     	System.out.println("clickSaveStationInSaveModal().");
     	return fullPlayer.isCurrentlyOnFullPlayer();
@@ -745,7 +745,7 @@ public class FullPlayer extends Page {
      * @return boolean
      */
     public boolean isRemoveStationInSaveModalDisplayed(){
-    	return (fullPlayer.isCurrentlyOn("isCurrentlyOnSaveModal with 'Remove Station' Button", RemoveStationButton));
+    	return (fullPlayer.isCurrentlyOn("isCurrentlyOnSaveModal with 'Remove Station' Button", removeStationButton));
     }
     /**
      * Checks if the 'Save Station' is available/displayed.
@@ -753,7 +753,7 @@ public class FullPlayer extends Page {
      * @return
      */
     public boolean isSaveStationInSaveModalDisplayed(){
-    	return (fullPlayer.isCurrentlyOn("isCurrentlyOnSaveModal with 'Save Station' Button", SaveStationButton));
+    	return (fullPlayer.isCurrentlyOn("isCurrentlyOnSaveModal with 'Save Station' Button", saveStationButton));
     }
     
     /**
