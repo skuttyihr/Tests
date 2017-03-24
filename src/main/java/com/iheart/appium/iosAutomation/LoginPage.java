@@ -205,6 +205,7 @@ public class LoginPage extends Page {
 		// Select Genre
 		int[] genres = new int[] {1, 2} ;
 		if (genrePage.isCurrentlyOnGenrePage()){
+			//removed the println, cause the above method prints it out as well.
 			if(!genrePage.isDoneButtonEnabled()){
 				genrePage.selectGenres(genres);
 				genrePage.clickDoneButton();
@@ -269,7 +270,7 @@ public class LoginPage extends Page {
 	 */
 	public boolean loginViaFacebook() {
 		onboardingPage.clickOnboardingLoginButton();
-		waitForElementToBeVisible(IHRAuthorizationViewEmailAddressTextField, 3);
+		waitForVisible(driver, By.className("XCUIElementTypeTextField"), 10);
 		clickFacebookLoginButton();
 		System.out.println("Testing Facebook login.");
 		// adding in wait

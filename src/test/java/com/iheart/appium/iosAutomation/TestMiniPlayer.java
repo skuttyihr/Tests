@@ -7,9 +7,11 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
-
+import org.junit.FixMethodOrder;
+import org.junit.runners.MethodSorters;
 import com.iheart.appium.utilities.TestRoot;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestMiniPlayer extends TestRoot {
 
 	@Rule
@@ -39,7 +41,7 @@ public class TestMiniPlayer extends TestRoot {
      * (todo)Play Artist in mini player if something is already playing. 
 	 */
 	@Test
-	public void testMiniPlayerArtistRadio_MPLAY1_FREE() {
+	public void MPLAY1_testMiniPlayerArtistRadio_FREE() {
 		LocalTime before = consoleLogStart(
 				"Testing testMiniPlayerArtistRadio_MPLAY1_FREE() - login, start MiniPlayer for Artist Radio, show all elements, test functionality.");
 		//sk - 2/23 - changing login id as the earlier one failed
@@ -111,7 +113,7 @@ public class TestMiniPlayer extends TestRoot {
 	 */
 	
 	@Test
-	public void testMiniPlayerWorksOnAllPages_MPLAY2_FREE() {
+	public void MPLAY2_testMiniPlayerWorksOnAllPages_FREE() {
 		LocalTime before = consoleLogStart(
 				"Testing testMiniPlayerWorksOnAllPages_MPLAY2_FREE - login, start MiniPlayer for Artist Radio, Open other pages, check that MiniPlayer is still running.");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("steph@free.com", "stephfree", "FREE"));
@@ -160,7 +162,7 @@ public class TestMiniPlayer extends TestRoot {
 		Verify that Elapsed view is hidden
 	 */
 	@Test
-	public void testMiniPlayerRadioStation_MPLAY3_FREE() {
+	public void MPLAY3_testMiniPlayerRadioStation_FREE() {
 		LocalTime before = consoleLogStart("Testing testMiniPlayerRadioStationAfterLogin");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("steph@free.com", "stephfree", "FREE"));
 		homePage.clickNavBarSearchButtonToOpenSearch();
@@ -202,7 +204,7 @@ public class TestMiniPlayer extends TestRoot {
 	 */
 /*	@Test
 	//@Ignore
-	public void testMiniPlayerPlaylist_MPLAY4_FREE() {
+	public void MPLAY4_testMiniPlayerPlaylist_FREE() {
 	
 	}
 	/**	1. Repeat MPLAY-1 with a Podcast ("Startalk")

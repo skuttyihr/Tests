@@ -35,6 +35,7 @@ import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.iheart.appium.iosAutomation.AlbumProfilePage;
+import com.iheart.appium.iosAutomation.AppboyUpsellsPage;
 import com.iheart.appium.iosAutomation.ArtistProfileOverflowPage;
 import com.iheart.appium.iosAutomation.ArtistProfilePage;
 import com.iheart.appium.iosAutomation.CuratedPlaylistPage;
@@ -108,7 +109,7 @@ public class TestRoot{
 	protected static ArtistProfileOverflowPage artistProfileOverflowPage;
 	protected static AlbumProfilePage albumProfilePage;
 	protected static CuratedPlaylistPage curatedPlaylistPage;
-
+	protected static AppboyUpsellsPage appboyUpsellsPage;
 
 	// New On Demand Elements
 	protected static ArtistProfilePage artistProfilePage;
@@ -130,6 +131,8 @@ public class TestRoot{
 	protected static String IHEARTFREEPASSWD;
 	protected static String IHEARTPLUSPASSWD;
 	protected static String IHEARTPREMIUMPASSWD;
+	protected static String IHEARTFREETRIALEXPUSERNAME;
+	protected static String IHEARTFREETRIALEXPPASSWD;
 
 	// Screenshot directory and URL
 	protected static String SCREENSHOT_DIRECTORY;
@@ -191,10 +194,12 @@ public class TestRoot{
 		IHEARTFREEUSERNAME = LoadProperties.getProperties(passwords, "IHEART.FREE.USERNAME");
 		IHEARTPLUSUSERNAME = LoadProperties.getProperties(passwords, "IHEART.PLUS.USERNAME");
 		IHEARTPREMIUMUSERNAME = LoadProperties.getProperties(passwords, "IHEART.PREMIUM.USERNAME");
+		IHEARTFREETRIALEXPUSERNAME = LoadProperties.getProperties(passwords, "IHEART.FREETRIALEXP.USERNAME");
 		IHEARTPASSWORD = LoadProperties.getProperties(passwords, "IHEART.PASSWORD");
 		IHEARTFREEPASSWD = LoadProperties.getProperties(passwords, "IHEART.FREE.PASSWORD");
 		IHEARTPLUSPASSWD = LoadProperties.getProperties(passwords, "IHEART.PLUS.PASSWORD");
 		IHEARTPREMIUMPASSWD = LoadProperties.getProperties(passwords, "IHEART.PREMIUM.PASSWORD");
+		IHEARTFREETRIALEXPPASSWD = LoadProperties.getProperties(passwords, "IHEART.FREETRIALEXP.PASSWORD");
 		FACEBOOKUSERNAME = LoadProperties.getProperties(passwords, "FACEBOOK.USERNAME");
 		FACEBOOKFULLNAME = LoadProperties.getProperties(passwords, "FACEBOOK.FULLNAME");
 		FACEBOOKPASSWORD = LoadProperties.getProperties(passwords, "FACEBOOK.PASSWORD");
@@ -307,6 +312,7 @@ public class TestRoot{
 		artistProfileOverflowPage = new ArtistProfileOverflowPage(driver);
 		albumProfilePage = new AlbumProfilePage(driver);
 		curatedPlaylistPage = new CuratedPlaylistPage(driver);
+		appboyUpsellsPage = new AppboyUpsellsPage(driver);
 		driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 		System.out.println("Testing on: " + MODEL);
 
@@ -355,16 +361,17 @@ public class TestRoot{
 		String getText = "";
 		String value = "";
 		String label = "";
-			
+
 		if (!isVisible(element)) {
-			waitForElementToBeVisible(element, 5);
-			System.out.println("element is null or is not visible.");
-			return false;
+			if (!waitForElementToBeVisible(element, 5)) {
+				System.out.println("element is null or is not visible.");
+				return false;
+			}
 		}	
-		getText = element.getAttribute("name");
+		getText = element.getText();
 		value = element.getAttribute("value");
 		label = element.getAttribute("label");
-		
+
 		if ( getText != null) 
 			System.out.println("Element '" + getText + "' is displayed.");
 		else if (value != null) 
@@ -809,17 +816,15 @@ public class TestRoot{
 	}
 
 	//// Waiting Methods ////
-	//sk - 2/24 - the method was returning false even when the element was displayed as there was no 'return true' stea
+	//sk - 2/24 - the method was returning false even when the element was displayed as there was no 'return true'
 	public static boolean isVisible(IOSElement e) {
 		boolean isVisible = false;
 		if (e == null) {
-			System.out.println("Failing in isVisible(), element is being sent as null");
 			return false;
 		}
 		try {
 			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 			isVisible = e.isDisplayed();
-			System.out.println("isDisplayed() in isVisible(): " +  isVisible);
 		} catch (Exception x) {
 		} finally {
 			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
@@ -839,7 +844,6 @@ public class TestRoot{
 		} finally {
 			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 		}
-
 		return isEnabled;
 	}
 
@@ -915,7 +919,6 @@ public class TestRoot{
 			// searching for element
 			timeLeftMil -= 1000;
 		}
-
 		return isVisible(ele);
 	}
 
@@ -932,6 +935,7 @@ public class TestRoot{
 			try {
 				driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
 				if (ele.isEnabled()) {
+					System.out.println("WaitForElementToBeEnabled(): Element is enabled");
 					break;
 				}
 			} catch (Exception e) {

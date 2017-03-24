@@ -10,6 +10,8 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.rules.TestName;
 
+import com.iheart.appium.iosAutomation.AppboyUpsellsPage.Entitlement;
+import com.iheart.appium.utilities.Errors;
 import com.iheart.appium.utilities.TestRoot;
 import com.iheart.appium.utilities.TestRoot.Stable;
 
@@ -168,7 +170,7 @@ public class TestFullPlayer extends TestRoot {
 		//No real way to check if Growl displays. But we can verify that Save Modal disappears and fullPlayer opens back up. //'SongName' saved to My Music
 		Assert.assertTrue("Clicking 'Save Song' should have popped up a growl and continued on the fullPlayer.", fullPlayer.isCurrentlyOnFullPlayer());
 		fullPlayer.clickSaveButtonToOpenSaveModal();
-		fullPlayer.clickAddToPlaylistButtonInSaveModal("FREE");
+		fullPlayer.clickAddToPlaylistButtonInSaveModal(Entitlement.FREE);
 		//Assert.assertTrue("Upsell Modal should be open after clicking 'Add to Playlist' " ,upsellPage.isUpsellModalOpen());
 		upsellPage.clickXtoCloseUpsellModal();
 		Assert.assertTrue("Upsell Modal should be closed and  FullPlayer should be open.", fullPlayer.isCurrentlyOnFullPlayer());
@@ -201,6 +203,11 @@ public class TestFullPlayer extends TestRoot {
 	 * Test Save Song
 	 * Test more than 6 tracks,
 	 * then Replay second to last played song and make sure it is the same name.
+	 * sk - 2/7 - Refactored this test for 
+	 * 1. Integrating appboy upsell page objects and methods
+	 * 2. Removed redundancy of testing the upsell at this point. For this test, if tapping on the replay button displays upsell, then it's a pass.
+	 *    Upsell text, features and buttons will be tested in the TestAppboyUpsells test
+	 * 
 	 */
 	@Test
 	public void testFullPlayerSaveReplaySkip_FPLAY4_PLUS(){
@@ -211,22 +218,15 @@ public class TestFullPlayer extends TestRoot {
 		searchPage.clickTopResult();
 		miniPlayer.openFullPlayer();
 		System.out.println("Testing to see if Save Button works for PLUS user...");
-		fullPlayer.clickSaveButtonToOpenSaveModal();
-		Assert.assertTrue("Clicking 'Add to Playlist' should show Upsell Modal.", fullPlayer.clickAddToPlaylistButtonInSaveModal("PLUS"));
-		//upsellPage.clickSubscribeAllAccessButton();
-		String upsellPlaylistText = upsellPage.getAddToPlaylistUpsellText().getText();		
-		upsellPage.assertPlaylistUpsell("Plus",upsellPlaylistText);
-		//Assert.assertTrue("Should show account was made on Web and only has 'Got It' button to escape from AA Upsell.",upsellPage.clickGotItWebUpsellDisplayed());
-		//Assert.assertTrue("Apple ID sign in should be displayed to buy All Access", upsellPage.isAppleIDSignInModalDisplayed());
-		upsellPage.clickXtoCloseUpsellModal();
+		Errors err = fullPlayer.clickSaveModalAddToPlaylist(Entitlement.PLUS);
+		Assert.assertEquals("Clicking 'Add to Playlist' should show Upsell Modal.", true, err.noErrors());
+		appboyUpsellsPage.closeUpsell();
 		fullPlayer.clickSaveButtonToOpenSaveModal();
 		fullPlayer.clickSaveSongInSaveModal();
-		String songUpsellText = upsellPage.getSongUpsellText().getText();		
-		upsellPage.assertTrackUpsell("Plus", songUpsellText);
-		//Get name of currently playing song.
+		/** sk - ToDo - Get name of currently playing song.
 		//Go to My Music
 		//Get title of last added Song in My Playlist 
-		//Verify that song names are equal.
+		//Verify that song names are equal. */
 		String fifthTrackName = "";
 		System.out.println("Testing to see if Skip button works more than 6 times, a PLUS and ALL ACCESS feature...");
 		for(int i=0; i< 7; i++){
@@ -239,7 +239,6 @@ public class TestFullPlayer extends TestRoot {
 		fullPlayer.clickReplayButtonToOpenReplayModal();
 		Assert.assertTrue("Clicking 'Replay' button should open Replay Modal and show first Track Cell", fullPlayer.isCurrentlyOnReplayFirstTrackCell());
 		Assert.assertTrue("Clicking 'Replay' button should open Replay Modal and not Upsell page.", fullPlayer.isCurrentlyOnReplayModal());
-
 		fullPlayer.clickReplaySecondCell();
 		Assert.assertEquals("After skipping 5 times, the Fifth Track's song name should match the Second to last song in Replay.", fifthTrackName, fullPlayer.getTitleOfSongPlaying());
 		consoleLogEnd(before, true , "Tested testFullPlayerSaveReplaySkip_FPLAY4_PLUS().");
