@@ -358,14 +358,10 @@ public class TestRoot{
 	 * @return
 	 */
 	public boolean printElementName(IOSElement element) {
-		if (element == null) {
-			System.out.println("printElementName(): element is null.");
-			return false;
-		}
 		String getText = "";
 		String value = "";
 		String label = "";
-			
+
 		if (!isVisible(element)) {
 			if (!waitForElementToBeVisible(element, 5)) {
 				System.out.println("element is null or is not visible.");
@@ -375,7 +371,7 @@ public class TestRoot{
 		getText = element.getText();
 		value = element.getAttribute("value");
 		label = element.getAttribute("label");
-		
+
 		if ( getText != null) 
 			System.out.println("Element '" + getText + "' is displayed.");
 		else if (value != null) 
