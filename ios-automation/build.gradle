@@ -1,0 +1,60 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+// In this section you declare where to find the dependencies of your project
+repositories {
+    mavenCentral()
+}
+
+// In this section you declare the dependencies for your production and test code
+dependencies {
+    compile 'io.appium:java-client:3.4.1'
+    compile 'junit:junit:4.12'
+    compile 'log4j:log4j:1.2.17'
+    compile 'com.github.detro.ghostdriver:phantomjsdriver:1.1.0'
+    compile 'xml-apis:xml-apis:1.4.01'
+    compile 'org.apache.poi:poi:3.9'
+    compile 'org.apache.poi:poi-ooxml:3.9'
+    compile 'dom4j:dom4j:1.6.1'
+    compile 'xmlbeans:xbean:2.2.0'
+    compile 'org.apache.httpcomponents:httpclient:4.5.1'
+    compile 'org.apache.commons:commons-lang3:3.4'
+    compile 'org.apache.maven.surefire:surefire-api:2.19.1'
+    compile ':test-commons'
+}
+
+sourceSets {
+    test{
+        java{
+            srcDirs = ['src/test-commons/src/main/java', 'src/test/java', 'src/main/java']
+            
+        }
+        resources{
+            srcDirs = ['properties/', 'passwords/', 'src/main/resources']
+            exclude '**/*.java'
+        }
+    }
+}
+
+test{
+	exclude "src/Suites/*"
+    useJUnit()
+    testLogging {
+        exceptionFormat = 'full'
+        events 'started', 'passed', 'failed'
+        showStandardStreams = true
+    }
+    systemProperties = System.getProperties()
+}
+
+eclipse {
+	classpath {
+		file {
+			withXml {
+				def node = it.asNode()
+				node.remove (node.find { it.@path == '/test-commons' } )
+			}
+		}
+	}
+}
+
