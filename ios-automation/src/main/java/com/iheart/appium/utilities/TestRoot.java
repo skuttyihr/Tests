@@ -375,8 +375,9 @@ public class TestRoot{
 		value = element.getAttribute("value");
 		label = element.getAttribute("label");
 
-		if ( getText != null) 
+		if (getText != null) {
 			System.out.println("Element '" + getText + "' is displayed.");
+		}
 		else if (value != null) 
 			System.out.println("Element '" + value + "' is displayed.");
 		else if (label != null)
@@ -821,6 +822,8 @@ public class TestRoot{
 	//// Waiting Methods ////
 	//sk - 2/24 - the method was returning false even when the element was displayed as there was no 'return true'
 	public static boolean isVisible(IOSElement e) {
+		//TODO - REMOVE
+		System.out.println("IN ISVISIBLE");
 		boolean isVisible = false;
 		if (e == null) {
 			return false;

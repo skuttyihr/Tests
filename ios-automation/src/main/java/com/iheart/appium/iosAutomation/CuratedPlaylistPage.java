@@ -15,7 +15,7 @@ import io.appium.java_client.pagefactory.iOSFindBy;
  */
 
 public class CuratedPlaylistPage extends Page{
-	
+
 	public CuratedPlaylistPage() {
 		super();
 	}
@@ -25,19 +25,26 @@ public class CuratedPlaylistPage extends Page{
 	}
 
 	// ***************  Elements   ***************// 
-	
-	@iOSFindBy(xpath = "//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/"
+
+	/*@iOSFindBy(xpath = "//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/"
 			+ "XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/"
 			+ "XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeStaticText[1]")
-	private IOSElement cPlaylistTitle;	
-	@iOSFindBy(accessibility = "Top Hits to keep you motivated in the gym") private IOSElement cPlaylistDescription;
-	@iOSFindBy(xpath = "By iHeartRadio /.*") private IOSElement cPlaylistCurator_Duration;
+	 */
+	@iOSFindBy(accessibility = "MyMusicCollapseableHeader-TitleLabel-UILabel") private IOSElement cPlaylistTitle;	
+	//@iOSFindBy(accessibility = "Top Hits to keep you motivated in the gym") private IOSElement cPlaylistDescription;
+	@iOSFindBy(accessibility = "MyMusicCollapseableHeader-DescriptionLabel-UILabel") private IOSElement cPlaylistDescription;
+	//@iOSFindBy(xpath = "By iHeartRadio /.*") private IOSElement cPlaylistCurator_Duration;
+	@iOSFindBy(accessibility = "MyMusicCollapseableHeader-InformationLabel-UILabel") private IOSElement curatedByAndDurationText;
+
+	//@iOSFindBy(id = "pause button") private IOSElement btnPause;
 	@iOSFindBy(id = "pause button") private IOSElement btnPause;
+
 	@iOSFindBy(accessibility = "overflow list") private IOSElement cPlaylistOverflow;
 	@iOSFindBy(accessibility = "NavBar-BackButton-UIButton") private IOSElement statusBar;
 	@iOSFindBy(className = "XCUIElementTypeImage") private IOSElement cPlaylistCoverArt;
-	@iOSFindBy(accessibility = "Shuffle") private IOSElement shuffleButton;
-	@iOSFindBy(accessibility = "overflow list") private IOSElement cPlaylistProfilePageOverflow;
+	@iOSFindBy(accessibility = "MyMusicPlaylistHeaderCell-ShuffleLabel-UILabel") private IOSElement shuffleButton;
+	@iOSFindBy(accessibility = "MyMusicPlaylistViewController-OverflowBarButtonItem-UIBarButtonItem") private IOSElement cPlaylistProfilePageOverflow;
+
 	@iOSFindBy(accessibility = "Track Overflow") private IOSElement cPlaylistProfileTrackOverflow;
 	@iOSFindBy(accessibility = "Save Playlist") private IOSElement cPlaylistProfilePageOverflowMenuSavePlaylist;
 	@iOSFindBy(accessibility = "Share") private IOSElement cPlaylistProfilePageOverflowMenuShare;
@@ -51,11 +58,10 @@ public class CuratedPlaylistPage extends Page{
 	@iOSFindBy(accessibility = "Reminders") private IOSElement cPlaylistProfilePageShareModalElement;
 	@iOSFindBy(xpath = "//XCUIElementTypeApplication/XCUIElementTypeWindow/XCUIElementTypeOther[2]/XCUIElementTypeOther[3]/XCUIElementTypeOther/XCUIElementTypeOther/"
 			+ "XCUIElementTypeCollectionView") private IOSElement shareModal;
-	@iOSFindBy(xpath = "//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/"
+	/*@iOSFindBy(xpath = "//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/"
 			+ "XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/"
 			+ "XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeStaticText[3]") 
-	private IOSElement curatedByAndDurationText;
-	
+	private IOSElement curatedByAndDurationText;*/
 
 	// ***************  Behaviors  ***************//
 	/** 
@@ -63,27 +69,31 @@ public class CuratedPlaylistPage extends Page{
 	 * getters
 	 * @return IOSElement
 	 */
-	
+
 	public IOSElement getPauseButton() {
 		waitForElementToBeVisible(btnPause, 1);
 		return btnPause;
 	}
-	
+
 	public IOSElement getPlaylistOverflow() {
 		waitForElementToBeVisible(cPlaylistOverflow,2);
 		return cPlaylistOverflow;
 	}
-	
+
 	/**
 	 * sk - cellnumbers for tracks starts from 2
 	 * @param cellnumber
 	 * @return
 	 */
 	public IOSElement getPlaylistCellSongName(int cellnumber) {
-		IOSElement cPlaylistCellSongName = waitForVisible(driver, By.xpath("//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/"
+		IOSElement cPlaylistCellSongName = driver.findElementByAccessibilityId("MyMusicPlaylistViewController-MyMusicSongCell-MyMusicViewCell-" +
+				cellnumber);
+		if (!waitForElementToBeVisible(cPlaylistCellSongName, 5))
+			/*IOSElement cPlaylistCellSongName = waitForVisible(driver, By.xpath("//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/"
 				+ "XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/"
-				+ "XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeCollectionView[1]/XCUIElementTypeCell[" + cellnumber + "]"), 3);
-		return cPlaylistCellSongName;				
+			 */
+			System.out.println("Tracks are not being displayed on curated playlists profile page.");
+		return cPlaylistCellSongName;		
 	}
 
 	public IOSElement getTrackOverflow(int cellnumber) {
