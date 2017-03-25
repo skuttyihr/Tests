@@ -14,6 +14,7 @@ import com.iheart.appium.iosAutomation.AppboyUpsellsPage.Entitlement;
 import com.iheart.appium.utilities.Errors;
 import com.iheart.appium.utilities.TestRoot;
 import com.iheart.appium.utilities.TestRoot.Stable;
+import com.iheart.appium.utilities.TestRoot.UnderWatchForStability;
 
 public class TestFullPlayer extends TestRoot {
 
@@ -77,6 +78,7 @@ public class TestFullPlayer extends TestRoot {
 		Verify that the casting button works
 	 */
 	@Test
+	@Category(UnderWatchForStability.class)
 	public void testFullPlayerFunctionality_FPLAY2_FREE() {
 		LocalTime before = consoleLogStart("Testing testFullPlayerFunctionality_FPLAY2_FREE()");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test66@Test.com", "test", "FREE"));
@@ -152,33 +154,29 @@ public class TestFullPlayer extends TestRoot {
 	 *
 	 */
 	@Test
+	@Category(UnderWatchForStability.class)
 	public void testFullPlayerSaveAndReplayButton_FPLAY3_FREE(){
 		LocalTime before = consoleLogStart("Testing testFullPlayerSaveAndReplayButton_FPLAY3_FREE()");
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("trav@free.com", "travfree", "FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement(IHEARTFREEUSERNAME, IHEARTFREEPASSWD, "FREE"));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		searchPage.enterTextIntoSearchBar("Job for a cowboy");
 		searchPage.clickTopResult();
 		miniPlayer.openFullPlayer();
 		fullPlayer.clickReplayButtonToOpenReplayModal();
-		//Assert.assertTrue("Clicking Replay Button for a Free User should have triggered Upsell.", upsellPage.isUpsellModalOpen());
-		String replayUpsellText = upsellPage.getReplaySongUpsellText().getText();
-		upsellPage.replaySongUpsell("Free", "Encore! Instantly replay songs on the radio with iHeartRadio Plus.");
-		upsellPage.clickXtoCloseUpsellModal();
+		Assert.assertTrue("Clicking Replay Button for a Free User should have triggered Upsell.", appboyUpsellsPage.isUpsellDisplayed());
+		appboyUpsellsPage.closeUpsell();
 		fullPlayer.clickSaveButtonToOpenSaveModal();
 		Assert.assertFalse("Clicking 'Save' should have opened Save Modal and hidden the FullPlayer under it", fullPlayer.isCurrentlyOnFullPlayer());
 		fullPlayer.clickSaveSongInSaveModal();
 		//No real way to check if Growl displays. But we can verify that Save Modal disappears and fullPlayer opens back up. //'SongName' saved to My Music
-		Assert.assertTrue("Clicking 'Save Song' should have popped up a growl and continued on the fullPlayer.", fullPlayer.isCurrentlyOnFullPlayer());
+		Assert.assertTrue("Clicking 'Save Song' should have popped up a growl and continued onto the fullPlayer.", fullPlayer.isCurrentlyOnFullPlayer());
 		fullPlayer.clickSaveButtonToOpenSaveModal();
 		fullPlayer.clickAddToPlaylistButtonInSaveModal(Entitlement.FREE);
-		//Assert.assertTrue("Upsell Modal should be open after clicking 'Add to Playlist' " ,upsellPage.isUpsellModalOpen());
-		upsellPage.clickXtoCloseUpsellModal();
+		Assert.assertTrue("Upsell Modal should be open after clicking 'Add to Playlist' " , appboyUpsellsPage.isUpsellDisplayed());
+		appboyUpsellsPage.closeUpsell();
 		Assert.assertTrue("Upsell Modal should be closed and  FullPlayer should be open.", fullPlayer.isCurrentlyOnFullPlayer());
-		//upsellPage.clickSubscribeAllAccessButton();
-		//Assert.assertTrue("Apple ID sign in should be displayed to buy All Access",upsellPage.isAppleIDSignInModalDisplayed());
-		//Assert.assertTrue("Apple ID sign in should be displayed to buy Plus",upsellPage.isAppleIDSignInModalDisplayed());
 	    fullPlayer.clickSaveButtonToOpenSaveModal();
-	    System.out.println("Testing 'Save Station' puts the Heart next Station Name");
+	    System.out.println("Testing 'Save Station' puts the heart next to Station Name");
 	    if(fullPlayer.isSaveStationInSaveModalDisplayed()){
 	    	fullPlayer.clickSaveStationInSaveModal();
 	    	Assert.assertTrue("Clicking Save Station should have made the Station Hearted/Favorited.",fullPlayer.isStationHearted());
@@ -210,6 +208,7 @@ public class TestFullPlayer extends TestRoot {
 	 * 
 	 */
 	@Test
+	@Category(UnderWatchForStability.class)
 	public void testFullPlayerSaveReplaySkip_FPLAY4_PLUS(){
 		LocalTime before = consoleLogStart("Testing testFullPlayerSaveReplaySkip_FPLAY4_PLUS()");
 		Assert.assertTrue("Should log in successfully to PLUS account.",loginPage.loginVerifyEntitlement(IHEARTPLUSUSERNAME,IHEARTPLUSPASSWD,"PLUS"));

@@ -6,8 +6,6 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 import com.iheart.appium.utilities.Errors;
-import com.iheart.appium.utilities.TestRoot;
-
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;

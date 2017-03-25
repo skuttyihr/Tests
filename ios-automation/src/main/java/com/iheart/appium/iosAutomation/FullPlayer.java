@@ -334,7 +334,7 @@ public class FullPlayer extends Page {
 	 * @return
 	 */
 	public boolean isShareMenuOpen(){
-		IOSElement mailButton = waitForVisible(driver, By.name("Mail"), 10);
+		IOSElement mailButton = waitForVisible(driver, By.name("Reminders"), 10);
 		boolean isThere = false;
 		if(mailButton != null){
 			isThere = true;
@@ -683,24 +683,27 @@ public class FullPlayer extends Page {
 	 */
 	public boolean clickAddToPlaylistButtonInSaveModal(Entitlement e) {
 		if(waitForElementToBeVisible(addToPlaylistButton, 3)) {
-			if(e.equals(Entitlement.FREE)) {
-				addToPlaylistButton.click();
-				System.out.println("AddToPlaylistButton was clicked for FREE User - Expect Upsell Modal to appear");
-				return upsellPage.isUpsellModalOpen();
-			}else if(e.equals(Entitlement.PLUS)) {
-				addToPlaylistButton.click();
-				System.out.println("AddToPlaylistButton was clicked for PLUS User - Expect Upsell Modal to appear");
-				return upsellPage.isUpsellModalOpen();
-				//return upsellPage.isad
-			}else if(e.equals(Entitlement.ALLA)) {
-				addToPlaylistButton.click();
-				System.out.println("AddToPlaylistButton was clicked for ALLACCESS User - Expect Add to Playlist Modal to appear");
-				//addToPlaylistModal.clickFirstPlaylist(); This can be filled in once AddToPlaylist page Object is done!!!!
-				return true;
-			}else 
+			if(isEnabled(addToPlaylistButton)) {
+				if(e.equals(Entitlement.FREE)) {
+					addToPlaylistButton.click();
+					System.out.println("AddToPlaylistButton was clicked for FREE User - Expect Upsell Modal to appear");
+				}else if(e.equals(Entitlement.PLUS)) {
+					addToPlaylistButton.click();
+					System.out.println("AddToPlaylistButton was clicked for PLUS User - Expect Upsell Modal to appear");
+				}else if(e.equals(Entitlement.ALLA)) {
+					addToPlaylistButton.click();
+					System.out.println("AddToPlaylistButton was clicked for ALLACCESS User - Expect Add to Playlist Modal to appear");
+					//addToPlaylistModal.clickFirstPlaylist(); This can be filled in once AddToPlaylist page Object is done!!!!
+				}
+				return appboyUpsellsPage.isUpsellDisplayed();
+			}
+			else {
+				System.out.println("AddToPlaylistButton was not enabled.");
+				clickCancelInSaveModal();
 				return false;
-		}else 
-			return false;
+			}
+		}
+		return false;
 	}
 	/**
 	 * Clicks the Save Song button in the Save Modal to Save currently playing song to My Playlist. 
@@ -708,8 +711,12 @@ public class FullPlayer extends Page {
 	 */
 	public boolean clickSaveSongInSaveModal() {
 		if(isVisible(saveSongButton)) {
-			saveSongButton.click();
-			System.out.println("clickSaveSongInSaveModal().");
+			if(isEnabled(saveSongButton)) {
+				saveSongButton.click();
+				System.out.println("clickSaveSongInSaveModal().");
+			}
+			else
+				clickCancelInSaveModal();			
 		}
 		return fullPlayer.isCurrentlyOnFullPlayer();
 	}
