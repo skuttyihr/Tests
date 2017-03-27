@@ -6,8 +6,12 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+
 import com.iheart.appium.utilities.Errors;
 import com.iheart.appium.utilities.TestRoot;
+import com.iheart.appium.utilities.TestRoot.Stable;
+
 import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;
 
@@ -26,6 +30,7 @@ public class TestCuratedPlaylist extends TestRoot {
 	public RetryRule retry = new RetryRule(1);
 	
 	@Test
+	@Category(RCStable.class)
 	public void CUR1_testPlaylistProfilePageMetadata_PLUS() {
 		LocalTime before = consoleLogStart("Testing elements on Curated Playlist Page Metadata - Plus User - testPlaylistProfilePageMetadata_CUR_1_PLUS().");
 		loginPage.loginVerifyEntitlement(IHEARTPLUSUSERNAME, IHEARTPLUSPASSWD, "PLUS");
@@ -37,6 +42,7 @@ public class TestCuratedPlaylist extends TestRoot {
 	}
 	
 	@Test
+	@Category(RCStable.class)
 	public void CUR2_testPlaylistProfilePageMetadata_ALLA() {
 		LocalTime before = consoleLogStart("Testing elements on Curated Playlist Page Metadata - Plus User - testPlaylistProfilePageMetadata_CUR_2_ALLA()");
 		loginPage.loginVerifyEntitlement(IHEARTPREMIUMUSERNAME, IHEARTPREMIUMPASSWD,"ALLA");
@@ -48,6 +54,7 @@ public class TestCuratedPlaylist extends TestRoot {
 	}
 	
 	@Test
+	@Category(RCStable.class)
 	public void CUR3_testPlaylistProfilePageOverflow_PLUS() {
 		LocalTime before = consoleLogStart("Testing elements on Curated Playlist Page Metadata - Plus User - test page overflow menu");
 		loginPage.loginVerifyEntitlement(IHEARTPLUSUSERNAME, IHEARTPLUSPASSWD, "PLUS");

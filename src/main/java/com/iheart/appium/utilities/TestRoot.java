@@ -70,6 +70,9 @@ public class TestRoot{
 	public static interface Stable{
 	}
 	
+	public static interface RCStable{
+	}
+	
 	protected static final int UP = 0;
 	protected static final int RIGHT = 1;
 	protected static final int DOWN = 2;
