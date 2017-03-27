@@ -322,6 +322,8 @@ public class TestRoot{
 		artistProfilePage = new ArtistProfilePage(driver);
 		artistProfileOverflowPage = new ArtistProfileOverflowPage(driver);
 		albumProfilePage = new AlbumProfilePage(driver);
+		myMusicPage = new MyMusicPage(driver);
+		addToPlaylistPage = new AddToPlaylistPage(driver);
 		curatedPlaylistPage = new CuratedPlaylistPage(driver);
 		driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 		System.out.println("Testing on: " + MODEL);
@@ -425,12 +427,12 @@ public class TestRoot{
 		String label = "";
 
 		if (!isVisible(element)) {
-			if (!waitForElementToBeVisible(element, 5)) {
-				System.out.println("element is null or is not visible.");
-				return false;
+			waitForElementToBeVisible(element, 5);
+			System.out.println("element is null or is not visible.");
+			return false;
 			}
 		}	
-		getText = element.getText();
+		getText = element.getAttribute("name");
 		value = element.getAttribute("value");
 		label = element.getAttribute("label");
 
@@ -884,14 +886,14 @@ public class TestRoot{
 	public static boolean isVisible(IOSElement e) {
 		boolean isVisible = false;
 		if (e == null) {
-			System.out.println("Failing in isVisible(), element is being sent as null");
+			//System.out.println("Failing in isVisible(), element is being sent as null");
 			return false;
 		}
 		try {
 			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 			isVisible = e.isDisplayed();
 			System.out.println("isDisplayed() in isVisible(): " +  isVisible);
-			return isVisible;
+			return isVisible;		
 		} catch (Exception x) {
 		} finally {
 			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
@@ -1003,7 +1005,7 @@ public class TestRoot{
 			try {
 				driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
 				if (ele.isEnabled()) {
-					System.out.println("WaitForElementToBeEnabled(): Element is enabled");
+					//System.out.println("WaitForElementToBeEnabled(): Element is enabled");
 					break;
 				}
 			} catch (Exception e) {
