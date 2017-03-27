@@ -648,15 +648,7 @@ public class FullPlayer extends Page {
 	 * @return
 	 */
 	public boolean clickSaveButtonToOpenSaveModal(){
-		System.out.print("clickSaveButton() : Opening Save Overflow. SaveSongButton.isDisplayed() : ");
-	if(waitForElementToBeVisible(IHRPlayerSaveButtonUIButton, 3)){
-			IHRPlayerSaveButtonUIButton.click();
-	}
-		//Save Modal should be up now
-		boolean isSaveSongVisible = saveSongButton.isDisplayed();
-		System.out.println(isSaveSongVisible);
-		return isSaveSongVisible;
-		
+		return waitAndClick(IHRPlayerSaveButtonUIButton, 3, "clickSaveButtonToOpenSaveModal");
 	}
 
 	/**
