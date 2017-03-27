@@ -195,7 +195,6 @@ public class LoginPage extends Page {
 		enterLoginPassword(password);
 		//System.out.println("Sent keys for Username and Password and about to click LogInAuthButton");
 		clickLogInAuthButton();
-		//System.out.println("Clicked LogInAuthButton.");
 		chooseStayConnected(false);
 		// Dismiss zip code
 		Page.enterZip("");
@@ -217,10 +216,7 @@ public class LoginPage extends Page {
 		chooseStayConnected(false);
 		sleep(2000);
 		Page.handlePossiblePopUp();  //added after genre screen sometimes pops up again. 
-		System.out.println("Logged in to account with email:[" + email + "] password ["+ password + "]");
-		//if(artistProfilePage.isCurrentlyOnArtistProfilePage()){
-		//	artistProfilePage.clickNavBarBackButton();
-		//}
+		System.out.println("Logged in to account.");
 	}
 
 	/**
