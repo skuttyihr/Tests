@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;
 
+import com.iheart.appium.iosAutomation.AppboyUpsellsPage.Entitlement;
 import com.iheart.appium.utilities.TestRoot;
 
 import org.junit.Rule;
@@ -202,7 +203,7 @@ public class TestMyMusic extends TestRoot{
 		searchPage.clickTopResult();
 		miniPlayer.openFullPlayer();
 		fullPlayer.clickSaveButtonToOpenSaveModal();
-		fullPlayer.clickAddToPlaylistButtonInSaveModal("ALLA");
+		fullPlayer.clickAddToPlaylistButtonInSaveModal(Entitlement.ALLA);
 		addToPlaylistPage.printAllElements();
 		addToPlaylistPage.clickFirstPlaylistInCollection();
 		fullPlayer.minimizeFullPlayerToMiniPlayer();
@@ -211,7 +212,7 @@ public class TestMyMusic extends TestRoot{
 		searchPage.clickTopResult();
 		miniPlayer.openFullPlayer();
 		fullPlayer.clickSaveButtonToOpenSaveModal();
-		fullPlayer.clickAddToPlaylistButtonInSaveModal("ALLA");
+		fullPlayer.clickAddToPlaylistButtonInSaveModal(Entitlement.ALLA);
 		addToPlaylistPage.clickFirstPlaylistInCollection();
 		fullPlayer.minimizeFullPlayerToMiniPlayer();
 		searchPage.clickCancelButtonOnSearchBar();

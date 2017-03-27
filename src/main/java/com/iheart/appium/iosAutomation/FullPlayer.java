@@ -675,7 +675,7 @@ public class FullPlayer extends Page {
      * Clicks the Add to Playlist Button, uses String entitlement to determine expected action. 
      * entitlement must be "FREE", "PLUS", or "ALLACCESS"
      */
-    public boolean clickAddToPlaylistButtonInSaveModal(String entitlement){
+    public boolean clickAddToPlaylistButtonInSaveModal(Entitlement entitlement){
     	if(entitlement!= null && addToPlaylistButton != null && !entitlement.equals("")){
     		if(entitlement.equals("FREE")){
     			addToPlaylistButton.click();
@@ -878,4 +878,5 @@ public class FullPlayer extends Page {
 		}
 		return err; 
 	}
+
 }
