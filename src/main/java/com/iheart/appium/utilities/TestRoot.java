@@ -382,15 +382,15 @@ public class TestRoot{
 			iosElement.click();
 			didClick = true;
 		}
-		if(iosElement == null) {
+		else if(iosElement == null) {
 			System.out.println("waitAndClick() : ELEMENT WAS NULL!");
 			return false;
 		}
 		String[] splitUp = iosElement.toString().split(">");
 		if(pageAndMethodName.equals("")) {
-			System.out.println("waitAndClick() : Element["+splitUp[1] + "][ Did Click? : "+ didClick + "].");
+			System.out.println("waitAndClick() : IOSElement["+splitUp[1] + "][ Did Click? : "+ didClick + "].");
 		}else {
-			System.out.println(pageAndMethodName + "() : IOS Element["+splitUp[1] + "][ Did Click? : "+ didClick + "].");
+			System.out.println(pageAndMethodName + "() : IOSElement["+splitUp[1] + "][ Did Click? : "+ didClick + "].");
 		}
 		return didClick;
 	}
@@ -404,14 +404,18 @@ public class TestRoot{
 	 */
 	public String waitAndGetText(IOSElement iosElement, int timeInSeconds, String pageAndMethodName) {
 		String text = "";
+		String[] splitUp = null;
 		if(waitForElementToBeVisible(iosElement, timeInSeconds)) {
 			text = iosElement.getText();
+			splitUp = iosElement.toString().split(">");
+		}else if(iosElement == null) {
+			System.out.println("waitAndGetText() : IOSElement is still null after waiting");
+			return "";
 		}
-		String[] splitUp = iosElement.toString().split(">");
 		if(pageAndMethodName.equals("")) {
-			System.out.println("waitAndGetText() : Element["+splitUp[1] + "][ Text : "+ text + "].");
+			System.out.println("waitAndGetText() : IOSElement["+splitUp[1] + "][ Text : "+ text + "].");
 		}else {
-			System.out.println(pageAndMethodName + "() : IOS Element["+splitUp[1] + "][ Text : "+ text + "].");
+			System.out.println(pageAndMethodName + "() : IOSElement["+splitUp[1] + "][ Text : "+ text + "].");
 		}
 		return text;
 	}
@@ -427,15 +431,13 @@ public class TestRoot{
 		String label = "";
 
 		if (!isVisible(element)) {
-			waitForElementToBeVisible(element, 5);
-			System.out.println("element is null or is not visible.");
-			return false;
+			if (!waitForElementToBeVisible(element, 5)) {
+				return false;
 			}
-		
+		}
 		getText = element.getAttribute("name");
 		value = element.getAttribute("value");
 		label = element.getAttribute("label");
-
 		if ( getText != null) 
 			System.out.println("Element '" + getText + "' is displayed.");
 		else if (value != null) 
@@ -881,19 +883,14 @@ public class TestRoot{
 		return driver.getContext().equals("NATIVE_APP");
 	}
 
-	//// Waiting Methods ////
-	//sk - 2/24 - the method was returning false even when the element was displayed as there was no 'return true'
 	public static boolean isVisible(IOSElement e) {
 		boolean isVisible = false;
 		if (e == null) {
-			//System.out.println("Failing in isVisible(), element is being sent as null");
 			return false;
 		}
 		try {
 			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
-			isVisible = e.isDisplayed();
-			System.out.println("isDisplayed() in isVisible(): " +  isVisible);
-			return isVisible;		
+			isVisible = e.isDisplayed();	
 		} catch (Exception x) {
 		} finally {
 			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
@@ -907,9 +904,7 @@ public class TestRoot{
 			return false;
 		try {
 			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
-			isEnabled = e.isEnabled();
-			System.out.println("isEnabled() in isVisible(): " + isEnabled);			
-			return isEnabled;
+			isEnabled = e.isEnabled();		
 		} catch (Exception x) {
 		} finally {
 			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
