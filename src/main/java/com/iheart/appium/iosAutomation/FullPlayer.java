@@ -656,12 +656,15 @@ public class FullPlayer extends Page {
 	 * If User is Plus/AA, expect to be able to click a song or cancel. 
 	 * @return
 	 */
-	public String clickReplayButtonToOpenReplayModal(){
-		if( IHRPlayerReplayButtonUIButton!= null){
-			IHRPlayerReplayButtonUIButton.click();
-			System.out.println("clickReplayButtonToOpenReplayModal() .");
-			return "clickReplayButtonToOpenReplayModal() : true";
-		} return "clickReplayButtonToOpenReplayModal() : false";
+	public Errors clickReplayButtonToOpenReplayModal(){
+		Errors err = new Errors();
+		if( !waitAndClick(IHRPlayerReplayButtonUIButton,3, "clickReplayButtonToOpenReplayModal")){
+			err.add("Replay button was not displayed/visible on full player.");
+			return err;
+		}
+		else{
+			return err;
+		}
 	}
 	/**
 	 * Clicks the Add to Playlist Button, uses String entitlement to determine expected action. 
@@ -691,10 +694,7 @@ public class FullPlayer extends Page {
 	 * @return fullPlayer.isCurrentlyOnFullPlayer();
 	 */
 	public boolean clickSaveSongInSaveModal(){
-		if(saveSongButton != null){
-			saveSongButton.click();
-			System.out.println("clickSaveSongInSaveModal().");
-		}
+		waitAndClick(saveSongButton,3, "clickSaveSongInSaveModal");
 		return fullPlayer.isCurrentlyOnFullPlayer();
 	}
 	/**
@@ -702,11 +702,7 @@ public class FullPlayer extends Page {
 	 * @return fullPlayer.isCurrentlyOnFullPlayer();
 	 */
 	public boolean clickRemoveStationInSaveModal(){
-		if(removeStationButton!=null){
-			removeStationButton.click();
-			System.out.println("clickRemoveStationInSaveModal().");
-		}
-		
+		waitAndClick(removeStationButton,3, "clickRemoveStationInSaveModal");
 		return fullPlayer.isCurrentlyOnFullPlayer();
 	}
 	/**
@@ -714,10 +710,7 @@ public class FullPlayer extends Page {
 	 * @return fullPlayer.isCurrentlyOnFullPlayer();
 	 */
 	public boolean clickCancelInSaveModal(){
-		if(cancelOutOfSaveButton!= null){
-			cancelOutOfSaveButton.click();
-		}
-		System.out.println("clickCancelInSaveModal().");
+		waitAndClick(cancelOutOfSaveButton,3, "clickCancelInSaveModal");
 		return fullPlayer.isCurrentlyOnFullPlayer();
 	}
 	/**
@@ -725,10 +718,7 @@ public class FullPlayer extends Page {
 	 * @return fullPlayer.isCurrentlyOnFullPlayer();
 	 */
 	public boolean clickSaveStationInSaveModal(){
-		if(saveStationButton != null){
-			saveStationButton.click();
-		}
-		System.out.println("clickSaveStationInSaveModal().");
+		waitAndClick(saveStationButton,3, "clickSaveStationInSaveModal");
 		return fullPlayer.isCurrentlyOnFullPlayer();
 	}
 	/**
