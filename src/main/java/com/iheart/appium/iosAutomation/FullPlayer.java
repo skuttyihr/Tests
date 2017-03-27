@@ -23,7 +23,7 @@ public class FullPlayer extends Page {
 		super(_driver);
 		setPlayer(this);
 	}
-
+	
 	//IHRPlayerTitleView
 	@iOSFindBy(accessibility = "IHRPlayerTitleView-TitleLabel-UILabel") private IOSElement IHRPlayerTitleViewTitleLabelUILabel;
 	@iOSFindBy(accessibility = "IHRPlayerTitleView-SubTitleLabel-UILabel") private IOSElement IHRPlayerTitleViewSubTitleLabelUILabel;
@@ -122,113 +122,113 @@ public class FullPlayer extends Page {
 	@iOSFindBy(accessibility = "Great, we’ll play you more  episodes like this.") public IOSElement podcastThumbUpGrowl; // //UIAApplication[1]/UIAWindow[1]/UIAStaticText[10]
 	@iOSFindBy(accessibility = "OK, we’ll adjust your station.") public IOSElement podcastThumbDownGrowl;
 	*/
-    /**
-     * Have Full Player Open and playing a SONG with Artist Radio before calling this method. 
-     */
-    public void showAllElements(){
-    	System.out.println("Checking NavBar elements...");
-    	printElementInformation(PlayerViewMinimizePlayerDownarrowUIButton);
-    	//printElementInformation(NavBarFavoriteButtonUIButton); This button has been removed and replaced in the Save Modal
-    	printElementInformation(NavBarShareButtonUIButton);
-    	//printElementInformation(IHRCastingBarButtonItemUIButton);
-    	System.out.println("Checking Slider elements...");
-    	printElementInformation(PlayerSliderViewPositionLabelUILabel);
-    	printElementInformation(PlayerSliderViewDurationLabelUILabel);
-    	printElementInformation(PlayerSliderViewProgressSliderUISlider);
-    	printElementInformation(PlayerImageViewImageViewUIImageView);
-        //IHROptionMenuView
-    	fullPlayer.clickMoreInfoButton();
-    	System.out.println("Checking Option Menu View elements...");
-    	printElementInformation(IHROptionMenuViewMenuContainerUIView);
-    	printElementInformation(IHROptionMenuViewMetadataViewUIView);
-    	printElementInformation(IHROptionMenuViewUpperContainerUIView);
-    	printElementInformation(IHROptionMenuViewDividerViewUIView);
-    	printElementInformation(IHROptionMenuViewButtonsContainerUIView);
-    	printElementInformation(buySongButton);
-    	printElementInformation(lyricsButton);
-    	printElementInformation(goToArtistProfileButton);
-    	printElementInformation(IHROptionMenuViewCancelButtonUIButton);
-    	printElementInformation(IHROptionMenuMetadataViewImageViewUIImageView);
-    	printElementInformation(IHROptionMenuMetadataViewLabelContainerUIView);
-    	printElementInformation(IHROptionMenuMetadataViewTitleLabelUILabel);
-    	printElementInformation(IHROptionMenuMetadataViewSubTitleLabelUILabel);
-    	
-    	if(fullPlayer.clickMoreLyricsButtonIfEnabled()){
-    		System.out.println("Checking Lyrics Elements...");
-    		printElementInformation(LyricsVCLyricsTextUIView);
-    		printElementInformation(LyricsVCArtistNameLabelUILabel);
-    		printElementInformation(LyricsVCTrackNameLabelUILabel);
-    		fullPlayer.clickNavBarBackButton(); //This goes back to FullPlayers
-    	}else{
-    		fullPlayer.clickMoreCancelButton();
-    	}
-    	//IHRPlayerTitleView
-    	System.out.println("Checking Title View elements... Station Name and Station Type");
-    	printElementInformation(IHRPlayerTitleViewTitleLabelUILabel);
-    	printElementInformation(IHRPlayerTitleViewSubTitleLabelUILabel);
-    	//IHRPlayerBackgroundView
-    	System.out.println("Checking Background View elements...");
-    	printElementInformation(IHRPlayerBackgroundViewImageViewUIImageView);
-    	printElementInformation(IHRPlayerBackgroundViewVisualEffectViewUIVisualEffectView);
-    	//interface IHRPlayerView 
-    	System.out.println("Checking FullPlayer elements...like Play Button, Skip, More Info, Thumbs, and Song Title/Artist");
-    	printElementInformation(IHRPlayerViewBackgroundImageViewUIImageView);
-    	printElementInformation(IHRPlayerViewImageViewUIImageView);
-    	printElementInformation(IHRPlayerViewCenterViewUIView);
-    	printElementInformation(IHRPlayerViewSliderViewUIView);
-    	printElementInformation(IHRPlayerViewButtonContainerUIView);
-    	printElementInformation(IHRPlayerViewPlayButtonUIButton);
-    	printElementInformation(IHRPlayerViewForwardButtonUIButton);
-    	printElementInformation(IHRPlayerMoreButtonUIButton);
-    	printElementInformation(IHRPlayerViewThumbDownButtonUIButton);
-    	printElementInformation(IHRPlayerViewThumbUpButtonUIButton);
-    	printElementInformation(IHRPlayerViewLabelContainerUIView);
-    	printElementInformation(IHRPlayerViewTitleLabelUILabel);
-    	printElementInformation(IHRPlayerViewSubTitleLabelUILabel);
-    	System.out.println("Checking if Replay and Save Buttons exist on FullPlayer");
-    	printElementInformation(IHRPlayerReplayButtonUIButton);
-    	printElementInformation(IHRPlayerSaveButtonUIButton);         
-    }
-    /**
-     * Clicks the Down Arrow at the top of FullPlayer to minimize it into MiniPlayer. 
-     */
-    public void minimizeFullPlayerToMiniPlayer(){
-    	System.out.println("minimizeFullPlayerToMiniPlayer()");
-    	PlayerViewMinimizePlayerDownarrowUIButton.click();
-    }
-    /**
-     * Clicks the Down Arrow at the top of FullPlayer to minimize it into MiniPlayer. 
-     * This method has the same functionality as above but different wording to keep up the 'click' actions idea. 
-     */
-    public void clickDownArrowOnNavBarToMinimizeFullPlayer(){
-    	//System.out.println("clickDownArrowOnNavBarToMinimizeFullPlayer()");
-    	PlayerViewMinimizePlayerDownarrowUIButton.click();
-    }
-    /**
-     * Clicks the Play, Pause, Stop etc Button on the Full Player.
-     */
-    public void clickPlayButton(){
-    	//System.out.println("clickPlayButton()");
-    	IHRPlayerViewPlayButtonUIButton.click();
-    }
-    
-    /**
-     * Clicks the Thumb Up Button. It can already be selected. 
-     */
-    public void clickThumbUpButton(){
-    	//System.out.println("clickThumbUpButton()");
-    	IHRPlayerViewThumbUpButtonUIButton.click();
-    }
-    
-    /**
-     * Clicks the Thumb Down button. It can already be selected. 
-     */
-    public void clickThumbDownButton(){
-    	//System.out.println("clickThumbDownButton()");
-    	IHRPlayerViewThumbDownButtonUIButton.click();
-    }
-    
-    
+	/**
+	 * Have Full Player Open and playing a SONG with Artist Radio before calling this method. 
+	 */
+	public void showAllElements(){
+		System.out.println("Checking NavBar elements...");
+		printElementInformation(PlayerViewMinimizePlayerDownarrowUIButton);
+		//printElementInformation(NavBarFavoriteButtonUIButton); This button has been removed and replaced in the Save Modal
+		printElementInformation(NavBarShareButtonUIButton);
+		//printElementInformation(IHRCastingBarButtonItemUIButton);
+		System.out.println("Checking Slider elements...");
+		printElementInformation(PlayerSliderViewPositionLabelUILabel);
+		printElementInformation(PlayerSliderViewDurationLabelUILabel);
+		printElementInformation(PlayerSliderViewProgressSliderUISlider);
+		printElementInformation(PlayerImageViewImageViewUIImageView);
+		//IHROptionMenuView
+		fullPlayer.clickMoreInfoButton();
+		System.out.println("Checking Option Menu View elements...");
+		printElementInformation(IHROptionMenuViewMenuContainerUIView);
+		printElementInformation(IHROptionMenuViewMetadataViewUIView);
+		printElementInformation(IHROptionMenuViewUpperContainerUIView);
+		printElementInformation(IHROptionMenuViewDividerViewUIView);
+		printElementInformation(IHROptionMenuViewButtonsContainerUIView);
+		printElementInformation(buySongButton);
+		printElementInformation(lyricsButton);
+		printElementInformation(goToArtistProfileButton);
+		printElementInformation(IHROptionMenuViewCancelButtonUIButton);
+		printElementInformation(IHROptionMenuMetadataViewImageViewUIImageView);
+		printElementInformation(IHROptionMenuMetadataViewLabelContainerUIView);
+		printElementInformation(IHROptionMenuMetadataViewTitleLabelUILabel);
+		printElementInformation(IHROptionMenuMetadataViewSubTitleLabelUILabel);
+		
+		if(fullPlayer.clickMoreLyricsButtonIfEnabled()){
+			System.out.println("Checking Lyrics Elements...");
+			printElementInformation(LyricsVCLyricsTextUIView);
+			printElementInformation(LyricsVCArtistNameLabelUILabel);
+			printElementInformation(LyricsVCTrackNameLabelUILabel);
+			fullPlayer.clickNavBarBackButton(); //This goes back to FullPlayers
+		}else{
+			fullPlayer.clickMoreCancelButton();
+		}
+		//IHRPlayerTitleView
+		System.out.println("Checking Title View elements... Station Name and Station Type");
+		printElementInformation(IHRPlayerTitleViewTitleLabelUILabel);
+		printElementInformation(IHRPlayerTitleViewSubTitleLabelUILabel);
+		//IHRPlayerBackgroundView
+		System.out.println("Checking Background View elements...");
+		printElementInformation(IHRPlayerBackgroundViewImageViewUIImageView);
+		printElementInformation(IHRPlayerBackgroundViewVisualEffectViewUIVisualEffectView);
+		//interface IHRPlayerView 
+		System.out.println("Checking FullPlayer elements...like Play Button, Skip, More Info, Thumbs, and Song Title/Artist");
+		printElementInformation(IHRPlayerViewBackgroundImageViewUIImageView);
+		printElementInformation(IHRPlayerViewImageViewUIImageView);
+		printElementInformation(IHRPlayerViewCenterViewUIView);
+		printElementInformation(IHRPlayerViewSliderViewUIView);
+		printElementInformation(IHRPlayerViewButtonContainerUIView);
+		printElementInformation(IHRPlayerViewPlayButtonUIButton);
+		printElementInformation(IHRPlayerViewForwardButtonUIButton);
+		printElementInformation(IHRPlayerMoreButtonUIButton);
+		printElementInformation(IHRPlayerViewThumbDownButtonUIButton);
+		printElementInformation(IHRPlayerViewThumbUpButtonUIButton);
+		printElementInformation(IHRPlayerViewLabelContainerUIView);
+		printElementInformation(IHRPlayerViewTitleLabelUILabel);
+		printElementInformation(IHRPlayerViewSubTitleLabelUILabel);
+		System.out.println("Checking if Replay and Save Buttons exist on FullPlayer");
+		printElementInformation(IHRPlayerReplayButtonUIButton);
+		printElementInformation(IHRPlayerSaveButtonUIButton);		 
+	}
+	/**
+	 * Clicks the Down Arrow at the top of FullPlayer to minimize it into MiniPlayer. 
+	 */
+	public void minimizeFullPlayerToMiniPlayer(){
+		System.out.println("minimizeFullPlayerToMiniPlayer()");
+		PlayerViewMinimizePlayerDownarrowUIButton.click();
+	}
+	/**
+	 * Clicks the Down Arrow at the top of FullPlayer to minimize it into MiniPlayer. 
+	 * This method has the same functionality as above but different wording to keep up the 'click' actions idea. 
+	 */
+	public void clickDownArrowOnNavBarToMinimizeFullPlayer(){
+		//System.out.println("clickDownArrowOnNavBarToMinimizeFullPlayer()");
+		PlayerViewMinimizePlayerDownarrowUIButton.click();
+	}
+	/**
+	 * Clicks the Play, Pause, Stop etc Button on the Full Player.
+	 */
+	public void clickPlayButton(){
+		//System.out.println("clickPlayButton()");
+		IHRPlayerViewPlayButtonUIButton.click();
+	}
+	
+	/**
+	 * Clicks the Thumb Up Button. It can already be selected. 
+	 */
+	public void clickThumbUpButton(){
+		//System.out.println("clickThumbUpButton()");
+		IHRPlayerViewThumbUpButtonUIButton.click();
+	}
+	
+	/**
+	 * Clicks the Thumb Down button. It can already be selected. 
+	 */
+	public void clickThumbDownButton(){
+		//System.out.println("clickThumbDownButton()");
+		IHRPlayerViewThumbDownButtonUIButton.click();
+	}
+	
+	
 	/**
 	 * Returns true if Thumb Down Is activated and Thumb Up is NOT activated. 
 	 * @return
@@ -563,205 +563,205 @@ public class FullPlayer extends Page {
 		return type;
 	}
 	/**
-     * Returns true if the Full Player is open. 
-     * Does a Null Check on the element so there won't be a NoSuchElementException
-     * @return
-     */
-    public boolean isCurrentlyOnFullPlayer(){
-    	return isCurrentlyOn("isCurrentlyOnFullPlayer", IHRPlayerViewBackgroundImageViewUIImageView);
-    }
-    
-    /**
-     * Clicks the More Info button to show Metadata, Lyrics, Buy Song Button, and Artist Bio.
-     * use fullPlayer.clickMoreCancelButton() to escape this view. 
-     */
-    public void clickMoreInfoButton(){
-    	System.out.println("clickMoreInfoButton()...");
-    	IHRPlayerMoreButtonUIButton.click();
-    }
-    /**
-     * This checks if the OptionMenuView is displayed, indicating that the More Info button was clicked on FullPlayer.
-     * This means that Go to Artist Profile, Lyrics, and Buy Song buttons should be visible, and a Cancel Button can be clicked as well.
-     * use fullPlayer.clickMoreCancelButton()
-     * @return
-     */
-    public boolean isOptionMenuOpen(){
-    	return isCurrentlyOn("isOptionMenuOpen", IHROptionMenuViewMenuContainerUIView);
-    }
-    
-    /**
-     * On the More Info pane on the Full Player - We're expecting a Lyrics Button to appear.
-     * This method clicks it and returns true if it's there, otherwise we return false. 
-     * @return
-     */
-    public boolean clickMoreLyricsButtonIfEnabled(){
-    	System.out.println("clickMoreLyricsButton() - On More Info Pane - clicking Lyrics");
-    	if(lyricsButton.isEnabled()){
-    		System.out.println("LyricsButton is Enabled? : " + lyricsButton.isEnabled() );
-    		lyricsButton.click();
-    		System.out.println("Clicked Lyrics Button. ");
-    		return true;
-    	}else{
-    		System.out.println("Lyrics button wasn't enabled. - couldn't click. Returning False.");
-    		return false;
-    	}
-    }
-    
-    /**
-     * Expects the Simulator to be on More Info pane in Full Player. 
-     * @return
-     */
-    public boolean clickGoToArtistProfileButtonIfEnabled(){
-    	if(IHROptionMenuViewCancelButtonUIButton.isDisplayed()){
-    		if(goToArtistProfileButton.isEnabled()){
-    			System.out.println("clickGoToArtistProfileButtonIfEnabled() - On More Info Pane - clicking 'Go To Artist Profile'");
-    			goToArtistProfileButton.click();
-    			return true;
-    		}else{
-    			System.out.println("GoToArtistProfileButton wasn't enabled. - couldn't click. Returning False.");
-    			return false;
-    		}
-    	}else{ 
-    		return false;
-    	}
-    }
-    
-    /**
-     * On the More Info Pane - click the Cancel Button. 
-     * Option Menu View
-     */
-    public void clickMoreCancelButton(){
-    	System.out.println("clickMoreCancelButton()");
-    	IHROptionMenuViewCancelButtonUIButton.click();
-    }
-    /**
-     * This must be tested. 
-     * @return
-     */
-    public boolean isCurrentStationSaved(){
-    	boolean isSaved = IHRPlayerTitleViewHeartViewUIImageView.isDisplayed();
-    	System.out.println("isCurrentStationSaved() : "+ isSaved);
-    	return isSaved;
-    }
-    /**
-     * Only clicks the Save Button once - Other actions afterwards need to be taken.
-     * @return
-     */
-    public boolean clickSaveButtonToOpenSaveModal(){
-    	System.out.print("clickSaveButton() : Opening Save Overflow. SaveSongButton.isDisplayed() : ");
-	if(waitForElementToBeVisible(IHRPlayerSaveButtonUIButton, 3)){
-    		IHRPlayerSaveButtonUIButton.click();
+	 * Returns true if the Full Player is open. 
+	 * Does a Null Check on the element so there won't be a NoSuchElementException
+	 * @return
+	 */
+	public boolean isCurrentlyOnFullPlayer(){
+		return isCurrentlyOn("isCurrentlyOnFullPlayer", IHRPlayerViewBackgroundImageViewUIImageView);
 	}
-    	//Save Modal should be up now
-    	boolean isSaveSongVisible = saveSongButton.isDisplayed();
-    	System.out.println(isSaveSongVisible);
-    	return isSaveSongVisible;
-    	
-    }
+	
+	/**
+	 * Clicks the More Info button to show Metadata, Lyrics, Buy Song Button, and Artist Bio.
+	 * use fullPlayer.clickMoreCancelButton() to escape this view. 
+	 */
+	public void clickMoreInfoButton(){
+		System.out.println("clickMoreInfoButton()...");
+		IHRPlayerMoreButtonUIButton.click();
+	}
+	/**
+	 * This checks if the OptionMenuView is displayed, indicating that the More Info button was clicked on FullPlayer.
+	 * This means that Go to Artist Profile, Lyrics, and Buy Song buttons should be visible, and a Cancel Button can be clicked as well.
+	 * use fullPlayer.clickMoreCancelButton()
+	 * @return
+	 */
+	public boolean isOptionMenuOpen(){
+		return isCurrentlyOn("isOptionMenuOpen", IHROptionMenuViewMenuContainerUIView);
+	}
+	
+	/**
+	 * On the More Info pane on the Full Player - We're expecting a Lyrics Button to appear.
+	 * This method clicks it and returns true if it's there, otherwise we return false. 
+	 * @return
+	 */
+	public boolean clickMoreLyricsButtonIfEnabled(){
+		System.out.println("clickMoreLyricsButton() - On More Info Pane - clicking Lyrics");
+		if(lyricsButton.isEnabled()){
+			System.out.println("LyricsButton is Enabled? : " + lyricsButton.isEnabled() );
+			lyricsButton.click();
+			System.out.println("Clicked Lyrics Button. ");
+			return true;
+		}else{
+			System.out.println("Lyrics button wasn't enabled. - couldn't click. Returning False.");
+			return false;
+		}
+	}
+	
+	/**
+	 * Expects the Simulator to be on More Info pane in Full Player. 
+	 * @return
+	 */
+	public boolean clickGoToArtistProfileButtonIfEnabled(){
+		if(IHROptionMenuViewCancelButtonUIButton.isDisplayed()){
+			if(goToArtistProfileButton.isEnabled()){
+				System.out.println("clickGoToArtistProfileButtonIfEnabled() - On More Info Pane - clicking 'Go To Artist Profile'");
+				goToArtistProfileButton.click();
+				return true;
+			}else{
+				System.out.println("GoToArtistProfileButton wasn't enabled. - couldn't click. Returning False.");
+				return false;
+			}
+		}else{ 
+			return false;
+		}
+	}
+	
+	/**
+	 * On the More Info Pane - click the Cancel Button. 
+	 * Option Menu View
+	 */
+	public void clickMoreCancelButton(){
+		System.out.println("clickMoreCancelButton()");
+		IHROptionMenuViewCancelButtonUIButton.click();
+	}
+	/**
+	 * This must be tested. 
+	 * @return
+	 */
+	public boolean isCurrentStationSaved(){
+		boolean isSaved = IHRPlayerTitleViewHeartViewUIImageView.isDisplayed();
+		System.out.println("isCurrentStationSaved() : "+ isSaved);
+		return isSaved;
+	}
+	/**
+	 * Only clicks the Save Button once - Other actions afterwards need to be taken.
+	 * @return
+	 */
+	public boolean clickSaveButtonToOpenSaveModal(){
+		System.out.print("clickSaveButton() : Opening Save Overflow. SaveSongButton.isDisplayed() : ");
+	if(waitForElementToBeVisible(IHRPlayerSaveButtonUIButton, 3)){
+			IHRPlayerSaveButtonUIButton.click();
+	}
+		//Save Modal should be up now
+		boolean isSaveSongVisible = saveSongButton.isDisplayed();
+		System.out.println(isSaveSongVisible);
+		return isSaveSongVisible;
+		
+	}
 
-    /**
-     * Clicks the 'Replay' button to open the Replay Modal. If user is FREE -> expect Upsell Modal.
-     * If User is Plus/AA, expect to be able to click a song or cancel. 
-     * @return
-     */
-    public boolean clickReplayButtonToOpenReplayModal(){
-    	if( IHRPlayerReplayButtonUIButton!= null){
-    		IHRPlayerReplayButtonUIButton.click();
-    		System.out.println("clickReplayButtonToOpenReplayModal() .");
-    		return true;
-    	} return false;
-    }
-    /**
-     * Clicks the Add to Playlist Button, uses String entitlement to determine expected action. 
-     * entitlement must be "FREE", "PLUS", or "ALLACCESS"
-     */
-    public boolean clickAddToPlaylistButtonInSaveModal(Entitlement entitlement){
-    	if(entitlement!= null && addToPlaylistButton != null && !entitlement.equals("")){
-    		if(entitlement.equals("FREE")){
-    			addToPlaylistButton.click();
-    			System.out.println("AddToPlaylistButton was clicked for FREE User - Expect Upsell Modal to appear");
-    			return upsellPage.isUpsellModalOpen();
-    		}else if(entitlement.equals("PLUS")){
-    			addToPlaylistButton.click();
-    			System.out.println("AddToPlaylistButton was clicked for PLUS User - Expect Upsell Modal to appear");
-    			return upsellPage.isUpsellModalOpen();
-    			//return upsellPage.isad
-    		}else if(entitlement.equals("ALLA")){
-    			addToPlaylistButton.click();
-    			System.out.println("AddToPlaylistButton was clicked for ALLACCESS User - Expect Add to Playlist Modal to appear");
-    			//addToPlaylistModal.clickFirstPlaylist(); This can be filled in once AddToPlaylist page Object is done!!!!
-    			return true;
-    		}else return false;
-    	}else return false;
-    }
-    /**
-     * Clicks the Save Song button in the Save Modal to Save currently playing song to My Playlist. 
-     * @return fullPlayer.isCurrentlyOnFullPlayer();
-     */
-    public boolean clickSaveSongInSaveModal(){
-    	if(saveSongButton != null){
-    		saveSongButton.click();
-    		System.out.println("clickSaveSongInSaveModal().");
-    	}
-    	return fullPlayer.isCurrentlyOnFullPlayer();
-    }
-    /**
-     * Clicks the Remove Station button in the Save Station Modal, and returns whether it reached the FullPlayer.
-     * @return fullPlayer.isCurrentlyOnFullPlayer();
-     */
-    public boolean clickRemoveStationInSaveModal(){
-    	if(removeStationButton!=null){
-    		removeStationButton.click();
-    		System.out.println("clickRemoveStationInSaveModal().");
-    	}
-    	
-    	return fullPlayer.isCurrentlyOnFullPlayer();
-    }
-    /**
-     * Clicks the Cancel Button on the bottom of the Save Modal to return to the FullPlayer.
-     * @return fullPlayer.isCurrentlyOnFullPlayer();
-     */
-    public boolean clickCancelInSaveModal(){
-    	if(cancelOutOfSaveButton!= null){
-    		cancelOutOfSaveButton.click();
-    	}
-    	System.out.println("clickCancelInSaveModal().");
-    	return fullPlayer.isCurrentlyOnFullPlayer();
-    }
-    /**
-     * Clicks the Save Station to 'Heart' or 'Favorite' the Station. 
-     * @return fullPlayer.isCurrentlyOnFullPlayer();
-     */
-    public boolean clickSaveStationInSaveModal(){
-    	if(saveStationButton != null){
-    		saveStationButton.click();
-    	}
-    	System.out.println("clickSaveStationInSaveModal().");
-    	return fullPlayer.isCurrentlyOnFullPlayer();
-    }
-    /**
-     * Checks if the 'Remove Station' is available/displayed. 
-     * Precondition : Clicked Save button on FullPlayer and already Saved Station. 
-     * @return boolean
-     */
-    public boolean isRemoveStationInSaveModalDisplayed(){
-    	return (fullPlayer.isCurrentlyOn("isCurrentlyOnSaveModal with 'Remove Station' Button", removeStationButton));
-    }
-    /**
-     * Checks if the 'Save Station' is available/displayed.
-     * Precondition : Clicked Save button on FullPlayer and already Saved Station. 
-     * @return
-     */
-    public boolean isSaveStationInSaveModalDisplayed(){
-    	return (fullPlayer.isCurrentlyOn("isCurrentlyOnSaveModal with 'Save Station' Button", saveStationButton));
-    }
-    
-    /**
-     * Checks if the Replay Modal is currently open by passing in the TableView element.
-     * @return
-     */
-    public boolean isCurrentlyOnReplayModal(){
-    	return (fullPlayer.isCurrentlyOn("isCurrentlyOnReplayModal()", IHRPlayerReplayOptionsViewControllerTableViewUITableView));
+	/**
+	 * Clicks the 'Replay' button to open the Replay Modal. If user is FREE -> expect Upsell Modal.
+	 * If User is Plus/AA, expect to be able to click a song or cancel. 
+	 * @return
+	 */
+	public String clickReplayButtonToOpenReplayModal(){
+		if( IHRPlayerReplayButtonUIButton!= null){
+			IHRPlayerReplayButtonUIButton.click();
+			System.out.println("clickReplayButtonToOpenReplayModal() .");
+			return "clickReplayButtonToOpenReplayModal() : true";
+		} return "clickReplayButtonToOpenReplayModal() : false";
+	}
+	/**
+	 * Clicks the Add to Playlist Button, uses String entitlement to determine expected action. 
+	 * entitlement must be "FREE", "PLUS", or "ALLACCESS"
+	 */
+	public boolean clickAddToPlaylistButtonInSaveModal(Entitlement entitlement){
+		if(entitlement!= null && addToPlaylistButton != null && !entitlement.equals("")){
+			if(entitlement.equals("FREE")){
+				addToPlaylistButton.click();
+				System.out.println("AddToPlaylistButton was clicked for FREE User - Expect Upsell Modal to appear");
+				return upsellPage.isUpsellModalOpen();
+			}else if(entitlement.equals("PLUS")){
+				addToPlaylistButton.click();
+				System.out.println("AddToPlaylistButton was clicked for PLUS User - Expect Upsell Modal to appear");
+				return upsellPage.isUpsellModalOpen();
+				//return upsellPage.isad
+			}else if(entitlement.equals("ALLA")){
+				addToPlaylistButton.click();
+				System.out.println("AddToPlaylistButton was clicked for ALLACCESS User - Expect Add to Playlist Modal to appear");
+				//addToPlaylistModal.clickFirstPlaylist(); This can be filled in once AddToPlaylist page Object is done!!!!
+				return true;
+			}else return false;
+		}else return false;
+	}
+	/**
+	 * Clicks the Save Song button in the Save Modal to Save currently playing song to My Playlist. 
+	 * @return fullPlayer.isCurrentlyOnFullPlayer();
+	 */
+	public boolean clickSaveSongInSaveModal(){
+		if(saveSongButton != null){
+			saveSongButton.click();
+			System.out.println("clickSaveSongInSaveModal().");
+		}
+		return fullPlayer.isCurrentlyOnFullPlayer();
+	}
+	/**
+	 * Clicks the Remove Station button in the Save Station Modal, and returns whether it reached the FullPlayer.
+	 * @return fullPlayer.isCurrentlyOnFullPlayer();
+	 */
+	public boolean clickRemoveStationInSaveModal(){
+		if(removeStationButton!=null){
+			removeStationButton.click();
+			System.out.println("clickRemoveStationInSaveModal().");
+		}
+		
+		return fullPlayer.isCurrentlyOnFullPlayer();
+	}
+	/**
+	 * Clicks the Cancel Button on the bottom of the Save Modal to return to the FullPlayer.
+	 * @return fullPlayer.isCurrentlyOnFullPlayer();
+	 */
+	public boolean clickCancelInSaveModal(){
+		if(cancelOutOfSaveButton!= null){
+			cancelOutOfSaveButton.click();
+		}
+		System.out.println("clickCancelInSaveModal().");
+		return fullPlayer.isCurrentlyOnFullPlayer();
+	}
+	/**
+	 * Clicks the Save Station to 'Heart' or 'Favorite' the Station. 
+	 * @return fullPlayer.isCurrentlyOnFullPlayer();
+	 */
+	public boolean clickSaveStationInSaveModal(){
+		if(saveStationButton != null){
+			saveStationButton.click();
+		}
+		System.out.println("clickSaveStationInSaveModal().");
+		return fullPlayer.isCurrentlyOnFullPlayer();
+	}
+	/**
+	 * Checks if the 'Remove Station' is available/displayed. 
+	 * Precondition : Clicked Save button on FullPlayer and already Saved Station. 
+	 * @return boolean
+	 */
+	public boolean isRemoveStationInSaveModalDisplayed(){
+		return (fullPlayer.isCurrentlyOn("isCurrentlyOnSaveModal with 'Remove Station' Button", removeStationButton));
+	}
+	/**
+	 * Checks if the 'Save Station' is available/displayed.
+	 * Precondition : Clicked Save button on FullPlayer and already Saved Station. 
+	 * @return
+	 */
+	public boolean isSaveStationInSaveModalDisplayed(){
+		return (fullPlayer.isCurrentlyOn("isCurrentlyOnSaveModal with 'Save Station' Button", saveStationButton));
+	}
+	
+	/**
+	 * Checks if the Replay Modal is currently open by passing in the TableView element.
+	 * @return
+	 */
+	public boolean isCurrentlyOnReplayModal(){
+		return (fullPlayer.isCurrentlyOn("isCurrentlyOnReplayModal()", IHRPlayerReplayOptionsViewControllerTableViewUITableView));
 
 	}
 	/**
