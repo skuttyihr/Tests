@@ -14,6 +14,7 @@ import org.openqa.selenium.By;
 
 import com.iheart.appium.iosAutomation.AppboyUpsellsPage.Entitlement;
 import com.iheart.appium.utilities.TestRoot;
+import com.iheart.appium.utilities.TestRoot.RCStable;
 
 import io.appium.java_client.ios.IOSElement;
 

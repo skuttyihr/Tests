@@ -124,7 +124,7 @@ public class TestLogin extends TestRoot {
 	 */
 	@Test
 	@Category(Stable.class)
-	public void LOG8_testLoginViaEmail_PLUS(){
+	public void testLoginViaEmail_LOG8_PLUS(){
 		LocalTime before = consoleLogStart("Testing login via Email with a PLUS Account : " + name.getMethodName());
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement(IHEARTPLUSUSERNAME, IHEARTPLUSPASSWD, Entitlement.PLUS));
 		consoleLogEnd(before, true, "Tested Log In via Email with a PLUS Account. ((LOG-8))");

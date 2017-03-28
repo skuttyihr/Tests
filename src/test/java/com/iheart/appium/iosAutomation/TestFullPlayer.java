@@ -50,7 +50,6 @@ public class TestFullPlayer extends TestRoot {
 		Verify Slider, PlayButton, Forward, More, Thumb Down, Thumb Up, Title (track), Subtitle (artist)
 	 */
 	@Test
-	@Category(Stable.class)
 	public void FPLAY1_testFullPlayer_FREE() {
 		LocalTime before = consoleLogStart("Testing testFullPlayer_FPLAY1_FREE");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test66@Test.com", "test",Entitlement.FREE));
@@ -255,7 +254,6 @@ public class TestFullPlayer extends TestRoot {
 	 * It then skips 8 times and then Replays the Last three tracks, Track 3, Track 2, Track 1.
 	 */
 	@Test
-	@Category(Stable.class)
 	public void FPLAY5_testFullPlayerSaveReplaySkip_ALLA(){
 		LocalTime before = consoleLogStart("Testing testFullPlayerSaveReplaySkip_FPLAY5_ALLA()");
 		Assert.assertTrue("Should log in successfully to ALLA account.",loginPage.loginVerifyEntitlement(IHEARTPREMIUMUSERNAME, IHEARTPREMIUMPASSWD, Entitlement.ALLA));

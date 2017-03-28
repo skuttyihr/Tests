@@ -69,7 +69,7 @@ import io.appium.java_client.MultiTouchAction;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
-import src.main.java.testCommons.*;
+import testCommons.*;
 
 public class TestRoot{
 
@@ -889,8 +889,6 @@ public class TestRoot{
 		try {
 			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 			isVisible = e.isDisplayed();
-			
-			return true;
 		} catch (Exception x) {
 		} finally {
 			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
@@ -905,8 +903,6 @@ public class TestRoot{
 		try {
 			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 			isEnabled = e.isEnabled();
-					
-			return true;
 		} catch (Exception x) {
 		} finally {
 			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
@@ -1002,7 +998,6 @@ public class TestRoot{
 			try {
 				driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
 				if (ele.isEnabled()) {
-					
 					break;
 				}
 			} catch (Exception e) {
@@ -1048,24 +1043,9 @@ public class TestRoot{
 			try {
 				ele.click();
 				couldClick = true;
-			} catch (Exception e) {
-				try {
-					System.out.println("Error clicking element (see below), retyring.");
-					System.out.println(e.getMessage());
-					int x = ele.getLocation().getX();
-					int y = ele.getLocation().getY();
-					d.tap(1, x, y, 300);
-					couldClick = true;
-				} catch (Exception e1) {
-					System.err.println("Could not click element!");
-					System.out.println("Error 1:");
-					e.printStackTrace();
-					System.out.println("\n\nError 2:");
-					e1.printStackTrace();
-				}
-			}	
+			} catch (Exception e) {}
 		}
-
+		
 		return couldClick;
 	}
 	
