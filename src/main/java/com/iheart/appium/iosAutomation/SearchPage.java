@@ -558,9 +558,8 @@ public class SearchPage extends Page {
 		return isCurrentlyOn("isCurrentlyOnUpgradePage", upgradeTitle);
 	}
 	
-	public void clickStartalkPodcastEpisode(){
-		//System.out.println("clickStartalkPodcastEpisode().");
-		playPodcastEpisode.click();
+	public boolean clickStartTalkPodcastEpisode(){
+		return click(driver, playPodcastEpisode);
 	}
 	/**
 	 * Simply print out all of the Search elements we've added and return

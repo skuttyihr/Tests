@@ -156,7 +156,7 @@ public class TestSearch extends TestRoot {
 		IOSElement episodes = Page.waitForVisible(driver, By.name("RECENT EPISODES"), 10);
 		printElementInformation(episodes);
 		Assert.assertTrue("Clicking the first Podcasts Cell for 'starta' should show Episodes of Star Talk",episodes.getText().equals("RECENT EPISODES"));
-		searchPage.clickStartalkPodcastEpisode();
+		searchPage.clickStartTalkPodcastEpisode();
 		Assert.assertTrue("Clicking one of the Podcast episdoes should have opened MiniPlayer", miniPlayer.isCurrentlyOnMiniPlayer() );
 		consoleLogEnd(before, true, "<<<<<testSearchPodcasts_SEA7_FREE() : ");
 		
