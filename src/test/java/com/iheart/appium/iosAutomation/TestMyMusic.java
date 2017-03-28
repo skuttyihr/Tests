@@ -167,8 +167,11 @@ public class TestMyMusic extends TestRoot{
 		myMusicPage.handleNewInitialMessage();
 		Assert.assertFalse("Upcell Cell should not exist on My Music Page for ALLA users. "
 				,myMusicPage.isCurrentlyOnUpsellCell());
-		Assert.assertTrue("The method should have verified that the third (2) cells for Playlists, Albums, Artists, and Songs are visible for an ALLA acct with multiple songs saved."
-				,myMusicPage.showAllElementsForOldALLAUsers());
+		Errors visibilityErrors = myMusicPage.showAllElementsForOldALLAUsers();
+		Assert.assertTrue("The method should have verified that the third (2) cells for Playlists, "
+				+ "Albums, Artists, and Songs are visible for an ALLA acct with multiple songs saved:\n"
+				+ visibilityErrors,
+				visibilityErrors.noErrors());
 		consoleLogEnd(before, true, "Tested MYMU6_testSongsAlbumsArtistsPlaylists_ALLA_POP()");
 	}
 	/**

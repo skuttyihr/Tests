@@ -343,8 +343,8 @@ public class MyMusicPage extends Page{
 	/**
 	 * This ALLA user should have a great deal of music saved to Playlists etc
 	 */
-	public boolean showAllElementsForOldALLAUsers(){
-		boolean playlistCell2, artistCell2, songsCell2, albumsCell2 = false;
+	public Errors showAllElementsForOldALLAUsers(){
+		Errors err = new Errors();
 		System.out.println("myMusicPage.showAllElementsForOldALLAUsers() : This ALLA user should have a great deal of music saved to Playlists etc");
 		System.out.println("Printing out AIDs for PlaylistHeaderView - a MyMusicViewCell at top of MyMusic.");
 		printElementInformation(PlaylistHeaderViewHeaderViewUICollectionReusableView);
@@ -358,7 +358,10 @@ public class MyMusicPage extends Page{
 		System.out.println("Printing out AIDs for PlaylistViewCell which should be My Playlist and some of the other playlists the user has created.");
 		printElementInformation(MyMusicViewPremiumPresenterPlaylistViewCellMyMusicViewCell0);
 		printElementInformation(MyMusicViewPremiumPresenterPlaylistViewCellMyMusicViewCell1);
-		playlistCell2 = printElementInformation(MyMusicViewPremiumPresenterPlaylistViewCellMyMusicViewCell2);
+		if (!printElementInformation(MyMusicViewPremiumPresenterPlaylistViewCellMyMusicViewCell2)){
+			err.add("Could not find MyMusicViewPremiumPresenterPlaylistViewCellMyMusicViewCell2"
+					+ " (playlistCell2) or it was not visible");
+		}
 		printElementInformation(MyMusicViewPremiumPresenterPlaylistViewCellMyMusicViewCell3);
 		printElementInformation(MyMusicViewPremiumPresenterPlaylistViewCellMyMusicViewCell4);
 		clickAlbumsPlaylistButton();
@@ -366,7 +369,10 @@ public class MyMusicPage extends Page{
 		printElementInformation(MyMusicAlbumsViewNotAvailableOfflineViewUIView);
 		printElementInformation(MyMusicAlbumsViewViewCellUICollectionViewCell0);
 		printElementInformation(MyMusicAlbumsViewViewCellUICollectionViewCell1);
-		albumsCell2 = printElementInformation(MyMusicAlbumsViewViewCellUICollectionViewCell2);
+		if (!printElementInformation(MyMusicAlbumsViewViewCellUICollectionViewCell2)){
+			err.add("Could not find MyMusicAlbumsViewViewCellUICollectionViewCell2"
+					+ " (albumsCell2) or it was not visible");
+		}
 		printElementInformation(MyMusicAlbumsViewViewCellUICollectionViewCell3);
 		printElementInformation(MyMusicAlbumsViewViewCellUICollectionViewCell4);
 		clickNavBarBackButton();
@@ -377,7 +383,10 @@ public class MyMusicPage extends Page{
 		printElementInformation(MyMusicSongViewNotAvailableOfflineViewUIView);
 		printElementInformation(MyMusicSongViewViewCellUICollectionViewCell0);
 		printElementInformation(MyMusicSongViewViewCellUICollectionViewCell1);
-		songsCell2 = printElementInformation(MyMusicSongViewViewCellUICollectionViewCell2);
+		if (!printElementInformation(MyMusicSongViewViewCellUICollectionViewCell2)){
+			err.add("Could not find MyMusicSongViewViewCellUICollectionViewCell2"
+					+ " (songsCell2) or it was not visible");
+		}
 		printElementInformation(MyMusicSongViewViewCellUICollectionViewCell3);
 		printElementInformation(MyMusicSongViewViewCellUICollectionViewCell4);
 		printElementInformation(MyMusicSongViewViewCellUICollectionViewCell5);
@@ -387,11 +396,14 @@ public class MyMusicPage extends Page{
 		printElementInformation(MyMusicArtistsViewNotAvailableOfflineViewUIView);
 		printElementInformation(MyMusicArtistsCellArtistViewCellUICollectionViewCell0);
 		printElementInformation(MyMusicArtistsCellArtistViewCellUICollectionViewCell1);
-		artistCell2 = printElementInformation(MyMusicArtistsCellArtistViewCellUICollectionViewCell2);
+		if (!printElementInformation(MyMusicArtistsCellArtistViewCellUICollectionViewCell2)){
+			err.add("Could not find MyMusicArtistsCellArtistViewCellUICollectionViewCell2"
+					+ " (artistCell2) or it was not visible");
+		}
 		printElementInformation(MyMusicArtistsCellArtistViewCellUICollectionViewCell3);
 		clickNavBarBackButton();
 		
-		return playlistCell2 && artistCell2 && songsCell2 && albumsCell2;
+		return err;
 	}
 	/**
 	 * A Playlist has been clicked on in My Music and this prints out the Header Cell, the collection views and buttons, and the collapseable header items. 
