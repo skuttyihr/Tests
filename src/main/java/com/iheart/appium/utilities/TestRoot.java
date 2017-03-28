@@ -1050,6 +1050,19 @@ public class TestRoot{
 
 		return couldClick;
 	}
+	
+	public static boolean type(IOSDriver<IOSElement> d, IOSElement ele, String toType){
+		boolean sentKeys = false;
+		
+		if (isVisible(ele)){
+			try{
+				ele.sendKeys(toType);
+				sentKeys = true;
+			}catch(Exception e){}
+		}
+		
+		return sentKeys;
+	}
 
 	/**
 	 * If a string is not empty and not null ("good"), return true

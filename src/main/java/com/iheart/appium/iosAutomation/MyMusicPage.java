@@ -665,9 +665,9 @@ public class MyMusicPage extends Page{
 	public String enterNewPlaylistNameAndClickCreate(String string) {
 		System.out.println("myMusicPage.enterNewPlaylistNameAndClickCreate() : "+ string);
 		playlistNameTextBoxCreateNew.sendKeys(string);
-		createPlaylistModalButton.click();
+		type(driver, playlistNameTextBoxCreateNew, string);
+		click(driver, createPlaylistModalButton);
 		return string;
-		
 	}
 	/**
 	 * Not even calling this yet. We can use it once Upsells are in place. 
