@@ -22,7 +22,7 @@ import com.iheart.appium.utilities.TestRoot.RCStable;
 })
 
 /**
- * Class runs all tests from the above suites (when marked as stable)
+ * Class runs all tests from the above suites (when marked as RCStable)
  * @author daniellegolinsky
  *
  */

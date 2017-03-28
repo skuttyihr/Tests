@@ -90,13 +90,11 @@ public class CuratedPlaylistPage extends Page{
 	 */
 
 	public IOSElement getPlaylistCellSongName(int cellnumber) {
-		IOSElement cPlaylistCellSongName = driver.findElementByAccessibilityId("MyMusicPlaylistViewController-MyMusicSongCell-MyMusicViewCell-" +
-				cellnumber);
-		if (!waitForElementToBeVisible(cPlaylistCellSongName, 5))
+		IOSElement cPlaylistCellSongName = waitForVisible(driver, By.name("MyMusicPlaylistViewController-MyMusicSongCell-MyMusicViewCell-" +
+				cellnumber), 10);
 			/*IOSElement cPlaylistCellSongName = waitForVisible(driver, By.xpath("//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/"
 				+ "XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/"
 			 */
-			System.out.println("Tracks are not being displayed on curated playlists profile page.");
 		return cPlaylistCellSongName;		
 	}
 
