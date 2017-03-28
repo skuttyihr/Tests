@@ -7,9 +7,14 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
+import org.junit.FixMethodOrder;
+import org.junit.Ignore;
+import org.junit.runners.MethodSorters;
 
+import com.iheart.appium.iosAutomation.AppboyUpsellsPage.Entitlement;
 import com.iheart.appium.utilities.TestRoot;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestMiniPlayer extends TestRoot {
 
 	@Rule
@@ -20,6 +25,9 @@ public class TestMiniPlayer extends TestRoot {
 		setup();
 	}
 
+	@Rule
+	public RetryRule retry = new RetryRule(1);
+	
 	@Rule
 	public ScreenshotRule screenshot = new ScreenshotRule();
 
@@ -36,41 +44,52 @@ public class TestMiniPlayer extends TestRoot {
      * (todo)Play Artist in mini player if something is already playing. 
 	 */
 	@Test
-	public void testMiniPlayerArtistRadio_MPLAY1_FREE() {
+	public void MPLAY1_testMiniPlayerArtistRadio_FREE() {
 		LocalTime before = consoleLogStart(
 				"Testing testMiniPlayerArtistRadio_MPLAY1_FREE() - login, start MiniPlayer for Artist Radio, show all elements, test functionality.");
-		//sk - 2/23 - changing login id as the earlier one failed
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("testfree@mail.com", "tester", "FREE"));
+		GifSequenceWriter writer = loginPage.initGIFWriter();
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("testfree@mail.com", "tester", Entitlement.FREE));
+		loginPage.addPageToGif(writer);
 		homePage.clickNavBarSearchButtonToOpenSearch();
+		loginPage.addPageToGif(writer);
 		// Start Artist Radio
 		searchPage.enterTextIntoSearchBar("Rage against the machine");
+		loginPage.addPageToGif(writer);
 		searchPage.clickTopResult();
+		loginPage.addPageToGif(writer);
 		Assert.assertTrue("Expected 'Pause Buffering' or 'Pause' because MiniPlayer should be playing an Artist track.",
 				miniPlayer.getTypeOfPlayButton().contains("Pause"));
 		miniPlayer.showAllElements();
 		miniPlayer.clickPlayPauseButton();
+		loginPage.addPageToGif(writer);
 		Assert.assertTrue("Expected 'Play Buffering' or 'Play' because MiniPlayer should be playing an Artist track.",
 				miniPlayer.getTypeOfPlayButton().contains("Play"));
 		miniPlayer.clickPlayPauseButton();
-		//sk - 2/7 - swipe left on the player doesn't work correctly, commenting out till we can find a solution
-/*		int numberOfSkipsRemaining = miniPlayer.getNumberOfSkipsRemaining();
+		loginPage.addPageToGif(writer);	
+		int numberOfSkipsRemaining = miniPlayer.getNumberOfSkipsRemaining();
 		if (numberOfSkipsRemaining > 2) {
 			miniPlayer.swipeMiniPlayerToLeftAndClickSkipButton();
+			loginPage.addPageToGif(writer);
 			Assert.assertTrue("Skip may not have worked - song title is the same.",
 					miniPlayer.isTitleDifferentAfterSkip());
 		}
 		miniPlayer.swipeMiniPlayerToLeftToShowSkipButton();
+		loginPage.addPageToGif(writer);
 		System.out.println("SkipButton type = [" + miniPlayer.getTypeOfSkipButton() + "]");
 		Assert.assertTrue("Expected 'Skip' instead of 'Scan' because MiniPlayer should be playing an Artist track.",
 				miniPlayer.getTypeOfSkipButton().contains("Skip"));
-		miniPlayer.swipeMiniPlayerToRightToHideSkipButton();   */
+		miniPlayer.swipeMiniPlayerToRightToHideSkipButton();
+		loginPage.addPageToGif(writer);
 		Assert.assertTrue("Track should not be Thumbed Up or Down yet...",
 				miniPlayer.isThumbUpAndThumbDownButtonNotActivated());
 		miniPlayer.clickThumbUpButton();
+		loginPage.addPageToGif(writer);
 		Assert.assertTrue("ThumbUpButton is not Selected", miniPlayer.isThumbUpButtonActivated());
 		miniPlayer.clickThumbDownButton();
+		loginPage.addPageToGif(writer);
 		Assert.assertTrue("ThumbDownButton is not Selected", miniPlayer.isThumbDownButtonActivated());
 		Assert.assertTrue("Test that it is still currently on Mini Player", miniPlayer.isCurrentlyOnMiniPlayer());
+		loginPage.closeGifWriter(writer);
 		consoleLogEnd(before, true, "Tested testMiniPlayerArtistRadio_MPLAY1_FREE in MiniPlayer for artist radio");
 	}
 	/*
@@ -108,10 +127,10 @@ public class TestMiniPlayer extends TestRoot {
 	 */
 	
 	@Test
-	public void testMiniPlayerWorksOnAllPages_MPLAY2_FREE() {
+	public void MPLAY2_testMiniPlayerWorksOnAllPages_FREE() {
 		LocalTime before = consoleLogStart(
 				"Testing testMiniPlayerWorksOnAllPages_MPLAY2_FREE - login, start MiniPlayer for Artist Radio, Open other pages, check that MiniPlayer is still running.");
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("steph@free.com", "stephfree", "FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("steph@free.com", "stephfree", Entitlement.FREE));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		// Start Artist Radio
 		searchPage.enterTextIntoSearchBar("Inanimate Existence");
@@ -157,9 +176,9 @@ public class TestMiniPlayer extends TestRoot {
 		Verify that Elapsed view is hidden
 	 */
 	@Test
-	public void testMiniPlayerRadioStation_MPLAY3_FREE() {
+	public void MPLAY3_testMiniPlayerRadioStation_FREE() {
 		LocalTime before = consoleLogStart("Testing testMiniPlayerRadioStationAfterLogin");
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("steph@free.com", "stephfree", "FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("steph@free.com", "stephfree", Entitlement.FREE));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		searchPage.enterTextIntoSearchBar("HOT 99.5");
 		searchPage.clickTopResult();
@@ -197,9 +216,9 @@ public class TestMiniPlayer extends TestRoot {
 		Verify that hidden Skip button is a 'Skip' button
 		Verify that Elapsed view is shown
 	 */
-/*	@Test
-	//@Ignore
-	public void testMiniPlayerPlaylist_MPLAY4_FREE() {
+	@Test
+	@Ignore
+	public void MPLAY4_testMiniPlayerPlaylist_ALLA() {
 	
 	}
 	/**	1. Repeat MPLAY-1 with a Podcast ("Startalk")
@@ -210,10 +229,11 @@ public class TestMiniPlayer extends TestRoot {
 		Verify that Thumbs up, down works.
 		Verify that hidden Skip button is a 'Scan' button
 		Verify that Elapsed view is shown
+		*/
 	@Test
 	@Ignore
-	public void testMiniPlayerPodcast_MPLAY5_FREE() {
+	public void MPLAY5_testMiniPlayerPodcast_FREE() {
 	
 	}
-*/
+
 }
