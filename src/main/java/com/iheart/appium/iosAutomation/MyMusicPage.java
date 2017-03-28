@@ -530,10 +530,10 @@ public class MyMusicPage extends Page{
 			offlineSwitch = MyMusicPlaylistHeaderCellOfflineSwitchUISwitch.getAttribute("value");
 		}
 		System.out.println("myMusicPage.getPlaylistHeaderCellOfflineSwitchText() : " + offlineSwitch);
-		 if(offlineSwitch.equals("true")){
+		if(offlineSwitch.equals("true")){
 			return true;
-		}else 
-			return false;
+		} 
+		return false;
 	}
 	public void handleNewInitialMessage(){
 		if(myMusicPage.isCurrentlyOnMyMusicInitialMessage()){
@@ -543,8 +543,8 @@ public class MyMusicPage extends Page{
 	}
 	/**
 	 * Feb 24, 2017
-     * [ accessibility id: MyMusicCollapseableHeader-Subtitle1Label-UILabel]  text: [Feb 24, 2017]  tagName: [XCUIElementTypeStaticText] isDisplayed: [true] isEnabled: [true].
-     * This returns the date the playlist was last changed (or created...not sure)
+	 * [ accessibility id: MyMusicCollapseableHeader-Subtitle1Label-UILabel]  text: [Feb 24, 2017]  tagName: [XCUIElementTypeStaticText] isDisplayed: [true] isEnabled: [true].
+	 * This returns the date the playlist was last changed (or created...not sure)
 	 * @return
 	 */
 	public String getCollapseableHeaderSubtitle1LabelText(){
