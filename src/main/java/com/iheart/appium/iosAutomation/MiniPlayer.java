@@ -1,11 +1,14 @@
 package com.iheart.appium.iosAutomation;
 
+import com.iheart.appium.utilities.Errors;
+
 import io.appium.java_client.SwipeElementDirection;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
 import io.appium.java_client.pagefactory.iOSFindBy;
 
 public class MiniPlayer extends Page {
+	
 	public MiniPlayer(){
 		super();
 	}
@@ -13,7 +16,6 @@ public class MiniPlayer extends Page {
 		super(_driver);
 	}
 	@iOSFindBy(accessibility = "MiniPlayerView-ImageView-UIImageView") private IOSElement MiniPlayerViewImageViewUIImageView;
-
 	@iOSFindBy(accessibility = "MiniPlayerView-ScrollView-UIScrollView") private IOSElement MiniPlayerViewScrollViewUIScrollView;
 		@iOSFindBy(accessibility = "MiniPlayerView-ContentView-UIView") private IOSElement MiniPlayerViewContentViewUIView;
 			@iOSFindBy(accessibility = "MiniPlayerView-PlayButton-UIButton") private IOSElement  MiniPlayerViewPlayButtonUIButton;
@@ -23,8 +25,7 @@ public class MiniPlayer extends Page {
 			@iOSFindBy(accessibility = "MiniPlayerView-TitleLabel-UILabel") private IOSElement  MiniPlayerViewTitleLabelUILabel;
 			@iOSFindBy(accessibility = "MiniPlayerView-SubtitleLabel-UILabel") private IOSElement MiniPlayerViewSubtitleLabelUILabel;
 			
-	//Swipe MiniPlayer to Left - Skip button appears with number of tracks left.
-			
+	//Swipe MiniPlayer to Left - Skip button appears with number of tracks left.			
 	@iOSFindBy(accessibility = "MiniPlayerView-ClipView-UIView") private IOSElement MiniPlayerViewClipViewUIView;
 	@iOSFindBy(accessibility = "MiniPlayerView-SwipeButtonContainerView-UIView") private IOSElement MiniPlayerViewSwipeButtonContainerViewUIView;
 	@iOSFindBy(accessibility = "MiniPlayerView-RedSkipButton-UIButton") private IOSElement MiniPlayerViewRedSkipButtonUIButton;
@@ -58,9 +59,16 @@ public class MiniPlayer extends Page {
 	/**
 	 * Clicks the MiniPlayer to open Full Player. 
 	 */
-	public void openFullPlayer(){
+	public Errors openFullPlayer(){
+		Errors err = new Errors();
 		System.out.println("Opening Full Player by clicking on MiniPlayerViewImageViewUIImageView element.");
-		MiniPlayerViewImageViewUIImageView.click();
+		if (!waitForElementToBeVisible(MiniPlayerViewImageViewUIImageView, 6)) {
+			err.add("MiniPlayer was not displayed.");
+		} 
+		else {
+			MiniPlayerViewImageViewUIImageView.click();
+		}
+		return err;
 	}
 	
 	/**
@@ -68,7 +76,7 @@ public class MiniPlayer extends Page {
 	 */
 	public void clickPlayPauseButton(){
 		waitForElementToBeVisible(MiniPlayerViewPlayButtonUIButton, 5);
-		System.out.println("clickPlayPauseButton()");
+		System.out.println("clickPlayPauseButton(): " + MiniPlayerViewPlayButtonUIButton.getAttribute("value"));
 		MiniPlayerViewPlayButtonUIButton.click();
 	}
 	/**
@@ -212,6 +220,13 @@ public class MiniPlayer extends Page {
 		boolean bothDown = !getThumbUpStatus() && !getThumbDownStatus();
 		System.out.println("isThumbUpAndThumbDownButtonNotActivated: " + bothDown);
 		return bothDown; 
+	}
+	
+	/**
+	 * @return if miniplayer is seen
+	 */
+	public boolean getMiniPlayer() {
+		return (isCurrentlyOnMiniPlayer());
 	}
 	
 	/**

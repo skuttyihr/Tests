@@ -266,7 +266,7 @@ public class SearchPage extends Page {
 	private IOSElement learnMoreButton;
 	@iOSFindBy(accessibility = "Upgrade")
 	private IOSElement upgradeTitle;
-
+	@iOSFindBy(accessibility = "podcastprofile play") private IOSElement playPodcastEpisode;
 	@iOSFindBy(accessibility = "Cosmic Queries: Galactic Grab Bag")
 	private IOSElement CosmicQueriesGalacticGrabBagEpisode;
 	
@@ -276,27 +276,27 @@ public class SearchPage extends Page {
 	 * Retaining those that show status after a method
 	 */
 	public void clickNavBarBackButton() {
-		//System.out.println("clickNavBarBackButton().");
+		System.out.println("clickNavBarBackButton().");
 		NavBarBackButtonUIButton.click();
 	}
 
 	public void clickShowAllArtists() {
-		//System.out.println("clickShowAllArtists().");
+		System.out.println("clickShowAllArtists().");
 		GlobalSearchDataSourceShowAllArtistsDisclosureCell.click();
 	}
 
 	public void clickShowAllPodcasts() {
-		//System.out.println("clickShowAllPodcasts().");
+		System.out.println("clickShowAllPodcasts().");
 		GlobalSearchDataSourceShowAllPodcastsDisclosureCell.click();
 	}
 
 	public void clickShowAllSongs() {
-		//System.out.println("clickShowAllSongs().");
+		System.out.println("clickShowAllSongs().");
 		GlobalSearchDataSourceShowAllSongsDisclosureCell.click();
 	}
 
 	public void clickShowAllLiveStations() {
-		//System.out.println("clickShowAllLiveStations().");
+		System.out.println("clickShowAllLiveStations().");
 		GlobalSearchDataSourceShowAllLiveStationsDisclosureCell.click();
 	}
 
@@ -314,7 +314,7 @@ public class SearchPage extends Page {
 	 * Click Cancel to get out of Search and back to other page.
 	 */
 	public void clickCancelButtonOnSearchBar() {
-		//System.out.println("clickCancelButtonOnSearchBar().");
+		System.out.println("clickCancelButtonOnSearchBar().");
 		IHRGlobalSearchBarCancelButtonUIButton.click();
 	}
 
@@ -558,9 +558,8 @@ public class SearchPage extends Page {
 		return isCurrentlyOn("isCurrentlyOnUpgradePage", upgradeTitle);
 	}
 	
-	public void clickStartalkPodcastEpisode(){
-		//System.out.println("clickStartalkPodcastEpisode().");
-		CosmicQueriesGalacticGrabBagEpisode.click();
+	public boolean clickStartTalkPodcastEpisode(){
+		return click(driver, playPodcastEpisode);
 	}
 	/**
 	 * Simply print out all of the Search elements we've added and return
@@ -603,7 +602,6 @@ public class SearchPage extends Page {
 		printElementInformation(GlobalSearchDataSourceShowAllLiveStationsDisclosureCell);
 		searchPage.clickShowAllLiveStations();
 		searchPage.showSomeElementsOnLiveStationsList();
-		searchPage.rootScrollDown();
 		searchPage.rootScrollDown();
 		System.out.println("::::Printing out ARTISTS.::::");
 		printElementInformation(GlobalSearchDataSourceARTISTSHeaderViewUIView);
@@ -691,8 +689,17 @@ public class SearchPage extends Page {
 	 * @param name
 	 */
 	public void searchAndPlayPlaylist(String name) {
-		searchPage.enterTextAndPressEnterIntoSearchBar(name);
+		enterTextAndPressEnterIntoSearchBar(name);
 		searchPage.clickFirstPlaylistCell();
 		System.out.println("Playing Curated Playlist");
+	}
+	
+	/**
+	 * sk - method to search and play Top Result
+	 * @param a station name
+	 */
+	public void searchAndPlayTopResults(String stationName) {
+		enterTextAndPressEnterIntoSearchBar(stationName);
+		clickTopResult();
 	}
 }

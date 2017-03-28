@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import com.iheart.appium.iosAutomation.AppboyUpsellsPage.Entitlement;
 import com.iheart.appium.utilities.TestRoot;
 
 import io.appium.java_client.ios.IOSDriver;
@@ -111,9 +112,9 @@ public class LoginPage extends Page {
 	 */
 	public void enterLoginEmailAddress(String emailAddress) {
 
-		IHRAuthorizationViewEmailAddressTextField.click();
+		waitAndClick(IHRAuthorizationViewEmailAddressTextField, 5, "");
 		if (emailAddress != null) {
-			System.out.println("enterLoginEmailAddress() : " + emailAddress);
+			System.out.println("enterLoginEmailAddress()");
 			IHRAuthorizationViewEmailAddressTextField.sendKeys(emailAddress);
 		} else {
 			System.out.println("enterLoginEmailAddress() : " + IHEARTUSERNAME);
@@ -122,7 +123,7 @@ public class LoginPage extends Page {
 	}
 
 	public void clearLoginEmailAddress() {
-		//System.out.println("clearLoginEmailAddress()");
+		System.out.println("clearLoginEmailAddress()");
 		IHRAuthorizationViewEmailAddressTextField.clear();
 	}
 
@@ -135,7 +136,7 @@ public class LoginPage extends Page {
 
 		IHRAuthorizationViewPasswordTextField.click();
 		if (password != null) {
-			System.out.println("enterLoginPassword() : " + password);
+			System.out.println("enterLoginPassword()");
 			IHRAuthorizationViewPasswordTextField.sendKeys(password);
 		} else {
 			System.out.println("enterLoginPassword() : " + IHEARTPASSWORD);
@@ -144,7 +145,7 @@ public class LoginPage extends Page {
 	}
 
 	public void clearLoginPassword() {
-		//System.out.println("clearLoginPassword()");
+		System.out.println("clearLoginPassword()");
 		IHRAuthorizationViewPasswordTextField.clear();
 	}
 
@@ -152,7 +153,7 @@ public class LoginPage extends Page {
 	 * Click Facebook Login Button
 	 */
 	public void clickFacebookLoginButton() {
-		//System.out.println("clickFacebookLoginButton()");
+		System.out.println("clickFacebookLoginButton()");
 		IHRAuthorizationViewFacebookButtonUIButton.click();
 	}
 
@@ -160,7 +161,7 @@ public class LoginPage extends Page {
 	 * Click Google Login Button
 	 */
 	public void clickGoogleLoginButton() {
-		//System.out.println("clickGoogleLoginButton()");
+		System.out.println("clickGoogleLoginButton()");
 		IHRAuthorizationViewGoogleButtonUIButton.click();
 	}
 
@@ -177,7 +178,7 @@ public class LoginPage extends Page {
 	 * Click the Forgot your Password? button to reset your account's password.
 	 */
 	public void clickForgotYourPasswordButton() {
-		//System.out.println("clickForgotYourPasswordButton()");
+		System.out.println("clickForgotYourPasswordButton()");
 		IHRAuthorizationViewForgotPasswordButtonUIButton.click();
 	}
 
@@ -195,7 +196,6 @@ public class LoginPage extends Page {
 		enterLoginPassword(password);
 		//System.out.println("Sent keys for Username and Password and about to click LogInAuthButton");
 		clickLogInAuthButton();
-		//System.out.println("Clicked LogInAuthButton.");
 		chooseStayConnected(false);
 		// Dismiss zip code
 		Page.enterZip("");
@@ -205,6 +205,7 @@ public class LoginPage extends Page {
 		// Select Genre
 		int[] genres = new int[] {1, 2} ;
 		if (genrePage.isCurrentlyOnGenrePage()){
+			//removed the println, cause the above method prints it out as well.
 			if(!genrePage.isDoneButtonEnabled()){
 				genrePage.selectGenres(genres);
 				genrePage.clickDoneButton();
@@ -216,7 +217,7 @@ public class LoginPage extends Page {
 		chooseStayConnected(false);
 		sleep(2000);
 		Page.handlePossiblePopUp();  //added after genre screen sometimes pops up again. 
-		System.out.println("Logged in to account with email:[" + email + "] password ["+ password + "]");
+		System.out.println("Logged in to account.");
 	}
 
 	/**
@@ -269,7 +270,7 @@ public class LoginPage extends Page {
 	 */
 	public boolean loginViaFacebook() {
 		onboardingPage.clickOnboardingLoginButton();
-		waitForElementToBeVisible(IHRAuthorizationViewEmailAddressTextField, 3);
+		waitForVisible(driver, By.className("XCUIElementTypeTextField"), 10);
 		clickFacebookLoginButton();
 		System.out.println("Testing Facebook login.");
 		// adding in wait
@@ -321,27 +322,9 @@ public class LoginPage extends Page {
 			btnAllow.click();
 		if (waitForElementToBeVisible(openInAppPrompt, 5))
 			openButton.click();
-		TestRoot.sleep(4000);
 		dismissStayConnectedPopup();
 		dismissLoginPopups();
 		return settingsPage.isLoggedIn();
-	}
-
-	public void dismissStayConnectedPopup() {
-		try {
-			waitForVisible(driver, By.name("Maybe Later"), 4).click();
-		} catch (Exception e) {
-		}
-	}
-
-	public void chooseStayConnected(boolean stayConnected) {
-		try {
-			if (stayConnected)
-				waitForVisible(driver, By.name("Get Notifications"), 2).click();
-			else
-				waitForVisible(driver, By.name("Maybe Later"), 1).click();
-		} catch (Exception e) {
-		}
 	}
 
 	// Tell us what you like
@@ -363,8 +346,8 @@ public class LoginPage extends Page {
 		NavBarBackButton.click();
 	}
 
-	public boolean loginVerifyEntitlement(String email, String password, String entitlementType) {
-		//System.out.println("loginVerifyEntitlement()...");
+	public boolean loginVerifyEntitlement(String email, String password, Entitlement entitlement) {
+		System.out.println("loginVerifyEntitlement()...");
 		boolean loggedIn = false;
 		boolean doesEntitlementMatch = false;
 		// Log in
@@ -373,11 +356,11 @@ public class LoginPage extends Page {
 		if(homePage.isCurrentlyOnForYouTab()){
 			loggedIn = true;
 		}
-		if(entitlementType.equals("PLUS")){
+		if(entitlement.equals("PLUS")){
 			doesEntitlementMatch = homePage.isCurrentlyOnPlusAccountLogo();
-		}else if(entitlementType.equals("ALLA")){
+		}else if(entitlement.equals("ALLA")){
 			doesEntitlementMatch = homePage.isCurrentlyOnAllAccessAccountLogo();
-		}else if(entitlementType.equals("FREE")){
+		}else if(entitlement.equals("FREE")){
 			doesEntitlementMatch = homePage.isCurrentlyOnFreeAccountLogo();
 		}
 		return loggedIn && doesEntitlementMatch;

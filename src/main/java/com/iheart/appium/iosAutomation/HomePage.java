@@ -273,9 +273,9 @@ public class HomePage extends Page {
 	 * Also enters Zip for local radio. 
 	 */
 	public void clickMyMusicTab(){
-		System.out.println("clickLocalRadioTab(). Then Entering Zip.");
+		System.out.println("clickMyMusicTab(). Then Entering Zip.");
 		HomeSegmentedControlTitleLabelUIButtonMyMusic.click();
-		Page.enterZip();
+		//Page.enterZip();
 	}
 	
 	/**
@@ -487,20 +487,7 @@ public class HomePage extends Page {
 		}
 		return "Element was null";
 	}
-	/**
-	 * This is a Popup that appears over HomePage, thus moving/adding it here. Clicks 'Get Notifications' or 'Maybe Later'
-	 * @param stayConnected
-	 */
-	public void chooseStayConnected(boolean stayConnected) {
-		try {
-			if (stayConnected)
-				waitForVisible(driver, By.name("Get Notifications"), 2).click();
-			else
-				waitForVisible(driver, By.name("Maybe Later"), 2).click();
-		} catch (Exception e) {
-		}
-	}
-	
+
 	public void swipeFirstForYouStationToLeft(){
 		if(homePage.isCurrentlyOnForYouTab()){
 			System.out.println("swipeFirstForYouStationToLeft() ");

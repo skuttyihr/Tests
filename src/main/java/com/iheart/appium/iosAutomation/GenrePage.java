@@ -95,7 +95,7 @@ public class GenrePage extends Page {
 	 */
 	public String getTitleLabelText(){
 		String title = IHRGenrePickerViewControllerTitleLabelUILabel.getText();
-		//System.out.println("getTitleLabelText() : " + title);
+		System.out.println("getTitleLabelText() : " + title);
 		return title;
 	}
 	/**
@@ -105,7 +105,7 @@ public class GenrePage extends Page {
 	 */
 	public String getSubtitleLabelText(){
 		String subtitle = IHRGenrePickerViewControllerSubtitleLabelUILabel.getText();
-		//System.out.println("getSubtitleLabelText() : " + subtitle);
+		System.out.println("getSubtitleLabelText() : " + subtitle);
 		return subtitle;
 	}
 	/**
@@ -121,6 +121,7 @@ public class GenrePage extends Page {
 		}
 		return err;
 	}
+	
 	/**
 	 * Checks whether the Done button is enabled, meaning that a Genre cell has been clicked and the user can move on.
 	 * @return true if isEnabled()
@@ -129,24 +130,34 @@ public class GenrePage extends Page {
 		/** sk - 2/23 - modifying this method as isEnabled() no longer works with Appium 1.6.0
 		 * 	Found this while testing AIOS-5585
 		 */
-		//boolean isEnabled = TestRoot.isEnabled(IHRGenrePickerViewControllerDoneButtonUIButton);
-		//System.out.println("isDoneButtonEnabled() : " + isEnabled);
-		//return isEnabled;
 		boolean doneEnabled = false;
-		String trueOrNull = IHRGenrePickerViewControllerDoneButtonUIButton.getAttribute("value");
-		System.out.println("isDoneEnabled " + trueOrNull);
-
-		if(trueOrNull == null){
-			doneEnabled = false;
+		int maxCount = 20; // ~2 seconds
+		int count = 0;
+		if (waitForElementToBeVisible(IHRGenrePickerViewControllerDoneButtonUIButton, 10)){
+			try{
+				if (isEnabled(IHRGenrePickerViewControllerDoneButtonUIButton)){
+					return true;
+				}
+			}
+			catch(Exception e){}
+			
+			// Try to get enabled boolean by value
+			String trueOrNull = IHRGenrePickerViewControllerDoneButtonUIButton.getAttribute("value");
+			System.out.println("isDoneEnabled " + trueOrNull);
+			doneEnabled = trueOrNull != null && trueOrNull.equalsIgnoreCase("true");
+			while (!doneEnabled && count < maxCount){
+				count++;
+				sleep(100); // Fluid wait since we break out as soon as it's enabled
+				trueOrNull = IHRGenrePickerViewControllerDoneButtonUIButton.getAttribute("value");
+				doneEnabled = trueOrNull != null && trueOrNull.equalsIgnoreCase("true");
+			}
 		}
-		else if( trueOrNull.equals("true")){
-			doneEnabled = true;
-		}else {
-			doneEnabled = false; //default
+		else{
+			System.err.println("Genre Picker Done Button was NOT visible!");
 		}
 		return doneEnabled;
-		
 	}
+	
 	/**
 	 * Uses Random number generator to select between 1 and 6 genres on the first page.
 	 */
@@ -176,7 +187,7 @@ public class GenrePage extends Page {
 		Errors err = new Errors();
 		for(int i : gs){
 			String genre = "IHRGenrePickerViewController-Cell-UICollectionViewCell-" + i;
-			//System.out.println("creating an IOSElement for Genre and clicking it : "+ genre );
+			System.out.println("creating an IOSElement for Genre and clicking it : "+ genre );
 			if(waitForElementToBeVisible(findElement(driver, MobileBy.AccessibilityId(genre)), 5)){
 				findElement(driver, MobileBy.AccessibilityId(genre)).click();
 			}else{
