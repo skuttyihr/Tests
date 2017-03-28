@@ -6,11 +6,17 @@ import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import org.junit.runners.MethodSorters;
 
+import com.iheart.appium.iosAutomation.AppboyUpsellsPage.Entitlement;
 import com.iheart.appium.utilities.TestRoot;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestOnboarding extends TestRoot {
 
 	@Before
@@ -21,6 +27,9 @@ public class TestOnboarding extends TestRoot {
 	@Rule
 	public ScreenshotRule screenshot = new ScreenshotRule();
 	
+	@Rule
+	public RetryRule retry = new RetryRule(1);
+	
 	/**
 	 * testAllElementsOnOnboardingPage is a method that makes sure all elements with AccessibilityIdentifiers show up on the Onboarding page.
 	 * It prints out all object information to the console.
@@ -29,11 +38,11 @@ public class TestOnboarding extends TestRoot {
 	 * This works at 169 seconds. 
 	 */
 	@Test
-	public void testAllElementsOnOnboardingPage_ONB1_FREE(){ 
-		LocalTime before = consoleLogStart("Testing testAllElementsOnOnboardingPage_ONB1_FREE()");
+	public void ONB1_testAllElementsOnOnboardingPage_FREE(){ 
+		LocalTime before = consoleLogStart("Testing ONB1_testAllElementsOnOnboardingPage_FREE()");
 		boolean allElementsDisplayedOnOnboardingPage = onboardingPage.showAllElements();
 		Assert.assertTrue("One of the elements on Onboarding Page is not displayed as expected.",allElementsDisplayedOnOnboardingPage);
-		consoleLogEnd(before, allElementsDisplayedOnOnboardingPage,  "Tested testAllElementsOnOnboardingPage_ONB1_FREE() in TestOnboarding.java");
+		consoleLogEnd(before, allElementsDisplayedOnOnboardingPage,  "Tested ONB1_testAllElementsOnOnboardingPage_FREE() in TestOnboarding.java");
 	}
 	
 	/**
@@ -45,8 +54,9 @@ public class TestOnboarding extends TestRoot {
 	 * We could also add Sleeps. 
 	 */
 	@Test
-	public void testUIScrollViewOnOnboardingPage_ONB2_FREE(){
-		LocalTime before = consoleLogStart("Testing testUIScrollViewOnOnboardingPage_ONB2_FREE()");
+	@Category(Stable.class)
+	public void ONB2_testUIScrollViewOnOnboardingPage_FREE(){
+		LocalTime before = consoleLogStart("Testing ONB2_testUIScrollViewOnOnboardingPage_FREE()");
 		//Part One
 		System.out.println("Testing that Titles are as expected.");
 		Set<String> foundWithinApp = onboardingPage.getThreeTextFields();
@@ -65,26 +75,32 @@ public class TestOnboarding extends TestRoot {
 		Assert.assertTrue("Descriptions have changed.",foundDescriptionsWithinApp.containsAll(descriptionsShouldBeInApp));
 		//End
 		boolean result = (foundDescriptionsWithinApp.containsAll(descriptionsShouldBeInApp) && foundWithinApp.containsAll(shouldBeInApp));
-		consoleLogEnd(before, result,  "Tested testUIScrollViewOnOnboardingPage_ONB2_FREE() in TestOnboarding.java");
+		consoleLogEnd(before, result,  "Tested ONB2_testUIScrollViewOnOnboardingPage_FREE() in TestOnboarding.java");
 	}
 
 	/**
 	 * Simply click the 'Log In' Button and the 'Create Account' Button and ensure the next pages are as expected. 
 	 */
 	@Test
-	public void testCreateAccountAndLogInButtons_ONB3_FREE(){
-		LocalTime before = consoleLogStart("Testing testCreateAccountAndLogInButtons_ONB3_FREE().");
+	@Category(Stable.class)
+	public void ONB3_testCreateAccountAndLogInButtons_FREE(){
+		LocalTime before = consoleLogStart("Testing ONB3_testCreateAccountAndLogInButtons_FREE().");
+		GifSequenceWriter writer = loginPage.initGIFWriter();
 		Assert.assertTrue("Could not click 'Log In' Button", onboardingPage.clickOnboardingLoginButton());
+		loginPage.addPageToGif(writer);
 		loginPage.tapBack();
+		loginPage.addPageToGif(writer);
 		Assert.assertTrue("Could not click 'Create Account' Button", onboardingPage.clickOnboardingCreateAccountButton());
-		consoleLogEnd(before, true,  "Tested testCreateAccountAndLogInButtons_ONB3_FREE");
+		loginPage.addPageToGif(writer);
+		loginPage.closeGifWriter(writer);
+		consoleLogEnd(before, true,  "Tested ONB3_testCreateAccountAndLogInButtons_FREE");
 	}
-/*	
-	//@Test
-	//@Ignore //still doesn't work
-	public void testOnboardingDisappearal_ONB4_FREE(){
+	
+	@Test
+	@Ignore //still doesn't work
+	public void ONB4_testOnboardingDisappearal_FREE(){
 		LocalTime before = consoleLogStart("Testing testOnboardingDisappearal_ONB4_FREE().");
-		loginPage.loginVerifyEntitlement("trav@free.com", "travfree", "FREE");
+		loginPage.loginVerifyEntitlement("trav@free.com", "travfree", Entitlement.FREE);
 		System.out.println("Closing app.");
 		driver.closeApp();
 		//closeApp();
@@ -97,5 +113,5 @@ public class TestOnboarding extends TestRoot {
 		//Play live station. 
 		//Kill app. 
 		//Relaunch app.
-	} */
+	}
 }
