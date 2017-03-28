@@ -266,7 +266,7 @@ public class SearchPage extends Page {
 	private IOSElement learnMoreButton;
 	@iOSFindBy(accessibility = "Upgrade")
 	private IOSElement upgradeTitle;
-
+	@iOSFindBy(accessibility = "podcastprofile play") private IOSElement playPodcastEpisode;
 	@iOSFindBy(accessibility = "Cosmic Queries: Galactic Grab Bag")
 	private IOSElement CosmicQueriesGalacticGrabBagEpisode;
 	
@@ -558,9 +558,8 @@ public class SearchPage extends Page {
 		return isCurrentlyOn("isCurrentlyOnUpgradePage", upgradeTitle);
 	}
 	
-	public void clickStartalkPodcastEpisode(){
-		//System.out.println("clickStartalkPodcastEpisode().");
-		CosmicQueriesGalacticGrabBagEpisode.click();
+	public boolean clickStartTalkPodcastEpisode(){
+		return click(driver, playPodcastEpisode);
 	}
 	/**
 	 * Simply print out all of the Search elements we've added and return
@@ -603,7 +602,6 @@ public class SearchPage extends Page {
 		printElementInformation(GlobalSearchDataSourceShowAllLiveStationsDisclosureCell);
 		searchPage.clickShowAllLiveStations();
 		searchPage.showSomeElementsOnLiveStationsList();
-		searchPage.rootScrollDown();
 		searchPage.rootScrollDown();
 		System.out.println("::::Printing out ARTISTS.::::");
 		printElementInformation(GlobalSearchDataSourceARTISTSHeaderViewUIView);

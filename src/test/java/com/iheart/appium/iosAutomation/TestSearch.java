@@ -12,6 +12,7 @@ import org.junit.experimental.categories.Category;
 import org.openqa.selenium.By;
 
 import com.iheart.appium.utilities.TestRoot;
+import com.iheart.appium.utilities.TestRoot.RCStable;
 
 import io.appium.java_client.ios.IOSElement;
 
@@ -30,6 +31,7 @@ public class TestSearch extends TestRoot {
 	public RetryRule retry = new RetryRule(1);
 	
 	@Test
+	@Category(RCStable.class)
 	public void testSearchPageResults_SEA1_FREE(){
 		LocalTime before = consoleLogStart("Testing testSearchPageResults_SEA1_FREE");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("search11@Test.com", "test", "FREE"));
@@ -40,6 +42,7 @@ public class TestSearch extends TestRoot {
 		consoleLogEnd(before, true, "Tested testSearchPageResults_SEA1_FREE");
 	}
 	@Test
+	@Category(RCStable.class)
 	public void testSearchPageTextfield_SEA2_FREE(){
 		LocalTime before = consoleLogStart("Testing testSearchPageTextfield_SEA2_FREE");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@Test.com","test", "FREE"));
@@ -142,6 +145,7 @@ public class TestSearch extends TestRoot {
 	}
 	
 	@Test
+	@Category(RCStable.class)
 	public void testSearchPodcasts_SEA7_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testSearchPodcasts_SEA7_FREE() : Searching for 'starta', clicking First Podcast Cell, hoping for Podcast List of episodes");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@Test.com","test", "FREE"));
@@ -149,16 +153,18 @@ public class TestSearch extends TestRoot {
 		String podcastName = "starta";
 		searchPage.enterTextAndPressEnterIntoSearchBar(podcastName);
 		searchPage.clickFirstPodcastsCell();
-		IOSElement episodes = Page.waitForVisible(driver, By.name("Episodes"), 10);
+		IOSElement episodes = Page.waitForVisible(driver, By.name("RECENT EPISODES"), 10);
 		printElementInformation(episodes);
-		Assert.assertTrue("Clicking the first Podcasts Cell for 'starta' should show Episodes of Star Talk",episodes.getText().equals("Episodes"));
-		searchPage.clickStartalkPodcastEpisode();
+		Assert.assertTrue("Clicking the first Podcasts Cell for 'starta' should show Episodes of Star Talk",episodes.getText().equals("RECENT EPISODES"));
+		searchPage.clickStartTalkPodcastEpisode();
 		Assert.assertTrue("Clicking one of the Podcast episdoes should have opened MiniPlayer", miniPlayer.isCurrentlyOnMiniPlayer() );
 		consoleLogEnd(before, true, "<<<<<testSearchPodcasts_SEA7_FREE() : ");
 		
 	}
 	
+	
 	@Test
+	@Category(RCStable.class)
 	public void testSearchLive_SEA8_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testSearchLiveRadio() : Searching for 'rock', clicking First Live Station, hoping for Live Radio.");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@Test.com","test", "FREE"));
