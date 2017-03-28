@@ -9,6 +9,7 @@ import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;
 
 import com.iheart.appium.iosAutomation.AppboyUpsellsPage.Entitlement;
+import com.iheart.appium.utilities.Errors;
 import com.iheart.appium.utilities.TestRoot;
 
 import org.junit.Rule;
@@ -147,8 +148,9 @@ public class TestMyMusic extends TestRoot{
 		myMusicPage.handleNewInitialMessage();
 		Assert.assertFalse("Upcell Cell should not exist on My Music Page for ALLA users. ", 
 				myMusicPage.isCurrentlyOnUpsellCell());
-		Assert.assertTrue("The method should have verified that the three empty cells exist for a Fresh ALLA acct."
-				,myMusicPage.testEmptySongsAlbumsArtistsPlaylists());
+		Errors visibilityErrors = myMusicPage.testEmptySongsAlbumsArtistsPlaylists();
+		Assert.assertTrue("The method should have verified that the three empty cells exist for a Fresh ALLA acct:\n" + visibilityErrors,
+				visibilityErrors.noErrors());
 		
 		consoleLogEnd(before, true, "Tested MYMU5_testEmptySongsAlbumsArtistsPlaylists_ALLA_FRESH()");
 	}

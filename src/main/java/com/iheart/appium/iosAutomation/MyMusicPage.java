@@ -1,5 +1,7 @@
 package com.iheart.appium.iosAutomation;
 
+import com.iheart.appium.utilities.Errors;
+
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
 import io.appium.java_client.pagefactory.iOSFindBy;
@@ -255,8 +257,8 @@ public class MyMusicPage extends Page{
 	/**
 	 * This method is run by the MYMU5 test case. 
 	 */
-	public boolean testEmptySongsAlbumsArtistsPlaylists(){
-		boolean albumsEmptyCell,artistsEmptyCell, songsEmptyCell = false; //Use these to assert.
+	public Errors testEmptySongsAlbumsArtistsPlaylists(){
+		Errors err = new Errors();
 		System.out.println("myMusicPage.showAllElementsForOldALLAUsers() : This ALLA user should be fresh - no saved songs - no prior history - just immediately signed up to ALLA");
 		System.out.println("Printing out AIDs for PlaylistHeaderView - a MyMusicViewCell at top of MyMusic.");
 		printElementInformation(PlaylistHeaderViewHeaderViewUICollectionReusableView);
@@ -277,7 +279,9 @@ public class MyMusicPage extends Page{
 		printElementInformation(MyMusicAlbumsViewNotAvailableOfflineViewUIView);
 		System.out.println("AlbumsView Cell0 should not exist, and expect to see AlbumsView Empty Cell with Search Albums Button. ");
 		printElementInformation(MyMusicAlbumsViewViewCellUICollectionViewCell0);
-		albumsEmptyCell = printElementInformation(MyMusicAlbumsViewEmptyCellMyMusicEmptyCell);
+		if (!printElementInformation(MyMusicAlbumsViewEmptyCellMyMusicEmptyCell)){
+			err.add("Could not find MyMusicAlbumsViewEmptyCellMyMusicEmptyCell or it was not displayed.");
+		}
 		printElementInformation(MyMusicEmptyCellTitleUILabel);
 		printElementInformation(MyMusicEmptyCellActionButtonUIButton);
 		clickNavBarBackButton();
@@ -291,7 +295,9 @@ public class MyMusicPage extends Page{
 		printElementInformation(MyMusicSongViewNotAvailableOfflineViewUIView);
 		System.out.println("SongView Cell0 should not exist, and expect to see SongView Empty Cell with Search Songs Button. ");
 		printElementInformation(MyMusicSongViewViewCellUICollectionViewCell0);
-		songsEmptyCell = printElementInformation(MyMusicSongViewEmptyCellMyMusicEmptyCell);
+		if (!printElementInformation(MyMusicSongViewEmptyCellMyMusicEmptyCell)){
+			err.add("Could not find MyMusicSongViewEmptyCellMyMusicEmptyCell or it was not displayed.");
+		}
 		printElementInformation(MyMusicEmptyCellTitleUILabel);
 		printElementInformation(MyMusicEmptyCellActionButtonUIButton);
 		clickNavBarBackButton();
@@ -302,13 +308,15 @@ public class MyMusicPage extends Page{
 		printElementInformation(MyMusicArtistsViewNotAvailableOfflineViewUIView);
 		System.out.println("ArtistsView Cell0 should not exist, and expect to see ArtistsView Empty Cell with Search Artists Button. ");
 		printElementInformation(MyMusicArtistsCellArtistViewCellUICollectionViewCell0);
-		artistsEmptyCell = printElementInformation(MyMusicArtistsViewEmptyCellMyMusicEmptyCell);
+		if (!printElementInformation(MyMusicArtistsViewEmptyCellMyMusicEmptyCell)){
+			err.add("Could not find MyMusicArtistsViewEmptyCellMyMusicEmptyCell or it was not displayed.");
+		}
 		//printElementInformation(MyMusicEmptyCellImageViewUIImageView);
 		printElementInformation(MyMusicEmptyCellTitleUILabel);
 		//printElementInformation(MyMusicEmptyCellSubtitleUILabel);
 		printElementInformation(MyMusicEmptyCellActionButtonUIButton);
 		clickNavBarBackButton();
-		return songsEmptyCell && artistsEmptyCell && albumsEmptyCell;
+		return err;
 	}
 	/**
 	 * This method is called by MYMU4 to check that Albums work and can be played, and then to show all playlists, 
