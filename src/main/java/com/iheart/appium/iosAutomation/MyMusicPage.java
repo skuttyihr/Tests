@@ -793,8 +793,7 @@ public class MyMusicPage extends Page{
 	 */
 	public boolean clickCancelButtonWhileEditingPlaylist() {
 		System.out.println("clickCancelButtonWhileEditingPlaylist()");
-		MyMusicPlaylistViewControllerCancelButtonUIBarButtonItem.click();
-		return true;
+		return click(driver, MyMusicPlaylistViewControllerCancelButtonUIBarButtonItem);
 		//return waitAndClick(MyMusicPlaylistViewControllerCancelButtonUIBarButtonItem, 5, "myMusicPage.clickCancelButtonWhileEditingPlaylist");	
 	}
 	/**
