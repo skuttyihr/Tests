@@ -49,7 +49,7 @@ public class TestFullPlayer extends TestRoot {
 	@Category(Stable.class)
 	public void testFullPlayer_FPLAY1_FREE() {
 		LocalTime before = consoleLogStart("Testing testFullPlayer_FPLAY1_FREE");
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test66@Test.com", "test", "FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test66@Test.com", "test",Entitlement.FREE));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		// New accounts start a Full Player
 		searchPage.enterTextIntoSearchBar("Opeth");
@@ -79,7 +79,7 @@ public class TestFullPlayer extends TestRoot {
 	@Test
 	public void testFullPlayerFunctionality_FPLAY2_FREE() {
 		LocalTime before = consoleLogStart("Testing testFullPlayerFunctionality_FPLAY2_FREE()");
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test66@Test.com", "test", "FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test66@Test.com", "test", Entitlement.FREE));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		searchPage.enterTextIntoSearchBar("Britney");
 		searchPage.clickTopResult();
@@ -154,7 +154,7 @@ public class TestFullPlayer extends TestRoot {
 	@Test
 	public void testFullPlayerSaveAndReplayButton_FPLAY3_FREE(){
 		LocalTime before = consoleLogStart("Testing testFullPlayerSaveAndReplayButton_FPLAY3_FREE()");
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("trav@free.com", "travfree", "FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("trav@free.com", "travfree", Entitlement.FREE));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		searchPage.enterTextIntoSearchBar("Job for a cowboy");
 		searchPage.clickTopResult();
@@ -212,7 +212,7 @@ public class TestFullPlayer extends TestRoot {
 	@Test
 	public void testFullPlayerSaveReplaySkip_FPLAY4_PLUS(){
 		LocalTime before = consoleLogStart("Testing testFullPlayerSaveReplaySkip_FPLAY4_PLUS()");
-		Assert.assertTrue("Should log in successfully to PLUS account.",loginPage.loginVerifyEntitlement(IHEARTPLUSUSERNAME,IHEARTPLUSPASSWD,"PLUS"));
+		Assert.assertTrue("Should log in successfully to PLUS account.",loginPage.loginVerifyEntitlement(IHEARTPLUSUSERNAME,IHEARTPLUSPASSWD,Entitlement.PLUS));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		searchPage.enterTextIntoSearchBar("Chimaira");
 		searchPage.clickTopResult();
@@ -254,7 +254,7 @@ public class TestFullPlayer extends TestRoot {
 	@Category(Stable.class)
 	public void testFullPlayerSaveReplaySkip_FPLAY5_ALLA(){
 		LocalTime before = consoleLogStart("Testing testFullPlayerSaveReplaySkip_FPLAY5_ALLA()");
-		Assert.assertTrue("Should log in successfully to ALLA account.",loginPage.loginVerifyEntitlement(IHEARTPREMIUMUSERNAME, IHEARTPREMIUMPASSWD, "ALLA"));
+		Assert.assertTrue("Should log in successfully to ALLA account.",loginPage.loginVerifyEntitlement(IHEARTPREMIUMUSERNAME, IHEARTPREMIUMPASSWD, Entitlement.ALLA));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		searchPage.enterTextIntoSearchBar("Chimaira");
 		searchPage.clickTopResult();

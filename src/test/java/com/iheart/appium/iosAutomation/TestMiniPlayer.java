@@ -9,6 +9,8 @@ import org.junit.Test;
 import org.junit.rules.TestName;
 import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;
+
+import com.iheart.appium.iosAutomation.AppboyUpsellsPage.Entitlement;
 import com.iheart.appium.utilities.TestRoot;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -45,7 +47,7 @@ public class TestMiniPlayer extends TestRoot {
 		LocalTime before = consoleLogStart(
 				"Testing testMiniPlayerArtistRadio_MPLAY1_FREE() - login, start MiniPlayer for Artist Radio, show all elements, test functionality.");
 		GifSequenceWriter writer = loginPage.initGIFWriter();
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("testfree@mail.com", "tester", "FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("testfree@mail.com", "tester", Entitlement.FREE));
 		loginPage.addPageToGif(writer);
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		loginPage.addPageToGif(writer);
@@ -127,7 +129,7 @@ public class TestMiniPlayer extends TestRoot {
 	public void MPLAY2_testMiniPlayerWorksOnAllPages_FREE() {
 		LocalTime before = consoleLogStart(
 				"Testing testMiniPlayerWorksOnAllPages_MPLAY2_FREE - login, start MiniPlayer for Artist Radio, Open other pages, check that MiniPlayer is still running.");
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("steph@free.com", "stephfree", "FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("steph@free.com", "stephfree", Entitlement.FREE));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		// Start Artist Radio
 		searchPage.enterTextIntoSearchBar("Inanimate Existence");
@@ -175,7 +177,7 @@ public class TestMiniPlayer extends TestRoot {
 	@Test
 	public void MPLAY3_testMiniPlayerRadioStation_FREE() {
 		LocalTime before = consoleLogStart("Testing testMiniPlayerRadioStationAfterLogin");
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("steph@free.com", "stephfree", "FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("steph@free.com", "stephfree", Entitlement.FREE));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		searchPage.enterTextIntoSearchBar("HOT 99.5");
 		searchPage.clickTopResult();

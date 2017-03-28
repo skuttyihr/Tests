@@ -344,16 +344,14 @@ public class TestRoot{
 
 	public boolean printElementInformation(IOSElement iosElement) {
 		try {
-			if (iosElement == null) {
-				System.out.println("is NULL! Returning false. ");
+			if (!waitForElementToBeVisible(iosElement,3)) {
+				System.out.println("printElementInformation() - "+iosElement + " is NULL or invisible! Returning false. ");
 				return false;
 			} else {
 				String[] aId = iosElement.toString().split(">");
 				// String getText = iosElement.getAttribute("name");
 				String value = iosElement.getAttribute("value");
-				// !value.equals("") ||
 				if (value != null) {
-					// .isSelected() doesnt work anymore with Appium 1.6.0beta3
 					System.out.println("  [" + aId[1] + "  text: [" + value + "]  tagName: [" + iosElement.getTagName()
 							+ "] isDisplayed: [" + iosElement.isDisplayed() + "] isEnabled: [" + iosElement.isEnabled()
 							+ "].");

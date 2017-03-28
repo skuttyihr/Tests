@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.rules.TestName;
 
+import com.iheart.appium.iosAutomation.AppboyUpsellsPage.Entitlement;
 import com.iheart.appium.utilities.TestRoot;
 
 public class TestLogin extends TestRoot {
@@ -37,7 +38,7 @@ public class TestLogin extends TestRoot {
 	//@Test
 	public void testLoginViaEmail_LOG1_FREE() {
 		LocalTime before = consoleLogStart("Testing login via Email." + name.getMethodName());
-		boolean testResult = loginPage.loginVerifyEntitlement("trav@free.com", "travfree", "FREE");
+		boolean testResult = loginPage.loginVerifyEntitlement("trav@free.com", "travfree", Entitlement.FREE);
 		Assert.assertTrue("Could not log in with email and password : ((LOG-1))", testResult);
 		consoleLogEnd(before, testResult, "Tested testLoginViaEmail_LOG1_FREE ((LOG-1))");
 	}
@@ -112,7 +113,7 @@ public class TestLogin extends TestRoot {
 	@Test
 	public void testLoginViaEmail_LOG7_FREE(){
 		LocalTime before = consoleLogStart("Testing login via Email with a FREE Account : " + name.getMethodName());
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement(IHEARTFREEUSERNAME, IHEARTFREEPASSWD, "FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement(IHEARTFREEUSERNAME, IHEARTFREEPASSWD, Entitlement.FREE));
 		consoleLogEnd(before, true, "Tested Log In via Email with a FREE Account. ((LOG-7))");
 	}
 	/**
@@ -122,7 +123,7 @@ public class TestLogin extends TestRoot {
 	@Category(Stable.class)
 	public void testLoginViaEmail_LOG8_PLUS(){
 		LocalTime before = consoleLogStart("Testing login via Email with a PLUS Account : " + name.getMethodName());
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement(IHEARTPLUSUSERNAME, IHEARTPLUSPASSWD, "PLUS"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement(IHEARTPLUSUSERNAME, IHEARTPLUSPASSWD, Entitlement.PLUS));
 		consoleLogEnd(before, true, "Tested Log In via Email with a PLUS Account. ((LOG-8))");
 	}
 	/**
@@ -131,7 +132,7 @@ public class TestLogin extends TestRoot {
 	@Test
 	public void testLoginViaEmail_LOG9_ALLACCESS(){
 		LocalTime before = consoleLogStart("Testing login via Email with a ALL Account : " + name.getMethodName());
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement(IHEARTPREMIUMUSERNAME, IHEARTPREMIUMPASSWD, "ALLA"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement(IHEARTPREMIUMUSERNAME, IHEARTPREMIUMPASSWD, Entitlement.ALLA));
 		consoleLogEnd(before, true, "Tested Log In via Email with a ALL Account. ((LOG-9))");
 	}
 

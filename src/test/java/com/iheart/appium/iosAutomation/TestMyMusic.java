@@ -31,7 +31,7 @@ public class TestMyMusic extends TestRoot{
 	@Test
 	public void MYMU1_testMyMusic_FREE_POST_TRIAL(){
 		LocalTime before = consoleLogStart("MYMU1_testMyMusic_FREE_POST_TRIAL()");
-		loginPage.loginVerifyEntitlement("trav@free.com", "travfree", "FREE");
+		loginPage.loginVerifyEntitlement("trav@free.com", "travfree", Entitlement.FREE);
 		homePage.clickMyMusicTab();
 		myMusicPage.handleNewInitialMessage();
 		myMusicPage.showAllElementsForFREEPOSTUsers();
@@ -58,7 +58,7 @@ public class TestMyMusic extends TestRoot{
 	@Test
 	public void MYMU2_testMyMusic_FREE_PRE_TRIAL(){
 		LocalTime before = consoleLogStart("MYMU2_testMyMusic_FREE_PRE_TRIAL()");
-		Assert.assertTrue("Should have logged in to an Free Account.",loginPage.loginVerifyEntitlement("trav2@free.com", "trav2free", "FREE"));
+		Assert.assertTrue("Should have logged in to an Free Account.",loginPage.loginVerifyEntitlement("trav2@free.com", "trav2free", Entitlement.FREE));
 		homePage.clickMyMusicTab();
 		if(myMusicPage.isCurrentlyOnMyMusicInitialMessage()){
 			Assert.assertEquals("Initial Message Title Label didn't match expected. ", 
@@ -94,7 +94,7 @@ public class TestMyMusic extends TestRoot{
 	@Test
 	public void MYMU3_testElements_PLUS(){
 		LocalTime before = consoleLogStart("MYMU3_testElements_PLUS()");
-		loginPage.loginVerifyEntitlement("trav@plus.com", "travplus", "PLUS");
+		loginPage.loginVerifyEntitlement("trav@plus.com", "travplus", Entitlement.PLUS);
 		homePage.clickMyMusicTab();
 		myMusicPage.handleNewInitialMessage();
 		myMusicPage.showAllElementsForPLUSUsers();
@@ -122,7 +122,7 @@ public class TestMyMusic extends TestRoot{
 		LocalTime before = consoleLogStart("MYMU4_managePlaylists_ALLA_POP()");
 		
 		Assert.assertTrue("Should have logged in to an All Access Account.", 
-				loginPage.loginVerifyEntitlement("mymu4@all.com", "Mymu44moo", "ALLA"));
+				loginPage.loginVerifyEntitlement("mymu4@all.com", "Mymu44moo", Entitlement.ALLA));
 		homePage.clickMyMusicTab();
 		myMusicPage.handleNewInitialMessage();
 		Assert.assertFalse("Upcell Cell should not exist on My Music Page for ALLA users. ", 
@@ -141,7 +141,7 @@ public class TestMyMusic extends TestRoot{
 	public void MYMU5_testEmptySongsAlbumsArtistsPlaylists_ALLA_FRESH(){
 		LocalTime before = consoleLogStart("MYMU5_testEmptySongsAlbumsArtistsPlaylists_ALLA_FRESH()");
 		Assert.assertTrue("Should have logged in to an All Access Account.", 
-				loginPage.loginVerifyEntitlement("mymu5fresh@all.com", "mymu55t", "ALLA"));
+				loginPage.loginVerifyEntitlement("mymu5fresh@all.com", "mymu55t", Entitlement.ALLA));
 	
 		homePage.clickMyMusicTab();
 		myMusicPage.handleNewInitialMessage();
@@ -160,7 +160,7 @@ public class TestMyMusic extends TestRoot{
 	public void MYMU6_testSongsAlbumsArtistsPlaylists_ALLA_POP(){
 		LocalTime before = consoleLogStart("MYMU6_testSongsAlbumsArtistsPlaylists_ALLA_POP()");
 		Assert.assertTrue("Should have logged in to an All Access Account.", 
-				loginPage.loginVerifyEntitlement("travused@all.com", "travUsed66t", "ALLA"));
+				loginPage.loginVerifyEntitlement("travused@all.com", "travUsed66t", Entitlement.ALLA));
 		homePage.clickMyMusicTab();
 		myMusicPage.handleNewInitialMessage();
 		Assert.assertFalse("Upcell Cell should not exist on My Music Page for ALLA users. "
@@ -181,7 +181,7 @@ public class TestMyMusic extends TestRoot{
 	public void MYMU7_createNewPlaylist_ALLA_FRESH(){
 		LocalTime before = consoleLogStart("MYMU7_createNewPlaylist_ALLA_FRESH()");
 		Assert.assertTrue("Should have logged in to an All Access Account.", 
-				loginPage.loginVerifyEntitlement("travfresh@all.com", "travFresh66t", "ALLA"));
+				loginPage.loginVerifyEntitlement("travfresh@all.com", "travFresh66t", Entitlement.ALLA));
 		homePage.clickMyMusicTab();	
 		myMusicPage.handleNewInitialMessage();
 		Assert.assertFalse("Upcell Cell should not exist on My Music Page for ALLA users. ", 

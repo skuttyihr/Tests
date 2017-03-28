@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import com.iheart.appium.iosAutomation.AppboyUpsellsPage.Entitlement;
 import com.iheart.appium.utilities.TestRoot;
 
 import io.appium.java_client.ios.IOSDriver;
@@ -345,7 +346,7 @@ public class LoginPage extends Page {
 		NavBarBackButton.click();
 	}
 
-	public boolean loginVerifyEntitlement(String email, String password, String entitlementType) {
+	public boolean loginVerifyEntitlement(String email, String password, Entitlement entitlement) {
 		System.out.println("loginVerifyEntitlement()...");
 		boolean loggedIn = false;
 		boolean doesEntitlementMatch = false;
@@ -355,11 +356,11 @@ public class LoginPage extends Page {
 		if(homePage.isCurrentlyOnForYouTab()){
 			loggedIn = true;
 		}
-		if(entitlementType.equals("PLUS")){
+		if(entitlement.equals("PLUS")){
 			doesEntitlementMatch = homePage.isCurrentlyOnPlusAccountLogo();
-		}else if(entitlementType.equals("ALLA")){
+		}else if(entitlement.equals("ALLA")){
 			doesEntitlementMatch = homePage.isCurrentlyOnAllAccessAccountLogo();
-		}else if(entitlementType.equals("FREE")){
+		}else if(entitlement.equals("FREE")){
 			doesEntitlementMatch = homePage.isCurrentlyOnFreeAccountLogo();
 		}
 		return loggedIn && doesEntitlementMatch;

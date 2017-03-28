@@ -331,12 +331,12 @@ public class Page extends TestRoot {
 	 */
 	public static void login(Entitlement e, boolean isTrialEligible)  {
 		if (e == Entitlement.FREE && isTrialEligible ==  true)
-			loginPage.loginVerifyEntitlement(IHEARTFREEUSERNAME, IHEARTFREEPASSWD,"FREE");
+			loginPage.loginVerifyEntitlement(IHEARTFREEUSERNAME, IHEARTFREEPASSWD,Entitlement.FREE);
 		else if(e == Entitlement.FREE && isTrialEligible ==  false)
-			loginPage.loginVerifyEntitlement(IHEARTFREETRIALEXPUSERNAME, IHEARTFREETRIALEXPPASSWD,"FREE");
+			loginPage.loginVerifyEntitlement(IHEARTFREETRIALEXPUSERNAME, IHEARTFREETRIALEXPPASSWD,Entitlement.FREE);
 		else if(e == Entitlement.PLUS)
-			loginPage.loginVerifyEntitlement(IHEARTPLUSUSERNAME, IHEARTPLUSPASSWD, "PLUS");
+			loginPage.loginVerifyEntitlement(IHEARTPLUSUSERNAME, IHEARTPLUSPASSWD, Entitlement.PLUS);
 		else
-			loginPage.loginVerifyEntitlement(IHEARTPREMIUMUSERNAME, IHEARTPREMIUMPASSWD, "ALLA");
+			loginPage.loginVerifyEntitlement(IHEARTPREMIUMUSERNAME, IHEARTPREMIUMPASSWD, Entitlement.ALLA);
 	}		
 }
