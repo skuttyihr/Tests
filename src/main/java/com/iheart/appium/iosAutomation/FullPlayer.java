@@ -660,11 +660,8 @@ public class FullPlayer extends Page {
 		Errors err = new Errors();
 		if( !waitAndClick(IHRPlayerReplayButtonUIButton,3, "clickReplayButtonToOpenReplayModal")){
 			err.add("Replay button was not displayed/visible on full player.");
-			return err;
 		}
-		else{
-			return err;
-		}
+		return err;
 	}
 	/**
 	 * Clicks the Add to Playlist Button, uses String entitlement to determine expected action. 
@@ -672,22 +669,19 @@ public class FullPlayer extends Page {
 	 */
 	public boolean clickAddToPlaylistButtonInSaveModal(Entitlement entitlement){
 		if(entitlement!= null && addToPlaylistButton != null && !entitlement.equals("")){
-			if(entitlement.equals("FREE")){
+			if(entitlement.equals(Entitlement.FREE) || entitlement.equals(Entitlement.PLUS)){
 				addToPlaylistButton.click();
-				System.out.println("AddToPlaylistButton was clicked for FREE User - Expect Upsell Modal to appear");
+				System.out.println("AddToPlaylistButton was clicked for " + entitlement.toString() + " User - Expect Upsell Modal to appear");
 				return upsellPage.isUpsellModalOpen();
-			}else if(entitlement.equals("PLUS")){
-				addToPlaylistButton.click();
-				System.out.println("AddToPlaylistButton was clicked for PLUS User - Expect Upsell Modal to appear");
-				return upsellPage.isUpsellModalOpen();
-				//return upsellPage.isad
 			}else if(entitlement.equals("ALLA")){
 				addToPlaylistButton.click();
 				System.out.println("AddToPlaylistButton was clicked for ALLACCESS User - Expect Add to Playlist Modal to appear");
 				//addToPlaylistModal.clickFirstPlaylist(); This can be filled in once AddToPlaylist page Object is done!!!!
+				// TODO Return isVisible for playlist modal
 				return true;
-			}else return false;
-		}else return false;
+			}
+		}
+		return false;
 	}
 	/**
 	 * Clicks the Save Song button in the Save Modal to Save currently playing song to My Playlist. 
