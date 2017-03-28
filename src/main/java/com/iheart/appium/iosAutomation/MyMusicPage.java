@@ -697,11 +697,11 @@ public class MyMusicPage extends Page{
 	 */
 	public int getNumberOfSongsInMyPlaylist(){
 		int returnInt = -1;
-			String subtitle2 = waitAndGetText(MyMusicCollapseableHeaderSubtitle2LabelUILabel, 2, "");
-			String[] split2 = subtitle2.split(" ");
-			returnInt = Integer.parseInt(split2[0]);
-			System.out.println("myMusicPage.getNumberOfSongsInMyPlaylist(): " + returnInt);
-			return returnInt;
+		String subtitle2 = waitAndGetText(MyMusicCollapseableHeaderSubtitle2LabelUILabel, 2, "");
+		String[] split2 = subtitle2.split(" ");
+		returnInt = Integer.parseInt(split2[0]);
+		System.out.println("myMusicPage.getNumberOfSongsInMyPlaylist(): " + returnInt);
+		return returnInt;
 	}
 	/**
 	 * text: [Radio and unlimited music on demand, all in one app.]
