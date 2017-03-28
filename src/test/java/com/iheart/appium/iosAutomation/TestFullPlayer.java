@@ -2,19 +2,23 @@ package com.iheart.appium.iosAutomation;
 
 import java.time.LocalTime;
 
+
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.rules.TestName;
+import org.junit.runners.MethodSorters;
 
 import com.iheart.appium.iosAutomation.AppboyUpsellsPage.Entitlement;
 import com.iheart.appium.utilities.Errors;
 import com.iheart.appium.utilities.TestRoot;
 import com.iheart.appium.utilities.TestRoot.Stable;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestFullPlayer extends TestRoot {
 
 	@Rule
