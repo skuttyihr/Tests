@@ -5,12 +5,16 @@ import java.time.LocalTime;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
+import com.iheart.appium.iosAutomation.AppboyUpsellsPage.Entitlement;
 import com.iheart.appium.utilities.TestRoot;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestHomePage extends TestRoot {
 	
 	@Before
@@ -25,13 +29,13 @@ public class TestHomePage extends TestRoot {
 	@Rule
 	public ScreenshotRule screenshot = new ScreenshotRule();
 	
+	@Rule
+	public RetryRule retry = new RetryRule(1);
 	
 	@Test
-	//Pass
-
-	public void testForYou_HOME1_FREE(){
+	public void HOME1_testForYou_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testForYou_HOME1_FREE() : Testing all elements on HomePage - For You, My Stations, Local Radio");
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("homepageelements@Test.com","test", "FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("homepageelements@Test.com","test", Entitlement.FREE));
 		if(homePage.isCurrentlyOnHomePage()){
 			homePage.clickFreeTrialUpsellButton();
 			upsellPage.clickCancelButton();
@@ -41,11 +45,9 @@ public class TestHomePage extends TestRoot {
 	}
 	
 	@Test
-	//Pass
-
-	public void testMyStations_HOME2_FREE(){
+	public void HOME2_testMyStations_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testMyStations_HOME2_FREE() : Testing all elements on HomePage - For You, My Stations, Local Radio");
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("homepageelements@Test.com","test", "FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("homepageelements@Test.com","test", Entitlement.FREE));
 		if(homePage.isCurrentlyOnHomePage()){
 			homePage.clickMyStationsTab();
 			homePage.printMyStationsElements();
@@ -56,9 +58,9 @@ public class TestHomePage extends TestRoot {
 	@Test
 	@Ignore
 
-	public void testMyMusic_HOME3_FREE(){
+	public void HOME3_testMyMusic_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testMyStations_HOME3_FREE() : Testing all elements on HomePage - For You, My Stations, Local Radio");
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("homepageelements@Test.com","test", "FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("homepageelements@Test.com","test", Entitlement.FREE));
 		if(homePage.isCurrentlyOnHomePage()){
 			homePage.clickMyMusicTab();
 			homePage.printMyMusicElements();
@@ -70,18 +72,18 @@ public class TestHomePage extends TestRoot {
 	@Test
 	@Ignore
 
-	public void testAddToFavorites_HOME4_FREE(){
+	public void HOME4_testAddToFavorites_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testAddToFavorites_HOME4_FREE() : Testing all elements on HomePage - For You, My Stations, Local Radio");
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("homepageelements@Test.com","test", "FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("homepageelements@Test.com","test", Entitlement.FREE));
 		if(homePage.isCurrentlyOnHomePage()){
 			
 		}
 		consoleLogEnd(before, true, "<<<<<testAddToFavorites_HOME4_FREE() : Tested HomePage Elements.");
 	}
 	@Test
-	public void testHomePagePlay_HOME5_FREE(){
+	public void HOME5_testHomePagePlay_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testHomePagePlay_HOME5_FREE() : Testing play on HomePage");
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("homepageelements@Test.com","test", "FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("homepageelements@Test.com","test", Entitlement.FREE));
 		boolean startPlaying = homePage.clickFirstStationOnForYouToBeginPlaying();
 		Assert.assertTrue("Clicking on the first station in For You should have started a player.", startPlaying);
 		consoleLogEnd(before, startPlaying, "<<<<<testHomePagePlay_HOME5_FREE(): Tested HomePage Play");
@@ -102,7 +104,7 @@ public class TestHomePage extends TestRoot {
 	 */
 	@Test
 	@Ignore
-	public void testMiscHomePage_HOME6_FREE(){
+	public void HOME6_testMiscHomePage_FREE(){
 	
 	}
 	/*
