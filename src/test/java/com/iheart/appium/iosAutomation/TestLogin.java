@@ -114,6 +114,7 @@ public class TestLogin extends TestRoot {
 	 * LOG-7    Free Account
 	 */
 	@Test
+	@Category(Stable.class)
 	public void LOG7_testLoginViaEmail_FREE(){
 		LocalTime before = consoleLogStart("Testing login via Email with a FREE Account : " + name.getMethodName());
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement(IHEARTFREEUSERNAME, IHEARTFREEPASSWD, Entitlement.FREE));
@@ -124,15 +125,16 @@ public class TestLogin extends TestRoot {
 	 */
 	@Test
 	@Category(Stable.class)
-	public void testLoginViaEmail_LOG8_PLUS(){
+	public void LOG8_testLoginViaEmail_PLUS(){
 		LocalTime before = consoleLogStart("Testing login via Email with a PLUS Account : " + name.getMethodName());
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement(IHEARTPLUSUSERNAME, IHEARTPLUSPASSWD, Entitlement.PLUS));
+		Assert.assertTrue("Should log in successfully to Plus account.",loginPage.loginVerifyEntitlement(IHEARTPLUSUSERNAME, IHEARTPLUSPASSWD, Entitlement.PLUS));
 		consoleLogEnd(before, true, "Tested Log In via Email with a PLUS Account. ((LOG-8))");
 	}
 	/**
 	 * LOG-9  All Access Account
 	 */
 	@Test
+	@Category(Stable.class)
 	public void LOG9_testLoginViaEmail_ALLA(){
 		LocalTime before = consoleLogStart("Testing login via Email with a ALL Account : " + name.getMethodName());
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement(IHEARTPREMIUMUSERNAME, IHEARTPREMIUMPASSWD, Entitlement.ALLA));
