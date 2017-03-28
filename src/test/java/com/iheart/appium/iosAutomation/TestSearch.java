@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.openqa.selenium.By;
 
+import com.iheart.appium.iosAutomation.AppboyUpsellsPage.Entitlement;
 import com.iheart.appium.utilities.TestRoot;
 import com.iheart.appium.utilities.TestRoot.RCStable;
 
@@ -34,7 +35,7 @@ public class TestSearch extends TestRoot {
 	@Category(RCStable.class)
 	public void testSearchPageResults_SEA1_FREE(){
 		LocalTime before = consoleLogStart("Testing testSearchPageResults_SEA1_FREE");
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("search11@Test.com", "test", "FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("search11@Test.com", "test", Entitlement.FREE));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		searchPage.showAllElements();
 		searchPage.enterTextIntoSearchBar("rap");
@@ -45,7 +46,7 @@ public class TestSearch extends TestRoot {
 	@Category(RCStable.class)
 	public void testSearchPageTextfield_SEA2_FREE(){
 		LocalTime before = consoleLogStart("Testing testSearchPageTextfield_SEA2_FREE");
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@Test.com","test", "FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@Test.com","test", Entitlement.FREE));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		searchPage.showAllElements();
 		searchPage.enterTextIntoSearchBar("asdf");
@@ -60,7 +61,7 @@ public class TestSearch extends TestRoot {
 	@Category(Stable.class)
 	public void testNoResults_SEA3_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testNoResults_SEA3_FREE() : Testing testNoResults");
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@Test.com","test", "FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@Test.com","test", Entitlement.FREE));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		String searchTerm = "xqWtlzap";
 		searchPage.enterTextIntoSearchBar(searchTerm);
@@ -88,7 +89,7 @@ public class TestSearch extends TestRoot {
 	@Category(Stable.class)
 	public void testSearchTrack_SEA4_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testSearchTrack_SEA4_FREE() : Searching a song, clicking Top Result, hoping for Artist Radio.");
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@Test.com","test","FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@Test.com","test",Entitlement.FREE));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		//sk - 11/5/16- updated to reflect the changed behavior - playing track from search creates <ArtistName> Radio
 		String expectedRadioType = "Artist Radio";
@@ -109,7 +110,7 @@ public class TestSearch extends TestRoot {
 	@Category(Stable.class)
 	public void testSearchArtist_SEA5_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testSearchArtist_SEA5_FREE() : Searching a song, clicking Top Result, hoping for Artist Radio.");
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@Test.com","test", "FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@Test.com","test", Entitlement.FREE));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		String artistName = "Black Crown Initiate";
 		String expectedRadioType = "Artist Radio";
@@ -129,7 +130,7 @@ public class TestSearch extends TestRoot {
 	@Category(Stable.class)
 	public void testSearchPlaylist_SEA6_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testSearchPlaylist_SEA6_FREE() : Searching a song, clicking Top Result, hoping for Artist Radio.");
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@Test.com","test", "FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@Test.com","test", Entitlement.FREE));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		String playlistName = "Workout Hits";
 //		String expectedRadioType = "Playlist by iHeartRadio";
@@ -148,7 +149,7 @@ public class TestSearch extends TestRoot {
 	@Category(RCStable.class)
 	public void testSearchPodcasts_SEA7_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testSearchPodcasts_SEA7_FREE() : Searching for 'starta', clicking First Podcast Cell, hoping for Podcast List of episodes");
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@Test.com","test", "FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@Test.com","test", Entitlement.FREE));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		String podcastName = "starta";
 		searchPage.enterTextAndPressEnterIntoSearchBar(podcastName);
@@ -167,7 +168,7 @@ public class TestSearch extends TestRoot {
 	@Category(RCStable.class)
 	public void testSearchLive_SEA8_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testSearchLiveRadio() : Searching for 'rock', clicking First Live Station, hoping for Live Radio.");
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@Test.com","test", "FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@Test.com","test", Entitlement.FREE));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		String liveSearchName = "rock";
 		String expectedRadioType = "Live Radio";

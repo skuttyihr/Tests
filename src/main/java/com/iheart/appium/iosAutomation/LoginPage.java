@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import com.iheart.appium.iosAutomation.AppboyUpsellsPage.Entitlement;
 import com.iheart.appium.utilities.TestRoot;
 
 import io.appium.java_client.ios.IOSDriver;
@@ -111,7 +112,7 @@ public class LoginPage extends Page {
 	 */
 	public void enterLoginEmailAddress(String emailAddress) {
 
-		IHRAuthorizationViewEmailAddressTextField.click();
+		waitAndClick(IHRAuthorizationViewEmailAddressTextField, 5, "");
 		if (emailAddress != null) {
 			System.out.println("enterLoginEmailAddress()");
 			IHRAuthorizationViewEmailAddressTextField.sendKeys(emailAddress);
@@ -122,7 +123,7 @@ public class LoginPage extends Page {
 	}
 
 	public void clearLoginEmailAddress() {
-		//System.out.println("clearLoginEmailAddress()");
+		System.out.println("clearLoginEmailAddress()");
 		IHRAuthorizationViewEmailAddressTextField.clear();
 	}
 
@@ -144,7 +145,7 @@ public class LoginPage extends Page {
 	}
 
 	public void clearLoginPassword() {
-		//System.out.println("clearLoginPassword()");
+		System.out.println("clearLoginPassword()");
 		IHRAuthorizationViewPasswordTextField.clear();
 	}
 
@@ -152,7 +153,7 @@ public class LoginPage extends Page {
 	 * Click Facebook Login Button
 	 */
 	public void clickFacebookLoginButton() {
-		//System.out.println("clickFacebookLoginButton()");
+		System.out.println("clickFacebookLoginButton()");
 		IHRAuthorizationViewFacebookButtonUIButton.click();
 	}
 
@@ -160,7 +161,7 @@ public class LoginPage extends Page {
 	 * Click Google Login Button
 	 */
 	public void clickGoogleLoginButton() {
-		//System.out.println("clickGoogleLoginButton()");
+		System.out.println("clickGoogleLoginButton()");
 		IHRAuthorizationViewGoogleButtonUIButton.click();
 	}
 
@@ -177,7 +178,7 @@ public class LoginPage extends Page {
 	 * Click the Forgot your Password? button to reset your account's password.
 	 */
 	public void clickForgotYourPasswordButton() {
-		//System.out.println("clickForgotYourPasswordButton()");
+		System.out.println("clickForgotYourPasswordButton()");
 		IHRAuthorizationViewForgotPasswordButtonUIButton.click();
 	}
 
@@ -195,7 +196,6 @@ public class LoginPage extends Page {
 		enterLoginPassword(password);
 		//System.out.println("Sent keys for Username and Password and about to click LogInAuthButton");
 		clickLogInAuthButton();
-		//System.out.println("Clicked LogInAuthButton.");
 		chooseStayConnected(false);
 		// Dismiss zip code
 		Page.enterZip("");
@@ -217,7 +217,7 @@ public class LoginPage extends Page {
 		chooseStayConnected(false);
 		sleep(2000);
 		Page.handlePossiblePopUp();  //added after genre screen sometimes pops up again. 
-		System.out.println("Logged in to account with email:[" + email + "] password ["+ password + "]");
+		System.out.println("Logged in to account.");
 	}
 
 	/**
@@ -346,8 +346,8 @@ public class LoginPage extends Page {
 		NavBarBackButton.click();
 	}
 
-	public boolean loginVerifyEntitlement(String email, String password, String entitlementType) {
-		//System.out.println("loginVerifyEntitlement()...");
+	public boolean loginVerifyEntitlement(String email, String password, Entitlement entitlement) {
+		System.out.println("loginVerifyEntitlement()...");
 		boolean loggedIn = false;
 		boolean doesEntitlementMatch = false;
 		// Log in
@@ -356,11 +356,11 @@ public class LoginPage extends Page {
 		if(homePage.isCurrentlyOnForYouTab()){
 			loggedIn = true;
 		}
-		if(entitlementType.equals("PLUS")){
+		if(entitlement.equals("PLUS")){
 			doesEntitlementMatch = homePage.isCurrentlyOnPlusAccountLogo();
-		}else if(entitlementType.equals("ALLA")){
+		}else if(entitlement.equals("ALLA")){
 			doesEntitlementMatch = homePage.isCurrentlyOnAllAccessAccountLogo();
-		}else if(entitlementType.equals("FREE")){
+		}else if(entitlement.equals("FREE")){
 			doesEntitlementMatch = homePage.isCurrentlyOnFreeAccountLogo();
 		}
 		return loggedIn && doesEntitlementMatch;

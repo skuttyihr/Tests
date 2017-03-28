@@ -1,6 +1,8 @@
 package com.iheart.appium.utilities;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -15,6 +17,10 @@ import java.util.Properties;
 import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+
+import javax.imageio.ImageIO;
+import javax.imageio.stream.FileImageOutputStream;
+import javax.imageio.stream.ImageOutputStream;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.rules.MethodRule;
@@ -34,6 +40,7 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.iheart.appium.iosAutomation.AddToPlaylistPage;
 import com.iheart.appium.iosAutomation.AlbumProfilePage;
 import com.iheart.appium.iosAutomation.AppboyUpsellsPage;
 import com.iheart.appium.iosAutomation.ArtistProfileOverflowPage;
@@ -42,9 +49,11 @@ import com.iheart.appium.iosAutomation.CuratedPlaylistPage;
 import com.iheart.appium.iosAutomation.DeepLink;
 import com.iheart.appium.iosAutomation.FullPlayer;
 import com.iheart.appium.iosAutomation.GenrePage;
+import com.iheart.appium.iosAutomation.GifSequenceWriter;
 import com.iheart.appium.iosAutomation.HomePage;
 import com.iheart.appium.iosAutomation.LoginPage;
 import com.iheart.appium.iosAutomation.MiniPlayer;
+import com.iheart.appium.iosAutomation.MyMusicPage;
 import com.iheart.appium.iosAutomation.OnboardingPage;
 import com.iheart.appium.iosAutomation.Page;
 import com.iheart.appium.iosAutomation.PodcastsPage;
@@ -56,13 +65,12 @@ import com.iheart.appium.iosAutomation.SignUpPage;
 import com.iheart.appium.iosAutomation.UpsellPage;
 
 import io.appium.java_client.MobileBy;
-import io.appium.java_client.MobileElement;
 import io.appium.java_client.MultiTouchAction;
 import io.appium.java_client.TouchAction;
-import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
-import testCommons.LoadProperties;
+import testCommons.*;
+
 
 public class TestRoot{
 
@@ -116,7 +124,8 @@ public class TestRoot{
 
 	// New On Demand Elements
 	protected static ArtistProfilePage artistProfilePage;
-
+	protected static MyMusicPage myMusicPage;
+	protected static AddToPlaylistPage addToPlaylistPage;
 	protected static boolean useSimulator = false;
 
 	// Login Info
@@ -314,8 +323,9 @@ public class TestRoot{
 		artistProfilePage = new ArtistProfilePage(driver);
 		artistProfileOverflowPage = new ArtistProfileOverflowPage(driver);
 		albumProfilePage = new AlbumProfilePage(driver);
+		myMusicPage = new MyMusicPage(driver);
+		addToPlaylistPage = new AddToPlaylistPage(driver);
 		curatedPlaylistPage = new CuratedPlaylistPage(driver);
-		appboyUpsellsPage = new AppboyUpsellsPage(driver);
 		driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 		System.out.println("Testing on: " + MODEL);
 
@@ -334,28 +344,82 @@ public class TestRoot{
 	}
 
 	public boolean printElementInformation(IOSElement iosElement) {
-		if (iosElement == null) {
-			System.out.println("is NULL! Returning false. ");
-			return false;
-		} else {
-			String[] aId = iosElement.toString().split(">");
-			//String getText = iosElement.getAttribute("name");
-			String value = iosElement.getAttribute("value");
-			//!value.equals("") ||
-			if ( value != null) {
-				// .isSelected() doesnt work anymore with Appium 1.6.0beta3
-				System.out.println("  [" + aId[1] + "  text: [" + value + "]  tagName: [" + iosElement.getTagName()
-				+ "] isDisplayed: [" + iosElement.isDisplayed() + "] isEnabled: [" + iosElement.isEnabled() + "].");
-			} else { // Element has no Text, not printing it.
-				System.out.println("  [" + aId[1] + " tagName: [" + iosElement.getTagName() + "] isDisplayed: ["
-						+ iosElement.isDisplayed() + "] isEnabled: [" + iosElement.isEnabled() + "].");
+		try {
+			if (!waitForElementToBeVisible(iosElement,3)) {
+				System.out.println("printElementInformation() - "+iosElement + " is NULL or invisible! Returning false. ");
+				return false;
+			} else {
+				String[] aId = iosElement.toString().split(">");
+				// String getText = iosElement.getAttribute("name");
+				String value = iosElement.getAttribute("value");
+				if (value != null) {
+					System.out.println("  [" + aId[1] + "  text: [" + value + "]  tagName: [" + iosElement.getTagName()
+							+ "] isDisplayed: [" + iosElement.isDisplayed() + "] isEnabled: [" + iosElement.isEnabled()
+							+ "].");
+				} else { // Element has no Text, not printing it.
+					System.out.println("  [" + aId[1] + " tagName: [" + iosElement.getTagName() + "] isDisplayed: ["
+							+ iosElement.isDisplayed() + "] isEnabled: [" + iosElement.isEnabled() + "].");
+				}
+				return iosElement.isDisplayed();
 			}
-			return iosElement.isDisplayed();
+		} catch (NoSuchElementException e) {
+			System.out.println("NoSuchElementException for element e = " + e.getMessage());
+			return false;
 		}
 	}
-	
-	
 	/**
+	 * Use this to get click on a IOSElement. 
+	 * Pass in the element, the time to wait for the element, and if possible, the pageObject and Method name as a String. 
+	 * @param iosElement
+	 * @param timeInSeconds
+	 * @param pageAndMethodName  ex: pageObject.clickOnCreateAccountButton 
+	 * @return
+	 */
+	public boolean waitAndClick(IOSElement iosElement, int timeInSeconds, String pageAndMethodName) {
+		boolean didClick = false;
+		if(waitForElementToBeVisible(iosElement, timeInSeconds)) {
+			iosElement.click();
+			didClick = true;
+		}
+		else if(iosElement == null) {
+			System.out.println("waitAndClick() : ELEMENT WAS NULL!");
+			return false;
+		}
+		String[] splitUp = iosElement.toString().split(">");
+		if(pageAndMethodName.equals("")) {
+			System.out.println("waitAndClick() : IOSElement["+splitUp[1] + "][ Did Click? : "+ didClick + "].");
+		}else {
+			System.out.println(pageAndMethodName + "() : IOSElement["+splitUp[1] + "][ Did Click? : "+ didClick + "].");
+		}
+		return didClick;
+	}
+	/**
+	 * Use this to get text out of an IOSElement. 
+	 * Pass in the element, the time to wait for the element, and if possible, the pageObject and Method name as a String. 
+	 * @param iosElement
+	 * @param timeInSeconds     ex: 3 
+	 * @param pageAndMethodName  ex: pageObject.clickOnCreateAccountButton 
+	 * @return
+	 */
+	public String waitAndGetText(IOSElement iosElement, int timeInSeconds, String pageAndMethodName) {
+		String text = "";
+		String[] splitUp = null;
+		if(waitForElementToBeVisible(iosElement, timeInSeconds)) {
+			text = iosElement.getText();
+			splitUp = iosElement.toString().split(">");
+		}else if(iosElement == null) {
+			System.out.println("waitAndGetText() : IOSElement is still null after waiting");
+			return "";
+		}
+		if(pageAndMethodName.equals("")) {
+			System.out.println("waitAndGetText() : IOSElement["+splitUp[1] + "][ Text : "+ text + "].");
+		}else {
+			System.out.println(pageAndMethodName + "() : IOSElement["+splitUp[1] + "][ Text : "+ text + "].");
+		}
+		return text;
+	}
+	
+/**
 	 * sk - 2/8 - method to print out Element Names as they appear in the app.
 	 * @param element
 	 * @return
@@ -367,14 +431,12 @@ public class TestRoot{
 
 		if (!isVisible(element)) {
 			if (!waitForElementToBeVisible(element, 5)) {
-				System.out.println("element is null or is not visible.");
 				return false;
 			}
-		}	
-		getText = element.getText();
+		}
+		getText = element.getAttribute("name");
 		value = element.getAttribute("value");
 		label = element.getAttribute("label");
-
 		if ( getText != null) 
 			System.out.println("Element '" + getText + "' is displayed.");
 		else if (value != null) 
@@ -578,6 +640,8 @@ public class TestRoot{
 					boolean onPage = element.isDisplayed();
 					System.out.println(isCurrentlyOnPageMessage + "() : " + onPage);
 					return onPage;
+				}else{
+					System.out.println(isCurrentlyOnPageMessage + "() Element is null : " + false);
 				}
 			}
 		} catch (NoSuchElementException e) {
@@ -818,8 +882,6 @@ public class TestRoot{
 		return driver.getContext().equals("NATIVE_APP");
 	}
 
-	//// Waiting Methods ////
-	//sk - 2/24 - the method was returning false even when the element was displayed as there was no 'return true'
 	public static boolean isVisible(IOSElement e) {
 		boolean isVisible = false;
 		if (e == null) {
@@ -827,7 +889,7 @@ public class TestRoot{
 		}
 		try {
 			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
-			isVisible = e.isDisplayed();
+			isVisible = e.isDisplayed();	
 		} catch (Exception x) {
 		} finally {
 			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
@@ -841,8 +903,7 @@ public class TestRoot{
 			return false;
 		try {
 			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
-			isEnabled = e.isEnabled();
-			System.out.println("isEnabled() in isVisible(): " + isEnabled);			
+			isEnabled = e.isEnabled();		
 		} catch (Exception x) {
 		} finally {
 			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
@@ -938,7 +999,7 @@ public class TestRoot{
 			try {
 				driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
 				if (ele.isEnabled()) {
-					System.out.println("WaitForElementToBeEnabled(): Element is enabled");
+					//System.out.println("WaitForElementToBeEnabled(): Element is enabled");
 					break;
 				}
 			} catch (Exception e) {
@@ -988,6 +1049,19 @@ public class TestRoot{
 		}
 
 		return couldClick;
+	}
+	
+	public static boolean type(IOSDriver<IOSElement> d, IOSElement ele, String toType){
+		boolean sentKeys = false;
+		
+		if (isVisible(ele)){
+			try{
+				ele.sendKeys(toType);
+				sentKeys = true;
+			}catch(Exception e){}
+		}
+		
+		return sentKeys;
 	}
 
 	/**
@@ -1173,5 +1247,58 @@ public class TestRoot{
 	public IOSElement generateIOSElementId(String eleName, int x){
 		String value = eleName + "-" + x;
 		return (findElement(driver, By.id(value)));
-	}	
+	}
+	
+	
+	public GifSequenceWriter initGIFWriter(){
+		String filePath = "";
+		if (driver != null) {
+			filePath = Errors.captureScreenshot(driver, "");
+		}
+		 BufferedImage firstImage;
+		 ImageOutputStream output;
+		 GifSequenceWriter gifSequenceWriter = null;
+		try {
+			firstImage = ImageIO.read(new File(filePath));
+			filePath = filePath.substring(0, filePath.length()-4) + "-GIF" + ".png";
+			output = new FileImageOutputStream(new File(filePath));
+			gifSequenceWriter = new GifSequenceWriter(output, firstImage.getType(), 1500, true);
+			gifSequenceWriter.writeToSequence(firstImage);
+		} catch (IOException e) {
+			System.out.println("Init GIF Writer Failed");
+		}
+		
+		return gifSequenceWriter;
+		
+		
+	}
+	public void addPageToGif(GifSequenceWriter writer){
+		sleep(1000);
+		String filePath = "";
+		if (driver != null) {
+			filePath = Errors.captureScreenshot(driver, "");
+		}
+		 try {
+			BufferedImage nextImage = ImageIO.read(new File(filePath));
+			writer.writeToSequence(nextImage);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
+	public boolean closeGifWriter(GifSequenceWriter writer){
+		try {
+		BufferedImage endImage = ImageIO.read(new File("screenshots/endImage.png"));
+			writer.writeToSequence(endImage);
+
+			writer.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+		return true;
+	}
 }

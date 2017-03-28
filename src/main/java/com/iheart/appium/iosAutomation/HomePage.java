@@ -273,9 +273,9 @@ public class HomePage extends Page {
 	 * Also enters Zip for local radio. 
 	 */
 	public void clickMyMusicTab(){
-		System.out.println("clickLocalRadioTab(). Then Entering Zip.");
+		System.out.println("clickMyMusicTab(). Then Entering Zip.");
 		HomeSegmentedControlTitleLabelUIButtonMyMusic.click();
-		Page.enterZip();
+		//Page.enterZip();
 	}
 	
 	/**

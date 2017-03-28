@@ -7,10 +7,10 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-
 import com.iheart.appium.utilities.Errors;
 import com.iheart.appium.utilities.TestRoot;
 import com.iheart.appium.utilities.TestRoot.Stable;
+import com.iheart.appium.iosAutomation.AppboyUpsellsPage.Entitlement;
 
 import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;
@@ -33,7 +33,7 @@ public class TestCuratedPlaylist extends TestRoot {
 	@Category(RCStable.class)
 	public void CUR1_testPlaylistProfilePageMetadata_PLUS() {
 		LocalTime before = consoleLogStart("Testing elements on Curated Playlist Page Metadata - Plus User - testPlaylistProfilePageMetadata_CUR_1_PLUS().");
-		loginPage.loginVerifyEntitlement(IHEARTPLUSUSERNAME, IHEARTPLUSPASSWD, "PLUS");
+		loginPage.loginVerifyEntitlement(IHEARTPLUSUSERNAME, IHEARTPLUSPASSWD, Entitlement.PLUS);
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		searchPage.searchAndPlayPlaylist("workout hits");
 		Errors err = curatedPlaylistPage.verifyPlaylistProfilePage();
@@ -45,7 +45,7 @@ public class TestCuratedPlaylist extends TestRoot {
 	@Category(RCStable.class)
 	public void CUR2_testPlaylistProfilePageMetadata_ALLA() {
 		LocalTime before = consoleLogStart("Testing elements on Curated Playlist Page Metadata - Plus User - testPlaylistProfilePageMetadata_CUR_2_ALLA()");
-		loginPage.loginVerifyEntitlement(IHEARTPREMIUMUSERNAME, IHEARTPREMIUMPASSWD,"ALLA");
+		loginPage.loginVerifyEntitlement(IHEARTPREMIUMUSERNAME, IHEARTPREMIUMPASSWD,Entitlement.ALLA);
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		searchPage.searchAndPlayPlaylist("workout hits");
 		Errors err = curatedPlaylistPage.verifyPlaylistProfilePage();
@@ -57,7 +57,7 @@ public class TestCuratedPlaylist extends TestRoot {
 	@Category(RCStable.class)
 	public void CUR3_testPlaylistProfilePageOverflow_PLUS() {
 		LocalTime before = consoleLogStart("Testing elements on Curated Playlist Page Metadata - Plus User - test page overflow menu");
-		loginPage.loginVerifyEntitlement(IHEARTPLUSUSERNAME, IHEARTPLUSPASSWD, "PLUS");
+		loginPage.loginVerifyEntitlement(IHEARTPLUSUSERNAME, IHEARTPLUSPASSWD, Entitlement.PLUS);
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		searchPage.searchAndPlayPlaylist("ambient pop");
 		Errors err = curatedPlaylistPage.verifyPlaylistProfilePageOverflow("PLUS");

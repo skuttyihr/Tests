@@ -9,6 +9,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
 
+import com.iheart.appium.iosAutomation.AppboyUpsellsPage.Entitlement;
 import com.iheart.appium.utilities.TestRoot;
 
 public class TestArtistProfile extends TestRoot {
@@ -31,7 +32,7 @@ public class TestArtistProfile extends TestRoot {
 	@Test
 	public void testArtistHero_ARTP1_FREE(){
 		LocalTime before = consoleLogStart("Testing elements on Artist Profile Page - testArtistProfileElements()");
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("artistProfilePage@Test.com", "test", "FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("artistProfilePage@Test.com", "test", Entitlement.FREE));
 		homePage.clickMyStationsTab();
 		//This should play Red Hot Chili Peppers Radio - the only favorite for this account.
 		homePage.clickCertainCellOnMyStationsToBeginPlaying(1);
@@ -44,7 +45,7 @@ public class TestArtistProfile extends TestRoot {
 	@Test
 	public void testArtistBio_ARTP2_FREE(){
 		LocalTime before = consoleLogStart("Testing elements on Artist Profile Page - testArtistBio_ARTP2_FREE()");
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("artistProfilePage@Test.com", "test", "FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("artistProfilePage@Test.com", "test", Entitlement.FREE));
 		homePage.clickMyStationsTab();
 		//This should play Red Hot Chili Peppers Radio - the only favorite for this account.
 		homePage.clickCertainCellOnMyStationsToBeginPlaying(1);
@@ -56,7 +57,7 @@ public class TestArtistProfile extends TestRoot {
 	@Test
 	public void testLatestReleaseTopSongsAlbumsRelatedPopular_ARTP3_FREE(){
 		LocalTime before = consoleLogStart("Testing elements on Artist Profile Page - testLatestReleaseTopSongsAlbumsRelatedPopular_ARTP3_FREE()");
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("artistProfilePage@Test.com", "test", "FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("artistProfilePage@Test.com", "test", Entitlement.FREE));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		searchPage.enterTextIntoSearchBar("nicki minaj");
 		searchPage.clickTopResult();
@@ -78,7 +79,7 @@ public class TestArtistProfile extends TestRoot {
 	@Test
 	public void testAlbumsAndAlbumProfile_ARTP4_FREE(){
 		LocalTime before = consoleLogStart("Testing elements on Artist Profile Page - testAlbumsAndAlbumProfile_ARTP4_FREE()");
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("artistProfilePage@Test.com", "test", "FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("artistProfilePage@Test.com", "test", Entitlement.FREE));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		searchPage.enterTextIntoSearchBar("britney");
 		searchPage.clickTopResult();
@@ -99,7 +100,7 @@ public class TestArtistProfile extends TestRoot {
 	@Test
 	public void testFunctions_ARTP5_FREE(){
 		LocalTime before = consoleLogStart("Testing methods on testFunctions_ARTP5_FREE");
-		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("artistProfileFunctions@Test.com", "test", "FREE"));
+		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("artistProfileFunctions@Test.com", "test", Entitlement.FREE));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		searchPage.enterTextIntoSearchBar("Rihanna");
 		searchPage.clickTopResult();
