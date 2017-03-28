@@ -3,7 +3,6 @@ package com.iheart.appium.utilities;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -66,13 +65,12 @@ import com.iheart.appium.iosAutomation.SignUpPage;
 import com.iheart.appium.iosAutomation.UpsellPage;
 
 import io.appium.java_client.MobileBy;
-import io.appium.java_client.MobileElement;
 import io.appium.java_client.MultiTouchAction;
 import io.appium.java_client.TouchAction;
-import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
-import src.main.java.testCommons.*;
+import testCommons.*;
+
 
 public class TestRoot{
 
@@ -161,7 +159,7 @@ public class TestRoot{
 		Properties props = null;
 		try {
 			System.out.println("Loading properties at ios.properties.local");
-			props = src.main.java.testCommons.LoadProperties.loadProperties("ios.properties.local");
+			props = LoadProperties.loadProperties("ios.properties.local");
 		} catch (Exception e) {
 			System.out.println("Could not load properties, defaulting to system properties.");
 			props = null;
