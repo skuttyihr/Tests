@@ -192,7 +192,8 @@ public class OnboardingPage extends Page {
 		printElementInformation(IHROnboardingViewPageControlUIPageControl);
 		printElementInformation(IHROnboardingViewLogInButtonUIButton);
 		printElementInformation(IHROnboardingViewSignUpButtonUIButton);
-		printElementInformation(IHROnboardingSlideViewLandscapeImageViewUIImageView);
+		//sk - 3/29 - landscape view has been removed
+		//printElementInformation(IHROnboardingSlideViewLandscapeImageViewUIImageView);
 		printElementInformation(IHROnboardingSlideViewPortraitImageViewUIImageView);
 		if(isOnboardingPortraitImagePresent()){
 			System.out.println("Portrait Image isDisplayed()");

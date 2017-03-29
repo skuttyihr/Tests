@@ -18,6 +18,9 @@ import com.iheart.appium.utilities.TestRoot.RCStable;
 @IncludeCategory(RCStable.class)
 @Suite.SuiteClasses({
 	com.iheart.appium.iosAutomation.TestCuratedPlaylist.class,
+	com.iheart.appium.iosAutomation.TestSearch.class,
+	com.iheart.appium.iosAutomation.TestAppboyUpsells.class,
+	com.iheart.appium.iosAutomation.TestOnboarding.class,
 
 })
 

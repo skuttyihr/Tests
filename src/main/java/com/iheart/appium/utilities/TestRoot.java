@@ -325,6 +325,7 @@ public class TestRoot{
 		myMusicPage = new MyMusicPage(driver);
 		addToPlaylistPage = new AddToPlaylistPage(driver);
 		curatedPlaylistPage = new CuratedPlaylistPage(driver);
+		appboyUpsellsPage = new AppboyUpsellsPage(driver);
 		driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
 		System.out.println("Testing on: " + MODEL);
 
@@ -433,7 +434,7 @@ public class TestRoot{
 				return false;
 			}
 		}
-		getText = element.getAttribute("name");
+		getText = element.getText();
 		value = element.getAttribute("value");
 		label = element.getAttribute("label");
 		if ( getText != null) 

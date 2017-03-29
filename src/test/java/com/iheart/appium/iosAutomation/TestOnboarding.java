@@ -38,8 +38,9 @@ public class TestOnboarding extends TestRoot {
 	 * This works at 169 seconds. 
 	 */
 	@Test
-	public void ONB1_testAllElementsOnOnboardingPage_FREE(){ 
-		LocalTime before = consoleLogStart("Testing ONB1_testAllElementsOnOnboardingPage_FREE()");
+	@Category(RCStable.class)	
+	public void testAllElementsOnOnboardingPage_ONB1_FREE(){ 
+		LocalTime before = consoleLogStart("Testing testAllElementsOnOnboardingPage_ONB1_FREE()");
 		boolean allElementsDisplayedOnOnboardingPage = onboardingPage.showAllElements();
 		Assert.assertTrue("One of the elements on Onboarding Page is not displayed as expected.",allElementsDisplayedOnOnboardingPage);
 		consoleLogEnd(before, allElementsDisplayedOnOnboardingPage,  "Tested ONB1_testAllElementsOnOnboardingPage_FREE() in TestOnboarding.java");
