@@ -356,11 +356,11 @@ public class LoginPage extends Page {
 		if(homePage.isCurrentlyOnForYouTab()){
 			loggedIn = true;
 		}
-		if(entitlement.equals("PLUS")){
+		if(entitlement.equals(Entitlement.PLUS)){
 			doesEntitlementMatch = homePage.isCurrentlyOnPlusAccountLogo();
-		}else if(entitlement.equals("ALLA")){
+		}else if(entitlement.equals(Entitlement.ALLA)){
 			doesEntitlementMatch = homePage.isCurrentlyOnAllAccessAccountLogo();
-		}else if(entitlement.equals("FREE")){
+		}else if(entitlement.equals(Entitlement.FREE)){
 			doesEntitlementMatch = homePage.isCurrentlyOnFreeAccountLogo();
 		}
 		return loggedIn && doesEntitlementMatch;
