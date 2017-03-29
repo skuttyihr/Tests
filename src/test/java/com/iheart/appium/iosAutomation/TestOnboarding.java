@@ -34,6 +34,7 @@ public class TestOnboarding extends TestRoot {
 	 * This works at 169 seconds. 
 	 */
 	@Test
+	@Category(RCStable.class)
 	public void testAllElementsOnOnboardingPage_ONB1_FREE(){ 
 		LocalTime before = consoleLogStart("Testing testAllElementsOnOnboardingPage_ONB1_FREE()");
 		boolean allElementsDisplayedOnOnboardingPage = onboardingPage.showAllElements();

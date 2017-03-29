@@ -5,9 +5,13 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+
 import com.iheart.appium.iosAutomation.AppboyUpsellsPage.Entitlement;
 import com.iheart.appium.utilities.Errors;
 import com.iheart.appium.utilities.TestRoot;
+import com.iheart.appium.utilities.TestRoot.RCStable;
+
 import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;
 
@@ -45,6 +49,7 @@ public class TestAppboyUpsells extends TestRoot {
 	 * 3/6 - Pass
 	 */
 	@Test
+	@Category(RCStable.class)
 	public void UPS1_testPlayerSkipLimitUpsell_FREE_TRLELG() {
 		LocalTime before = consoleLogStart("Testing artist radio unlimited skip upsell UPS1_testPlayerSkipLimitUpsell_FREE_TRLELG");
 		Errors err = Page.playStationOpenFullPlayer(Entitlement.FREE, true, "Ed Sheeran");		
@@ -64,6 +69,7 @@ public class TestAppboyUpsells extends TestRoot {
 	 * 3/6 - Pass
 	 */
 	@Test
+	@Category(RCStable.class)
 	public void UPS2_testPlayerSkipLimitUpsell_FREE_TRLEXP() {
 		LocalTime before = consoleLogStart("Testing artist radio unlimited skips upsell UPS2_testPlayerSkipLimitUpsell_FREE_TRLEXP");
 		Errors err = Page.playStationOpenFullPlayer(Entitlement.FREE, false, "Luke Bryan");
@@ -81,6 +87,7 @@ public class TestAppboyUpsells extends TestRoot {
 	 * sk - 3/5 -Test unlimited skips upsell DOES NOT show for Plus user.
 	 */
 	@Test
+	@Category(RCStable.class)
 	public void UPS3_testPlayerSkipLimitUpsell_PLUS() {
 		LocalTime before = consoleLogStart("Testing artist radio unlimited skips UPS3_testPlayerSkipLimitUpsell_PLUS().");
 		Errors err = Page.playStationOpenFullPlayer(Entitlement.PLUS, false, "Luke Bryan");
@@ -95,6 +102,7 @@ public class TestAppboyUpsells extends TestRoot {
 	 * sk - 2/27 -Test replay upsell shows for FREE NON-TRIAL ELIGIBILE user on ARTIST radio
 	 */
 	@Test
+	@Category(RCStable.class)
 	public void UPS4_testPlayerReplayUpsell_Artist_FREE_TRLEXP() {
 		LocalTime before = consoleLogStart("Testing artist radio replay UPS4_testPlayerReplayUpsell_Artist_FREE_TRLEXP");
 		Errors err = Page.playStationOpenFullPlayer(Entitlement.FREE, false, "Luke Bryan");
@@ -217,6 +225,7 @@ public class TestAppboyUpsells extends TestRoot {
 	 * sk - 2/27 -Test replay upsell shows for FREE TRIAL ELIGIBILE user on ARTIST radio
 	 */
 	@Test
+	@Category(RCStable.class)
 	public void UPS11_testPlayerAddToPlaylistUpsell_Artist_FREE_TRLELG() {
 		LocalTime before = consoleLogStart("Testing artist radio replay UPS11_testPlayerAddToPlaylistUpsell_Artist_FREE_TRLELG()");
 		Errors err = Page.playStationOpenFullPlayer(Entitlement.FREE, true, "Luke Bryan");
