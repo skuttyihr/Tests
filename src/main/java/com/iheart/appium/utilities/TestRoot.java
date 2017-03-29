@@ -1179,9 +1179,14 @@ public class TestRoot{
 							System.out.println(t);
 							caughtThrowable = t;
 							// Only retry if it was a driver issue, not an assertion
-							if(!(t instanceof java.lang.AssertionError)
-									&& t.getMessage().contains("session is either terminated or not started")){
-								System.err.println("\n\nRun #" + (i + 1) + " failed, may retry.");
+							if(!(t instanceof java.lang.AssertionError)){
+								if(t.getMessage() == null){
+									System.err.println("\n\nRun #" + (i + 1) + " failed due to unknown issues, may retry.\n");
+								}
+								else if (t.getMessage().contains("session is either terminated or not started")){
+									System.err.println("\n\nRun #" + (i + 1) + " failed due to driver issues, may retry.");
+									System.out.println(t.getMessage()+ "\n");
+								}
 							}
 							else{
 								throw t;
