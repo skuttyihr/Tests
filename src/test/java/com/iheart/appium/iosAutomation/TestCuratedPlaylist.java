@@ -15,12 +15,12 @@ import com.iheart.appium.iosAutomation.AppboyUpsellsPage.Entitlement;
 import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;
 
-
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestCuratedPlaylist extends TestRoot {
 	
 	@Before
 	public void setUp() {
-		setup();
+		setUp();
 	}
 	
 	@Rule

@@ -2,19 +2,23 @@ package com.iheart.appium.iosAutomation;
 
 import java.time.LocalTime;
 
+
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.rules.TestName;
+import org.junit.runners.MethodSorters;
 
 import com.iheart.appium.iosAutomation.AppboyUpsellsPage.Entitlement;
 import com.iheart.appium.utilities.Errors;
 import com.iheart.appium.utilities.TestRoot;
 import com.iheart.appium.utilities.TestRoot.Stable;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestFullPlayer extends TestRoot {
 
 	@Rule
@@ -46,8 +50,7 @@ public class TestFullPlayer extends TestRoot {
 		Verify Slider, PlayButton, Forward, More, Thumb Down, Thumb Up, Title (track), Subtitle (artist)
 	 */
 	@Test
-	@Category(Stable.class)
-	public void testFullPlayer_FPLAY1_FREE() {
+	public void FPLAY1_testFullPlayer_FREE() {
 		LocalTime before = consoleLogStart("Testing testFullPlayer_FPLAY1_FREE");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test66@Test.com", "test",Entitlement.FREE));
 		homePage.clickNavBarSearchButtonToOpenSearch();
@@ -77,7 +80,7 @@ public class TestFullPlayer extends TestRoot {
 		Verify that the casting button works
 	 */
 	@Test
-	public void testFullPlayerFunctionality_FPLAY2_FREE() {
+	public void FPLAY2_testFullPlayerFunctionality_FREE() {
 		LocalTime before = consoleLogStart("Testing testFullPlayerFunctionality_FPLAY2_FREE()");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test66@Test.com", "test", Entitlement.FREE));
 		homePage.clickNavBarSearchButtonToOpenSearch();
@@ -152,7 +155,7 @@ public class TestFullPlayer extends TestRoot {
 	 *
 	 */
 	@Test
-	public void testFullPlayerSaveAndReplayButton_FPLAY3_FREE(){
+	public void FPLAY3_testFullPlayerSaveAndReplayButton_FREE(){
 		LocalTime before = consoleLogStart("Testing testFullPlayerSaveAndReplayButton_FPLAY3_FREE()");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("trav@free.com", "travfree", Entitlement.FREE));
 		homePage.clickNavBarSearchButtonToOpenSearch();
@@ -210,7 +213,7 @@ public class TestFullPlayer extends TestRoot {
 	 * 
 	 */
 	@Test
-	public void testFullPlayerSaveReplaySkip_FPLAY4_PLUS(){
+	public void FPLAY4_testFullPlayerSaveReplaySkip_PLUS(){
 		LocalTime before = consoleLogStart("Testing testFullPlayerSaveReplaySkip_FPLAY4_PLUS()");
 		Assert.assertTrue("Should log in successfully to PLUS account.",loginPage.loginVerifyEntitlement(IHEARTPLUSUSERNAME,IHEARTPLUSPASSWD,Entitlement.PLUS));
 		homePage.clickNavBarSearchButtonToOpenSearch();
@@ -251,8 +254,7 @@ public class TestFullPlayer extends TestRoot {
 	 * It then skips 8 times and then Replays the Last three tracks, Track 3, Track 2, Track 1.
 	 */
 	@Test
-	@Category(Stable.class)
-	public void testFullPlayerSaveReplaySkip_FPLAY5_ALLA(){
+	public void FPLAY5_testFullPlayerSaveReplaySkip_ALLA(){
 		LocalTime before = consoleLogStart("Testing testFullPlayerSaveReplaySkip_FPLAY5_ALLA()");
 		Assert.assertTrue("Should log in successfully to ALLA account.",loginPage.loginVerifyEntitlement(IHEARTPREMIUMUSERNAME, IHEARTPREMIUMPASSWD, Entitlement.ALLA));
 		homePage.clickNavBarSearchButtonToOpenSearch();
@@ -305,7 +307,7 @@ public class TestFullPlayer extends TestRoot {
 	 */
 	@Test
 	@Ignore
-	public void testFullPlayerAddToPlaylist_FPLAY6_ALLA(){
+	public void FPLAY6_testFullPlayerAddToPlaylist_ALLA(){
 		//empty
 	}
 }

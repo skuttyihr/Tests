@@ -4,11 +4,15 @@ import java.time.LocalTime;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 import com.iheart.appium.utilities.TestRoot;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestNewAccount extends TestRoot {
 
 	@Before
@@ -31,41 +35,36 @@ public class TestNewAccount extends TestRoot {
 	 * 
 	 */
 	@Test
-	public void testCreateNewEmailAccount_SIGN1_FREE() {
+	public void SIGN1_testCreateNewEmailAccount_FREE() {
 		LocalTime before = consoleLogStart(
-				">>>>>testCreateNewEmailAccount_SIGN1_FREE() : Creating a new account with the default parameters. ");
+				">>>>>SIGN1_testCreateNewEmailAccount_FREE() : Creating a new account with the default parameters. ");
 		Assert.assertTrue(signupPage.createNewAccount());
-		consoleLogEnd(before, true, "<<<<<testCreateNewEmailAccount_SIGN1_FREE");
-
+		consoleLogEnd(before, true, "<<<<<SIGN1_testCreateNewEmailAccount_FREE");
 	}
-
-	/*
-	 * @Test
-	 * 
-	 * @Ignore 
-	 * public void testCreateNewGmailAccount_SIGN2_FREE(){
-	 * System.out.println("testCreateNewGmailAccount_SIGN2_FREE() - Isn't created yet.");
-	 * //Can't keep using Gmail accounts //Most likely cannot be automated. }
-	 * 
-	 * @Test
-	 * 
-	 * @Ignore 
-	 * public void testCreateNewFacebookAccount_SIGN3_FREE(){
-	 * System.out.println("testCreateNewFacebookAccount_SIGN3_FREE() - Isn't created yet."); 
-	 * //Can't keep using Facebook accounts 
-	 * //Most likely cannot be automated. }
-	 */
+	 @Test
+	 @Ignore 
+	 public void SIGN2_testCreateNewGmailAccount_FREE(){
+		 System.out.println("SIGN2_testCreateNewGmailAccount_FREE() - Needs Manual Test.");
+		 //Can't keep using Gmail accounts //Most likely cannot be automated. }
+	 }
+	 @Test
+	 @Ignore 
+	 public void SIGN3_testCreateNewFacebookAccount_FREE(){
+		 System.out.println("SIGN3_testCreateNewFacebookAccount_FREE() - Needs Manual Test."); 
+		 //Can't keep using Facebook accounts 
+		 //Most likely cannot be automated. }
+	 }
 	/**
 	 * Tests all the elements on the sign up page.
 	 */
 	@Test
-	public void testAllElements_SIGN4_FREE() {
+	public void SIGN4_testAllElements_FREE() {
 		LocalTime before = consoleLogStart(
-				">>>>>testAllElements_SIGN4_FREE() : Checking all the iOS Elements on the Onboarding / Sign Up Page.");
+				">>>>>SIGN4_testAllElements_FREE() : Checking all the iOS Elements on the Onboarding / Sign Up Page.");
 		// We only care about console output here
 		signupPage.checkAllElements();
 		consoleLogEnd(before, true,
-				"<<<<<testAllElements_SIGN4_FREE() : Test completed and all elements must be on the Onboarding Screen as expected.");
+				"<<<<<SIGN4_testAllElements_FREE() : Test completed and all elements must be on the Onboarding Screen as expected.");
 	}
 
 	/**
@@ -77,9 +76,9 @@ public class TestNewAccount extends TestRoot {
 	// sk - 2/8 - commented the elements verification, can be added back or
 	// separated out for regression tests
 	@Test
-	public void testGenreGameForNewAccount_GEN1_FREE() {
+	public void SIGN5_testGenreGameForNewAccount_FREE() {
 		LocalTime before = consoleLogStart(
-				">>>>>testGenreGameForNewAccount_GEN1_FREE(): Testing Genre Game for New Account.");
+				">>>>>SIGN5_testGenreGameForNewAccount_FREE(): Testing Genre Game for New Account.");
 		Assert.assertTrue("Could not create a new account and get the genre picker", signupPage.createNewAccount());
 		Assert.assertFalse("Done Button shouldn't be enabled for a new account.", genrePage.isDoneButtonEnabled());
 		genrePage.printGenreElements();
@@ -95,6 +94,6 @@ public class TestNewAccount extends TestRoot {
 		Page.handlePossiblePopUp();
 		Assert.assertTrue("Clicking Done button should have landed on For You in Homepage.",
 				homePage.isCurrentlyOnForYouTab());
-		consoleLogEnd(before, true, "<<<<<testGenreGameForNewAccount_GEN1_FREE() : Tested Genre Game for New Account");
+		consoleLogEnd(before, true, "<<<<<SIGN5_testGenreGameForNewAccount_FREE() : Tested Genre Game for New Account");
 	}
 }

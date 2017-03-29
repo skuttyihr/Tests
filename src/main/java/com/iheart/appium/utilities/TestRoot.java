@@ -71,7 +71,6 @@ import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
 import testCommons.*;
 
-
 public class TestRoot{
 
 	// Suite categories
@@ -890,7 +889,7 @@ public class TestRoot{
 		}
 		try {
 			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
-			isVisible = e.isDisplayed();	
+			isVisible = e.isDisplayed();
 		} catch (Exception x) {
 		} finally {
 			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
@@ -904,7 +903,7 @@ public class TestRoot{
 			return false;
 		try {
 			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
-			isEnabled = e.isEnabled();		
+			isEnabled = e.isEnabled();
 		} catch (Exception x) {
 		} finally {
 			driver.manage().timeouts().implicitlyWait(implicitWaitTimeout, TimeUnit.MILLISECONDS);
@@ -1000,7 +999,6 @@ public class TestRoot{
 			try {
 				driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
 				if (ele.isEnabled()) {
-					//System.out.println("WaitForElementToBeEnabled(): Element is enabled");
 					break;
 				}
 			} catch (Exception e) {
@@ -1048,7 +1046,7 @@ public class TestRoot{
 				couldClick = true;
 			} catch (Exception e) {}
 		}
-
+		
 		return couldClick;
 	}
 	
@@ -1253,9 +1251,7 @@ public class TestRoot{
 	public IOSElement generateIOSElementId(String eleName, int x){
 		String value = eleName + "-" + x;
 		return (findElement(driver, By.id(value)));
-	}
-	
-	
+	}	
 	public GifSequenceWriter initGIFWriter(){
 		String filePath = "";
 		if (driver != null) {

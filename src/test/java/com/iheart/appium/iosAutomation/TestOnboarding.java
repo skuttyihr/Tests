@@ -6,13 +6,17 @@ import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-
+import org.junit.runners.MethodSorters;
+import com.iheart.appium.iosAutomation.AppboyUpsellsPage.Entitlement;
 import com.iheart.appium.utilities.TestRoot;
 import com.iheart.appium.utilities.TestRoot.Stable;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestOnboarding extends TestRoot {
 
 	@Before
@@ -34,12 +38,12 @@ public class TestOnboarding extends TestRoot {
 	 * This works at 169 seconds. 
 	 */
 	@Test
-	@Category(RCStable.class)
+	@Category(RCStable.class)	
 	public void testAllElementsOnOnboardingPage_ONB1_FREE(){ 
 		LocalTime before = consoleLogStart("Testing testAllElementsOnOnboardingPage_ONB1_FREE()");
 		boolean allElementsDisplayedOnOnboardingPage = onboardingPage.showAllElements();
 		Assert.assertTrue("One of the elements on Onboarding Page is not displayed as expected.",allElementsDisplayedOnOnboardingPage);
-		consoleLogEnd(before, allElementsDisplayedOnOnboardingPage,  "Tested testAllElementsOnOnboardingPage_ONB1_FREE() in TestOnboarding.java");
+		consoleLogEnd(before, allElementsDisplayedOnOnboardingPage,  "Tested ONB1_testAllElementsOnOnboardingPage_FREE() in TestOnboarding.java");
 	}
 	
 	/**
@@ -52,8 +56,8 @@ public class TestOnboarding extends TestRoot {
 	 */
 	@Test
 	@Category(Stable.class)
-	public void testUIScrollViewOnOnboardingPage_ONB2_FREE(){
-		LocalTime before = consoleLogStart("Testing testUIScrollViewOnOnboardingPage_ONB2_FREE()");
+	public void ONB2_testUIScrollViewOnOnboardingPage_FREE(){
+		LocalTime before = consoleLogStart("Testing ONB2_testUIScrollViewOnOnboardingPage_FREE()");
 		//Part One
 		System.out.println("Testing that Titles are as expected.");
 		Set<String> foundWithinApp = onboardingPage.getThreeTextFields();
@@ -72,7 +76,7 @@ public class TestOnboarding extends TestRoot {
 		Assert.assertTrue("Descriptions have changed.",foundDescriptionsWithinApp.containsAll(descriptionsShouldBeInApp));
 		//End
 		boolean result = (foundDescriptionsWithinApp.containsAll(descriptionsShouldBeInApp) && foundWithinApp.containsAll(shouldBeInApp));
-		consoleLogEnd(before, result,  "Tested testUIScrollViewOnOnboardingPage_ONB2_FREE() in TestOnboarding.java");
+		consoleLogEnd(before, result,  "Tested ONB2_testUIScrollViewOnOnboardingPage_FREE() in TestOnboarding.java");
 	}
 
 	/**
@@ -80,8 +84,8 @@ public class TestOnboarding extends TestRoot {
 	 */
 	@Test
 	@Category(Stable.class)
-	public void testCreateAccountAndLogInButtons_ONB3_FREE(){
-		LocalTime before = consoleLogStart("Testing testCreateAccountAndLogInButtons_ONB3_FREE().");
+	public void ONB3_testCreateAccountAndLogInButtons_FREE(){
+		LocalTime before = consoleLogStart("Testing ONB3_testCreateAccountAndLogInButtons_FREE().");
 		GifSequenceWriter writer = loginPage.initGIFWriter();
 		Assert.assertTrue("Could not click 'Log In' Button", onboardingPage.clickOnboardingLoginButton());
 		loginPage.addPageToGif(writer);
@@ -90,14 +94,14 @@ public class TestOnboarding extends TestRoot {
 		Assert.assertTrue("Could not click 'Create Account' Button", onboardingPage.clickOnboardingCreateAccountButton());
 		loginPage.addPageToGif(writer);
 		loginPage.closeGifWriter(writer);
-		consoleLogEnd(before, true,  "Tested testCreateAccountAndLogInButtons_ONB3_FREE");
+		consoleLogEnd(before, true,  "Tested ONB3_testCreateAccountAndLogInButtons_FREE");
 	}
-/*	
-	//@Test
-	//@Ignore //still doesn't work
-	public void testOnboardingDisappearal_ONB4_FREE(){
+	
+	@Test
+	@Ignore //still doesn't work
+	public void ONB4_testOnboardingDisappearal_FREE(){
 		LocalTime before = consoleLogStart("Testing testOnboardingDisappearal_ONB4_FREE().");
-		loginPage.loginVerifyEntitlement("trav@free.com", "travfree", "FREE");
+		loginPage.loginVerifyEntitlement("trav@free.com", "travfree", Entitlement.FREE);
 		System.out.println("Closing app.");
 		driver.closeApp();
 		//closeApp();
@@ -110,5 +114,5 @@ public class TestOnboarding extends TestRoot {
 		//Play live station. 
 		//Kill app. 
 		//Relaunch app.
-	} */
+	}
 }

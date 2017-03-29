@@ -338,7 +338,7 @@ public class LoginPage extends Page {
 	}
 
 	public boolean isCurrentlyOnLoginPage() {
-		return isCurrentlyOn("isCurrentlyOnLoginPage()", IHRAuthorizationViewForgotPasswordButtonUIButton);
+		return isCurrentlyOn("isCurrentlyOnLoginPage", IHRAuthorizationViewForgotPasswordButtonUIButton);
 	}
 
 	public void tapBack() {

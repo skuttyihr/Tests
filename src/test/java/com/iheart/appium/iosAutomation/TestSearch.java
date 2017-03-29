@@ -5,6 +5,7 @@ import java.time.LocalTime;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.runners.MethodSorters;
 import org.junit.Rule;
 import org.junit.Test;
@@ -22,7 +23,7 @@ public class TestSearch extends TestRoot {
 
 	@Before
 	public void setUp() throws Exception {
-		setup();
+		TestRoot.setup();
 	}
 	
 	@Rule
@@ -33,7 +34,7 @@ public class TestSearch extends TestRoot {
 	
 	@Test
 	@Category(RCStable.class)
-	public void testSearchPageResults_SEA1_FREE(){
+	public void SEA1_testSearchPageResults_FREE(){
 		LocalTime before = consoleLogStart("Testing testSearchPageResults_SEA1_FREE");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("search11@Test.com", "test", Entitlement.FREE));
 		homePage.clickNavBarSearchButtonToOpenSearch();
@@ -44,7 +45,7 @@ public class TestSearch extends TestRoot {
 	}
 	@Test
 	@Category(RCStable.class)
-	public void testSearchPageTextfield_SEA2_FREE(){
+	public void SEA2_testSearchPageTextfield_FREE(){
 		LocalTime before = consoleLogStart("Testing testSearchPageTextfield_SEA2_FREE");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@Test.com","test", Entitlement.FREE));
 		homePage.clickNavBarSearchButtonToOpenSearch();
@@ -59,7 +60,7 @@ public class TestSearch extends TestRoot {
 	
 	@Test
 	@Category(Stable.class)
-	public void testNoResults_SEA3_FREE(){
+	public void SEA3_testNoResults_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testNoResults_SEA3_FREE() : Testing testNoResults");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@Test.com","test", Entitlement.FREE));
 		homePage.clickNavBarSearchButtonToOpenSearch();
@@ -87,7 +88,7 @@ public class TestSearch extends TestRoot {
 	
 	@Test
 	@Category(Stable.class)
-	public void testSearchTrack_SEA4_FREE(){
+	public void SEA4_testSearchTrack_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testSearchTrack_SEA4_FREE() : Searching a song, clicking Top Result, hoping for Artist Radio.");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@Test.com","test",Entitlement.FREE));
 		homePage.clickNavBarSearchButtonToOpenSearch();
@@ -108,7 +109,7 @@ public class TestSearch extends TestRoot {
 	}
 	@Test
 	@Category(Stable.class)
-	public void testSearchArtist_SEA5_FREE(){
+	public void SEA5_testSearchArtist_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testSearchArtist_SEA5_FREE() : Searching a song, clicking Top Result, hoping for Artist Radio.");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@Test.com","test", Entitlement.FREE));
 		homePage.clickNavBarSearchButtonToOpenSearch();
@@ -128,13 +129,14 @@ public class TestSearch extends TestRoot {
 	
 	@Test
 	@Category(Stable.class)
-	public void testSearchPlaylist_SEA6_FREE(){
+	public void SEA6_testSearchPlaylist_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testSearchPlaylist_SEA6_FREE() : Searching a song, clicking Top Result, hoping for Artist Radio.");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@Test.com","test", Entitlement.FREE));
 		homePage.clickNavBarSearchButtonToOpenSearch();
 		String playlistName = "Workout Hits";
 //		String expectedRadioType = "Playlist by iHeartRadio";
 		searchPage.enterTextAndPressEnterIntoSearchBar(playlistName);
+		//sk - 2/8 - the Playlist section is visible, so scrolldown is not required
 		//searchPage.scrollSearchResultsCollectionView(SwipeElementDirection.DOWN, 100, 200, 100);
 		searchPage.clickFirstPlaylistCell();
 		//Playlist Results open
@@ -147,7 +149,7 @@ public class TestSearch extends TestRoot {
 	
 	@Test
 	@Category(RCStable.class)
-	public void testSearchPodcasts_SEA7_FREE(){
+	public void SEA7_testSearchPodcasts_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testSearchPodcasts_SEA7_FREE() : Searching for 'starta', clicking First Podcast Cell, hoping for Podcast List of episodes");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@Test.com","test", Entitlement.FREE));
 		homePage.clickNavBarSearchButtonToOpenSearch();
@@ -166,7 +168,7 @@ public class TestSearch extends TestRoot {
 	
 	@Test
 	@Category(RCStable.class)
-	public void testSearchLive_SEA8_FREE(){
+	public void SEA8_testSearchLive_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testSearchLiveRadio() : Searching for 'rock', clicking First Live Station, hoping for Live Radio.");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@Test.com","test", Entitlement.FREE));
 		homePage.clickNavBarSearchButtonToOpenSearch();
@@ -191,8 +193,9 @@ public class TestSearch extends TestRoot {
 		Playlists: Now displays list of Top 2 curated playlists plus See More option. An overflow menu appears with options to Save to My Music/Add to Playlist
 		Podcasts: Top 2 Podcasts plus option to see more
 	 */
-	//@Test
-	public void testSearchResults_SEA9_PLUS(){
+	@Test
+	@Ignore
+	public void SEA9_testSearchResults_PLUS(){
 		
 	}
 	/**
@@ -204,8 +207,9 @@ public class TestSearch extends TestRoot {
 		Playlists: Now displays list of Top 2 curated playlists plus See More option. An overflow menu appears with options to Save to My Music/Add to Playlist
 		Podcasts: Top 2 Podcasts plus option to see more
 	 */
-	//@Test
-	public void testSearchResults_SEA10_ALLACCESS(){
+	@Test
+	@Ignore
+	public void SEA10_testSearchResults_ALLA(){
 		
 	}
 

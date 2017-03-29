@@ -8,8 +8,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.runners.MethodSorters;
-
 import com.iheart.appium.iosAutomation.AppboyUpsellsPage.Entitlement;
 import com.iheart.appium.utilities.TestRoot;
 
@@ -215,9 +215,9 @@ public class TestMiniPlayer extends TestRoot {
 		Verify that hidden Skip button is a 'Skip' button
 		Verify that Elapsed view is shown
 	 */
-/*	@Test
-	//@Ignore
-	public void testMiniPlayerPlaylist_MPLAY4_FREE() {
+	@Test
+	@Ignore
+	public void MPLAY4_testMiniPlayerPlaylist_ALLA() {
 	
 	}
 	/**	1. Repeat MPLAY-1 with a Podcast ("Startalk")
@@ -228,10 +228,11 @@ public class TestMiniPlayer extends TestRoot {
 		Verify that Thumbs up, down works.
 		Verify that hidden Skip button is a 'Scan' button
 		Verify that Elapsed view is shown
+		*/
 	@Test
 	@Ignore
-	public void testMiniPlayerPodcast_MPLAY5_FREE() {
+	public void MPLAY5_testMiniPlayerPodcast_FREE() {
 	
 	}
-*/
+
 }
