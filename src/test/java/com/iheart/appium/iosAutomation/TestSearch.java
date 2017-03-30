@@ -33,7 +33,7 @@ public class TestSearch extends TestRoot {
 	public RetryRule retry = new RetryRule(1);
 	
 	@Test
-	@Category(RCStable.class)
+	@Category(Regression.class)
 	public void SEA1_testSearchPageResults_FREE(){
 		LocalTime before = consoleLogStart("Testing testSearchPageResults_SEA1_FREE");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("search11@Test.com", "test", Entitlement.FREE));
@@ -44,7 +44,7 @@ public class TestSearch extends TestRoot {
 		consoleLogEnd(before, true, "Tested testSearchPageResults_SEA1_FREE");
 	}
 	@Test
-	@Category(RCStable.class)
+	@Category(Regression.class)
 	public void SEA2_testSearchPageTextfield_FREE(){
 		LocalTime before = consoleLogStart("Testing testSearchPageTextfield_SEA2_FREE");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@Test.com","test", Entitlement.FREE));
@@ -59,7 +59,7 @@ public class TestSearch extends TestRoot {
 	}
 	
 	@Test
-	@Category(Stable.class)
+	@Category({Stable.class, Regression.class})
 	public void SEA3_testNoResults_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testNoResults_SEA3_FREE() : Testing testNoResults");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@Test.com","test", Entitlement.FREE));
@@ -87,7 +87,7 @@ public class TestSearch extends TestRoot {
 	}
 	
 	@Test
-	@Category(Stable.class)
+	@Category({Stable.class, Regression.class})
 	public void SEA4_testSearchTrack_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testSearchTrack_SEA4_FREE() : Searching a song, clicking Top Result, hoping for Artist Radio.");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@Test.com","test",Entitlement.FREE));
@@ -108,7 +108,7 @@ public class TestSearch extends TestRoot {
 		
 	}
 	@Test
-	@Category(Stable.class)
+	@Category({Stable.class, Regression.class})
 	public void SEA5_testSearchArtist_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testSearchArtist_SEA5_FREE() : Searching a song, clicking Top Result, hoping for Artist Radio.");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@Test.com","test", Entitlement.FREE));
@@ -128,7 +128,7 @@ public class TestSearch extends TestRoot {
 	}
 	
 	@Test
-	@Category(Stable.class)
+	@Category({Stable.class, Regression.class})
 	public void SEA6_testSearchPlaylist_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testSearchPlaylist_SEA6_FREE() : Searching a song, clicking Top Result, hoping for Artist Radio.");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@Test.com","test", Entitlement.FREE));
@@ -148,7 +148,7 @@ public class TestSearch extends TestRoot {
 	}
 	
 	@Test
-	@Category(RCStable.class)
+	@Category(Regression.class)
 	public void SEA7_testSearchPodcasts_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testSearchPodcasts_SEA7_FREE() : Searching for 'starta', clicking First Podcast Cell, hoping for Podcast List of episodes");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@Test.com","test", Entitlement.FREE));
@@ -157,7 +157,6 @@ public class TestSearch extends TestRoot {
 		searchPage.enterTextAndPressEnterIntoSearchBar(podcastName);
 		searchPage.clickFirstPodcastsCell();
 		IOSElement episodes = Page.waitForVisible(driver, By.name("RECENT EPISODES"), 10);
-		printElementInformation(episodes);
 		Assert.assertTrue("Clicking the first Podcasts Cell for 'starta' should show Episodes of Star Talk",episodes.getText().equals("RECENT EPISODES"));
 		searchPage.clickStartTalkPodcastEpisode();
 		Assert.assertTrue("Clicking one of the Podcast episdoes should have opened MiniPlayer", miniPlayer.isCurrentlyOnMiniPlayer() );
@@ -167,7 +166,7 @@ public class TestSearch extends TestRoot {
 	
 	
 	@Test
-	@Category(RCStable.class)
+	@Category(Regression.class)
 	public void SEA8_testSearchLive_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testSearchLiveRadio() : Searching for 'rock', clicking First Live Station, hoping for Live Radio.");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("test55@Test.com","test", Entitlement.FREE));

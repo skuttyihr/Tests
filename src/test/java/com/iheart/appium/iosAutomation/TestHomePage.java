@@ -9,10 +9,13 @@ import org.junit.FixMethodOrder;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runners.MethodSorters;
 
 import com.iheart.appium.iosAutomation.AppboyUpsellsPage.Entitlement;
 import com.iheart.appium.utilities.TestRoot;
+import com.iheart.appium.utilities.TestRoot.Regression;
+import com.iheart.appium.utilities.TestRoot.Stable;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestHomePage extends TestRoot {
@@ -33,6 +36,7 @@ public class TestHomePage extends TestRoot {
 	public RetryRule retry = new RetryRule(1);
 	
 	@Test
+	@Category(Regression.class)
 	public void HOME1_testForYou_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testForYou_HOME1_FREE() : Testing all elements on HomePage - For You, My Stations, Local Radio");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("homepageelements@Test.com","test", Entitlement.FREE));
@@ -45,6 +49,7 @@ public class TestHomePage extends TestRoot {
 	}
 	
 	@Test
+	@Category(Regression.class)
 	public void HOME2_testMyStations_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testMyStations_HOME2_FREE() : Testing all elements on HomePage - For You, My Stations, Local Radio");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("homepageelements@Test.com","test", Entitlement.FREE));
@@ -81,6 +86,7 @@ public class TestHomePage extends TestRoot {
 		consoleLogEnd(before, true, "<<<<<testAddToFavorites_HOME4_FREE() : Tested HomePage Elements.");
 	}
 	@Test
+	@Category(Regression.class)
 	public void HOME5_testHomePagePlay_FREE(){
 		LocalTime before = consoleLogStart(">>>>>testHomePagePlay_HOME5_FREE() : Testing play on HomePage");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("homepageelements@Test.com","test", Entitlement.FREE));

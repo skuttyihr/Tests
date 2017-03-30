@@ -7,11 +7,13 @@ import org.junit.FixMethodOrder;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.rules.TestName;
 import org.junit.runners.MethodSorters;
 
 import com.iheart.appium.iosAutomation.AppboyUpsellsPage.Entitlement;
 import com.iheart.appium.utilities.TestRoot;
+import com.iheart.appium.utilities.TestRoot.Regression;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestArtistProfile extends TestRoot {
 	
@@ -44,6 +46,7 @@ public class TestArtistProfile extends TestRoot {
 		
 	}
 	@Test	
+	@Category(Regression.class)
 	public void ARTP2_testArtistBio_FREE(){
 		LocalTime before = consoleLogStart("Testing elements on Artist Profile Page - ARTP2_testArtistBio_FREE()");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("artistProfilePage@Test.com", "test", Entitlement.FREE));
@@ -56,6 +59,7 @@ public class TestArtistProfile extends TestRoot {
 		consoleLogEnd(before, true, "Tested ARTP2_testArtistBio_FREE().");
 	}
 	@Test
+	@Category(Regression.class)
 	public void ARTP3_testLatestReleaseTopSongsAlbumsRelatedPopular_FREE(){
 		LocalTime before = consoleLogStart("Testing elements on Artist Profile Page - ARTP3_testLatestReleaseTopSongsAlbumsRelatedPopular_FREE()");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("artistProfilePage@Test.com", "test", Entitlement.FREE));
@@ -99,6 +103,7 @@ public class TestArtistProfile extends TestRoot {
 	
 	
 	@Test
+	@Category(Regression.class)
 	public void ARTP5_testFunctions_FREE(){
 		LocalTime before = consoleLogStart("Testing methods on ARTP5_testFunctions_FREE");
 		Assert.assertTrue("Should log in successfully to FREE account.",loginPage.loginVerifyEntitlement("artistProfileFunctions@Test.com", "test", Entitlement.FREE));

@@ -8,9 +8,12 @@ import org.junit.FixMethodOrder;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runners.MethodSorters;
 
 import com.iheart.appium.utilities.TestRoot;
+import com.iheart.appium.utilities.TestRoot.Regression;
+import com.iheart.appium.utilities.TestRoot.Stable;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestNewAccount extends TestRoot {
@@ -35,6 +38,7 @@ public class TestNewAccount extends TestRoot {
 	 * 
 	 */
 	@Test
+	@Category(Regression.class)
 	public void SIGN1_testCreateNewEmailAccount_FREE() {
 		LocalTime before = consoleLogStart(
 				">>>>>SIGN1_testCreateNewEmailAccount_FREE() : Creating a new account with the default parameters. ");

@@ -14,6 +14,7 @@ import org.junit.experimental.categories.Category;
 import org.junit.runners.MethodSorters;
 import com.iheart.appium.iosAutomation.AppboyUpsellsPage.Entitlement;
 import com.iheart.appium.utilities.TestRoot;
+import com.iheart.appium.utilities.TestRoot.Regression;
 import com.iheart.appium.utilities.TestRoot.Stable;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -38,7 +39,7 @@ public class TestOnboarding extends TestRoot {
 	 * This works at 169 seconds. 
 	 */
 	@Test
-	@Category(RCStable.class)	
+	@Category(Regression.class)
 	public void testAllElementsOnOnboardingPage_ONB1_FREE(){ 
 		LocalTime before = consoleLogStart("Testing testAllElementsOnOnboardingPage_ONB1_FREE()");
 		boolean allElementsDisplayedOnOnboardingPage = onboardingPage.showAllElements();
@@ -55,7 +56,7 @@ public class TestOnboarding extends TestRoot {
 	 * We could also add Sleeps. 
 	 */
 	@Test
-	@Category(Stable.class)
+	@Category({Stable.class, Regression.class})
 	public void ONB2_testUIScrollViewOnOnboardingPage_FREE(){
 		LocalTime before = consoleLogStart("Testing ONB2_testUIScrollViewOnOnboardingPage_FREE()");
 		//Part One
@@ -83,7 +84,7 @@ public class TestOnboarding extends TestRoot {
 	 * Simply click the 'Log In' Button and the 'Create Account' Button and ensure the next pages are as expected. 
 	 */
 	@Test
-	@Category(Stable.class)
+	@Category({Stable.class, Regression.class})
 	public void ONB3_testCreateAccountAndLogInButtons_FREE(){
 		LocalTime before = consoleLogStart("Testing ONB3_testCreateAccountAndLogInButtons_FREE().");
 		GifSequenceWriter writer = loginPage.initGIFWriter();

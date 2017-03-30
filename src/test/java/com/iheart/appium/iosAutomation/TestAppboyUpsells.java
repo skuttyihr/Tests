@@ -11,6 +11,7 @@ import com.iheart.appium.iosAutomation.AppboyUpsellsPage.Entitlement;
 import com.iheart.appium.utilities.Errors;
 import com.iheart.appium.utilities.TestRoot;
 import com.iheart.appium.utilities.TestRoot.RCStable;
+import com.iheart.appium.utilities.TestRoot.Regression;
 
 import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;
@@ -139,6 +140,7 @@ public class TestAppboyUpsells extends TestRoot {
 	 * sk - 2/27 -Test replay upsell shows for FREE TRIAL ELIGIBILE user on ARTIST radio
 	 */
 	@Test
+	@Category(Regression.class)
 	public void UPS6_testPlayerReplayUpsell_Artist_FREE_TRLELG() {
 		LocalTime before = consoleLogStart("Testing artist radio replay UPS6_testPlayerReplayUpsell_Artist_FREE_TRLELG");
 		Errors err = Page.playStationOpenFullPlayer(Entitlement.FREE, true, "Luke Bryan");
@@ -157,6 +159,7 @@ public class TestAppboyUpsells extends TestRoot {
 	 * sk - 3/5 -Test replay upsell shows for FREE TRIAL ELIGIBILE user on LIVE radio
 	 */
 	@Test
+	@Category(Regression.class)
 	public void UPS7_testPlayerReplayUpsell_Live_FREE_TRLELG() {
 		LocalTime before = consoleLogStart("Testing live radio replay UPS7_testPlayerReplayUpsell_Live_FREE_TRLELG().");
 		Errors err = Page.playStationOpenFullPlayer(Entitlement.FREE, true, "Z100");
